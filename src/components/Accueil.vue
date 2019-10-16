@@ -4,6 +4,10 @@
       <h1 id="titreAccueil">{{ titre }}</h1>
       <p id="message">{{ message }}</p>
       <br />
+      <p id="message">{{ message2 }}</p>
+      <br />
+      <p id="message">{{ message3 }}</p>
+      <br />
       <p id="bannière">{{ bannière }}</p>
       <button @click.passive="goEpisodes" id="button">Episodes</button>
     </div>
@@ -22,11 +26,12 @@ export default {
   data() {
     return {
       titre: "Un podcast sur les createur de business independents",
-      message: `Salut je sur Martin DONADIEU, et sur Indie maker fr j’interviewe des makers qui ont fait de leur idée et side projet des business en ligne profitable.
- Plus qu’un simple success story nous allons plus loin pour comprendre leur histoire, les challenges et les tactiques derrière les makers qui ont créé depuis  zéro et fait grandir leur propre business indépendant. 
-Je parle avec toute personne qui a su cree son business avec ou sans talent pour coder.\n
-J’interviewe les maker qui commence, pour avoir une vision authentique et un exemple de comment commencer !
-Mais je m’attaque aussi a ceux qui ont un MMR plus élevé pour comprendre comment ils continuent d’atteindre leur objectif, et les différents challenges pour continué a gardé ce revenue.
+      message: `Salut je sur Martin DONADIEU, et sur Indiemaker.fr j’interviewe des makers qui ont fait de leur idée et side projet des business en ligne profitable.
+ Plus que leur simple success story nous allons plus loin pour comprendre leur histoire, les challenges et les tactiques derrière les makers qui ont créé depuis zéro et fait grandir leur propre business indépendant.`,
+      message2: `Je parle avec toute personne qui a su cree son business avec ou sans talent pour coder.\n
+J’interviewe les maker qui commence, pour avoir une vision authentique et un exemple de comment commencer !`,
+      message3: `
+Mais j'interviewe aussi a ceux qui ont un MMR plus élevé pour comprendre comment ils continuent d’atteindre leur objectif, et les différents challenges pour continué a gardé ce revenue.
 Que vous soyez en train de créer votre propre business ou que vous cherchiez a le devenir, dans ce podcast vous apprendrez par l’exemple comment devenir financièrement indépendant un indie maker, et cela sans se prendre au sérieux ! `,
       bannière:
         "#Innovation, #Entrepreunariat, #Makers, #AutoFormation, #Productivite, #Independans, #MRR"
@@ -70,9 +75,9 @@ Que vous soyez en train de créer votre propre business ou que vous cherchiez a 
 
 #button {
   width: 150px;
-  color: black;
-  background-color: white;
-  border-color: black;
+  color: white;
+  background-color: #df99d8;
+  border: none;
   transition: all 0.2s ease-in-out;
   z-index: 0;
   margin-top: 46px;
@@ -81,7 +86,6 @@ Que vous soyez en train de créer votre propre business ou que vous cherchiez a 
 }
 
 h1 {
-  width: 433px;
   font-size: 39px;
   color: white;
   font-family: "Rex Bold", "Open Sans";
@@ -133,28 +137,16 @@ p {
 }
 
 @media only screen and (max-width: 420px) {
-  /* #Accueil2 {
-            display: flex;
-            flex-flow: column nowrap;
-        } */
   #main {
-    /* width: 100%;
-            margin-right: auto; */
-    margin-top: -150px;
-    /* margin-left: auto; */
+    margin-top: -200px;
   }
-
-  /* padding-top: 5em; */
 
   h1 {
     width: 80%;
     font-size: 1.6em;
-    margin: 0 20% auto;
-    /* text-align: center; */
   }
 
   #message {
-    /* width: 90%; */
     font-size: 1em;
     margin: 15px auto 5px;
   }
@@ -164,8 +156,5 @@ p {
     font-size: 1em;
     margin: auto;
   }
-  /* #button {
-            margin: 30px auto;
-        } */
 }
 </style>

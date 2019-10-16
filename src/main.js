@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import Accueil from './components/Accueil.vue'
 import Emissions from './components/Emissions.vue'
+import Votes from './components/Votes.vue'
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,11 @@ const routes = [
     path: '/Emissions',
     name: 'Emissions',
     component: Emissions,
+  },
+  {
+    path: '/Votes',
+    name: 'Votes',
+    component: Votes,
   },
 ];
 

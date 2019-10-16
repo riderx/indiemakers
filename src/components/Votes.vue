@@ -1,20 +1,17 @@
 <template>
   <div id="emissions">
     <div id="episodes">
-      <h2 id="titreEpisodes">Derniers épisodes</h2>
-      <ChoixEpisodes />
+      <h2 id="titreEpisodes">En construction</h2>
     </div>
     <illu2 />
   </div>
 </template>
 
 <script>
-import ChoixEpisodes from "./ChoixEpisodes.vue";
 import illu2 from "./illu2.vue";
 
 export default {
   components: {
-    ChoixEpisodes,
     illu2
   }
 };

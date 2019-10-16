@@ -23,8 +23,9 @@
         <ul id="ulHamburger">
           <li class="menuLi" @click="goAccueil">Accueil</li>
           <li class="menuLi" @click="goEpisodes">Episodes</li>
-          <li class="menuLi">Blog</li>
-          <li class="menuLi">Contact</li>
+          <li class="menuLi" @click="goVotes">Votes</li>
+          <!-- <li class="menuLi">Blog</li> -->
+          <!-- <li class="menuLi">Contact</li> -->
         </ul>
       </div>
     </transition>
@@ -44,7 +45,7 @@ export default {
       icones: [
         {
           title: "soundCloud",
-          lien: "https://soundcloud.com/indiemakerfr-becode",
+          lien: "https://soundcloud.com/indiemakerfr",
           class: "fab fa-soundcloud"
         },
         // {title: 'instagram', lien:'#', class: 'fab fa-instagram'},
@@ -69,6 +70,10 @@ export default {
       this.$router.push("/Emissions");
       this.bar = !this.bar;
     },
+    goVotes() {
+      this.$router.push("/Votes");
+      this.bar = !this.bar;
+    },
     changeBar() {
       this.bar = !this.bar;
     }
@@ -81,8 +86,14 @@ export default {
   width: 100%;
   z-index: 2;
 }
+#ulHamburger {
+  padding: unset;
+  margin: unset;
+  width: 100vw;
+}
 #navBar {
   width: 100%;
+  height: 8vh;
 }
 #indiemakerfr {
   width: 9vw;
@@ -119,7 +130,7 @@ export default {
   margin-right: 27px;
 }
 #menu {
-  width: 102%;
+  width: 100%;
   margin: auto;
   height: 92vh;
   background-color: white;
@@ -138,19 +149,15 @@ export default {
 }
 
 .menuLi {
+  padding-top: 20px;
   list-style-type: none;
   font-size: 6vw;
   cursor: pointer;
 }
 .menuLi:hover {
-  list-style-type: none;
-  font-size: 6vw;
   background-color: #df99d8;
   cursor: pointer;
   color: white;
-  /* box-sizing: content-box; */
-  width: 110%;
-  margin-left: -5%;
 }
 
 #ulNavBar {
@@ -167,14 +174,20 @@ export default {
   padding: 10px;
 }
 
-/* @media only screen and (max-width: 800px){
-        #ulNavBar {
-            display: flex;
-            flex-direction: column-reverse;
-            width: 30px;
-        }
-        #navBar {
-            width: 100%;
-        }   
-    } */
+@media only screen and (max-width: 800px) {
+  /* #ulNavBar {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 30px;
+  }
+  #navBar {
+    width: 100%;
+  } */
+  ul {
+    padding-inline-start: 0px;
+  }
+  .menuLi {
+    font-size: 22vw;
+  }
+}
 </style>
