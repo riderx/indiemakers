@@ -27,9 +27,11 @@ export default {
 
 <style>
 #footer {
+  position: fixed;
   width: 100vw;
   margin-top: 50px;
   z-index: 2;
+  bottom: 0;
 }
 #infoMoins {
   /* background-color: #f2f2f2; */

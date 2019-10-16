@@ -55,7 +55,7 @@ h2 {
     flex-flow: column nowrap;
     width: 100%;
     margin: -90px -17px;
-    background-color: #fff;
+    background-color: #df99d8;
     box-shadow: none;
     height: fit-content;
     overflow-y: auto;

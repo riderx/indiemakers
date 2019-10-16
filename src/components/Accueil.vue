@@ -41,7 +41,7 @@ Que vous soyez en train de créer votre propre business ou que vous cherchiez a 
 </script>
 
 <style scoped>
-#Accueil2 {
+#Accueil {
   margin: auto;
   width: 100vw;
 }
@@ -96,10 +96,13 @@ p {
 }
 
 @media only screen and (max-width: 800px) {
-  #Accueil2 {
+  #Accueil {
     display: flex;
     flex-flow: column nowrap;
   }
+  /* #titreAccueil {
+    padding-top: 3em;
+  } */
   #main {
     width: 100%;
     margin-right: auto;
@@ -140,6 +143,8 @@ p {
     margin-top: -150px;
     /* margin-left: auto; */
   }
+
+  /* padding-top: 5em; */
 
   h1 {
     width: 80%;
