@@ -20,6 +20,6 @@ git commit -m 'deploy'
 # git push -f git@github.com:riderx/<USERNAME>.github.io.git master
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:riderx/indiemakerfr-landing-page.git master:gh-pages
+git push -f git@github.com:riderx/indiemakerfr.git master:gh-pages
 
 cd -
