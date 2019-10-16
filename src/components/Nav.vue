@@ -38,7 +38,7 @@ export default {
     return {
       logo: {
         title: "indiemakerfr",
-        source: "./assets/default-monochrome-black.svg",
+        source: "./assets/default-monochrome-white.svg",
         lien: "#"
       },
       icones: [
@@ -104,7 +104,7 @@ export default {
 .fab,
 .fas {
   margin-left: -34px;
-  color: #b0b9c4;
+  color: white;
   font-size: 1.5em;
   margin-top: 13px;
   margin-right: 30px;
@@ -113,7 +113,7 @@ export default {
 }
 .fab:hover,
 .fas:hover {
-  color: #759faa;
+  color: #4b279b;
   transform: scale(1.6);
   font-size: 1.5em;
   margin-right: 27px;
@@ -122,8 +122,8 @@ export default {
   width: 102%;
   margin: auto;
   height: 92vh;
-  background-color: #96c3ca;
-  font-family: "Concert One", cursive;
+  background-color: white;
+  font-family: "Rex Bold", "Open Sans";
   text-align: center;
   position: fixed;
   z-index: 10;
@@ -145,7 +145,7 @@ export default {
 .menuLi:hover {
   list-style-type: none;
   font-size: 6vw;
-  background-color: #506f77;
+  background-color: #df99d8;
   cursor: pointer;
   color: white;
   /* box-sizing: content-box; */

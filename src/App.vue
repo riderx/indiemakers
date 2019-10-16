@@ -28,6 +28,12 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: "Rex Bold";
+  src: url("/assets/fonts/Rex-Bold.woff2") format("woff2"),
+    url("/assets/fonts/Rex-Bold.woff") format("woff");
+}
+
 body {
   width: 100vw;
   height: 100vh;

@@ -1,6 +1,10 @@
-/* font-family: 'Concert One', cursive;
+/* font-family: 'Rex Bold', 'Open Sans';
 font-family: 'Lato', sans-serif; */
-
+@font-face {
+  font-family: "Rex Bold";
+  src: url("/fonts/Rex-Bold.woff2") format("woff2"),
+    url("/fonts/Rex-Bold.woff") format("woff");
+}
 
 .navbar {
   background-color: #9fc2c9;
@@ -26,15 +30,15 @@ font-family: 'Lato', sans-serif; */
 
 .btn-primary {
   color: #ffffff;
-  background-color: #96c3ca;
-  border-color: #96c3ca;
+  background-color: white;
+  border-color: white;
   transition: all .2s ease-in-out;
 }
 
 .btn-primary:hover {
   color: #ffffff;
-  background-color: #759faa;
-  border-color: #759faa;
+  background-color: #4b279b;
+  border-color: #4b279b;
 }
 
 /* .btn-primary {
@@ -48,11 +52,11 @@ h1,
 .h1 {
   width: 433px;
   font-size: 39px;
-  color: #96c3ca;
+  color: white;
 }
 
 h1 {
-  font-family: 'Concert One', cursive;
+  font-family: 'Rex Bold', 'Open Sans';
 }
 
 h6,
@@ -96,7 +100,7 @@ p {
 
 
 .fab:hover {
-  color: #759faa;
+  color: #4b279b;
   transform: scale(1.6);
   font-size: 1.5em;
   margin-top: 45px;
@@ -114,7 +118,7 @@ p {
 
 
 .fab:hover {
-  color: #759faa;
+  color: #4b279b;
   transform: scale(1.6);
   font-size: 1.5em;
   margin-top: 17px;
