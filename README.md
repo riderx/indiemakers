@@ -32,7 +32,7 @@ THe development team is:
 | Andrés Goldestein | Emilie Bialais | 
 | :---: |:---:|
 | ![Andres](https://avatars1.githubusercontent.com/u/46483156?s=400&v=4)| ![Emilie](https://avatars3.githubusercontent.com/u/46483146?s=460&v=4)| 
-| <a href="https://github.com/AndresGol" target="_blank">`github.com/AndresGol`</a> | <a href="https://github.com/Ebialais" target="_blank">`github.com/Ebialais`</a> |
+| <a href="https://github.com/riderx" target="_blank">`github.com/riderx`</a> | <a href="https://github.com/Ebialais" target="_blank">`github.com/Ebialais`</a> |
 
 ---
 
