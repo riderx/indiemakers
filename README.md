@@ -1,4 +1,4 @@
-# indiemakerfr-landing-page
+# indiemakerfr
 
 indiemakerfr is a project of some of becode-lovelace students. The aim is to allow new web developers to have access to information about their training / future job, in French. This informations will be available as podcasts, so we needed a site for hosting them which reflects the state of mind in which this project was born.
 
