@@ -3,7 +3,7 @@
     <div id="infoMoins">
       <img src="assets/information.png" id="imgInfoMoins" @click="getInfo" />
       <span id="infoPlus" v-if="!displayInfo">
-        <p>| 2019 | Un projet Forgr | Site web : Martin Donadieu</p>
+        <p>| 2019 | Forgr | Site web : Martin Donadieu, Shannone Controu</p>
       </span>
     </div>
   </div>
