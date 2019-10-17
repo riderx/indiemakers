@@ -1,5 +1,8 @@
 <template>
   <div id="emissions">
+    <modal name="hello-world">hello, world! 
+     <div id="person-email">Enter your e-mail to upvote :<input type="text"></div> 
+    </modal>
     <div id="episodes">
       <h2 id="titreEpisodes">En construction</h2>
       <div id="addPerson">+ Ajouter une proposition</div>
@@ -9,7 +12,7 @@
       <h2>{{person.name}}</h2>
       <h3>@{{person.login}}</h3>
       <p>{{person.bio}}</p>
-      <div id="bouton-vote">Votes: {{person.votes}}</div>
+      <div id="bouton-vote" @click="show()"> &#9650; {{person.votes}}</div>
     </div>
       
     </div>
@@ -24,6 +27,14 @@ import { db } from "../utils/db";
 export default {
   components: {
     illu2
+  },
+  methods: {
+    show() {
+      this.$modal.show("hello-world");
+    },
+    hide() {
+      this.$modal.hide("hello-world");
+    }
   },
   data() {
     return {
@@ -90,28 +101,29 @@ h2 {
     width: 100%;
   }
 }
-#person-info{
+#person-info {
   background-color: white;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   text-align: left;
   padding-top: 0.5em;
   height: 4.5em;
 }
-#person-info h2{
+#person-info h2 {
   color: black;
   margin-bottom: 0em;
   margin-top: 0.5em;
   font-size: 0.9em;
   width: 36em;
 }
-#person-info h3{
+#person-info h3 {
   color: lightgrey;
   font-weight: normal;
   font-size: 0.5em;
   margin-top: 0em;
   width: 36em;
 }
-#person-info p{
+#person-info p {
   color: black;
   font-weight: normal;
   font-size: 0.5em;
@@ -126,7 +138,7 @@ h2 {
 }
 #bouton-vote {
     border: solid 1px lightgray;
-    width: 5em;
+    width: 2em;
     text-align: center;
     font-size: 57%;
     border-radius: 1em;
@@ -135,6 +147,7 @@ h2 {
     position: relative;
     top: -6em;
     padding: 0.2em;
+    margin-right: 1%;
 }
 #addPerson{
   position: absolute;
@@ -146,6 +159,10 @@ h2 {
   border-radius: 2em;
   box-shadow: 1em #df99d8;
 }
+#person-email{
+  text-align: center;
+  color:  #9456b7;
 
+}
 
 </style>

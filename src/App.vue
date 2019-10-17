@@ -11,8 +11,10 @@ import NavBar from "./components/Nav.vue";
 import pied from "./components/Footer.vue";
 import { firestorePlugin } from "vuefire";
 import Vue from "vue";
+import VModal from "vue-js-modal";
 
 Vue.use(firestorePlugin);
+Vue.use(VModal);
 
 export default {
   name: "app",
