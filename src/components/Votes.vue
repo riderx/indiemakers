@@ -2,6 +2,16 @@
   <div id="emissions">
     <div id="episodes">
       <h2 id="titreEpisodes">En construction</h2>
+      
+    <div id="person-info" v-bind:key="person.id" v-for="person in people">
+
+      <div> <img :src="person.pic" alt="Logo person"> </div>
+      <h2>{{person.name}}</h2>
+      <h3>{{person.login}}</h3>
+      <p>{{person.bio}}</p>
+      <div id="bouton-vote">votes:{{person.votes}}</div>
+    </div>
+      
     </div>
     <illu2 />
   </div>
@@ -18,11 +28,21 @@ export default {
     return {
       people: [
         {
+          id: 1,
           name: "NASA",
-          login: "NASA",
+          login: "@NASA",
           bio: `Explore the universe and discover our home planet with 
 @NASA
-. We usually post in EDT (UTC-4)"`,
+. We usually post in EDT (UTC-4)`,
+          pic: "https://pbs.twimg.com/profile_images/1091070803184177153/TI2qItoi_400x400.jpg",
+          votes: 12
+        },    {
+          id: 2,
+          name: "sha",
+          login: "@Sha_code",
+          bio: `Explore the universe and discover our home planet with 
+@NASA
+. We usually post in EDT (UTC-4)`,
           pic: "https://twitter.com/NASA/photo",
           votes: 12
         }
@@ -86,4 +106,46 @@ h2 {
     width: 100%;
   }
 }
+#person-info{
+  background-color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  text-align: left;
+  padding-top: 0.5em;
+}
+#person-info h2{
+  color: black;
+  margin-bottom: 0em;
+  margin-top: 0em;
+  font-size: 1em;
+  width: 36em;
+}
+#person-info h3{
+  color: lightgrey;
+  font-weight: normal;
+  font-size: 0.5em;
+  margin-top: 0em;
+  width: 36em;
+}
+#person-info p{
+  color: black;
+  font-weight: normal;
+  font-size: 0.5em;
+  width: 36em;
+}
+#person-info img{
+  width: 4.5em;
+  float: left;
+}
+#bouton-vote {
+    border: solid 1px lightgray;
+    bottom: 4em;
+    position: relative;
+    left: 22em;
+    width: 3em;
+    text-align: center;
+    font-size: 78%;
+    border-radius: 1em;
+}
+
+
 </style>
