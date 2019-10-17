@@ -19,6 +19,7 @@
 
 <script>
 import illu2 from "./illu2.vue";
+import { db } from "../utils/db";
 
 export default {
   components: {
@@ -26,28 +27,11 @@ export default {
   },
   data() {
     return {
-      people: [
-        {
-          id: 1,
-          name: "NASA",
-          login: "@NASA",
-          bio: `Explore the universe and discover our home planet with 
-@NASA
-. We usually post in EDT (UTC-4)`,
-          pic: "https://pbs.twimg.com/profile_images/1091070803184177153/TI2qItoi_400x400.jpg",
-          votes: 12
-        },    {
-          id: 2,
-          name: "sha",
-          login: "@Sha_code",
-          bio: `Explore the universe and discover our home planet with 
-@NASA
-. We usually post in EDT (UTC-4)`,
-          pic: "https://twitter.com/NASA/photo",
-          votes: 12
-        }
-      ]
+      people: []
     };
+  },
+  firestore: {
+    people: db.collection("people")
   }
 };
 </script>
