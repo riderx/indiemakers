@@ -9,6 +9,10 @@
 <script>
 import NavBar from "./components/Nav.vue";
 import pied from "./components/Footer.vue";
+import { firestorePlugin } from "vuefire";
+import Vue from "vue";
+
+Vue.use(firestorePlugin);
 
 export default {
   name: "app",
