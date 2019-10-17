@@ -20,12 +20,10 @@
 <script>
 import illu2 from "./illu2.vue";
 import { db } from "../utils/db";
-import Modal from "modal-vue";
 
 export default {
   components: {
-    illu2,
-    Modal // https://www.npmjs.com/package/modal-vue
+    illu2
   },
   methods: {
     show() {
