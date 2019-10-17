@@ -13,6 +13,21 @@ import illu2 from "./illu2.vue";
 export default {
   components: {
     illu2
+  },
+  data() {
+    return {
+      people: [
+        {
+          name: "NASA",
+          login: "NASA",
+          bio: `Explore the universe and discover our home planet with 
+@NASA
+. We usually post in EDT (UTC-4)"`,
+          pic: "https://twitter.com/NASA/photo",
+          votes: 12
+        }
+      ]
+    };
   }
 };
 </script>
