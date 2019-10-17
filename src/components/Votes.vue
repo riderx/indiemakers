@@ -1,11 +1,20 @@
 <template>
   <div id="emissions">
-    <modal name="hello-world">hello, world! 
-     <div id="person-email">Enter your e-mail to upvote :<input type="text"></div> 
+    <modal :height="320" name="hello-world" >
+      <section id="div-modal">
+      Inscription 
+      <div id="sign-in-vote">
+        <div id="explain"> Pour pouvoir voter ou ajouter un·e potentiel·le invité·e, j’ai besoin que tu valides ton email pour deux raisons: éviter les faux votes et pouvoir te tenir au courant s'il y a des news sur le podcast ou dans mes projets ( je n'aime pas le spam, attends-toi à pas plus de 3 par an ). 
+Et bien entendu, je refile ton e-mail à personne, je déteste ça ! </div>
+         <div class="person-email">Tu peux ecrire ton e-mail juste là :<input type="text"></div>
+         <div><button>valider</button></div>
+      </div>
+      </section>
     </modal>
     <div id="episodes">
-      <h2 id="titreEpisodes">En construction</h2>
-      <div id="addPerson">+ Ajouter une proposition</div>
+      <h2 id="titreEpisodes">Most wanted</h2>
+      <div id="addPerson"> + <span class="tooltiptext">Ajouter un·e invité·e</span></div>
+    
     <div id="person-info" v-bind:key="person.id" v-for="person in people">
 
       <div> <img :src="person.pic" alt="Logo person"> </div>
@@ -48,6 +57,7 @@ export default {
 </script>
 
 <style>
+
 #emissions {
   width: 47vw;
   height: 68vh;
@@ -151,18 +161,85 @@ h2 {
 }
 #addPerson{
   position: absolute;
-  top: 5em;
+  top: 3.3em;
   right: 0em;
   font-size: medium;
-  color: #9456b7;
+  color: white;
+  background-color: #9456b7;
   border: 1px solid #9456b7;
-  border-radius: 2em;
-  box-shadow: 1em #df99d8;
+  border-radius: 0.5em;
+  padding: 2%;
+  margin: 0% 1%;
 }
-#person-email{
+.v--modal-box{
+  border-radius: 1em;
+  
+}
+#div-modal{
+  width: 100%;
+  height: 100%;
+  background-color: #f3d7f0;
   text-align: center;
-  color:  #9456b7;
-
+  color:  #6a477d;
+  padding: 1%;
+}
+#sign-in-vote{
+  border-radius: 0.5em;
+  text-align: center;
+  font-size: 72%;
+}
+#explain{
+  font-size: 86%;
+  text-align: left;
+  padding: 2% 5%;
+}
+input {
+  width: 45.5%;
+  font-size: 1em;
+  padding: 1%;
+  border-radius: 1em 1em 0em 0em;
+}
+input:focus {
+  border-radius: 1em 1em 0em 0em;
+}
+button{
+width: 48.5%;
+  padding: 1%;
+  font-size: inherit;
+  background-color: #6a477d1f;
+  color: #6a477d;
+  border-radius: 0em 0em 1em 1em;
 }
 
+#addPerson .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+#addPerson .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+#addPerson:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+  background-color: #9456b7;
+}
 </style>
