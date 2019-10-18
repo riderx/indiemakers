@@ -60,7 +60,7 @@ export default {
         const actionCodeSettings = {
           // URL you want to redirect back to. The domain (www.example.com) for this
           // URL must be whitelisted in the Firebase Console.
-          url: "https://indiemaker.fr/login",
+          url: "https://indiemaker.fr/#/login",
           // This must be true.
           handleCodeInApp: true
         };

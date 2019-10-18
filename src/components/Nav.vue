@@ -22,7 +22,7 @@
       <div v-if="!bar" id="menu">
         <ul id="ulHamburger">
           <li class="menuLi" @click="goAccueil">Accueil</li>
-          <li class="menuLi" @click="goEpisodes">Episodes</li>
+          <!-- <li class="menuLi" @click="goEpisodes">Episodes</li> -->
           <li class="menuLi" @click="goVotes">Votes</li>
           <!-- <li class="menuLi">Blog</li> -->
           <!-- <li class="menuLi">Contact</li> -->
@@ -44,9 +44,9 @@ export default {
       },
       icones: [
         {
-          title: "soundCloud",
+          title: "Spotify",
           lien: "https://soundcloud.com/indiemakerfr",
-          class: "fab fa-soundcloud"
+          class: "fab fa-spotify"
         },
         // {title: 'instagram', lien:'#', class: 'fab fa-instagram'},
         {
