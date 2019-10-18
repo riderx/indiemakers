@@ -35,7 +35,7 @@
         <h2>{{person.name}}</h2>
         <h3>@{{person.login}}</h3>
         <p>{{person.bio}}</p>
-        <div id="bouton-vote" @click="vote()">
+        <div id="bouton-vote" @click="vote(person.id_str)">
           <div>&#9650;</div>
           {{person.votes}}
         </div>
@@ -50,6 +50,10 @@ import illu2 from "./illu2.vue";
 import { db } from "../utils/db";
 import firebase from "firebase/app";
 
+const voteTwiterUser = firebase.functions().httpsCallable("voteTwiterUser");
+const addTwiterUser = firebase.functions().httpsCallable("addTwiterUser");
+const findTwiterUser = firebase.functions().httpsCallable("findTwiterUser");
+
 export default {
   components: {
     illu2
@@ -57,6 +61,7 @@ export default {
   methods: {
     sendLogin() {
       if (this.email) {
+        window.localStorage.setItem("emailForSignIn", this.email);
         const actionCodeSettings = {
           // URL you want to redirect back to. The domain (www.example.com) for this
           // URL must be whitelisted in the Firebase Console.
@@ -75,22 +80,43 @@ export default {
           });
       }
     },
-    vote() {
+    vote(id_str) {
       if (!this.loggin) {
         this.showLogin();
       } else {
-        console.log("vote");
+        console.log("vote", id_str);
+        voteTwiterUser({ id_str }).then(result => {
+          var sanitizedMessage = result.data.text;
+          if (result.error) {
+            console.error(result);
+          } else {
+            console.log(result);
+          }
+        });
       }
     },
-    add() {
-      if (!this.loggin) {
-        this.showLogin();
-      } else {
-        console.log("add");
-      }
+    add(id_str) {
+      addTwiterUser({ id_str }).then(result => {
+        if (result.error) {
+          console.error(result);
+        } else {
+          console.log(result);
+        }
+        this.hideAdd();
+      });
     },
     showLogin() {
       this.$modal.show("inscription");
+    },
+    showAdd() {
+      if (!this.loggin) {
+        this.showLogin();
+      } else {
+        this.$modal.show("add");
+      }
+    },
+    hideAdd() {
+      this.$modal.hide("add");
     },
     hideLogin() {
       this.$modal.hide("inscription");
