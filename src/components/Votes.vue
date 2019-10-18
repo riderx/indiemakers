@@ -1,5 +1,38 @@
 <template>
   <div id="emissions">
+    <modal :height="300" name="Added">
+      <section id="div-modal">
+        Ajout pris en compte
+        <div id="sign-in-vote">
+          <div id="explain">N'esite pas a twitter pour motiver ce Maker a venir sur le podcast!</div>
+          <div>
+            <button @click="tweetIt()">Tweet</button>
+          </div>
+        </div>
+      </section>
+    </modal>
+    <modal :height="300" name="Voted">
+      <section id="div-modal">
+        Vote pris en compte
+        <div id="sign-in-vote">
+          <div id="explain">N'esite pas a twitter pour motiver ce Maker a venir sur le podcast!</div>
+          <div>
+            <button @click="tweetIt()">Tweet</button>
+          </div>
+        </div>
+      </section>
+    </modal>
+    <modal :height="300" name="checkEmail">
+      <section id="div-modal">
+        Check ta boite email
+        <div id="sign-in-vote">
+          <div id="explain">recupere ton lien de login et click dessus, c'est tout❤️</div>
+          <div>
+            <button @click="$modal.hide('checkEmail')">Cool</button>
+          </div>
+        </div>
+      </section>
+    </modal>
     <modal :height="470" name="inscription">
       <section id="div-modal">
         Inscription
@@ -23,11 +56,10 @@
     </modal>
     <div id="episodes">
       <h2 id="titreEpisodes">Most wanted</h2>
-      <div id="addPerson" @click="add()">
+      <div id="addPerson" @click="showAdd()">
         +
         <span class="tooltiptext">Ajouter un·e invité·e</span>
       </div>
-
       <div id="person-info" v-bind:key="person.id" v-for="person in people">
         <div>
           <img :src="person.pic" alt="Logo person" />
@@ -41,12 +73,13 @@
         </div>
       </div>
     </div>
-    <illu2 />
+    <illu />
   </div>
 </template>
 
 <script>
-import illu2 from "./illu2.vue";
+/*eslint no-console: ["error", { allow: ["warn", "error"] }] */
+import illu from "./illu.vue";
 import { db } from "../utils/db";
 import firebase from "firebase/app";
 
@@ -56,17 +89,14 @@ const findTwiterUser = firebase.functions().httpsCallable("findTwiterUser");
 
 export default {
   components: {
-    illu2
+    illu
   },
   methods: {
     sendLogin() {
       if (this.email) {
         window.localStorage.setItem("emailForSignIn", this.email);
         const actionCodeSettings = {
-          // URL you want to redirect back to. The domain (www.example.com) for this
-          // URL must be whitelisted in the Firebase Console.
           url: "https://indiemaker.fr/#/login",
-          // This must be true.
           handleCodeInApp: true
         };
         firebase
@@ -74,43 +104,50 @@ export default {
           .sendSignInLinkToEmail(this.email, actionCodeSettings)
           .then(() => {
             this.hideLogin();
+            this.$modal.show("checkEmail");
+            window.localStorage.setItem("emailForSignIn", this.email);
           })
-          .catch(() => {
+          .catch(error => {
             this.hideLogin();
+            console.error(error);
           });
       }
     },
     vote(id_str) {
       if (!this.loggin) {
-        this.showLogin();
+        this.$modal.show("inscription");
       } else {
-        console.log("vote", id_str);
+        // console.log("vote", id_str);
         voteTwiterUser({ id_str }).then(result => {
-          var sanitizedMessage = result.data.text;
           if (result.error) {
             console.error(result);
+            this.$modal.show("add");
           } else {
-            console.log(result);
+            this.$modal.show("Voted");
           }
         });
       }
     },
     add(id_str) {
-      addTwiterUser({ id_str }).then(result => {
+      findTwiterUser({ id_str }).then(result => {
         if (result.error) {
           console.error(result);
         } else {
-          console.log(result);
+          addTwiterUser({ id_str }).then(result => {
+            if (result.error) {
+              console.error(result);
+            } else {
+              this.$modal.show("Added");
+            }
+            this.hideAdd();
+          });
         }
         this.hideAdd();
       });
     },
-    showLogin() {
-      this.$modal.show("inscription");
-    },
     showAdd() {
       if (!this.loggin) {
-        this.showLogin();
+        this.$modal.show("inscription");
       } else {
         this.$modal.show("add");
       }
@@ -131,6 +168,7 @@ export default {
   },
   created() {
     this.loggin = firebase.auth().currentUser;
+    this.email = window.localStorage.getItem("emailForSignIn");
   },
   firestore: {
     people: db.collection("people")
@@ -199,7 +237,7 @@ h2 {
   text-align: left;
   padding-top: 0.5em;
   height: 4.5em;
-  margin-bottom: 10px;
+  border-bottom: solid lightgray;
 }
 #person-info h2 {
   color: black;

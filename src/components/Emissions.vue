@@ -4,18 +4,18 @@
       <h2 id="titreEpisodes">Derniers épisodes</h2>
       <ChoixEpisodes />
     </div>
-    <illu2 />
+    <illu />
   </div>
 </template>
 
 <script>
 import ChoixEpisodes from "./ChoixEpisodes.vue";
-import illu2 from "./illu2.vue";
+import illu from "./illu.vue";
 
 export default {
   components: {
     ChoixEpisodes,
-    illu2
+    illu
   }
 };
 </script>

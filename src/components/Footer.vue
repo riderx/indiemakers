@@ -3,7 +3,7 @@
     <div id="infoMoins">
       <img src="assets/information.png" id="imgInfoMoins" @click="getInfo" />
       <span id="infoPlus" v-if="!displayInfo">
-        <p>| 2019 | Forgr | Site web : Martin Donadieu, Shannone Controu</p>
+        <p>2019 | Forgr | Site web : Martin Donadieu, Shannone Controu</p>
       </span>
     </div>
   </div>
@@ -34,7 +34,6 @@ export default {
   bottom: 0;
 }
 #infoMoins {
-  /* background-color: #f2f2f2; */
   display: flex;
   flex-flow: row-reverse wrap;
   justify-content: space-between;
@@ -50,8 +49,6 @@ export default {
   align-items: center;
 }
 #imgInfoMoins {
-  /* width: 40px;
-        height: 30px; */
   margin: 10px;
   float: right;
 }
@@ -64,7 +61,7 @@ export default {
 #footer p {
   font-size: 0.8em;
   margin-top: 12px;
-  color: #303777;
+  color: white;
 }
 @media only screen and (max-width: 800px) {
   #infoPlus {
