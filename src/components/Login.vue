@@ -1,35 +1,29 @@
 
 <template>
   <div>
-    <modal :height="300" name="confirm">
-      <section id="div-modal">
-        Email Verification
-        <div id="sign-in-vote">
-          <div id="explain">Pour etre sur que tu n'essais pas un etre malicieux confirme ton email</div>
-          <div class="person-email">
-            <input v-model="email" type="email" placeholder="elon@musk.com" />
-          </div>
-          <div>
-            <button @click="sendConfirm()">valider</button>
-          </div>
+    <section id="emissions">
+      Email Verification
+      <div id="sign-in-vote">
+        <div id="explain">Pour etre sur que tu n'essais pas un etre malicieux confirme ton email</div>
+        <div class="person-email">
+          <input v-model="email" type="email" placeholder="elon@musk.com" />
         </div>
-      </section>
-    </modal>
+        <div>
+          <button @click="sendConfirm()">valider</button>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 <script>
-import { db } from "../utils/db";
-import firebase from "firebase/app";
+/*eslint no-console: ["error", { allow: ["warn", "error"] }] */
+import { firebaseLib } from "../utils/db";
 
 export default {
   created() {
-    this.showConfirm();
-
-    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+    if (firebaseLib.auth().isSignInWithEmailLink(window.location.href)) {
       this.email = window.localStorage.getItem("emailForSignIn");
       if (this.email) {
-        this.showConfirm();
-      } else {
         this.sendConfirm();
       }
     }
@@ -40,19 +34,20 @@ export default {
     };
   },
   methods: {
-    showConfirm() {
-      this.$modal.show("confirm");
-    },
+    // showConfirm() {
+    //   this.$modal.show("confirm");
+    // },
     sendConfirm() {
       if (this.email) {
-        firebase
+        firebaseLib
           .auth()
-          .signInWithEmailLink(email, window.location.href)
-          .then(result => {
+          .signInWithEmailLink(this.email, window.location.href)
+          .then(() => {
             window.localStorage.removeItem("emailForSignIn");
             this.$router.push("/Votes");
           })
           .catch(error => {
+            console.error(error);
             this.$router.push("/");
           });
       } else {
@@ -64,17 +59,30 @@ export default {
 </script>
 
 <style>
-.v--modal-box {
-  border-radius: 1em;
-}
-#div-modal {
-  width: 100%;
-  height: 100%;
-  background-color: #f3d7f0;
+#emissions {
+  padding-top: 20px;
+  width: 47vw;
+  height: 48vh;
+  min-height: 48vh;
+  background-color: #df99d8;
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  color: rgb(35, 35, 85);
+  font-size: 2em;
   text-align: center;
-  color: #6a477d;
-  padding: 1%;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  transition: box-shadow 0.3s;
+  z-index: 0;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column nowrap;
 }
+
+#emissions:hover {
+  box-shadow: 0 0 11px rgba(3, 53, 148, 0.2);
+}
+
 #sign-in-vote {
   border-radius: 0.5em;
   text-align: center;

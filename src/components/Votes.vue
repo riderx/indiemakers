@@ -1,6 +1,6 @@
 <template>
   <div id="emissions">
-    <modal :height="300" name="Added">
+    <modal :height="300" adaptive="true" name="Added">
       <section id="div-modal">
         Ajout pris en compte
         <div id="sign-in-vote">
@@ -11,7 +11,7 @@
         </div>
       </section>
     </modal>
-    <modal :height="300" name="Voted">
+    <modal :height="300" adaptive="true" name="Voted">
       <section id="div-modal">
         Vote pris en compte
         <div id="sign-in-vote">
@@ -22,7 +22,7 @@
         </div>
       </section>
     </modal>
-    <modal :height="300" name="checkEmail">
+    <modal :height="300" adaptive="true" name="checkEmail">
       <section id="div-modal">
         Check ta boite email
         <div id="sign-in-vote">
@@ -33,7 +33,7 @@
         </div>
       </section>
     </modal>
-    <modal :height="470" name="inscription">
+    <modal :height="470" adaptive="true" name="inscription">
       <section id="div-modal">
         Inscription
         <div id="sign-in-vote">
@@ -80,12 +80,11 @@
 <script>
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import illu from "./illu.vue";
-import { db } from "../utils/db";
-import firebase from "firebase/app";
+import { db, firebaseLib } from "../utils/db";
 
-const voteTwiterUser = firebase.functions().httpsCallable("voteTwiterUser");
-const addTwiterUser = firebase.functions().httpsCallable("addTwiterUser");
-const findTwiterUser = firebase.functions().httpsCallable("findTwiterUser");
+const voteTwiterUser = firebaseLib.functions().httpsCallable("voteTwiterUser");
+const addTwiterUser = firebaseLib.functions().httpsCallable("addTwiterUser");
+const findTwiterUser = firebaseLib.functions().httpsCallable("findTwiterUser");
 
 export default {
   components: {
@@ -99,7 +98,7 @@ export default {
           url: "https://indiemaker.fr/#/login",
           handleCodeInApp: true
         };
-        firebase
+        firebaseLib
           .auth()
           .sendSignInLinkToEmail(this.email, actionCodeSettings)
           .then(() => {
@@ -167,7 +166,7 @@ export default {
     };
   },
   created() {
-    this.loggin = firebase.auth().currentUser;
+    this.loggin = firebaseLib.auth().currentUser;
     this.email = window.localStorage.getItem("emailForSignIn");
   },
   firestore: {
