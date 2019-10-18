@@ -29,11 +29,11 @@ const getPerson = (id_str: string): Promise<FirebaseFirestore.DocumentReference 
         });
 }
 
-const getVotes = (name: string, uid: string): Promise<boolean> => {
+const getVotes = (id_str: string, uid: string): Promise<boolean> => {
     return admin.firestore()
         .collection('votes')
         .where("uid", "==", uid)
-        .where("name", "==", name)
+        .where("id_str", "==", id_str)
         .get()
         .then(snapshot => {
             let result: boolean = false;
@@ -86,8 +86,8 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
             .then(async (res) => {
                 console.log(res);
                 const newuser = {
-                    id_str: res.data.id_str,
                     addedBy: uid,
+                    id_str: res.data.id_str,
                     name: res.data.name,
                     login: res.data.screen_name,
                     bio: res.data.description,
@@ -122,7 +122,7 @@ export const voteTwiterUser = functions.https.onCall(async (data, context) => {
     const uid = context.auth ? context.auth.uid : null;
     if (uid) {
         const exist = await getPerson(id_str);
-        const voted = await getVotes(name, uid);
+        const voted = await getVotes(id_str, uid);
         if (!exist) {
             return { error: 'user not exist' };
         }
