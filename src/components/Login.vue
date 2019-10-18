@@ -24,7 +24,7 @@ export default {
       firebase
         .auth()
         .signInWithEmailLink(email, window.location.href)
-        .then(function(result) {
+        .then(result => {
           // Clear email from storage.
           window.localStorage.removeItem("emailForSignIn");
           // You can access the new user via result.user
@@ -34,7 +34,7 @@ export default {
           // result.additionalUserInfo.isNewUser
           this.$router.push("/Votes");
         })
-        .catch(function(error) {
+        .catch(error => {
           this.$router.push("/");
           // Some error occurred, you can inspect the code: error.code
           // Common errors could be invalid email and invalid or expired OTPs.
