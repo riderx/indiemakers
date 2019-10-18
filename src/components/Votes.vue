@@ -16,14 +16,14 @@
             <input v-model="email" type="email" placeholder="elon@musk.com" />
           </div>
           <div>
-            <button>valider</button>
+            <button @click="sendLogin()">valider</button>
           </div>
         </div>
       </section>
     </modal>
     <div id="episodes">
       <h2 id="titreEpisodes">Most wanted</h2>
-      <div id="addPerson" @click="show()">
+      <div id="addPerson" @click="add()">
         +
         <span class="tooltiptext">Ajouter un·e invité·e</span>
       </div>
@@ -35,7 +35,7 @@
         <h2>{{person.name}}</h2>
         <h3>@{{person.login}}</h3>
         <p>{{person.bio}}</p>
-        <div id="bouton-vote" @click="show()">
+        <div id="bouton-vote" @click="vote()">
           <div>&#9650;</div>
           {{person.votes}}
         </div>
@@ -48,30 +48,51 @@
 <script>
 import illu2 from "./illu2.vue";
 import { db } from "../utils/db";
+import firebase from "firebase/app";
 
 export default {
   components: {
     illu2
   },
   methods: {
+    sendLogin() {
+      if (this.email) {
+        const actionCodeSettings = {
+          // URL you want to redirect back to. The domain (www.example.com) for this
+          // URL must be whitelisted in the Firebase Console.
+          url: "https://indiemaker.fr/login",
+          // This must be true.
+          handleCodeInApp: true
+        };
+        firebase
+          .auth()
+          .sendSignInLinkToEmail(this.email, actionCodeSettings)
+          .then(() => {
+            this.hideLogin();
+          })
+          .catch(() => {
+            this.hideLogin();
+          });
+      }
+    },
     vote() {
       if (!this.loggin) {
-        this.show();
+        this.showLogin();
       } else {
         console.log("vote");
       }
     },
     add() {
       if (!this.loggin) {
-        this.show();
+        this.showLogin();
       } else {
         console.log("add");
       }
     },
-    show() {
+    showLogin() {
       this.$modal.show("inscription");
     },
-    hide() {
+    hideLogin() {
       this.$modal.hide("inscription");
     }
   },
@@ -81,6 +102,9 @@ export default {
       loggin: false,
       people: []
     };
+  },
+  created() {
+    this.loggin = firebase.auth().currentUser;
   },
   firestore: {
     people: db.collection("people")
@@ -226,7 +250,7 @@ h2 {
   padding: 2% 5%;
 }
 input {
-  width: 45.5%;
+  width: 55.5%;
   font-size: 1em;
   padding: 1%;
   border-radius: 1em 1em 0em 0em;
@@ -236,13 +260,20 @@ input {
 input:focus {
   border-radius: 1em 1em 0em 0em;
 }
+
 button {
-  width: 47.5%;
+  width: 57.5%;
   padding: 1%;
   font-size: inherit;
   background-color: #6a477d1f;
   color: #6a477d;
+  cursor: pointer;
   border-radius: 0em 0em 1em 1em;
+}
+
+button:active {
+  background-color: #6a477d;
+  color: #8c6c9e;
 }
 
 #addPerson .tooltiptext {
