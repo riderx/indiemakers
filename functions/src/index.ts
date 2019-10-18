@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 admin.initializeApp();
-const TwitterApiToken = '';
+const TwitterApiToken = 'FlAWfz12qce6flIK3DfSBOqIp';
 
 const getPerson = (id_str: string): Promise<FirebaseFirestore.DocumentReference | null> => {
     return admin.firestore()
@@ -60,7 +60,7 @@ export const findTwiterUser = functions.https.onCall(async (data, context) => {
         return await axios({
             method: 'get',
             url: `https://api.twitter.com/1.1/users/show?screen_name=${name}`,
-            headers: { 'authorization': `Bearer ${TwitterApiToken}` },
+            headers: { 'authorization': `OAuth oauth_consumer_key="${TwitterApiToken}"` },
         })
             .then((res) => {
                 console.log(res);
@@ -81,7 +81,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
         return await axios({
             method: 'get',
             url: `https://api.twitter.com/1.1/users/show?screen_name=${name}`,
-            headers: { 'authorization': `Bearer ${TwitterApiToken}` },
+            headers: { 'authorization': `OAuth oauth_consumer_key="${TwitterApiToken}"` },
         })
             .then(async (res) => {
                 console.log(res);
