@@ -11,6 +11,30 @@
         </div>
       </section>
     </modal>
+    <modal :height="300" adaptive="true" name="fail-add">
+      <section id="div-modal">
+        Je ne trouve pas ce Maker
+        <div id="sign-in-vote">
+          <div id="explain">est t'il sur twitter ?</div>
+          <div>
+            <button @click="$modal.hide('fail-add')">Fermer</button>
+          </div>
+        </div>
+      </section>
+    </modal>
+    <modal :height="300" adaptive="true" name="Added">
+      <section id="div-modal">
+        Ajouter un Maker
+        <div id="sign-in-vote">
+          <div class="person-email">
+            <input v-model="text" type="text" placeholder="elonmusk" />
+          </div>
+          <div>
+            <button @click="tweetIt()">Tweet</button>
+          </div>
+        </div>
+      </section>
+    </modal>
     <modal :height="300" adaptive="true" name="Voted">
       <section id="div-modal">
         Vote pris en compte
@@ -127,12 +151,13 @@ export default {
         });
       }
     },
-    add(id_str) {
-      findTwiterUser({ id_str }).then(result => {
+    add(name) {
+      findTwiterUser({ name }).then(result => {
         if (result.error) {
           console.error(result);
+          this.$modal.show("fail-add");
         } else {
-          addTwiterUser({ id_str }).then(result => {
+          addTwiterUser({ id_str: result.id_str }).then(result => {
             if (result.error) {
               console.error(result);
             } else {
