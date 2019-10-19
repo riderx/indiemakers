@@ -99,9 +99,11 @@
         <div>
           <img :src="person.pic" alt="Logo person" />
         </div>
-        <h2>{{person.name}}</h2>
-        <h3>@{{person.login}}</h3>
-        <p>{{person.bio}}</p>
+        <div>
+          <h2>{{person.name}}</h2>
+          <h3>@{{person.login}}</h3>
+          <p>{{person.bio}}</p>
+        </div>
         <div id="bouton-vote" @click="vote(person)">
           <div>&#9650;</div>
           {{person.votes}}
@@ -307,7 +309,11 @@ h2 {
   color: black;
   font-weight: normal;
   font-size: 0.5em;
-  width: 80%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 60%;
+  word-wrap: break-word;
 }
 #person-info img {
   width: 3.5em;
@@ -333,11 +339,11 @@ h2 {
 #addPerson {
   position: absolute;
   top: 1em;
-  right: 0.5em;
+  right: 0.4em;
   color: white;
   background-color: #9456b7;
   border-radius: 0.5em;
-  padding: 2%;
+  padding: 0.5em;
   margin: 0% 1%;
   cursor: pointer;
 }
