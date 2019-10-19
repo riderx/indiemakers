@@ -67,10 +67,11 @@ export const findTwiterUser = functions.https.onCall(async (data, context) => {
                 return res.data;
             })
             .catch((error) => {
-                console.error(error);
+                console.error('cannot find user', error);
                 return { error: 'cannot find user' };
             });
     }
+    console.error('not loggin');
     return { error: 'not loggin' };
 });
 
@@ -84,7 +85,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
             headers: { 'authorization': `OAuth oauth_consumer_key="${TwitterApiToken}"` },
         })
             .then(async (res) => {
-                console.log(res);
+                console.log('twiter api', res);
                 const newuser = {
                     addedBy: uid,
                     id_str: res.data.id_str,
@@ -107,6 +108,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                             return { error: 'cannot create' };
                         })
                 }
+                console.error('already exist');
                 return { error: 'already exist' };
             })
             .catch((error) => {
@@ -114,6 +116,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                 return { error: 'cannot create' };
             });
     }
+    console.error('not loggin');
     return { error: 'not loggin' };
 });
 
@@ -124,6 +127,7 @@ export const voteTwiterUser = functions.https.onCall(async (data, context) => {
         const exist = await getPerson(id_str);
         const voted = await getVotes(id_str, uid);
         if (!exist) {
+            console.error('user not exist');
             return { error: 'user not exist' };
         }
         if (!voted) {
@@ -144,15 +148,17 @@ export const voteTwiterUser = functions.https.onCall(async (data, context) => {
                             }
                             return;
                         });
-                }).then(result => {
+                }).then(() => {
                     console.log('Transaction success!');
                     return { message: 'voted' };
                 }).catch(err => {
                     return { error: err };
                 });
         }
+        console.error('already voted');
         return { error: 'already voted' };
     }
+    console.error('not loggin');
     return { error: 'not loggin' };
 });
 
