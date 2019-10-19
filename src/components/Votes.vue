@@ -57,7 +57,7 @@
         </div>
       </section>
     </modal>
-    <modal :height="470" adaptive name="inscription">
+    <modal :height="500" adaptive name="inscription">
       <section id="div-modal">
         Inscription
         <div id="sign-in-vote">
@@ -320,7 +320,6 @@ h2 {
   font-size: medium;
   color: white;
   background-color: #9456b7;
-  border: 1px solid #9456b7;
   border-radius: 0.5em;
   padding: 2%;
   margin: 0% 1%;
@@ -331,9 +330,9 @@ h2 {
 #div-modal {
   width: 100%;
   height: 100%;
-  background-color: #f3d7f0;
+  background-color: #9456b7;
   text-align: center;
-  color: #6a477d;
+  color: white;
   padding: 1%;
 }
 #sign-in-vote {
@@ -349,24 +348,22 @@ h2 {
 }
 input {
   width: 55.5%;
-  font-size: 1em;
+  font-size: 1.5em;
   padding: 1%;
-  border-radius: 1em 1em 0em 0em;
   border: none;
   margin-top: 40px;
-}
-input:focus {
-  border-radius: 1em 1em 0em 0em;
 }
 
 button {
   width: 57.5%;
   padding: 1%;
-  font-size: inherit;
-  background-color: #6a477d1f;
-  color: #6a477d;
+  font-size: 1.5em;
+  /* background-color: #9456b7; */
+
+  background-color: #df99d8;
+  color: white;
+  border: none;
   cursor: pointer;
-  border-radius: 0em 0em 1em 1em;
 }
 
 button:active {

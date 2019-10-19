@@ -98,12 +98,8 @@ input {
   width: 55.5%;
   font-size: 1em;
   padding: 1%;
-  border-radius: 1em 1em 0em 0em;
   border: none;
   margin-top: 40px;
-}
-input:focus {
-  border-radius: 1em 1em 0em 0em;
 }
 
 button {
@@ -113,7 +109,6 @@ button {
   background-color: #6a477d1f;
   color: #6a477d;
   cursor: pointer;
-  border-radius: 0em 0em 1em 1em;
 }
 
 button:active {
