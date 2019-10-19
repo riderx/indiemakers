@@ -1,5 +1,23 @@
 <template>
-  <div id="Accueil" class="jumbotron-fluid">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-md-6 py-5">
+        <h1>{{ titre }}</h1>
+        <div v-bind:key="message" v-for="message in messages">
+          <p>{{ message }}</p>
+          <br />
+        </div>
+        <p>{{ banner }}</p>
+        <button type="button" class="btn btn-success text-light px-4" @click.passive="goEpisodes">
+          <h3>Episodes</h3>
+        </button>
+      </div>
+      <div class="col-12 col-md-6">
+        <IllustrationAccueil />
+      </div>
+    </div>
+  </div>
+  <!-- <div id="Accueil" class="jumbotron-fluid">
     <div id="main">
       <h1 id="titreAccueil">{{ titre }}</h1>
       <p id="message">{{ message }}</p>
@@ -12,7 +30,7 @@
       <button @click.passive="goEpisodes" id="button">Episodes</button>
     </div>
     <IllustrationAccueil />
-  </div>
+  </div>-->
 </template>
 
 <script>
@@ -46,115 +64,4 @@ Que vous soyez en train de créer votre propre business ou que vous cherchiez a 
 </script>
 
 <style scoped>
-#Accueil {
-  margin: auto;
-  width: 100vw;
-}
-#main {
-  width: 40%;
-  display: flex;
-  flex-flow: column nowrap;
-  margin-right: 10px;
-  padding-top: 150px;
-  margin-left: 100px;
-  z-index: 0;
-}
-#message {
-  width: 100%;
-  margin: 0px;
-  font-size: 1em;
-  color: whitesmoke;
-}
-
-#bannière {
-  width: 100%;
-  font-size: 1em;
-  margin: 0;
-  color: whitesmoke;
-}
-
-#button {
-  width: 150px;
-  color: white;
-  background-color: #df99d8;
-  border: none;
-  transition: all 0.2s ease-in-out;
-  z-index: 0;
-  margin-top: 46px;
-  padding: 8px;
-  font-size: 1.5em;
-}
-
-h1 {
-  font-size: 39px;
-  color: white;
-  font-family: "Rex Bold", "Open Sans";
-  margin: 0 0 45px;
-}
-
-p {
-  font-family: "Lato", sans-serif;
-  margin-right: 200px;
-  font-size: 1.5em;
-  /*margin: 100px;*/
-}
-
-@media only screen and (max-width: 800px) {
-  #Accueil {
-    display: flex;
-    flex-flow: column nowrap;
-  }
-  /* #titreAccueil {
-    padding-top: 3em;
-  } */
-  #main {
-    width: 100%;
-    margin-right: auto;
-    margin-top: -50px;
-    margin-left: auto;
-  }
-
-  h1 {
-    width: 90%;
-    margin: 0 auto 5px;
-    font-size: 2.3em;
-  }
-
-  #message {
-    width: 90%;
-    font-size: 1.4em;
-    margin: 15px auto;
-  }
-
-  #bannière {
-    width: 90%;
-    font-size: 1.6em;
-    margin: 0 auto;
-  }
-  #button {
-    margin: 30px auto;
-  }
-}
-
-@media only screen and (max-width: 420px) {
-  #main {
-    margin-top: -200px;
-  }
-
-  h1 {
-    width: 80%;
-    font-size: 1.6em;
-  }
-
-  #message {
-    font-size: 1em;
-    margin: 15px auto 5px;
-  }
-
-  #bannière {
-    width: 90%;
-    font-size: 1em;
-    margin: auto;
-  }
-}
 </style>

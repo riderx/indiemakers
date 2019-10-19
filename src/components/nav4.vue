@@ -89,7 +89,7 @@ export default {
 #ulHamburger {
   padding: unset;
   margin: unset;
-  width: 100vw;
+  /* width: 100vw; */
 }
 #navBar {
   width: 100%;

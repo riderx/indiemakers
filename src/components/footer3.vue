@@ -25,10 +25,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #footer {
   position: fixed;
-  width: 100vw;
+  /* width: 100vw; */
   margin-top: 50px;
   z-index: 2;
   bottom: 0;

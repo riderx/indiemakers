@@ -58,7 +58,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #emissions {
   padding-top: 20px;
   width: 47vw;

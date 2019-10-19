@@ -225,7 +225,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .padding {
   padding-top: 20px;
 }
