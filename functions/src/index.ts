@@ -69,7 +69,7 @@ export const findTwiterUser = functions.https.onCall(async (data, context) => {
                 console.log('user', user, response);
                 return { user };
             }
-            console.error('cannot find user', error);
+            console.error('cannot find user', error, response);
             return { error: 'cannot find user' };
         });
     }
