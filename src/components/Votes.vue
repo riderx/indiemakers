@@ -320,6 +320,7 @@ h2 {
   top: -6em;
   padding: 0.5em;
   margin-right: 1em;
+  cursor: pointer;
 }
 #addPerson {
   position: absolute;
