@@ -22,7 +22,7 @@
         </div>
       </section>
     </modal>
-    <modal :height="200" adaptive name="fail-add">
+    <modal :height="200" adaptive name="fail-vote">
       <section id="div-modal">
         😨 Hoho
         <div id="sign-in-vote">
