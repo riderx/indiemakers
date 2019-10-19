@@ -119,7 +119,6 @@ import { db, firebaseLib } from "../utils/db";
 
 const voteTwiterUser = firebaseLib.functions().httpsCallable("voteTwiterUser");
 const addTwiterUser = firebaseLib.functions().httpsCallable("addTwiterUser");
-const findTwiterUser = firebaseLib.functions().httpsCallable("findTwiterUser");
 
 export default {
   components: {
@@ -174,24 +173,15 @@ export default {
       }
     },
     add() {
-      findTwiterUser({ name: this.addName }).then(findJson => {
-        console.log("findJson", findJson);
-        const data = findJson.data;
-        if (data.error) {
-          console.error(data);
+      addTwiterUser({ name: this.addName }).then(addJson => {
+        console.log("addJson", addJson);
+        const added = addJson.data;
+        if (added.error) {
+          console.error(added);
           this.$modal.show("fail-add");
         } else {
-          addTwiterUser({ id_str: data.id_str }).then(addJson => {
-            console.log("addJson", addJson);
-            const added = addJson.data;
-            if (added.error) {
-              console.error(added);
-              this.$modal.show("fail-add");
-            } else {
-              this.currentName = "" + this.addName;
-              this.$modal.show("Added");
-            }
-          });
+          this.currentName = "" + this.addName;
+          this.$modal.show("Added");
         }
         this.addName = "";
         this.hideAdd();
