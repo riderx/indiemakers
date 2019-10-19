@@ -132,9 +132,10 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                         })
                 }
             }
+            return { error: 'not found on api twitter' };
         } catch (err) {
             console.error('cannot find user', err);
-            return { error: 'not found' };
+            return { error: err };
         }
     }
     console.error('not loggin');
