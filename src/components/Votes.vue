@@ -161,8 +161,7 @@ export default {
         // console.log("vote", id_str);
         voteTwiterUser({ id_str }).then(resultJson => {
           console.log("resultJson", resultJson);
-          const result = resultJson.result;
-          const data = result.data;
+          const data = resultJson.data;
           if (data.error) {
             console.error(data);
             this.currentName = name;
@@ -175,18 +174,16 @@ export default {
       }
     },
     add() {
-      findTwiterUser({ name: this.addName }).then(resultJson => {
-        console.log("resultJson", resultJson);
-        const result = resultJson.result;
-        const data = result.data;
+      findTwiterUser({ name: this.addName }).then(findJson => {
+        console.log("findJson", findJson);
+        const data = findJson.data;
         if (data.error) {
           console.error(data);
           this.$modal.show("fail-add");
         } else {
           addTwiterUser({ id_str: data.id_str }).then(addJson => {
             console.log("addJson", addJson);
-            const resultAdd = addJson.result;
-            const added = resultAdd.data;
+            const added = addJson.data;
             if (added.error) {
               console.error(added);
               this.$modal.show("fail-add");
