@@ -102,7 +102,7 @@
         <h2>{{person.name}}</h2>
         <h3>@{{person.login}}</h3>
         <p>{{person.bio}}</p>
-        <div id="bouton-vote" @click="vote(person.id_str, person.login)">
+        <div id="bouton-vote" @click="vote(person)">
           <div>&#9650;</div>
           {{person.votes}}
         </div>
@@ -153,20 +153,20 @@ export default {
           });
       }
     },
-    vote(id_str, name) {
+    vote(person) {
       if (!this.loggin) {
         this.$modal.show("inscription");
       } else {
-        // console.log("vote", id_str);
-        voteTwiterUser({ id_str }).then(resultJson => {
+        voteTwiterUser({ id_str: person.id_str }).then(resultJson => {
           console.log("resultJson", resultJson);
           const data = resultJson.data;
           if (data.error) {
             console.error(data);
-            this.currentName = name;
+            this.currentName = person.login;
             this.$modal.show("fail-vote");
           } else {
-            this.currentName = name;
+            this.currentName = person.login;
+            person.votes += 1;
             this.$modal.show("Voted");
           }
         });
