@@ -182,7 +182,7 @@ export default {
               console.error(result);
               this.$modal.show("fail-add");
             } else {
-              this.currentName = this.addName;
+              this.currentName = "" + this.addName;
               this.$modal.show("Added");
             }
           });
