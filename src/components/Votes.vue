@@ -1,6 +1,6 @@
 <template>
   <div id="emissions">
-    <modal :height="300" adaptive name="Added">
+    <modal :height="200" adaptive name="Added">
       <section id="div-modal">
         Ajout pris en compte
         <div id="sign-in-vote">
@@ -11,7 +11,7 @@
         </div>
       </section>
     </modal>
-    <modal :height="300" adaptive name="fail-add">
+    <modal :height="200" adaptive name="fail-add">
       <section id="div-modal">
         Je ne trouve pas ce Maker
         <div id="sign-in-vote">
@@ -35,7 +35,7 @@
         </div>
       </section>
     </modal>
-    <modal :height="300" adaptive name="Voted">
+    <modal :height="200" adaptive name="Voted">
       <section id="div-modal">
         Vote pris en compte
         <div id="sign-in-vote">
