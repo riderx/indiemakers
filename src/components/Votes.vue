@@ -41,7 +41,7 @@
             <input v-model="addName" type="text" placeholder="elonmusk" />
           </div>
           <div class="padding">
-            <button @click="add()">Ajouté</button>
+            <button @click="add()">Ajouter</button>
           </div>
         </div>
       </section>
