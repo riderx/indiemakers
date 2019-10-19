@@ -124,6 +124,31 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
     return { error: 'not loggin' };
 });
 
+export const calcVotes = functions.firestore
+    .document('/votes/{voteId}')
+    .onCreate(async (snapshot, context) => {
+        const vote = snapshot.data();
+        if (vote) {
+            const id_str = vote.id_str;
+            const exist = await getPerson(id_str);
+            const snap = await admin.firestore()
+                .collection(`votes`)
+                .where("id_str", "==", id_str)
+                .get();
+            const votesTotal = snap.size;
+            if (exist && snap && votesTotal) {
+                return exist.update({ votes: votesTotal }).then(() => {
+                    console.log('updates votes', id_str, votesTotal);
+                }).catch((error) => {
+                    console.error('error', error);
+                });
+            } else {
+                console.error('no votes');
+            }
+        }
+        return snapshot;
+    });
+
 export const voteTwiterUser = functions.https.onCall(async (data, context) => {
     const id_str = data.id_str;
     const uid = context.auth ? context.auth.uid : null;
@@ -136,29 +161,35 @@ export const voteTwiterUser = functions.https.onCall(async (data, context) => {
         }
         if (!voted) {
             return await admin.firestore()
-                .runTransaction(t => {
-                    return t.get(exist)
-                        .then(async doc => {
-                            const docData = doc.data();
-                            if (docData) {
-                                const newVotes = docData.votes + 1;
-                                t.update(exist, { votes: newVotes });
-                                return await admin.firestore()
-                                    .collection('votes')
-                                    .add({
-                                        uid: uid,
-                                        name: name
-                                    });
-                            }
-                            console.error('no doc found');
-                            return { error: 'no doc found' };
-                        });
-                }).then(() => {
-                    console.log('Transaction success!');
-                    return { message: 'voted' };
-                }).catch(err => {
-                    return { error: err };
+                .collection('votes')
+                .add({
+                    uid: uid,
+                    name: name
                 });
+            // return await admin.firestore()
+            //     .runTransaction(t => {
+            //         return t.get(exist)
+            //             .then(async doc => {
+            //                 const docData = doc.data();
+            //                 if (docData) {
+            //                     const newVotes = docData.votes + 1;
+            //                     t.update(exist, { votes: newVotes });
+            //                     return await admin.firestore()
+            //                         .collection('votes')
+            //                         .add({
+            //                             uid: uid,
+            //                             name: name
+            //                         });
+            //                 }
+            //                 console.error('no doc found');
+            //                 return { error: 'no doc found' };
+            //             });
+            //     }).then(() => {
+            //         console.log('Transaction success!');
+            //         return { message: 'voted' };
+            //     }).catch(err => {
+            //         return { error: err };
+            //     });
         }
         console.error('already voted');
         return { error: 'already voted' };
