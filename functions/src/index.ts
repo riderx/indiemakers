@@ -83,7 +83,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
     if (uid) {
         const params = { screen_name: name };
         return await client.get('users/show', params, async (error: any, user: any, response: any) => {
-            if (!error) {
+            if (!error && user) {
                 console.log('user', user);
                 console.log('twiter api', response);
                 const newuser = {
@@ -111,6 +111,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                 console.error('already exist');
                 return { error: 'already exist' };
             }
+            console.error('cannot get user', user, response);
             return { error: 'cannot get user' };
         }).catch((error: any) => {
             console.error(error);
