@@ -28,7 +28,7 @@
         <div id="sign-in-vote">
           <div id="explain">tu as deja voté pour ce Maker</div>
           <div class="padding">
-            <button @click="$modal.hide('fail-add')">Fermer</button>
+            <button @click="$modal.hide('fail-vote')">Fermer</button>
           </div>
         </div>
       </section>
