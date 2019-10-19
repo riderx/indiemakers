@@ -64,11 +64,10 @@ export const findTwiterUser = functions.https.onCall(async (data, context) => {
     const uid = context.auth ? context.auth.uid : null;
     if (uid) {
         const params = { screen_name: name };
-
         return await client.get('users/show', params, async (error: any, user: any, response: any) => {
-            if (!error) {
-                console.log('user', user);
-                return user;
+            if (!error && user) {
+                console.log('user', user, response);
+                return { user };
             }
             console.error('cannot find user', error);
             return { error: 'cannot find user' };
