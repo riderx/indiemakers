@@ -59,19 +59,38 @@ const getVotes = async (id_str: string, uid: string): Promise<boolean> => {
     return votes;
 }
 
+const twUserPromise = (screen_name: string): Promise<{
+    id_str: string,
+    name: string,
+    screen_name: string,
+    description: string,
+    profile_image_url_https: string
+}> => {
+    return new Promise((resolve, reject) => {
+        const params = { screen_name };
+        client.get('users/show', params, async (error: any, user: any, response: any) => {
+            if (!error && user) {
+                console.log('user', user, 'response', response);
+                resolve(user);
+            } else {
+                console.error('cannot find user', error, response);
+                reject(error);
+            }
+        });
+    });
+}
+
 export const findTwiterUser = functions.https.onCall(async (data, context) => {
     const name = data.name;
     const uid = context.auth ? context.auth.uid : null;
     if (uid) {
-        const params = { screen_name: name };
-        return await client.get('users/show', params, async (error: any, user: any, response: any) => {
-            if (!error && user) {
-                console.log('user', user, response);
-                return { user };
-            }
-            console.error('cannot find user', error, response);
-            return { error: 'cannot find user' };
-        });
+        try {
+            const user = await twUserPromise(name);
+            return user;
+        } catch (err) {
+            console.error('cannot find user', err);
+            return { error: 'not found' };
+        }
     }
     console.error('not loggin');
     return { error: 'not loggin' };
@@ -81,11 +100,10 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
     const name = data.name;
     const uid = context.auth ? context.auth.uid : null;
     if (uid) {
-        const params = { screen_name: name };
-        return await client.get('users/show', params, async (error: any, user: any, response: any) => {
-            if (!error && user) {
+        try {
+            const user = await twUserPromise(name);
+            if (user) {
                 console.log('user', user);
-                console.log('twiter api', response);
                 const newuser = {
                     addedBy: uid,
                     id_str: user.id_str,
@@ -111,12 +129,10 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                 console.error('already exist');
                 return { error: 'already exist' };
             }
-            console.error('cannot get user', user, response);
-            return { error: 'cannot get user' };
-        }).catch((error: any) => {
-            console.error(error);
-            return { error: 'cannot create' };
-        });
+        } catch (err) {
+            console.error('cannot find user', err);
+            return { error: 'not found' };
+        }
     }
     console.error('not loggin');
     return { error: 'not loggin' };
