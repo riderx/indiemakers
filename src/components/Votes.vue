@@ -202,7 +202,7 @@ export default {
       people: []
     };
   },
-  created() {
+  mounted() {
     this.loggin = firebaseLib.auth().currentUser;
     this.email = window.localStorage.getItem("emailForSignIn");
     firebase.auth().onAuthStateChanged(user => {
