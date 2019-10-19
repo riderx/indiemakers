@@ -90,6 +90,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                 console.log('user', user);
                 const newuser = {
                     addedBy: uid,
+                    addDate: new Date(),
                     id_str: user.id_str,
                     name: user.name,
                     login: user.screen_name,
