@@ -150,7 +150,8 @@ export const voteTwiterUser = functions.https.onCall(async (data, context) => {
                                         name: name
                                     });
                             }
-                            return;
+                            console.error('no doc found');
+                            return { error: 'no doc found' };
                         });
                 }).then(() => {
                     console.log('Transaction success!');
