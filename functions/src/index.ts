@@ -104,6 +104,12 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                     console.error('not exist', newuser.id_str);
                 }
                 if (!exist) {
+                    await admin.firestore()
+                        .collection('votes')
+                        .add({
+                            uid: uid,
+                            id_str: newuser.id_str
+                        });
                     return await admin.firestore()
                         .collection('people')
                         .add(newuser)
