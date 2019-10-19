@@ -80,22 +80,6 @@ const twUserPromise = (screen_name: string): Promise<{
     });
 }
 
-export const findTwiterUser = functions.https.onCall(async (data, context) => {
-    const name = data.name;
-    const uid = context.auth ? context.auth.uid : null;
-    if (uid) {
-        try {
-            const user = await twUserPromise(name);
-            return user;
-        } catch (err) {
-            console.error('cannot find user', err);
-            return { error: 'not found' };
-        }
-    }
-    console.error('not loggin');
-    return { error: 'not loggin' };
-});
-
 export const addTwiterUser = functions.https.onCall(async (data, context) => {
     const name = data.name;
     const uid = context.auth ? context.auth.uid : null;
