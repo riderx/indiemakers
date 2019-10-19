@@ -205,6 +205,9 @@ export default {
   created() {
     this.loggin = firebaseLib.auth().currentUser;
     this.email = window.localStorage.getItem("emailForSignIn");
+    firebase.auth().onAuthStateChanged(user => {
+      this.loggin = user;
+    });
   },
   firestore: {
     people: db.collection("people")
