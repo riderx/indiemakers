@@ -205,7 +205,7 @@ export default {
   mounted() {
     this.loggin = firebaseLib.auth().currentUser;
     this.email = window.localStorage.getItem("emailForSignIn");
-    firebase.auth().onAuthStateChanged(user => {
+    firebaseLib.auth().onAuthStateChanged(user => {
       this.loggin = user;
     });
   },
