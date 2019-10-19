@@ -6,8 +6,8 @@ import { TwitterApiToken } from './twitter_api';
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 admin.initializeApp();
 
-const getPerson = (id_str: string): Promise<FirebaseFirestore.DocumentReference | null> => {
-    return admin.firestore()
+const getPerson = async (id_str: string): Promise<FirebaseFirestore.DocumentReference | null> => {
+    const person: FirebaseFirestore.DocumentReference | null = await await admin.firestore()
         .collection('people')
         .where("id_str", "==", id_str)
         .get()
@@ -21,16 +21,18 @@ const getPerson = (id_str: string): Promise<FirebaseFirestore.DocumentReference 
                 console.log(doc.id, '=>', doc.data());
                 result = doc.ref;
             });
+            console.log('result', result);
             return result;
         })
         .catch(err => {
-            console.log('Error getting person', err);
+            console.error('Error getting person', err);
             return null;
         });
+    return person;
 }
 
-const getVotes = (id_str: string, uid: string): Promise<boolean> => {
-    return admin.firestore()
+const getVotes = async (id_str: string, uid: string): Promise<boolean> => {
+    const votes: boolean = await admin.firestore()
         .collection('votes')
         .where("uid", "==", uid)
         .where("id_str", "==", id_str)
@@ -51,6 +53,7 @@ const getVotes = (id_str: string, uid: string): Promise<boolean> => {
             console.log('Error getting votes', err);
             return false;
         });
+    return votes;
 }
 
 export const findTwiterUser = functions.https.onCall(async (data, context) => {
