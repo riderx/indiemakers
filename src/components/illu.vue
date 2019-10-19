@@ -28,9 +28,6 @@
       class="img-fluid"
       alt="humaaans by Pablo Stanley"
     />
-    <div>
-      <p id="pablo2">@pablostanley</p>
-    </div>
   </div>
 </template>
 

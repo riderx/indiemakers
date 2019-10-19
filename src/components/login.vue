@@ -44,7 +44,7 @@ export default {
           .signInWithEmailLink(this.email, window.location.href)
           .then(() => {
             window.localStorage.removeItem("emailForSignIn");
-            this.$router.push("/Votes");
+            this.$router.push("/votes");
           })
           .catch(error => {
             console.error(error);

@@ -1,7 +1,7 @@
 <template>
-  <div id="emissions">
-    <div id="episodes">
-      <h2 id="titreEpisodes">Derniers épisodes</h2>
+  <div>
+    <div>
+      <h2>Derniers épisodes</h2>
     </div>
     <illu />
   </div>

@@ -1,22 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import App from './App.vue'
-import Accueil from './components/Accueil.vue'
-import Emissions from './components/Emissions.vue'
-import Login from './components/Login.vue'
-import Votes from './components/Votes.vue'
+import App from './app.vue'
+import Home from './components/home.vue'
+import Emissions from './components/emissions.vue'
+import Login from './components/login.vue'
+import Votes from './components/votes.vue'
+require('./style/custom.boostrap.css')
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'Accueil',
-    component: Accueil,
+    name: 'home',
+    component: Home,
   },
   {
-    path: '/Emissions',
-    name: 'Emissions',
+    path: '/emissions',
+    name: 'emissions',
     component: Emissions,
   },
   {

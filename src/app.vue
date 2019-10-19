@@ -2,13 +2,11 @@
   <div id="app">
     <NavBar />
     <router-view />
-    <Footer />
   </div>
 </template>
 
 <script>
 import NavBar from "./components/nav.vue";
-import Footer from "./components/footer.vue";
 import { firestorePlugin } from "vuefire";
 import Vue from "vue";
 import VModal from "vue-js-modal";
@@ -19,8 +17,7 @@ Vue.use(VModal);
 export default {
   name: "app",
   components: {
-    NavBar,
-    Footer
+    NavBar
   },
   methods: {
     beforeLoad() {
@@ -47,6 +44,4 @@ body {
     rgba(223, 153, 216, 1) 100%
   );
 }
-/*! `Custom` Bootstrap 4 theme */
-@import url(https://use.fontawesome.com/releases/v5.0.10/css/all.css);
 </style>
