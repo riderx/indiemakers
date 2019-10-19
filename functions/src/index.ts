@@ -165,7 +165,7 @@ export const voteTwiterUser = functions.https.onCall(async (data, context) => {
                 .collection('votes')
                 .add({
                     uid: uid,
-                    name: name
+                    id_str: id_str
                 });
         }
         console.error('already voted', id_str, uid);
