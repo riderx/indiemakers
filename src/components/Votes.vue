@@ -1,6 +1,6 @@
 <template>
   <div id="emissions">
-    <modal :height="300" adaptive="true" name="Added">
+    <modal :height="300" adaptive name="Added">
       <section id="div-modal">
         Ajout pris en compte
         <div id="sign-in-vote">
@@ -11,7 +11,7 @@
         </div>
       </section>
     </modal>
-    <modal :height="300" adaptive="true" name="fail-add">
+    <modal :height="300" adaptive name="fail-add">
       <section id="div-modal">
         Je ne trouve pas ce Maker
         <div id="sign-in-vote">
@@ -22,20 +22,20 @@
         </div>
       </section>
     </modal>
-    <modal :height="300" adaptive="true" name="Added">
+    <modal :height="300" adaptive name="Added">
       <section id="div-modal">
         Ajouter un Maker
         <div id="sign-in-vote">
           <div class="person-email">
-            <input v-model="text" type="text" placeholder="elonmusk" />
+            <input v-model="addName" type="text" placeholder="elonmusk" />
           </div>
           <div>
-            <button @click="tweetIt()">Tweet</button>
+            <button @click="add()">Ajouté</button>
           </div>
         </div>
       </section>
     </modal>
-    <modal :height="300" adaptive="true" name="Voted">
+    <modal :height="300" adaptive name="Voted">
       <section id="div-modal">
         Vote pris en compte
         <div id="sign-in-vote">
@@ -46,7 +46,7 @@
         </div>
       </section>
     </modal>
-    <modal :height="300" adaptive="true" name="checkEmail">
+    <modal :height="300" adaptive name="checkEmail">
       <section id="div-modal">
         Check ta boite email
         <div id="sign-in-vote">
@@ -57,7 +57,7 @@
         </div>
       </section>
     </modal>
-    <modal :height="470" adaptive="true" name="inscription">
+    <modal :height="470" adaptive name="inscription">
       <section id="div-modal">
         Inscription
         <div id="sign-in-vote">
@@ -158,8 +158,8 @@ export default {
         });
       }
     },
-    add(name) {
-      findTwiterUser({ name }).then(result => {
+    add() {
+      findTwiterUser({ name: this.addName }).then(result => {
         if (result.error) {
           console.error(result);
           this.$modal.show("fail-add");
@@ -168,12 +168,12 @@ export default {
             if (result.error) {
               console.error(result);
             } else {
-              this.currentName = name;
+              this.currentName = this.addName;
               this.$modal.show("Added");
             }
-            this.hideAdd();
           });
         }
+        this.addName = "";
         this.hideAdd();
       });
     },
@@ -195,6 +195,7 @@ export default {
     return {
       email: "",
       loggin: false,
+      addName: "",
       currentName: "",
       people: []
     };
