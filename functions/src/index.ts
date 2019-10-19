@@ -113,7 +113,12 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                     pic: user.profile_image_url_https,
                     votes: 1
                 }
-                const exist = await getPerson(newuser.id_str);
+                let exist = null;
+                try {
+                    exist = await getPerson(newuser.id_str);
+                } catch (err) {
+                    console.error('not exist', newuser.id_str);
+                }
                 if (!exist) {
                     return await admin.firestore()
                         .collection('people')
@@ -126,8 +131,6 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                             return { error: 'cannot create' };
                         })
                 }
-                console.error('already exist');
-                return { error: 'already exist' };
             }
         } catch (err) {
             console.error('cannot find user', err);
