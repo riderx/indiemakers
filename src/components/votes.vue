@@ -233,9 +233,20 @@
               <p>{{person.bio}}</p>
             </div>
             <div class="col-3 col-md-2" @click="vote(person)">
-              <button type="button" class="btn btn-primary btn-lg text-light px-4 h1">
+              <button
+                type="button"
+                v-if="!person.episode"
+                class="btn btn-primary btn-lg text-light px-4 h1"
+              >
                 <div>&#9650;</div>
                 {{person.votes}}
+              </button>
+              <button
+                type="button"
+                v-if="person.episode"
+                class="btn btn-primary btn-lg text-light px-4 h1"
+              >
+                <i class="fab fa-spotify fa-2x"></i>
               </button>
             </div>
           </div>
@@ -292,6 +303,8 @@ export default {
     vote(person) {
       if (!this.loggin) {
         this.$modal.show("inscription");
+      } else if (person.episode) {
+        window.open(person.episode, "_blank");
       } else {
         voteTwiterUser({ id_str: person.id_str }).then(resultJson => {
           console.log("resultJson", resultJson);
