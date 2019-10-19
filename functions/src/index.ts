@@ -1,10 +1,10 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import axios from 'axios';
+import { TwitterApiToken } from './twitter_api';
 
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 admin.initializeApp();
-const TwitterApiToken = '';
 
 const getPerson = (id_str: string): Promise<FirebaseFirestore.DocumentReference | null> => {
     return admin.firestore()
