@@ -2,18 +2,18 @@
   <div id="emissions">
     <modal :height="200" adaptive name="Added">
       <section id="div-modal">
-        Ajout pris en compte
+        🏄‍♂️ Ajout pris en compte
         <div id="sign-in-vote">
           <div id="explain">N'esite pas a twitter pour motiver ce Maker a venir sur le podcast!</div>
           <div class="padding">
-            <button @click="tweetIt()">Tweet</button>
+            <button @click="tweetIt()">🦚Tweet</button>
           </div>
         </div>
       </section>
     </modal>
     <modal :height="200" adaptive name="fail-add">
       <section id="div-modal">
-        Je ne trouve pas ce Maker
+        👀Je ne trouve pas ce Maker
         <div id="sign-in-vote">
           <div id="explain">est t'il sur twitter ?</div>
           <div class="padding">
@@ -22,9 +22,20 @@
         </div>
       </section>
     </modal>
+    <modal :height="200" adaptive name="fail-add">
+      <section id="div-modal">
+        😨 Hoho
+        <div id="sign-in-vote">
+          <div id="explain">tu as deja voté pour ce Maker</div>
+          <div class="padding">
+            <button @click="$modal.hide('fail-add')">Fermer</button>
+          </div>
+        </div>
+      </section>
+    </modal>
     <modal :height="300" adaptive name="add">
       <section id="div-modal">
-        Ajouter un Maker
+        ➕Ajouter un Maker
         <div id="sign-in-vote">
           <div class="person-email">
             <input v-model="addName" type="text" placeholder="elonmusk" />
@@ -37,29 +48,29 @@
     </modal>
     <modal :height="200" adaptive name="Voted">
       <section id="div-modal">
-        Vote pris en compte
+        💪Vote pris en compte
         <div id="sign-in-vote">
           <div id="explain">N'esite pas a twitter pour motiver ce Maker a venir sur le podcast!</div>
           <div class="padding">
-            <button @click="tweetIt()">Tweet</button>
+            <button @click="tweetIt()">🦚Tweet</button>
           </div>
         </div>
       </section>
     </modal>
     <modal :height="200" adaptive name="checkEmail">
       <section id="div-modal">
-        Check ta boite email
+        ✅Check ta boite email
         <div id="sign-in-vote">
           <div id="explain">recupere ton lien de login et click dessus, c'est tout❤️</div>
           <div class="padding">
-            <button @click="$modal.hide('checkEmail')">Cool</button>
+            <button @click="$modal.hide('checkEmail')">😎Cool</button>
           </div>
         </div>
       </section>
     </modal>
     <modal :height="500" adaptive name="inscription">
       <section id="div-modal">
-        Pas tout de suite !
+        🔐Pas tout de suite !
         <div id="sign-in-vote">
           <div
             id="explain"
@@ -73,16 +84,16 @@
             <input v-model="email" type="email" placeholder="elon@musk.com" />
           </div>
           <div>
-            <button @click="sendLogin()">valider</button>
+            <button @click="sendLogin()">🚀valider</button>
           </div>
         </div>
       </section>
     </modal>
     <div id="episodes">
-      <h2 id="titreEpisodes">Most wanted</h2>
+      <h2 id="titreEpisodes">🔥Most wanted</h2>
       <div id="addPerson" @click="showAdd()">
         +
-        <span class="tooltiptext">Ajouter un·e invité·e</span>
+        <span class="tooltiptext">👀Ajouter un·e invité·e</span>
       </div>
       <div id="person-info" v-bind:key="person.id" v-for="person in people">
         <div>
@@ -152,7 +163,7 @@ export default {
           if (result.error) {
             console.error(result);
             this.currentName = name;
-            this.$modal.show("add");
+            this.$modal.show("fail-vote");
           } else {
             this.currentName = name;
             this.$modal.show("Voted");
