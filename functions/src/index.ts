@@ -14,7 +14,7 @@ const getPerson = (id_str: string): Promise<FirebaseFirestore.DocumentReference 
         .then(snapshot => {
             let result: FirebaseFirestore.DocumentReference | null = null;
             if (snapshot.empty) {
-                console.log('No matching documents.');
+                console.log('No matching person', id_str);
                 return null;
             }
             snapshot.forEach(doc => {
@@ -24,7 +24,7 @@ const getPerson = (id_str: string): Promise<FirebaseFirestore.DocumentReference 
             return result;
         })
         .catch(err => {
-            console.log('Error getting documents', err);
+            console.log('Error getting person', err);
             return null;
         });
 }
@@ -38,7 +38,7 @@ const getVotes = (id_str: string, uid: string): Promise<boolean> => {
         .then(snapshot => {
             let result: boolean = false;
             if (snapshot.empty) {
-                console.log('No matching documents.');
+                console.log('No votes', uid, id_str);
                 return false;
             }
             snapshot.forEach(doc => {
@@ -48,7 +48,7 @@ const getVotes = (id_str: string, uid: string): Promise<boolean> => {
             return result;
         })
         .catch(err => {
-            console.log('Error getting documents', err);
+            console.log('Error getting votes', err);
             return false;
         });
 }
