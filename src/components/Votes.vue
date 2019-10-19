@@ -22,7 +22,7 @@
         </div>
       </section>
     </modal>
-    <modal :height="300" adaptive name="Added">
+    <modal :height="300" adaptive name="add">
       <section id="div-modal">
         Ajouter un Maker
         <div id="sign-in-vote">
