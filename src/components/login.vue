@@ -1,25 +1,51 @@
 
 <template>
   <div>
-    <section id="emissions">
-      Email Verification
-      <div id="sign-in-vote">
-        <div id="explain">Pour etre sur que tu n'essais pas un etre malicieux confirme ton email</div>
-        <div class="person-email">
-          <input v-model="email" type="email" placeholder="elon@musk.com" />
+    <div class="container-fluid">
+      <div class="row pt-md-5">
+        <div class="col-12 offset-md-1 col-md-5">
+          <div class="row bg-primary py-4">
+            <div class="col pt-3 px-0 text-white text-center">
+              <h1>🔑Email Verification</h1>
+            </div>
+          </div>
+          <div class="row bg-success pb-4">
+            <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+              <div class="form-group mb-0">
+                <input
+                  type="email"
+                  v-model="email"
+                  class="form-control pb-0"
+                  aria-describedby="emailHelp"
+                  placeholder="elon@musk.com"
+                />
+              </div>
+            </div>
+            <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
+              <button
+                type="button"
+                class="btn btn-primary btn-lg btn-block text-light px-4 h1"
+                @click="sendConfirm()"
+              >🚀valider</button>
+            </div>
+          </div>
         </div>
-        <div>
-          <button @click="sendConfirm()">valider</button>
+        <div class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2">
+          <illu />
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 <script>
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import { firebaseLib } from "../utils/db";
+import illu from "./illu.vue";
 
 export default {
+  components: {
+    illu
+  },
   created() {
     if (firebaseLib.auth().isSignInWithEmailLink(window.location.href)) {
       this.email = window.localStorage.getItem("emailForSignIn");
@@ -34,9 +60,6 @@ export default {
     };
   },
   methods: {
-    // showConfirm() {
-    //   this.$modal.show("confirm");
-    // },
     sendConfirm() {
       if (this.email) {
         firebaseLib
@@ -59,60 +82,4 @@ export default {
 </script>
 
 <style scoped>
-#emissions {
-  padding-top: 20px;
-  width: 47vw;
-  height: 48vh;
-  min-height: 48vh;
-  background-color: #df99d8;
-  position: absolute;
-  top: 20%;
-  left: 5%;
-  color: rgb(35, 35, 85);
-  font-size: 2em;
-  text-align: center;
-  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
-  transition: box-shadow 0.3s;
-  z-index: 0;
-  border-radius: 10px;
-  display: flex;
-  flex-flow: column nowrap;
-}
-
-#emissions:hover {
-  box-shadow: 0 0 11px rgba(3, 53, 148, 0.2);
-}
-
-#sign-in-vote {
-  border-radius: 0.5em;
-  text-align: center;
-  font-size: 72%;
-  margin-top: 20px;
-}
-#explain {
-  font-size: 86%;
-  text-align: left;
-  padding: 2% 5%;
-}
-input {
-  width: 55.5%;
-  font-size: 1em;
-  padding: 1%;
-  border: none;
-  margin-top: 40px;
-}
-
-button {
-  width: 57.5%;
-  padding: 1%;
-  font-size: inherit;
-  background-color: #6a477d1f;
-  color: #6a477d;
-  cursor: pointer;
-}
-
-button:active {
-  background-color: #6a477d;
-  color: #8c6c9e;
-}
 </style>

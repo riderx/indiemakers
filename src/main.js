@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './app.vue'
 import Home from './components/home.vue'
-import Emissions from './components/emissions.vue'
 import Login from './components/login.vue'
 import Votes from './components/votes.vue'
 require('./style/custom.boostrap.css')
@@ -14,11 +13,6 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
-  },
-  {
-    path: '/emissions',
-    name: 'emissions',
-    component: Emissions,
   },
   {
     path: '/login',

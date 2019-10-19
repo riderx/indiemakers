@@ -8,11 +8,15 @@
           <br />
         </div>
         <p>{{ banner }}</p>
-        <button
-          type="button"
-          class="btn btn-success btn-lg text-white px-4 h1"
-          @click.passive="goEpisodes"
-        >Episodes</button>
+        <div class="row">
+          <div class="offset-3 offset-md-0 col-6 col-md-12">
+            <button
+              type="button"
+              class="btn btn-success btn-lg bnt-block text-white px-4"
+              @click.passive="goEpisodes"
+            >Episodes</button>
+          </div>
+        </div>
       </div>
       <div class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2">
         <IllustrationHome />
@@ -46,7 +50,7 @@ Que vous soyez en train de créer votre propre business ou que vous cherchiez a 
   },
   methods: {
     goEpisodes() {
-      this.$router.push("/emissions");
+      this.$router.push("/votes");
     }
   }
 };
