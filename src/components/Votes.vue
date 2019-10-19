@@ -91,7 +91,7 @@
         <h2>{{person.name}}</h2>
         <h3>@{{person.login}}</h3>
         <p>{{person.bio}}</p>
-        <div id="bouton-vote" @click="vote(person.id_str)">
+        <div id="bouton-vote" @click="vote(person.id_str, person.login)">
           <div>&#9650;</div>
           {{person.votes}}
         </div>
@@ -115,6 +115,12 @@ export default {
     illu
   },
   methods: {
+    tweetIt() {
+      const text = `@${this.currentName}, j'aimerais beaucoup que tu soit le prochain invité du podcast @indiemakerfr 🚀.`;
+      window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
+      this.currentName = "";
+      this.$modal.hide();
+    },
     sendLogin() {
       if (this.email) {
         window.localStorage.setItem("emailForSignIn", this.email);
@@ -136,7 +142,7 @@ export default {
           });
       }
     },
-    vote(id_str) {
+    vote(id_str, name) {
       if (!this.loggin) {
         this.$modal.show("inscription");
       } else {
@@ -146,6 +152,7 @@ export default {
             console.error(result);
             this.$modal.show("add");
           } else {
+            this.currentName = name;
             this.$modal.show("Voted");
           }
         });
@@ -161,6 +168,7 @@ export default {
             if (result.error) {
               console.error(result);
             } else {
+              this.currentName = name;
               this.$modal.show("Added");
             }
             this.hideAdd();
@@ -187,6 +195,7 @@ export default {
     return {
       email: "",
       loggin: false,
+      currentName: "",
       people: []
     };
   },
