@@ -162,8 +162,9 @@ export default {
         voteTwiterUser({ id_str }).then(resultJson => {
           console.log("resultJson", resultJson);
           const result = resultJson.result;
-          if (result.error) {
-            console.error(result);
+          const data = result.data;
+          if (data.error) {
+            console.error(data);
             this.currentName = name;
             this.$modal.show("fail-vote");
           } else {
@@ -177,15 +178,17 @@ export default {
       findTwiterUser({ name: this.addName }).then(resultJson => {
         console.log("resultJson", resultJson);
         const result = resultJson.result;
-        if (result.error) {
-          console.error(result);
+        const data = result.data;
+        if (data.error) {
+          console.error(data);
           this.$modal.show("fail-add");
         } else {
-          addTwiterUser({ id_str: result.id_str }).then(addJson => {
+          addTwiterUser({ id_str: data.id_str }).then(addJson => {
             console.log("addJson", addJson);
             const resultAdd = addJson.result;
-            if (resultAdd.error) {
-              console.error(resultAdd);
+            const added = resultAdd.data;
+            if (added.error) {
+              console.error(added);
               this.$modal.show("fail-add");
             } else {
               this.currentName = "" + this.addName;
