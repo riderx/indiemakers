@@ -94,7 +94,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                     name: user.name,
                     login: user.screen_name,
                     bio: user.description,
-                    pic: user.profile_image_url_https,
+                    pic: user.profile_image_url_https.replace('_normal', ''),
                     votes: 1
                 }
                 let exist = null;
