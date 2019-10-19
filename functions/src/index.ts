@@ -160,38 +160,15 @@ export const voteTwiterUser = functions.https.onCall(async (data, context) => {
             return { error: 'user not exist' };
         }
         if (!voted) {
+            console.log('voted', id_str, uid);
             return await admin.firestore()
                 .collection('votes')
                 .add({
                     uid: uid,
                     name: name
                 });
-            // return await admin.firestore()
-            //     .runTransaction(t => {
-            //         return t.get(exist)
-            //             .then(async doc => {
-            //                 const docData = doc.data();
-            //                 if (docData) {
-            //                     const newVotes = docData.votes + 1;
-            //                     t.update(exist, { votes: newVotes });
-            //                     return await admin.firestore()
-            //                         .collection('votes')
-            //                         .add({
-            //                             uid: uid,
-            //                             name: name
-            //                         });
-            //                 }
-            //                 console.error('no doc found');
-            //                 return { error: 'no doc found' };
-            //             });
-            //     }).then(() => {
-            //         console.log('Transaction success!');
-            //         return { message: 'voted' };
-            //     }).catch(err => {
-            //         return { error: err };
-            //     });
         }
-        console.error('already voted');
+        console.error('already voted', id_str, uid);
         return { error: 'already voted' };
     }
     console.error('not loggin');
