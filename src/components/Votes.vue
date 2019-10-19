@@ -59,7 +59,7 @@
     </modal>
     <modal :height="500" adaptive name="inscription">
       <section id="div-modal">
-        Inscription
+        Pas tout de suite !
         <div id="sign-in-vote">
           <div
             id="explain"
@@ -315,15 +315,16 @@ h2 {
 }
 #addPerson {
   position: absolute;
-  top: 1.5em;
-  right: 1em;
-  font-size: medium;
+  top: 1em;
+  right: 0.5em;
   color: white;
   background-color: #9456b7;
   border-radius: 0.5em;
   padding: 2%;
   margin: 0% 1%;
+  cursor: pointer;
 }
+
 .v--modal-box {
   border-radius: 1em;
 }
