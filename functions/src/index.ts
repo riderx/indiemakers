@@ -68,7 +68,7 @@ export const findTwiterUser = functions.https.onCall(async (data, context) => {
             })
             .catch((error) => {
                 console.error(error);
-                return error;
+                return { error: 'cannot find user' };
             });
     }
     return { error: 'not loggin' };
@@ -101,17 +101,17 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                         .add(newuser)
                         .then(() => {
                             console.log('New account added');
-                            return newuser;
+                            return { done: 'New account added' };
                         }).catch((error) => {
                             console.error(error);
-                            return error;
+                            return { error: 'cannot create' };
                         })
                 }
                 return { error: 'already exist' };
             })
             .catch((error) => {
                 console.error(error);
-                return error;
+                return { error: 'cannot create' };
             });
     }
     return { error: 'not loggin' };
