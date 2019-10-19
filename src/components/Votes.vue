@@ -5,7 +5,7 @@
         Ajout pris en compte
         <div id="sign-in-vote">
           <div id="explain">N'esite pas a twitter pour motiver ce Maker a venir sur le podcast!</div>
-          <div>
+          <div class="padding">
             <button @click="tweetIt()">Tweet</button>
           </div>
         </div>
@@ -16,7 +16,7 @@
         Je ne trouve pas ce Maker
         <div id="sign-in-vote">
           <div id="explain">est t'il sur twitter ?</div>
-          <div>
+          <div class="padding">
             <button @click="$modal.hide('fail-add')">Fermer</button>
           </div>
         </div>
@@ -29,7 +29,7 @@
           <div class="person-email">
             <input v-model="addName" type="text" placeholder="elonmusk" />
           </div>
-          <div>
+          <div class="padding">
             <button @click="add()">Ajouté</button>
           </div>
         </div>
@@ -40,18 +40,18 @@
         Vote pris en compte
         <div id="sign-in-vote">
           <div id="explain">N'esite pas a twitter pour motiver ce Maker a venir sur le podcast!</div>
-          <div>
+          <div class="padding">
             <button @click="tweetIt()">Tweet</button>
           </div>
         </div>
       </section>
     </modal>
-    <modal :height="300" adaptive name="checkEmail">
+    <modal :height="200" adaptive name="checkEmail">
       <section id="div-modal">
         Check ta boite email
         <div id="sign-in-vote">
           <div id="explain">recupere ton lien de login et click dessus, c'est tout❤️</div>
-          <div>
+          <div class="padding">
             <button @click="$modal.hide('checkEmail')">Cool</button>
           </div>
         </div>
@@ -116,10 +116,11 @@ export default {
   },
   methods: {
     tweetIt() {
-      const text = `@${this.currentName}, j'aimerais beaucoup que tu soit le prochain invité du podcast @indiemakerfr 🚀.`;
+      const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakerfr 🚀.`;
       window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
       this.currentName = "";
-      this.$modal.hide();
+      this.$modal.hide("Added");
+      this.$modal.hide("Voted");
     },
     sendLogin() {
       if (this.email) {
@@ -150,6 +151,7 @@ export default {
         voteTwiterUser({ id_str }).then(result => {
           if (result.error) {
             console.error(result);
+            this.currentName = name;
             this.$modal.show("add");
           } else {
             this.currentName = name;
@@ -211,6 +213,9 @@ export default {
 </script>
 
 <style>
+.padding {
+  padding-top: 20px;
+}
 #emissions {
   width: 47vw;
   height: 68vh;
