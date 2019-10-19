@@ -14,20 +14,20 @@ const getPerson = async (id_str: string): Promise<FirebaseFirestore.DocumentRefe
         .then(snapshot => {
             let result: FirebaseFirestore.DocumentReference | null = null;
             if (snapshot.empty) {
-                console.log('No matching person', id_str);
+                console.error('No matching person', id_str);
                 return null;
             }
             snapshot.forEach(doc => {
                 console.log(doc.id, '=>', doc.data());
                 result = doc.ref;
             });
-            console.log('result', result);
             return result;
         })
         .catch(err => {
             console.error('Error getting person', err);
             return null;
         });
+    console.log('person', person);
     return person;
 }
 
@@ -53,6 +53,7 @@ const getVotes = async (id_str: string, uid: string): Promise<boolean> => {
             console.log('Error getting votes', err);
             return false;
         });
+    console.log('votes', votes);
     return votes;
 }
 
