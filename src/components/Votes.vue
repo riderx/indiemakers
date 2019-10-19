@@ -169,6 +169,7 @@ export default {
           addTwiterUser({ id_str: result.id_str }).then(result => {
             if (result.error) {
               console.error(result);
+              this.$modal.show("fail-add");
             } else {
               this.currentName = this.addName;
               this.$modal.show("Added");
