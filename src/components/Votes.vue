@@ -159,7 +159,8 @@ export default {
         this.$modal.show("inscription");
       } else {
         // console.log("vote", id_str);
-        voteTwiterUser({ id_str }).then(result => {
+        voteTwiterUser({ id_str }).then(resultJson => {
+          const result = resultJson;
           if (result.error) {
             console.error(result);
             this.currentName = name;
@@ -172,14 +173,16 @@ export default {
       }
     },
     add() {
-      findTwiterUser({ name: this.addName }).then(result => {
+      findTwiterUser({ name: this.addName }).then(resultJson => {
+        const result = resultJson;
         if (result.error) {
           console.error(result);
           this.$modal.show("fail-add");
         } else {
-          addTwiterUser({ id_str: result.id_str }).then(result => {
-            if (result.error) {
-              console.error(result);
+          addTwiterUser({ id_str: result.id_str }).then(addJson => {
+            const resultAdd = addJson;
+            if (resultAdd.error) {
+              console.error(resultAdd);
               this.$modal.show("fail-add");
             } else {
               this.currentName = "" + this.addName;
