@@ -175,7 +175,7 @@
                   <li>pouvoir te tenir au courant des news</li>
                 </ul>
                 <p>je n'aime pas le spam, attends-toi à pas plus de 3 par an.</p>
-                <p>Et bien entendu, je refile ton e-mail à personne, je déteste ça !</p>
+                <p>Et bien entendu, je ne refile ton e-mail à personne, je déteste ça !</p>
               </div>
             </div>
             <div class="row bg-success pb-4">
