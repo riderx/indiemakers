@@ -1,5 +1,16 @@
 <template>
   <div id="emissions">
+    <modal height="auto" adaptive name="loading">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 p-5 text-center">
+            <div class="spinner-grow text-primary" style="width: 6rem; height: 6rem;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </modal>
     <modal adaptive name="Added">
       <div class="container-fluid">
         <div class="row">
@@ -175,7 +186,7 @@
                   <li>pouvoir te tenir au courant des news</li>
                 </ul>
                 <p>je n'aime pas le spam, attends-toi à pas plus de 3 par an.</p>
-                <p>Et bien entendu, je ne refile ton e-mail à personne, je déteste ça !</p>
+                <p>Et bien entendu, je ne refile ton e-mail à personne, je déteste ceux qui font ça !</p>
               </div>
             </div>
             <div class="row bg-success pb-4">
@@ -213,7 +224,7 @@
               <button
                 type="button"
                 class="btn btn-primary btn-lg text-light px-4 display-1"
-                @click="showAdd()"
+                @click="add()"
               >
                 <strong>+</strong>
               </button>
@@ -292,16 +303,19 @@ export default {
           url: "https://indiemaker.fr/#/login",
           handleCodeInApp: true
         };
+        this.$modal.show("loading");
         firebaseLib
           .auth()
           .sendSignInLinkToEmail(this.email, actionCodeSettings)
           .then(() => {
-            this.hideLogin();
+            this.$modal.hide("inscription");
             this.$modal.show("checkEmail");
+            this.$modal.hide("loading");
             window.localStorage.setItem("emailForSignIn", this.email);
           })
           .catch(error => {
-            this.hideLogin();
+            this.$modal.hide("inscription");
+            this.$modal.hide("loading");
             console.error(error);
           });
       }
@@ -312,9 +326,11 @@ export default {
       } else if (person.episode) {
         window.open(person.episode, "_blank");
       } else {
+        this.$modal.show("loading");
         voteTwiterUser({ id_str: person.id_str }).then(resultJson => {
           console.log("resultJson", resultJson);
           const data = resultJson.data;
+          this.$modal.hide("loading");
           if (data.error) {
             console.error(data);
             this.currentName = person.login;
@@ -328,32 +344,25 @@ export default {
       }
     },
     add() {
-      addTwiterUser({ name: this.addName }).then(addJson => {
-        console.log("addJson", addJson);
-        const added = addJson.data;
-        if (added.error) {
-          console.error(added);
-          this.$modal.show("fail-add");
-        } else {
-          this.currentName = "" + this.addName;
-          this.$modal.show("Added");
-        }
-        this.addName = "";
-        this.hideAdd();
-      });
-    },
-    showAdd() {
       if (!this.loggin) {
         this.$modal.show("inscription");
       } else {
-        this.$modal.show("add");
+        this.$modal.show("loading");
+        addTwiterUser({ name: this.addName }).then(addJson => {
+          console.log("addJson", addJson);
+          const added = addJson.data;
+          this.$modal.hide("loading");
+          if (added.error) {
+            console.error(added);
+            this.$modal.show("fail-add");
+          } else {
+            this.currentName = "" + this.addName;
+            this.$modal.show("Added");
+          }
+          this.addName = "";
+          this.$modal.hide("add");
+        });
       }
-    },
-    hideAdd() {
-      this.$modal.hide("add");
-    },
-    hideLogin() {
-      this.$modal.hide("inscription");
     }
   },
   data() {
