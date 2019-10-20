@@ -215,8 +215,8 @@
     </modal>
     <div class="container-fluid">
       <div class="row pt-md-5">
-        <div class="col-12 offset-md-1 col-md-5">
-          <div class="row bg-success py-4">
+        <div class="col-12 offset-xl-1 col-xl-5">
+          <div class="row bg-success py-1 py-md-4">
             <div class="col col-md-10 pt-3 px-0 text-white text-center">
               <h1>🔥Most wanted</h1>
             </div>
@@ -268,7 +268,7 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2">
+        <div class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
           <illu />
         </div>
       </div>
