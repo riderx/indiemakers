@@ -1,6 +1,17 @@
 
 <template>
   <div>
+    <modal height="auto" adaptive name="loading">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 p-5 text-center">
+            <div class="spinner-grow text-primary" style="width: 6rem; height: 6rem;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </modal>
     <div class="container-fluid">
       <div class="row pt-md-5">
         <div class="col-12 offset-md-1 col-md-5">
@@ -46,7 +57,7 @@ export default {
   components: {
     illu
   },
-  created() {
+  mounted() {
     if (firebaseLib.auth().isSignInWithEmailLink(window.location.href)) {
       this.email = window.localStorage.getItem("emailForSignIn");
       if (this.email) {
@@ -62,19 +73,20 @@ export default {
   methods: {
     sendConfirm() {
       if (this.email) {
+        this.$modal.show("loading");
         firebaseLib
           .auth()
           .signInWithEmailLink(this.email, window.location.href)
           .then(() => {
             window.localStorage.removeItem("emailForSignIn");
+            this.$modal.hide("loading");
             this.$router.push("/votes");
           })
           .catch(error => {
             console.error(error);
+            this.$modal.hide("loading");
             this.$router.push("/");
           });
-      } else {
-        this.$router.push("/");
       }
     }
   }
