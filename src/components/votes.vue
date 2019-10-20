@@ -224,7 +224,7 @@
               <button
                 type="button"
                 class="btn btn-primary btn-lg text-light px-4 display-1"
-                @click="add()"
+                @click="showAddForm()"
               >
                 <strong>+</strong>
               </button>
@@ -341,6 +341,13 @@ export default {
             this.$modal.show("Voted");
           }
         });
+      }
+    },
+    showAddForm() {
+      if (!this.loggin) {
+        this.$modal.show("inscription");
+      } else {
+        this.$modal.show("add");
       }
     },
     add() {
