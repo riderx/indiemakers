@@ -224,13 +224,16 @@
             v-bind:key="person.id"
             v-for="person in people"
           >
-            <div class="col-3">
-              <img :src="person.pic" class="w-75 img-fluid rounded-circle" alt="Logo person" />
+            <div class="col-4 pr-0 pr-md-5">
+              <img
+                :src="person.pic"
+                class="w-100 w-md-75 img-fluid rounded-circle"
+                alt="Logo person"
+              />
             </div>
-            <div class="col-6 col-md-7">
-              <h2>{{person.name}}</h2>
+            <div class="col-5 col-md-6">
+              <h3>{{person.name}}</h3>
               <p class="text-secondary">@{{person.login}}</p>
-              <p>{{person.bio}}</p>
             </div>
             <div class="col-3 col-md-2" @click="vote(person)">
               <button
@@ -248,6 +251,9 @@
               >
                 <i class="fab fa-spotify fa-2x"></i>
               </button>
+            </div>
+            <div class="col-12 px-md-5 pt-3">
+              <p class>{{person.bio}}</p>
             </div>
           </div>
         </div>
