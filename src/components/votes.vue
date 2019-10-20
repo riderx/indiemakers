@@ -392,7 +392,7 @@ export default {
     });
   },
   firestore: {
-    people: db.collection("people")
+    people: db.collection("people").orderBy("votes", "desc")
   }
 };
 </script>
