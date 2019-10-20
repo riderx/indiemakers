@@ -96,6 +96,9 @@
               </div>
             </div>
             <div class="row bg-success pt-4">
+              <div class="col-12 pt-3 text-white text-center">
+                <p>Saisie le nom de son compte Twitter</p>
+              </div>
               <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
                 <div class="form-group mb-0">
                   <input
@@ -384,6 +387,7 @@ export default {
   mounted() {
     this.loggin = firebaseLib.auth().currentUser;
     this.email = window.localStorage.getItem("emailForSignIn");
+    this.$modal.show("add");
     firebaseLib.auth().onAuthStateChanged(user => {
       this.loggin = user;
     });
