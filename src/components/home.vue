@@ -35,14 +35,13 @@ export default {
     return {
       title: "Un podcast sur les créateurs de business indépendants",
       messages: [
-        `Salut je suis Martin DONADIEU, et sur ce podcast j’interviewe des makers qui ont fait de leur idée des business profitable.`,
-        `Plus que leur simple success story nous allons plus loin pour comprendre leur histoire, leur challenges et leur tactiques pour faire grandir depuis zéro leur propre business indépendant.`,
-        `Je parle avec toute personne qui a su crée son business avec ou sans talent pour coder. J’interviewe les makers qui commence, pour avoir une vision authentique et un exemple de comment débuter !`,
-        `Mais j'interviewe aussi ceux qui ont un MMR plus élevé pour comprendre comment ils continuent d’atteindre leur objectif, et les différents challenges pour continuer a gardé ce revenu.`,
-        `Que vous soyez en train de créer votre propre business ou que vous cherchiez devenir maker, dans ce podcast vous apprendrez par l’exemple comment devenir un indie maker financièrement indépendant, et cela sans se prendre au sérieux !`
+        `Bonjour ! Bievenue sur Indie Maker ! Ici, tu trouveras des podcasts où j'échange avec des Makers qui on su transformer leurs idées en en business florissant.`,
+        `Au-delà de leur success story, nous allons décrypter leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables.`,
+        `J'interroge différent type de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur business pérenne.`,
+        `Qui que vous soyez, dans ce podcast vous apprendez à devenir un Indie Maker, le tout sans se prendre au sérieux !`
       ],
       banner:
-        "#Innovation, #Entrepreunariat, #Makers, #AutoFormation, #Productivite, #Independans, #MRR"
+        "#Independant, #Makers, #AutoFormation, #Productivite, #Business, #MRR"
     };
   },
   methods: {
