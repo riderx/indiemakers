@@ -24,16 +24,19 @@
         <h5>Mes autres projets:</h5>
         <a
           class="text-white"
+          target="_blank"
           href="https://forgr.ee"
         >Forgr.ee | Agence de creation de MVP pour entrepreneurs.</a>
         <br />
         <a
           class="text-white"
+          target="_blank"
           href="https://bewise.love"
         >Bewise | Une citation par jour simple et bienveillant.</a>
         <br />
         <a
           class="text-white"
+          target="_blank"
           href="https://apps.apple.com/us/app/captime-crossfit-timer/id1369288585"
         >Captime | Crossfit timer</a>
         <br />
