@@ -33,30 +33,10 @@ const getPerson = async (id_str: string): Promise<FirebaseFirestore.DocumentRefe
     return person;
 }
 
-const getVotes = async (id_str: string, uid: string): Promise<boolean> => {
-    const votes: boolean = await admin.firestore()
-        .collection('votes')
-        .where("uid", "==", uid)
-        .where("id_str", "==", id_str)
-        .get()
-        .then(snapshot => {
-            let result: boolean = false;
-            if (snapshot.empty) {
-                console.log('No votes', uid, id_str);
-                return false;
-            }
-            snapshot.forEach(doc => {
-                console.log(doc.id, '=>', doc.data());
-                result = true;
-            });
-            return result;
-        })
-        .catch(err => {
-            console.log('Error getting votes', err);
-            return false;
-        });
-    console.log('votes', votes);
-    return votes;
+const getPersonById = async (id: string): Promise<FirebaseFirestore.DocumentReference> => {
+    return admin.firestore()
+        .collection(`people`)
+        .doc(id);
 }
 
 const twUserPromise = (screen_name: string): Promise<{
@@ -133,20 +113,20 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
     return { error: 'not loggin' };
 });
 
-export const calcVotes = functions.firestore
-    .document('/votes/{voteId}')
+export const calcVotesByPerson = functions.firestore
+    .document('/people/{personId}/votes/{voteId}')
     .onCreate(async (snapshot, context) => {
         const vote = snapshot.data();
         if (vote) {
+            const personId = context.params.personId;
             const id_str = vote.id_str;
-            const exist = await getPerson(id_str);
+            const person = await getPersonById(personId);
             const snap = await admin.firestore()
-                .collection(`votes`)
-                .where("id_str", "==", id_str)
+                .collection(`/people/${personId}/votes`)
                 .get();
             const votesTotal = snap.size;
-            if (exist && snap && votesTotal) {
-                return exist.update({ votes: votesTotal }).then(() => {
+            if (person && snap && votesTotal) {
+                return person.update({ votes: votesTotal }).then(() => {
                     console.log('updates votes', id_str, votesTotal);
                 }).catch((error) => {
                     console.error('error', error);
@@ -157,30 +137,3 @@ export const calcVotes = functions.firestore
         }
         return snapshot;
     });
-
-export const voteTwiterUser = functions.https.onCall(async (data, context) => {
-    const id_str = data.id_str;
-    const uid = context.auth ? context.auth.uid : null;
-    if (uid) {
-        const exist = await getPerson(id_str);
-        const voted = await getVotes(id_str, uid);
-        if (!exist) {
-            console.error('user not exist');
-            return { error: 'user not exist' };
-        }
-        if (!voted) {
-            console.log('voted', id_str, uid);
-            return await admin.firestore()
-                .collection('votes')
-                .add({
-                    uid: uid,
-                    id_str: id_str
-                });
-        }
-        console.error('already voted', id_str, uid);
-        return { error: 'already voted' };
-    }
-    console.error('not loggin');
-    return { error: 'not loggin' };
-});
-

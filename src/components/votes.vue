@@ -1,6 +1,6 @@
 <template>
   <div id="emissions">
-    <modal height="auto" adaptive name="loading">
+    <modal height="auto" adaptive :clickToClose="isFalse" name="loading">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 p-5 text-center">
@@ -284,7 +284,6 @@
 import illu from "./illu.vue";
 import { db, firebaseLib } from "../utils/db";
 
-const voteTwiterUser = firebaseLib.functions().httpsCallable("voteTwiterUser");
 const addTwiterUser = firebaseLib.functions().httpsCallable("addTwiterUser");
 
 export default {
@@ -324,26 +323,29 @@ export default {
       }
     },
     vote(person) {
+      console.log(person);
       if (!this.loggin) {
         this.$modal.show("inscription");
       } else if (person.episode) {
         window.open(person.episode, "_blank");
       } else {
         this.$modal.show("loading");
-        voteTwiterUser({ id_str: person.id_str }).then(resultJson => {
-          console.log("resultJson", resultJson);
-          const data = resultJson.data;
-          this.$modal.hide("loading");
-          if (data.error) {
-            console.error(data);
-            this.currentName = person.login;
-            this.$modal.show("fail-vote");
-          } else {
-            this.currentName = person.login;
+        db.collection(`people/${person.id}/votes`)
+          .doc(this.loggin.uid)
+          .set({
+            date: Date()
+          })
+          .then(() => {
+            this.$modal.hide("loading");
             person.votes += 1;
             this.$modal.show("Voted");
-          }
-        });
+          })
+          .catch(error => {
+            this.$modal.hide("loading");
+            console.error("Error writing document: ", error);
+            this.currentName = person.login;
+            this.$modal.show("fail-vote");
+          });
       }
     },
     showAddForm() {
@@ -362,7 +364,6 @@ export default {
       } else {
         this.$modal.show("loading");
         addTwiterUser({ name: this.addName }).then(addJson => {
-          console.log("addJson", addJson);
           const added = addJson.data;
           this.$modal.hide("loading");
           if (added.error) {
@@ -381,6 +382,7 @@ export default {
   data() {
     return {
       email: "",
+      isFalse: false,
       loggin: false,
       addName: "",
       currentName: "",
