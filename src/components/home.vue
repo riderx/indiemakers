@@ -20,6 +20,24 @@
       <div class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2">
         <IllustrationHome />
       </div>
+      <div class="col-12 pt-0 px-md-5 order-1 order-md-2 text-white">
+        <h5>Mes autres projets:</h5>
+        <a
+          class="text-white"
+          href="https://forgr.ee"
+        >Forgr.ee | Agence de creation de MVP pour entrepreneurs.</a>
+        <br />
+        <a
+          class="text-white"
+          href="https://bewise.love"
+        >Bewise | Une citation par jour simple et bienveillant.</a>
+        <br />
+        <a
+          class="text-white"
+          href="https://apps.apple.com/us/app/captime-crossfit-timer/id1369288585"
+        >Captime | Crossfit timer</a>
+        <br />
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +53,7 @@ export default {
     return {
       title: "Un podcast sur les créateurs de business indépendants",
       messages: [
-        `Bonjour ! Bienvenue sur Indie Maker ! Ici, tu trouveras des podcasts où j'échange avec des Makers qui ont su transformer leurs idées en en business florissant.`,
+        `Bonjour je suis Martin Donadieu ! Bienvenue sur Indie Maker ! Ici, tu trouveras des podcasts où j'échange avec des Makers qui ont su transformer leurs idées en en business florissant.`,
         `Au-delà de leur success-story, nous allons décrypter leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables.`,
         `J'interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur business pérenne.`,
         `Qui que vous soyez, dans ce podcast vous apprendrez à devenir un Indie Maker, le tout sans se prendre au sérieux !`

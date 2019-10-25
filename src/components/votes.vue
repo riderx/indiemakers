@@ -323,7 +323,6 @@ export default {
       }
     },
     vote(person) {
-      console.log(person);
       if (!this.loggin) {
         this.$modal.show("inscription");
       } else if (person.episode) {
