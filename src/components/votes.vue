@@ -238,7 +238,7 @@
             v-bind:key="person.id"
             v-for="person in people"
           >
-            <div class="col-4 pr-0 pr-md-5">
+            <div class="col-4 pr-0 pr-md-5 cursor-pointer" @click="openAccount(person.login)">
               <img
                 :src="person.pic"
                 class="w-100 w-md-75 img-fluid rounded-circle"
@@ -353,6 +353,9 @@ export default {
         this.$modal.show("add");
       }
     },
+    openAccount(name) {
+      window.open(`https://twitter.com/${name}`, "_blank");
+    },
     add() {
       if (!this.loggin) {
         this.$modal.show("inscription");
@@ -398,4 +401,7 @@ export default {
 </script>
 
 <style scoped>
+.cursor-pointer {
+  cursor: pointer;
+}
 </style>
