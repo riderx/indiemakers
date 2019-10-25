@@ -22,7 +22,9 @@
             </div>
             <div class="row bg-success pt-4 h-100">
               <div class="col-12 pt-3 text-white text-center">
-                <p>N'esite pas a twitter pour motiver ce Maker a venir sur le podcast!</p>
+                <p>N'esite pas a twitter pour motiver ce Maker a venir sur le podcast !</p>
+                <p>J'ai supposé que tu voulais aussi voter pour lui, alors c'est fait .✅</p>
+                <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
               </div>
               <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
                 <button
@@ -133,7 +135,8 @@
             </div>
             <div class="row bg-success pt-4 h-100">
               <div class="col-12 pt-3 text-white">
-                <p>N'esite pas a twitter pour motiver ce Maker a venir sur le podcast!</p>
+                <p>N'esite pas a twitter pour motiver ce Maker a venir sur le podcast !</p>
+                <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
               </div>
               <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
                 <button
