@@ -35,10 +35,10 @@ export default {
     return {
       title: "Un podcast sur les créateurs de business indépendants",
       messages: [
-        `Bonjour ! Bievenue sur Indie Maker ! Ici, tu trouveras des podcasts où j'échange avec des Makers qui on su transformer leurs idées en en business florissant.`,
-        `Au-delà de leur success story, nous allons décrypter leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables.`,
-        `J'interroge différent type de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur business pérenne.`,
-        `Qui que vous soyez, dans ce podcast vous apprendez à devenir un Indie Maker, le tout sans se prendre au sérieux !`
+        `Bonjour ! Bievenue sur Indie Maker ! Ici, tu trouveras des podcasts où j'échange avec des Makers qui ont su transformer leurs idées en en business florissant.`,
+        `Au-delà de leur success-story, nous allons décrypter leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables.`,
+        `J'interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur business pérenne.`,
+        `Qui que vous soyez, dans ce podcast vous apprendrez à devenir un Indie Maker, le tout sans se prendre au sérieux !`
       ],
       banner:
         "#Independant, #Makers, #AutoFormation, #Productivite, #Business, #MRR"
