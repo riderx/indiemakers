@@ -158,7 +158,7 @@
             </div>
             <div class="row bg-success pt-4">
               <div class="col-12 pt-3 text-white text-center">
-                <p>recupere ton lien de login et click dessus, c'est tout❤️</p>
+                <p>Récupère ton lien de login reçût par email et click dessus, c'est tout❤️</p>
               </div>
               <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
                 <button
@@ -183,12 +183,9 @@
             </div>
             <div class="row bg-success pt-4">
               <div class="col-12 pt-3 text-white">
-                <p>Pour pouvoir voter ou ajouter un·e potentiel·le invité·e, j’ai besoin que tu valides ton email pour deux raisons:</p>
-                <ul>
-                  <li>éviter les faux votes</li>
-                  <li>pouvoir te tenir au courant des news</li>
-                </ul>
-                <p>je n'aime pas le spam, attends-toi à pas plus de 3 par an.</p>
+                <p>Pour pouvoir te tenir au courant de la sortie de l'épisode et éviter les faux votes</p>
+                <h5 class="text-center">j’ai besoin que tu valides ton email</h5>
+                <p>Tu ne recevras des emails seulement pour les makers pour qui tu as voté, et si j'ai une grande nouvelle a te partager (max 3 par ans).</p>
                 <p>Et bien entendu, je ne refile ton e-mail à personne, je déteste ceux qui font ça !</p>
               </div>
             </div>
@@ -338,6 +335,7 @@ export default {
           .then(() => {
             this.$modal.hide("loading");
             person.votes += 1;
+            this.currentName = person.login;
             this.$modal.show("Voted");
           })
           .catch(error => {
@@ -359,10 +357,11 @@ export default {
       window.open(`https://twitter.com/${name}`, "_blank");
     },
     add() {
+      this.$modal.show("loading");
       if (!this.loggin) {
+        this.$modal.hide("loading");
         this.$modal.show("inscription");
       } else {
-        this.$modal.show("loading");
         addTwiterUser({ name: this.addName }).then(addJson => {
           const added = addJson.data;
           this.$modal.hide("loading");
@@ -391,6 +390,7 @@ export default {
   },
   mounted() {
     this.loggin = firebaseLib.auth().currentUser;
+    this.$modal.show("inscription");
     this.email = window.localStorage.getItem("emailForSignIn");
     firebaseLib.auth().onAuthStateChanged(user => {
       this.loggin = user;
