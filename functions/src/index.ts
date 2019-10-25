@@ -65,36 +65,36 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
     const uid = context.auth ? context.auth.uid : null;
     if (uid) {
         try {
-            const user = await twUserPromise(name);
-            if (user) {
-                console.log('user', user);
-                const newuser = {
+            const twUser = await twUserPromise(name);
+            if (twUser) {
+                console.log('user', twUser);
+                const newPerson = {
                     addedBy: uid,
                     addDate: new Date(),
-                    id_str: user.id_str,
-                    name: user.name,
-                    login: user.screen_name,
-                    bio: user.description,
-                    pic: user.profile_image_url_https.replace('_normal', ''),
+                    id_str: twUser.id_str,
+                    name: twUser.name,
+                    login: twUser.screen_name,
+                    bio: twUser.description,
+                    pic: twUser.profile_image_url_https.replace('_normal', ''),
                     votes: 1
                 }
                 let exist = null;
                 try {
-                    exist = await getPerson(newuser.id_str);
+                    exist = await getPerson(newPerson.id_str);
                 } catch (err) {
-                    console.error('not exist', newuser.id_str);
+                    console.error('not exist', newPerson.id_str);
                 }
                 if (!exist) {
-                    await admin.firestore()
-                        .collection('votes')
-                        .add({
-                            uid: uid,
-                            id_str: newuser.id_str
-                        });
                     return await admin.firestore()
                         .collection('people')
-                        .add(newuser)
-                        .then(() => {
+                        .add(newPerson)
+                        .then(async (person) => {
+                            await admin.firestore()
+                                .collection(`/people/${person.id}/votes`)
+                                .doc(uid)
+                                .set({
+                                    date: Date()
+                                });
                             console.log('New account added');
                             return { done: 'New account added' };
                         }).catch((err) => {
