@@ -417,7 +417,6 @@ export default {
     this.loggin = firebaseLib.auth().currentUser;
     this.email = window.localStorage.getItem("emailForSignIn");
     // this.$modal.show("listen");
-    this.$modal.show("error");
     firebaseLib.auth().onAuthStateChanged(user => {
       this.loggin = user;
     });
