@@ -288,7 +288,7 @@
               <div class="col-3 col-md-2" @click="vote(person)">
                 <button
                   type="button"
-                  v-if="!person.episode"
+                  v-if="!person.episodeSpotify"
                   class="btn btn-primary btn-lg text-light px-4 h1"
                 >
                   <div>&#9650;</div>
@@ -361,8 +361,11 @@ export default {
     vote(person) {
       if (!this.loggin) {
         this.$modal.show("inscription");
-      } else if (person.episode) {
-        window.open(person.episode, "_blank");
+      } else if (person.episodeSpotify) {
+        window.open(
+          `https://open.spotify.com/episode/${person.episodeSpotify}`,
+          "_blank"
+        );
       } else {
         this.$modal.show("loading");
         db.collection(`people/${person.id}/votes`)
