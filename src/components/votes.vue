@@ -253,7 +253,22 @@
               </button>
             </div>
           </div>
-          <div class="custom-scroll bg-white px-3" v-bind:style="{ height: heightDiv }">
+          <div class="row bg-white px-3" v-if="loading">
+            <div class="col-12 p-5 text-center">
+              <div
+                class="spinner-grow text-primary"
+                style="width: 6rem; height: 6rem;"
+                role="status"
+              >
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="custom-scroll bg-white px-3"
+            v-if="!loading"
+            v-bind:style="{ height: heightDiv }"
+          >
             <div
               class="row bg-white py-3 border-bottom align-items-center"
               v-bind:key="person.id"
@@ -417,6 +432,7 @@ export default {
       email: "",
       isFalse: false,
       loggin: false,
+      loading: true,
       sizeHead: 0,
       addName: "",
       currentName: "",
@@ -432,21 +448,14 @@ export default {
     }
   },
   mounted() {
-    this.$modal.show("loading");
     this.loggin = firebaseLib.auth().currentUser;
     this.email = window.localStorage.getItem("emailForSignIn");
-    // this.setSizeHead();
-    // console.log(this.people);
-
-    // this.people.then(snapshot => {
-    //   this.$modal.hide("loading");
-    // });
-    console.log(this.sizeHead);
-    console.log(this.heightDiv);
     this.$bind("people", db.collection("people").orderBy("votes", "desc"))
       .then(docs => {
-        this.$modal.hide("loading");
-        this.setSizeHead();
+        this.loading = false;
+        setTimeout(() => {
+          this.setSizeHead();
+        }, 50);
       })
       .catch(error => {
         console.log("error in loading: ", error);

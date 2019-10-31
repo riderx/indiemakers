@@ -39,6 +39,7 @@ export default {
 body {
   background-repeat: inherit;
   overscroll-behavior: none;
+  overflow-x: hidden;
   background: linear-gradient(
     90deg,
     rgba(75, 39, 155, 1) 0%,
