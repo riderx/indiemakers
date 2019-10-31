@@ -11,6 +11,24 @@
         </div>
       </div>
     </modal>
+    <modal height="auto" adaptive name="error">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="row bg-primary py-2">
+              <div class="col-12 pt-2 text-white text-center">
+                <h1>😨 Quelque chose n'as pas marché</h1>
+              </div>
+            </div>
+            <div class="row bg-success pt-4 h-100">
+              <div class="col-12 pt-3 text-white text-center">
+                <p>Essais plus tard</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </modal>
     <modal adaptive name="Added">
       <div class="container-fluid">
         <div class="row">
@@ -305,18 +323,17 @@ export default {
           url: "https://indiemaker.fr/#/login",
           handleCodeInApp: true
         };
+        this.$modal.hide("inscription");
         this.$modal.show("loading");
         firebaseLib
           .auth()
           .sendSignInLinkToEmail(this.email, actionCodeSettings)
           .then(() => {
-            this.$modal.hide("inscription");
-            this.$modal.show("checkEmail");
-            this.$modal.hide("loading");
             window.localStorage.setItem("emailForSignIn", this.email);
+            this.$modal.hide("loading");
+            this.$modal.show("checkEmail");
           })
           .catch(error => {
-            this.$modal.hide("inscription");
             this.$modal.hide("loading");
             console.error(error);
           });
@@ -359,24 +376,30 @@ export default {
       window.open(`https://twitter.com/${name}`, "_blank");
     },
     add() {
+      this.$modal.hide("add");
       this.$modal.show("loading");
       if (!this.loggin) {
         this.$modal.hide("loading");
         this.$modal.show("inscription");
       } else {
-        addTwiterUser({ name: this.addName }).then(addJson => {
-          const added = addJson.data;
-          this.$modal.hide("loading");
-          if (added.error) {
-            console.error(added);
-            this.$modal.show("fail-add");
-          } else {
-            this.currentName = "" + this.addName;
-            this.$modal.show("Added");
-          }
-          this.addName = "";
-          this.$modal.hide("add");
-        });
+        addTwiterUser({ name: this.addName })
+          .then(addJson => {
+            const added = addJson.data;
+            this.$modal.hide("loading");
+            if (added.error) {
+              console.error(added);
+              this.$modal.show("fail-add");
+            } else {
+              this.currentName = "" + this.addName;
+              this.$modal.show("Added");
+            }
+            this.addName = "";
+          })
+          .catch(err => {
+            this.$modal.hide("loading");
+            this.$modal.show("error");
+            console.error(err);
+          });
       }
     }
   },
@@ -393,6 +416,8 @@ export default {
   mounted() {
     this.loggin = firebaseLib.auth().currentUser;
     this.email = window.localStorage.getItem("emailForSignIn");
+    // this.$modal.show("listen");
+    this.$modal.show("error");
     firebaseLib.auth().onAuthStateChanged(user => {
       this.loggin = user;
     });
