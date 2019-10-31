@@ -450,15 +450,21 @@ export default {
   mounted() {
     this.loggin = firebaseLib.auth().currentUser;
     this.email = window.localStorage.getItem("emailForSignIn");
-    this.$bind("people", db.collection("people").orderBy("votes", "desc"))
-      .then(docs => {
+    this.$bind(
+      "people",
+      db
+        .collection("people")
+        .orderBy("votes", "desc")
+        .orderBy("addDate", "asc")
+    )
+      .then(() => {
         this.loading = false;
         setTimeout(() => {
           this.setSizeHead();
         }, 50);
       })
       .catch(error => {
-        console.log("error in loading: ", error);
+        console.error("error in loading: ", error);
       });
     // this.$modal.show("voted");
     // this.$modal.show("loading");
