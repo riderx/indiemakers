@@ -21,7 +21,7 @@
               </div>
             </div>
             <div class="row bg-success pt-4 h-100">
-              <div class="col-12 pt-3 text-white text-center">
+              <div class="col-12 pt-2 pb-3 text-white text-center">
                 <p>Essais plus tard</p>
               </div>
             </div>
@@ -29,47 +29,48 @@
         </div>
       </div>
     </modal>
-    <modal adaptive name="Added">
+    <modal height="auto" adaptive name="added">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 h-100">
             <div class="row bg-primary py-2">
               <div class="col-12 pt-2 text-white text-center">
                 <h1>🏄‍♂️ Ajout pris en compte</h1>
               </div>
             </div>
             <div class="row bg-success pt-4 h-100">
-              <div class="col-12 pt-3 text-white text-center">
-                <p>N'esite pas a twitter pour motiver ce Maker a venir sur le podcast !</p>
+              <div class="col-12 pt-2 text-white text-center">
+                <p>N'hésite pas a twitter pour motiver ce Maker à venir sur le podcast !</p>
                 <p>J'ai supposé que tu voulais aussi voter pour lui, alors c'est fait .✅</p>
+                <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
                 <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
               </div>
-              <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
+              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
                   @click="tweetIt()"
-                >🦚Tweet</button>
+                >🦚Voir</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </modal>
-    <modal adaptive name="fail-add">
+    <modal adaptive height="auto" name="fail-add">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 h-100">
             <div class="row bg-primary py-2">
               <div class="col-12 pt-2 text-white text-center">
                 <h1>👀Je ne trouve pas ce Maker</h1>
               </div>
             </div>
             <div class="row bg-success pt-4 h-100">
-              <div class="col-12 pt-3 text-white text-center">
+              <div class="col-12 pt-2 text-white text-center">
                 <p>Je ne peut pas ajouter de Maker qui n'est pas sur Twitter pour le moment.</p>
               </div>
-              <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
+              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
@@ -81,20 +82,20 @@
         </div>
       </div>
     </modal>
-    <modal adaptive name="fail-vote">
+    <modal adaptive height="auto" name="fail-vote">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 h-100">
             <div class="row bg-primary py-2">
               <div class="col-12 pt-2 text-white text-center">
                 <h1>😨 Hoho</h1>
               </div>
             </div>
             <div class="row bg-success pt-4 h-100">
-              <div class="col-12 pt-3 text-white text-center">
+              <div class="col-12 pt-2 text-white text-center">
                 <p>tu as deja voté pour ce Maker</p>
               </div>
-              <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
+              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
@@ -109,14 +110,14 @@
     <modal height="auto" adaptive name="add">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 h-100">
             <div class="row bg-primary py-2">
               <div class="col-12 pt-2 text-white text-center">
                 <h1>➕Ajouter un Maker</h1>
               </div>
             </div>
             <div class="row bg-success pt-4">
-              <div class="col-12 pt-3 text-white text-center">
+              <div class="col-12 pt-2 text-white text-center">
                 <p>Saisie le nom de son compte Twitter</p>
               </div>
               <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
@@ -130,7 +131,7 @@
                   />
                 </div>
               </div>
-              <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
+              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
@@ -142,26 +143,27 @@
         </div>
       </div>
     </modal>
-    <modal adaptive name="Voted">
+    <modal height="auto" adaptive name="voted">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 h-100">
             <div class="row bg-primary py-2">
               <div class="col-12 pt-2 text-white text-center">
                 <h1>💪Vote pris en compte</h1>
               </div>
             </div>
             <div class="row bg-success pt-4 h-100">
-              <div class="col-12 pt-3 text-white">
-                <p>N'esite pas a twitter pour motiver ce Maker a venir sur le podcast !</p>
+              <div class="col-12 pt-2 text-white">
+                <p>N'hésite pas a twitter pour motiver ce Maker à venir sur le podcast !</p>
+                <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
                 <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
               </div>
-              <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
+              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
                   @click="tweetIt()"
-                >🦚Tweet</button>
+                >🦚Voir</button>
               </div>
             </div>
           </div>
@@ -171,17 +173,17 @@
     <modal height="auto" adaptive name="checkEmail">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 h-100">
             <div class="row bg-primary py-2">
               <div class="col-12 pt-2 text-white text-center">
                 <h1>✅Check ta boite email</h1>
               </div>
             </div>
             <div class="row bg-success pt-4">
-              <div class="col-12 pt-3 text-white text-center">
+              <div class="col-12 pt-2 text-white text-center">
                 <p>Récupère ton lien de login reçût par email et click dessus, c'est tout❤️</p>
               </div>
-              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+              <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
@@ -196,21 +198,21 @@
     <modal height="auto" adaptive name="inscription">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-12">
+          <div class="col-12 h-100">
             <div class="row bg-primary py-2">
               <div class="col-12 pt-2 text-white text-center">
                 <h1>🔐Pas tout de suite !</h1>
               </div>
             </div>
             <div class="row bg-success pt-4">
-              <div class="col-12 pt-3 text-white">
+              <div class="col-12 pt-2 text-white">
                 <p>Pour pouvoir te tenir au courant de la sortie de l'épisode et éviter les faux votes</p>
                 <h5 class="text-center">j’ai besoin que tu valides ton email</h5>
                 <p>Tu ne recevras des emails seulement pour les makers pour qui tu as voté, et si j'ai une grande nouvelle a te partager (max 3 par ans).</p>
                 <p>Et bien entendu, je ne refile ton e-mail à personne, je déteste ceux qui font ça !</p>
               </div>
             </div>
-            <div class="row bg-success pb-4">
+            <div class="row bg-success">
               <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
                 <div class="form-group mb-0">
                   <input
@@ -222,19 +224,19 @@
                   />
                 </div>
               </div>
-              <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
+              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
                   @click="sendLogin()"
-                >🚀valider</button>
+                >🚀VALIDER</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </modal>
-    <div class="container-fluid">
+    <div class="container-fluid position-fixed">
       <div class="row pt-md-5">
         <div class="col-12 offset-xl-1 col-xl-5">
           <div class="row bg-success py-1 py-md-4">
@@ -251,41 +253,43 @@
               </button>
             </div>
           </div>
-          <div
-            class="row bg-white py-3 border-bottom align-items-center"
-            v-bind:key="person.id"
-            v-for="person in people"
-          >
-            <div class="col-4 pr-0 pr-md-5 cursor-pointer" @click="openAccount(person.login)">
-              <img
-                :src="person.pic"
-                class="w-100 w-md-75 img-fluid rounded-circle"
-                alt="Logo person"
-              />
-            </div>
-            <div class="col-5 col-md-6">
-              <h3>{{person.name}}</h3>
-              <p class="text-secondary">@{{person.login}}</p>
-            </div>
-            <div class="col-3 col-md-2" @click="vote(person)">
-              <button
-                type="button"
-                v-if="!person.episode"
-                class="btn btn-primary btn-lg text-light px-4 h1"
-              >
-                <div>&#9650;</div>
-                {{person.votes}}
-              </button>
-              <button
-                type="button"
-                v-if="person.episode"
-                class="btn btn-primary btn-lg text-light px-4 h1"
-              >
-                <i class="fab fa-spotify fa-2x"></i>
-              </button>
-            </div>
-            <div class="col-12 px-md-5 pt-3">
-              <p class>{{person.bio}}</p>
+          <div>
+            <div
+              class="row bg-white py-3 border-bottom align-items-center"
+              v-bind:key="person.id"
+              v-for="person in people"
+            >
+              <div class="col-4 pr-0 pr-md-5 cursor-pointer" @click="openAccount(person.login)">
+                <img
+                  :src="person.pic"
+                  class="w-100 w-md-75 img-fluid rounded-circle"
+                  alt="Logo person"
+                />
+              </div>
+              <div class="col-5 col-md-6">
+                <h3>{{person.name}}</h3>
+                <p class="text-secondary">@{{person.login}}</p>
+              </div>
+              <div class="col-3 col-md-2" @click="vote(person)">
+                <button
+                  type="button"
+                  v-if="!person.episode"
+                  class="btn btn-primary btn-lg text-light px-4 h1"
+                >
+                  <div>&#9650;</div>
+                  {{person.votes}}
+                </button>
+                <button
+                  type="button"
+                  v-if="person.episode"
+                  class="btn btn-primary btn-lg text-light px-4 h1"
+                >
+                  <i class="fab fa-spotify fa-2x"></i>
+                </button>
+              </div>
+              <div class="col-12 px-md-5 pt-3">
+                <p class>{{person.bio}}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -313,8 +317,8 @@ export default {
       const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakerfr 🚀.`;
       window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
       this.currentName = "";
-      this.$modal.hide("Added");
-      this.$modal.hide("Voted");
+      this.$modal.hide("added");
+      this.$modal.hide("voted");
     },
     sendLogin() {
       if (this.email) {
@@ -355,7 +359,7 @@ export default {
             this.$modal.hide("loading");
             person.votes += 1;
             this.currentName = person.login;
-            this.$modal.show("Voted");
+            this.$modal.show("voted");
           })
           .catch(error => {
             this.$modal.hide("loading");
@@ -391,7 +395,7 @@ export default {
               this.$modal.show("fail-add");
             } else {
               this.currentName = "" + this.addName;
-              this.$modal.show("Added");
+              this.$modal.show("added");
             }
             this.addName = "";
           })
@@ -416,7 +420,15 @@ export default {
   mounted() {
     this.loggin = firebaseLib.auth().currentUser;
     this.email = window.localStorage.getItem("emailForSignIn");
-    // this.$modal.show("listen");
+    // this.$modal.show("voted");
+    // this.$modal.show("loading");
+    // this.$modal.show("error");
+    // this.$modal.show("added");
+    // this.$modal.show("checkEmail");
+    // this.$modal.show("inscription");
+    // this.$modal.show("add");
+    // this.$modal.show("fail-add");
+    // this.$modal.show("fail-vote");
     firebaseLib.auth().onAuthStateChanged(user => {
       this.loggin = user;
     });
