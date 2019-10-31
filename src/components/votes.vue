@@ -236,7 +236,7 @@
         </div>
       </div>
     </modal>
-    <div class="container-fluid position-fixed">
+    <div class="container-fluid">
       <div class="row pt-md-5">
         <div class="col-12 offset-xl-1 col-xl-5">
           <div class="row bg-success py-1 py-md-4">
@@ -253,7 +253,7 @@
               </button>
             </div>
           </div>
-          <div>
+          <div class="custom-scroll bg-white px-3" v-bind:style="{ height: heightDiv }">
             <div
               class="row bg-white py-3 border-bottom align-items-center"
               v-bind:key="person.id"
@@ -405,6 +405,11 @@ export default {
             console.error(err);
           });
       }
+    },
+    setSizeHead() {
+      if (document.getElementById("app")) {
+        this.sizeHead = document.getElementById("app").offsetHeight;
+      }
     }
   },
   data() {
@@ -412,14 +417,40 @@ export default {
       email: "",
       isFalse: false,
       loggin: false,
+      sizeHead: 0,
       addName: "",
       currentName: "",
       people: []
     };
   },
+  computed: {
+    heightDiv() {
+      if (this.sizeHead === 0) {
+        return 0;
+      }
+      return `calc(100vh - ${this.sizeHead}px)`;
+    }
+  },
   mounted() {
+    this.$modal.show("loading");
     this.loggin = firebaseLib.auth().currentUser;
     this.email = window.localStorage.getItem("emailForSignIn");
+    // this.setSizeHead();
+    // console.log(this.people);
+
+    // this.people.then(snapshot => {
+    //   this.$modal.hide("loading");
+    // });
+    console.log(this.sizeHead);
+    console.log(this.heightDiv);
+    this.$bind("people", db.collection("people").orderBy("votes", "desc"))
+      .then(docs => {
+        this.$modal.hide("loading");
+        this.setSizeHead();
+      })
+      .catch(error => {
+        console.log("error in loading: ", error);
+      });
     // this.$modal.show("voted");
     // this.$modal.show("loading");
     // this.$modal.show("error");
@@ -434,7 +465,7 @@ export default {
     });
   },
   firestore: {
-    people: db.collection("people").orderBy("votes", "desc")
+    // people: db.collection("people").orderBy("votes", "desc")
   }
 };
 </script>
@@ -442,5 +473,29 @@ export default {
 <style scoped>
 .cursor-pointer {
   cursor: pointer;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+.custom-scroll {
+  overflow-y: scroll;
+  position: absolute;
+  overflow-x: hidden;
+  /* height: 600px; */
+  margin-left: -15px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #9456b7;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #df99d8 !important;
 }
 </style>
