@@ -123,6 +123,7 @@
               <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
                 <div class="form-group mb-0">
                   <input
+                    ref="addMaker"
                     type="text"
                     v-model="addName"
                     class="form-control pb-0"
@@ -195,7 +196,7 @@
         </div>
       </div>
     </modal>
-    <modal height="auto" adaptive name="inscription">
+    <modal height="auto" adaptive name="register">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 h-100">
@@ -216,6 +217,7 @@
               <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
                 <div class="form-group mb-0">
                   <input
+                    ref="register"
                     type="email"
                     v-model="email"
                     class="form-control pb-0"
@@ -342,7 +344,7 @@ export default {
           url: "https://indiemaker.fr/#/login",
           handleCodeInApp: true
         };
-        this.$modal.hide("inscription");
+        this.$modal.hide("register");
         this.$modal.show("loading");
         firebaseLib
           .auth()
@@ -360,7 +362,7 @@ export default {
     },
     vote(person) {
       if (!this.loggin) {
-        this.$modal.show("inscription");
+        this.openRegister();
       } else if (person.episodeSpotify) {
         window.open(
           `https://open.spotify.com/episode/${person.episodeSpotify}`,
@@ -387,11 +389,23 @@ export default {
           });
       }
     },
+    openRegister() {
+      this.$modal.show("register");
+      setTimeout(() => {
+        this.$refs.register.focus();
+      }, 50);
+    },
+    openAdd() {
+      this.$modal.show("add");
+      setTimeout(() => {
+        this.$refs.addMaker.focus();
+      }, 50);
+    },
     showAddForm() {
       if (!this.loggin) {
-        this.$modal.show("inscription");
+        this.openRegister();
       } else {
-        this.$modal.show("add");
+        this.openAdd();
       }
     },
     openAccount(name) {
@@ -402,7 +416,7 @@ export default {
       this.$modal.show("loading");
       if (!this.loggin) {
         this.$modal.hide("loading");
-        this.$modal.show("inscription");
+        this.openRegister();
       } else {
         addTwiterUser({ name: this.addName })
           .then(addJson => {
@@ -474,7 +488,8 @@ export default {
     // this.$modal.show("error");
     // this.$modal.show("added");
     // this.$modal.show("checkEmail");
-    // this.$modal.show("inscription");
+    this.openRegister();
+    // this.openAdd();
     // this.$modal.show("add");
     // this.$modal.show("fail-add");
     // this.$modal.show("fail-vote");
