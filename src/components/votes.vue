@@ -490,7 +490,6 @@ export default {
     // this.$modal.show("checkEmail");
     this.openRegister();
     // this.openAdd();
-    // this.$modal.show("add");
     // this.$modal.show("fail-add");
     // this.$modal.show("fail-vote");
     firebaseLib.auth().onAuthStateChanged(user => {
