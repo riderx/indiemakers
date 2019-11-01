@@ -8,6 +8,26 @@ const client = new Twitter(TwitterApiToken);
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 admin.initializeApp();
 
+const voteIfNotDone = (personId: string, uid: string) => {
+    const voteRef = admin.firestore().collection(`/people/${personId}/votes`).doc(uid)
+    return voteRef.get()
+        .then(async (docSnapshot): Promise<{ error: string } | { done: string }> => {
+            if (docSnapshot.exists) {
+                return { error: 'Already voted' };
+            }
+            return await voteRef.set({ date: Date() })
+                .then(() => {
+                    return { done: "Voted" };
+                })
+                .catch(() => {
+                    return { error: "Fail vote" };
+                });
+        }).catch((err: any) => {
+            console.error('Fail vote', err);
+            return { error: "Fail vote" };
+        });
+}
+
 const getPerson = async (id_str: string): Promise<FirebaseFirestore.DocumentReference | null> => {
     const person: FirebaseFirestore.DocumentReference | null = await await admin.firestore()
         .collection('people')
@@ -29,7 +49,7 @@ const getPerson = async (id_str: string): Promise<FirebaseFirestore.DocumentRefe
             console.error('Error getting person', err);
             return null;
         });
-    console.log('person', person);
+    console.log('Person', person);
     return person;
 }
 
@@ -50,10 +70,10 @@ const twUserPromise = (screen_name: string): Promise<{
         const params = { screen_name };
         client.get('users/show', params, async (error: any, user: any, response: any) => {
             if (!error && user) {
-                console.log('user', user, 'response', response);
+                console.log('User', user, 'response', response);
                 resolve(user);
             } else {
-                console.error('cannot find user', error, response);
+                console.error('Cannot find user', error, response);
                 reject(error);
             }
         });
@@ -82,37 +102,32 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                 try {
                     exist = await getPerson(newPerson.id_str);
                 } catch (err) {
-                    console.error('not exist', newPerson.id_str);
+                    console.error('Not exist', newPerson.id_str);
                 }
                 if (!exist) {
                     return await admin.firestore()
                         .collection('people')
                         .add(newPerson)
                         .then(async (person) => {
-                            await admin.firestore()
-                                .collection(`/people/${person.id}/votes`)
-                                .doc(uid)
-                                .set({
-                                    date: Date()
-                                });
+                            await voteIfNotDone(person.id, uid);
                             console.log('New account added');
                             return { done: 'New account added' };
                         }).catch((err) => {
-                            console.error('cannot create', err);
-                            return { error: 'cannot create' };
+                            console.error('Cannot create', err);
+                            return { error: 'Cannot create' };
                         })
                 } else {
-                    return { error: 'already exist' };
+                    return await voteIfNotDone(exist.id, uid);
                 }
             }
-            return { error: 'not found on api twitter' };
+            return { error: 'Not found on api twitter' };
         } catch (err) {
-            console.error('cannot find user', err);
+            console.error('Cannot find user', err);
             return { error: err };
         }
     }
-    console.error('not loggin');
-    return { error: 'not loggin' };
+    console.error('Not loggin');
+    return { error: 'Not loggin' };
 });
 
 export const calcVotesByPerson = functions.firestore
@@ -129,12 +144,12 @@ export const calcVotesByPerson = functions.firestore
             const votesTotal = snap.size;
             if (person && snap && votesTotal) {
                 return person.update({ votes: votesTotal }).then(() => {
-                    console.log('updates votes', id_str, votesTotal);
+                    console.log('Updates votes', id_str, votesTotal);
                 }).catch((error) => {
-                    console.error('error', error);
+                    console.error('Error', error);
                 });
             } else {
-                console.error('no votes');
+                console.error('No votes');
             }
         }
         return snapshot;

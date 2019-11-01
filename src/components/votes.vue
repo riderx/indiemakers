@@ -94,13 +94,69 @@
             <div class="row bg-success pt-4 h-100">
               <div class="col-12 pt-2 text-white text-center">
                 <p>tu as deja voté pour ce Maker</p>
+                <p>Tu peux toujour twitter pour motiver ce Maker à venir sur le podcast !</p>
+                <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
               </div>
               <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
-                  @click="$modal.hide('fail-vote')"
-                >Fermer</button>
+                  @click="tweetIt()"
+                >🦚Voir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </modal>
+    <modal adaptive height="auto" name="fail-exist">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 h-100">
+            <div class="row bg-primary py-2">
+              <div class="col-12 pt-2 text-white text-center">
+                <h1>😝 OUPS</h1>
+              </div>
+            </div>
+            <div class="row bg-success pt-4 h-100">
+              <div class="col-12 pt-2 text-white text-center">
+                <p>Ce maker est déjà présent dans la liste, J'ai ajouté ton vote pour lui.</p>
+                <p>Tu peux toujour twitter pour motiver ce Maker à venir sur le podcast !</p>
+                <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
+              </div>
+              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-lg btn-block text-light px-4 h1"
+                  @click="tweetIt()"
+                >🦚Voir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </modal>
+    <modal adaptive height="auto" name="fail-exist-vote">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 h-100">
+            <div class="row bg-primary py-2">
+              <div class="col-12 pt-2 text-white text-center">
+                <h1>😝 OUPS</h1>
+              </div>
+            </div>
+            <div class="row bg-success pt-4 h-100">
+              <div class="col-12 pt-2 text-white text-center">
+                <p>Ce maker est déjà présent dans la liste, et tu as déjà voté pour lui 😇.</p>
+                <p>Tu peux toujour twitter pour motiver ce Maker à venir sur le podcast !</p>
+                <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
+              </div>
+              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-lg btn-block text-light px-4 h1"
+                  @click="tweetIt()"
+                >🦚Voir</button>
               </div>
             </div>
           </div>
@@ -422,9 +478,15 @@ export default {
           .then(addJson => {
             const added = addJson.data;
             this.$modal.hide("loading");
-            if (added.error) {
+            if (added.error && added.error === "Already voted") {
+              this.currentName = "" + this.addName;
+              this.$modal.show("fail-exist-vote");
+            } else if (added.error) {
               console.error(added);
               this.$modal.show("fail-add");
+            } else if (added.done && added.done === "Voted") {
+              this.currentName = "" + this.addName;
+              this.$modal.show("fail-exist");
             } else {
               this.currentName = "" + this.addName;
               this.$modal.show("added");
