@@ -488,7 +488,7 @@ export default {
     // this.$modal.show("error");
     // this.$modal.show("added");
     // this.$modal.show("checkEmail");
-    this.openRegister();
+    // this.openRegister();
     // this.openAdd();
     // this.$modal.show("fail-add");
     // this.$modal.show("fail-vote");
