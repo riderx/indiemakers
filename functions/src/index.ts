@@ -101,6 +101,8 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                             console.error('cannot create', err);
                             return { error: 'cannot create' };
                         })
+                } else {
+                    return { error: 'already exist' };
                 }
             }
             return { error: 'not found on api twitter' };
