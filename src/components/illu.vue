@@ -21,13 +21,7 @@
       class="img-fluid"
       alt="humaaans by Pablo Stanley"
     />
-    <img
-      id="mic"
-      src="assets/new_mic.png"
-      width="100%"
-      class="img-fluid"
-      alt="humaaans by Pablo Stanley"
-    />
+    <i id="mic" class="pl-0 pl-md-3 fas fa-microphone fa-3x text-primary"></i>
   </div>
 </template>
 
