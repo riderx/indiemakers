@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import App from './app.vue'
 import Home from './components/home.vue'
 import Login from './components/login.vue'
-import Votes from './components/votes.vue'
+import Episodes from './components/episodes.vue'
 require('./style/custom.boostrap.css')
 
 Vue.use(VueRouter);
@@ -20,9 +20,9 @@ const routes = [
     component: Login,
   },
   {
-    path: '/Votes',
-    name: 'Votes',
-    component: Votes,
+    path: '/episodes',
+    name: 'Episodes',
+    component: Episodes,
   },
 ];
 

@@ -2,18 +2,22 @@
   <div class="container-fluid pt-md-5">
     <div class="row pt-lx-5">
       <div class="col-12 col-md-6 pt-md-5 px-md-5 text-white order-2 order-md-1">
-        <h1 class="pb-2">{{ title }}</h1>
-        <div v-bind:key="message" v-for="message in messages">
-          <p class="pb-0">{{ message }}</p>
-        </div>
-        <p>{{ banner }}</p>
         <div class="row">
-          <div class="offset-3 offset-md-0 col-6 col-md-12 pb-5 pt-3">
+          <div class="col-12 pt-3 order-1">
+            <h1 class="pb-2">{{ title }}</h1>
+          </div>
+          <div class="col-12 pt-3 order-3 order-md-2">
+            <div v-bind:key="message" v-for="message in messages">
+              <p class="pb-0">{{ message }}</p>
+            </div>
+            <p>{{ banner }}</p>
+          </div>
+          <div class="offset-3 offset-md-0 col-6 col-md-12 pb-5 pt-3 order-2 order-md-3">
             <button
               type="button"
               class="btn btn-success btn-lg bnt-block text-white px-4"
               @click.passive="goEpisodes"
-            >Episodes</button>
+            >🎧 Episodes</button>
           </div>
         </div>
       </div>
@@ -32,7 +36,7 @@
           class="text-white"
           target="_blank"
           href="https://bewise.love"
-        >Bewise | Une citation par jour simple et bienveillant.</a>
+        >Bewise | Une citation par jour simple et bienveillante.</a>
         <br />
         <a
           class="text-white"
@@ -67,7 +71,7 @@ export default {
   },
   methods: {
     goEpisodes() {
-      this.$router.push("/votes");
+      this.$router.push("/episodes");
     }
   }
 };

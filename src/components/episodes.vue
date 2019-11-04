@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-12 p-5 text-center">
             <div class="spinner-grow text-primary" style="width: 6rem; height: 6rem;" role="status">
-              <span class="sr-only">Loading...</span>
+              <span class="sr-only">Chargement...</span>
             </div>
           </div>
         </div>
@@ -40,8 +40,8 @@
             </div>
             <div class="row bg-success pt-4 h-100">
               <div class="col-12 pt-2 text-white text-center">
-                <p>N'hésite pas a twitter pour motiver ce Maker à venir sur le podcast !</p>
-                <p>J'ai supposé que tu voulais aussi voter pour lui, alors c'est fait .✅</p>
+                <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                <p>J'ai supposé que tu voulais aussi voter pour lui/elle, alors c'est fait .✅</p>
                 <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
                 <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
               </div>
@@ -63,7 +63,7 @@
           <div class="col-12 h-100">
             <div class="row bg-primary py-2">
               <div class="col-12 pt-2 text-white text-center">
-                <h1>👀Je ne trouve pas ce Maker</h1>
+                <h1>👀Je ne trouve pas ce·tte Maker</h1>
               </div>
             </div>
             <div class="row bg-success pt-4 h-100">
@@ -93,8 +93,8 @@
             </div>
             <div class="row bg-success pt-4 h-100">
               <div class="col-12 pt-2 text-white text-center">
-                <p>tu as deja voté pour ce Maker</p>
-                <p>Tu peux toujour twitter pour motiver ce Maker à venir sur le podcast !</p>
+                <p>tu as deja voté pour ce·tte Maker</p>
+                <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
                 <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
               </div>
               <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
@@ -120,8 +120,8 @@
             </div>
             <div class="row bg-success pt-4 h-100">
               <div class="col-12 pt-2 text-white text-center">
-                <p>Ce maker est déjà présent dans la liste, J'ai ajouté ton vote pour lui.</p>
-                <p>Tu peux toujour twitter pour motiver ce Maker à venir sur le podcast !</p>
+                <p>Ce·tte maker est déjà présent dans la liste, J'ai ajouté ton vote pour lui/elle.</p>
+                <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
                 <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
               </div>
               <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
@@ -147,8 +147,8 @@
             </div>
             <div class="row bg-success pt-4 h-100">
               <div class="col-12 pt-2 text-white text-center">
-                <p>Ce maker est déjà présent dans la liste, et tu as déjà voté pour lui 😇.</p>
-                <p>Tu peux toujour twitter pour motiver ce Maker à venir sur le podcast !</p>
+                <p>Ce·tte maker est déjà présent dans la liste, et tu as déjà voté pour lui/elle 😇.</p>
+                <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
                 <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
               </div>
               <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
@@ -169,7 +169,7 @@
           <div class="col-12 h-100">
             <div class="row bg-primary py-2">
               <div class="col-12 pt-2 text-white text-center">
-                <h1>➕Ajouter un Maker</h1>
+                <h1>➕Ajouter un·e Maker</h1>
               </div>
             </div>
             <div class="row bg-success pt-4">
@@ -211,7 +211,7 @@
             </div>
             <div class="row bg-success pt-4 h-100">
               <div class="col-12 pt-2 text-white">
-                <p>N'hésite pas a twitter pour motiver ce Maker à venir sur le podcast !</p>
+                <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
                 <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
                 <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
               </div>
@@ -299,12 +299,15 @@
         <div class="col-12 offset-xl-1 col-xl-5">
           <div class="row bg-success py-1 py-md-4">
             <div class="col col-md-10 pt-3 px-0 text-white text-center">
-              <h1>🔥Most wanted</h1>
+              <h1>🔥Episodes</h1>
             </div>
             <div class="col-3 col-md-2 pt-3 text-white">
               <button
                 type="button"
                 class="btn btn-primary btn-lg text-light px-4 display-1"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Ajouter un·e maker"
                 @click="showAddForm()"
               >
                 <strong>+</strong>
@@ -318,7 +321,7 @@
                 style="width: 6rem; height: 6rem;"
                 role="status"
               >
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">Chargement...</span>
               </div>
             </div>
           </div>
@@ -348,14 +351,20 @@
                   type="button"
                   v-if="!person.episodeSpotify"
                   class="btn btn-primary btn-lg text-light px-4 h1"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title="Voter pour ce·tte Maker"
                 >
                   <div>&#9650;</div>
                   {{person.votes}}
                 </button>
                 <button
                   type="button"
-                  v-if="person.episode"
+                  v-if="person.episodeSpotify"
                   class="btn btn-primary btn-lg text-light px-4 h1"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title="Ecouter l'épisode"
                 >
                   <i class="fab fa-spotify fa-2x"></i>
                 </button>
@@ -540,6 +549,9 @@ export default {
         this.loading = false;
         setTimeout(() => {
           this.setSizeHead();
+          $(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+          });
         }, 50);
       })
       .catch(error => {

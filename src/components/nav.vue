@@ -43,11 +43,6 @@ export default {
           title: "twitter",
           lien: "https://twitter.com/indiemakerfr",
           class: "fab fa-twitter fa-2x"
-        },
-        {
-          title: "vote",
-          lien: "/votes",
-          class: "fas fa-vote-yea fa-2x"
         }
       ],
       bar: true
@@ -82,6 +77,5 @@ export default {
 .fas:hover {
   color: #4b279b;
   transform: scale(1.6);
-  font-size: 1.5em;
 }
 </style>
