@@ -24,7 +24,7 @@
       <div class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2">
         <IllustrationHome />
       </div>
-      <div class="col-12 pt-0 px-md-5 pb-5 pb-md-3 order-3 text-white">
+      <div class="col-12 pt-0 px-md-5 pb-5 pb-md-3 pt-5 pt-md-0 order-3 text-white">
         <h5>Mes autres projets:</h5>
         <a
           class="text-white"
