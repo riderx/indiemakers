@@ -12,7 +12,7 @@
             </div>
             <p>{{ banner }}</p>
           </div>
-          <div class="offset-3 offset-md-0 col-6 col-md-12 pb-1 pb-md-5 pt-3 order-2 order-md-3">
+          <div class="offset-3 offset-md-0 col-6 col-md-12 py-1 py-md-3 order-2 order-md-3">
             <button
               type="button"
               class="btn btn-success btn-lg bnt-block text-white px-4"
@@ -24,7 +24,7 @@
       <div class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2">
         <IllustrationHome />
       </div>
-      <div class="col-12 pt-0 px-md-5 pb-5 pb-md-3 pt-5 pt-md-0 order-3 text-white">
+      <div class="col-12 pt-0 px-md-5 py-4 order-3 text-white">
         <h5>Mes autres projets:</h5>
         <a
           class="text-white"
