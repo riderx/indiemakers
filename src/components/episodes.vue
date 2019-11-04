@@ -353,7 +353,7 @@
                   class="btn btn-primary btn-lg text-light px-4 h1"
                   data-toggle="tooltip"
                   data-placement="bottom"
-                  title="Voter pour ce·tte Maker"
+                  :title="tooltipVote(person)"
                 >
                   <div>&#9650;</div>
                   {{person.votes}}
@@ -395,6 +395,9 @@ export default {
     illu
   },
   methods: {
+    tooltipVote(person) {
+      return `Voter pour avoir ${person.name} dans le podcast`;
+    },
     tweetIt() {
       const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakerfr 🚀.`;
       window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
