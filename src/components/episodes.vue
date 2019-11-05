@@ -370,7 +370,7 @@
                 </button>
               </div>
               <div class="col-12 px-md-5 pt-3">
-                <p class>{{person.bio}}</p>
+                <p class v-html="getTextLink(person.bio)"></p>
               </div>
             </div>
           </div>
@@ -387,6 +387,8 @@
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import illu from "./illu.vue";
 import { db, firebaseLib } from "../utils/db";
+import * as linkify from "linkifyjs";
+import linkifyHtml from "linkifyjs/html";
 
 const addTwiterUser = firebaseLib.functions().httpsCallable("addTwiterUser");
 
@@ -404,6 +406,27 @@ export default {
       this.currentName = "";
       this.$modal.hide("added");
       this.$modal.hide("voted");
+    },
+    getTextLink(text) {
+      return linkifyHtml(text, {
+        defaultProtocol: "https",
+        attributes: null,
+        className: "linkified",
+        events: null,
+        format: function(value, type) {
+          return value;
+        },
+        formatHref: function(href, type) {
+          return href;
+        },
+        ignoreTags: [],
+        nl2br: false,
+        tagName: "a",
+        target: {
+          url: "_blank"
+        },
+        validate: true
+      });
     },
     sendLogin() {
       if (this.email) {
