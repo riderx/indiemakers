@@ -1,6 +1,13 @@
 # indiemakerfr
 
-indiemakerfr is a project of some of becode-lovelace students. The aim is to allow new web developers to have access to information about their training / future job, in French. This informations will be available as podcasts, so we needed a site for hosting them which reflects the state of mind in which this project was born.
+
+Hello, I'm Martin Donadieu! Welcome to Indie Maker! Here you will find podcasts where I interact with Makers who have turned their ideas into a flourishing business.
+
+Beyond their success story, we will decipher their history, their strategy, their challenges, in order to understand how they managed to become profitable.
+
+I ask different types of Makers, novices, seasoned, always in order to understand how they started and how they made their business sustainable.
+
+Whoever you are, in this podcast you will learn to become an Indie Maker, all without taking yourself seriously!
 
 *Tags: podcast, web, indie maker, community*
 
