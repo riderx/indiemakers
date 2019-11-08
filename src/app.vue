@@ -7,12 +7,6 @@
 
 <script>
 import NavBar from "./components/nav.vue";
-import { firestorePlugin } from "vuefire";
-import Vue from "vue";
-import VModal from "vue-js-modal";
-
-Vue.use(firestorePlugin);
-Vue.use(VModal);
 
 export default {
   name: "app",

@@ -10,6 +10,8 @@
     "deploy:functions": "firebase deploy --only functions"
   },
   "dependencies": {
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.4",
     "cryptiles": "4.1.2",
     "firebase": "^7.2.2",
     "fsevents": "^2.1.1",

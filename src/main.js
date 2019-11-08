@@ -4,9 +4,17 @@ import App from './app.vue'
 import Home from './components/home.vue'
 import Login from './components/login.vue'
 import Episodes from './components/episodes.vue'
-require('./style/custom.boostrap.css')
+import { firestorePlugin } from "vuefire";
+import VModal from "vue-js-modal";
+import BootstrapVue from "bootstrap-vue";
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import './style/custom.boostrap.css';
 
 Vue.use(VueRouter);
+Vue.use(BootstrapVue);
+Vue.use(firestorePlugin);
+Vue.use(VModal);
 
 const routes = [
   {

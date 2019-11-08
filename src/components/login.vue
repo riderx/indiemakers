@@ -80,7 +80,7 @@ export default {
           .then(() => {
             window.localStorage.removeItem("emailForSignIn");
             this.$modal.hide("loading");
-            this.$router.push("/votes");
+            this.$router.push("/episodes");
           })
           .catch(error => {
             console.error(error);

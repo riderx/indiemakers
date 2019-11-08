@@ -185,6 +185,7 @@
                     class="form-control pb-0"
                     aria-describedby="TweetnameHelp"
                     placeholder="elonmusk"
+                    v-on:keyup.enter="add()"
                   />
                 </div>
               </div>
@@ -279,6 +280,7 @@
                     class="form-control pb-0"
                     aria-describedby="emailHelp"
                     placeholder="elon@musk.com"
+                    v-on:keyup.enter="sendLogin()"
                   />
                 </div>
               </div>
@@ -305,8 +307,7 @@
               <button
                 type="button"
                 class="btn btn-primary btn-lg text-light px-4 display-1"
-                data-toggle="tooltip"
-                data-placement="bottom"
+                v-b-tooltip.hover
                 title="Ajouter un·e maker"
                 @click="showAddForm()"
               >
@@ -335,7 +336,12 @@
               v-bind:key="person.id"
               v-for="person in people"
             >
-              <div class="col-4 pr-0 pr-md-5 cursor-pointer" @click="openAccount(person.login)">
+              <div
+                class="col-4 pr-0 pr-md-5 cursor-pointer"
+                @click="openAccount(person.login)"
+                v-b-tooltip.hover
+                title="Voir le profils Twitter"
+              >
                 <img
                   :src="person.pic"
                   class="w-100 w-md-75 img-fluid rounded-circle"
@@ -351,8 +357,7 @@
                   type="button"
                   v-if="!person.episodeSpotify"
                   class="btn btn-primary btn-lg text-light px-4 h1"
-                  data-toggle="tooltip"
-                  data-placement="bottom"
+                  v-b-tooltip.hover
                   :title="tooltipVote(person)"
                 >
                   <div>&#9650;</div>
@@ -362,8 +367,7 @@
                   type="button"
                   v-if="person.episodeSpotify"
                   class="btn btn-primary btn-lg text-light px-4 h1"
-                  data-toggle="tooltip"
-                  data-placement="bottom"
+                  v-b-tooltip.hover
                   title="Ecouter l'épisode"
                 >
                   <i class="fab fa-spotify fa-2x"></i>
@@ -387,7 +391,6 @@
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import illu from "./illu.vue";
 import { db, firebaseLib } from "../utils/db";
-import * as linkify from "linkifyjs";
 import linkifyHtml from "linkifyjs/html";
 
 const addTwiterUser = firebaseLib.functions().httpsCallable("addTwiterUser");
@@ -413,12 +416,6 @@ export default {
         attributes: null,
         className: "linkified",
         events: null,
-        format: function(value, type) {
-          return value;
-        },
-        formatHref: function(href, type) {
-          return href;
-        },
         ignoreTags: [],
         nl2br: false,
         tagName: "a",
@@ -575,9 +572,6 @@ export default {
         this.loading = false;
         setTimeout(() => {
           this.setSizeHead();
-          $(function() {
-            $('[data-toggle="tooltip"]').tooltip();
-          });
         }, 50);
       })
       .catch(error => {
