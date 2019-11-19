@@ -62,15 +62,34 @@
             </div>
             <div class="col-12 px-md-5 pt-1 pt-md-3">
               <h3 class="text-white d-none d-md-block">Aussi sur tes plateformes préférés !</h3>
-              <div class v-if="person.episodeSpotify">
+              <div class>
                 <button
                   type="button"
-                  @click="listenSpotify()"
-                  class="btn btn-transparent btn-lg text-light py-0 py-md-3 px-0 px-md-4 h1"
+                  v-if="person.episodeSpotify"
+                  @click="listenExternal(person.episodeSpotify)"
+                  class="btn btn-transparent btn-lg text-light m-3 py-0 py-md-3 px-0 px-md-4 h1"
                   v-b-tooltip.hover
                   title="Ecouter l'épisode sur spotify"
                 >
                   <i class="fab fa-spotify fa-2x"></i>
+                </button>
+                <button
+                  type="button"
+                  v-if="person.episodePocketCast"
+                  @click="listenExternal(person.episodePocketCast)"
+                  class="btn btn-primary btn-lg text-light m-3 py-0 py-md-3 px-0 px-md-4 h1"
+                  v-b-tooltip.hover
+                  title="Ecouter l'épisode sur PocketCast"
+                >Pocket cast</button>
+                <button
+                  v-if="person.episodeApple"
+                  type="button"
+                  @click="listenExternal(person.episodeApple)"
+                  class="btn btn-transparent btn-lg text-light m-3 py-0 py-md-3 px-0 px-md-4 h1"
+                  v-b-tooltip.hover
+                  title="Ecouter l'épisode sur Apple podcast"
+                >
+                  <i class="fas fa-podcast fa-2x"></i>
                 </button>
               </div>
             </div>
@@ -126,11 +145,8 @@ export default {
         validate: true
       });
     },
-    listenSpotify() {
-      window.open(
-        `https://open.spotify.com/episode/${this.person.episodeSpotify}`,
-        "_blank"
-      );
+    listenExternal(url) {
+      window.open(url, "_blank");
     },
     openAccount(name) {
       window.open(`https://twitter.com/${name}`, "_blank");
