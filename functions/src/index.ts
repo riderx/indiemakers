@@ -161,7 +161,7 @@ export const calcVotesByPerson = functions.firestore
 const sendEmail = (user: any, maker: any, makerId: string, subject: string, template: string, previewText: string) => {
     return new Promise((resolve, reject) => {
         sendWithTemplate('indiemakerfr@gmail.com', user.email, subject, 'text', template, {
-            LINKEPISODE: `https://indiemaker.fr/#/episode/${makerId}`,
+            LINKEPISODE: `https://indiemaker.fr/episode/${makerId}`,
             MC_PREVIEW_TEXT: previewText,
             NAME: user.displayName || 'Elon Musk',
             SUBJECT: subject,

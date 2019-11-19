@@ -434,7 +434,7 @@ export default {
       if (this.email) {
         window.localStorage.setItem("emailForSignIn", this.email);
         const actionCodeSettings = {
-          url: "https://indiemaker.fr/#/login",
+          url: "https://indiemaker.fr/login",
           handleCodeInApp: true
         };
         this.$modal.hide("register");

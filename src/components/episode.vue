@@ -92,6 +92,13 @@
                   <i class="fas fa-podcast fa-2x"></i>
                 </button>
               </div>
+              <button
+                type="button"
+                class="btn btn-primary btn-lg text-light m-3 py-0 py-md-3 px-0 px-md-4 h1"
+                v-b-tooltip.hover
+                title="Partager via twitter"
+                @click="tweetIt()"
+              >🦚Partager</button>
             </div>
           </div>
         </div>
@@ -158,6 +165,13 @@ export default {
       if (document.getElementById("app")) {
         this.sizeHead = document.getElementById("app").offsetHeight;
       }
+    },
+    tweetIt() {
+      // https://twitter.com/intent/tweet?text=J%27%C3%A9coute%20le%20podcast%20@indiemakerfr%20avec%20@[LOGINMAKER]%20[LINKEPISODE]
+      const text = `J'écoute le podcast @indiemakerfr avec ${this.person.login} 🚀https://indiemaker.fr/episode/${this.id}`;
+      window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
+      this.$modal.hide("added");
+      this.$modal.hide("voted");
     }
   },
   data() {

@@ -25,8 +25,8 @@ export default {
     return {
       logo: {
         title: "indiemakerfr",
-        source: "./assets/default-monochrome-white.svg",
-        lien: "#"
+        source: "/assets/default-monochrome-white.svg",
+        lien: "/"
       },
       icones: [
         {

@@ -1,26 +1,8 @@
 <template>
   <div class="w-100">
-    <img
-      id="background"
-      src="assets/Home@2x.png"
-      width="100%"
-      class="img-fluid"
-      alt="humaaans by Pablo Stanley"
-    />
-    <img
-      id="man"
-      src="assets/sitting-2@2x.png"
-      width="100%"
-      class="img-fluid"
-      alt="humaaans by Pablo Stanley"
-    />
-    <img
-      id="woman"
-      src="assets/standing-6.png"
-      width="100%"
-      class="img-fluid"
-      alt="humaaans by Pablo Stanley"
-    />
+    <img id="background" src="assets/Home@2x.png" width="100%" class="img-fluid" alt="humans" />
+    <img id="man" src="assets/sitting-2@2x.png" width="100%" class="img-fluid" alt="humans" />
+    <img id="woman" src="assets/standing-6.png" width="100%" class="img-fluid" alt="humans" />
     <i id="mic" class="pl-0 pl-md-3 fas fa-microphone fa-3x text-primary"></i>
   </div>
 </template>
