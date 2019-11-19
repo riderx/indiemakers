@@ -32,15 +32,9 @@
               </div>
             </div>
           </div>
-          <div
-            class="custom-scroll bg-white px-3"
-            v-if="!loading"
-            v-bind:style="{ height: heightDiv}"
-          >
-            <div class="row bg-white py-3 border-bottom align-items-center">
-              <div class="col-12 px-md-5 pt-3">
-                <p class v-html="linkDescription"></p>
-              </div>
+          <div class="row" v-if="!loading">
+            <div class="col-12 bg-white px-md-5 pt-3">
+              <p class v-html="linkDescription"></p>
             </div>
           </div>
         </div>
@@ -83,7 +77,7 @@ export default {
       return linkifyHtml(text, {
         defaultProtocol: "https",
         attributes: null,
-        className: "linkified",
+        className: "linkified d-block",
         events: null,
         ignoreTags: [],
         nl2br: false,
@@ -122,9 +116,13 @@ export default {
       if (this.person && this.person.description) {
         const aeratedText = this.person.description
           .split(". ")
-          .join(".<br/>")
+          .join(".<br/><br/>")
           .split("!")
-          .join("!<br/>");
+          .join("!<br/><br/>")
+          .split(": ")
+          .join(":<br/>")
+          .split("Quelques références")
+          .join("<br/><br/><br/>Quelques références");
         return this.getTextLink(aeratedText);
       }
       return "";
@@ -180,6 +178,9 @@ export default {
   background: #9456b7;
 }
 
+.linkified {
+  display: block;
+}
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #df99d8 !important;
