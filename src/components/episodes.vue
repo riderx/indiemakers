@@ -49,7 +49,7 @@
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt(name)"
+                  @click="tweetIt()"
                 >🦚Voir</button>
               </div>
             </div>
@@ -128,7 +128,7 @@
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt(name)"
+                  @click="tweetIt()"
                 >🦚Voir</button>
               </div>
             </div>
@@ -155,7 +155,7 @@
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt(name)"
+                  @click="tweetIt()"
                 >🦚Voir</button>
               </div>
             </div>
@@ -220,7 +220,7 @@
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt(name)"
+                  @click="tweetIt()"
                 >🦚Voir</button>
               </div>
             </div>
@@ -403,8 +403,8 @@ export default {
     tooltipVote(person) {
       return `Voter pour avoir ${person.name} dans le podcast`;
     },
-    tweetIt(name) {
-      const text = `@${name}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakerfr 🚀.`;
+    tweetIt() {
+      const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakerfr 🚀.`;
       window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
       this.$modal.hide("added");
       this.$modal.hide("voted");
@@ -465,12 +465,14 @@ export default {
           .then(() => {
             this.$modal.hide("loading");
             person.votes += 1;
-            this.$modal.show("voted", { name: person.login });
+            this.currentName = "" + person.login;
+            this.$modal.show("voted");
           })
           .catch(error => {
             this.$modal.hide("loading");
             console.error("Error writing document: ", error);
-            this.$modal.show("fail-vote", { name: person.login });
+            this.currentName = "" + person.login;
+            this.$modal.show("fail-vote");
           });
       }
     },
@@ -508,14 +510,17 @@ export default {
             const added = addJson.data;
             this.$modal.hide("loading");
             if (added.error && added.error === "Already voted") {
-              this.$modal.show("fail-exist-vote", { name: this.addName });
+              this.currentName = "" + this.addName;
+              this.$modal.show("fail-exist-vote");
             } else if (added.error) {
               console.error(added);
               this.$modal.show("fail-add");
             } else if (added.done && added.done === "Voted") {
-              this.$modal.show("fail-exist", { name: this.addName });
+              this.currentName = "" + this.addName;
+              this.$modal.show("fail-exist");
             } else {
-              this.$modal.show("added", { name: this.addName });
+              this.currentName = "" + this.addName;
+              this.$modal.show("added");
             }
             this.addName = "";
           })
@@ -540,6 +545,7 @@ export default {
       loading: true,
       sizeHead: 0,
       addName: "",
+      currentName: "",
       people: []
     };
   },
