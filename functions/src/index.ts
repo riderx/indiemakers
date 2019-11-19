@@ -93,6 +93,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                 const newPerson = {
                     addedBy: uid,
                     addDate: new Date(),
+                    emailSend: true,
                     id_str: twUser.id_str,
                     name: twUser.name,
                     login: twUser.screen_name,
@@ -203,7 +204,7 @@ export const sendEmailWhenEpisodeIsRealised = functions.firestore
                 });
                 Promise.all(emailProm)
                     .then(() => {
-                        return person.update({ emailSend: true }).then(() => {
+                        return person.update({ emailSend: new Date() }).then(() => {
                             console.log('Email sended');
                         }).catch((error: any) => {
                             console.error('Error', error);
