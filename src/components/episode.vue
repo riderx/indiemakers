@@ -80,7 +80,7 @@
           class="col-12 col-md-6 py-md-4 px-md-5 order-1 order-md-2 text-center d-block d-md-none"
           v-if="!loading"
         >
-          <div class="row py-0 py-md-3 align-items-center">
+          <div class="row py-0 py-4 align-items-center">
             <div class="col-12 px-md-5 pt-1 pt-md-3">
               <h5 class="text-white">Ecoute sur tes plateformes préférés !</h5>
               <div class v-if="person.episodeSpotify">
