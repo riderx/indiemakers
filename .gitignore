@@ -22,3 +22,4 @@ yarn-error.log*
 dist
 functions/twitter_api.txt
 functions/src/twitter_api.ts
+functions/firebase-debug.log

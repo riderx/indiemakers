@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
 import * as nodemailer from 'nodemailer';
-import * as moment from 'moment';
+import { moment } from './moment';
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'indiemakerfr@gmail.com',
-    pass: 'z434YfksdM7KJy8M5LMyzN5YrKho'
+    pass: 'bandhuttseilovzy'
   }
 });
 

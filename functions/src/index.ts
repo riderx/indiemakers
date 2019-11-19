@@ -2,7 +2,7 @@ import { sendWithTemplate } from './email';
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { TwitterApiToken } from './twitter_api';
-import moment = require('moment');
+import { moment } from './moment';
 const Twitter = require('twitter');
 
 const client = new Twitter(TwitterApiToken);
@@ -158,15 +158,16 @@ export const calcVotesByPerson = functions.firestore
         return snapshot;
     });
 
-const sendEmail = (user: any, maker: any, subject: string, template: string, previewText: string) => {
+const sendEmail = (user: any, maker: any, makerId: string, subject: string, template: string, previewText: string) => {
     return new Promise((resolve, reject) => {
-        sendWithTemplate('martin@indiemaker.fr', user.email, subject, 'text', template, {
-            LINKEPISODE: `https://indiemaker.fr/#/episode/${maker.id}`,
+        sendWithTemplate('indiemakerfr@gmail.com', user.email, subject, 'text', template, {
+            LINKEPISODE: `https://indiemaker.fr/#/episode/${makerId}`,
             MC_PREVIEW_TEXT: previewText,
-            NAME: user.displayName || '',
+            NAME: user.displayName || 'Elon Musk',
             SUBJECT: subject,
-            DATE: moment(maker.addDate).format(),
-            NAMEMAKER: maker.name
+            DATE: moment(maker.addDate).fromNow(),
+            NAMEMAKER: maker.name,
+            LOGINMAKER: maker.login
         })
             .then(() => {
                 resolve(user);
@@ -194,24 +195,24 @@ export const sendEmailWhenEpisodeIsRealised = functions.firestore
                 .get();
             if (person && votes) {
                 const emailProm: Promise<any>[] = [];
-                const addedBy = getUser(person.addedBy);
-                emailProm.push(sendEmail(addedBy, person, 'Le maker que tu as ajouté est venue dans le podcast', 'remerciment_add', 'Je tenais a te remercier infiniment pour ca !'));
-                votes.docs.forEach((vote) => {
+                const addedBy = await getUser(person.addedBy);
+                emailProm.push(sendEmail(addedBy, person, personId, 'Le maker que tu as ajouté est venue dans le podcast', 'remerciment_add', 'Je tenais a te remercier infiniment pour ca !'));
+                for (const vote of votes.docs) {
                     if (vote.id !== person.addedBy) {
-                        const user = getUser(vote.id);
-                        emailProm.push(sendEmail(user, person, 'Grace a toi il est la !', 'remerciment_vote', 'Pour une fois ton vote compte !'));
+                        const user = await getUser(vote.id);
+                        emailProm.push(sendEmail(user, person, personId, 'Grace a toi il est la !', 'remerciment_vote', 'Pour une fois ton vote compte !'));
                     }
-                });
+                }
                 Promise.all(emailProm)
                     .then(() => {
-                        return person.update({ emailSend: new Date() }).then(() => {
+                        return person.set({ emailSend: new Date() }).then(() => {
                             console.log('Email sended');
                         }).catch((error: any) => {
-                            console.error('Error', error);
+                            console.error('Error update person', error);
                         });
                     })
                     .catch((err) => {
-                        console.error('Error', err);
+                        console.error('Error send all', err);
                     });
             } else {
                 console.error('No email to send');
