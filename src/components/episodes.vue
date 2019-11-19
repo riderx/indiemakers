@@ -455,10 +455,6 @@ export default {
     vote(person) {
       if (person.episodeSpotify) {
         this.$router.push(`/episode/${person.id}`);
-        // window.open(
-        //   `https://open.spotify.com/episode/${person.episodeSpotify}`,
-        //   "_blank"
-        // );
       } else if (!this.loggin) {
         this.openRegister();
       } else {
@@ -593,6 +589,9 @@ export default {
     // this.$modal.show("fail-vote");
     firebaseLib.auth().onAuthStateChanged(user => {
       this.loggin = user;
+      if (this.loggin.displayName === null) {
+        this.$router.push("/login");
+      }
     });
   },
   firestore: {

@@ -1,6 +1,8 @@
+import { sendWithTemplate } from './email';
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { TwitterApiToken } from './twitter_api';
+import moment = require('moment');
 const Twitter = require('twitter');
 
 const client = new Twitter(TwitterApiToken);
@@ -54,6 +56,12 @@ const getPerson = async (id_str: string): Promise<FirebaseFirestore.DocumentRefe
 }
 
 const getPersonById = async (id: string): Promise<FirebaseFirestore.DocumentReference> => {
+    return admin.firestore()
+        .collection(`people`)
+        .doc(id);
+}
+
+const getUserById = async (id: string): Promise<FirebaseFirestore.DocumentReference> => {
     return admin.firestore()
         .collection(`people`)
         .doc(id);
@@ -150,6 +158,68 @@ export const calcVotesByPerson = functions.firestore
                 });
             } else {
                 console.error('No votes');
+            }
+        }
+        return snapshot;
+    });
+
+const sendEmail = (user: any, maker: any, subject: string, template: string, previewText: string) => {
+    return new Promise((resolve, reject) => {
+        sendWithTemplate('martin@indiemaker.fr', user.email, subject, 'text', template, {
+            LINKEPISODE: `https://indiemaker.fr/#/episode/${maker.id}`,
+            MC_PREVIEW_TEXT: previewText,
+            NAME: user.displayName,
+            SUBJECT: subject,
+            DATE: moment(maker.addDate).format(),
+            NAMEMAKER: maker.name
+        })
+            .then(() => {
+                resolve(user);
+            }).catch((err: any) => {
+                console.error('Error send email', err);
+                reject(err);
+            })
+    });
+};
+
+const getUser = async (id: string) => {
+    return admin.auth()
+        .getUser(id);
+};
+
+export const sendEmailWhenEpisodeIsRealised = functions.firestore
+    .document('/people/{personId}')
+    .onUpdate(async (snapshot, context) => {
+        const person = snapshot.after.data();
+        if (person && person.description && person.episodeSpotify && !person.emailSend) {
+            const personId = context.params.personId;
+            // const id_str = person.id_str;
+            const votes = await admin.firestore()
+                .collection(`/people/${personId}/votes`)
+                .get();
+            if (person && votes) {
+                const emailProm: Promise<any>[] = [];
+                const addedBy = getUser(person.addedBy);
+                emailProm.push(sendEmail(addedBy, person, 'Le maker que tu as ajouté est venue dans le podcast', 'remerciment_add', 'Je tenais a te remercier infiniment pour ca !'));
+                votes.docs.forEach((vote) => {
+                    if (vote.id !== person.addedBy) {
+                        const user = getUser(vote.id);
+                        emailProm.push(sendEmail(user, person, 'Grace a toi il est la !', 'remerciment_vote', 'Pour une fois ton vote compte !'));
+                    }
+                });
+                Promise.all(emailProm)
+                    .then(() => {
+                        return person.update({ emailSend: true }).then(() => {
+                            console.log('Email sended');
+                        }).catch((error: any) => {
+                            console.error('Error', error);
+                        });
+                    })
+                    .catch((err) => {
+                        console.error('Error', err);
+                    });
+            } else {
+                console.error('No email to send');
             }
         }
         return snapshot;
