@@ -3,24 +3,6 @@
     <div class="container-fluid">
       <div class="row pt-md-5">
         <div class="col-12 offset-xl-1 col-xl-5 order-2 order-md-1">
-          <div v-if="!loading" class="row bg-success py-1 py-md-4">
-            <div class="col-4 pr-0 pr-md-5 cursor-pointer">
-              <img
-                :src="person.pic"
-                class="w-100 w-md-75 img-fluid rounded-circle"
-                alt="Logo person"
-              />
-            </div>
-            <div class="col pt-3 px-0 text-white">
-              <h1>#{{person.number}} {{person.name}}</h1>
-              <p
-                @click="openAccount(person.login)"
-                v-b-tooltip.hover
-                title="Voir le profils Twitter"
-                class="text-white"
-              >@{{person.login}}</p>
-            </div>
-          </div>
           <div class="row bg-white px-3" v-if="loading">
             <div class="col-12 p-5 text-center">
               <div
@@ -32,30 +14,86 @@
               </div>
             </div>
           </div>
+          <div v-if="!loading" class="row bg-success py-1 py-md-4">
+            <div class="col-3 pt-1 px-1 px-md-3">
+              <img
+                :src="person.pic"
+                class="w-100 w-md-75 img-fluid rounded-circle"
+                alt="Logo person"
+              />
+            </div>
+            <div class="col pt-3 px-0 text-white">
+              <h1>#{{person.number}} {{person.name}}</h1>
+              <div>
+                <p
+                  @click="openAccount(person.login)"
+                  v-b-tooltip.hover
+                  title="Voir le profils Twitter"
+                  class="text-white cursor-pointer fit-content"
+                >
+                  <i class="fab fa-twitter"></i>
+                  @{{person.login}}
+                </p>
+              </div>
+            </div>
+          </div>
           <div class="row" v-if="!loading">
             <div class="col-12 bg-white px-md-5 pt-3">
               <p class v-html="linkDescription"></p>
             </div>
           </div>
+          <div class="row bg-success py-1 py-md-4">
+            <div class="col pt-1 px-1 px-md-3 text-center">
+              <button
+                type="button"
+                class="btn btn-primary btn-lg bnt-block text-white px-4"
+                @click.passive="goEpisodes"
+              >🎧 Les autres Episodes</button>
+            </div>
+          </div>
         </div>
-        <div class="col-12 col-md-6 py-md-4 px-md-5 order-1 order-md-2 text-center" v-if="!loading">
-          <div class="row py-3 align-items-center">
-            <div class="col-12 px-md-5 pt-3 d-none d-md-block">
+        <div
+          class="col-12 col-md-6 py-md-4 px-md-5 order-1 order-md-2 text-center d-none d-md-block"
+          v-if="!loading"
+        >
+          <div class="row py-0 py-md-3 align-items-center position-fixed">
+            <div class="col-12 px-md-5 pt-3">
               <iframe :src="person.embed" width="100%" frameborder="0" scrolling="no"></iframe>
             </div>
-            <div class="col-12 px-md-5 pt-3">
-              <h3 class="text-white">Dispo aussi sur tes plateformes préférés !</h3>
-              <p class v-if="person.episodeSpotify">
+            <div class="col-12 px-md-5 pt-1 pt-md-3">
+              <h3 class="text-white d-none d-md-block">Aussi sur tes plateformes préférés !</h3>
+              <div class v-if="person.episodeSpotify">
                 <button
                   type="button"
                   @click="listenSpotify()"
-                  class="btn btn-primary btn-lg text-light py-3 px-4 h1"
+                  class="btn btn-transparent btn-lg text-light py-0 py-md-3 px-0 px-md-4 h1"
                   v-b-tooltip.hover
                   title="Ecouter l'épisode sur spotify"
                 >
                   <i class="fab fa-spotify fa-2x"></i>
                 </button>
-              </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-12 col-md-6 py-md-4 px-md-5 order-1 order-md-2 text-center d-block d-md-none"
+          v-if="!loading"
+        >
+          <div class="row py-0 py-md-3 align-items-center">
+            <div class="col-12 px-md-5 pt-1 pt-md-3">
+              <h5 class="text-white">Ecoute sur tes plateformes préférés !</h5>
+              <div class v-if="person.episodeSpotify">
+                <button
+                  type="button"
+                  @click="listenSpotify()"
+                  class="btn btn-transparent btn-lg text-light py-0 py-md-3 px-0 px-md-4 h1"
+                  v-b-tooltip.hover
+                  title="Ecouter l'épisode sur spotify"
+                >
+                  <i class="fab fa-spotify fa-2x"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -96,6 +134,9 @@ export default {
     },
     openAccount(name) {
       window.open(`https://twitter.com/${name}`, "_blank");
+    },
+    goEpisodes() {
+      this.$router.push("/episodes");
     },
     setSizeHead() {
       if (document.getElementById("app")) {
@@ -173,6 +214,10 @@ export default {
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
+}
+
+.fit-content {
+  width: fit-content;
 }
 
 /* Handle */
