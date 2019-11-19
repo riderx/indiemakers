@@ -43,12 +43,21 @@
             </div>
           </div>
           <div class="row bg-success py-4">
-            <div class="col pt-1 px-1 px-md-3 text-center">
+            <div class="col-12 pt-1 px-1 px-md-3 text-center">
               <button
                 type="button"
                 class="btn btn-primary btn-lg bnt-block text-white px-4"
                 @click.passive="goEpisodes"
               >🎧 Les autres Episodes</button>
+            </div>
+            <div class="col-12 pt-3 px-1 px-md-3 text-center d-block d-md-none">
+              <button
+                type="button"
+                class="btn btn-primary btn-lg bnt-block text-white px-4"
+                v-b-tooltip.hover
+                title="Partager via twitter"
+                @click="tweetIt()"
+              >🦚Partager</button>
             </div>
           </div>
         </div>
@@ -92,6 +101,7 @@
                   <i class="fas fa-podcast fa-2x"></i>
                 </button>
               </div>
+              <h5 class="text-white">Si tu aime ❤️</h5>
               <button
                 type="button"
                 class="btn btn-primary btn-lg text-light m-3 py-0 py-md-3 px-0 px-md-4 h1"
