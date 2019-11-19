@@ -168,7 +168,7 @@ export default {
     },
     tweetIt() {
       // https://twitter.com/intent/tweet?text=J%27%C3%A9coute%20le%20podcast%20@indiemakerfr%20avec%20@[LOGINMAKER]%20[LINKEPISODE]
-      const text = `J'écoute le podcast @indiemakerfr avec ${this.person.login} 🚀https://indiemaker.fr/episode/${this.id}`;
+      const text = `J'écoute le podcast @indiemakerfr avec ${this.person.login} 🚀https://indiemaker.fr/%23/episode/${this.id}`;
       window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
       this.$modal.hide("added");
       this.$modal.hide("voted");
