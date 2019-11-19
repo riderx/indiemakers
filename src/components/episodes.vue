@@ -365,7 +365,8 @@
                   v-b-tooltip.hover
                   :title="tooltipVote(person)"
                 >
-                  <div>&#9650;</div>
+                  <!-- <div>&#9650;</div> -->
+                  <i class="fas fa-caret-up fa-2x px-1"></i>
                   {{person.votes}}
                 </button>
                 <button
@@ -375,7 +376,7 @@
                   v-b-tooltip.hover
                   title="Ecouter l'épisode"
                 >
-                  <i class="fas fa-caret-right fa-2x"></i>
+                  <i class="fas fa-caret-right fa-2x px-2"></i>
                 </button>
               </div>
               <div class="col-12 px-md-5 pt-3">
