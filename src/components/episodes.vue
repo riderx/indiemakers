@@ -49,7 +49,7 @@
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt()"
+                  @click="tweetIt(name)"
                 >🦚Voir</button>
               </div>
             </div>
@@ -101,7 +101,7 @@
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt()"
+                  @click="tweetIt(name)"
                 >🦚Voir</button>
               </div>
             </div>
@@ -128,7 +128,7 @@
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt()"
+                  @click="tweetIt(name)"
                 >🦚Voir</button>
               </div>
             </div>
@@ -155,7 +155,7 @@
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt()"
+                  @click="tweetIt(name)"
                 >🦚Voir</button>
               </div>
             </div>
@@ -220,7 +220,7 @@
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt()"
+                  @click="tweetIt(name)"
                 >🦚Voir</button>
               </div>
             </div>
@@ -403,10 +403,9 @@ export default {
     tooltipVote(person) {
       return `Voter pour avoir ${person.name} dans le podcast`;
     },
-    tweetIt() {
-      const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakerfr 🚀.`;
+    tweetIt(name) {
+      const text = `@${name}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakerfr 🚀.`;
       window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
-      this.currentName = "";
       this.$modal.hide("added");
       this.$modal.hide("voted");
     },
@@ -449,13 +448,13 @@ export default {
       }
     },
     vote(person) {
-      if (!this.loggin) {
-        this.openRegister();
-      } else if (person.episodeSpotify) {
+      if (person.episodeSpotify) {
         window.open(
-          `https://open.spotify.com/episode/${person.episodeSpotify}`,
+          `https://open.spotify.com/show/${person.episodeSpotify}`,
           "_blank"
         );
+      } else if (!this.loggin) {
+        this.openRegister();
       } else {
         this.$modal.show("loading");
         db.collection(`people/${person.id}/votes`)
@@ -466,14 +465,12 @@ export default {
           .then(() => {
             this.$modal.hide("loading");
             person.votes += 1;
-            this.currentName = person.login;
-            this.$modal.show("voted");
+            this.$modal.show("voted", { name: person.login });
           })
           .catch(error => {
             this.$modal.hide("loading");
             console.error("Error writing document: ", error);
-            this.currentName = person.login;
-            this.$modal.show("fail-vote");
+            this.$modal.show("fail-vote", { name: person.login });
           });
       }
     },
@@ -511,17 +508,14 @@ export default {
             const added = addJson.data;
             this.$modal.hide("loading");
             if (added.error && added.error === "Already voted") {
-              this.currentName = "" + this.addName;
-              this.$modal.show("fail-exist-vote");
+              this.$modal.show("fail-exist-vote", { name: this.addName });
             } else if (added.error) {
               console.error(added);
               this.$modal.show("fail-add");
             } else if (added.done && added.done === "Voted") {
-              this.currentName = "" + this.addName;
-              this.$modal.show("fail-exist");
+              this.$modal.show("fail-exist", { name: this.addName });
             } else {
-              this.currentName = "" + this.addName;
-              this.$modal.show("added");
+              this.$modal.show("added", { name: this.addName });
             }
             this.addName = "";
           })
@@ -546,7 +540,6 @@ export default {
       loading: true,
       sizeHead: 0,
       addName: "",
-      currentName: "",
       people: []
     };
   },

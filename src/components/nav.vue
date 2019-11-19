@@ -31,7 +31,7 @@ export default {
       icones: [
         {
           title: "Spotify",
-          lien: "https://soundcloud.com/indiemakerfr",
+          lien: "https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg",
           class: "fab fa-spotify fa-2x"
         },
         {
