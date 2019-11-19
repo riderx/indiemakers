@@ -366,7 +366,7 @@
                 <button
                   type="button"
                   v-if="person.episodeSpotify"
-                  class="btn btn-primary btn-lg text-light px-4 h1"
+                  class="btn btn-primary btn-lg text-light p-3 h1"
                   v-b-tooltip.hover
                   title="Ecouter l'épisode"
                 >
