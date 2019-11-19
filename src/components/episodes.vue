@@ -450,7 +450,7 @@ export default {
     vote(person) {
       if (person.episodeSpotify) {
         window.open(
-          `https://open.spotify.com/show/${person.episodeSpotify}`,
+          `https://open.spotify.com/episode/${person.episodeSpotify}`,
           "_blank"
         );
       } else if (!this.loggin) {
