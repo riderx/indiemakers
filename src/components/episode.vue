@@ -121,6 +121,8 @@ export default {
           .join("!<br/><br/>")
           .split(": ")
           .join(":<br/>")
+          .split(":)")
+          .join(":) <br/>")
           .split("Quelques références")
           .join("<br/><br/><br/>Quelques références");
         return this.getTextLink(aeratedText);
