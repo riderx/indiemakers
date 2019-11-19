@@ -168,7 +168,7 @@ const sendEmail = (user: any, maker: any, subject: string, template: string, pre
         sendWithTemplate('martin@indiemaker.fr', user.email, subject, 'text', template, {
             LINKEPISODE: `https://indiemaker.fr/#/episode/${maker.id}`,
             MC_PREVIEW_TEXT: previewText,
-            NAME: user.displayName,
+            NAME: user.displayName || '',
             SUBJECT: subject,
             DATE: moment(maker.addDate).format(),
             NAMEMAKER: maker.name

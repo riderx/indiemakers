@@ -3,12 +3,10 @@ import * as nodemailer from 'nodemailer';
 import * as moment from 'moment';
 
 const transporter = nodemailer.createTransport({
-  host: '',
-  port: 465,
-  secure: true,
+  service: 'gmail',
   auth: {
-    user: '',
-    pass: ''
+    user: 'indiemakerfr@gmail.com',
+    pass: 'z434YfksdM7KJy8M5LMyzN5YrKho'
   }
 });
 
