@@ -61,12 +61,6 @@ const getPersonById = async (id: string): Promise<FirebaseFirestore.DocumentRefe
         .doc(id);
 }
 
-const getUserById = async (id: string): Promise<FirebaseFirestore.DocumentReference> => {
-    return admin.firestore()
-        .collection(`people`)
-        .doc(id);
-}
-
 const twUserPromise = (screen_name: string): Promise<{
     id_str: string,
     name: string,
