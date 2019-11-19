@@ -336,12 +336,7 @@
               v-bind:key="person.id"
               v-for="person in people"
             >
-              <div
-                class="col-4 pr-0 pr-md-5 cursor-pointer"
-                @click="openAccount(person.login)"
-                v-b-tooltip.hover
-                title="Voir le profils Twitter"
-              >
+              <div class="col-4 pr-0 pr-md-5">
                 <img
                   :src="person.pic"
                   class="w-100 w-md-75 img-fluid rounded-circle"
@@ -350,12 +345,17 @@
               </div>
               <div class="col-5 col-md-6">
                 <h3>{{person.name}}</h3>
-                <p
-                  @click="openAccount(person.login)"
-                  v-b-tooltip.hover
-                  title="Voir le profils Twitter"
-                  class="text-secondary"
-                >@{{person.login}}</p>
+                <div>
+                  <p
+                    @click="openAccount(person.login)"
+                    v-b-tooltip.hover
+                    title="Ouvrir son profils Twitter"
+                    class="text-secondary fit-content"
+                  >
+                    <i class="fab fa-twitter"></i>
+                    @{{person.login}}
+                  </p>
+                </div>
               </div>
               <div class="col-3 col-md-2" @click="vote(person)">
                 <button
@@ -623,6 +623,10 @@ export default {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #9456b7;
+}
+
+.fit-content {
+  width: fit-content;
 }
 
 /* Handle on hover */

@@ -28,7 +28,7 @@
                 <p
                   @click="openAccount(person.login)"
                   v-b-tooltip.hover
-                  title="Voir le profils Twitter"
+                  title="Ouvrir son profils Twitter"
                   class="text-white cursor-pointer fit-content"
                 >
                   <i class="fab fa-twitter"></i>
