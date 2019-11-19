@@ -350,7 +350,12 @@
               </div>
               <div class="col-5 col-md-6">
                 <h3>{{person.name}}</h3>
-                <p class="text-secondary">@{{person.login}}</p>
+                <p
+                  @click="openAccount(person.login)"
+                  v-b-tooltip.hover
+                  title="Voir le profils Twitter"
+                  class="text-secondary"
+                >@{{person.login}}</p>
               </div>
               <div class="col-3 col-md-2" @click="vote(person)">
                 <button
@@ -366,11 +371,11 @@
                 <button
                   type="button"
                   v-if="person.episodeSpotify"
-                  class="btn btn-primary btn-lg text-light p-3 h1"
+                  class="btn btn-primary btn-lg text-light py-3 px-4 h1"
                   v-b-tooltip.hover
                   title="Ecouter l'épisode"
                 >
-                  <i class="fab fa-spotify fa-2x"></i>
+                  <i class="fas fa-caret-right fa-2x"></i>
                 </button>
               </div>
               <div class="col-12 px-md-5 pt-3">
@@ -449,10 +454,11 @@ export default {
     },
     vote(person) {
       if (person.episodeSpotify) {
-        window.open(
-          `https://open.spotify.com/episode/${person.episodeSpotify}`,
-          "_blank"
-        );
+        this.$router.push(`/episode/${person.id}`);
+        // window.open(
+        //   `https://open.spotify.com/episode/${person.episodeSpotify}`,
+        //   "_blank"
+        // );
       } else if (!this.loggin) {
         this.openRegister();
       } else {

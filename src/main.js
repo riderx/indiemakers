@@ -4,6 +4,7 @@ import App from './app.vue'
 import Home from './components/home.vue'
 import Login from './components/login.vue'
 import Episodes from './components/episodes.vue'
+import Episode from './components/episode.vue'
 import { firestorePlugin } from "vuefire";
 import VModal from "vue-js-modal";
 import BootstrapVue from "bootstrap-vue";
@@ -31,6 +32,11 @@ const routes = [
     path: '/episodes',
     name: 'Episodes',
     component: Episodes,
+  },
+  {
+    path: '/episode/:id', props: true ,
+    name: 'Episode',
+    component: Episode,
   },
 ];
 
