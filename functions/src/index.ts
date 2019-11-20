@@ -92,7 +92,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                 console.log('user', twUser);
                 const newPerson = {
                     addedBy: uid,
-                    addDate: new Date(),
+                    addDate: new Date().toISOString(),
                     emailSend: true,
                     id_str: twUser.id_str,
                     name: twUser.name,
@@ -160,12 +160,16 @@ export const calcVotesByPerson = functions.firestore
 
 const sendEmail = (user: any, maker: any, makerId: string, subject: string, template: string, previewText: string) => {
     return new Promise((resolve, reject) => {
+        const linkEp = `https://indiemaker.fr/#/episode/${makerId}`;
+        const tweet = `J'écoute le podcast @indiemakerfr avec @${maker.login} 🚀 ${linkEp}`
+        const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`
         sendWithTemplate('indiemakerfr@gmail.com', user.email, subject, 'text', template, {
-            LINKEPISODE: `https://indiemaker.fr/%23/episode/${makerId}`,
+            LINKEPISODE: linkEp,
+            TWEETLINK: tweetLink,
             MC_PREVIEW_TEXT: previewText,
             NAME: user.displayName || 'Elon Musk',
             SUBJECT: subject,
-            DATE: moment(maker.addDate).fromNow(),
+            DATE: moment(Date.parse(maker.addDate)).fromNow(),
             NAMEMAKER: maker.name,
             LOGINMAKER: maker.login
         })
@@ -208,7 +212,7 @@ export const sendEmailWhenEpisodeIsRealised = functions.firestore
                         return admin.firestore()
                             .collection(`/people`)
                             .doc(personId)
-                            .update({ emailSend: new Date() }).then(() => {
+                            .update({ emailSend: new Date().toISOString() }).then(() => {
                                 console.log('Email sended');
                             }).catch((error: any) => {
                                 console.error('Error update person', error);

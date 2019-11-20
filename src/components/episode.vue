@@ -108,7 +108,7 @@
                 v-b-tooltip.hover
                 title="Partager via twitter"
                 @click="tweetIt()"
-              >🦚Partager</button>
+              >🦚Voir</button>
             </div>
           </div>
         </div>
@@ -177,9 +177,12 @@ export default {
       }
     },
     tweetIt() {
-      // https://twitter.com/intent/tweet?text=J%27%C3%A9coute%20le%20podcast%20@indiemakerfr%20avec%20@[LOGINMAKER]%20[LINKEPISODE]
-      const text = `J'écoute le podcast @indiemakerfr avec ${this.person.login} 🚀https://indiemaker.fr/%23/episode/${this.id}`;
-      window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
+      const linkEp = `https://indiemaker.fr/#/episode/${this.id}`;
+      const tweet = `J'écoute le podcast @indiemakerfr avec @${this.person.login} 🚀 ${linkEp}`;
+      const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        tweet
+      )}`;
+      window.open(tweetLink, "_blank");
       this.$modal.hide("added");
       this.$modal.hide("voted");
     }
