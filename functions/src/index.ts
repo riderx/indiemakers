@@ -92,7 +92,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                 console.log('user', twUser);
                 const newPerson = {
                     addedBy: uid,
-                    addDate: new Date().toISOString(),
+                    addDate: new Date(),
                     emailSend: true,
                     id_str: twUser.id_str,
                     name: twUser.name,
@@ -163,13 +163,13 @@ const sendEmail = (user: any, maker: any, makerId: string, subject: string, temp
         const linkEp = `https://indiemaker.fr/#/episode/${makerId}`;
         const tweet = `J'écoute le podcast @indiemakerfr avec @${maker.login} 🚀 ${linkEp}`
         const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`
-        sendWithTemplate('indiemakerfr@gmail.com', user.email, subject, 'text', template, {
+        sendWithTemplate('indiemakerfr@gmail.com', user.email, subject, previewText, template, {
             LINKEPISODE: linkEp,
             TWEETLINK: tweetLink,
             MC_PREVIEW_TEXT: previewText,
             NAME: user.displayName || 'Elon Musk',
             SUBJECT: subject,
-            DATE: moment(Date.parse(maker.addDate)).fromNow(),
+            DATE: moment(maker.addDate.toMillis()).fromNow(),
             NAMEMAKER: maker.name,
             LOGINMAKER: maker.login
         })
@@ -212,7 +212,7 @@ export const sendEmailWhenEpisodeIsRealised = functions.firestore
                         return admin.firestore()
                             .collection(`/people`)
                             .doc(personId)
-                            .update({ emailSend: new Date().toISOString() }).then(() => {
+                            .update({ emailSend: new Date() }).then(() => {
                                 console.log('Email sended');
                             }).catch((error: any) => {
                                 console.error('Error update person', error);
