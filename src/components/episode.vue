@@ -189,7 +189,7 @@ export default {
       }
     },
     bmc() {
-      window.open("https://www.buymeacoffee.com/forgr", "_blank");
+      window.open("https://www.buymeacoffee.com/indiemakerfr", "_blank");
     },
     tweetIt() {
       const linkEp = `https://indiemaker.fr/#/episode/${this.id}`;
