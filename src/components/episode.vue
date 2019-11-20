@@ -108,7 +108,7 @@
                 v-b-tooltip.hover
                 title="Partager via twitter"
                 @click="tweetIt()"
-              >🦚Voir</button>
+              >🦚Partage</button>
               <button
                 type="button"
                 class="btn btn-primary btn-lg text-light m-3 py-0 py-md-3 px-0 px-md-4 h1"
