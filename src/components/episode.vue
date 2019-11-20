@@ -109,6 +109,18 @@
                 title="Partager via twitter"
                 @click="tweetIt()"
               >🦚Voir</button>
+              <button
+                type="button"
+                class="btn btn-primary btn-lg text-light m-3 py-0 py-md-3 px-0 px-md-4 h1"
+                v-b-tooltip.hover
+                title="buymeacoffee"
+                @click="bmc()"
+              >
+                <img
+                  src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+                  alt="Buy me a coffee"
+                /> Paye moi un café
+              </button>
             </div>
           </div>
         </div>
@@ -175,6 +187,9 @@ export default {
       if (document.getElementById("app")) {
         this.sizeHead = document.getElementById("app").offsetHeight;
       }
+    },
+    bmc() {
+      window.open("https://www.buymeacoffee.com/forgr", "_blank");
     },
     tweetIt() {
       const linkEp = `https://indiemaker.fr/#/episode/${this.id}`;
