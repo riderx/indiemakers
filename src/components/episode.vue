@@ -59,6 +59,20 @@
                 @click="tweetIt()"
               >🦚Partager</button>
             </div>
+            <div class="col-12 pt-3 px-1 px-md-3 text-center d-block d-md-none">
+              <button
+                type="button"
+                class="btn btn-primary btn-lg text-light m-3 py-0 py-md-3 px-0 px-md-4 h1"
+                v-b-tooltip.hover
+                title="buymeacoffee"
+                @click="bmc()"
+              >
+                <img
+                  src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+                  alt="Buy me a coffee"
+                /> Paye moi un café
+              </button>
+            </div>
           </div>
         </div>
         <div
