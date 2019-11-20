@@ -84,18 +84,16 @@
               <iframe :src="person.embed" width="100%" frameborder="0" scrolling="no"></iframe>
             </div>
             <div class="col-12 px-md-5 pt-1 pt-md-3">
-              <h3 class="text-white d-none d-md-block">Aussi sur tes plateformes préférés !</h3>
+              <h3 class="pt-2 text-white d-none d-md-block">Aussi sur tes plateformes préférées !</h3>
               <div class>
                 <button
                   type="button"
                   v-if="person.episodeSpotify"
                   @click="listenExternal(person.episodeSpotify)"
-                  class="btn btn-transparent btn-lg text-light m-3 py-0 py-md-3 px-0 px-md-4 h1"
+                  class="btn btn-primary btn-lg text-light m-3 py-0 py-md-3 px-0 px-md-4 h1"
                   v-b-tooltip.hover
                   title="Ecouter l'épisode sur spotify"
-                >
-                  <i class="fab fa-spotify fa-2x"></i>
-                </button>
+                >Spotify</button>
                 <button
                   type="button"
                   v-if="person.episodePocketCast"
@@ -115,7 +113,7 @@
                   <i class="fas fa-podcast fa-2x"></i>
                 </button>
               </div>
-              <h5 class="text-white">Si tu aime ❤️</h5>
+              <h3 class="pt-2 text-white">Si tu aimes ❤️</h3>
               <button
                 type="button"
                 class="btn btn-primary btn-lg text-light m-3 py-0 py-md-3 px-0 px-md-4 h1"
@@ -133,6 +131,7 @@
                 <img
                   src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
                   alt="Buy me a coffee"
+                  class="bmc"
                 /> Paye moi un café
               </button>
             </div>
@@ -299,6 +298,9 @@ export default {
 
 .linkified {
   display: block;
+}
+.bmc {
+  height: 20px;
 }
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
