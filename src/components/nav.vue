@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-light bg-transparent">
       <a class="navbar-brand" href="#" @click="openPage('/')">
-        <img :src="logo.source" :id="logo.title" class="d-inline-block align-top" alt />
+        <img :src="logo.source" :id="logo.title" class="d-inline-block align-top" :alt="logo.title" />
       </a>
       <ul class="list-group list-group-horizontal">
         <li
