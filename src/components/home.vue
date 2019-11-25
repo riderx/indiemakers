@@ -29,19 +29,19 @@
       <div class="col-12 pt-0 px-md-5 py-4 order-3 text-white">
         <h5>Mes autres projets:</h5>
         <a
-          class="text-white d-block pt-1"
+          class="text-white d-block pt-3 pb-2"
           target="_blank"
           rel="noreferrer"
           href="https://forgr.ee"
         >Forgr.ee | Agence de creation de MVP pour entrepreneurs.</a>
         <a
-          class="text-white d-block pt-1"
+          class="text-white d-block pt-3 pb-2"
           target="_blank"
           rel="noreferrer"
           href="https://bewise.love"
         >Bewise | Une citation par jour simple et bienveillante.</a>
         <a
-          class="text-white d-block pt-1"
+          class="text-white d-block pt-3 pb-2"
           target="_blank"
           rel="noreferrer"
           href="https://apps.apple.com/us/app/captime-crossfit-timer/id1369288585"
