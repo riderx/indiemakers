@@ -87,7 +87,12 @@
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import { firebaseLib } from "../utils/db";
 import illu from "./illu.vue";
+import { firestorePlugin } from "vuefire";
+import Vue from "vue";
+import VModal from "vue-js-modal";
 
+Vue.use(VModal);
+Vue.use(firestorePlugin);
 export default {
   components: {
     illu

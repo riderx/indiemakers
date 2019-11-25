@@ -65,8 +65,7 @@
               <div>
                 <p
                   @click="openAccount(person.login)"
-                  v-b-tooltip.hover
-                  title="Ouvrir son profils Twitter"
+                  v-tooltip="'Ouvrir son profils Twitter'"
                   class="text-white cursor-pointer fit-content"
                 >
                   <i class="fab fa-twitter"></i>
@@ -86,57 +85,49 @@
                 type="button"
                 @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
                 class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
-                v-b-tooltip.hover
-                title="Ecouter l'épisode sur spotify"
+                v-tooltip="'Ecouter l\'épisode sur spotify'"
               >Spotify</button>
               <button
                 type="button"
                 @click="listenExternal('https://deezer.com/show/689072')"
                 class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
-                v-b-tooltip.hover
-                title="Ecouter l'épisode sur Deezer"
+                v-tooltip="'Ecouter l\'épisode sur Deezer'"
               >Deezer</button>
               <button
                 type="button"
                 @click="listenExternal('https://pca.st/yjcdxg09')"
                 class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
-                v-b-tooltip.hover
-                title="Ecouter l'épisode sur PocketCast"
+                v-tooltip="'Ecouter l\'épisode sur PocketCast'"
               >Pocket cast</button>
               <button
                 type="button"
                 @click="copyTextToClipboard('https://anchor.fm/s/414d1d4/podcast/rss')"
                 class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
-                v-b-tooltip.hover
-                title="Copier le flux RSS"
+                v-tooltip="'C\'opier le flux RSS'"
               >RSS</button>
               <button
                 type="button"
                 @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
                 class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
-                v-b-tooltip.hover
-                title="Ecouter l'épisode sur Apple podcast"
+                v-tooltip="'Ecouter l\'épisode sur Apple podcast'"
               >Apple</button>
               <button
                 type="button"
                 @click="listenExternal('https://www.breaker.audio/indie-maker-france')"
                 class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
-                v-b-tooltip.hover
-                title="Ecouter l'épisode sur Breaker podcast"
+                v-tooltip="'Ecouter l\'épisode sur Breaker podcast'"
               >Breaker</button>
               <button
                 type="button"
                 @click="listenExternal('https://podcasts.google.com/?feed=aHR0cHM6Ly9hbmNob3IuZm0vcy80MTRkMWQ0L3BvZGNhc3QvcnNz')"
                 class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
-                v-b-tooltip.hover
-                title="Ecouter l'épisode sur Google podcast"
+                v-tooltip="'Ecouter l\'épisode sur Google podcast'"
               >Google</button>
               <button
                 type="button"
                 @click="listenExternal('https://radiopublic.com/indie-maker-france-60NJEy')"
                 class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
-                v-b-tooltip.hover
-                title="Ecouter l'épisode sur Radio Public"
+                v-tooltip="'Ecouter l\'épisode sur Radio Public'"
               >Radio Public</button>
             </div>
             <div class="col-12 pt-1 px-1 px-md-3 text-center">
@@ -151,8 +142,7 @@
               <button
                 type="button"
                 class="btn btn-primary btn-lg bnt-block text-white m-1 m-md-3 px-4"
-                v-b-tooltip.hover
-                title="Partager via twitter"
+                v-tooltip="'Partager via twitter'"
                 @click="tweetIt()"
               >🦚Partage</button>
             </div>
@@ -160,8 +150,7 @@
               <button
                 type="button"
                 class="btn btn-primary btn-lg bnt-block text-white m-1 m-md-3 px-4"
-                v-b-tooltip.hover
-                title="buymeacoffee"
+                v-tooltip="'buymeacoffee'"
                 @click="bmc()"
               >
                 <img
@@ -182,15 +171,13 @@
               <button
                 type="button"
                 class="btn btn-primary btn-lg text-light m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
-                v-b-tooltip.hover
-                title="Partager via twitter"
+                v-tooltip="'Partager via twitter'"
                 @click="tweetIt()"
               >🦚Partage</button>
               <button
                 type="button"
                 class="btn btn-primary btn-lg text-light m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
-                v-b-tooltip.hover
-                title="buymeacoffee"
+                v-tooltip="'buymeacoffee'"
                 @click="bmc()"
               >
                 <img
@@ -211,7 +198,15 @@
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import { db, firebaseLib } from "../utils/db";
 import linkifyHtml from "linkifyjs/html";
+import Tooltip from "vue-directive-tooltip";
+import "vue-directive-tooltip/dist/vueDirectiveTooltip.css";
+import { firestorePlugin } from "vuefire";
+import Vue from "vue";
+import VModal from "vue-js-modal";
 
+Vue.use(Tooltip);
+Vue.use(VModal);
+Vue.use(firestorePlugin);
 export default {
   components: {},
   props: ["id"],

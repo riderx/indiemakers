@@ -7,6 +7,8 @@
 
 <script>
 import NavBar from "./components/nav.vue";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style/custom.boostrap.css";
 
 export default {
   name: "app",
@@ -27,6 +29,7 @@ export default {
 <style>
 @font-face {
   font-family: "Rex Bold";
+  font-display: swap;
   src: url("/assets/fonts/Rex-Bold.woff2") format("woff2"),
     url("/assets/fonts/Rex-Bold.woff") format("woff");
 }

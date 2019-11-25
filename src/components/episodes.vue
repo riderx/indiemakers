@@ -307,8 +307,7 @@
               <button
                 type="button"
                 class="btn btn-primary btn-lg text-light px-3 px-md-4 display-1"
-                v-b-tooltip.hover
-                title="Ajouter un·e maker"
+                v-tooltip="'Ajouter un·e maker'"
                 @click="showAddForm()"
               >
                 <strong>+</strong>
@@ -348,8 +347,7 @@
                 <div>
                   <p
                     @click="openAccount(person.login)"
-                    v-b-tooltip.hover
-                    title="Ouvrir son profils Twitter"
+                    v-tooltip="'Ouvrir son profils Twitter'"
                     class="text-secondary fit-content"
                   >
                     <i class="fab fa-twitter"></i>
@@ -362,8 +360,7 @@
                   type="button"
                   v-if="!person.episodeSpotify"
                   class="btn btn-primary btn-lg text-light py-0 py-md-2 px-2 px-md-4 h1"
-                  v-b-tooltip.hover
-                  :title="tooltipVote(person)"
+                  v-tooltip="tooltipVote(person)"
                 >
                   <!-- <div>&#9650;</div> -->
                   <i class="fas fa-caret-up fa-2x px-1"></i>
@@ -373,8 +370,7 @@
                   type="button"
                   v-if="person.episodeSpotify"
                   class="btn btn-primary btn-lg text-light py-1 px-2 py-md-3 px-md-4 h1"
-                  v-b-tooltip.hover
-                  title="Ecouter l'épisode"
+                  v-tooltip="'Ecouter l\'épisode'"
                 >
                   <i class="fas fa-caret-right fa-2x px-2"></i>
                 </button>
@@ -396,8 +392,17 @@
 <script>
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import illu from "./illu.vue";
+import Vue from "vue";
 import { db, firebaseLib } from "../utils/db";
 import linkifyHtml from "linkifyjs/html";
+import Tooltip from "vue-directive-tooltip";
+import "vue-directive-tooltip/dist/vueDirectiveTooltip.css";
+import { firestorePlugin } from "vuefire";
+import VModal from "vue-js-modal";
+
+Vue.use(Tooltip);
+Vue.use(VModal);
+Vue.use(firestorePlugin);
 
 const addTwiterUser = firebaseLib.functions().httpsCallable("addTwiterUser");
 

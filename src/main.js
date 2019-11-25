@@ -5,15 +5,11 @@ const Home = () => import('./components/home.vue')
 const Login = () => import('./components/login.vue')
 const Episodes = () => import('./components/episodes.vue')
 const Episode = () => import('./components/episode.vue')
-import { firestorePlugin } from "vuefire";
-import VModal from "vue-js-modal";
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './style/custom.boostrap.css';
 import './registerServiceWorker'
 
 Vue.use(VueRouter);
-Vue.use(firestorePlugin);
-Vue.use(VModal);
+// Vue.use(firestorePlugin);
+// Vue.use(VModal);
 
 const routes = [
   {
