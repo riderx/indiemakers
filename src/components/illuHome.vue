@@ -1,7 +1,7 @@
 <template>
-  <div class="w-100 h-100">
+  <div class="w-100 h-100 illu">
     <img
-      id="background pages"
+      id="background-pages"
       src="assets/background.webp"
       width="100%"
       class="img-fluid"
@@ -20,15 +20,14 @@ export default {
 </script>
 
 <style scoped>
-#background {
-  position: absolute;
-  width: 80%;
-  z-index: -9999;
+.illu {
+  max-height: 500px;
 }
+
 #mic {
   position: absolute;
   width: 4em;
-  top: 30%;
+  top: 50%;
   left: 50%;
   animation: animationMic 5s;
   animation-iteration-count: 1;
@@ -93,80 +92,81 @@ export default {
     transform: translate(0px, 0px);
   }
 }
-
-@media (min-width: 420px) and (max-width: 800px) {
-  #man {
-    position: absolute;
-    width: 27%;
-    top: 25%;
-    left: 26%;
-  }
-  #woman {
-    position: absolute;
-    width: 23%;
-    top: 25%;
-    left: 40%;
-  }
-  #background {
-    position: relative;
-    top: 10%;
-    left: 20%;
-    width: 60%;
-    height: auto;
-  }
-  #mic {
-    position: absolute;
-    width: 5%;
-  }
-}
-@media (min-width: 800px) and (max-width: 1600px) {
-  #man {
-    position: absolute;
-    width: 27%;
-    top: 15%;
-    left: 26%;
-  }
-  #woman {
-    position: absolute;
-    width: 23%;
-    top: 15%;
-    left: 40%;
-  }
-  #background {
-    position: relative;
-    top: unset;
-    left: unset;
-    width: 100%;
-    height: auto;
-  }
-  #mic {
-    position: absolute;
-    top: 15%;
-    width: 5%;
-  }
-}
-
 @media only screen and (max-width: 420px) {
   #man {
     position: absolute;
     width: 27%;
-    top: 25%;
+    top: 55%;
     left: 26%;
   }
   #woman {
     position: absolute;
     width: 23%;
-    top: 25%;
+    top: 55%;
     left: 40%;
   }
-  #background {
-    position: relative;
-    top: 10%;
-    left: 20%;
-    width: 60%;
-    height: auto;
-  }
+
   #mic {
+    width: 5%;
+  }
+}
+@media (min-width: 420px) and (max-width: 800px) {
+  #man {
+    position: absolute;
+    width: 27%;
+    top: 50%;
+    left: 26%;
+  }
+  #woman {
+    position: absolute;
+    width: 23%;
+    top: 50%;
+    left: 40%;
+  }
+
+  #mic {
+    position: absolute;
+    top: 50%;
+    width: 5%;
+  }
+}
+@media (min-width: 800px) and (max-width: 1200px) {
+  #man {
+    position: absolute;
+    width: 27%;
+    top: 10%;
+    left: 26%;
+  }
+  #woman {
+    position: absolute;
+    width: 23%;
+    top: 10%;
+    left: 40%;
+  }
+
+  #mic {
+    position: absolute;
+    top: 10%;
+    width: 5%;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1600px) {
+  #man {
+    position: absolute;
+    width: 27%;
+    top: 35%;
+    left: 26%;
+  }
+  #woman {
+    position: absolute;
+    width: 23%;
+    top: 35%;
+    left: 50%;
+  }
+
+  #mic {
+    position: absolute;
+    top: 35%;
     width: 5%;
   }
 }
