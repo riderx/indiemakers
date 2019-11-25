@@ -27,23 +27,20 @@
       <div class="col-12 pt-0 px-md-5 py-4 order-3 text-white">
         <h5>Mes autres projets:</h5>
         <a
-          class="text-white"
+          class="text-white d-block pt-1"
           target="_blank"
           href="https://forgr.ee"
         >Forgr.ee | Agence de creation de MVP pour entrepreneurs.</a>
-        <br />
         <a
-          class="text-white"
+          class="text-white d-block pt-1"
           target="_blank"
           href="https://bewise.love"
         >Bewise | Une citation par jour simple et bienveillante.</a>
-        <br />
         <a
-          class="text-white"
+          class="text-white d-block pt-1"
           target="_blank"
           href="https://apps.apple.com/us/app/captime-crossfit-timer/id1369288585"
         >Captime | Crossfit timer</a>
-        <br />
       </div>
     </div>
   </div>
