@@ -15,12 +15,11 @@ const config = {
     appId: "1:600956995728:web:17aacb03e66648e2d63015"
 };
 
-export const firebaseLib = firebase;
-export const db = firebase
-  .initializeApp(config)
-  .firestore()
-  .enablePersistence()
-  .catch(function(err) {
+firebase
+    .initializeApp(config)
+    .firestore()
+    .enablePersistence()
+    .catch(function(err) {
     if (err.code == 'failed-precondition') {
         // Multiple tabs open, persistence can only be enabled
         // in one tab at a a time.
@@ -33,3 +32,6 @@ export const db = firebase
         console.error('The current browser does not support all of the features required to enable persistence', err);
     }
 });
+export const firebaseLib = firebase;
+export const db = firebase
+    .firestore()

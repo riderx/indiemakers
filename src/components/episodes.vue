@@ -590,7 +590,7 @@ export default {
     // this.$modal.show("fail-vote");
     firebaseLib.auth().onAuthStateChanged(user => {
       this.loggin = user;
-      if (this.loggin.displayName === null) {
+      if (this.loggin && this.loggin.displayName === null) {
         this.$router.push("/login");
       }
     });
