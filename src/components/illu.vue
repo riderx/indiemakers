@@ -1,8 +1,20 @@
 <template>
   <div class="w-100">
-    <img id="background" src="assets/Home@2x.png" width="100%" class="img-fluid" alt="humans" />
-    <img id="man" src="assets/sitting-2@2x.png" width="100%" class="img-fluid" alt="humans" />
-    <img id="woman" src="assets/standing-6.png" width="100%" class="img-fluid" alt="humans" />
+    <img
+      id="background-home"
+      src="assets/background-home.webp"
+      width="100%"
+      class="img-fluid"
+      alt="background home"
+    />
+    <img id="woman-sit" src="assets/woman-sit.webp" width="100%" class="img-fluid" alt="woman sit" />
+    <img
+      id="woman-stand"
+      src="assets/woman-stand.webp"
+      width="100%"
+      class="img-fluid"
+      alt="woman stand"
+    />
     <i id="mic" class="pl-0 pl-md-3 fas fa-microphone fa-3x text-primary"></i>
   </div>
 </template>
@@ -14,7 +26,7 @@ export default {
 </script>
 
 <style scoped>
-#background {
+#background-home {
   position: fixed;
   width: 33%;
   top: 21%;
@@ -32,7 +44,7 @@ export default {
   z-index: 30 !important;
 }
 
-#man {
+#woman-sit {
   position: fixed;
   width: 13%;
   top: 55%;
@@ -44,7 +56,7 @@ export default {
   z-index: 30 !important;
 }
 
-#woman {
+#woman-stand {
   position: fixed;
   width: 12%;
   top: 56%;

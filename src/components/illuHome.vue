@@ -1,8 +1,14 @@
 <template>
   <div class="w-100 h-100">
-    <img id="background" src="assets/decor.png" width="100%" class="img-fluid" alt="humans" />
-    <img id="man" src="assets/homme.png" width="100%" class="img-fluid" alt="humans" />
-    <img id="woman" src="assets/femme.png" width="100%" class="img-fluid" alt="humans" />
+    <img
+      id="background pages"
+      src="assets/background.webp"
+      width="100%"
+      class="img-fluid"
+      alt="background"
+    />
+    <img id="man" src="assets/man.webp" width="100%" class="img-fluid" alt="man" />
+    <img id="woman" src="assets/woman.webp" width="100%" class="img-fluid" alt="woman" />
     <i id="mic" class="pl-1 pl-md-3 fas fa-microphone fa-3x text-primary d-none d-md-block"></i>
     <i id="mic" class="pl-1 pl-md-3 fas fa-microphone fa-2x text-primary d-md-none"></i>
   </div>
@@ -23,7 +29,7 @@ export default {
 #mic {
   position: absolute;
   width: 4em;
-  top: 50%;
+  top: 30%;
   left: 50%;
   animation: animationMic 5s;
   animation-iteration-count: 1;
@@ -32,7 +38,7 @@ export default {
 #man {
   position: relative;
   width: 15em;
-  top: 18em;
+  top: -24em;
   left: 20%;
   animation: animationFrames ease 2s;
   animation-iteration-count: 1;
@@ -43,7 +49,7 @@ export default {
 #woman {
   position: relative;
   width: 13em;
-  top: 18em;
+  top: -24em;
   left: 20%;
   animation: animationFemme ease-in-out 1s;
   animation-iteration-count: 1;
