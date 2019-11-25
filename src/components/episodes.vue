@@ -361,7 +361,7 @@
                 <button
                   type="button"
                   v-if="!person.episodeSpotify"
-                  class="btn btn-primary btn-lg text-light px-2 px-md-4 h1"
+                  class="btn btn-primary btn-lg text-light py-0 py-md-2 px-2 px-md-4 h1"
                   v-b-tooltip.hover
                   :title="tooltipVote(person)"
                 >
