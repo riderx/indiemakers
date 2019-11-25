@@ -52,11 +52,9 @@
 </template>
 
 <script>
-import IllustrationHome from "./illuHome.vue";
-
 export default {
   components: {
-    IllustrationHome
+    IllustrationHome: () => import(/* webpackPrefetch: true */ "./illuHome.vue")
   },
   data() {
     return {
