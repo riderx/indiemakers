@@ -9,8 +9,7 @@
     />
     <img id="man" src="assets/man.webp" width="100%" class="img-fluid" alt="man" />
     <img id="woman" src="assets/woman.webp" width="100%" class="img-fluid" alt="woman" />
-    <i id="mic" class="pl-1 pl-md-3 fas fa-microphone fa-3x text-primary d-none d-md-block"></i>
-    <i id="mic" class="pl-1 pl-md-3 fas fa-microphone fa-2x text-primary d-md-none"></i>
+    <i id="mic" class="pl-1 pl-md-3 fas fa-microphone fa-3x text-primary"></i>
   </div>
 </template>
 
