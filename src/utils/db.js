@@ -18,3 +18,17 @@ export const firebaseLib = firebase;
 export const db = firebase
   .initializeApp(config)
   .firestore()
+  .enablePersistence()
+  .catch(function(err) {
+    if (err.code == 'failed-precondition') {
+        // Multiple tabs open, persistence can only be enabled
+        // in one tab at a a time.
+        // ...
+        console.error('Multiple tabs open, persistence can only be enabled', err);
+    } else if (err.code == 'unimplemented') {
+        // The current browser does not support all of the
+        // features required to enable persistence
+        // ...
+        console.error('The current browser does not support all of the features required to enable persistence', err);
+    }
+});

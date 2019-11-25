@@ -158,6 +158,31 @@ export const calcVotesByPerson = functions.firestore
         return snapshot;
     });
 
+export const calcLikesByPerson = functions.firestore
+    .document('/people/{personId}/likes/{likeId}')
+    .onCreate(async (snapshot, context) => {
+        const like = snapshot.data();
+        if (like) {
+            const personId = context.params.personId;
+            const id_str = like.id_str;
+            const person = await getPersonById(personId);
+            const snap = await admin.firestore()
+                .collection(`/people/${personId}/likes`)
+                .get();
+            const likesTotal = snap.size;
+            if (person && snap && likesTotal) {
+                return person.update({ likes: likesTotal }).then(() => {
+                    console.log('Updates likes', id_str, likesTotal);
+                }).catch((error) => {
+                    console.error('Error', error);
+                });
+            } else {
+                console.error('No Like');
+            }
+        }
+        return snapshot;
+    });
+
 const sendEmail = (user: any, maker: any, makerId: string, subject: string, template: string, previewText: string) => {
     return new Promise((resolve, reject) => {
         const linkEp = `https://indiemaker.fr/#/episode/${makerId}`;

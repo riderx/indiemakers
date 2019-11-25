@@ -138,7 +138,7 @@ export default {
         firebaseLib
           .auth()
           .signInWithEmailLink(this.email, window.location.href)
-          .then(user => {
+          .then(() => {
             window.localStorage.removeItem("emailForSignIn");
             this.$modal.hide("loading");
           })
