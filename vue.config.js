@@ -1,5 +1,14 @@
+const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 module.exports = {
     publicPath: '/',
+    configureWebpack: {
+        plugins: [
+            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /fr/),
+            // new BundleAnalyzerPlugin()
+        ]
+    },
     pwa: {
         themeColor: '#9456b7',
         msTileColor: '#9456b7',
