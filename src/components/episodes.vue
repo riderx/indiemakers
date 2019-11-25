@@ -306,7 +306,7 @@
             <div class="col-3 col-md-2 pt-3 text-white">
               <button
                 type="button"
-                class="btn btn-primary btn-lg text-light px-4 display-1"
+                class="btn btn-primary btn-lg text-light px-3 px-md-4 display-1"
                 v-b-tooltip.hover
                 title="Ajouter un·e maker"
                 @click="showAddForm()"
@@ -361,7 +361,7 @@
                 <button
                   type="button"
                   v-if="!person.episodeSpotify"
-                  class="btn btn-primary btn-lg text-light px-4 h1"
+                  class="btn btn-primary btn-lg text-light px-2 px-md-4 h1"
                   v-b-tooltip.hover
                   :title="tooltipVote(person)"
                 >
@@ -372,7 +372,7 @@
                 <button
                   type="button"
                   v-if="person.episodeSpotify"
-                  class="btn btn-primary btn-lg text-light py-3 px-4 h1"
+                  class="btn btn-primary btn-lg text-light py-1 px-2 py-md-3 px-md-4 h1"
                   v-b-tooltip.hover
                   title="Ecouter l'épisode"
                 >
