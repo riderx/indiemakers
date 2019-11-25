@@ -17,7 +17,9 @@
               type="button"
               class="btn btn-success btn-lg bnt-block text-white px-4"
               @click.passive="goEpisodes"
-            >🎧 Episodes</button>
+            >
+              <i class="fas fa-headphones"></i> Episodes
+            </button>
           </div>
         </div>
       </div>
@@ -29,16 +31,19 @@
         <a
           class="text-white d-block pt-1"
           target="_blank"
+          rel="noreferrer"
           href="https://forgr.ee"
         >Forgr.ee | Agence de creation de MVP pour entrepreneurs.</a>
         <a
           class="text-white d-block pt-1"
           target="_blank"
+          rel="noreferrer"
           href="https://bewise.love"
         >Bewise | Une citation par jour simple et bienveillante.</a>
         <a
           class="text-white d-block pt-1"
           target="_blank"
+          rel="noreferrer"
           href="https://apps.apple.com/us/app/captime-crossfit-timer/id1369288585"
         >Captime | Crossfit timer</a>
       </div>
