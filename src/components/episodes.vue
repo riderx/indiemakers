@@ -359,17 +359,17 @@
                 <button
                   type="button"
                   v-if="!person.episodeSpotify"
-                  class="btn btn-primary btn-lg text-light py-0 py-md-2 px-2 px-md-4 h1"
+                  class="btn btn-primary btn-lg text-light py-1 px-3 py-md-2 px-md-4 h1"
                   v-tooltip="tooltipVote(person)"
                 >
                   <!-- <div>&#9650;</div> -->
-                  <i class="fas fa-caret-up fa-2x px-1"></i>
+                  <i class="fas fa-caret-up fa-2x"></i>
                   {{person.votes}}
                 </button>
                 <button
                   type="button"
                   v-if="person.episodeSpotify"
-                  class="btn btn-primary btn-lg text-light py-1 px-2 py-md-3 px-md-4 h1"
+                  class="btn btn-primary btn-lg text-light py-3 px-3 pl-4 py-md-2 px-md-4 h1"
                   v-tooltip="'Ecouter l\'épisode'"
                 >
                   <i class="fas fa-caret-right fa-2x"></i>
