@@ -3,14 +3,23 @@
     <img
       id="background-home"
       src="assets/background-home.webp"
+      onerror="this.onerror=null; this.src='iassets/background-home.png'"
       width="100%"
       class="img-fluid"
       alt="background home"
     />
-    <img id="woman-sit" src="assets/woman-sit.webp" width="100%" class="img-fluid" alt="woman sit" />
+    <img
+      id="woman-sit"
+      src="assets/woman-sit.webp"
+      onerror="this.onerror=null; this.src='iassets/woman-sit.png'"
+      width="100%"
+      class="img-fluid"
+      alt="woman sit"
+    />
     <img
       id="woman-stand"
       src="assets/woman-stand.webp"
+      onerror="this.onerror=null; this.src='iassets/woman-stand.png'"
       width="100%"
       class="img-fluid"
       alt="woman stand"

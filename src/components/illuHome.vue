@@ -3,12 +3,27 @@
     <img
       id="background-pages"
       src="assets/background.webp"
+      onerror="this.onerror=null; this.src='iassets/background.png'"
       width="100%"
       class="img-fluid"
       alt="background"
     />
-    <img id="man" src="assets/man.webp" width="100%" class="img-fluid" alt="man" />
-    <img id="woman" src="assets/woman.webp" width="100%" class="img-fluid" alt="woman" />
+    <img
+      id="man"
+      src="assets/man.webp"
+      onerror="this.onerror=null; this.src='iassets/man.png'"
+      width="100%"
+      class="img-fluid"
+      alt="man"
+    />
+    <img
+      id="woman"
+      src="assets/woman.webp"
+      onerror="this.onerror=null; this.src='iassets/woman.png'"
+      width="100%"
+      class="img-fluid"
+      alt="woman"
+    />
     <i id="mic" class="pl-1 pl-md-3 fas fa-microphone fa-3x text-primary"></i>
   </div>
 </template>
