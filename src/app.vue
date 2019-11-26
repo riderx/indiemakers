@@ -7,7 +7,7 @@
 
 <script>
 import NavBar from "./components/nav.vue";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap-grid.min.css";
 import "./style/custom.boostrap.css";
 
 export default {

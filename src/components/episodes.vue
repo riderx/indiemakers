@@ -372,7 +372,7 @@
                   class="btn btn-primary btn-lg text-light py-1 px-2 py-md-3 px-md-4 h1"
                   v-tooltip="'Ecouter l\'épisode'"
                 >
-                  <i class="fas fa-caret-right fa-2x px-2"></i>
+                  <i class="fas fa-caret-right fa-2x"></i>
                 </button>
               </div>
               <div class="col-12 px-md-5 pt-3">
