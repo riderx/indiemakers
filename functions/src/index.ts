@@ -30,6 +30,22 @@ interface TwEntities {
         urls: TwUrl[]
     },
 }
+interface Person {
+    addedBy: string;
+    addDate: Date;
+    emailSend: boolean;
+    id_str: string;
+    name: string;
+    login: string;
+    description?: string;
+    episode?: {
+        Spotify?: string;
+    }
+    bio: string;
+    pic: string;
+    votes: number;
+    likes: number;
+}
 interface TwUrl {
     url: string,
     expanded_url: string,
@@ -217,7 +233,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
             const twUser = await twUserPromise(name);
             if (twUser) {
                 console.log('user', twUser);
-                const newPerson = {
+                const newPerson: Person = {
                     addedBy: uid,
                     addDate: new Date(),
                     emailSend: true,
@@ -226,7 +242,8 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                     login: twUser.screen_name,
                     bio: await transformURLtoTracked(twUser.description || '', twUser.entities),
                     pic: twUser.profile_image_url_https.replace('_normal', ''),
-                    votes: 1
+                    votes: 1,
+                    likes: 0
                 }
                 let exist: FirebaseFirestore.DocumentReference | null = null;
                 try {
@@ -310,7 +327,7 @@ export const calcLikesByPerson = functions.firestore
         return snapshot;
     });
 
-const sendEmail = (user: any, maker: any, makerId: string, subject: string, template: string, previewText: string) => {
+const sendEmail = (user: any, maker: Person, makerId: string, subject: string, template: string, previewText: string) => {
     return new Promise((resolve, reject) => {
         const linkEp = `https://indiemaker.fr/#/episode/${makerId}`;
         const tweet = `J'écoute le podcast @indiemakerfr avec @${maker.login} 🚀 ${linkEp}`
@@ -321,7 +338,7 @@ const sendEmail = (user: any, maker: any, makerId: string, subject: string, temp
             MC_PREVIEW_TEXT: previewText,
             NAME: user.displayName || 'Elon Musk',
             SUBJECT: subject,
-            DATE: moment(maker.addDate.toMillis()).fromNow(),
+            DATE: moment(maker.addDate.getMilliseconds()).fromNow(),
             NAMEMAKER: maker.name,
             LOGINMAKER: maker.login
         })
@@ -342,10 +359,14 @@ const getUser = async (id: string) => {
 export const onUpdatePeople = functions.firestore
     .document('/people/{personId}')
     .onUpdate(async (snapshot, context) => {
-        const person = snapshot.after.data();
+        const person: Person | undefined = snapshot.after.data() as Person;
         const personId = context.params.personId;
         if (person && person.description) {
-            const description = await transformURLtoTracked(person.description, null);
+            let twUser: TwUser | null = null;
+            if (person.description.indexOf('https://t.co') !== -1) {
+                twUser = await twUserPromise(person.login)
+            }
+            const description = await transformURLtoTracked(person.description, twUser ? twUser.entities : null);
             if (description !== person.description) {
                 await admin.firestore()
                     .collection(`/people`)
@@ -370,7 +391,7 @@ export const onUpdatePeople = functions.firestore
                     });
             }
         }
-        if (person && person.description && person.episodeSpotify && !person.emailSend) {
+        if (person && person.description && !person.emailSend) {
             // send EMAIL for episode Ready
             const votes = await admin.firestore()
                 .collection(`/people/${personId}/votes`)
