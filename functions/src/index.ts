@@ -5,10 +5,13 @@ import { TwitterApiToken } from './twitter_api';
 import { moment } from './moment';
 const Twitter = require('twitter');
 import axios from 'axios';
-import * as linkify from "linkifyjs";
+import * as linkify from 'linkifyjs';
+import { mention } from './linkify-plugin/mention';
+import { hashtag } from './linkify-plugin/hashtag';
+new hashtag(linkify);
+new mention(linkify);
 import { PixelMeApiToken, PixelsId } from './pixelMe_api';
-require("linkifyjs/plugins/mention")(linkify);
-require("linkifyjs/plugins/ticket")(linkify);
+
 // PixelMeApiToken
 const client = new Twitter(TwitterApiToken);
 
