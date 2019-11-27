@@ -169,7 +169,7 @@ const transformURLtoTracked = async (text: string, entities: TwEntities | null) 
     const newDescription = '' + text;
     const links = Array.from(findUrl(text));
     const hashtags = findHashtags(text);
-    const mentions = findMentions(text);
+    const mentions = findMentions(text).get();
     for (const link of links) {
         let newHref = link;
         try {
