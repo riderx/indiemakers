@@ -166,11 +166,11 @@ const findInTwUrls = (url: string, twUrls: TwUrl[]): string => {
 }
 
 const transformURLtoTracked = async (text: string, entities: TwEntities | null) => {
-    const newDescription = '' + text;
+    let newDescription = '' + text;
     const links = Array.from(findUrl(text));
     const hashtags = findHashtags(text);
     const mentions = findMentions(text).get();
-    for await (const link of links) {
+    for (const link of links) {
         let newHref = link;
         try {
             if (link.indexOf('https://pxlme.me/') === -1) {
@@ -181,12 +181,12 @@ const transformURLtoTracked = async (text: string, entities: TwEntities | null) 
                     newHref = await shortURLPixel(link);
                 }
             }
-            newDescription.split(link).join(newHref);
+            newDescription = newDescription.split(link).join(newHref);
         } catch (err) {
             console.error('error transform link', link, err);
         }
     }
-    for await (const hashtag of hashtags) {
+    for (const hashtag of hashtags) {
         const hHashtag = `#${hashtag}`;
         let newHref = `https://twitter.com/hashtag/${hashtag}`;
         try {
@@ -194,9 +194,9 @@ const transformURLtoTracked = async (text: string, entities: TwEntities | null) 
         } catch (err) {
             console.error('error transform hashtag', hashtag, err);
         }
-        newDescription.split(hHashtag).join(newHref);
+        newDescription = newDescription.split(hHashtag).join(newHref);
     }
-    for await (const mention of mentions) {
+    for (const mention of mentions) {
         const mMention = mention.substring(1);
         let newHref = `https://twitter.com/${mMention}`;
         try {
@@ -204,7 +204,7 @@ const transformURLtoTracked = async (text: string, entities: TwEntities | null) 
         } catch (err) {
             console.error('error transform mention', mention, err);
         }
-        newDescription.split(mention).join(newHref);
+        newDescription = newDescription.split(mention).join(newHref);
     }
     return newDescription;
 }
