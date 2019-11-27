@@ -170,7 +170,7 @@ const transformURLtoTracked = async (text: string, entities: TwEntities | null) 
     const links = Array.from(findUrl(text));
     const hashtags = findHashtags(text);
     const mentions = findMentions(text).get();
-    for (const link of links) {
+    for await (const link of links) {
         let newHref = link;
         try {
             if (link.indexOf('https://pxlme.me/') === -1) {
@@ -186,7 +186,7 @@ const transformURLtoTracked = async (text: string, entities: TwEntities | null) 
             console.error('error transform link', link, err);
         }
     }
-    for (const hashtag of hashtags) {
+    for await (const hashtag of hashtags) {
         const hHashtag = `#${hashtag}`;
         let newHref = `https://twitter.com/hashtag/${hashtag}`;
         try {
@@ -196,7 +196,7 @@ const transformURLtoTracked = async (text: string, entities: TwEntities | null) 
         }
         newDescription.split(hHashtag).join(newHref);
     }
-    for (const mention of mentions) {
+    for await (const mention of mentions) {
         const mMention = mention.substring(1);
         let newHref = `https://twitter.com/${mMention}`;
         try {
