@@ -139,11 +139,11 @@ const shortURLPixel = (url: string): Promise<string> => {
             pixels_ids: PixelsId
         })
             .then((response) => {
-                console.log(response.data);
                 if (response && response.data && response.data.shorten) {
+                    console.log('new link', response.data);
                     resolve(response.data.shorten);
                 } else {
-                    console.error('shorten error, no shorten found', response.data);
+                    console.error('shorten error, no shorten found', response);
                     resolve(url);
                 }
             })
@@ -197,7 +197,8 @@ const transformURLtoTracked = async (text: string, entities: TwEntities | null) 
         newDescription.split(hHashtag).join(newHref);
     }
     for (const mention of mentions) {
-        let newHref = `https://twitter.com/${mention.substring(1)}`;
+        const mMention = mention.substring(1);
+        let newHref = `https://twitter.com/${mMention}`;
         try {
             newHref = await shortURLPixel(newHref);
         } catch (err) {
@@ -344,12 +345,12 @@ export const onUpdatePeople = functions.firestore
         const person = snapshot.after.data();
         const personId = context.params.personId;
         if (person && person.description) {
-            const newText = await transformURLtoTracked(person.description, null);
-            if (newText !== person.description) {
+            const description = await transformURLtoTracked(person.description, null);
+            if (description !== person.description) {
                 await admin.firestore()
                     .collection(`/people`)
                     .doc(personId)
-                    .update({ description: newText }).then(() => {
+                    .update({ description }).then(() => {
                         console.log('description updated');
                     }).catch((error: any) => {
                         console.error('Error update person', error);
@@ -357,12 +358,12 @@ export const onUpdatePeople = functions.firestore
             }
         }
         if (person && person.bio) {
-            const newText = await transformURLtoTracked(person.bio, null);
-            if (newText !== person.bio) {
+            const bio = await transformURLtoTracked(person.bio, null);
+            if (bio !== person.bio) {
                 await admin.firestore()
                     .collection(`/people`)
                     .doc(personId)
-                    .update({ bio: newText }).then(() => {
+                    .update({ bio }).then(() => {
                         console.log('bio updated');
                     }).catch((error: any) => {
                         console.error('Error update person', error);
