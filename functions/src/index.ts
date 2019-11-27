@@ -5,11 +5,9 @@ import { TwitterApiToken } from './twitter_api';
 import { moment } from './moment';
 const Twitter = require('twitter');
 import axios from 'axios';
-import * as linkify from 'linkifyjs';
-import { mention } from './linkify-plugin/mention';
-import { hashtag } from './linkify-plugin/hashtag';
-new hashtag(linkify);
-new mention(linkify);
+import * as findUrl from 'get-urls';
+import * as findMentions from 'mentions';
+import * as findHashtags from 'find-hashtags';
 import { PixelMeApiToken, PixelsId } from './pixelMe_api';
 
 // PixelMeApiToken
@@ -133,11 +131,6 @@ const twUserPromise = (screen_name: string): Promise<TwUser> => {
         });
     });
 }
-// curl -H "Authorization: Bearer <your_token>" \
-// -d '{"url": "http://blog.intercom.com/how-to", "pixels_ids": ["nxs_3344", "fb_109138409374"], "domain": "rocks.awesome.me", "key": "black-friday"}' \
-// "https://api.pixelme.me/redirects"
-
-// Make a request for a user with a given ID
 
 const shortURLPixel = (url: string): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -146,7 +139,7 @@ const shortURLPixel = (url: string): Promise<string> => {
             pixels_ids: PixelsId
         })
             .then((response) => {
-                console.log(response);
+                console.log(response.data);
                 if (response && response.data && response.data.shorten) {
                     resolve(response.data.shorten);
                 } else {
@@ -172,25 +165,45 @@ const findInTwUrls = (url: string, twUrls: TwUrl[]): string => {
     return found ? found.expanded_url : url;
 }
 
-const transformURLtoTracked = async (description: string, entities: TwEntities | null) => {
-    const newDescription = '' + description;
-    const links = linkify.find(description);
-
+const transformURLtoTracked = async (text: string, entities: TwEntities | null) => {
+    const newDescription = '' + text;
+    const links = Array.from(findUrl(text));
+    const hashtags = findHashtags(text);
+    const mentions = findMentions(text);
     for (const link of links) {
-        let newHref = link.href;
-        if (link.type === 'url' && link.href.indexOf('https://pxlme.me/') === -1) {
-            if (entities) {
-                const twUrl = findInTwUrls(link.href, entities.description.urls);
-                newHref = await shortURLPixel(twUrl);
-            } else {
-                newHref = await shortURLPixel(link.href);
+        let newHref = link;
+        try {
+            if (link.indexOf('https://pxlme.me/') === -1) {
+                if (entities) {
+                    const twUrl = findInTwUrls(link, entities.description.urls);
+                    newHref = await shortURLPixel(twUrl);
+                } else {
+                    newHref = await shortURLPixel(link);
+                }
             }
-        } else if (link.type === 'hashtag') {
-            newHref = 'https://twitter.com/hashtag/' + link.href.substring(1);
-        } else if (link.type === 'mention') {
-            newHref = 'https://twitter.com/' + link.href.substring(1);
+            newDescription.split(link).join(newHref);
+        } catch (err) {
+            console.error('error transform link', link, err);
         }
-        newDescription.split(link.href).join(newHref);
+    }
+    for (const hashtag of hashtags) {
+        const hHashtag = `#${hashtag}`;
+        let newHref = `https://twitter.com/hashtag/${hashtag}`;
+        try {
+            newHref = await shortURLPixel(newHref);
+        } catch (err) {
+            console.error('error transform hashtag', hashtag, err);
+        }
+        newDescription.split(hHashtag).join(newHref);
+    }
+    for (const mention of mentions) {
+        let newHref = `https://twitter.com/${mention.substring(1)}`;
+        try {
+            newHref = await shortURLPixel(newHref);
+        } catch (err) {
+            console.error('error transform mention', mention, err);
+        }
+        newDescription.split(mention).join(newHref);
     }
     return newDescription;
 }
@@ -214,7 +227,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                     pic: twUser.profile_image_url_https.replace('_normal', ''),
                     votes: 1
                 }
-                let exist = null;
+                let exist: FirebaseFirestore.DocumentReference | null = null;
                 try {
                     exist = await getPerson(newPerson.id_str);
                 } catch (err) {
