@@ -4,9 +4,64 @@ import * as admin from 'firebase-admin';
 import { TwitterApiToken } from './twitter_api';
 import { moment } from './moment';
 const Twitter = require('twitter');
-
+import axios from 'axios';
+import * as linkify from "linkifyjs";
+import { PixelMeApiToken } from './pixelMe_api';
+require("linkifyjs/plugins/mention")(linkify);
+require("linkifyjs/plugins/ticket")(linkify);
+// PixelMeApiToken
 const client = new Twitter(TwitterApiToken);
 
+axios.defaults.baseURL = 'https://api.pixelme.me';
+axios.defaults.headers.common['Authorization'] = `Bearer ${PixelMeApiToken}`;
+
+interface TwEntities {
+    url: {
+        hashtags: [],
+        symbols: [],
+        user_mentions: [],
+        urls: TwUrl[]
+    },
+    description: {
+        hashtags: [],
+        symbols: [],
+        user_mentions: [],
+        urls: TwUrl[]
+    },
+}
+interface TwUrl {
+    url: string,
+    expanded_url: string,
+    display_url: string,
+    indices: [
+        number,
+        number
+    ]
+}
+interface TwUser {
+    created_at: string;
+    default_profile_image: boolean;
+    default_profile: boolean;
+    description?: string | null;
+    entities: TwEntities,
+    favourites_count: number;
+    followers_count: number;
+    friends_count: number;
+    id_str: string;
+    id: number;
+    listed_count: number;
+    location?: string | null;
+    name: string;
+    profile_banner_url?: string;
+    profile_image_url_https: string;
+    protected: boolean;
+    screen_name: string;
+    statuses_count: number;
+    url?: string | null;
+    verified: boolean;
+    withheld_in_countries?: string[];
+    withheld_scope?: string;
+};
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 admin.initializeApp();
 
@@ -61,16 +116,10 @@ const getPersonById = async (id: string): Promise<FirebaseFirestore.DocumentRefe
         .doc(id);
 }
 
-const twUserPromise = (screen_name: string): Promise<{
-    id_str: string,
-    name: string,
-    screen_name: string,
-    description: string,
-    profile_image_url_https: string
-}> => {
+const twUserPromise = (screen_name: string): Promise<TwUser> => {
     return new Promise((resolve, reject) => {
-        const params = { screen_name };
-        client.get('users/show', params, async (error: any, user: any, response: any) => {
+        const params = { screen_name, include_entities: true };
+        client.get('users/show', params, async (error: any, user: TwUser, response: any) => {
             if (!error && user) {
                 console.log('User', user, 'response', response);
                 resolve(user);
@@ -80,6 +129,67 @@ const twUserPromise = (screen_name: string): Promise<{
             }
         });
     });
+}
+// curl -H "Authorization: Bearer <your_token>" \
+// -d '{"url": "http://blog.intercom.com/how-to", "pixels_ids": ["nxs_3344", "fb_109138409374"], "domain": "rocks.awesome.me", "key": "black-friday"}' \
+// "https://api.pixelme.me/redirects"
+
+// Make a request for a user with a given ID
+
+const shortURLPixel = (url: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        axios.post('/redirects', {
+            url,
+            pixels_ids: ["indiemakerfb", "Ganalytics"]
+        })
+            .then((response) => {
+                console.log(response);
+                if (response && response.data && response.data.shorten) {
+                    resolve(response.data.shorten);
+                } else {
+                    console.error('shorten error, no shorten found', response.data);
+                    resolve(url);
+                }
+            })
+            .catch((error) => {
+                console.error('shorten error', error);
+                resolve(url);
+            });
+    });
+
+};
+
+const findInTwUrls = (url: string, twUrls: TwUrl[]): string => {
+    const found = twUrls.find((twUrl) => {
+        if (twUrl.display_url === url) {
+            return twUrl.expanded_url;
+        }
+        return null;
+    });
+    return found ? found.expanded_url : url;
+}
+
+const transformURLtoTracked = async (description: string, entities: TwEntities | null) => {
+    const newDescription = '' + description;
+    const links = linkify.find(description);
+
+    for (const link of links) {
+        let newHref = link.href;
+        if (link.type === 'url' && link.href.indexOf('https://pxlme.me/') === -1) {
+            if (entities) {
+                const twUrl = findInTwUrls(link.href, entities.description.urls);
+                newHref = await shortURLPixel(twUrl);
+            } else {
+                newHref = await shortURLPixel(link.href);
+            }
+        } else if (link.type === 'hashtag') {
+            newHref = 'https://twitter.com/hashtag/' + link.href.substring(1);
+        } else if (link.type === 'mention') {
+            newHref = 'https://twitter.com/' + link.href.substring(1);
+        }
+        newDescription.split(link.href).join(newHref);
+    }
+    return newDescription;
 }
 
 export const addTwiterUser = functions.https.onCall(async (data, context) => {
@@ -97,7 +207,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                     id_str: twUser.id_str,
                     name: twUser.name,
                     login: twUser.screen_name,
-                    bio: twUser.description,
+                    bio: transformURLtoTracked(twUser.description || '', twUser.entities),
                     pic: twUser.profile_image_url_https.replace('_normal', ''),
                     votes: 1
                 }
@@ -212,13 +322,39 @@ const getUser = async (id: string) => {
         .getUser(id);
 };
 
-export const sendEmailWhenEpisodeIsRealised = functions.firestore
+export const onUpdatePeople = functions.firestore
     .document('/people/{personId}')
     .onUpdate(async (snapshot, context) => {
         const person = snapshot.after.data();
+        const personId = context.params.personId;
+        if (person && person.description) {
+            const newText = await transformURLtoTracked(person.description, null);
+            if (newText !== person.description) {
+                await admin.firestore()
+                    .collection(`/people`)
+                    .doc(personId)
+                    .update({ description: newText }).then(() => {
+                        console.log('description updated');
+                    }).catch((error: any) => {
+                        console.error('Error update person', error);
+                    });
+            }
+        }
+        if (person && person.bio) {
+            const newText = await transformURLtoTracked(person.bio, null);
+            if (newText !== person.bio) {
+                await admin.firestore()
+                    .collection(`/people`)
+                    .doc(personId)
+                    .update({ bio: newText }).then(() => {
+                        console.log('bio updated');
+                    }).catch((error: any) => {
+                        console.error('Error update person', error);
+                    });
+            }
+        }
         if (person && person.description && person.episodeSpotify && !person.emailSend) {
-            const personId = context.params.personId;
-            // const id_str = person.id_str;
+            // send EMAIL for episode Ready
             const votes = await admin.firestore()
                 .collection(`/people/${personId}/votes`)
                 .get();
@@ -232,7 +368,7 @@ export const sendEmailWhenEpisodeIsRealised = functions.firestore
                         emailProm.push(sendEmail(user, person, personId, 'Grace a toi il est la !', 'remerciment_vote', 'Pour une fois ton vote compte !'));
                     }
                 }
-                Promise.all(emailProm)
+                await Promise.all(emailProm)
                     .then(() => {
                         return admin.firestore()
                             .collection(`/people`)
