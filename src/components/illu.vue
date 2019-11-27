@@ -3,7 +3,7 @@
     <img
       id="background-home"
       src="assets/background-home.webp"
-      onerror="this.onerror=null; this.src='iassets/background-home.png'"
+      onerror="this.onerror=null; this.src='assets/background-home.png'"
       width="100%"
       class="img-fluid"
       alt="background home"
@@ -11,7 +11,7 @@
     <img
       id="woman-sit"
       src="assets/woman-sit.webp"
-      onerror="this.onerror=null; this.src='iassets/woman-sit.png'"
+      onerror="this.onerror=null; this.src='assets/woman-sit.png'"
       width="100%"
       class="img-fluid"
       alt="woman sit"
@@ -19,12 +19,12 @@
     <img
       id="woman-stand"
       src="assets/woman-stand.webp"
-      onerror="this.onerror=null; this.src='iassets/woman-stand.png'"
+      onerror="this.onerror=null; this.src='assets/woman-stand.png'"
       width="100%"
       class="img-fluid"
       alt="woman stand"
     />
-    <i id="mic" class="pl-0 pl-md-3 fas fa-microphone fa-3x text-primary"></i>
+    <img id="mic" src="assets/mic.svg" width="100%" class="img-fluid" alt="mic" />
   </div>
 </template>
 

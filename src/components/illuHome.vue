@@ -3,7 +3,7 @@
     <img
       id="background-pages"
       src="assets/background.webp"
-      onerror="this.onerror=null; this.src='iassets/background.png'"
+      onerror="this.onerror=null; this.src='assets/background.png'"
       width="100%"
       class="img-fluid"
       alt="background"
@@ -11,7 +11,7 @@
     <img
       id="man"
       src="assets/man.webp"
-      onerror="this.onerror=null; this.src='iassets/man.png'"
+      onerror="this.onerror=null; this.src='assets/man.png'"
       width="100%"
       class="img-fluid"
       alt="man"
@@ -19,7 +19,7 @@
     <img
       id="woman"
       src="assets/woman.webp"
-      onerror="this.onerror=null; this.src='iassets/woman.png'"
+      onerror="this.onerror=null; this.src='assets/woman.png'"
       width="100%"
       class="img-fluid"
       alt="woman"
