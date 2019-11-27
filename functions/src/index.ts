@@ -6,7 +6,7 @@ import { moment } from './moment';
 const Twitter = require('twitter');
 import axios from 'axios';
 import * as linkify from "linkifyjs";
-import { PixelMeApiToken } from './pixelMe_api';
+import { PixelMeApiToken, PixelsId } from './pixelMe_api';
 require("linkifyjs/plugins/mention")(linkify);
 require("linkifyjs/plugins/ticket")(linkify);
 // PixelMeApiToken
@@ -140,7 +140,7 @@ const shortURLPixel = (url: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         axios.post('/redirects', {
             url,
-            pixels_ids: ["indiemakerfb", "Ganalytics"]
+            pixels_ids: PixelsId
         })
             .then((response) => {
                 console.log(response);
@@ -207,7 +207,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                     id_str: twUser.id_str,
                     name: twUser.name,
                     login: twUser.screen_name,
-                    bio: transformURLtoTracked(twUser.description || '', twUser.entities),
+                    bio: await transformURLtoTracked(twUser.description || '', twUser.entities),
                     pic: twUser.profile_image_url_https.replace('_normal', ''),
                     votes: 1
                 }
