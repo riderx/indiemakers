@@ -429,6 +429,8 @@ export default {
           let newVal = value + "";
           if (type === "url" && newVal.indexOf("https://") !== -1) {
             newVal = newVal.replace("https://", "");
+          } else if (type === "url" && newVal.indexOf("http://") !== -1) {
+            newVal = newVal.replace("http://", "");
           }
           if (type === "url" && newVal.length > 50) {
             newVal = newVal.slice(0, 50) + "…";
