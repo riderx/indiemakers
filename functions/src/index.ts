@@ -181,7 +181,7 @@ const shortURLPixel = (url: string): Promise<string> => {
             })
             .catch((error) => {
                 if (error.response.data.error_message === "Key already taken for this domain") {
-                    resolve(`http://imf.to/${key}`);
+                    resolve(`https://imf.to/${key}`);
                 } else {
                     console.error('shorten error', error.response.data, error);
                     resolve(url);
