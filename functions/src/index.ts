@@ -180,8 +180,12 @@ const shortURLPixel = (url: string): Promise<string> => {
                 }
             })
             .catch((error) => {
-                console.error('shorten error', error);
-                resolve(url);
+                if (error.data.error_message === "Key already taken for this domain") {
+                    resolve(`http://imf.to/${key}`);
+                } else {
+                    console.error('shorten error', error.data, error);
+                    resolve(url);
+                }
             });
     });
 
@@ -208,8 +212,7 @@ const transformURLtoTracked = async (text: string, entities: TwEntities | null) 
             if (link.indexOf('https://imf.to/') === -1) {
                 if (entities) {
                     const twUrl = findInTwUrls(link, entities.description.urls);
-                    newHref = twUrl;
-                    // newHref = await shortURLPixel(twUrl);
+                    newHref = await shortURLPixel(twUrl);
                 } else {
                     newHref = await shortURLPixel(link);
                 }
