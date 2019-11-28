@@ -12,7 +12,8 @@
             </div>
             <p>{{ banner }}</p>
           </div>
-          <div class="offset-3 offset-md-0 col-6 col-md-12 py-1 py-md-3 order-2 order-md-3">
+          <div class="col-12 py-1 py-md-3 order-2 order-md-3 text-center">
+            <h3>Prochain episode dans : {{nextEpisode()}} jours !</h3>
             <button
               type="button"
               class="btn btn-success btn-lg bnt-block text-white px-4"
@@ -52,6 +53,7 @@
 </template>
 
 <script>
+/*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 export default {
   components: {
     IllustrationHome: () => import(/* webpackPrefetch: true */ "./illuHome.vue")
@@ -62,7 +64,7 @@ export default {
       messages: [
         `Salut je suis Martin Donadieu ! Bienvenue sur Indie Maker ! Ici, tu trouveras des podcasts où j'échange avec des Makers qui ont su transformer leurs idées en en business florissant.`,
         `Au-delà de leur success-story, nous allons décrypter leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables.`,
-        `J'interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur business pérenne.`,
+        `Toutes les 2 semaines, j'interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur business pérenne.`,
         `Qui que vous soyez, dans ce podcast vous apprendrez à devenir un Indie Maker, le tout sans se prendre au sérieux !`
       ],
       banner:
@@ -72,6 +74,14 @@ export default {
   methods: {
     goEpisodes() {
       this.$router.push("/episodes");
+    },
+    nextEpisode() {
+      const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+      const firstDate = new Date(2019, 10, 19);
+      const now = new Date();
+      const diffDays = Math.round(Math.abs((firstDate - now) / oneDay));
+      const nextEp = 14 - (diffDays % 14);
+      return nextEp;
     }
   }
 };

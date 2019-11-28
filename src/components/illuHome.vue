@@ -43,7 +43,7 @@ export default {
   position: absolute;
   width: 4em;
   top: 50%;
-  left: 50%;
+  left: 45%;
   animation: animationMic 5s;
   animation-iteration-count: 1;
   transform-origin: 50% 50%;

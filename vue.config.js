@@ -6,7 +6,7 @@ module.exports = {
     publicPath: '/',
     configureWebpack: {
         plugins: [
-            new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /fr/),
+            // new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /fr/),
             new OptimizeCssAssetsPlugin({
                 assetNameRegExp: /\.optimize\.css$/g,
                 cssProcessor: require('cssnano'),
