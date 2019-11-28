@@ -13,7 +13,7 @@
             <p>{{ banner }}</p>
           </div>
           <div class="col-12 py-1 py-md-3 order-2 order-md-3 text-center">
-            <h3>Prochain episode dans : {{nextEpisode()}} jours !</h3>
+            <h3>Prochain episode dans : {{nextEpisode()}} !</h3>
             <button
               type="button"
               class="btn btn-success btn-lg bnt-block text-white px-4"
@@ -81,7 +81,10 @@ export default {
       const now = new Date();
       const diffDays = Math.round(Math.abs((firstDate - now) / oneDay));
       const nextEp = 14 - (diffDays % 14);
-      return nextEp;
+      // const nextEpDate = new Date();
+      // nextEpDate.setHours(10, 0, 0);
+      // nextEpDate.setDate(now.getDate() + nextEp);
+      return nextEp > 1 ? `${nextEp} jours` : `DEMAIN 10 heures`;
     }
   }
 };
