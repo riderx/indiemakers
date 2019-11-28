@@ -122,7 +122,8 @@ export default {
   }
 
   #mic {
-    width: 5%;
+    /* width: 5%; */
+    left: 30%;
   }
 }
 @media (min-width: 420px) and (max-width: 800px) {
@@ -142,7 +143,8 @@ export default {
   #mic {
     position: absolute;
     top: 50%;
-    width: 5%;
+    left: 30%;
+    /* width: 5%; */
   }
 }
 @media (min-width: 800px) and (max-width: 1200px) {
@@ -162,7 +164,8 @@ export default {
   #mic {
     position: absolute;
     top: 10%;
-    width: 5%;
+    /* width: 5%;   */
+    left: 30%;
   }
 }
 @media (min-width: 1200px) and (max-width: 1600px) {
@@ -182,7 +185,8 @@ export default {
   #mic {
     position: absolute;
     top: 35%;
-    width: 5%;
+    left: 40%;
+    /* width: 5%; */
   }
 }
 </style>

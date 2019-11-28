@@ -12,7 +12,7 @@
             </div>
             <p>{{ banner }}</p>
           </div>
-          <div class="col-12 py-1 py-md-3 order-2 order-md-3 text-center">
+          <div class="col-12 py-1 py-md-3 order-2 order-md-3">
             <h3>Prochain episode dans : {{nextEpisode()}} !</h3>
             <button
               type="button"

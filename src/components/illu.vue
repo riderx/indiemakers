@@ -24,7 +24,8 @@
       class="img-fluid"
       alt="woman stand"
     />
-    <img id="mic" src="assets/mic.svg" width="100%" class="img-fluid" alt="mic" />
+    <i id="mic" class="pl-1 pl-md-3 fas fa-microphone fa-3x text-primary"></i>
+    <!-- <img id="mic" src="assets/mic.svg" width="100%" class="img-fluid" alt="mic" /> -->
   </div>
 </template>
 
