@@ -180,10 +180,10 @@ const shortURLPixel = (url: string): Promise<string> => {
                 }
             })
             .catch((error) => {
-                if (error.data.error_message === "Key already taken for this domain") {
+                if (error.response.data.error_message === "Key already taken for this domain") {
                     resolve(`http://imf.to/${key}`);
                 } else {
-                    console.error('shorten error', error.data, error);
+                    console.error('shorten error', error.response.data, error);
                     resolve(url);
                 }
             });
@@ -192,8 +192,9 @@ const shortURLPixel = (url: string): Promise<string> => {
 };
 
 const findInTwUrls = (url: string, twUrls: TwUrl[]): string => {
+    console.log('twUrls', twUrls);
     const found = twUrls.find((twUrl) => {
-        if (twUrl.display_url === url) {
+        if (twUrl.url === url) {
             return twUrl.expanded_url;
         }
         return null;
@@ -382,11 +383,7 @@ export const onUpdatePeople = functions.firestore
         const person: Person | undefined = snapshot.after.data() as Person;
         const personId = context.params.personId;
         if (person && person.description) {
-            let twUser: TwUser | null = null;
-            if (person.description.indexOf('https://t.co') !== -1) {
-                twUser = await twUserPromise(person.login)
-            }
-            const description = await transformURLtoTracked(person.description, twUser ? twUser.entities : null);
+            const description = await transformURLtoTracked(person.description, null);
             if (description !== person.description) {
                 await admin.firestore()
                     .collection(`/people`)
@@ -399,7 +396,11 @@ export const onUpdatePeople = functions.firestore
             }
         }
         if (person && person.bio) {
-            const bio = await transformURLtoTracked(person.bio, null);
+            let twUser: TwUser | null = null;
+            if (person.bio.indexOf('https://t.co') !== -1) {
+                twUser = await twUserPromise(person.login)
+            }
+            const bio = await transformURLtoTracked(person.bio, twUser ? twUser.entities : null);
             if (bio !== person.bio) {
                 await admin.firestore()
                     .collection(`/people`)
