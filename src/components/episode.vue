@@ -135,7 +135,9 @@
                 type="button"
                 class="btn btn-primary btn-lg text-light m-1 m-md-3 mt-4 px-3 h1"
                 @click.passive="goEpisodes"
-              >🎧 Les autres Episodes</button>
+              >
+                <i class="fas fa-headphones"></i> Les autres Episodes
+              </button>
             </div>
             <div class="col-12 pt-3 px-1 px-md-3 text-center d-block d-md-none">
               <h3 class="pt-2 text-white">Si tu aimes ❤️</h3>

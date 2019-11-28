@@ -331,9 +331,9 @@
             v-bind:style="{ height: heightDiv }"
           >
             <div
-              class="row bg-white py-3 border-bottom align-items-center"
               v-bind:key="person.id"
               v-for="person in people"
+              :class="'row bg-white py-3 border-bottom align-items-center ' + person.id"
             >
               <div class="col-4 pr-0 pr-md-5">
                 <img
