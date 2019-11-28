@@ -148,11 +148,27 @@ const twUserPromise = (screen_name: string): Promise<TwUser> => {
     });
 }
 
+const bestKey = (url: string): string => {
+    if (url.indexOf('twitter.com/hashtag/') !== -1) {
+        return `H_${url.split('/').pop()}`;
+    }
+    if (url.indexOf('twitter.com/') !== -1) {
+        return url.split('/').pop() || url;
+    }
+    if (url.indexOf('/') !== -1 && url.indexOf('/') < (url.length - 1)) {
+        return url.split('/').pop() || url;
+    }
+    return url;
+}
+
 const shortURLPixel = (url: string): Promise<string> => {
     return new Promise((resolve, reject) => {
+        const key = bestKey(url);
         axios.post('/redirects', {
             url,
-            pixels_ids: PixelsId
+            key,
+            pixels_ids: PixelsId,
+            domain: 'imf.to',
         })
             .then((response) => {
                 if (response && response.data && response.data.shorten) {
@@ -189,10 +205,11 @@ const transformURLtoTracked = async (text: string, entities: TwEntities | null) 
     for (const link of links) {
         let newHref = link;
         try {
-            if (link.indexOf('https://pxlme.me/') === -1) {
+            if (link.indexOf('https://imf.to/') === -1) {
                 if (entities) {
                     const twUrl = findInTwUrls(link, entities.description.urls);
-                    newHref = await shortURLPixel(twUrl);
+                    newHref = twUrl;
+                    // newHref = await shortURLPixel(twUrl);
                 } else {
                     newHref = await shortURLPixel(link);
                 }
