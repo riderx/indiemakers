@@ -9,6 +9,7 @@ import * as findUrl from 'get-urls';
 import * as findMentions from 'mentions';
 import * as findHashtags from 'find-hashtags';
 import { PixelMeApiToken, PixelsId } from './pixelMe_api';
+import { Timestamp } from '@google-cloud/firestore';
 
 // PixelMeApiToken
 const client = new Twitter(TwitterApiToken);
@@ -32,8 +33,8 @@ interface TwEntities {
 }
 interface Person {
     addedBy: string;
-    addDate: Date;
-    emailSend: boolean;
+    addDate: Timestamp;
+    emailSend: boolean | Timestamp;
     id_str: string;
     name: string;
     login: string;
@@ -256,7 +257,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                 console.log('user', twUser);
                 const newPerson: Person = {
                     addedBy: uid,
-                    addDate: new Date(),
+                    addDate: Timestamp.now(),
                     emailSend: true,
                     id_str: twUser.id_str,
                     name: twUser.name,
@@ -359,7 +360,7 @@ const sendEmail = (user: any, maker: Person, makerId: string, subject: string, t
             MC_PREVIEW_TEXT: previewText,
             NAME: user.displayName || 'Elon Musk',
             SUBJECT: subject,
-            DATE: moment(maker.addDate.getMilliseconds()).fromNow(),
+            DATE: moment(maker.addDate.toDate()).fromNow(),
             NAMEMAKER: maker.name,
             LOGINMAKER: maker.login
         })
