@@ -46,6 +46,7 @@ interface Person {
     pic: string;
     votes: number;
     likes: number;
+    number: number;
 }
 interface TwUrl {
     url: string,
@@ -265,6 +266,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                     bio: await transformURLtoTracked(twUser.description || '', twUser.entities),
                     pic: twUser.profile_image_url_https.replace('_normal', ''),
                     votes: 1,
+                    number: Number.MAX_SAFE_INTEGER,
                     likes: 0
                 }
                 let exist: FirebaseFirestore.DocumentReference | null = null;
@@ -412,6 +414,17 @@ export const onUpdatePeople = functions.firestore
                         console.error('Error update person', error);
                     });
             }
+        }
+        if (!person.number) {
+            const update = { emailSend: false, number: Number.MAX_SAFE_INTEGER };
+            await admin.firestore()
+                .collection(`/people`)
+                .doc(personId)
+                .update(update).then(() => {
+                    console.log('emailSend updated');
+                }).catch((error: any) => {
+                    console.error('Error update emailSend', error);
+                });
         }
         if (person && person.description && !person.emailSend) {
             // send EMAIL for episode Ready

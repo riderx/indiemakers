@@ -369,10 +369,10 @@
                 <button
                   type="button"
                   v-if="person.emailSend"
-                  class="btn btn-primary btn-lg text-light py-3 px-3 pl-4 py-md-2 px-md-4 h1"
+                  class="btn btn-success btn-lg text-primary p-3 h1"
                   v-tooltip="'Ecouter l\'épisode'"
                 >
-                  <i class="fas fa-caret-right fa-2x"></i>
+                  <i class="fas fa-caret-circle-right fa-2x"></i>
                 </button>
               </div>
               <div class="col-12 px-md-5 pt-3">
@@ -582,6 +582,7 @@ export default {
       "people",
       db
         .collection("people")
+        .orderBy("number", "asc")
         .orderBy("votes", "desc")
         .orderBy("addDate", "asc")
     )
