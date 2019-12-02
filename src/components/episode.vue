@@ -257,7 +257,7 @@
                 @click="like()"
               >
                 <i class="fas fa-heart"></i>
-                {{person.likes}}
+                {{person.likes || 1}}
               </button>
               <button
                 type="button"
