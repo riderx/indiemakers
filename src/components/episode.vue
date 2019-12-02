@@ -204,11 +204,10 @@
                 class="btn btn-primary btn-lg text-white m-1 m-md-3 mt-4 px-3 h1"
                 @click.passive="goEpisodes"
               >
-                <i class="fas fa-headphones"></i> Les autres Episodes
+                <i class="fas fa-headphones"></i> Autres Episodes
               </button>
             </div>
             <div class="col-12 pt-3 px-1 px-md-3 text-center d-block d-md-none">
-              <!-- <h3 class="pt-2 text-white">Si tu aimes ❤️</h3> -->
               <button
                 type="button"
                 class="btn btn-primary btn-lg bnt-block text-white m-1 m-md-3 px-4"
