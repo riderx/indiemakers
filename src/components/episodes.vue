@@ -369,7 +369,7 @@
                 <button
                   type="button"
                   v-if="person.emailSend"
-                  class="btn btn-success btn-lg text-primary p-3 h1"
+                  class="btn btn-success btn-lg text-white p-3 h1"
                   v-tooltip="'Ecouter l\'épisode'"
                 >
                   <i class="fas fa-caret-circle-right fa-2x"></i>
