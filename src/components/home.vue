@@ -84,7 +84,7 @@ export default {
       // const nextEpDate = new Date();
       // nextEpDate.setHours(10, 0, 0);
       // nextEpDate.setDate(now.getDate() + nextEp);
-      return nextEp > 0 ? `${nextEp} jours` : `DEMAIN 10 heures`;
+      return nextEp !== 14 ? `${nextEp} jours` : `DEMAIN 10 heures`;
     }
   }
 };

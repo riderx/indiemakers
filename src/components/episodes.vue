@@ -469,7 +469,7 @@ export default {
       }
     },
     vote(person) {
-      if (person.episodeSpotify) {
+      if (person.emailSend) {
         this.$router.push(`/episode/${person.id}`);
       } else if (!this.loggin) {
         this.openRegister();
