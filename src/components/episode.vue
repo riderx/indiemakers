@@ -13,6 +13,74 @@
         </div>
       </div>
     </modal>
+    <modal height="auto" adaptive name="checkEmail">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 h-100">
+            <div class="row bg-primary py-2">
+              <div class="col-12 pt-2 text-white text-center">
+                <h1>✅Check ta boite email</h1>
+              </div>
+            </div>
+            <div class="row bg-success pt-4">
+              <div class="col-12 pt-2 text-white text-center">
+                <p>Récupère ton lien de login reçût par email et click dessus, c'est tout❤️</p>
+              </div>
+              <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-lg btn-block text-white px-4 h1"
+                  @click="$modal.hide('checkEmail')"
+                >😎Cool</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </modal>
+    <modal height="auto" adaptive name="register">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 h-100">
+            <div class="row bg-primary py-2">
+              <div class="col-12 pt-2 text-white text-center">
+                <h1>🔐Pas tout de suite !</h1>
+              </div>
+            </div>
+            <div class="row bg-success pt-4">
+              <div class="col-12 pt-2 text-white">
+                <p>Pour pouvoir te tenir au courant de la sortie de l'épisode et éviter les faux votes</p>
+                <h5 class="text-center">j’ai besoin que tu valides ton email</h5>
+                <p>Tu ne recevras des emails seulement pour les makers pour qui tu as voté, et si j'ai une grande nouvelle a te partager (max 3 par ans).</p>
+                <p>Et bien entendu, je ne refile ton e-mail à personne, je déteste ceux qui font ça !</p>
+              </div>
+            </div>
+            <div class="row bg-success">
+              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+                <div class="form-group mb-0">
+                  <input
+                    ref="register"
+                    type="email"
+                    v-model="email"
+                    class="form-control pb-0"
+                    aria-describedby="emailHelp"
+                    placeholder="elon@musk.com"
+                    v-on:keyup.enter="sendLogin()"
+                  />
+                </div>
+              </div>
+              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-lg btn-block text-white px-4 h1"
+                  @click="sendLogin()"
+                >🚀VALIDER</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </modal>
     <modal height="auto" adaptive name="copied">
       <div class="container-fluid">
         <div class="row">
@@ -29,7 +97,7 @@
               <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                 <button
                   type="button"
-                  class="btn btn-primary btn-lg btn-block text-light px-4 h1"
+                  class="btn btn-primary btn-lg btn-block text-white px-4 h1"
                   @click="$modal.hide('copied')"
                 >😎Cool</button>
               </div>
@@ -79,76 +147,87 @@
               <p class v-html="linkDescription"></p>
             </div>
           </div>
-          <div class="row bg-success py-4">
+          <div class="row bg-success py-4" v-if="!loading">
             <div class="col-12 pt-1 px-1 px-md-3 text-center">
               <button
                 type="button"
                 @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
-                class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur spotify'"
               >Spotify</button>
               <button
                 type="button"
                 @click="listenExternal('https://deezer.com/show/689072')"
-                class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Deezer'"
               >Deezer</button>
               <button
                 type="button"
                 @click="listenExternal('https://pca.st/yjcdxg09')"
-                class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur PocketCast'"
               >Pocket cast</button>
               <button
                 type="button"
                 @click="copyTextToClipboard('https://anchor.fm/s/414d1d4/podcast/rss')"
-                class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'C\'opier le flux RSS'"
               >RSS</button>
               <button
                 type="button"
                 @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
-                class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Apple podcast'"
               >Apple</button>
               <button
                 type="button"
                 @click="listenExternal('https://www.breaker.audio/indie-maker-france')"
-                class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Breaker podcast'"
               >Breaker</button>
               <button
                 type="button"
                 @click="listenExternal('https://podcasts.google.com/?feed=aHR0cHM6Ly9hbmNob3IuZm0vcy80MTRkMWQ0L3BvZGNhc3QvcnNz')"
-                class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Google podcast'"
               >Google</button>
               <button
                 type="button"
                 @click="listenExternal('https://radiopublic.com/indie-maker-france-60NJEy')"
-                class="btn btn-primary btn-lg text-light m-1 m-md-3 px-3 h1"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Radio Public'"
               >Radio Public</button>
             </div>
-            <div class="col-12 pt-1 px-1 px-md-3 text-center">
+            <div class="col-12 pt-1 px-1 px-md-3 text-center" v-if="!loading">
               <button
                 type="button"
-                class="btn btn-primary btn-lg text-light m-1 m-md-3 mt-4 px-3 h1"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 mt-4 px-3 h1"
                 @click.passive="goEpisodes"
               >
                 <i class="fas fa-headphones"></i> Les autres Episodes
               </button>
             </div>
             <div class="col-12 pt-3 px-1 px-md-3 text-center d-block d-md-none">
-              <h3 class="pt-2 text-white">Si tu aimes ❤️</h3>
+              <!-- <h3 class="pt-2 text-white">Si tu aimes ❤️</h3> -->
               <button
                 type="button"
                 class="btn btn-primary btn-lg bnt-block text-white m-1 m-md-3 px-4"
                 v-tooltip="'Partager via twitter'"
                 @click="tweetIt()"
-              >🦚Partage</button>
+              >
+                <i class="fas fa-pizza-slice"></i> Partager
+              </button>
             </div>
             <div class="col-12 pt-3 px-1 px-md-3 text-center d-block d-md-none">
+              <button
+                type="button"
+                class="btn btn-primary btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                v-tooltip="'Aimer'"
+                @click="like()"
+              >
+                <i class="fas fa-heart"></i>
+                {{person.likes || 1}}
+              </button>
               <button
                 type="button"
                 class="btn btn-primary btn-lg bnt-block text-white m-1 m-md-3 px-4"
@@ -157,8 +236,9 @@
               >
                 <img
                   src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+                  class="bmc"
                   alt="Buy me a coffee"
-                /> Paye moi un café
+                /> Soutenir
               </button>
             </div>
           </div>
@@ -169,16 +249,27 @@
               <iframe :src="person.embed" width="100%" frameborder="0" scrolling="no"></iframe>
             </div>
             <div class="col-12 px-md-5 pt-1 pt-md-3">
-              <h3 class="pt-2 text-white">Si tu aimes ❤️</h3>
+              <!-- <h3 class="pt-2 text-white">Si tu aimes ❤️</h3> -->
               <button
                 type="button"
-                class="btn btn-primary btn-lg text-light m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
+                v-tooltip="'Aimer'"
+                @click="like()"
+              >
+                <i class="fas fa-heart"></i>
+                {{person.likes}}
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
                 v-tooltip="'Partager via twitter'"
                 @click="tweetIt()"
-              >🦚Partage</button>
+              >
+                <i class="fas fa-pizza-slice"></i> Partager
+              </button>
               <button
                 type="button"
-                class="btn btn-primary btn-lg text-light m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
                 v-tooltip="'buymeacoffee'"
                 @click="bmc()"
               >
@@ -186,7 +277,7 @@
                   src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
                   alt="Buy me a coffee"
                   class="bmc"
-                /> Paye moi un café
+                /> Soutenir
               </button>
             </div>
           </div>
@@ -227,6 +318,57 @@ export default {
         },
         validate: true
       });
+    },
+    openRegister() {
+      this.$modal.show("register");
+      setTimeout(() => {
+        this.$refs.register.focus();
+      }, 50);
+    },
+    sendLogin() {
+      if (this.email) {
+        window.localStorage.setItem("emailForSignIn", this.email);
+        const actionCodeSettings = {
+          url: "https://indiemaker.fr/#/login",
+          handleCodeInApp: true
+        };
+        this.$modal.hide("register");
+        this.$modal.show("loading");
+        firebaseLib
+          .auth()
+          .sendSignInLinkToEmail(this.email, actionCodeSettings)
+          .then(() => {
+            window.localStorage.setItem("emailForSignIn", this.email);
+            this.$modal.hide("loading");
+            this.$modal.show("checkEmail");
+          })
+          .catch(error => {
+            this.$modal.hide("loading");
+            console.error(error);
+          });
+      }
+    },
+    like() {
+      if (!this.loggin) {
+        this.openRegister();
+      } else {
+        this.$modal.show("loading");
+        db.collection(`people/${this.person.id}/likes`)
+          .doc(this.loggin.uid)
+          .set({
+            date: Date()
+          })
+          .then(() => {
+            this.$modal.hide("loading");
+            this.person.likes += 1;
+            this.$modal.show("liked");
+          })
+          .catch(error => {
+            this.$modal.hide("loading");
+            console.error("Error writing document: ", error);
+            this.$modal.show("fail-like");
+          });
+      }
     },
     listenExternal(url) {
       window.open(url, "_blank");
@@ -291,6 +433,8 @@ export default {
   },
   data() {
     return {
+      email: "",
+      isFalse: false,
       loggin: false,
       loading: true,
       sizeHead: 0,
