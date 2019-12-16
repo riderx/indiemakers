@@ -358,7 +358,7 @@
               <div class="col-3 col-md-2" @click="vote(person)">
                 <button
                   type="button"
-                  v-if="!person.emailSend"
+                  v-if="!person.description"
                   class="btn btn-primary btn-lg text-light py-1 px-3 py-md-2 px-md-4 h1"
                   v-tooltip="tooltipVote(person)"
                 >
@@ -368,7 +368,7 @@
                 </button>
                 <button
                   type="button"
-                  v-if="person.emailSend"
+                  v-if="person.description"
                   class="btn btn-success btn-lg text-white p-3 h1"
                   v-tooltip="'Ecouter l\'épisode'"
                 >
