@@ -416,7 +416,7 @@ export const onUpdatePeople = functions.firestore
             }
         }
         if (!person.number) {
-            const update = { emailSend: false, number: Number.MAX_SAFE_INTEGER };
+            const update = { emailSend: true, number: Number.MAX_SAFE_INTEGER };
             await admin.firestore()
                 .collection(`/people`)
                 .doc(personId)
