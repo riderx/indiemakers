@@ -1,13 +1,14 @@
 # indiemakerfr
 
+Salut je suis Martin Donadieu ! Bienvenue sur Indie Maker ! Ici, tu trouveras des podcasts où j'échange avec des Makers qui ont su transformer leurs idées en en business florissant.
 
-Hello, I'm Martin Donadieu! Welcome to Indie Maker! Here you will find podcasts where I interact with Makers who have turned their ideas into a flourishing business.
+Au-delà de leur success-story, nous allons décrypter leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables.
 
-Beyond their success story, we will decipher their history, their strategy, their challenges, in order to understand how they managed to become profitable.
+Toutes les 2 semaines, j'interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur business pérenne.
 
-I ask different types of Makers, novices, seasoned, always in order to understand how they started and how they made their business sustainable.
+Qui que vous soyez, dans ce podcast vous apprendrez à devenir un Indie Maker, le tout sans se prendre au sérieux !
 
-Whoever you are, in this podcast you will learn to become an Indie Maker, all without taking yourself seriously!
+#Independant, #Makers, #AutoFormation, #Productivite, #Business, #MRR
 
 *Tags: podcast, web, indie maker, community*
 
