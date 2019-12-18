@@ -157,6 +157,12 @@
               >Spotify</button>
               <button
                 type="button"
+                @click="listenExternal('https://anchor.fm/indiemakerfr')"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                v-tooltip="'Ecouter l\'épisode sur Anchor'"
+              >Anchor</button>
+              <button
+                type="button"
                 @click="listenExternal('https://deezer.com/show/689072')"
                 class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Deezer'"
