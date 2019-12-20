@@ -203,6 +203,18 @@
                 class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Radio Public'"
               >Radio Public</button>
+              <button
+                type="button"
+                @click="listenExternal('https://overcast.fm/itunes1488437972/indie-maker-france')"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                v-tooltip="'Ecouter l\'épisode sur Overcast'"
+              >Overcast</button>
+              <button
+                type="button"
+                @click="listenExternal('https://castro.fm/podcast/e3350808-2fc9-481e-a449-a7abe035002e')"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                v-tooltip="'Ecouter l\'épisode sur Castro'"
+              >Castro</button>
             </div>
             <div class="col-12 pt-1 px-1 px-md-3 text-center" v-if="!loading">
               <button
