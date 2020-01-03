@@ -263,7 +263,14 @@
         <div class="col-12 col-md-6 py-md-4 px-md-5 text-center d-none d-md-block" v-if="!loading">
           <div class="row py-0 py-md-3 align-items-center position-fixed">
             <div class="col-12 px-md-5 pt-3">
-              <iframe :src="person.embed" width="100%" frameborder="0" scrolling="no"></iframe>
+              <iframe
+                :src="person.embed"
+                width="100%"
+                frameborder="0"
+                scrolling="no"
+                allowtransparency="true"
+                allow="encrypted-media"
+              ></iframe>
             </div>
             <div class="col-12 px-md-5 pt-1 pt-md-3">
               <!-- <h3 class="pt-2 text-white">Si tu aimes ❤️</h3> -->
