@@ -149,6 +149,9 @@
           </div>
           <div class="row bg-success py-4" v-if="!loading">
             <div class="col-12 pt-1 px-1 px-md-3 text-center">
+              <h3>Disponible sur :</h3>
+            </div>
+            <div class="col-12 pt-1 px-1 px-md-3 text-center">
               <button
                 type="button"
                 @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
@@ -177,7 +180,7 @@
                 type="button"
                 @click="copyTextToClipboard('https://anchor.fm/s/414d1d4/podcast/rss')"
                 class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
-                v-tooltip="'C\'opier le flux RSS'"
+                v-tooltip="'Copier le flux RSS'"
               >RSS</button>
               <button
                 type="button"
@@ -216,38 +219,29 @@
                 v-tooltip="'Ecouter l\'épisode sur Castro'"
               >Castro</button>
             </div>
-            <div class="col-12 pt-1 px-1 px-md-3 text-center" v-if="!loading">
+          </div>
+          <div class="row bg-primary py-4 d-block d-md-none" v-if="!loading">
+            <div class="col-12 px-1 px-md-3 text-center">
               <button
                 type="button"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 mt-4 px-3 h1"
-                @click.passive="goEpisodes"
-              >
-                <i class="fas fa-headphones"></i> Autres Episodes
-              </button>
-            </div>
-            <div class="col-12 pt-3 px-1 px-md-3 text-center d-block d-md-none">
-              <button
-                type="button"
-                class="btn btn-primary btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                class="btn btn-success btn-lg bnt-block text-white m-1 m-md-3 px-4"
                 v-tooltip="'Partager via twitter'"
                 @click="tweetIt()"
               >
                 <i class="fas fa-pizza-slice"></i> Partager
               </button>
-            </div>
-            <div class="col-12 pt-3 px-1 px-md-3 text-center d-block d-md-none">
               <button
                 type="button"
-                class="btn btn-primary btn-lg bnt-block text-white m-1 m-md-3 px-4"
-                v-tooltip="'Aimer'"
-                @click="like()"
+                class="btn btn-success btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                v-tooltip="'Noter l\'épisode'"
+                @click="rate()"
               >
                 <i class="fas fa-heart"></i>
-                {{person.likes || 1}}
+                Noter l'épisode
               </button>
               <button
                 type="button"
-                class="btn btn-primary btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                class="btn btn-success btn-lg bnt-block text-white m-1 m-md-3 px-4"
                 v-tooltip="'buymeacoffee'"
                 @click="bmc()"
               >
@@ -256,6 +250,13 @@
                   class="bmc"
                   alt="Buy me a coffee"
                 /> Soutenir
+              </button>
+              <button
+                type="button"
+                class="btn btn-success btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                @click.passive="goEpisodes"
+              >
+                <i class="fas fa-headphones"></i> Autres Episodes
               </button>
             </div>
           </div>
@@ -273,15 +274,14 @@
               ></iframe>
             </div>
             <div class="col-12 px-md-5 pt-1 pt-md-3">
-              <!-- <h3 class="pt-2 text-white">Si tu aimes ❤️</h3> -->
               <button
                 type="button"
                 class="btn btn-primary btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
-                v-tooltip="'Aimer'"
-                @click="like()"
+                v-tooltip="'Noter l\'épisode'"
+                @click="rate()"
               >
                 <i class="fas fa-heart"></i>
-                {{person.likes || 1}}
+                Noter l'épisode
               </button>
               <button
                 type="button"
@@ -302,6 +302,13 @@
                   alt="Buy me a coffee"
                   class="bmc"
                 /> Soutenir
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
+                @click.passive="goEpisodes"
+              >
+                <i class="fas fa-headphones"></i> Autres Episodes
               </button>
             </div>
           </div>
@@ -372,27 +379,8 @@ export default {
           });
       }
     },
-    like() {
-      if (!this.loggin) {
-        this.openRegister();
-      } else {
-        this.$modal.show("loading");
-        db.collection(`people/${this.person.id}/likes`)
-          .doc(this.loggin.uid)
-          .set({
-            date: Date()
-          })
-          .then(() => {
-            this.$modal.hide("loading");
-            this.person.likes += 1;
-            this.$modal.show("liked");
-          })
-          .catch(error => {
-            this.$modal.hide("loading");
-            console.error("Error writing document: ", error);
-            this.$modal.show("fail-like");
-          });
-      }
+    rate() {
+      window.open(`https://ratethispodcast.com/imf`, "_blank");
     },
     listenExternal(url) {
       window.open(url, "_blank");

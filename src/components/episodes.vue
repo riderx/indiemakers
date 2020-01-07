@@ -301,7 +301,7 @@
         <div class="col-12 offset-xl-1 col-xl-5">
           <div class="row bg-success py-1 py-md-4">
             <div class="col col-md-10 pt-3 px-0 text-white text-center">
-              <h1>🔥Episodes</h1>
+              <h1>🔥Makers</h1>
             </div>
             <div class="col-3 col-md-2 pt-3 text-white">
               <button

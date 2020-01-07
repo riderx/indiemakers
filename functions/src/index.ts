@@ -45,7 +45,6 @@ interface Person {
     bio: string;
     pic: string;
     votes: number;
-    likes: number;
     number: number;
 }
 interface TwUrl {
@@ -267,7 +266,6 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                     pic: twUser.profile_image_url_https.replace('_normal', ''),
                     votes: 1,
                     number: Number.MAX_SAFE_INTEGER,
-                    likes: 0
                 }
                 let exist: FirebaseFirestore.DocumentReference | null = null;
                 try {
@@ -321,31 +319,6 @@ export const calcVotesByPerson = functions.firestore
                 });
             } else {
                 console.error('No votes');
-            }
-        }
-        return snapshot;
-    });
-
-export const calcLikesByPerson = functions.firestore
-    .document('/people/{personId}/likes/{likeId}')
-    .onCreate(async (snapshot, context) => {
-        const like = snapshot.data();
-        if (like) {
-            const personId = context.params.personId;
-            const id_str = like.id_str;
-            const person = await getPersonById(personId);
-            const snap = await admin.firestore()
-                .collection(`/people/${personId}/likes`)
-                .get();
-            const likesTotal = snap.size;
-            if (person && snap && likesTotal) {
-                return person.update({ likes: likesTotal }).then(() => {
-                    console.log('Updates likes', id_str, likesTotal);
-                }).catch((error) => {
-                    console.error('Error', error);
-                });
-            } else {
-                console.error('No Like');
             }
         }
         return snapshot;
