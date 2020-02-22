@@ -1,4 +1,4 @@
-import { sendWithTemplate, sendEmail } from './email';
+import { sendWithTemplate } from './email';
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { TwitterApiToken } from './twitter_api';
