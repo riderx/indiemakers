@@ -1,4 +1,4 @@
-import { sendWithTemplate } from './email';
+import { sendWithTemplate, sendEmail } from './email';
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { TwitterApiToken } from './twitter_api';
@@ -324,7 +324,7 @@ export const calcVotesByPerson = functions.firestore
         return snapshot;
     });
 
-const sendEmail = (user: any, maker: Person, makerId: string, subject: string, template: string, previewText: string) => {
+const sendEmailEp = (user: any, maker: Person, makerId: string, subject: string, template: string, previewText: string) => {
     return new Promise((resolve, reject) => {
         const linkEp = `https://indiemaker.fr/#/episode/${makerId}`;
         const tweet = `J'écoute le podcast @indiemakerfr avec @${maker.login} 🚀 ${linkEp}`
@@ -352,6 +352,34 @@ const getUser = async (id: string) => {
     return admin.auth()
         .getUser(id);
 };
+
+const sendEmailWel = (user: any, subject: string, template: string, previewText: string) => {
+    return new Promise((resolve, reject) => {
+        const tweet = `J'écoute le podcast @indiemakerfr 🚀 https://indiemaker.fr`
+        const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`
+        sendWithTemplate('indiemakerfr@gmail.com', user.email, subject, previewText, template, {
+            TWEETLINK: tweetLink,
+            MC_PREVIEW_TEXT: previewText,
+            NAME: user.displayName || 'Elon Musk',
+            SUBJECT: subject,
+        })
+            .then(() => {
+                resolve(user);
+            }).catch((err: any) => {
+                console.error('Error send email', err);
+                reject(err);
+            })
+    });
+};
+
+export const sendWelcomeEmail = functions.auth.user()
+    .onCreate((user) => {
+        const emailProm: Promise<any>[] = [];
+        // emailProm.push(sendEmailWel(user, `Welcome ${user.displayName} 🧞‍♀️`, 'welcome', 'Bienvenue dans la communauté INDIE MAKER FRANCE !'));
+        user.email = "indiemakerfr@gmail.com"
+        emailProm.push(sendEmailWel(user, `Welcome ${user.email} 🧞‍♀️`, 'welcome', 'Bienvenue dans la communauté INDIE MAKER FRANCE !'));
+        return emailProm;
+    });
 
 export const onUpdatePeople = functions.firestore
     .document('/people/{personId}')
@@ -407,11 +435,11 @@ export const onUpdatePeople = functions.firestore
             if (person && votes) {
                 const emailProm: Promise<any>[] = [];
                 const addedBy = await getUser(person.addedBy);
-                emailProm.push(sendEmail(addedBy, person, personId, 'Le maker que tu as ajouté est venue dans le podcast', 'remerciment_add', 'Je tenais a te remercier infiniment pour ca !'));
+                emailProm.push(sendEmailEp(addedBy, person, personId, 'Le maker que tu as ajouté est venue dans le podcast', 'remerciment_add', 'Je tenais a te remercier infiniment pour ca !'));
                 for (const vote of votes.docs) {
                     if (vote.id !== person.addedBy) {
                         const user = await getUser(vote.id);
-                        emailProm.push(sendEmail(user, person, personId, 'Grace a toi il est la !', 'remerciment_vote', 'Pour une fois ton vote compte !'));
+                        emailProm.push(sendEmailEp(user, person, personId, 'Grace a toi il est la !', 'remerciment_vote', 'Pour une fois ton vote compte !'));
                     }
                 }
                 await Promise.all(emailProm)
