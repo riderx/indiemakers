@@ -425,10 +425,8 @@ export default {
         return person.pic;
       }
     },
-    imgUrlAlt(person) {
-      return event => {
-        event.target.src = `https://avatars.io/twitter/${person.name}`;
-      };
+    imgUrlAlt(event) {
+      event.target.src = `assets/profile.png`;
     },
     tweetIt() {
       const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakerfr 🚀.`;
