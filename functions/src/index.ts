@@ -263,7 +263,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                     name: twUser.name,
                     login: twUser.screen_name,
                     bio: await transformURLtoTracked(twUser.description || '', twUser.entities),
-                    pic: twUser.profile_image_url_https.replace('_normal', ''),
+                    pic: `https://avatars.io/twitter/${twUser.screen_name}`,
                     votes: 1,
                     number: Number.MAX_SAFE_INTEGER,
                 }

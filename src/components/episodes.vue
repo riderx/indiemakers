@@ -337,7 +337,8 @@
             >
               <div class="col-4 pr-0 pr-md-5">
                 <img
-                  :src="person.pic"
+                  :src="personImg(person)"
+                  @onerror="imgUrlAlt"
                   class="w-100 w-md-75 img-fluid rounded-circle"
                   alt="Logo person"
                 />
@@ -359,17 +360,20 @@
                 <button
                   type="button"
                   v-if="!person.description"
-                  class="btn btn-primary btn-lg text-light py-1 px-3 py-md-2 px-md-4 h1"
+                  class="btn btn-primary btn-lg text-light px-3 px-md-4 py-3 h1"
                   v-tooltip="tooltipVote(person)"
                 >
                   <!-- <div>&#9650;</div> -->
-                  <i class="fas fa-caret-up fa-2x"></i>
-                  {{person.votes}}
+                  <i class="fas fa-caret-circle-right fa-2x invisible"></i>
+                  <div class="position-absolute ml-2 top">
+                    <i class="fas fa-caret-up fa-2x"></i>
+                    <p>{{person.votes}}</p>
+                  </div>
                 </button>
                 <button
                   type="button"
                   v-if="person.description"
-                  class="btn btn-success btn-lg text-white p-3 h1"
+                  class="btn btn-success btn-lg text-white px-3 px-md-4 py-3 h1"
                   v-tooltip="'Ecouter l\'épisode'"
                 >
                   <i class="fas fa-caret-circle-right fa-2x"></i>
@@ -413,6 +417,18 @@ export default {
   methods: {
     tooltipVote(person) {
       return `Voter pour avoir ${person.name} dans le podcast`;
+    },
+    personImg(person) {
+      if (person.pic.indexOf("pbs.twimg.com/profile_images") > 0) {
+        return `https://avatars.io/twitter/${person.login}`;
+      } else {
+        return person.pic;
+      }
+    },
+    imgUrlAlt(person) {
+      return event => {
+        event.target.src = `https://avatars.io/twitter/${person.name}`;
+      };
     },
     tweetIt() {
       const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakerfr 🚀.`;
@@ -620,6 +636,9 @@ export default {
 <style scoped>
 .cursor-pointer {
   cursor: pointer;
+}
+.top {
+  top: 0;
 }
 ::-webkit-scrollbar {
   width: 10px;
