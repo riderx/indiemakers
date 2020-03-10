@@ -62,7 +62,7 @@ export default {
     return {
       title: "Un podcast sur les créateurs de business indépendants",
       messages: [
-        `Salut je suis Martin Donadieu ! Bienvenue sur Indie Maker ! Ici, tu trouveras des podcasts où j'échange avec des Makers qui ont su transformer leurs idées en en business florissant.`,
+        `Salut je suis Martin Donadieu ! Bienvenue sur Indie Makers ! Ici, tu trouveras des podcasts où j'échange avec des Makers qui ont su transformer leurs idées en en business florissant.`,
         `Au-delà de leur success-story, nous allons décrypter leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables.`,
         `Toutes les 2 semaines, j'interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur business pérenne.`,
         `Qui que vous soyez, dans ce podcast vous apprendrez à devenir un Indie Maker, le tout sans se prendre au sérieux !`

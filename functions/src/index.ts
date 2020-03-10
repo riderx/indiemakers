@@ -39,9 +39,6 @@ interface Person {
     name: string;
     login: string;
     description?: string;
-    episode?: {
-        Spotify?: string;
-    }
     bio: string;
     pic: string;
     votes: number;
@@ -375,9 +372,9 @@ const sendEmailWel = (user: any, subject: string, template: string, previewText:
 export const sendWelcomeEmail = functions.auth.user()
     .onCreate((user) => {
         const emailProm: Promise<any>[] = [];
-        emailProm.push(sendEmailWel(user, `Welcome ${user.displayName} 🧞‍♀️`, 'welcome', 'Bienvenue dans la communauté INDIE MAKER FRANCE !'));
+        emailProm.push(sendEmailWel(user, `Welcome ${user.displayName} 🧞‍♀️`, 'welcome', 'Bienvenue dans la communauté INDIE MAKERS !'));
         user.email = "indiemakerfr@gmail.com"
-        emailProm.push(sendEmailWel(user, `Welcome ${user.email} 🧞‍♀️`, 'welcome', 'Bienvenue dans la communauté INDIE MAKER FRANCE !'));
+        emailProm.push(sendEmailWel(user, `Welcome ${user.email} 🧞‍♀️`, 'welcome', 'Bienvenue dans la communauté INDIE MAKERS !'));
         return emailProm;
     });
 

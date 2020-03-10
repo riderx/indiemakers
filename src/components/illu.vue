@@ -47,7 +47,7 @@ export default {
 #mic {
   position: fixed;
   width: 3%;
-  top: 65%;
+  top: 56%;
   left: 74%;
   animation: animationMic 5s;
   animation-iteration-count: 1;

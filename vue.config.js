@@ -26,7 +26,7 @@ module.exports = {
         appleMobileWebAppStatusBarStyle: 'black',
         workboxPluginMode: 'GenerateSW',
         manifestOptions: {
-            name: 'INDIE MAKER FRANCE',
+            name: 'INDIE MAKERS',
             short_name: 'IMF'
         }
     }
