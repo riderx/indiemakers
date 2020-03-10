@@ -36,12 +36,12 @@ export default {
         },
         {
           title: "Instagram",
-          lien: "https://instagram.com/indiemakerfr",
+          lien: "https://instagram.com/indiemakersfr",
           class: "fab fa-instagram fa-2x"
         },
         {
           title: "twitter",
-          lien: "https://twitter.com/indiemakerfr",
+          lien: "https://twitter.com/indiemakersfr",
           class: "fab fa-twitter fa-2x"
         }
       ],
