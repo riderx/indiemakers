@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style scoped>
-#indiemakerfr {
+#indiemakersfr {
   width: 12vw;
   min-width: 90px;
   margin-left: 2vw;
