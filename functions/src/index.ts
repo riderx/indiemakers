@@ -323,7 +323,7 @@ export const calcVotesByPerson = functions.firestore
 
 const sendEmailEp = (user: any, maker: Person, makerId: string, subject: string, template: string, previewText: string) => {
     return new Promise((resolve, reject) => {
-        const linkEp = `https://indiemaker.fr/#/episode/${makerId}`;
+        const linkEp = `https://indiemakers.fr/#/episode/${makerId}`;
         const tweet = `J'écoute le podcast @indiemakersfr avec @${maker.login} 🚀 ${linkEp}`
         const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`
         sendWithTemplate('indiemakerfr@gmail.com', user.email, subject, previewText, template, {
@@ -352,7 +352,7 @@ const getUser = async (id: string) => {
 
 const sendEmailWel = (user: any, subject: string, template: string, previewText: string) => {
     return new Promise((resolve, reject) => {
-        const tweet = `J'écoute le podcast @indiemakersfr 🚀 https://indiemaker.fr`
+        const tweet = `J'écoute le podcast @indiemakersfr 🚀 https://indiemakers.fr`
         const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`
         sendWithTemplate('indiemakerfr@gmail.com', user.email, subject, previewText, template, {
             TWEETLINK: tweetLink,
