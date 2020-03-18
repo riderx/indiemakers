@@ -429,7 +429,7 @@ export default {
       event.target.src = `assets/profile.png`;
     },
     tweetIt() {
-      const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakerfr 🚀.`;
+      const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakersfr 🚀.`;
       window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
       this.$modal.hide("added");
       this.$modal.hide("voted");

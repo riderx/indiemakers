@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       logo: {
-        title: "indiemakerfr",
+        title: "indiemakersfr",
         source: "/assets/default-monochrome-white.svg",
         lien: "/"
       },

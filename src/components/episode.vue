@@ -430,11 +430,11 @@ export default {
       }
     },
     bmc() {
-      window.open("https://www.buymeacoffee.com/indiemakerfr", "_blank");
+      window.open("https://www.buymeacoffee.com/indiemakersfr", "_blank");
     },
     tweetIt() {
-      const linkEp = `https://indiemaker.fr/#/episode/${this.id}`;
-      const tweet = `J'écoute le podcast @indiemakerfr avec @${this.person.login} 🚀 ${linkEp}`;
+      const linkEp = `https://indiemakers.fr/#/episode/${this.id}`;
+      const tweet = `J'écoute le podcast @indiemakersfr avec @${this.person.login} 🚀 ${linkEp}`;
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`;
