@@ -419,8 +419,9 @@ export default {
       return `Voter pour avoir ${person.name} dans le podcast`;
     },
     personImg(person) {
-      if (person.pic.indexOf("pbs.twimg.com/profile_images") > 0) {
-        return `https://twitter-avatar.now.sh//${person.login}`;
+      if (person.pic.indexOf("pbs.twimg.com/profile_images") > -1 ||
+        person.pic.indexOf("https://avatars.io/twitter") > -1) {
+        return `https://twitter-avatar.now.sh/${person.login}`;
       } else {
         return person.pic;
       }
