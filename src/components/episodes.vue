@@ -420,7 +420,7 @@ export default {
     },
     personImg(person) {
       if (person.pic.indexOf("pbs.twimg.com/profile_images") > 0) {
-        return `https://avatars.io/twitter/${person.login}/large`;
+        return `https://twitter-avatar.now.sh//${person.login}`;
       } else {
         return person.pic;
       }
