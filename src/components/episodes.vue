@@ -335,6 +335,9 @@
               v-for="person in people"
               :class="'row bg-white py-3 border-bottom align-items-center ' + person.id"
             >
+              <div class="col-12 d-block d-sm-none">
+                <h3 >{{person.name}}</h3>
+              </div>
               <div class="col-4 pr-0 pr-md-5">
                 <img
                   :src="personImg(person)"
@@ -344,16 +347,13 @@
                 />
               </div>
               <div class="col-5 col-md-6">
-                <h3>{{person.name}}</h3>
+                <h3 class="d-none d-sm-block" >{{person.name}}</h3>
                 <div>
                   <p
                     @click="openAccount(person.login)"
                     v-tooltip="'Ouvrir son profils Twitter'"
                     class="text-secondary fit-content"
-                  >
-                    <i class="fab fa-twitter"></i>
-                    @{{person.login}}
-                  </p>
+                  >@{{person.login}}</p>
                 </div>
               </div>
               <div class="col-3 col-md-2" @click="vote(person)">
