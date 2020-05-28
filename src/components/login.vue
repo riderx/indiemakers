@@ -76,8 +76,8 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2">
-          <illu />
+        <div v-if="image" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
+          <img class="img-fluid" :alt="image.title" :src="image.url" />
         </div>
       </div>
     </div>
@@ -86,18 +86,23 @@
 <script>
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import { firebaseLib } from "../utils/db";
-import illu from "./illu.vue";
 import { firestorePlugin } from "vuefire";
 import Vue from "vue";
 import VModal from "vue-js-modal";
+const Parser = require('rss-parser');
+const parser = new Parser();
 
 Vue.use(VModal);
 Vue.use(firestorePlugin);
 export default {
-  components: {
-    illu
-  },
   mounted() {
+    parser.parseURL('https://anchor.fm/s/414d1d4/podcast/rss')
+    .then((feed) => {
+            this.image = feed.image;
+    }).catch((error) => {
+        // this.loading = false;
+        console.error(error)
+    })
     firebaseLib.auth().onAuthStateChanged(user => {
       this.user = user;
       if (this.user.displayName === null) {
@@ -116,6 +121,7 @@ export default {
   data() {
     return {
       email: null,
+      image: null,
       myName: null,
       isFalse: false,
       user: null

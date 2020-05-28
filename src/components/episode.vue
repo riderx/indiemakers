@@ -94,74 +94,6 @@
         </div>
       </div>
     </modal>
-    <modal height="auto" adaptive name="checkEmail">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>✅Check ta boite email</h1>
-              </div>
-            </div>
-            <div class="row bg-success pt-4">
-              <div class="col-12 pt-2 text-white text-center">
-                <p>Récupère ton lien de login reçût par email et click dessus, c'est tout❤️</p>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary btn-lg btn-block text-white px-4 h1"
-                  @click="$modal.hide('checkEmail')"
-                >😎Cool</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal height="auto" adaptive name="register">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>🔐Pas tout de suite !</h1>
-              </div>
-            </div>
-            <div class="row bg-success pt-4">
-              <div class="col-12 pt-2 text-white">
-                <p>Pour pouvoir te tenir au courant de la sortie de l'épisode et éviter les faux votes</p>
-                <h5 class="text-center">j’ai besoin que tu valides ton email</h5>
-                <p>Tu ne recevras des emails seulement pour les makers pour qui tu as voté, et si j'ai une grande nouvelle a te partager (max 3 par ans).</p>
-                <p>Et bien entendu, je ne refile ton e-mail à personne, je déteste ceux qui font ça !</p>
-              </div>
-            </div>
-            <div class="row bg-success">
-              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-                <div class="form-group mb-0">
-                  <input
-                    ref="register"
-                    type="email"
-                    v-model="email"
-                    class="form-control pb-0"
-                    aria-describedby="emailHelp"
-                    placeholder="elon@musk.com"
-                    v-on:keyup.enter="sendLogin()"
-                  />
-                </div>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary btn-lg btn-block text-white px-4 h1"
-                  @click="sendLogin()"
-                >🚀VALIDER</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
     <modal height="auto" adaptive name="copied">
       <div class="container-fluid">
         <div class="row">
@@ -204,31 +136,28 @@
           <div v-if="!loading" class="row bg-success py-1 py-md-4">
             <div class="col-4 offset-4 offset-md-0 col-md-3 pt-1 px-1 px-md-3">
               <img
-                :src="person.pic"
+                :src="person.itunes.image"
                 class="w-100 w-md-75 img-fluid rounded-circle"
                 alt="Logo person"
               />
             </div>
             <div class="col-6 col-md-8 offset-3 offset-md-0 pt-3 px-0 text-white text-center text-md-left">
-              <h1 class="d-none d-sm-block">#{{person.number}} {{person.name}}</h1>
-              <div class="text-center">
-                <p
-                  @click="openAccount(person.login)"
-                  v-tooltip="'Ouvrir son profils Twitter'"
-                  class="text-white cursor-pointer fit-content"
-                >
-                  <i class="fab fa-twitter"></i>
-                  @{{person.login}}
-                </p>
-              </div>
+              <h1 class="d-none d-sm-block">{{person.title}}</h1>
             </div>
             <div class="col-12 d-block d-sm-none text-white">
-              <h3>#{{person.number}} {{person.name}}</h3>
+              <h3>{{person.title}}</h3>
+            </div>
+            <div class="col-12 d-block d-sm-none text-white">
+              <vue-plyr>
+                  <audio>
+                    <source :src="person.enclosure.url" type="audio/mp3"/>
+                  </audio>
+              </vue-plyr>
             </div>
           </div>
           <div class="row" v-if="!loading">
             <div class="col-12 bg-white px-md-5 pt-3">
-              <p class v-html="linkDescription"></p>
+              <p class v-html="person.content"></p>
             </div>
           </div>
           <div class="row bg-primary py-4 d-block d-md-none" v-if="!loading">
@@ -286,15 +215,12 @@
         </div>
         <div class="col-12 col-md-6 py-md-4 px-md-5 text-center d-none d-md-block" v-if="!loading">
           <div class="row py-0 py-md-3 align-items-center position-fixed">
-            <div class="col-12 px-md-5 pt-3">
-              <iframe
-                :src="person.embed"
-                width="100%"
-                frameborder="0"
-                scrolling="no"
-                allowtransparency="true"
-                allow="encrypted-media"
-              ></iframe>
+            <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-1 pt-md-3">
+              <vue-plyr>
+                <audio>
+                  <source :src="person.enclosure.url" type="audio/mp3"/>
+                </audio>
+              </vue-plyr>
             </div>
             <div class="col-12 px-md-5 pt-1 pt-md-3">
               <button
@@ -344,73 +270,32 @@
 
 <script>
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
-import { db, firebaseLib } from "../utils/db";
-import linkifyHtml from "linkifyjs/html";
+// import { db, firebaseLib } from "../utils/db";
 import Tooltip from "vue-directive-tooltip";
 import "vue-directive-tooltip/dist/vueDirectiveTooltip.css";
-import { firestorePlugin } from "vuefire";
 import Vue from "vue";
 import VModal from "vue-js-modal";
-
+import VuePlyr from 'vue-plyr';
+const Parser = require('rss-parser');
+const parser = new Parser();
+ 
+// The second argument is optional and sets the default config values for every player.
+Vue.use(VuePlyr);
 Vue.use(Tooltip);
 Vue.use(VModal);
-Vue.use(firestorePlugin);
 export default {
-  components: {},
+  components: {
+  },
   props: ["id"],
   methods: {
-    getTextLink(text) {
-      return linkifyHtml(text, {
-        defaultProtocol: "https",
-        attributes: null,
-        className: "linkified d-block",
-        events: null,
-        ignoreTags: [],
-        nl2br: false,
-        tagName: "a",
-        target: {
-          url: "_blank"
-        },
-        validate: true
-      });
-    },
-    openRegister() {
-      this.$modal.show("register");
-      setTimeout(() => {
-        this.$refs.register.focus();
-      }, 50);
-    },
-    sendLogin() {
-      if (this.email) {
-        window.localStorage.setItem("emailForSignIn", this.email);
-        const actionCodeSettings = {
-          url: "https://indiemakers.fr/#/login",
-          handleCodeInApp: true
-        };
-        this.$modal.hide("register");
-        this.$modal.show("loading");
-        firebaseLib
-          .auth()
-          .sendSignInLinkToEmail(this.email, actionCodeSettings)
-          .then(() => {
-            window.localStorage.setItem("emailForSignIn", this.email);
-            this.$modal.hide("loading");
-            this.$modal.show("checkEmail");
-          })
-          .catch(error => {
-            this.$modal.hide("loading");
-            console.error(error);
-          });
-      }
+    toEmbed(url) {
+      return url.replace('/episodes/', '/embed/episodes/')
     },
     rate() {
       window.open(`https://ratethispodcast.com/imf`, "_blank");
     },
     listenExternal(url) {
       window.open(url, "_blank");
-    },
-    openAccount(name) {
-      window.open(`https://twitter.com/${name}`, "_blank");
     },
     goEpisodes() {
       this.$router.push("/episodes");
@@ -461,7 +346,7 @@ export default {
     },
     tweetIt() {
       const linkEp = `https://indiemakers.fr/#/episode/${this.id}`;
-      const tweet = `J'écoute le podcast @indiemakersfr avec @${this.person.login} 🚀 ${linkEp}`;
+      const tweet = `J'écoute le podcast ${this.person.title} le podcast @indiemakersfr 🚀 ${linkEp}`;
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`;
@@ -472,32 +357,12 @@ export default {
   },
   data() {
     return {
-      email: "",
-      isFalse: false,
-      loggin: false,
       loading: true,
       sizeHead: 0,
       person: null
     };
   },
   computed: {
-    linkDescription() {
-      if (this.person && this.person.description) {
-        const aeratedText = this.person.description
-          .split(". ")
-          .join(".<br/><br/>")
-          .split("!")
-          .join("!<br/><br/>")
-          .split(": ")
-          .join(":<br/>")
-          .split(":)")
-          .join(":) <br/>")
-          .split("Quelques références")
-          .join("<br/><br/><br/>Quelques références");
-        return this.getTextLink(aeratedText);
-      }
-      return "";
-    },
     heightDiv() {
       if (this.sizeHead === 0) {
         return 0;
@@ -506,21 +371,27 @@ export default {
     }
   },
   mounted() {
-    this.loggin = firebaseLib.auth().currentUser;
-    this.email = window.localStorage.getItem("emailForSignIn");
-    this.$bind("person", db.collection("people").doc(this.id))
-      .then(() => {
-        this.loading = false;
+    parser.parseURL('https://anchor.fm/s/414d1d4/podcast/rss')
+    .then((feed) => {
+        if (feed && feed.items) {
+            this.loading = false;
+            feed.items.forEach((element) => {
+              if (element.guid === this.id) {
+                this.person = element
+                // eslint-disable-next-line no-console
+                console.log('found item', element)
+              }
+            });
         setTimeout(() => {
           this.setSizeHead();
-        }, 1000);
-      })
-      .catch(error => {
-        console.error("error in loading: ", error);
-      });
-    firebaseLib.auth().onAuthStateChanged(user => {
-      this.loggin = user;
-    });
+        }, 50);
+        }
+    // eslint-disable-next-line no-console
+        // console.log(feed)
+    }).catch((error) => {
+        // this.loading = false;
+        console.error(error)
+    })
   }
 };
 </script>

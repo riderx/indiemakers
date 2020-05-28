@@ -4,6 +4,7 @@ import App from './app.vue'
 const Home = () => import('./components/home.vue')
 const Login = () => import('./components/login.vue')
 const Episodes = () => import('./components/episodes.vue')
+const Makers = () => import('./components/makers.vue')
 const Episode = () => import('./components/episode.vue')
 import './registerServiceWorker'
 
@@ -26,6 +27,11 @@ const routes = [
     path: '/episodes',
     name: 'Episodes',
     component: Episodes,
+  },
+  {
+    path: '/makers',
+    name: 'Makers',
+    component: Makers,
   },
   {
     path: '/episode/:id', props: true ,
