@@ -121,11 +121,11 @@ mounted() {
     .then((feed) => {
         if (feed && feed.items) {
           this.episodes = feed.items;
-          this.image = feed.image;
           this.loading = false;
           setTimeout(() => {
             this.setSizeHead();
-          }, 500);
+            this.image = feed.image;
+          }, 50);
         }
     }).catch((error) => {
         console.error(error)

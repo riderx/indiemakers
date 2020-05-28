@@ -591,7 +591,13 @@ export default {
         this.loading = false;
         setTimeout(() => {
           this.setSizeHead();
-        }, 500);
+          parser.parseURL('https://anchor.fm/s/414d1d4/podcast/rss')
+            .then((feed) => {
+                this.image = feed.image;
+            }).catch((error) => {
+                console.error(error)
+            })
+        }, 50);
       })
       .catch(error => {
         console.error("error in loading: ", error);
@@ -611,12 +617,7 @@ export default {
         this.$router.push("/login");
       }
     });
-    parser.parseURL('https://anchor.fm/s/414d1d4/podcast/rss')
-    .then((feed) => {
-        this.image = feed.image;
-    }).catch((error) => {
-        console.error(error)
-    })
+
   },
   firestore: {
     // people: db.collection("people").orderBy("votes", "desc")
