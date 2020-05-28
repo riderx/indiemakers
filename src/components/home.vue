@@ -3,16 +3,16 @@
     <div class="row pt-lx-5">
       <div class="col-12 col-md-6 pt-md-0 px-md-5 text-white order-2 order-md-1">
         <div class="row">
-          <div class="col-12 pt-3 order-1">
+          <div class="col-12 pt-3 order-1 text-center text-sm-left">
             <h1 class="pb-2">{{ title }}</h1>
           </div>
-          <div class="col-12 pt-3 order-3 order-md-2">
+          <div class="col-12 pt-3 order-3 order-md-2 text-center text-sm-left">
             <div v-for="(message, index) in messages" :key="`fruit-${index}`">
               <p class="pb-0">{{ message }}</p>
             </div>
             <p>{{ banner }}</p>
           </div>
-          <div class="col-12 py-1 py-md-3 order-2 order-md-3">
+          <div class="col-12 py-1 py-md-3 order-2 order-md-3 text-center text-sm-left">
             <h3>Prochain episode dans : {{nextEpisode()}} !</h3>
             <button
               type="button"
@@ -22,7 +22,7 @@
               <i class="fas fa-headphones"></i> Episodes
             </button>
           </div>
-          <div class="col-12 py-1 py-md-3 order-2 order-md-3">
+          <div class="col-12 py-1 py-md-3 order-4 order-md-3 text-center text-sm-left">
             <h3>Aide moi a trouver les prochain invités !</h3>
             <button
               type="button"
@@ -37,7 +37,7 @@
       <div v-if="feed" class="offset-3 offset-md-0 col-6 col-md-6 pt-0 px-md-5 order-1 order-md-2">
         <img class="img-fluid" :alt="feed.image.title" :src="feed.image.url" />
       </div>
-      <div class="col-12 pt-0 px-md-5 py-4 order-3 text-white">
+      <div class="col-12 pt-0 px-md-5 py-4 order-3 text-white text-center text-sm-left">
         <h5>Mes autres projets:</h5>
         <div class="d-flex"> 
         <a
