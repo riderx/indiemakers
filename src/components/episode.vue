@@ -278,6 +278,7 @@ import VModal from "vue-js-modal";
 import VuePlyr from 'vue-plyr';
 const Parser = require('rss-parser');
 const parser = new Parser();
+const RSSURL = 'https://cors-anywhere.herokuapp.com/https://anchor.fm/s/414d1d4/podcast/rss';
  
 // The second argument is optional and sets the default config values for every player.
 Vue.use(VuePlyr);
@@ -371,7 +372,7 @@ export default {
     }
   },
   mounted() {
-    parser.parseURL('https://anchor.fm/s/414d1d4/podcast/rss')
+    parser.parseURL(RSSURL)
     .then((feed) => {
         if (feed && feed.items) {
             this.loading = false;

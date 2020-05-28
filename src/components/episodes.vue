@@ -82,6 +82,7 @@ import Tooltip from "vue-directive-tooltip";
 import "vue-directive-tooltip/dist/vueDirectiveTooltip.css";
 const Parser = require('rss-parser');
 const parser = new Parser();
+const RSSURL = 'https://cors-anywhere.herokuapp.com/https://anchor.fm/s/414d1d4/podcast/rss';
 
 Vue.use(Tooltip);
 
@@ -117,7 +118,7 @@ export default {
   },
 mounted() {
  
-    parser.parseURL('https://anchor.fm/s/414d1d4/podcast/rss')
+    parser.parseURL(RSSURL)
     .then((feed) => {
         if (feed && feed.items) {
           this.episodes = feed.items;

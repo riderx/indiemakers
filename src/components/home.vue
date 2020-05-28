@@ -68,6 +68,7 @@
 /*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 const Parser = require('rss-parser');
 const parser = new Parser();
+const RSSURL = 'https://cors-anywhere.herokuapp.com/https://anchor.fm/s/414d1d4/podcast/rss';
 
 export default {
   components: {
@@ -89,7 +90,7 @@ export default {
   },
   mounted() {
  
-    parser.parseURL('https://anchor.fm/s/414d1d4/podcast/rss')
+    parser.parseURL(RSSURL)
     .then((feed) => {
       this.feed = feed;
       const description = feed.description.trim().split('\n');

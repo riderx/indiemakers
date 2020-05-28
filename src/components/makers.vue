@@ -396,6 +396,7 @@ import { firestorePlugin } from "vuefire";
 import VModal from "vue-js-modal";
 const Parser = require('rss-parser');
 const parser = new Parser();
+const RSSURL = 'https://cors-anywhere.herokuapp.com/https://anchor.fm/s/414d1d4/podcast/rss';
 
 Vue.use(Tooltip);
 Vue.use(VModal);
@@ -591,7 +592,7 @@ export default {
         this.loading = false;
         setTimeout(() => {
           this.setSizeHead();
-          parser.parseURL('https://anchor.fm/s/414d1d4/podcast/rss')
+          parser.parseURL(RSSURL)
             .then((feed) => {
                 this.image = feed.image;
             }).catch((error) => {
