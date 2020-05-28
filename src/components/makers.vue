@@ -591,7 +591,7 @@ export default {
         this.loading = false;
         setTimeout(() => {
           this.setSizeHead();
-        }, 50);
+        }, 500);
       })
       .catch(error => {
         console.error("error in loading: ", error);
