@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <div v-if="feed" class="offset-3 offset-md-0 col-6 col-md-6 pt-0 px-md-5 order-1 order-md-2">
+      <div v-if="feed" class="offset-3 offset-md-0 col-6 col-md-5 pt-0 px-md-5 order-1 order-md-2">
         <img class="img-fluid" :alt="feed.image.title" :src="feed.image.url" />
       </div>
       <div class="col-12 pt-0 px-md-5 py-4 order-3 text-white text-center text-sm-left">
