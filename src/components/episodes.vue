@@ -120,19 +120,14 @@ mounted() {
     parser.parseURL('https://anchor.fm/s/414d1d4/podcast/rss')
     .then((feed) => {
         if (feed && feed.items) {
-            this.episodes = feed.items;
-            this.image = feed.image;
-            this.loading = false;
-    // eslint-disable-next-line no-console
-        console.log('found items2')
-        setTimeout(() => {
-          this.setSizeHead();
-        }, 50);
+          this.episodes = feed.items;
+          this.image = feed.image;
+          this.loading = false;
+          setTimeout(() => {
+            this.setSizeHead();
+          }, 500);
         }
-    // eslint-disable-next-line no-console
-        console.log(feed)
     }).catch((error) => {
-        // this.loading = false;
         console.error(error)
     })
   },

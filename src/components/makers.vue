@@ -613,9 +613,8 @@ export default {
     });
     parser.parseURL('https://anchor.fm/s/414d1d4/podcast/rss')
     .then((feed) => {
-            this.image = feed.image;
+        this.image = feed.image;
     }).catch((error) => {
-        // this.loading = false;
         console.error(error)
     })
   },

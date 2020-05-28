@@ -95,9 +95,6 @@ export default {
       const description = feed.description.trim().split('\n');
       this.title = description.shift();
       this.messages = description;
-      // eslint-disable-next-line no-console
-      console.log(feed)
-
     }).catch((error) => {
         // this.loading = false;
         console.error(error)
