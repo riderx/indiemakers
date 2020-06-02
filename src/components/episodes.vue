@@ -37,22 +37,20 @@
             <div
               v-bind:key="episode.guid"
               v-for="episode in episodes"
+              @click="openEp(episode.guid)"
               :class="'row bg-white py-3 border-bottom align-items-center ' + episode.guid"
             >
-              <div class="col-12 d-block d-sm-none">
-                <h3 >{{episode.title}}</h3>
-              </div>
-              <div class="col-4 pr-0 pr-md-5">
+              <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 pr-0 pr-md-5 pb-3 pb-md-0">
                 <img
                   :src="episode.itunes.image"
                   class="w-100 w-md-75 img-fluid"
                   alt="Logo person"
                 />
               </div>
-              <div class="col-5 col-md-6">
-                <h3 class="d-none d-sm-block" >{{episode.title}}</h3>
+              <div class="col-12 col-md-6 order-2 order-md-2 text-center text-md-left">
+                <h3 >{{episode.title}}</h3>
               </div>
-              <div class="col-3 col-md-2" @click="openEp(episode.guid)">
+              <div class="col-3 col-md-2 order-3 d-none d-md-block">
                 <button
                   type="button"
                   class="btn btn-success btn-lg text-white px-3 px-md-4 py-3 h1"
@@ -61,8 +59,8 @@
                   <i class="fas fa-caret-circle-right fa-2x"></i>
                 </button>
               </div>
-              <div class="col-12 px-md-5 pt-3">
-                <p class >{{episode.contentSnippet.split('.')[0]}}</p>
+              <div class="col-12 px-0 px-md-5 pt-1 pt-md-3 order-3">
+                <p class="text-center text-md-left" >{{previewText(episode.contentSnippet)}}</p>
               </div>
             </div>
           </div>
@@ -88,6 +86,13 @@ Vue.use(Tooltip);
 
 export default {
   methods: {
+    previewText(text) {
+      let first = text.split(/[.!]+/)[0];
+      if (first.split(' ').length > 20) {
+        first = `${first.split(' ').splice(0, 17).join(' ')} ...`;
+      } 
+      return first;
+    },
     openEp(guid) {
         this.$router.push(`/episode/${guid}`);
     },
