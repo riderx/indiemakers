@@ -45,7 +45,7 @@
               <div class="col-4 pr-0 pr-md-5">
                 <img
                   :src="episode.itunes.image"
-                  class="w-100 w-md-75 img-fluid rounded-circle"
+                  class="w-100 w-md-75 img-fluid"
                   alt="Logo person"
                 />
               </div>

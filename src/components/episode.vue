@@ -137,7 +137,7 @@
             <div class="col-4 offset-4 offset-md-0 col-md-3 pt-1 px-1 px-md-3">
               <img
                 :src="person.itunes.image"
-                class="w-100 w-md-75 img-fluid rounded-circle"
+                class="w-100 w-md-75 img-fluid"
                 alt="Logo person"
               />
             </div>
