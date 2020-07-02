@@ -17,11 +17,7 @@ export default {
   },
   methods: {
     beforeLoad() {
-      if (document.location.href.indexOf('https://indiemakers.fr')) {
-        document.location.href = "https://indiemakers.fr"; 
-      } else {
-        this.$router.push("/");
-      }
+      this.$router.push("/");
     },
     mounted() {
       this.$nextTick(this.beforeLoad);
