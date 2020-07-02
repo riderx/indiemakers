@@ -1,6 +1,7 @@
 {
  "name": "INDIE MAKER",
  "short_name": "IM",
+ "theme_color": "#6b3a87",
  "icons": [
   {
    "src": "/assets/img/icons/android-icon-36x36.png",
