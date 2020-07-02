@@ -9,7 +9,7 @@
         <li
           v-for="(icon, index) in icones"
           :key="index"
-          class="list-group-item bg-transparent text-white p-2 p-md-3"
+          class="list-group-item bg-transparent text-white p-2 p-md-3 cursor-pointer"
           @click="openPage(icon.lien)"
         >
           <i :class="icon.class"></i>

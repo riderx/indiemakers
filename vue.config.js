@@ -21,13 +21,9 @@ module.exports = {
     pwa: {
         themeColor: 'rgba(75, 39, 155, 1)',
         msTileColor: 'rgba(75, 39, 155, 1)',
-        assetsVersion: '1',
+        assetsVersion: '2',
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',
         workboxPluginMode: 'GenerateSW',
-        manifestOptions: {
-            name: 'INDIE MAKERS',
-            short_name: 'IM'
-        }
     }
 }

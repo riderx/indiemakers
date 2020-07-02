@@ -1,5 +1,6 @@
 {
- "name": "App",
+ "name": "INDIE MAKER",
+ "short_name": "IM",
  "icons": [
   {
    "src": "/assets/img/icons/android-icon-36x36.png",
