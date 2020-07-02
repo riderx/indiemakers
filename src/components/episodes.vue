@@ -43,7 +43,7 @@
               <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 pr-0 pr-md-5 pb-3 pb-md-0">
                 <img
                   :src="episode.itunes.image"
-                  class="w-100 w-md-75 img-fluid"
+                  class="w-100 w-md-75 img-fluid border-10 border-primary"
                   alt="Logo person"
                 />
               </div>
@@ -66,7 +66,7 @@
           </div>
         </div>
         <div v-if="image" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
-          <img class="img-fluid" :alt="image.title" :src="image.url" />
+          <img class="img-fluid border-10 border-light" :alt="image.title" :src="image.url" />
         </div>
       </div>
     </div>
@@ -164,7 +164,7 @@ mounted() {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #9456b7;
+  background: rgba(75, 39, 155, 1);
 }
 
 .fit-content {

@@ -133,26 +133,26 @@
               </div>
             </div>
           </div>
-          <div v-if="!loading" class="row bg-success py-1 py-md-4">
-            <div class="col-4 offset-4 offset-md-0 col-md-3 pt-1 px-1 px-md-3">
-              <img
+          <div v-if="!loading" class="row bg-success">
+            <div class="col-12 pt-md-3 text-white text-center">
+              <h1 class="d-none d-sm-block">{{person.title}}</h1>
+            </div>
+            <div class="col-12 d-block d-sm-none px-0">
+                <img
                 :src="person.itunes.image"
-                class="w-100 w-md-75 img-fluid"
+                class="w-100 img-fluid border-10 border-light"
                 alt="Logo person"
               />
             </div>
-            <div class="col-6 col-md-8 offset-3 offset-md-0 pt-3 px-0 text-white text-center text-md-left">
-              <h1 class="d-none d-sm-block">{{person.title}}</h1>
-            </div>
-            <div class="col-12 d-block d-sm-none text-white">
-              <h3>{{person.title}}</h3>
-            </div>
-            <div class="col-12 d-block d-sm-none text-white">
+            <div class="col-12 d-block d-sm-none text-white px-0">
               <vue-plyr>
                   <audio>
                     <source :src="person.enclosure.url" type="audio/mp3"/>
                   </audio>
               </vue-plyr>
+            </div>
+            <div class="col-12 pt-3 d-block d-sm-none text-white">
+              <h3>{{person.title}}</h3>
             </div>
           </div>
           <div class="row" v-if="!loading">
@@ -213,9 +213,16 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-6 py-md-4 px-md-5 text-center d-none d-md-block" v-if="!loading">
-          <div class="row py-0 py-md-3 align-items-center position-fixed">
-            <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-1 pt-md-3">
+        <div class="col-12 col-md-6 text-center d-none d-md-block" v-if="!loading">
+          <div class="row align-items-center">
+              <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-0">
+                  <img
+                  :src="person.itunes.image"
+                  class="w-100 img-fluid border-10 border-light"
+                  alt="Logo person"
+                />
+              </div>
+            <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-0">
               <vue-plyr>
                 <audio>
                   <source :src="person.enclosure.url" type="audio/mp3"/>
@@ -226,14 +233,14 @@
               <button
                 type="button"
                 @click="listen()"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
+                class="btn btn-success btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
                 v-tooltip="'Ecouter'"
               >
                 <i class="fas fa-headphones"></i> Ecouter
               </button>
               <button
                 type="button"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
+                class="btn btn-success btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
                 v-tooltip="'Noter l\'épisode'"
                 @click="rate()"
               >
@@ -242,7 +249,7 @@
               </button>
               <button
                 type="button"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
+                class="btn btn-success btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
                 v-tooltip="'Partager via twitter'"
                 @click="tweetIt()"
               >
@@ -250,7 +257,7 @@
               </button>
               <button
                 type="button"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
+                class="btn btn-success btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
                 v-tooltip="'buymeacoffee'"
                 @click="bmc()"
               >
@@ -422,7 +429,7 @@ export default {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #9456b7;
+  background: rgba(75, 39, 155, 1);
 }
 
 .linkified {

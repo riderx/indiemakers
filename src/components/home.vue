@@ -35,7 +35,7 @@
         </div>
       </div>
       <div v-if="feed" class="offset-3 offset-md-0 col-6 col-md-5 pt-0 px-md-5 order-1 order-md-2">
-        <img class="img-fluid" :alt="feed.image.title" :src="feed.image.url" />
+        <img class="img-fluid border-10 border-light" :alt="feed.image.title" :src="feed.image.url" />
       </div>
       <div class="col-12 pt-0 px-md-5 py-4 order-3 text-white text-center text-sm-left">
         <h5>Mes autres projets:</h5>
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       feed: null,
-      title: "Le 1er podcast français qui aide les indépendants à vivre de leur business.",
+      title: "Le 1er podcast francais qui aide les independants a vivre de leur business.",
       messages: [
         `Salut je suis Martin Donadieu ! Bienvenue sur Indie Makers ! Ici, tu trouveras des podcasts où j'échange avec des Makers qui ont su transformer leurs idées en en business florissant.`,
         `Au-delà de leur success-story, nous allons décrypter leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables.`,
@@ -89,12 +89,11 @@ export default {
     };
   },
   mounted() {
- 
     parser.parseURL(RSSURL)
     .then((feed) => {
       this.feed = feed;
       const description = feed.description.trim().split('\n');
-      this.title = description.shift();
+      this.title = this.removeAccent(description.shift());
       this.messages = description;
     }).catch((error) => {
         // this.loading = false;
@@ -102,6 +101,9 @@ export default {
     })
   },
   methods: {
+    removeAccent(str) {
+      return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    },
     goEpisodes() {
       this.$router.push("/episodes");
     },

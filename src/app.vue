@@ -34,13 +34,18 @@ export default {
     url("/assets/fonts/Rex-Bold.woff") format("woff");
 }
 body {
-  background-repeat: inherit;
+  /* background-repeat: inherit; */
   overscroll-behavior: none;
   overflow-x: hidden;
-  background: linear-gradient(
+  background-color: rgba(75, 39, 155, 1);
+  /* background: linear-gradient(
     90deg,
     rgba(75, 39, 155, 1) 0%,
     rgba(223, 153, 216, 1) 100%
-  );
+  ); */
 }
+.border-10{
+    border-style:solid;
+    border-width: 10px;
+  }
 </style>

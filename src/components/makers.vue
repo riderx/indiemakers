@@ -650,7 +650,7 @@ export default {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #9456b7;
+  background: rgba(75, 39, 155, 1);
 }
 
 .fit-content {

@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-light bg-transparent">
       <a class="navbar-brand" href="#" @click="openPage('/')">
-        <img :src="logo.source" :id="logo.title" class="d-inline-block align-top" :alt="logo.title" />
+        <img :src="logo.source" :id="logo.title" class="d-inline-block align-top w-100" :alt="logo.title" />
       </a>
       <ul class="list-group list-group-horizontal">
         <li
@@ -24,8 +24,8 @@ export default {
   data() {
     return {
       logo: {
-        title: "indiemakersfr",
-        source: "/assets/default-monochrome-white.svg",
+        title: "INDIE MAKERS LOGO",
+        source: "/assets/isolated-monochrome-white.svg",
         lien: "/"
       },
       icones: [
