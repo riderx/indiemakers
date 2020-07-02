@@ -11,6 +11,7 @@
               <p class="pb-0">{{ message }}</p>
             </div>
             <p>{{ banner }}</p>
+            <p>Par <b>Martin DONADIEU</b></p>
           </div>
           <div class="col-12 py-1 py-md-3 order-2 order-md-3 text-center text-sm-left">
             <h3>Prochain episode dans : {{nextEpisode()}} !</h3>
