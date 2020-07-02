@@ -47,5 +47,12 @@ body {
 .border-10{
     border-style:solid;
     border-width: 10px;
-  }
+}
+.border-5{
+  border-style:solid;
+  border-width: 5px;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
 </style>

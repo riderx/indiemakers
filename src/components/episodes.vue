@@ -3,14 +3,14 @@
     <div class="container-fluid">
       <div class="row pt-md-5">
         <div class="col-12 offset-xl-1 col-xl-5">
-          <div class="row bg-success py-1 py-md-4">
+          <div class="row bg-primary border-10 border-light py-1 py-md-4">
             <div class="col col-md-10 pt-3 px-0 text-white text-center">
               <h1>🎙Episodes</h1>
             </div>
-            <div class="col-3 col-md-2 pt-3 text-white">
+            <div class="col-3 col-md-2 pt-2 text-white">
               <button
                 type="button"
-                class="btn btn-primary btn-lg text-light px-3 px-md-4 display-1"
+                class="btn btn-primary border-5 border-light btn-lg text-light px-3 px-md-4 display-1"
                 v-tooltip="'Ajouter un·e maker'"
                 @click="openAdd()"
               >
@@ -30,7 +30,7 @@
             </div>
           </div>
           <div
-            class="custom-scroll bg-white px-3"
+            class="custom-scroll border-5 px-2 border-light border-right-0"
             v-if="!loading"
             v-bind:style="{ height: heightDiv }"
           >
@@ -38,29 +38,29 @@
               v-bind:key="episode.guid"
               v-for="episode in episodes"
               @click="openEp(episode.guid)"
-              :class="'row bg-white py-3 border-bottom align-items-center ' + episode.guid"
+              :class="'row bg-primary text-white py-3 border-bottom align-items-center ' + episode.guid"
             >
               <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 pr-0 pr-md-5 pb-3 pb-md-0">
                 <img
                   :src="episode.itunes.image"
-                  class="w-100 w-md-75 img-fluid border-10 border-primary"
+                  class="w-100 w-md-75 img-fluid border-5 border-light"
                   alt="Logo person"
                 />
               </div>
-              <div class="col-12 col-md-6 order-2 order-md-2 text-center text-md-left">
+              <div class="col-12 col-md-6 order-2 pl-2 pl-md-0 order-md-2 text-center text-md-left">
                 <h3 >{{episode.title}}</h3>
               </div>
-              <div class="col-3 col-md-2 order-3 d-none d-md-block">
+              <div class="col-3 col-md-2 order-3 pl-0 d-none d-md-block">
                 <button
                   type="button"
-                  class="btn btn-success btn-lg text-white px-3 px-md-4 py-3 h1"
+                  class="btn btn-primary border-5 border-light btn-lg text-white px-3 px-md-4 py-3 h1"
                   v-tooltip="'Ecouter l\'épisode'"
                 >
                   <i class="fas fa-caret-circle-right fa-2x"></i>
                 </button>
               </div>
               <div class="col-12 px-0 px-md-5 pt-1 pt-md-3 order-3">
-                <p class="text-center text-md-left" >{{previewText(episode.contentSnippet)}}</p>
+                <p class="text-center text-md-left px-3 px-md-0" >{{previewText(episode.contentSnippet)}}</p>
               </div>
             </div>
           </div>
@@ -141,15 +141,14 @@ mounted() {
 </script>
 
 <style scoped>
-.cursor-pointer {
-  cursor: pointer;
-}
+
 .top {
   top: 0;
 }
 ::-webkit-scrollbar {
   width: 10px;
 }
+
 .custom-scroll {
   overflow-y: scroll;
   position: absolute;

@@ -16,7 +16,7 @@
             <h3>Prochain episode dans : {{nextEpisode()}} !</h3>
             <button
               type="button"
-              class="btn btn-success btn-lg bnt-block text-white px-4"
+              class="btn btn-primary border-5 border-light btn-lg bnt-block text-white px-4"
               @click.passive="goEpisodes"
             >
               <i class="fas fa-headphones"></i> Episodes
@@ -26,7 +26,7 @@
             <h3>Aide moi a trouver les prochain invités !</h3>
             <button
               type="button"
-              class="btn btn-success btn-lg bnt-block text-white px-4"
+              class="btn btn-primary border-5 border-light btn-lg bnt-block text-white px-4"
               @click.passive="goMakers"
             >
               Makers Hunt

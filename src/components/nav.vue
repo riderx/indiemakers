@@ -1,8 +1,9 @@
 <template>
   <div>
     <nav class="navbar navbar-light bg-transparent">
-      <a class="navbar-brand" href="#" @click="openPage('/')">
-        <img :src="logo.source" :id="logo.title" class="d-inline-block align-top w-100" :alt="logo.title" />
+      <a class="navbar-brand w-50" href="#" @click="openPage('/')">
+        <img :src="logo.source" :id="logo.title" class="d-none d-md-inline-block align-top w-50" :alt="logo.title" />
+        <img :src="logo.source" :id="logo.title" class="d-inline-block d-md-none align-top w-100" :alt="logo.title" />
       </a>
       <ul class="list-group list-group-horizontal">
         <li

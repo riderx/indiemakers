@@ -17,75 +17,75 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-          <div class="row bg-success py-4" v-if="!loading">
-            <div class="col-12 pt-1 px-1 px-md-3 text-center">
+          <div class="row bg-primary border-10 border-light py-4" v-if="!loading">
+            <div class="col-12 pt-1 px-1 px-md-3 text-white text-center">
               <h3>Disponible sur :</h3>
             </div>
             <div class="col-12 pt-1 px-1 px-md-3 text-center">
               <button
                 type="button"
                 @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur spotify'"
               >Spotify</button>
               <button
                 type="button"
                 @click="listenExternal('https://anchor.fm/indiemakers')"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Anchor'"
               >Anchor</button>
               <button
                 type="button"
                 @click="listenExternal('https://deezer.com/show/689072')"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Deezer'"
               >Deezer</button>
               <button
                 type="button"
                 @click="listenExternal('https://pca.st/yjcdxg09')"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur PocketCast'"
               >Pocket cast</button>
               <button
                 type="button"
                 @click="copyTextToClipboard('https://anchor.fm/s/414d1d4/podcast/rss')"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Copier le flux RSS'"
               >RSS</button>
               <button
                 type="button"
                 @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Apple podcast'"
               >Apple</button>
               <button
                 type="button"
                 @click="listenExternal('https://www.breaker.audio/indie-maker-france')"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Breaker podcast'"
               >Breaker</button>
               <button
                 type="button"
                 @click="listenExternal('https://podcasts.google.com/?feed=aHR0cHM6Ly9hbmNob3IuZm0vcy80MTRkMWQ0L3BvZGNhc3QvcnNz')"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Google podcast'"
               >Google</button>
               <button
                 type="button"
                 @click="listenExternal('https://radiopublic.com/indie-maker-france-60NJEy')"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Radio Public'"
               >Radio Public</button>
               <button
                 type="button"
                 @click="listenExternal('https://overcast.fm/itunes1488437972/indie-maker-france')"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Overcast'"
               >Overcast</button>
               <button
                 type="button"
                 @click="listenExternal('https://castro.fm/podcast/e3350808-2fc9-481e-a449-a7abe035002e')"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-3 h1"
+                class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                 v-tooltip="'Ecouter l\'épisode sur Castro'"
               >Castro</button>
             </div>
@@ -133,7 +133,7 @@
               </div>
             </div>
           </div>
-          <div v-if="!loading" class="row bg-success">
+          <div v-if="!loading" class="row bg-primary border-10 border-light">
             <div class="col-12 pt-md-3 text-white text-center">
               <h1 class="d-none d-sm-block">{{person.title}}</h1>
             </div>
@@ -156,7 +156,7 @@
             </div>
           </div>
           <div class="row" v-if="!loading">
-            <div class="col-12 bg-white px-md-5 pt-3">
+            <div class="col-12 bg-primary border-10 border-light text-white px-md-5 pt-3">
               <p class v-html="person.content"></p>
             </div>
           </div>
@@ -165,14 +165,14 @@
               <button
                 type="button"
                 @click="listen()"
-                class="btn btn-success btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                 v-tooltip="'Ecouter'"
               >
                 <i class="fas fa-headphones"></i> Ecouter
               </button>
               <button
                 type="button"
-                class="btn btn-success btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                 v-tooltip="'Noter l\'épisode'"
                 @click="rate()"
               >
@@ -181,7 +181,7 @@
               </button>
               <button
                 type="button"
-                class="btn btn-success btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                 v-tooltip="'Partager via twitter'"
                 @click="tweetIt()"
               >
@@ -189,7 +189,7 @@
               </button>
               <button
                 type="button"
-                class="btn btn-success btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                 v-tooltip="'buymeacoffee'"
                 @click="bmc()"
               >
@@ -198,17 +198,6 @@
                   class="bmc"
                   alt="Buy me a coffee"
                 /> Soutenir
-              </button>
-            </div>
-          </div>
-          <div class="row bg-success py-4" v-if="!loading">
-            <div class="col-12 pt-1 px-1 px-md-3 text-center">
-              <button
-                type="button"
-                class="btn btn-primary btn-lg text-white m-1 m-md-3 px-4"
-                @click.passive="goEpisodes"
-              >
-                <i class="fas fa-arrow-left"></i> Tous les Episodes
               </button>
             </div>
           </div>
@@ -233,14 +222,14 @@
               <button
                 type="button"
                 @click="listen()"
-                class="btn btn-success btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
+                class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
                 v-tooltip="'Ecouter'"
               >
                 <i class="fas fa-headphones"></i> Ecouter
               </button>
               <button
                 type="button"
-                class="btn btn-success btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
+                class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
                 v-tooltip="'Noter l\'épisode'"
                 @click="rate()"
               >
@@ -249,7 +238,7 @@
               </button>
               <button
                 type="button"
-                class="btn btn-success btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
+                class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
                 v-tooltip="'Partager via twitter'"
                 @click="tweetIt()"
               >
@@ -257,7 +246,7 @@
               </button>
               <button
                 type="button"
-                class="btn btn-success btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
+                class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
                 v-tooltip="'buymeacoffee'"
                 @click="bmc()"
               >
@@ -405,9 +394,7 @@ export default {
 </script>
 
 <style scoped>
-.cursor-pointer {
-  cursor: pointer;
-}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

@@ -299,14 +299,14 @@
     <div class="container-fluid">
       <div class="row pt-md-5">
         <div class="col-12 offset-xl-1 col-xl-5">
-          <div class="row bg-success py-1 py-md-4">
+          <div class="row bg-primary border-10 border-light py-1 py-md-4">
             <div class="col col-md-10 pt-3 px-0 text-white text-center">
               <h1>🔥Makers</h1>
             </div>
             <div class="col-3 col-md-2 pt-3 text-white">
               <button
                 type="button"
-                class="btn btn-primary btn-lg text-light px-3 px-md-4 display-1"
+                class="btn btn-primary btn-lg border-5 border-light text-light px-3 px-md-4 display-1"
                 v-tooltip="'Ajouter un·e maker'"
                 @click="showAddForm()"
               >
@@ -326,14 +326,14 @@
             </div>
           </div>
           <div
-            class="custom-scroll bg-white px-3"
+            class="custom-scroll border-5 px-2 border-light border-right-0"
             v-if="!loading"
             v-bind:style="{ height: heightDiv }"
           >
             <div
               v-bind:key="person.id"
               v-for="person in people"
-              :class="'row bg-white py-3 border-bottom align-items-center ' + person.id"
+              :class="'row bg-primary text-white py-3 border-bottom align-items-center ' + person.id"
             >
               <div class="col-12 d-block d-sm-none">
                 <h3 >{{person.name}}</h3>
@@ -342,7 +342,7 @@
                 <img
                   :src="personImg(person)"
                   @onerror="imgUrlAlt"
-                  class="w-100 w-md-75 img-fluid rounded-circle"
+                  class="w-100 w-md-75 img-fluid border-5 border-light"
                   alt="Logo person"
                 />
               </div>
@@ -352,14 +352,14 @@
                   <p
                     @click="openAccount(person.login)"
                     v-tooltip="'Ouvrir son profils Twitter'"
-                    class="text-secondary fit-content"
+                    class="text-secondary fit-content cursor-pointer"
                   >@{{person.login}}</p>
                 </div>
               </div>
-              <div class="col-3 col-md-2" @click="vote(person)">
+              <div class="col-3 col-md-2 pl-0" @click="vote(person)">
                 <button
                   type="button"
-                  class="btn btn-primary btn-lg text-light px-3 px-md-4 py-3 h1"
+                  class="btn btn-primary border-5 border-light btn-lg text-white px-3 px-md-4 py-3 h1"
                   v-tooltip="tooltipVote(person)"
                 >
                   <!-- <div>&#9650;</div> -->
@@ -377,7 +377,7 @@
           </div>
         </div>
         <div v-if="image" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
-          <img class="img-fluid" :alt="image.title" :src="image.url" />
+          <img class="img-fluid border-10 border-light" :alt="image.title" :src="image.url" />
         </div>
       </div>
     </div>
@@ -627,9 +627,7 @@ export default {
 </script>
 
 <style scoped>
-.cursor-pointer {
-  cursor: pointer;
-}
+
 .top {
   top: 0;
 }
