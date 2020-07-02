@@ -50,12 +50,12 @@
     <div class="container-fluid">
       <div class="row pt-md-5">
         <div class="col-12 offset-md-1 col-md-5">
-          <div class="row bg-primary py-4">
-            <div class="col pt-3 px-0 text-white text-center">
+          <div class="row bg-primary py-0">
+            <div class="col pt-3 px-0 border-10 border-light text-white text-center">
               <h1>🔑Email Verification</h1>
             </div>
           </div>
-          <div class="row bg-success pb-4">
+          <div class="row bg-primary border-10 border-light pb-4">
             <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
               <div class="form-group mb-0">
                 <input
@@ -70,14 +70,14 @@
             <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
               <button
                 type="button"
-                class="btn btn-primary btn-lg btn-block text-light px-4 h1"
+                class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
                 @click="sendConfirm()"
               >🚀valider</button>
             </div>
           </div>
         </div>
         <div v-if="image" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
-          <img class="img-fluid" :alt="image.title" :src="image.url" />
+          <img class="img-fluid border-10 border-light" :alt="image.title" :src="image.url" />
         </div>
       </div>
     </div>

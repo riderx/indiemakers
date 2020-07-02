@@ -27,7 +27,7 @@ module.exports = {
         workboxPluginMode: 'GenerateSW',
         manifestOptions: {
             name: 'INDIE MAKERS',
-            short_name: 'IMF'
+            short_name: 'IM'
         }
     }
 }
