@@ -122,7 +122,6 @@ export default {
     }
   },
 mounted() {
- 
     parser.parseURL(RSSURL)
     .then((feed) => {
         if (feed && feed.items) {
