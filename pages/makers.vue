@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12 offset-xl-1 col-xl-5">
-          <div id="header-ep" class="row bg-primary border-10 border-light py-1 py-md-4">
+          <div id="header-mk" class="row bg-primary border-10 border-light py-1 py-md-4">
             <div class="col col-md-10 pt-3 px-0 text-white text-center">
               <h1>🔥Makers</h1>
             </div>
@@ -18,7 +18,7 @@
               </button>
             </div>
           </div>
-          <div v-if="loading" class="row bg-white px-3 w-100">
+          <div v-if="loading" class="row bg-white px-3">
             <div class="col-12 p-5 text-center">
               <div
                 class="spinner-grow text-primary"
@@ -31,7 +31,7 @@
           </div>
           <div
             v-if="!loading"
-            class="custom-scroll fix-marging border-5 px-2 border-light border-right-0 w-100"
+            class="custom-scroll fix-marging border-5 px-2 border-light border-right-0"
             :style="{ height: sizeHead }"
           >
             <div
@@ -39,9 +39,6 @@
               :key="person.id"
               :class="'row bg-primary text-white py-3 border-bottom align-items-center ' + person.id"
             >
-              <div class="col-12 d-block d-sm-none">
-                <h3>{{ person.name }}</h3>
-              </div>
               <div class="col-4 pr-0 pr-md-5">
                 <img
                   :src="person.img"
@@ -51,13 +48,13 @@
                 >
               </div>
               <div class="col-5 col-md-6">
-                <h3 class="d-none d-sm-block">
+                <h3 class="pb-0">
                   {{ person.name }}
                 </h3>
                 <div>
                   <p
                     v-tooltip="'Ouvrir son profils Twitter'"
-                    class="text-secondary fit-content cursor-pointer"
+                    class="text-success fit-content cursor-pointer"
                     @click="openAccount(person.login)"
                   >
                     @{{ person.login }}
@@ -669,8 +666,8 @@ export default {
       }
     },
     setSizeHead () {
-      if (process.client && document.getElementById('header-ep') && document.getElementById('header')) {
-        const size = `${document.getElementById('header-ep').offsetHeight + document.getElementById('header').offsetHeight}px`
+      if (process.client && document.getElementById('header-mk') && document.getElementById('header')) {
+        const size = `${document.getElementById('header-mk').offsetHeight + document.getElementById('header').offsetHeight}px`
         this.sizeHead = `calc(100vh - ${size})`
       }
     }
@@ -679,5 +676,7 @@ export default {
 </script>
 
 <style scoped>
-
+.linkified {
+  display: block;
+}
 </style>

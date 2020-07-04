@@ -39,6 +39,11 @@ body {
   overflow-x: hidden;
   background-color: rgba(75, 39, 155, 1);
 }
+/* @media screen and (max-width: 768px) {
+  body {
+      overflow-y: auto;
+  }
+} */
 .border-10{
     border-style:solid;
     border-width: 10px;
@@ -56,9 +61,6 @@ body {
 }
 .fit-content {
   width: fit-content;
-}
-.linkified {
-  display: block;
 }
 .bmc {
   height: 20px;

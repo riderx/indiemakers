@@ -14,7 +14,7 @@
               </div>
             </div>
           </div>
-          <div id="header-ep" class="row bg-primary border-10 border-light">
+          <div id="header-title" class="row bg-primary border-10 border-light">
             <div  class="col-12 pt-md-3 text-white text-center">
               <h1 class="d-none d-sm-block">
                 {{ title }}
@@ -325,8 +325,8 @@ export default {
   },
   methods: {
     setSizeHead () {
-      if (process.client && document.getElementById('header-ep') && document.getElementById('header')) {
-        const size = `${document.getElementById('header-ep').offsetHeight + document.getElementById('header').offsetHeight}px`
+      if (process.client && document.getElementById('header-title') && document.getElementById('header')) {
+        const size = `${document.getElementById('header-title').offsetHeight + document.getElementById('header').offsetHeight}px`
         console.log('size', size)
         this.sizeHead = `calc(100vh - ${size})`
       }
