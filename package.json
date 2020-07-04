@@ -1,65 +1,35 @@
 {
-  "name": "indiemakerfr",
-  "version": "0.1.0",
+  "name": "indiemakers",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "deploy": "./deploy.sh",
-    "deploy:functions": "firebase deploy --only functions",
-    "start": "vue-cli-service serve"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "export": "nuxt export",
+    "serve": "nuxt serve",
+    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint": "npm run lint:js"
   },
   "dependencies": {
-    "bootstrap": "^4.3.1",
-    "core-js": "^3.3.2",
-    "firebase": "^7.2.2",
-    "linkifyjs": "^2.1.8",
-    "plyr": "^3.6.2",
-    "register-service-worker": "^1.6.2",
+    "@nuxtjs/pwa": "^3.0.0-beta.20",
+    "bootstrap": "^4.5.0",
+    "bootstrap-vue": "^2.15.0",
+    "firebase": "^7.15.5",
+    "linkifyjs": "^2.1.9",
+    "nuxt": "^2.13.0",
     "rss-parser": "^3.8.0",
-    "vue": "^2.6.10",
+    "string-strip-html": "^4.5.0",
     "vue-directive-tooltip": "^1.6.3",
-    "vue-js-modal": "^1.3.31",
+    "vue-js-modal": "^2.0.0-rc.3",
     "vue-plyr": "^6.0.4",
-    "vue-router": "^3.1.3",
-    "vuefire": "^2.2.0",
-    "vuex": "^3.1.1",
-    "workbox-cli": "^4.3.1"
+    "vuefire": "^2.2.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.0.5",
-    "@vue/cli-plugin-eslint": "^4.0.5",
-    "@vue/cli-plugin-pwa": "^4.0.5",
-    "@vue/cli-service": "^4.0.5",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.2.3",
-    "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "vue-template-compiler": "^2.6.10",
-    "webpack-bundle-analyzer": "^3.6.0"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+    "@nuxtjs/eslint-config": "^3.0.0",
+    "@nuxtjs/eslint-module": "^2.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.2.0",
+    "eslint-plugin-nuxt": "^1.0.0"
+  }
 }
