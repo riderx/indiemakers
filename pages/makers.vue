@@ -676,7 +676,5 @@ export default {
 </script>
 
 <style scoped>
-.linkified {
-  display: block;
-}
+
 </style>

@@ -296,6 +296,11 @@
 <script>
 import stripHtml from 'string-strip-html'
 import { feed } from '~/plugins/rss'
+const linkTwitter = 'Son Twitter : <a href="https://twitter.com/'
+const linkTwitterRe = /Son Twitter : <a href="https:\/\/twitter\.com\/(.*)"/g
+// const linkTwitterEnd = '"'
+// const linkTwitter = /Son Twitter : <a href="https:\/\/twitter\.com\/*"/
+// const re = new RegExp(`${linkTwitter}*${linkTwitterEnd}`, 'g')
 
 export default {
   async fetch () {
@@ -305,6 +310,7 @@ export default {
         if (element.guid === this.$route.params.id) {
           this.title = element.title
           this.content = element.content
+          this.tw = this.findTw(this.content)
           this.image = element.itunes.image
           this.audio = element.enclosure.url
         }
@@ -317,6 +323,7 @@ export default {
     return {
       loading: true,
       title: '',
+      tw: '',
       sizeHead: '100vh',
       content: '',
       image: '',
@@ -324,10 +331,19 @@ export default {
     }
   },
   methods: {
+    findTw (text) {
+      const found = text.match(linkTwitterRe)
+      let name = 'error'
+      if (found.length > 0) {
+        name = found[0].replace(linkTwitter, '')
+        name = name.replace('"', '')
+      }
+      return name
+    },
     setSizeHead () {
       if (process.client && document.getElementById('header-title') && document.getElementById('header')) {
         const size = `${document.getElementById('header-title').offsetHeight + document.getElementById('header').offsetHeight}px`
-        console.log('size', size)
+        // console.log('size', size)
         this.sizeHead = `calc(100vh - ${size})`
       }
     },
@@ -385,8 +401,8 @@ export default {
       window.open('https://www.buymeacoffee.com/indiemakersfr', '_blank')
     },
     tweetIt () {
-      const linkEp = `https://indiemakers.fr/#/episode/${this.$route.params.id}`
-      const tweet = `J'écoute le podcast ${this.person.title} le podcast @indiemakersfr 🚀 ${linkEp}`
+      const linkEp = `https://indiemakers.fr/episode/${this.$route.params.id}`
+      const tweet = `J'écoute le podcast @indiemakersfr avec @${this.tw} ${linkEp}`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`
