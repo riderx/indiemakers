@@ -127,6 +127,14 @@ export default {
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
-  build: {
+ build: {
+  extend ( config, { isDev, isClient, isServer } ) {
+    if ( isServer ) {
+      config.externals = {
+        '@firebase/app': 'commonjs @firebase/app',
+        '@firebase/firestore': 'commonjs @firebase/firestore',
+      }
+    }
   }
+}
 }
