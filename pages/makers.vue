@@ -667,7 +667,7 @@ export default {
     },
     setSizeHead () {
       if (process.client && document.getElementById('header-mk') && document.getElementById('header')) {
-        const size = `${document.getElementById('header-mk').offsetHeight + document.getElementById('header').offsetHeight - 5}px`
+        const size = `${document.getElementById('header-mk').offsetHeight + document.getElementById('header').offsetHeight - 5 }px`
         this.sizeHead = `calc(100vh - ${size})`
       }
     }
