@@ -1,9 +1,9 @@
 <template>
   <div id="episodes">
     <div class="container-fluid">
-      <div class="row pt-md-5">
+      <div class="row">
         <div class="col-12 offset-xl-1 col-xl-5">
-          <div id="header" class="row bg-primary border-10 border-light py-1 py-md-4">
+          <div id="header-ep" class="row bg-primary border-10 border-light py-1 py-md-4">
             <div class="col col-md-8 pt-3 px-0 text-white text-center">
               <h1>🎙Episodes</h1>
             </div>
@@ -31,8 +31,8 @@
           </div>
           <div
             v-if="!loading"
-            class="custom-scroll border-5 px-2 border-light border-right-0"
-            :style="{ height: heightDiv }"
+            class="custom-scroll fix-marging border-5 px-2 border-light border-right-0"
+            :style="{ height: sizeHead }"
           >
             <div
               v-for="episode in episodes"
@@ -56,7 +56,7 @@
                   type="button"
                   class="btn btn-primary border-5 border-light btn-lg text-white px-3 px-md-4 py-3 h1"
                 >
-                  <i class="fas fa-caret-circle-right fa-2x" />
+                  <fa :icon="['fas', 'play-circle']"  class="fa-2x" />
                 </button>
               </div>
               <div class="col-12 px-0 px-md-5 pt-1 pt-md-3 order-3">
@@ -122,10 +122,7 @@
 </template>
 
 <script>
-
-/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import { feed } from '../plugins/rss'
-// import '~/plugins/global.js'
 
 export default {
   async fetch () {
@@ -136,12 +133,13 @@ export default {
       this.feed = res
       this.episodes = res.items
       this.loading = false
+      this.setSizeHead()
     }
   },
   data () {
     return {
       loading: true,
-      sizeHead: 200,
+      sizeHead: '100vh',
       image: require('~/assets/cover-imf@0.5x.png'),
       episodes: [],
       feed: null,
@@ -157,16 +155,7 @@ export default {
         '#Independant, #Makers, #AutoFormation, #Productivite, #Business, #MRR'
     }
   },
-  computed: {
-    heightDiv () {
-      if (this.sizeHead === 0) {
-        return 0
-      }
-      return `calc(${this.sizeHead}px)`
-    }
-  },
   mounted () {
-    this.setSizeHead()
   },
   methods: {
     removeAccent (str) {
@@ -200,8 +189,10 @@ export default {
       this.$router.push('/makers')
     },
     setSizeHead () {
-      if (document.getElementById('content')) {
-        this.sizeHead = document.getElementById('content').offsetHeight
+      if (process.client && document.getElementById('header-ep') && document.getElementById('header')) {
+        const size = `${document.getElementById('header-ep').offsetHeight + document.getElementById('header').offsetHeight}px`
+        console.log('size', size)
+        this.sizeHead = `calc(100vh - ${size})`
       }
     }
   }
@@ -210,43 +201,4 @@ export default {
 
 <style scoped>
 
-.top {
-  top: 0;
-}
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-.custom-scroll {
-  overflow-y: scroll;
-  position: absolute;
-  overflow-x: hidden;
-  /* height: 600px; */
-  margin-left: -15px;
-  margin-right: 0px;
-}
-@media screen and (max-width: 768px) {
-.custom-scroll {
-    position: inherit;
-    margin-right: -15px;
-  }
-}
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #df99d8;
-}
-
-.fit-content {
-  width: fit-content;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(75, 39, 155, 1) !important;
-}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="header" class="pb-md-5">
     <nav class="navbar navbar-light bg-transparent">
       <a class="navbar-brand w-50 mr-0" href="#" @click="openPage('/')">
         <img :id="logo.title" :src="logo.source" class="d-none d-md-inline-block align-top w-50" :alt="logo.title">
@@ -12,7 +12,8 @@
           class="list-group-item bg-transparent text-white p-2 p-md-3 cursor-pointer"
           @click="openPage(icon.lien)"
         >
-          <i :class="icon.class" />
+          <!-- <i :class="icon.class" /> -->
+          <fa :icon="icon.class"  class="fa-2x" />
         </li>
       </ul>
     </nav>
@@ -33,17 +34,17 @@ export default {
         {
           title: 'Spotify',
           lien: 'https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg',
-          class: 'fab fa-spotify fa-2x'
+          class: ['fab', 'spotify']
         },
         {
           title: 'Instagram',
           lien: 'https://instagram.com/indiemakersfr',
-          class: 'fab fa-instagram fa-2x'
+          class: ['fab', 'instagram']
         },
         {
           title: 'twitter',
           lien: 'https://twitter.com/indiemakersfr',
-          class: 'fab fa-twitter fa-2x'
+          class: ['fab', 'twitter']
         }
       ],
       bar: true

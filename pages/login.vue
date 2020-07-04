@@ -81,7 +81,7 @@
           </div>
         </div>
         <div v-if="image" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
-          <img class="img-fluid border-10 border-light" :alt="image.title" :src="image.url">
+          <img class="img-fluid border-10 border-light" alt="Logo IM" :src="image">
         </div>
       </div>
     </div>
@@ -89,7 +89,6 @@
 </template>
 <script>
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-import { firebaseLib } from '../plugins/db'
 
 export default {
   data () {
@@ -102,7 +101,7 @@ export default {
     }
   },
   mounted () {
-    firebaseLib.auth().onAuthStateChanged((user) => {
+    this.$fireAuth.onAuthStateChanged((user) => {
       this.user = user
       if (this.user.displayName === null) {
         this.$modal.show('confirmName')
@@ -110,7 +109,7 @@ export default {
         this.$router.push('/episodes')
       }
     })
-    if (firebaseLib.auth().isSignInWithEmailLink(window.location.href)) {
+    if (this.$fireAuth.isSignInWithEmailLink(window.location.href)) {
       this.email = window.localStorage.getItem('emailForSignIn')
       if (this.email) {
         this.sendConfirm()
@@ -136,8 +135,7 @@ export default {
     sendConfirm () {
       if (this.email) {
         this.$modal.show('loading')
-        firebaseLib
-          .auth()
+        this.$fireAuth
           .signInWithEmailLink(this.email, window.location.href)
           .then(() => {
             window.localStorage.removeItem('emailForSignIn')

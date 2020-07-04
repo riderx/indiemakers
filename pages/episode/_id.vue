@@ -1,6 +1,153 @@
 <template>
   <div id="emission">
-    <modal height="auto" adaptive name="copied">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 offset-xl-1 col-xl-5">
+          <div v-if="loading" class="row bg-white px-3">
+            <div class="col-12 p-5 text-center">
+              <div
+                class="spinner-grow text-primary"
+                style="width: 6rem; height: 6rem;"
+                role="status"
+              >
+                <span class="sr-only">Chargement...</span>
+              </div>
+            </div>
+          </div>
+          <div id="header-ep" class="row bg-primary border-10 border-light">
+            <div  class="col-12 pt-md-3 text-white text-center">
+              <h1 class="d-none d-sm-block">
+                {{ title }}
+              </h1>
+            </div>
+            <div class="col-12 d-block d-sm-none px-0">
+              <img
+                :src="image"
+                class="w-100 img-fluid border-10 border-light"
+                :alt="title"
+              >
+            </div>
+            <div class="col-12 d-block d-sm-none text-white px-0">
+              <vue-plyr>
+                <audio>
+                  <source :src="audio" type="audio/mp3">
+                </audio>
+              </vue-plyr>
+            </div>
+            <div class="col-12 pt-3 d-block d-sm-none text-white">
+              <h3>{{ title }}</h3>
+            </div>
+          </div>
+          <div v-if="!loading" class="row">
+            <div class="custom-scroll bg-primary border-5 border-right-0 border-light text-white px-md-5 pt-3 w-100" :style="{ height: sizeHead }">
+              <div v-html="content" />
+            </div>
+          </div>
+          <div v-if="!loading" class="row bg-primary py-4 d-block d-md-none">
+            <div class="col-12 px-1 px-md-3 text-center">
+              <button
+                v-tooltip="'Ecouter'"
+                type="button"
+                class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                @click="listen()"
+              >
+              <fa :icon="['fas', 'headphones']" /> Ecouter
+              </button>
+              <button
+                v-tooltip="'Noter l\'épisode'"
+                type="button"
+                class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                @click="rate()"
+              >
+                <fa :icon="['fas', 'heart']" />
+                Noter
+              </button>
+              <button
+                v-tooltip="'Partager via twitter'"
+                type="button"
+                class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                @click="tweetIt()"
+              >
+                <fa :icon="['fas', 'pizza-slice']" />
+                Partager
+              </button>
+              <button
+                v-tooltip="'buymeacoffee'"
+                type="button"
+                class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                @click="bmc()"
+              >
+                <img
+                  src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+                  class="bmc"
+                  alt="Buy me a coffee"
+                > Soutenir
+              </button>
+            </div>
+          </div>
+        </div>
+        <div v-if="!loading" class="col-12 col-md-6 text-center d-none d-md-block">
+          <div class="row align-items-center">
+            <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-0">
+              <img
+                :src="image"
+                class="w-100 img-fluid border-10 border-light"
+                alt="Logo person"
+              >
+            </div>
+            <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-0">
+              <vue-plyr>
+                <audio>
+                  <source :src="audio" type="audio/mp3">
+                </audio>
+              </vue-plyr>
+            </div>
+            <div class="col-12 px-md-5 pt-1 pt-md-3">
+              <button
+                v-tooltip="'Ecouter'"
+                type="button"
+                class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                @click="listen()"
+              >
+                <fa :icon="['fas', 'headphones']" />
+                Ecouter
+              </button>
+              <button
+                v-tooltip="'Noter l\'épisode'"
+                type="button"
+                class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                @click="rate()"
+              >
+                <fa :icon="['fas', 'heart']" />
+                Noter
+              </button>
+              <button
+                v-tooltip="'Partager via twitter'"
+                type="button"
+                class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                @click="tweetIt()"
+              >
+                <fa :icon="['fas', 'pizza-slice']" />
+                Partager
+              </button>
+              <button
+                v-tooltip="'buymeacoffee'"
+                type="button"
+                class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                @click="bmc()"
+              >
+                <img
+                  src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+                  alt="Buy me a coffee"
+                  class="bmc"
+                > Soutenir
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <modal height="auto" adaptive name="copied">
       <div class="container-fluid">
         <div class="row bg-primary border-10 border-light">
           <div class="col-12">
@@ -143,166 +290,15 @@
         </div>
       </div>
     </modal>
-    <div class="container-fluid">
-      <div class="row pt-md-5">
-        <div class="col-12 offset-xl-1 col-xl-5">
-          <div v-if="loading" class="row bg-white px-3">
-            <div class="col-12 p-5 text-center">
-              <div
-                class="spinner-grow text-primary"
-                style="width: 6rem; height: 6rem;"
-                role="status"
-              >
-                <span class="sr-only">Chargement...</span>
-              </div>
-            </div>
-          </div>
-          <div v-if="!loading" class="row bg-primary border-10 border-light">
-            <div class="col-12 pt-md-3 text-white text-center">
-              <h1 class="d-none d-sm-block">
-                {{ title }}
-              </h1>
-            </div>
-            <div class="col-12 d-block d-sm-none px-0">
-              <img
-                :src="image"
-                class="w-100 img-fluid border-10 border-light"
-                :alt="title"
-              >
-            </div>
-            <div class="col-12 d-block d-sm-none text-white px-0">
-              <vue-plyr>
-                <audio>
-                  <source :src="audio" type="audio/mp3">
-                </audio>
-              </vue-plyr>
-            </div>
-            <div class="col-12 pt-3 d-block d-sm-none text-white">
-              <h3>{{ title }}</h3>
-            </div>
-          </div>
-          <div v-if="!loading" class="row">
-            <div class="col-12 bg-primary border-10 border-light text-white px-md-5 pt-3">
-              // eslint-disable-next-line vue/no-v-html
-              <div v-html="content" />
-            </div>
-          </div>
-          <div v-if="!loading" class="row bg-primary py-4 d-block d-md-none">
-            <div class="col-12 px-1 px-md-3 text-center">
-              <button
-                v-tooltip="'Ecouter'"
-                type="button"
-                class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
-                @click="listen()"
-              >
-                <i class="fas fa-headphones" /> Ecouter
-              </button>
-              <button
-                v-tooltip="'Noter l\'épisode'"
-                type="button"
-                class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
-                @click="rate()"
-              >
-                <i class="fas fa-heart" />
-                Noter
-              </button>
-              <button
-                v-tooltip="'Partager via twitter'"
-                type="button"
-                class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
-                @click="tweetIt()"
-              >
-                <i class="fas fa-pizza-slice" /> Partager
-              </button>
-              <button
-                v-tooltip="'buymeacoffee'"
-                type="button"
-                class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
-                @click="bmc()"
-              >
-                <img
-                  src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
-                  class="bmc"
-                  alt="Buy me a coffee"
-                > Soutenir
-              </button>
-            </div>
-          </div>
-        </div>
-        <div v-if="!loading" class="col-12 col-md-6 text-center d-none d-md-block">
-          <div class="row align-items-center">
-            <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-0">
-              <img
-                :src="image"
-                class="w-100 img-fluid border-10 border-light"
-                alt="Logo person"
-              >
-            </div>
-            <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-0">
-              <vue-plyr>
-                <audio>
-                  <source :src="audio" type="audio/mp3">
-                </audio>
-              </vue-plyr>
-            </div>
-            <div class="col-12 px-md-5 pt-1 pt-md-3">
-              <button
-                v-tooltip="'Ecouter'"
-                type="button"
-                class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
-                @click="listen()"
-              >
-                <i class="fas fa-headphones" /> Ecouter
-              </button>
-              <button
-                v-tooltip="'Noter l\'épisode'"
-                type="button"
-                class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
-                @click="rate()"
-              >
-                <i class="fas fa-heart" />
-                Noter
-              </button>
-              <button
-                v-tooltip="'Partager via twitter'"
-                type="button"
-                class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
-                @click="tweetIt()"
-              >
-                <i class="fas fa-pizza-slice" /> Partager
-              </button>
-              <button
-                v-tooltip="'buymeacoffee'"
-                type="button"
-                class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-4 h1"
-                @click="bmc()"
-              >
-                <img
-                  src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
-                  alt="Buy me a coffee"
-                  class="bmc"
-                > Soutenir
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
   </div>
 </template>
 
 <script>
-/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import stripHtml from 'string-strip-html'
 import { feed } from '~/plugins/rss'
 
-// The second argument is optional and sets the default config values for every player.
 export default {
   async fetch () {
-    // eslint-disable-next-line no-console
-    // console.log('id', this.$route.params.id)
     const res = await feed()
     if (res && res.items) {
       res.items.forEach((element) => {
@@ -311,24 +307,30 @@ export default {
           this.content = element.content
           this.image = element.itunes.image
           this.audio = element.enclosure.url
-          this.loading = false
-          // eslint-disable-next-line no-console
-          // console.log('found item', element)
         }
       })
+      this.loading = false
+      this.setSizeHead()
     }
   },
   data () {
     return {
       loading: true,
-      sizeHead: 200,
       title: '',
+      sizeHead: '100vh',
       content: '',
       image: '',
       audio: ''
     }
   },
   methods: {
+    setSizeHead () {
+      if (process.client && document.getElementById('header-ep') && document.getElementById('header')) {
+        const size = `${document.getElementById('header-ep').offsetHeight + document.getElementById('header').offsetHeight}px`
+        console.log('size', size)
+        this.sizeHead = `calc(100vh - ${size})`
+      }
+    },
     toEmbed (url) {
       return url.replace('/episodes/', '/embed/episodes/')
     },
@@ -379,11 +381,6 @@ export default {
         }
       )
     },
-    setSizeHead () {
-      if (document.getElementById('app')) {
-        this.sizeHead = document.getElementById('app').offsetHeight
-      }
-    },
     bmc () {
       window.open('https://www.buymeacoffee.com/indiemakersfr', '_blank')
     },
@@ -416,56 +413,8 @@ export default {
     }
   }
 }
-// <meta property="og:title" content="Le 1er podcast francais qui aide les independants a vivre de leur business."" />
-// <meta property="og:type" content="website" />
-// <meta property="og:url" content="https://indiemakers.fr" />
-// <meta property="og:locale" content="fr_FR" />
-// <meta property="og:site_name" content="indiemakers.fr" />
-// <meta property="og:image" content="https://indiemakers.fr/assets/img/icons/cover-imf-fav.png" />
-// <meta property="og:image:secure_url" content="https://indiemakers.fr/assets/img/icons/cover-imf-fav.png" />
-// <meta property="og:image:type" content="image/png" />
-// <meta property="og:image:width" content="400" />
-// <meta property="og:image:height" content="400" />
-// <meta property="og:article:author " content="Martin DONADIEU" />
-// <meta property="og:image:alt" content="Des idées profitables" />
-// <meta property="og:description"
-//   content="Ici, tu trouveras des podcasts où j'échange avec ceux qui ont su transformer leurs idées en en business florissant." />
 </script>
 
 <style scoped>
 
-::-webkit-scrollbar {
-  width: 10px;
-}
-.custom-scroll {
-  overflow-y: scroll;
-  position: absolute;
-  overflow-x: hidden;
-  /* height: 600px; */
-  margin-left: -15px;
-}
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.fit-content {
-  width: fit-content;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: rgba(75, 39, 155, 1);
-}
-
-.linkified {
-  display: block;
-}
-.bmc {
-  height: 20px;
-}
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #df99d8 !important;
-}
 </style>

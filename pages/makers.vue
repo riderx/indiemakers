@@ -1,6 +1,94 @@
 <template>
   <div id="makers">
-    <modal height="auto" adaptive :click-to-close="isFalse" name="loading">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 offset-xl-1 col-xl-5">
+          <div id="header-ep" class="row bg-primary border-10 border-light py-1 py-md-4">
+            <div class="col col-md-10 pt-3 px-0 text-white text-center">
+              <h1>🔥Makers</h1>
+            </div>
+            <div class="col-3 col-md-2 pt-3 text-white">
+              <button
+                v-tooltip="'Ajouter un·e maker'"
+                type="button"
+                class="btn btn-primary btn-lg border-5 border-light text-light px-3 px-md-4 display-1"
+                @click="showAddForm()"
+              >
+                <strong>+</strong>
+              </button>
+            </div>
+          </div>
+          <div v-if="loading" class="row bg-white px-3 w-100">
+            <div class="col-12 p-5 text-center">
+              <div
+                class="spinner-grow text-primary"
+                style="width: 6rem; height: 6rem;"
+                role="status"
+              >
+                <span class="sr-only">Chargement...</span>
+              </div>
+            </div>
+          </div>
+          <div
+            v-if="!loading"
+            class="custom-scroll fix-marging border-5 px-2 border-light border-right-0 w-100"
+            :style="{ height: sizeHead }"
+          >
+            <div
+              v-for="person in people"
+              :key="person.id"
+              :class="'row bg-primary text-white py-3 border-bottom align-items-center ' + person.id"
+            >
+              <div class="col-12 d-block d-sm-none">
+                <h3>{{ person.name }}</h3>
+              </div>
+              <div class="col-4 pr-0 pr-md-5">
+                <img
+                  :src="person.img"
+                  class="w-100 w-md-75 img-fluid border-5 border-light"
+                  :alt="'Picture ' + person.name"
+                  @error="imgUrlAlt"
+                >
+              </div>
+              <div class="col-5 col-md-6">
+                <h3 class="d-none d-sm-block">
+                  {{ person.name }}
+                </h3>
+                <div>
+                  <p
+                    v-tooltip="'Ouvrir son profils Twitter'"
+                    class="text-secondary fit-content cursor-pointer"
+                    @click="openAccount(person.login)"
+                  >
+                    @{{ person.login }}
+                  </p>
+                </div>
+              </div>
+              <div class="col-3 col-md-2 pl-0" @click="vote(person)">
+                <button
+                  v-tooltip="tooltipVote(person)"
+                  type="button"
+                  class="btn btn-primary border-5 border-light btn-lg text-white px-3 px-md-4 py-3 h1"
+                >
+                  <fa :icon="['fas', 'play-circle']"  class="fa-2x invisible" />
+                  <div class="position-absolute ml-2 top">
+                    <fa :icon="['fas', 'caret-up']"  class="fa-2x" />
+                    <p>{{ person.votes }}</p>
+                  </div>
+                </button>
+              </div>
+              <div class="col-12 px-md-5 pt-3">
+                <p class v-html="getTextLink(person.bio)" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="content" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
+          <img id="cover" class="img-fluid border-10 border-light" alt="IM COVER" :src="image">
+        </div>
+      </div>
+    </div>
+        <modal height="auto" adaptive :click-to-close="isFalse" name="loading">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 p-5 text-center">
@@ -352,106 +440,14 @@
         </div>
       </div>
     </modal>
-    <div class="container-fluid">
-      <div class="row pt-md-5">
-        <div class="col-12 offset-xl-1 col-xl-5">
-          <div class="row bg-primary border-10 border-light py-1 py-md-4">
-            <div class="col col-md-10 pt-3 px-0 text-white text-center">
-              <h1>🔥Makers</h1>
-            </div>
-            <div class="col-3 col-md-2 pt-3 text-white">
-              <button
-                v-tooltip="'Ajouter un·e maker'"
-                type="button"
-                class="btn btn-primary btn-lg border-5 border-light text-light px-3 px-md-4 display-1"
-                @click="showAddForm()"
-              >
-                <strong>+</strong>
-              </button>
-            </div>
-          </div>
-          <div v-if="loading" class="row bg-white px-3">
-            <div class="col-12 p-5 text-center">
-              <div
-                class="spinner-grow text-primary"
-                style="width: 6rem; height: 6rem;"
-                role="status"
-              >
-                <span class="sr-only">Chargement...</span>
-              </div>
-            </div>
-          </div>
-          <div
-            v-if="!loading"
-            class="custom-scroll border-5 px-2 border-light border-right-0"
-            :style="{ height: heightDiv }"
-          >
-            <div
-              v-for="person in people"
-              :key="person.id"
-              :class="'row bg-primary text-white py-3 border-bottom align-items-center ' + person.id"
-            >
-              <div class="col-12 d-block d-sm-none">
-                <h3>{{ person.name }}</h3>
-              </div>
-              <div class="col-4 pr-0 pr-md-5">
-                <img
-                  :src="personImg(person)"
-                  class="w-100 w-md-75 img-fluid border-5 border-light"
-                  alt="Logo person"
-                  @onerror="imgUrlAlt"
-                >
-              </div>
-              <div class="col-5 col-md-6">
-                <h3 class="d-none d-sm-block">
-                  {{ person.name }}
-                </h3>
-                <div>
-                  <p
-                    v-tooltip="'Ouvrir son profils Twitter'"
-                    class="text-secondary fit-content cursor-pointer"
-                    @click="openAccount(person.login)"
-                  >
-                    @{{ person.login }}
-                  </p>
-                </div>
-              </div>
-              <div class="col-3 col-md-2 pl-0" @click="vote(person)">
-                <button
-                  v-tooltip="tooltipVote(person)"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white px-3 px-md-4 py-3 h1"
-                >
-                  <i class="fas fa-caret-circle-right fa-2x invisible" />
-                  <div class="position-absolute ml-2 top">
-                    <i class="fas fa-caret-up fa-2x" />
-                    <p>{{ person.votes }}</p>
-                  </div>
-                </button>
-              </div>
-              <div class="col-12 px-md-5 pt-3">
-                <p class v-html="getTextLink(person.bio)" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="content" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
-          <img id="cover" class="img-fluid border-10 border-light" alt="IM COVER" :src="image">
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-// import illu from "./illu.vue";
 import linkifyHtml from 'linkifyjs/html'
-import { db, firebaseLib } from '../plugins/db'
 import { feed } from '../plugins/rss'
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/USERNAME">@USERNAME</a>'
-
-const addTwiterUser = firebaseLib.functions().httpsCallable('addTwiterUser')
+const defaultImg = require('~/assets/people-default.svg')
 
 export default {
   async fetch () {
@@ -463,6 +459,18 @@ export default {
       this.episodes = res.items
       this.loading = false
     }
+    await this.$bind(
+      'people',
+      this.$fireStore
+        .collection('people')
+        .orderBy('votes', 'desc')
+        .orderBy('addDate', 'asc')
+    )
+    this.people.forEach((person) => {
+      person.img = this.personImg(person)
+    })
+    this.setSizeHead()
+    this.loading = false
   },
   data () {
     return {
@@ -474,37 +482,13 @@ export default {
       isFalse: false,
       loggin: false,
       loading: true,
-      sizeHead: 400,
+      sizeHead: '100vh',
       addName: '',
       currentName: '',
       people: []
     }
   },
-  computed: {
-    heightDiv () {
-      if (this.sizeHead === 0) {
-        return 400
-      }
-      return `calc(${this.sizeHead}px)`
-    }
-  },
   mounted () {
-    this.loggin = firebaseLib.auth().currentUser
-    this.email = window.localStorage.getItem('emailForSignIn')
-    this.$bind(
-      'people',
-      db
-        .collection('people')
-        .orderBy('votes', 'desc')
-        .orderBy('addDate', 'asc')
-    )
-      .then(() => {
-        this.loading = false
-        this.setSizeHead()
-      })
-      .catch((error) => {
-        console.error('error in loading: ', error)
-      })
     // this.$modal.show("voted");
     // this.$modal.show("loading");
     // this.$modal.show("error");
@@ -514,7 +498,9 @@ export default {
     // this.openAdd();
     // this.$modal.show("fail-add");
     // this.$modal.show("fail-vote");
-    firebaseLib.auth().onAuthStateChanged((user) => {
+    this.loggin = this.$fireAuth.currentUser
+    this.email = window.localStorage.getItem('emailForSignIn')
+    this.$fireAuth.onAuthStateChanged((user) => {
       this.loggin = user
       if (this.loggin && this.loggin.displayName === null) {
         this.$router.push('/login')
@@ -525,8 +511,6 @@ export default {
     findInEp (name) {
       let found = false
       const link = linkTwitter.replace(/USERNAME/g, name)
-      // eslint-disable-next-line no-console
-      // console.log('link', link)
       this.episodes.forEach((element) => {
         if (element.content.includes(link)) {
           found = element.guid
@@ -544,7 +528,7 @@ export default {
       return `https://twitter-avatar.now.sh/${person.login}`
     },
     imgUrlAlt (event) {
-      event.target.src = '../assets/profile.png'
+      event.target.src = defaultImg
     },
     tweetIt () {
       const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakersfr 🚀.`
@@ -586,8 +570,7 @@ export default {
         }
         this.$modal.hide('register')
         this.$modal.show('loading')
-        firebaseLib
-          .auth()
+        this.$fireAuth
           .sendSignInLinkToEmail(this.email, actionCodeSettings)
           .then(() => {
             window.localStorage.setItem('emailForSignIn', this.email)
@@ -603,8 +586,6 @@ export default {
     vote (person) {
       const found = this.findInEp(person.login)
       if (found) {
-        // eslint-disable-next-line no-console
-        // console.log('this ep exist', found)
         this.guid = found
         this.$modal.show('found')
         return
@@ -613,7 +594,7 @@ export default {
         this.openRegister()
       } else {
         this.$modal.show('loading')
-        db.collection(`people/${person.id}/votes`)
+        this.$fireStore.collection(`people/${person.id}/votes`)
           .doc(this.loggin.uid)
           .set({
             date: Date()
@@ -661,7 +642,7 @@ export default {
         this.$modal.hide('loading')
         this.openRegister()
       } else {
-        addTwiterUser({ name: this.addName })
+        this.$fireFunc.httpsCallable('addTwiterUser')({ name: this.addName })
           .then((addJson) => {
             const added = addJson.data
             this.$modal.hide('loading')
@@ -688,52 +669,15 @@ export default {
       }
     },
     setSizeHead () {
-      if (document.getElementById('makers')) {
-        this.sizeHead = document.getElementById('makers').offsetHeight
+      if (process.client && document.getElementById('header-ep') && document.getElementById('header')) {
+        const size = `${document.getElementById('header-ep').offsetHeight + document.getElementById('header').offsetHeight}px`
+        this.sizeHead = `calc(100vh - ${size})`
       }
     }
-  },
-  firestore: {
-    // people: db.collection("people").orderBy("votes", "desc")
   }
 }
 </script>
 
 <style scoped>
 
-.top {
-  top: 0;
-}
-::-webkit-scrollbar {
-  width: 10px;
-}
-.custom-scroll {
-  overflow-y: scroll;
-  position: absolute;
-  overflow-x: hidden;
-  margin-left: -15px;
-}
-@media screen and (max-width: 768px) {
-.custom-scroll {
-  height: 600px !important;
-  }
-}
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #df99d8;
-}
-
-.fit-content {
-  width: fit-content;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(75, 39, 155, 1) !important;
-}
 </style>

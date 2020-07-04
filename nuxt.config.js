@@ -20,7 +20,7 @@ export default {
   head: {
     title: process.env.npm_package_name || '',
     script: [
-      { hid: 'FA', src: 'https://kit.fontawesome.com/0a896015b4.js', defer: true }
+      // { hid: 'FA', src: 'https://kit.fontawesome.com/0a896015b4.js', defer: true }
     ],
     meta: [
       { charset: 'utf-8' },
@@ -43,12 +43,15 @@ export default {
   ** Global CSS
   */
   css: [
+    '@fortawesome/fontawesome-svg-core/styles.css'
   ],
   /*
   ** Plugins to load before mounting the App
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    { src: '~/plugins/fontawesome.js'},
+    { src: '~plugins/crisp.js', ssr: false },
     { src: '~/plugins/global.client.js' }
   ],
   /*
@@ -61,7 +64,7 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
   ],
   /*
   ** Nuxt.js modules
@@ -69,8 +72,57 @@ export default {
   modules: [
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/firebase'
   ],
+  fontawesome: {
+    component: 'fa',
+    icons: {
+      solid: ['faHeadphones', 'faHeart', 'faPizzaSlice', 'faCaretUp', 'faCaretCircleRight'],
+      brands: ['faSpotify', 'faInstagram', 'faTwitter']
+    }
+  },
+  firebase: {
+    config: {
+      production: {
+        apiKey: 'AIzaSyAC0aCq1umg8bZtOuhzH8GkflqUCtInOp8',
+        authDomain: 'indiemakerfr.firebaseapp.com',
+        databaseURL: 'https://indiemakerfr.firebaseio.com',
+        projectId: 'indiemakerfr',
+        storageBucket: 'indiemakerfr.appspot.com',
+        messagingSenderId: '600956995728',
+        appId: '1:600956995728:web:17aacb03e66648e2d63015',
+        measurementId: 'G-HCXN7ZEMJ8'
+      },
+      development: {
+        apiKey: 'AIzaSyAC0aCq1umg8bZtOuhzH8GkflqUCtInOp8',
+        authDomain: 'indiemakerfr.firebaseapp.com',
+        databaseURL: 'https://indiemakerfr.firebaseio.com',
+        projectId: 'indiemakerfr',
+        storageBucket: 'indiemakerfr.appspot.com',
+        messagingSenderId: '600956995728',
+        appId: '1:600956995728:web:17aacb03e66648e2d63015',
+        measurementId: 'G-HCXN7ZEMJ8'
+      }
+    },
+    onFirebaseHosting: false,
+    services: {
+      auth: {
+        persistence: 'local'
+      },
+      firestore: {
+        memoryOnly: false, // default
+        enablePersistence: true
+      },
+      ssr: false,
+      functions: true,
+      storage: false,
+      realtimeDb: false,
+      performance: true,
+      analytics: true,
+      messaging: false
+    }
+  },
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
