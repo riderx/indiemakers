@@ -50,7 +50,7 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
-    { src: '~/plugins/fontawesome.js'},
+    { src: '~/plugins/fontawesome.js' },
     { src: '~plugins/crisp.js', ssr: false },
     { src: '~/plugins/global.client.js' }
   ],
@@ -65,6 +65,7 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
+    ['@nuxtjs/pwa', { workbox: false }]
   ],
   /*
   ** Nuxt.js modules
@@ -72,7 +73,6 @@ export default {
   modules: [
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
-    '@nuxtjs/pwa',
     '@nuxtjs/firebase'
   ],
   fontawesome: {
@@ -127,14 +127,14 @@ export default {
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
- build: {
-  extend ( config, { isDev, isClient, isServer } ) {
-    if ( isServer ) {
-      config.externals = {
-        '@firebase/app': 'commonjs @firebase/app',
-        '@firebase/firestore': 'commonjs @firebase/firestore',
+  build: {
+    extend (config, { isDev, isClient, isServer }) {
+      if (isServer) {
+        config.externals = {
+          '@firebase/app': 'commonjs @firebase/app',
+          '@firebase/firestore': 'commonjs @firebase/firestore'
+        }
       }
     }
   }
-}
 }
