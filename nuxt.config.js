@@ -71,7 +71,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://bootstrap-vue.js.org
+    '@nuxtjs/component-cache',
     'bootstrap-vue/nuxt',
     '@nuxtjs/firebase'
   ],
