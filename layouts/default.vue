@@ -16,12 +16,12 @@ export default {
   },
   head: {
     meta: [
-      { hid: 'og:image:alt', name: 'og:image:alt', content: 'Des idées profitables' },
-      { hid: 'og:image:type', name: 'og:image:type', content: 'image/png' },
-      { hid: 'og:image', name: 'og:image', content: require('~/assets/cover-imf@0.5x.png') },
-      { hid: 'og:image:secure_url', name: 'og:image:secure_url', content: require('~/assets/cover-imf@0.5x.png') },
-      { hid: 'og:image:width', name: 'og:image:width', content: 400 },
-      { hid: 'og:image:height', name: 'og:image:height', content: 400 }
+      { hid: 'og:image:alt', property: 'og:image:alt', content: 'Des idées profitables' },
+      { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
+      { hid: 'og:image', property: 'og:image', content: require('~/assets/cover-imf@0.5x.png') },
+      { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: require('~/assets/cover-imf@0.5x.png') },
+      { hid: 'og:image:width', property: 'og:image:width', content: 400 },
+      { hid: 'og:image:height', property: 'og:image:height', content: 400 }
     ]
   }
 }

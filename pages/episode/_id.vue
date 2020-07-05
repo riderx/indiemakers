@@ -15,7 +15,7 @@
             </div>
           </div>
           <div id="header-title" class="row bg-primary border-10 border-light">
-            <div  class="col-12 pt-md-3 text-white text-center">
+            <div class="col-12 pt-md-3 text-white text-center">
               <h1 class="d-none d-sm-block">
                 {{ title }}
               </h1>
@@ -51,7 +51,7 @@
                 class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                 @click="listen()"
               >
-              <fa :icon="['fas', 'headphones']" /> Ecouter
+                <fa :icon="['fas', 'headphones']" /> Ecouter
               </button>
               <button
                 v-tooltip="'Noter l\'épisode'"
@@ -147,7 +147,7 @@
         </div>
       </div>
     </div>
-        <modal height="auto" adaptive name="copied">
+    <modal height="auto" adaptive name="copied">
       <div class="container-fluid">
         <div class="row bg-primary border-10 border-light">
           <div class="col-12">
@@ -418,13 +418,14 @@ export default {
         // hid est utilisé comme identifiant unique. N'utilisez pas `vmid` car ça ne fonctionnera pas
         { hid: 'description', name: 'description', content: stripHtml(this.content) },
         { hid: 'title', name: 'title', content: this.title },
-        { hid: 'og:title', name: 'og:title', content: this.title },
-        { hid: 'og:image:alt', name: 'og:image:alt', content: this.title },
-        { hid: 'og:image:type', name: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', name: 'og:image', content: this.image },
-        { hid: 'og:image:secure_url', name: 'og:image:secure_url', content: this.image },
-        { hid: 'og:image:width', name: 'og:image:width', content: 400 },
-        { hid: 'og:image:height', name: 'og:image:height', content: 400 }
+        { hid: 'og:description', property: 'og:description', content: stripHtml(this.content) },
+        { hid: 'og:title', property: 'og:title', content: this.title },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
+        { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
+        { hid: 'og:image', property: 'og:image', content: this.image },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this.image },
+        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
+        { hid: 'og:image:height', property: 'og:image:height', content: 400 }
       ]
     }
   }

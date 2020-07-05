@@ -26,12 +26,14 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'title', name: 'title', content: 'Le 1er podcast francais qui aide les independants a vivre de leur business.' },
-      { hid: 'og:title', name: 'og:title', content: 'Le 1er podcast francais qui aide les independants a vivre de leur business.' },
-      { hid: 'og:type', name: 'og:type', content: 'website' },
-      { hid: 'og:locale', name: 'og:locale', content: 'fr_FR' },
-      { hid: 'og:site_name', name: 'og:site_name', content: 'indiemakers.fr' },
-      { hid: 'og:article:author', name: 'og:article:author', content: 'Martin DONADIEU' },
-      { hid: 'description', name: 'description', content: 'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en en business florissant.' }
+      { hid: 'description', name: 'description', content: 'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en en business florissant.' },
+      { hid: 'og:title', property: 'og:title', content: 'Le 1er podcast francais qui aide les independants a vivre de leur business.' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:url', property: 'og:url', content: 'https://indiemakers.fr' },
+      { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'indiemakers.fr' },
+      { hid: 'og:article:author', property: 'og:article:author', content: 'Martin DONADIEU' },
+      { hid: 'og:description', property: 'og:description', content: 'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en en business florissant.' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
