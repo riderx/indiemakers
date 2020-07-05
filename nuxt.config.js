@@ -65,7 +65,7 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    ['@nuxtjs/pwa', { workbox: false }]
+    ['@nuxtjs/pwa', { workbox: false, oneSignal: false }]
   ],
   /*
   ** Nuxt.js modules
