@@ -151,16 +151,18 @@ export default {
       }
     }
   },
-  head: {
-    title: 'Connecxion a INDIE MAKERS',
-    meta: [
-      { hid: 'og:image:alt', property: 'og:image:alt', content: 'Des idées profitables' },
-      { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-      { hid: 'og:image', property: 'og:image', content: require('~/assets/cover-im@0.5x.png') },
-      { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: require('~/assets/cover-im@0.5x.png') },
-      { hid: 'og:image:width', property: 'og:image:width', content: 400 },
-      { hid: 'og:image:height', property: 'og:image:height', content: 400 }
-    ]
+  head () {
+    return {
+      title: this.title,
+      meta: [
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
+        { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
+        { hid: 'og:image', property: 'og:image', content: require('~/assets/cover-im@0.5x.png') },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: require('~/assets/cover-im@0.5x.png') },
+        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
+        { hid: 'og:image:height', property: 'og:image:height', content: 400 }
+      ]
+    }
   }
 }
 </script>

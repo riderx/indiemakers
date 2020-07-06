@@ -8,16 +8,17 @@
 <script>
 import NavBar from '~/components/NavBar.vue'
 import '~/static/custom.boostrap.css'
-// import '~/plugins/global.js'
 
 export default {
   components: {
     NavBar
   },
-  head: {
-    meta: [
-      { hid: 'og:url', property: 'og:url', content: process.env.domain }
-    ]
+  head () {
+    return {
+      meta: [
+        { hid: 'og:url', property: 'og:url', content: process.env.domain }
+      ]
+    }
   }
 }
 </script>
