@@ -42,7 +42,7 @@
               >
                 <div class="col-3 col-md-4 pr-0 pr-md-5">
                   <img
-                    :src="person.img"
+                    v-lazy="getImgObj(person.img)"
                     class="w-100 img-fluid border-5 border-light"
                     :alt="'Picture ' + person.name"
                     @error="imgUrlAlt"
@@ -84,7 +84,7 @@
           </client-only>
         </div>
         <div id="content" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
-          <img id="cover" class="img-fluid border-10 border-light" alt="IM COVER" :src="image">
+          <img id="cover" v-lazy="getImgObj(image)" class="img-fluid border-10 border-light" alt="IM COVER">
         </div>
       </div>
     </div>
@@ -665,6 +665,13 @@ export default {
             this.$modal.show('error')
             console.error(err)
           })
+      }
+    },
+    getImgObj (img) {
+      return {
+        src: img,
+        error: require('~/assets/cover-im_user.png'),
+        loading: require('~/assets/cover-im_empty.png')
       }
     },
     setSizeHead () {

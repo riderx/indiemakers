@@ -43,9 +43,9 @@
             >
               <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 pr-0 pr-md-3 pb-3 pb-md-0">
                 <img
-                  :src="episode.itunes.image"
+                  v-lazy="getImgObj(episode.itunes.image)"
                   class="w-100 w-md-75 img-fluid border-5 border-light"
-                  alt="Logo person"
+                  :alt="'Cover ' + episode.twitter"
                 >
               </div>
               <div v-tooltip="'Ecouter l\'épisode'" class="col-12 col-md-8 order-2 pl-2 pl-md-0 order-md-2 text-center text-md-left">
@@ -168,6 +168,13 @@ export default {
     this.setSizeHead()
   },
   methods: {
+    getImgObj (img) {
+      return {
+        src: img,
+        error: require('~/assets/cover-im_user.png'),
+        loading: require('~/assets/cover-im_empty.png')
+      }
+    },
     removeAccent (str) {
       return str.normalize('NFD').replace(/[\u0300-\u036F]/g, '')
     },

@@ -22,7 +22,7 @@
             </div>
             <div class="col-12 d-block d-sm-none px-0">
               <img
-                :src="image"
+                v-lazy="getImgObj(image)"
                 class="w-100 img-fluid border-10 border-light"
                 :alt="title"
               >
@@ -90,7 +90,7 @@
           <div class="row align-items-center">
             <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-0">
               <img
-                :src="image"
+                v-lazy="getImgObj(image)"
                 class="w-100 img-fluid border-10 border-light"
                 alt="Logo person"
               >
@@ -333,6 +333,13 @@ export default {
     }
   },
   methods: {
+    getImgObj (img) {
+      return {
+        src: img,
+        error: require('~/assets/cover-im_user.png'),
+        loading: require('~/assets/cover-im_empty.png')
+      }
+    },
     findTw (text) {
       const found = text.match(linkTwitterRe)
       let name = 'error'
