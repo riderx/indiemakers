@@ -1,54 +1,56 @@
 
 <template>
   <div>
-    <modal height="auto" adaptive name="loading">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 p-5 text-center">
-            <div class="spinner-grow text-primary" style="width: 6rem; height: 6rem;" role="status">
-              <span class="sr-only">Chargement...</span>
+    <client-only>
+      <modal height="auto" adaptive name="loading">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 p-5 text-center">
+              <div class="spinner-grow text-primary" style="width: 6rem; height: 6rem;" role="status">
+                <span class="sr-only">Chargement...</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </modal>
-    <modal height="auto" adaptive :click-to-close="isFalse" name="confirmName">
-      <div class="container-fluid">
-        <div class="row bg-primary py-2">
-          <div class="col-12 pt-2 text-white text-center">
-            <h1>😨 Spam ou pas Spam ?</h1>
+      </modal>
+      <modal height="auto" adaptive :click-to-close="isFalse" name="confirmName">
+        <div class="container-fluid">
+          <div class="row bg-primary py-2">
+            <div class="col-12 pt-2 text-white text-center">
+              <h1>😨 Spam ou pas Spam ?</h1>
+            </div>
           </div>
-        </div>
-        <div class="row bg-success pt-4">
-          <div class="col-12 pt-2 text-white text-center">
-            <p>Ajoute ton nom pour recevoir par email les épisodes pour lesquels tu as voté.</p>
-          </div>
-          <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-            <div class="form-group mb-0">
-              <input
-                ref="myName"
-                v-model="myName"
-                type="text"
-                class="form-control pb-0"
-                aria-describedby="TweetnameHelp"
-                placeholder="Elon Musk"
-                @keyup.enter="addName()"
+          <div class="row bg-success pt-4">
+            <div class="col-12 pt-2 text-white text-center">
+              <p>Ajoute ton nom pour recevoir par email les épisodes pour lesquels tu as voté.</p>
+            </div>
+            <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+              <div class="form-group mb-0">
+                <input
+                  ref="myName"
+                  v-model="myName"
+                  type="text"
+                  class="form-control pb-0"
+                  aria-describedby="TweetnameHelp"
+                  placeholder="Elon Musk"
+                  @keyup.enter="addName()"
+                >
+              </div>
+              <p>Si tu choisie un faux nom ca seras a jamais dans les spams 😢</p>
+            </div>
+            <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+              <button
+                type="button"
+                class="btn btn-primary btn-lg btn-block text-light px-4 h1"
+                @click="addName()"
               >
+                Valider mon Nom
+              </button>
             </div>
-            <p>Si tu choisie un faux nom ca seras a jamais dans les spams 😢</p>
-          </div>
-          <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
-            <button
-              type="button"
-              class="btn btn-primary btn-lg btn-block text-light px-4 h1"
-              @click="addName()"
-            >
-              Valider mon Nom
-            </button>
           </div>
         </div>
-      </div>
-    </modal>
+      </modal>
+    </client-only>
     <div class="container-fluid">
       <div class="row pt-md-5">
         <div class="col-12 offset-md-1 col-md-5">
@@ -103,9 +105,9 @@ export default {
   mounted () {
     this.$fireAuth.onAuthStateChanged((user) => {
       this.user = user
-      if (this.user.displayName === null) {
+      if (this.user && this.user.displayName === null) {
         this.$modal.show('confirmName')
-      } else {
+      } else if (this.user) {
         this.$router.push('/episodes')
       }
     })

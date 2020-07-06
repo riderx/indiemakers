@@ -147,149 +147,151 @@
         </div>
       </div>
     </div>
-    <modal height="auto" adaptive name="copied">
-      <div class="container-fluid">
-        <div class="row bg-primary border-10 border-light">
-          <div class="col-12">
-            <div class="row bg-success pt-4 h-100">
-              <div class="col-12 pt-2 pb-3 text-white text-center">
-                <p>Lien Copié</p>
+    <client-only>
+      <modal height="auto" adaptive name="copied">
+        <div class="container-fluid">
+          <div class="row bg-primary border-10 border-light">
+            <div class="col-12">
+              <div class="row bg-success pt-4 h-100">
+                <div class="col-12 pt-2 pb-3 text-white text-center">
+                  <p>Lien Copié</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </modal>
-    <modal height="auto" adaptive name="listen">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div v-if="!loading" class="row bg-primary border-10 border-light py-4">
-              <div class="col-12 pt-1 px-1 px-md-3 text-white text-center">
-                <h3>Disponible sur :</h3>
-              </div>
-              <div class="col-12 pt-1 px-1 px-md-3 text-center">
-                <button
-                  v-tooltip="'Ecouter l\'épisode sur spotify'"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                  @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
-                >
-                  Spotify
-                </button>
-                <button
-                  v-tooltip="'Ecouter l\'épisode sur Anchor'"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                  @click="listenExternal('https://anchor.fm/indiemakers')"
-                >
-                  Anchor
-                </button>
-                <button
-                  v-tooltip="'Ecouter l\'épisode sur Deezer'"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                  @click="listenExternal('https://deezer.com/show/689072')"
-                >
-                  Deezer
-                </button>
-                <button
-                  v-tooltip="'Ecouter l\'épisode sur PocketCast'"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                  @click="listenExternal('https://pca.st/yjcdxg09')"
-                >
-                  Pocket cast
-                </button>
-                <button
-                  v-tooltip="'Copier le flux RSS'"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                  @click="copyTextToClipboard('https://anchor.fm/s/414d1d4/podcast/rss')"
-                >
-                  RSS
-                </button>
-                <button
-                  v-tooltip="'Ecouter l\'épisode sur Apple podcast'"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                  @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
-                >
-                  Apple
-                </button>
-                <button
-                  v-tooltip="'Ecouter l\'épisode sur Breaker podcast'"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                  @click="listenExternal('https://www.breaker.audio/indie-maker-france')"
-                >
-                  Breaker
-                </button>
-                <button
-                  v-tooltip="'Ecouter l\'épisode sur Google podcast'"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                  @click="listenExternal('https://podcasts.google.com/?feed=aHR0cHM6Ly9hbmNob3IuZm0vcy80MTRkMWQ0L3BvZGNhc3QvcnNz')"
-                >
-                  Google
-                </button>
-                <button
-                  v-tooltip="'Ecouter l\'épisode sur Radio Public'"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                  @click="listenExternal('https://radiopublic.com/indie-maker-france-60NJEy')"
-                >
-                  Radio Public
-                </button>
-                <button
-                  v-tooltip="'Ecouter l\'épisode sur Overcast'"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                  @click="listenExternal('https://overcast.fm/itunes1488437972/indie-maker-france')"
-                >
-                  Overcast
-                </button>
-                <button
-                  v-tooltip="'Ecouter l\'épisode sur Castro'"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                  @click="listenExternal('https://castro.fm/podcast/e3350808-2fc9-481e-a449-a7abe035002e')"
-                >
-                  Castro
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal height="auto" adaptive name="copied">
-      <div class="container-fluid">
-        <div class="row https://anchor.fm/s/414d1d4/podcast/rss">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>✅C'est fait !</h1>
-              </div>
-            </div>
-            <div class="row bg-primary pt-4 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <p>Lien Copié, je sais pas trop ce que tu compte en faire mais enjoy, c'est tout❤️</p>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-white px-4 h1"
-                  @click="$modal.hide('copied')"
-                >
-                  😎Cool
-                </button>
+      </modal>
+      <modal height="auto" adaptive name="listen">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div v-if="!loading" class="row bg-primary border-10 border-light py-4">
+                <div class="col-12 pt-1 px-1 px-md-3 text-white text-center">
+                  <h3>Disponible sur :</h3>
+                </div>
+                <div class="col-12 pt-1 px-1 px-md-3 text-center">
+                  <button
+                    v-tooltip="'Ecouter l\'épisode sur spotify'"
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
+                  >
+                    Spotify
+                  </button>
+                  <button
+                    v-tooltip="'Ecouter l\'épisode sur Anchor'"
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    @click="listenExternal('https://anchor.fm/indiemakers')"
+                  >
+                    Anchor
+                  </button>
+                  <button
+                    v-tooltip="'Ecouter l\'épisode sur Deezer'"
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    @click="listenExternal('https://deezer.com/show/689072')"
+                  >
+                    Deezer
+                  </button>
+                  <button
+                    v-tooltip="'Ecouter l\'épisode sur PocketCast'"
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    @click="listenExternal('https://pca.st/yjcdxg09')"
+                  >
+                    Pocket cast
+                  </button>
+                  <button
+                    v-tooltip="'Copier le flux RSS'"
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    @click="copyTextToClipboard('https://anchor.fm/s/414d1d4/podcast/rss')"
+                  >
+                    RSS
+                  </button>
+                  <button
+                    v-tooltip="'Ecouter l\'épisode sur Apple podcast'"
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
+                  >
+                    Apple
+                  </button>
+                  <button
+                    v-tooltip="'Ecouter l\'épisode sur Breaker podcast'"
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    @click="listenExternal('https://www.breaker.audio/indie-maker-france')"
+                  >
+                    Breaker
+                  </button>
+                  <button
+                    v-tooltip="'Ecouter l\'épisode sur Google podcast'"
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    @click="listenExternal('https://podcasts.google.com/?feed=aHR0cHM6Ly9hbmNob3IuZm0vcy80MTRkMWQ0L3BvZGNhc3QvcnNz')"
+                  >
+                    Google
+                  </button>
+                  <button
+                    v-tooltip="'Ecouter l\'épisode sur Radio Public'"
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    @click="listenExternal('https://radiopublic.com/indie-maker-france-60NJEy')"
+                  >
+                    Radio Public
+                  </button>
+                  <button
+                    v-tooltip="'Ecouter l\'épisode sur Overcast'"
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    @click="listenExternal('https://overcast.fm/itunes1488437972/indie-maker-france')"
+                  >
+                    Overcast
+                  </button>
+                  <button
+                    v-tooltip="'Ecouter l\'épisode sur Castro'"
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    @click="listenExternal('https://castro.fm/podcast/e3350808-2fc9-481e-a449-a7abe035002e')"
+                  >
+                    Castro
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </modal>
+      </modal>
+      <modal height="auto" adaptive name="copied">
+        <div class="container-fluid">
+          <div class="row https://anchor.fm/s/414d1d4/podcast/rss">
+            <div class="col-12 h-100">
+              <div class="row bg-primary py-2 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>✅C'est fait !</h1>
+                </div>
+              </div>
+              <div class="row bg-primary pt-4 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <p>Lien Copié, je sais pas trop ce que tu compte en faire mais enjoy, c'est tout❤️</p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg btn-block text-white px-4 h1"
+                    @click="$modal.hide('copied')"
+                  >
+                    😎Cool
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+    </client-only>
   </div>
 </template>
 

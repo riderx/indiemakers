@@ -88,358 +88,360 @@
         </div>
       </div>
     </div>
-    <modal height="auto" adaptive :click-to-close="isFalse" name="loading">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 p-5 text-center">
-            <div class="spinner-grow text-primary" style="width: 6rem; height: 6rem;" role="status">
-              <span class="sr-only">Chargement...</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal height="auto" adaptive name="error">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="row bg-primary py-2 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>😨 Quelque chose n'as pas marché</h1>
-              </div>
-            </div>
-            <div class="row bg-primary pt-4 h-100 border-10 border-light">
-              <div class="col-12 pt-2 pb-3 text-white text-center">
-                <p>Essais plus tard</p>
+    <client-only>
+      <modal height="auto" adaptive :click-to-close="isFalse" name="loading">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 p-5 text-center">
+              <div class="spinner-grow text-primary" style="width: 6rem; height: 6rem;" role="status">
+                <span class="sr-only">Chargement...</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </modal>
-    <modal height="auto" adaptive name="found">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>Cet Episode existe !</h1>
-              </div>
-            </div>
-            <div class="row bg-primary pt-4 h-100 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <p>Grace a ton vote et ceux des autres, ce·tte maker a accepter de venir dans le podcast !</p>
-                <p>Merci ❤❤</p>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                  @click="openEp(guid)"
-                >
-                  Ecouter
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal height="auto" adaptive name="added">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>🏄‍♂️ Ajout pris en compte</h1>
-              </div>
-            </div>
-            <div class="row bg-primary pt-4 h-100 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
-                <p>J'ai supposé que tu voulais aussi voter pour lui/elle, alors c'est fait .✅</p>
-                <p class="font-weight-bold">
-                  Voici un message tout pret pour l'inviter 😎
-                </p>
-                <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt()"
-                >
-                  🦚Voir
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal adaptive height="auto" name="fail-add">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>👀Je ne trouve pas ce·tte Maker</h1>
-              </div>
-            </div>
-            <div class="row bg-primary pt-4 h-100 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <p>Je ne peut pas ajouter de Maker qui n'est pas sur Twitter pour le moment.</p>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                  @click="$modal.hide('fail-add')"
-                >
-                  Fermer
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal adaptive height="auto" name="fail-vote">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>😨 Hoho</h1>
-              </div>
-            </div>
-            <div class="row bg-primary pt-4 h-100 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <p>tu as deja voté pour ce·tte Maker</p>
-                <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
-                <p class="font-weight-bold">
-                  Voici un message tout pret pour l'inviter 😎
-                </p>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt(name)"
-                >
-                  🦚Voir
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal adaptive height="auto" name="fail-exist">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>😝 OUPS</h1>
-              </div>
-            </div>
-            <div class="row bg-primary pt-4 h-100 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <p>Ce·tte maker est déjà présent dans la liste, J'ai ajouté ton vote pour lui/elle.</p>
-                <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
-                <p class="font-weight-bold">
-                  Voici un message tout pret pour l'inviter 😎
-                </p>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt()"
-                >
-                  🦚Voir
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal adaptive height="auto" name="fail-exist-vote">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>😝 OUPS</h1>
-              </div>
-            </div>
-            <div class="row bg-primary pt-4 h-100 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <p>Ce·tte maker est déjà présent dans la liste, et tu as déjà voté pour lui/elle 😇.</p>
-                <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
-                <p class="font-weight-bold">
-                  Voici un message tout pret pour l'inviter 😎
-                </p>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt()"
-                >
-                  🦚Voir
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal height="auto" adaptive name="add">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>👌Ajouter un·e Maker</h1>
-              </div>
-            </div>
-            <div class="row bg-primary pt-4 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <p>Saisie le nom de son compte Twitter</p>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-                <div class="form-group mb-0">
-                  <input
-                    ref="addMaker"
-                    v-model="addName"
-                    type="text"
-                    class="form-control pb-0"
-                    aria-describedby="TweetnameHelp"
-                    placeholder="elonmusk"
-                    @keyup.enter="add()"
-                  >
+      </modal>
+      <modal height="auto" adaptive name="error">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="row bg-primary py-2 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>😨 Quelque chose n'as pas marché</h1>
                 </div>
               </div>
-              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                  @click="add()"
-                >
-                  Ajouter
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal height="auto" adaptive name="voted">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>💪Vote pris en compte</h1>
-              </div>
-            </div>
-            <div class="row bg-primary pt-4 h-100 border-10 border-light">
-              <div class="col-12 pt-2 text-white">
-                <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
-                <p class="font-weight-bold">
-                  Voici un message tout pret pour l'inviter 😎
-                </p>
-                <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                  @click="tweetIt()"
-                >
-                  🦚Voir
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal height="auto" adaptive name="checkEmail">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>✅Check ta boite email</h1>
-              </div>
-            </div>
-            <div class="row bg-primary pt-4 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <p>Récupère ton lien de login reçût par email et click dessus, c'est tout❤️</p>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                  @click="$modal.hide('checkEmail')"
-                >
-                  😎Cool
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal height="auto" adaptive name="register">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 h-100">
-            <div class="row bg-primary py-2 border-10 border-light">
-              <div class="col-12 pt-2 text-white text-center">
-                <h1>🔐Pas tout de suite !</h1>
-              </div>
-            </div>
-            <div class="row bg-primary pt-4 border-10 border-light">
-              <div class="col-12 pt-2 text-white">
-                <p>Pour pouvoir te tenir au courant de la sortie de l'épisode et éviter les faux votes</p>
-                <h5 class="text-center">
-                  j’ai besoin que tu valides ton email
-                </h5>
-                <p>Tu ne recevras des emails seulement pour les makers pour qui tu as voté, et si j'ai une grande nouvelle a te partager (max 3 par ans).</p>
-                <p>Et bien entendu, je ne refile ton e-mail à personne, je déteste ceux qui font ça !</p>
-              </div>
-              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-                <div class="form-group mb-0">
-                  <input
-                    ref="register"
-                    v-model="email"
-                    type="email"
-                    class="form-control pb-0"
-                    aria-describedby="emailHelp"
-                    placeholder="elon@musk.com"
-                    @keyup.enter="sendLogin()"
-                  >
+              <div class="row bg-primary pt-4 h-100 border-10 border-light">
+                <div class="col-12 pt-2 pb-3 text-white text-center">
+                  <p>Essais plus tard</p>
                 </div>
               </div>
-              <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
-                <button
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                  @click="sendLogin()"
-                >
-                  🚀VALIDER
-                </button>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal height="auto" adaptive name="found">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 h-100">
+              <div class="row bg-primary py-2 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>Cet Episode existe !</h1>
+                </div>
+              </div>
+              <div class="row bg-primary pt-4 h-100 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <p>Grace a ton vote et ceux des autres, ce·tte maker a accepter de venir dans le podcast !</p>
+                  <p>Merci ❤❤</p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    @click="openEp(guid)"
+                  >
+                    Ecouter
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </modal>
+      </modal>
+      <modal height="auto" adaptive name="added">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 h-100">
+              <div class="row bg-primary py-2 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>🏄‍♂️ Ajout pris en compte</h1>
+                </div>
+              </div>
+              <div class="row bg-primary pt-4 h-100 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p>J'ai supposé que tu voulais aussi voter pour lui/elle, alors c'est fait .✅</p>
+                  <p class="font-weight-bold">
+                    Voici un message tout pret pour l'inviter 😎
+                  </p>
+                  <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    @click="tweetIt()"
+                  >
+                    🦚Voir
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal adaptive height="auto" name="fail-add">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 h-100">
+              <div class="row bg-primary py-2 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>👀Je ne trouve pas ce·tte Maker</h1>
+                </div>
+              </div>
+              <div class="row bg-primary pt-4 h-100 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <p>Je ne peut pas ajouter de Maker qui n'est pas sur Twitter pour le moment.</p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    @click="$modal.hide('fail-add')"
+                  >
+                    Fermer
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal adaptive height="auto" name="fail-vote">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 h-100">
+              <div class="row bg-primary py-2 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>😨 Hoho</h1>
+                </div>
+              </div>
+              <div class="row bg-primary pt-4 h-100 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <p>tu as deja voté pour ce·tte Maker</p>
+                  <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p class="font-weight-bold">
+                    Voici un message tout pret pour l'inviter 😎
+                  </p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    @click="tweetIt(name)"
+                  >
+                    🦚Voir
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal adaptive height="auto" name="fail-exist">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 h-100">
+              <div class="row bg-primary py-2 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>😝 OUPS</h1>
+                </div>
+              </div>
+              <div class="row bg-primary pt-4 h-100 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <p>Ce·tte maker est déjà présent dans la liste, J'ai ajouté ton vote pour lui/elle.</p>
+                  <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p class="font-weight-bold">
+                    Voici un message tout pret pour l'inviter 😎
+                  </p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    @click="tweetIt()"
+                  >
+                    🦚Voir
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal adaptive height="auto" name="fail-exist-vote">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 h-100">
+              <div class="row bg-primary py-2 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>😝 OUPS</h1>
+                </div>
+              </div>
+              <div class="row bg-primary pt-4 h-100 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <p>Ce·tte maker est déjà présent dans la liste, et tu as déjà voté pour lui/elle 😇.</p>
+                  <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p class="font-weight-bold">
+                    Voici un message tout pret pour l'inviter 😎
+                  </p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    @click="tweetIt()"
+                  >
+                    🦚Voir
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal height="auto" adaptive name="add">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 h-100">
+              <div class="row bg-primary py-2 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>👌Ajouter un·e Maker</h1>
+                </div>
+              </div>
+              <div class="row bg-primary pt-4 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <p>Saisie le nom de son compte Twitter</p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+                  <div class="form-group mb-0">
+                    <input
+                      ref="addMaker"
+                      v-model="addName"
+                      type="text"
+                      class="form-control pb-0"
+                      aria-describedby="TweetnameHelp"
+                      placeholder="elonmusk"
+                      @keyup.enter="add()"
+                    >
+                  </div>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    @click="add()"
+                  >
+                    Ajouter
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal height="auto" adaptive name="voted">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 h-100">
+              <div class="row bg-primary py-2 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>💪Vote pris en compte</h1>
+                </div>
+              </div>
+              <div class="row bg-primary pt-4 h-100 border-10 border-light">
+                <div class="col-12 pt-2 text-white">
+                  <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p class="font-weight-bold">
+                    Voici un message tout pret pour l'inviter 😎
+                  </p>
+                  <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    @click="tweetIt()"
+                  >
+                    🦚Voir
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal height="auto" adaptive name="checkEmail">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 h-100">
+              <div class="row bg-primary py-2 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>✅Check ta boite email</h1>
+                </div>
+              </div>
+              <div class="row bg-primary pt-4 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <p>Récupère ton lien de login reçût par email et click dessus, c'est tout❤️</p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    @click="$modal.hide('checkEmail')"
+                  >
+                    😎Cool
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal height="auto" adaptive name="register">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12 h-100">
+              <div class="row bg-primary py-2 border-10 border-light">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>🔐Pas tout de suite !</h1>
+                </div>
+              </div>
+              <div class="row bg-primary pt-4 border-10 border-light">
+                <div class="col-12 pt-2 text-white">
+                  <p>Pour pouvoir te tenir au courant de la sortie de l'épisode et éviter les faux votes</p>
+                  <h5 class="text-center">
+                    j’ai besoin que tu valides ton email
+                  </h5>
+                  <p>Tu ne recevras des emails seulement pour les makers pour qui tu as voté, et si j'ai une grande nouvelle a te partager (max 3 par ans).</p>
+                  <p>Et bien entendu, je ne refile ton e-mail à personne, je déteste ceux qui font ça !</p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+                  <div class="form-group mb-0">
+                    <input
+                      ref="register"
+                      v-model="email"
+                      type="email"
+                      class="form-control pb-0"
+                      aria-describedby="emailHelp"
+                      placeholder="elon@musk.com"
+                      @keyup.enter="sendLogin()"
+                    >
+                  </div>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    @click="sendLogin()"
+                  >
+                    🚀VALIDER
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+    </client-only>
   </div>
 </template>
 
