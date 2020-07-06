@@ -16,7 +16,7 @@ export default {
   */
   env: {
     baseRSS: 'https://anchor.fm/s/414d1d4/podcast/rss',
-    domain: 'https://indiemakerfr.vercel.app',
+    domain: 'https://indiemakers.fr',
     handler: 'indiemakersfr'
   },
   head: {
