@@ -50,6 +50,7 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    { src: '~/plugins/oldPath.js' },
     { src: '~/plugins/fontawesome.js' },
     { src: '~plugins/crisp.js', ssr: false },
     { src: '~/plugins/global.client.js' }
