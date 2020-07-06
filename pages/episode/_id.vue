@@ -431,7 +431,7 @@ export default {
         { hid: 'og:description', property: 'og:description', content: stripHtml(this.content) },
         { hid: 'og:title', property: 'og:title', content: this.title },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
-        { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
+        { hid: 'og:image:type', property: 'og:image:type', content: 'image/jpg' },
         { hid: 'og:image', property: 'og:image', content: this.image },
         { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this.image },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
