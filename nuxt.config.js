@@ -20,7 +20,7 @@ export default {
     handler: 'indiemakersfr'
   },
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
     script: [
       // { hid: 'FA', src: 'https://kit.fontawesome.com/0a896015b4.js', defer: true }
     ],

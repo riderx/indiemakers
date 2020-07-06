@@ -675,6 +675,11 @@ export default {
         this.sizeHead = 'auto'
       }
     }
+  },
+  head () {
+    return {
+      title: 'Vote pour ton maker'
+    }
   }
 }
 </script>
