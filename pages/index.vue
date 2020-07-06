@@ -10,6 +10,7 @@
             <div class="col-4 col-md-3 pt-1 pt-md-2 text-white">
               <button
                 v-tooltip="'Aide moi a trouver les prochain invités'"
+                aria-label="Maker hunt"
                 type="button"
                 class="btn btn-primary border-5 border-light btn-lg text-light px-3 px-md-4 display-1"
                 @click="openAdd()"
