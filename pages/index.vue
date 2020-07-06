@@ -44,6 +44,7 @@
               <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 pr-0 pr-md-3 pb-3 pb-md-0">
                 <img
                   v-lazy="getImgObj(episode.itunes.image)"
+                  :src="loadingImg"
                   class="w-100 w-md-75 img-fluid border-5 border-light"
                   :alt="'Cover ' + episode.twitter"
                 >
@@ -70,7 +71,7 @@
         <div id="content" class="col-12 col-md-6 pt-md-0 px-md-5 text-white">
           <div class="row">
             <div class="col-md-3 offset-3 offset-md-0 col-6 py-3 pt-md-0 px-3 pl-md-0 pr-md-5">
-              <img class="img-fluid border-10 border-light" alt="IM COVER" :src="image">
+              <img v-lazy="image" class="img-fluid border-10 border-light" alt="IM COVER" :src="loadingImg">
             </div>
             <div class="col-12 col-md-9 text-center text-sm-left">
               <h1 class="pb-2">
@@ -149,7 +150,12 @@ export default {
     return {
       loading: true,
       sizeHead: '100vh',
-      image: require('~/assets/cover-im@0.5x.png'),
+      image: {
+        src: require('~/assets/cover-im@0.5x.png'),
+        error: require('~/assets/cover-im_user.png'),
+        loading: require('~/assets/cover-im_empty.png')
+      },
+      loadingImg: require('~/assets/cover-im_empty.png'),
       episodes: [],
       feed: null,
       title: '🚀Le 1er podcast francais qui aide les independants a vivre de leur business.',

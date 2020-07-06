@@ -40,6 +40,7 @@ body {
   overflow-x: hidden;
   background-color: rgba(75, 39, 155, 1);
 }
+img:not([src]) { display: none; }
 /* @media screen and (max-width: 768px) {
   body {
       overflow-y: auto;
