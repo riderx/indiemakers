@@ -359,9 +359,6 @@ export default {
     listenExternal (url) {
       window.open(url, '_blank')
     },
-    goEpisodes () {
-      this.$router.push('/episodes')
-    },
     fallbackCopyTextToClipboard (text) {
       const textArea = document.createElement('textarea')
       textArea.value = text

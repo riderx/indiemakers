@@ -108,7 +108,7 @@ export default {
       if (this.user && this.user.displayName === null) {
         this.$modal.show('confirmName')
       } else if (this.user) {
-        this.$router.push('/episodes')
+        this.$router.push('/makers')
       }
     })
     if (this.$fireAuth.isSignInWithEmailLink(window.location.href)) {
@@ -128,7 +128,7 @@ export default {
         })
         .then(() => {
           this.$modal.hide('loading')
-          this.$router.push('/episodes')
+          this.$router.push('/')
         })
         .catch(() => {
           this.$modal.hide('loading')
