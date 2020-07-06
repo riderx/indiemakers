@@ -38,17 +38,17 @@
               <div
                 v-for="person in people"
                 :key="person.id"
-                :class="'row bg-primary text-white py-3 border-bottom align-items-top ' + person.id"
+                :class="'row bg-primary text-white py-2 py-md-3 border-bottom align-items-top ' + person.id"
               >
-                <div class="col-4 pr-0 pr-md-5">
+                <div class="col-3 col-md-4 pr-0 pr-md-5">
                   <img
                     :src="person.img"
-                    class="w-100 w-md-75 img-fluid border-5 border-light"
+                    class="w-100 img-fluid border-5 border-light"
                     :alt="'Picture ' + person.name"
                     @error="imgUrlAlt"
                   >
                 </div>
-                <div class="col-5 col-md-6">
+                <div class="col-6 col-md-5">
                   <h3 class="mb-0">
                     {{ person.name }}
                   </h3>
@@ -60,14 +60,14 @@
                     >
                       @{{ person.login }}
                     </p>
-                    <p class="text-center text-md-left px-3 px-md-0 d-none d-md-block" v-html="getTextLink(person.bio)" /></p>
+                    <p class="text-center text-md-left px-2 px-md-0 d-none d-md-block" v-html="getTextLink(person.bio)" /></p>
                   </div>
                 </div>
                 <div class="col-3 col-md-2 pl-0" @click="vote(person)">
                   <button
                     v-tooltip="tooltipVote(person)"
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg text-white px-3 px-md-4 py-3 h1"
+                    class="btn btn-primary border-5 border-light btn-lg text-white px-2 px-md-4 py-2 py-md-3 h1"
                   >
                     <fa :icon="['fas', 'play-circle']" class="fa-2x invisible" />
                     <div class="position-absolute ml-2 top">
@@ -76,7 +76,7 @@
                     </div>
                   </button>
                 </div>
-                <div class="col-12 px-md-5 pt-3 d-block d-md-none">
+                <div class="col-12 px-md-5 pt-0 d-block d-md-none">
                   <p class v-html="getTextLink(person.bio)" />
                 </div>
               </div>
