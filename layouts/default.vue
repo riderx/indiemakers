@@ -71,12 +71,19 @@ body {
   margin-left: -15px;
   margin-right: 0px;
 }
+
 @media screen and (max-width: 768px) {
 .fix-marging {
     margin-right: -15px;
   }
 }
+@-moz-document url-prefix() {
+  .fix-marging {
+    border-right: 5px solid white !important;
+  }
+}
 .custom-scroll {
+  scrollbar-color: #f1f1f1 #df99d8;
   overflow-y: scroll;
   position: absolute;
   overflow-x: hidden;
@@ -88,16 +95,16 @@ body {
   }
 }
 
-::-webkit-scrollbar {
+.custom-scroll::-webkit-scrollbar {
   width: 10px;
 }
-::-webkit-scrollbar-track {
+.custom-scroll::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
-::-webkit-scrollbar-thumb {
+.custom-scroll::-webkit-scrollbar-thumb {
   background: #df99d8;
 }
-::-webkit-scrollbar-thumb:hover {
+.custom-scroll::-webkit-scrollbar-thumb:hover {
   background: rgba(75, 39, 155, 1) !important;
 }
 </style>

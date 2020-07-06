@@ -38,11 +38,11 @@
               <h3>{{ title }}</h3>
             </div>
           </div>
-          <div v-if="!loading" class="row">
-            <div class="custom-scroll bg-primary border-5 border-right-0 border-light text-white px-1 px-md-5 pt-3 w-100" :style="{ height: sizeHead }">
-              <div v-html="content" />
-            </div>
+          <!-- <div v-if="!loading" class="row"> -->
+          <div v-if="!loading" class="custom-scroll fix-marging border-5 px-2 border-light border-right-0" :style="{ height: sizeHead }">
+            <div class="px-1 px-md-5 pt-3 text-light" v-html="content" />
           </div>
+          <!-- </div> -->
           <div v-if="!loading" class="row bg-primary py-4 d-block d-md-none">
             <div class="col-12 px-1 px-md-3 text-center">
               <button
@@ -86,7 +86,7 @@
             </div>
           </div>
         </div>
-        <div v-if="!loading" id="left" class="col-12 col-md-6 text-center d-none d-md-block">
+        <div v-if="!loading" class="col-12 col-md-6 text-center d-none d-md-block">
           <div class="row align-items-center">
             <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-0">
               <img
@@ -318,7 +318,7 @@ export default {
         }
       })
       this.loading = false
-      this.setSizeHead()
+      // this.setSizeHead()
     }
   },
   data () {
@@ -331,6 +331,9 @@ export default {
       image: '',
       audio: ''
     }
+  },
+  mounted () {
+    this.setSizeHead()
   },
   methods: {
     getImgObj (img) {
@@ -350,7 +353,7 @@ export default {
       return name
     },
     setSizeHead () {
-      if (process.client && document.getElementById('header-title') && document.getElementById('header') && document.getElementById('left') && document.getElementById('left').offsetHeight > 0) {
+      if (process.client && document.getElementById('header-title') && document.getElementById('header') && document.getElementById('header-title').offsetWidth !== window.innerWidth) {
         const size = `${document.getElementById('header-title').offsetHeight + document.getElementById('header').offsetHeight + 5}px`
         this.sizeHead = `calc(100vh - ${size})`
       } else {
