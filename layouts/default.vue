@@ -16,6 +16,7 @@ export default {
   },
   head: {
     meta: [
+      { hid: 'og:url', property: 'og:url', content: process.env.domain },
       { hid: 'og:image:alt', property: 'og:image:alt', content: 'Des idées profitables' },
       { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
       { hid: 'og:image', property: 'og:image', content: require('~/assets/cover-imf@0.5x.png') },
