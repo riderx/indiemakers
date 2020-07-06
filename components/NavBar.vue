@@ -1,7 +1,7 @@
 <template>
   <div id="header" class="pb-md-5">
     <nav class="navbar navbar-light bg-transparent">
-      <a class="navbar-brand w-50 mr-0" href="#" @click="openPage('/')">
+      <a class="navbar-brand w-50 mr-0" href="/" @click="openPage('/')">
         <img :id="logo.title" :src="logo.source" class="d-none d-md-inline-block align-top w-50" :alt="logo.title">
         <img id="IM" :src="logo.source" class="d-inline-block d-md-none align-top w-100" :alt="logo.title">
       </a>
