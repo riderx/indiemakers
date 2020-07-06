@@ -83,6 +83,7 @@ body {
 @media screen and (max-width: 768px) {
 .custom-scroll {
     position: inherit;
+    /* overflow: hidden; */
   }
 }
 

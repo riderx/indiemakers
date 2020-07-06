@@ -15,7 +15,9 @@ export default {
   ** See https://nuxtjs.org/api/configuration-head
   */
   env: {
-    baseRSS: 'https://anchor.fm/s/414d1d4/podcast/rss'
+    baseRSS: 'https://anchor.fm/s/414d1d4/podcast/rss',
+    domain: 'https://indiemakers.fr',
+    handler: 'indiemakersfr'
   },
   head: {
     title: process.env.npm_package_name || '',
@@ -29,7 +31,7 @@ export default {
       { hid: 'description', name: 'description', content: 'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en en business florissant.' },
       { hid: 'og:title', property: 'og:title', content: 'Le 1er podcast francais qui aide les independants a vivre de leur business.' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
-      { hid: 'og:url', property: 'og:url', content: 'https://indiemakers.fr' },
+      { hid: 'og:url', property: 'og:url', content: process.env.domain },
       { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
       { hid: 'og:site_name', property: 'og:site_name', content: 'indiemakers.fr' },
       { hid: 'og:article:author', property: 'og:article:author', content: 'Martin DONADIEU' },

@@ -39,7 +39,7 @@
             </div>
           </div>
           <div v-if="!loading" class="row">
-            <div class="custom-scroll bg-primary border-5 border-right-0 border-light text-white px-md-5 pt-3 w-100" :style="{ height: sizeHead }">
+            <div class="custom-scroll bg-primary border-5 border-right-0 border-light text-white px-1 px-md-5 pt-3 w-100" :style="{ height: sizeHead }">
               <div v-html="content" />
             </div>
           </div>
@@ -86,7 +86,7 @@
             </div>
           </div>
         </div>
-        <div v-if="!loading" class="col-12 col-md-6 text-center d-none d-md-block">
+        <div v-if="!loading" id="left" class="col-12 col-md-6 text-center d-none d-md-block">
           <div class="row align-items-center">
             <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-0">
               <img
@@ -341,10 +341,11 @@ export default {
       return name
     },
     setSizeHead () {
-      if (process.client && document.getElementById('header-title') && document.getElementById('header')) {
+      if (process.client && document.getElementById('header-title') && document.getElementById('header') && document.getElementById('left') && document.getElementById('left').offsetHeight > 0) {
         const size = `${document.getElementById('header-title').offsetHeight + document.getElementById('header').offsetHeight + 5}px`
-        // console.log('size', size)
         this.sizeHead = `calc(100vh - ${size})`
+      } else {
+        this.sizeHead = 'auto'
       }
     },
     toEmbed (url) {
@@ -398,11 +399,11 @@ export default {
       )
     },
     bmc () {
-      window.open('https://www.buymeacoffee.com/indiemakersfr', '_blank')
+      window.open(`https://www.buymeacoffee.com/${process.env.handler}`, '_blank')
     },
     tweetIt () {
-      const linkEp = `https://indiemakers.fr/episode/${this.$route.params.id}`
-      const tweet = `J'écoute le podcast @indiemakersfr avec @${this.tw} ${linkEp}`
+      const linkEp = `${process.env.domain}/episode/${this.$route.params.id}`
+      const tweet = `J'écoute le podcast @${process.env.handler} avec @${this.tw} ${linkEp}`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`

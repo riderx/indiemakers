@@ -14,10 +14,7 @@
                 class="btn btn-primary border-5 border-light btn-lg text-light px-3 px-md-4 display-1"
                 @click="openAdd()"
               >
-              <fa :icon="['fab', 'product-hunt']"  class="fa-2x" />
-
-              <!-- <i class="fab fa-product-hunt"></i> -->
-                <!-- Makers Hunt -->
+                <fa :icon="['fab', 'product-hunt']" class="fa-2x" />
               </button>
             </div>
           </div>
@@ -40,7 +37,7 @@
             <div
               v-for="episode in episodes"
               :key="episode.guid"
-              :class="'row cursor-pointer bg-primary text-white py-3 border-bottom align-items-center ' + episode.guid"
+              :class="'row cursor-pointer bg-primary text-white py-3 border-bottom align-items-top ' + episode.guid"
               @click="openEp(episode.guid)"
             >
               <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 pr-0 pr-md-3 pb-3 pb-md-0">
@@ -52,13 +49,18 @@
               </div>
               <div v-tooltip="'Ecouter l\'épisode'" class="col-12 col-md-8 order-2 pl-2 pl-md-0 order-md-2 text-center text-md-left">
                 <h3>{{ episode.title }}</h3>
+                <p
+                  class="text-success fit-content cursor-pointer"
+                >
+                  @{{ episode.twitter }}
+                </p>
                 <p class="text-center text-md-left px-3 px-md-0 d-none d-md-block">
-                  {{ previewText(episode.contentSnippet) }}
+                  {{ episode.preview }}
                 </p>
               </div>
               <div class="col-12 px-0 px-md-5 pt-1 pt-md-3 order-3 d-block d-md-none">
                 <p class="text-center text-md-left px-3 px-md-0">
-                  {{ previewText(episode.contentSnippet) }}
+                  {{ episode.preview }}
                 </p>
               </div>
             </div>
@@ -120,6 +122,8 @@
 
 <script>
 import { feed } from '../plugins/rss'
+const linkTwitter = 'Son Twitter : <a href="https://twitter.com/'
+const linkTwitterRe = /Son Twitter : <a href="https:\/\/twitter\.com\/(.*)"/g
 
 export default {
   async fetch () {
@@ -129,8 +133,15 @@ export default {
     if (res && res.items) {
       this.feed = res
       this.episodes = res.items
+      this.episodes.forEach((element) => {
+        const twitter = this.findTw(element.content)
+        const preview = this.previewText(element.contentSnippet)
+        element.preview = preview
+        if (twitter !== 'error') {
+          element.twitter = twitter
+        }
+      })
       this.loading = false
-      this.setSizeHead()
     }
   },
   data () {
@@ -153,6 +164,7 @@ export default {
     }
   },
   mounted () {
+    this.setSizeHead()
   },
   methods: {
     removeAccent (str) {
@@ -160,6 +172,18 @@ export default {
     },
     goMakers () {
       this.$router.push('/makers')
+    },
+    openAccount (name) {
+      window.open(`https://twitter.com/${name}`, '_blank')
+    },
+    findTw (text) {
+      const found = text.match(linkTwitterRe)
+      let name = 'error'
+      if (found && found.length > 0) {
+        name = found[0].replace(linkTwitter, '')
+        name = name.replace('"', '')
+      }
+      return name
     },
     nextEpisode () {
       const oneDay = 24 * 60 * 60 * 1000 // hours*minutes*seconds*milliseconds
@@ -186,9 +210,11 @@ export default {
       this.$router.push('/makers')
     },
     setSizeHead () {
-      if (process.client && document.getElementById('header-eps') && document.getElementById('header')) {
+      if (process.client && document.getElementById('header-eps') && document.getElementById('header') && document.getElementById('content') && document.getElementById('content').offsetWidth !== window.innerWidth) {
         const size = `${document.getElementById('header-eps').offsetHeight + document.getElementById('header').offsetHeight + 5}px`
         this.sizeHead = `calc(100vh - ${size})`
+      } else {
+        this.sizeHead = 'auto'
       }
     }
   }

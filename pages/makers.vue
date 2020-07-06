@@ -18,74 +18,77 @@
               </button>
             </div>
           </div>
-          <div v-if="loading" class="row bg-white px-3">
-            <div class="col-12 p-5 text-center">
-              <div
-                class="spinner-grow text-primary"
-                style="width: 6rem; height: 6rem;"
-                role="status"
-              >
-                <span class="sr-only">Chargement...</span>
-              </div>
-            </div>
-          </div>
-          <div
-            v-if="!loading"
-            class="custom-scroll fix-marging border-5 px-2 border-light border-right-0"
-            :style="{ height: sizeHead }"
-          >
-            <div
-              v-for="person in people"
-              :key="person.id"
-              :class="'row bg-primary text-white py-3 border-bottom align-items-center ' + person.id"
-            >
-              <div class="col-4 pr-0 pr-md-5">
-                <img
-                  :src="person.img"
-                  class="w-100 w-md-75 img-fluid border-5 border-light"
-                  :alt="'Picture ' + person.name"
-                  @error="imgUrlAlt"
+          <client-only>
+            <div v-if="loading" slot="placeholder" class="row bg-white px-3">
+              <div class="col-12 p-5 text-center">
+                <div
+                  class="spinner-grow text-primary"
+                  style="width: 6rem; height: 6rem;"
+                  role="status"
                 >
-              </div>
-              <div class="col-5 col-md-6">
-                <h3 class="pb-0">
-                  {{ person.name }}
-                </h3>
-                <div>
-                  <p
-                    v-tooltip="'Ouvrir son profils Twitter'"
-                    class="text-success fit-content cursor-pointer"
-                    @click="openAccount(person.login)"
-                  >
-                    @{{ person.login }}
-                  </p>
+                  <span class="sr-only">Chargement...</span>
                 </div>
               </div>
-              <div class="col-3 col-md-2 pl-0" @click="vote(person)">
-                <button
-                  v-tooltip="tooltipVote(person)"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-white px-3 px-md-4 py-3 h1"
-                >
-                  <fa :icon="['fas', 'play-circle']"  class="fa-2x invisible" />
-                  <div class="position-absolute ml-2 top">
-                    <fa :icon="['fas', 'caret-up']"  class="fa-2x" />
-                    <p>{{ person.votes }}</p>
+            </div>
+            <div
+              v-if="!loading"
+              class="custom-scroll fix-marging border-5 px-2 border-light border-right-0"
+              :style="{ height: sizeHead }"
+            >
+              <div
+                v-for="person in people"
+                :key="person.id"
+                :class="'row bg-primary text-white py-3 border-bottom align-items-top ' + person.id"
+              >
+                <div class="col-4 pr-0 pr-md-5">
+                  <img
+                    :src="person.img"
+                    class="w-100 w-md-75 img-fluid border-5 border-light"
+                    :alt="'Picture ' + person.name"
+                    @error="imgUrlAlt"
+                  >
+                </div>
+                <div class="col-5 col-md-6">
+                  <h3 class="mb-0">
+                    {{ person.name }}
+                  </h3>
+                  <div>
+                    <p
+                      v-tooltip="'Ouvrir son profils Twitter'"
+                      class="text-success fit-content cursor-pointer"
+                      @click="openAccount(person.login)"
+                    >
+                      @{{ person.login }}
+                    </p>
+                    <p class="text-center text-md-left px-3 px-md-0 d-none d-md-block" v-html="getTextLink(person.bio)" /></p>
                   </div>
-                </button>
-              </div>
-              <div class="col-12 px-md-5 pt-3">
-                <p class v-html="getTextLink(person.bio)" />
+                </div>
+                <div class="col-3 col-md-2 pl-0" @click="vote(person)">
+                  <button
+                    v-tooltip="tooltipVote(person)"
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg text-white px-3 px-md-4 py-3 h1"
+                  >
+                    <fa :icon="['fas', 'play-circle']" class="fa-2x invisible" />
+                    <div class="position-absolute ml-2 top">
+                      <fa :icon="['fas', 'caret-up']" class="fa-2x" />
+                      <p>{{ person.votes }}</p>
+                    </div>
+                  </button>
+                </div>
+                <div class="col-12 px-md-5 pt-3 d-block d-md-none">
+                  <p class v-html="getTextLink(person.bio)" />
+                </div>
               </div>
             </div>
-          </div>
+          </client-only>
         </div>
         <div id="content" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
           <img id="cover" class="img-fluid border-10 border-light" alt="IM COVER" :src="image">
         </div>
       </div>
     </div>
-        <modal height="auto" adaptive :click-to-close="isFalse" name="loading">
+    <modal height="auto" adaptive :click-to-close="isFalse" name="loading">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 p-5 text-center">
@@ -452,27 +455,12 @@ export default {
     // eslint-disable-next-line no-console
     // console.log(res)
     if (res && res.items) {
-      this.feed = res
       this.episodes = res.items
-      this.loading = false
     }
-    await this.$bind(
-      'people',
-      this.$fireStore
-        .collection('people')
-        .orderBy('votes', 'desc')
-        .orderBy('addDate', 'asc')
-    )
-    this.people.forEach((person) => {
-      person.img = this.personImg(person)
-    })
-    this.setSizeHead()
-    this.loading = false
   },
   data () {
     return {
       email: '',
-      feed: null,
       guid: null,
       episodes: [],
       image: require('~/assets/cover-imf@0.5x.png'),
@@ -485,7 +473,7 @@ export default {
       people: []
     }
   },
-  mounted () {
+  async mounted () {
     // this.$modal.show("voted");
     // this.$modal.show("loading");
     // this.$modal.show("error");
@@ -503,6 +491,18 @@ export default {
         this.$router.push('/login')
       }
     })
+    await this.$bind(
+      'people',
+      this.$fireStore
+        .collection('people')
+        .orderBy('votes', 'desc')
+        .orderBy('addDate', 'asc')
+    )
+    this.people.forEach((person) => {
+      person.img = this.personImg(person)
+    })
+    this.setSizeHead()
+    this.loading = false
   },
   methods: {
     findInEp (name) {
@@ -528,7 +528,7 @@ export default {
       event.target.src = defaultImg
     },
     tweetIt () {
-      const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @indiemakersfr 🚀.`
+      const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @${process.env.handler} 🚀.`
       window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank')
       this.$modal.hide('added')
       this.$modal.hide('voted')
@@ -562,7 +562,7 @@ export default {
       if (this.email) {
         window.localStorage.setItem('emailForSignIn', this.email)
         const actionCodeSettings = {
-          url: 'https://indiemakers.fr/#/login',
+          url: `${process.env.domain}/login`,
           handleCodeInApp: true
         }
         this.$modal.hide('register')
@@ -666,9 +666,11 @@ export default {
       }
     },
     setSizeHead () {
-      if (process.client && document.getElementById('header-mk') && document.getElementById('header')) {
+      if (process.client && document.getElementById('header-mk') && document.getElementById('header') && document.getElementById('cover') && document.getElementById('cover').offsetHeight > 0) {
         const size = `${document.getElementById('header-mk').offsetHeight + document.getElementById('header').offsetHeight + 5}px`
         this.sizeHead = `calc(100vh - ${size})`
+      } else {
+        this.sizeHead = 'auto'
       }
     }
   }

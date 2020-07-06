@@ -13,7 +13,7 @@
           @click="openPage(icon.lien)"
         >
           <!-- <i :class="icon.class" /> -->
-          <fa :icon="icon.class"  class="fa-2x" />
+          <fa :icon="icon.class" class="fa-2x" />
         </li>
       </ul>
     </nav>
@@ -38,12 +38,12 @@ export default {
         },
         {
           title: 'Instagram',
-          lien: 'https://instagram.com/indiemakersfr',
+          lien: `https://instagram.com/${process.env.handler}`,
           class: ['fab', 'instagram']
         },
         {
           title: 'twitter',
-          lien: 'https://twitter.com/indiemakersfr',
+          lien: `https://twitter.com/${process.env.handler}`,
           class: ['fab', 'twitter']
         }
       ],
@@ -63,12 +63,6 @@ export default {
 </script>
 
 <style scoped>
-#indiemakersfr {
-  width: 12vw;
-  min-width: 90px;
-  margin-left: 2vw;
-  margin-top: 7px;
-}
 .fab,
 .fas {
   color: white;
