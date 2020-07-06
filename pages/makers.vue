@@ -45,7 +45,6 @@
                     v-lazy="getImgObj(person.img)"
                     class="w-100 img-fluid border-5 border-light"
                     :alt="'Picture ' + person.name"
-                    @error="imgUrlAlt"
                   >
                 </div>
                 <div class="col-6 col-md-5">
@@ -449,7 +448,6 @@
 import linkifyHtml from 'linkifyjs/html'
 import { feed } from '../plugins/rss'
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/USERNAME">@USERNAME</a>'
-const defaultImg = require('~/assets/people-default.svg')
 
 export default {
   async fetch () {
@@ -465,7 +463,7 @@ export default {
       email: '',
       guid: null,
       episodes: [],
-      image: require('~/assets/cover-imf@0.5x.png'),
+      image: require('~/assets/cover-im@0.5x.png'),
       isFalse: false,
       loggin: false,
       loading: true,
@@ -525,9 +523,6 @@ export default {
     },
     personImg (person) {
       return `https://twitter-avatar.now.sh/${person.login}`
-    },
-    imgUrlAlt (event) {
-      event.target.src = defaultImg
     },
     tweetIt () {
       const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @${process.env.handler} 🚀.`

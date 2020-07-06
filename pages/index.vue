@@ -149,7 +149,7 @@ export default {
     return {
       loading: true,
       sizeHead: '100vh',
-      image: require('~/assets/cover-imf@0.5x.png'),
+      image: require('~/assets/cover-im@0.5x.png'),
       episodes: [],
       feed: null,
       title: '🚀Le 1er podcast francais qui aide les independants a vivre de leur business.',

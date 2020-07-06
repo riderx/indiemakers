@@ -37,7 +37,7 @@ export default {
       { hid: 'og:description', property: 'og:description', content: 'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en en business florissant.' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
       // <script src="https://kit.fontawesome.com/0a896015b4.js" crossorigin="anonymous" defer></script>
 
     ]

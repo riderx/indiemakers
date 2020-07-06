@@ -96,7 +96,7 @@ export default {
   data () {
     return {
       email: null,
-      image: require('~/assets/cover-imf@0.5x.png'),
+      image: require('~/assets/cover-im@0.5x.png'),
       myName: null,
       isFalse: false,
       user: null
