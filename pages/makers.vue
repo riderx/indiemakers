@@ -684,8 +684,8 @@ export default {
       meta: [
         { hid: 'og:image:alt', property: 'og:image:alt', content: 'INDIE MAKERS COVER' },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', property: 'og:image', content: require('~/assets/cover-im@0.5x.png') },
-        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: require('~/assets/cover-im@0.5x.png') },
+        { hid: 'og:image', property: 'og:image', content: `${process.env.domain}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${process.env.domain}${require('~/assets/cover-im@0.5x.png')}` },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 }
       ]

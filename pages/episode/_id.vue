@@ -388,6 +388,9 @@ export default {
     listen () {
       this.$modal.show('listen')
     },
+    getImageFullLink (image) {
+      return `${process.env.domain}${image}`
+    },
     copyTextToClipboard (text) {
       if (!navigator.clipboard) {
         this.fallbackCopyTextToClipboard(text)
@@ -429,8 +432,8 @@ export default {
         { hid: 'og:title', property: 'og:title', content: this.title },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/jpg' },
-        { hid: 'og:image', property: 'og:image', content: this.image },
-        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this.image },
+        { hid: 'og:image', property: 'og:image', content: this.getImageFullLink(this.image) },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this.getImageFullLink(this.image) },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 },
         { hid: 'og:image:audio', property: 'og:image:audio', content: this.audio },
