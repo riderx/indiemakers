@@ -306,6 +306,7 @@ const linkTwitterRe = /Son Twitter : <a href="https:\/\/twitter\.com\/(.*)"/g
 
 export default {
   async fetch () {
+    console.log('full', this.$route.query.page)
     const res = await feed()
     if (res && res.items) {
       res.items.forEach((element) => {
@@ -366,6 +367,9 @@ export default {
     listenExternal (url) {
       window.open(url, '_blank')
     },
+    removeEmoji (str) {
+      return str.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')
+    },
     fallbackCopyTextToClipboard (text) {
       const textArea = document.createElement('textarea')
       textArea.value = text
@@ -419,24 +423,31 @@ export default {
     },
     unsecureUrl (url) {
       return url.replace('https://')
+    },
+    previewText (text) {
+      let first = text.split(/[.!]+/)[0]
+      if (first.split(' ').length > 20) {
+        first = `${first.split(' ').splice(0, 17).join(' ')} ...`
+      }
+      return first
     }
   },
   head () {
     return {
-      title: this.title,
+      title: this.removeEmoji(this.title),
       meta: [
-        // hid est utilisé comme identifiant unique. N'utilisez pas `vmid` car ça ne fonctionnera pas
-        { hid: 'description', name: 'description', content: stripHtml(this.content) },
-        { hid: 'title', name: 'title', content: this.title },
-        { hid: 'og:description', property: 'og:description', content: stripHtml(this.content) },
-        { hid: 'og:title', property: 'og:title', content: this.title },
-        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
+        { hid: 'og:url', property: 'og:url', content: `${process.env.domain}${this.$route.fullPath}` },
+        { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
+        { hid: 'description', name: 'description', content: this.previewText(this.removeEmoji(stripHtml(this.content))) },
+        { hid: 'og:title', property: 'og:title', content: this.removeEmoji(this.title) },
+        { hid: 'og:description', property: 'og:description', content: this.previewText(this.removeEmoji(stripHtml(this.content))) },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this.removeEmoji(this.title) },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/jpg' },
-        { hid: 'og:image', property: 'og:image', content: this.unsecureUrl(this.image) },
+        { hid: 'og:image', property: 'og:image', content: this.image },
         { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this.image },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 },
-        { hid: 'og:audio', property: 'og:image:audio', content: this.unsecureUrl(this.audio) },
+        { hid: 'og:audio', property: 'og:image:audio', content: this.audio },
         { hid: 'og:audio:secure_url', property: 'og:image:audio:secure_url', content: this.audio },
         { hid: 'og:audio:type', property: 'og:image:audio:type', content: 'audio/mpeg' }
       ]

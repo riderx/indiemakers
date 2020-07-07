@@ -158,7 +158,7 @@ export default {
       loadingImg: require('~/assets/cover-im_empty.png'),
       episodes: [],
       feed: null,
-      title: '🚀Le 1er podcast francais qui aide les independants a vivre de leur business.',
+      title: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
       messages: [
         'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en en business florissant.',
         'Au-delà des success-story, nous décryptons leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables.',
@@ -174,6 +174,9 @@ export default {
     this.setSizeHead()
   },
   methods: {
+    removeEmoji (str) {
+      return str.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')
+    },
     getImgObj (img) {
       return {
         src: img,
@@ -234,11 +237,16 @@ export default {
   },
   head () {
     return {
-      title: this.title,
+      title: this.removeEmoji(this.title),
       meta: [
+        { hid: 'og:url', property: 'og:url', content: `${process.env.domain}${this.$route.fullPath}` },
+        { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
+        { hid: 'description', name: 'description', content: this.removeEmoji(this.messages[0]) },
+        { hid: 'og:title', property: 'og:title', content: this.removeEmoji(this.title) },
+        { hid: 'og:description', property: 'og:description', content: this.removeEmoji(this.messages[0]) },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', property: 'og:image', content: `${process.env.domain_unsecure}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image', property: 'og:image', content: `${process.env.domain}${require('~/assets/cover-im@0.5x.png')}` },
         { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${process.env.domain}${require('~/assets/cover-im@0.5x.png')}` },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 }

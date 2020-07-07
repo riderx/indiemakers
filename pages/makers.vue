@@ -460,6 +460,8 @@ export default {
   },
   data () {
     return {
+      title: 'Vote pour ton maker preféré',
+      message: 'Cela me permettra de decouvrir de nouveau maker a inviter',
       email: '',
       guid: null,
       episodes: [],
@@ -505,6 +507,9 @@ export default {
     this.loading = false
   },
   methods: {
+    removeEmoji (str) {
+      return str.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')
+    },
     findInEp (name) {
       let found = false
       const link = linkTwitter.replace(/USERNAME/g, name)
@@ -680,9 +685,14 @@ export default {
   },
   head () {
     return {
-      title: 'Vote pour le prochain invité !',
+      title: this.title,
       meta: [
-        { hid: 'og:image:alt', property: 'og:image:alt', content: 'INDIE MAKERS COVER' },
+        { hid: 'og:url', property: 'og:url', content: `${process.env.domain}${this.$route.fullPath}` },
+        { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
+        { hid: 'description', name: 'description', content: this.removeEmoji(this.message) },
+        { hid: 'og:title', property: 'og:title', content: this.removeEmoji(this.title) },
+        { hid: 'og:description', property: 'og:description', content: this.removeEmoji(this.message) },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
         { hid: 'og:image', property: 'og:image', content: `${process.env.domain_unsecure}${require('~/assets/cover-im@0.5x.png')}` },
         { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${process.env.domain}${require('~/assets/cover-im@0.5x.png')}` },

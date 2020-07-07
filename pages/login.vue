@@ -95,6 +95,8 @@
 export default {
   data () {
     return {
+      title: 'Login to indie makers',
+      message: 'To allow you vote for makers',
       email: null,
       image: require('~/assets/cover-im@0.5x.png'),
       myName: null,
@@ -119,6 +121,9 @@ export default {
     }
   },
   methods: {
+    removeEmoji (str) {
+      return str.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')
+    },
     addName () {
       this.$modal.hide('confirmName')
       this.$modal.show('loading')
@@ -155,6 +160,11 @@ export default {
     return {
       title: this.title,
       meta: [
+        { hid: 'og:url', property: 'og:url', content: `${process.env.domain}${this.$route.fullPath}` },
+        { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
+        { hid: 'description', name: 'description', content: this.removeEmoji(this.message) },
+        { hid: 'og:title', property: 'og:title', content: this.removeEmoji(this.title) },
+        { hid: 'og:description', property: 'og:description', content: this.removeEmoji(this.message) },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
         { hid: 'og:image', property: 'og:image', content: `${process.env.domain_unsecure}${require('~/assets/cover-im@0.5x.png')}` },
