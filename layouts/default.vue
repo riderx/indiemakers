@@ -1,17 +1,20 @@
 <template>
   <div>
-    <NavBar />
+    <LazyHydrate when-idle>
+      <NavBar />
+    </LazyHydrate>
     <Nuxt keep-alive :keep-alive-props="{ max: 10 }" />
   </div>
 </template>
 
 <script>
-import NavBar from '~/components/NavBar.vue'
 import '~/static/custom.boostrap.css'
+import LazyHydrate from 'vue-lazy-hydration'
 
 export default {
   components: {
-    NavBar
+    LazyHydrate,
+    NavBar: () => import('~/components/NavBar.vue')
   },
   head () {
     return {
