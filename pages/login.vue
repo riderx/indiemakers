@@ -91,6 +91,7 @@
 </template>
 <script>
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
+import { firebaseLib } from '../plugins/firebase'
 
 export default {
   data () {
@@ -105,7 +106,7 @@ export default {
     }
   },
   mounted () {
-    this.$fireAuth.onAuthStateChanged((user) => {
+    firebaseLib.auth().onAuthStateChanged((user) => {
       this.user = user
       if (this.user && this.user.displayName === null) {
         this.$modal.show('confirmName')
@@ -113,7 +114,7 @@ export default {
         this.$router.push('/makers')
       }
     })
-    if (this.$fireAuth.isSignInWithEmailLink(window.location.href)) {
+    if (firebaseLib.auth().isSignInWithEmailLink(window.location.href)) {
       this.email = window.localStorage.getItem('emailForSignIn')
       if (this.email) {
         this.sendConfirm()
@@ -142,7 +143,7 @@ export default {
     sendConfirm () {
       if (this.email) {
         this.$modal.show('loading')
-        this.$fireAuth
+        firebaseLib.auth()
           .signInWithEmailLink(this.email, window.location.href)
           .then(() => {
             window.localStorage.removeItem('emailForSignIn')

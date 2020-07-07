@@ -17,7 +17,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.1",
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "@nuxtjs/component-cache": "^1.1.5",
-    "@nuxtjs/firebase": "^6.1.0",
     "@nuxtjs/now-builder": "^0.17.3",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "bootstrap": "^4.5.0",

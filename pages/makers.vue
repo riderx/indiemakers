@@ -452,6 +452,7 @@
 import linkifyHtml from 'linkifyjs/html'
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '../plugins/rss'
+import { firebaseLib, db } from '../plugins/firebase'
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/USERNAME">@USERNAME</a>'
 
 export default {
@@ -493,9 +494,9 @@ export default {
     // this.openAdd();
     // this.$modal.show("fail-add");
     // this.$modal.show("fail-vote");
-    this.loggin = this.$fireAuth.currentUser
+    this.loggin = firebaseLib.auth().currentUser
     this.email = window.localStorage.getItem('emailForSignIn')
-    this.$fireAuth.onAuthStateChanged((user) => {
+    firebaseLib.auth().onAuthStateChanged((user) => {
       this.loggin = user
       if (this.loggin && this.loggin.displayName === null) {
         this.$router.push('/login')
@@ -503,7 +504,7 @@ export default {
     })
     await this.$bind(
       'people',
-      this.$fireStore
+      db
         .collection('people')
         .orderBy('votes', 'desc')
         .orderBy('addDate', 'asc')
@@ -577,7 +578,7 @@ export default {
         }
         this.$modal.hide('register')
         this.$modal.show('loading')
-        this.$fireAuth
+        firebaseLib.auth()
           .sendSignInLinkToEmail(this.email, actionCodeSettings)
           .then(() => {
             window.localStorage.setItem('emailForSignIn', this.email)
@@ -601,7 +602,7 @@ export default {
         this.openRegister()
       } else {
         this.$modal.show('loading')
-        this.$fireStore.collection(`people/${person.id}/votes`)
+        db.collection(`people/${person.id}/votes`)
           .doc(this.loggin.uid)
           .set({
             date: Date()
@@ -649,7 +650,7 @@ export default {
         this.$modal.hide('loading')
         this.openRegister()
       } else {
-        this.$fireFunc.httpsCallable('addTwiterUser')({ name: this.addName })
+        firebaseLib.functions().httpsCallable('addTwiterUser')({ name: this.addName })
           .then((addJson) => {
             const added = addJson.data
             this.$modal.hide('loading')

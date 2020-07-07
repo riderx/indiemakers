@@ -74,8 +74,7 @@ export default {
   */
   modules: [
     '@nuxtjs/component-cache',
-    'bootstrap-vue/nuxt',
-    '@nuxtjs/firebase'
+    'bootstrap-vue/nuxt'
   ],
   fontawesome: {
     component: 'fa',
@@ -83,60 +82,9 @@ export default {
       solid: ['faHeadphones', 'faHeart', 'faPizzaSlice', 'faCaretUp', 'faCaretCircleRight'],
       brands: ['faSpotify', 'faInstagram', 'faTwitter']
     }
-  },
-  firebase: {
-    config: {
-      production: {
-        apiKey: 'AIzaSyAC0aCq1umg8bZtOuhzH8GkflqUCtInOp8',
-        authDomain: 'indiemakerfr.firebaseapp.com',
-        databaseURL: 'https://indiemakerfr.firebaseio.com',
-        projectId: 'indiemakerfr',
-        storageBucket: 'indiemakerfr.appspot.com',
-        messagingSenderId: '600956995728',
-        appId: '1:600956995728:web:17aacb03e66648e2d63015',
-        measurementId: 'G-HCXN7ZEMJ8'
-      },
-      development: {
-        apiKey: 'AIzaSyAC0aCq1umg8bZtOuhzH8GkflqUCtInOp8',
-        authDomain: 'indiemakerfr.firebaseapp.com',
-        databaseURL: 'https://indiemakerfr.firebaseio.com',
-        projectId: 'indiemakerfr',
-        storageBucket: 'indiemakerfr.appspot.com',
-        messagingSenderId: '600956995728',
-        appId: '1:600956995728:web:17aacb03e66648e2d63015',
-        measurementId: 'G-HCXN7ZEMJ8'
-      }
-    },
-    onFirebaseHosting: false,
-    services: {
-      auth: {
-        persistence: 'local'
-      },
-      firestore: {
-        memoryOnly: false, // default
-        enablePersistence: true
-      },
-      ssr: false,
-      functions: true,
-      storage: false,
-      realtimeDb: false,
-      performance: true,
-      analytics: true,
-      messaging: false
-    }
-  },
+  }
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
-  build: {
-    extend (config, { isDev, isClient, isServer }) {
-      if (isServer) {
-        config.externals = {
-          '@firebase/app': 'commonjs @firebase/app',
-          '@firebase/firestore': 'commonjs @firebase/firestore'
-        }
-      }
-    }
-  }
 }
