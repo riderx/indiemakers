@@ -7,7 +7,9 @@
             <div class="col col-md-10 pt-3 px-0 text-white text-center">
               <h1>🔥Makers</h1>
             </div>
-            <div class="col-3 col-md-2 pt-3 text-white">
+            <div
+              class="col-3 col-md-2 pt-3 text-white"
+            >
               <button
                 v-tooltip="'Ajouter un·e maker'"
                 type="button"
