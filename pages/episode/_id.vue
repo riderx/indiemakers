@@ -416,6 +416,9 @@ export default {
       window.open(tweetLink, '_blank')
       this.$modal.hide('added')
       this.$modal.hide('voted')
+    },
+    unsecureUrl (url) {
+      return url.replace('https://')
     }
   },
   head () {
@@ -429,11 +432,11 @@ export default {
         { hid: 'og:title', property: 'og:title', content: this.title },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/jpg' },
-        { hid: 'og:image', property: 'og:image', content: this.image },
+        { hid: 'og:image', property: 'og:image', content: this.unsecureUrl(this.image) },
         { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this.image },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 },
-        { hid: 'og:audio', property: 'og:image:audio', content: this.audio },
+        { hid: 'og:audio', property: 'og:image:audio', content: this.unsecureUrl(this.audio) },
         { hid: 'og:audio:secure_url', property: 'og:image:audio:secure_url', content: this.audio },
         { hid: 'og:audio:type', property: 'og:image:audio:type', content: 'audio/mpeg' }
       ]
