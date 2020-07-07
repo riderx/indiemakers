@@ -92,6 +92,7 @@
 <script>
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import { firebaseLib } from '../plugins/firebase'
+import '../plugins/modal'
 
 export default {
   data () {

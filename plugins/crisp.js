@@ -1,4 +1,4 @@
-export default () => {
+export const crispLoader = () => {
   window.$crisp = []
   window.CRISP_WEBSITE_ID = 'd87fdc65-9f0f-4ce9-920f-33e9a8bd0f18'
 

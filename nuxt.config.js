@@ -44,6 +44,7 @@ export default {
   ** Global CSS
   */
   css: [
+    'plyr/dist/plyr.css',
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
   /*
@@ -51,9 +52,9 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    { src: '~/plugins/player.js' },
     { src: '~/plugins/oldPath.js' },
     { src: '~/plugins/fontawesome.js' },
-    { src: '~plugins/crisp.js', ssr: false },
     { src: '~/plugins/global.client.js' }
   ],
   /*

@@ -33,6 +33,7 @@
             </div>
             <div
               v-if="!loading"
+              id="scrollable"
               class="custom-scroll fix-marging border-5 px-2 border-light border-right-0"
               :style="{ height: sizeHead }"
             >
@@ -127,6 +128,7 @@
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '../plugins/rss'
+import { crispLoader } from '../plugins/crisp'
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/'
 const linkTwitterRe = /Son Twitter : <a href="https:\/\/twitter\.com\/(.*)"/g
 
@@ -178,6 +180,12 @@ export default {
   },
   mounted () {
     this.setSizeHead()
+    document.getElementById('scrollable').addEventListener('scroll', () => {
+      crispLoader()
+    }, { once: true })
+    // setTimeout(() => {
+    //   crispLoader()
+    // }, 2500)
   },
   methods: {
     removeEmoji (str) {

@@ -298,6 +298,8 @@
 </template>
 
 <script>
+import '../../plugins/modal'
+import '../../plugins/player'
 import stripHtml from 'string-strip-html'
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '~/plugins/rss'
@@ -309,7 +311,6 @@ export default {
     LazyHydrate
   },
   async fetch () {
-    console.log('full', this.$route.query.page)
     const res = await feed()
     if (res && res.items) {
       res.items.forEach((element) => {

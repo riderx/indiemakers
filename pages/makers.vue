@@ -453,6 +453,7 @@ import linkifyHtml from 'linkifyjs/html'
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '../plugins/rss'
 import { firebaseLib, db } from '../plugins/firebase'
+import '../plugins/modal'
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/USERNAME">@USERNAME</a>'
 
 export default {
