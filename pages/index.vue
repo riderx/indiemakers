@@ -128,7 +128,7 @@
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '../plugins/rss'
-import { crispLoader } from '../plugins/crisp'
+import { crispLoader } from '../plugins/crisp.client'
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/'
 const linkTwitterRe = /Son Twitter : <a href="https:\/\/twitter\.com\/(.*)"/g
 

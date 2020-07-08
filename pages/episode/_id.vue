@@ -298,8 +298,6 @@
 </template>
 
 <script>
-import '../../plugins/modal'
-import '../../plugins/player'
 import stripHtml from 'string-strip-html'
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '~/plugins/rss'
@@ -338,6 +336,7 @@ export default {
     }
   },
   mounted () {
+    require('../../plugins/modal.client')
     this.setSizeHead()
   },
   methods: {

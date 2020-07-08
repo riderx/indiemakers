@@ -55,7 +55,8 @@ export default {
     { src: '~/plugins/player.js' },
     { src: '~/plugins/oldPath.js' },
     { src: '~/plugins/fontawesome.js' },
-    { src: '~/plugins/global.client.js' }
+    { src: '~/plugins/global.client.js' },
+    { src: '~/plugins/firebase.client.js' }
   ],
   /*
   ** Auto import components

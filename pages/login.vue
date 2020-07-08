@@ -91,8 +91,8 @@
 </template>
 <script>
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-import { firebaseLib } from '../plugins/firebase'
-import '../plugins/modal'
+// import { firebaseLib } from '../plugins/firebase.client'
+// import '../plugins/modal.client'
 
 export default {
   data () {
@@ -107,7 +107,8 @@ export default {
     }
   },
   mounted () {
-    firebaseLib.auth().onAuthStateChanged((user) => {
+    require('../plugins/modal.client')
+    this.$firebase.auth().onAuthStateChanged((user) => {
       this.user = user
       if (this.user && this.user.displayName === null) {
         this.$modal.show('confirmName')
@@ -115,7 +116,7 @@ export default {
         this.$router.push('/makers')
       }
     })
-    if (firebaseLib.auth().isSignInWithEmailLink(window.location.href)) {
+    if (this.$firebase.auth().isSignInWithEmailLink(window.location.href)) {
       this.email = window.localStorage.getItem('emailForSignIn')
       if (this.email) {
         this.sendConfirm()
@@ -144,7 +145,7 @@ export default {
     sendConfirm () {
       if (this.email) {
         this.$modal.show('loading')
-        firebaseLib.auth()
+        this.$firebase.auth()
           .signInWithEmailLink(this.email, window.location.href)
           .then(() => {
             window.localStorage.removeItem('emailForSignIn')

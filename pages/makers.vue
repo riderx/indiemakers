@@ -452,8 +452,8 @@
 import linkifyHtml from 'linkifyjs/html'
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '../plugins/rss'
-import { firebaseLib, db } from '../plugins/firebase'
-import '../plugins/modal'
+// eslint-disable-next-line no-unused-vars
+// import { fb } from '../plugins/firebase.client'
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/USERNAME">@USERNAME</a>'
 
 export default {
@@ -486,6 +486,9 @@ export default {
     }
   },
   async mounted () {
+    require('../plugins/modal.client')
+    // require('../plugins/firebase.client')
+
     // this.$modal.show("voted");
     // this.$modal.show("loading");
     // this.$modal.show("error");
@@ -495,9 +498,9 @@ export default {
     // this.openAdd();
     // this.$modal.show("fail-add");
     // this.$modal.show("fail-vote");
-    this.loggin = firebaseLib.auth().currentUser
     this.email = window.localStorage.getItem('emailForSignIn')
-    firebaseLib.auth().onAuthStateChanged((user) => {
+    // this.loggin = fb.auth().currentUser
+    this.$firebase.auth().onAuthStateChanged((user) => {
       this.loggin = user
       if (this.loggin && this.loggin.displayName === null) {
         this.$router.push('/login')
@@ -505,7 +508,8 @@ export default {
     })
     await this.$bind(
       'people',
-      db
+      this.$firebase
+        .firestore()
         .collection('people')
         .orderBy('votes', 'desc')
         .orderBy('addDate', 'asc')
@@ -513,6 +517,7 @@ export default {
     this.people.forEach((person) => {
       person.img = this.personImg(person)
     })
+
     this.setSizeHead()
     this.loading = false
   },
@@ -579,7 +584,8 @@ export default {
         }
         this.$modal.hide('register')
         this.$modal.show('loading')
-        firebaseLib.auth()
+        this.$firebase
+          .auth()
           .sendSignInLinkToEmail(this.email, actionCodeSettings)
           .then(() => {
             window.localStorage.setItem('emailForSignIn', this.email)
@@ -603,7 +609,9 @@ export default {
         this.openRegister()
       } else {
         this.$modal.show('loading')
-        db.collection(`people/${person.id}/votes`)
+        this.$firebase
+          .firestore()
+          .collection(`people/${person.id}/votes`)
           .doc(this.loggin.uid)
           .set({
             date: Date()
@@ -651,7 +659,8 @@ export default {
         this.$modal.hide('loading')
         this.openRegister()
       } else {
-        firebaseLib.functions().httpsCallable('addTwiterUser')({ name: this.addName })
+        this.$firebase
+          .functions().httpsCallable('addTwiterUser')({ name: this.addName })
           .then((addJson) => {
             const added = addJson.data
             this.$modal.hide('loading')
