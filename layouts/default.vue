@@ -22,6 +22,7 @@ export default {
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { hid: 'og:type', property: 'og:type', content: 'website' },
+        { hid: 'og:type', property: 'og:type', content: 'website' },
         { hid: 'og:site_name', property: 'og:site_name', content: 'indiemakers.fr' },
         { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' }
         // { hid: 'og:article:author', property: 'og:article:author', content: 'Martin DONADIEU' },
