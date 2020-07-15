@@ -54,7 +54,7 @@
                 <div v-tooltip="'Ecouter l\'épisode'" class="col-12 col-md-8 order-2 pl-2 pl-md-0 order-md-2 text-center text-md-left">
                   <h3>{{ episode.title }}</h3>
                   <p
-                    class="text-success fit-content cursor-pointer"
+                    class="text-success fit-content cursor-pointer mb-0 d-none d-md-block"
                   >
                     @{{ episode.twitter }}
                   </p>
@@ -63,6 +63,11 @@
                   </p>
                 </div>
                 <div class="col-12 px-0 px-md-5 pt-1 pt-md-3 order-3 d-block d-md-none">
+                  <p
+                    class="text-success text-center text-md-left mb-0"
+                  >
+                    @{{ episode.twitter }}
+                  </p>
                   <p class="text-center text-md-left px-3 px-md-0">
                     {{ episode.preview }}
                   </p>
