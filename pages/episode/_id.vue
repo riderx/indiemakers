@@ -312,8 +312,7 @@ export default {
     const res = await feed()
     if (res && res.items) {
       res.items.forEach((element) => {
-        const id = encodeURIComponent(element.guid)
-        if (id === this.$route.params.id) {
+        if (element.guid === this.$route.params.id) {
           this.title = element.title
           this.content = element.content
           this.tw = this.findTw(this.content)
