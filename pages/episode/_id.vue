@@ -228,6 +228,14 @@
                       Breaker
                     </button>
                     <button
+                      v-tooltip="'Ecouter l\'épisode sur Youtube'"
+                      type="button"
+                      class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                      @click="listenExternal('https://www.youtube.com/channel/UCMedW_Y4K0alzeVz1bSBvjA')"
+                    >
+                      Youtube
+                    </button>
+                    <button
                       v-tooltip="'Ecouter l\'épisode sur Google podcast'"
                       type="button"
                       class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
