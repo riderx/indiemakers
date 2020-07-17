@@ -240,7 +240,8 @@ export default {
       return first
     },
     openEp (guid) {
-      this.$router.push(`/episode/${guid}`)
+      const id = encodeURIComponent(guid)
+      this.$router.push(`/episode/${id}`)
     },
     openAdd () {
       this.$router.push('/makers')

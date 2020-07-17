@@ -312,7 +312,8 @@ export default {
     const res = await feed()
     if (res && res.items) {
       res.items.forEach((element) => {
-        if (element.guid === this.$route.params.id) {
+        const id = encodeURIComponent(element.guid)
+        if (id === this.$route.params.id) {
           this.title = element.title
           this.content = element.content
           this.tw = this.findTw(this.content)
@@ -320,6 +321,9 @@ export default {
           this.audio = element.enclosure.url
         }
       })
+      if (this.title === '') {
+        this.$router.push('/')
+      }
       this.loading = false
       // this.setSizeHead()
     }
