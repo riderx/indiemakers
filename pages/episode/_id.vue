@@ -132,6 +132,15 @@
                   Partager
                 </button>
                 <button
+                  v-tooltip="'Rejoin nous'"
+                  type="button"
+                  class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                  @click="joinUs()"
+                >
+                  <fa :icon="['fas', 'hand-point-right']" />
+                  Rejoint nous !
+                </button>
+                <button
                   v-tooltip="'buymeacoffee'"
                   type="button"
                   class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
@@ -300,6 +309,9 @@
             </div>
           </div>
         </modal>
+        <modal height="560px" adaptive name="join">
+          <iframe frameborder="0" width="100%" height="100%" src="https://cdn.forms-content.sg-form.com/7b46df84-c9ba-11ea-8d2c-9aae4ee15967" />
+        </modal>
       </client-only>
     </div>
   </LazyHydrate>
@@ -359,6 +371,9 @@ export default {
     }, 2000)
   },
   methods: {
+    joinUs () {
+      this.$modal.show('join')
+    },
     findTw (text) {
       const found = text.match(linkTwitterRe)
       let name = 'error'

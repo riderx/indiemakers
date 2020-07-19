@@ -99,6 +99,16 @@
                 </p>
                 <p>Par <b>Martin DONADIEU</b></p>
               </div>
+              <div class="col-12 pt-3 text-center">
+                <button
+                  type="button"
+                  class="btn btn-primary border-5 border-light btn-lg text-light px-4 h1"
+                  @click="joinUs()"
+                >
+                  <fa :icon="['fas', 'hand-point-right']" />
+                  Rejoint nous !
+                </button>
+              </div>
               <div class="col-12 pt-5 px-md-3 order-3 text-white text-center text-sm-left">
                 <h5>Mes autres projets:</h5>
                 <div class="d-flex flex-column flex-md-row">
@@ -107,25 +117,34 @@
                     target="_blank"
                     rel="noreferrer"
                     href="https://forgr.ee"
-                  >Forgr.ee | Agence de creation de MVP pour entrepreneurs</a>
+                  >Forgr.ee | Startup studio</a>
                   <a
                     class="text-white d-block px-2 py-3 py-md-0"
                     target="_blank"
                     rel="noreferrer"
                     href="https://bewise.love"
-                  >Bewise | Une citation par jour simple et bienveillante.</a>
+                  >Bewise | Une citation par jour</a>
                   <a
                     class="text-white d-block px-2 py-3 py-md-0"
                     target="_blank"
                     rel="noreferrer"
                     href="https://apps.apple.com/us/app/captime-crossfit-timer/id1369288585"
                   >Captime | Crossfit timer</a>
+                  <a
+                    class="text-white d-block px-2 py-3 py-md-0"
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://apps.apple.com/us/app/captime-crossfit-timer/id1369288585"
+                  >Lk stats | Linkedin analytics</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <modal height="560px" adaptive name="join">
+        <iframe frameborder="0" width="100%" height="100%" src="https://cdn.forms-content.sg-form.com/7b46df84-c9ba-11ea-8d2c-9aae4ee15967" />
+      </modal>
     </div>
   </LazyHydrate>
 </template>
@@ -184,6 +203,7 @@ export default {
     }
   },
   mounted () {
+    require('../plugins/modal.client')
     this.setSizeHead()
     document.getElementById('scrollable').addEventListener('scroll', () => {
       crispLoader()
@@ -193,6 +213,9 @@ export default {
     // }, 2500)
   },
   methods: {
+    joinUs () {
+      this.$modal.show('join')
+    },
     removeEmoji (str) {
       return str.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')
     },
