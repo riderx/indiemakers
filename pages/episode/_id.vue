@@ -84,6 +84,15 @@
                     alt="Buy me a coffee"
                   > Soutenir
                 </button>
+                <button
+                  v-tooltip="'Rejoin nous'"
+                  type="button"
+                  class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                  @click="joinUs()"
+                >
+                  <fa :icon="['fas', 'hand-point-right']" />
+                  Rejoint nous !
+                </button>
               </div>
             </div>
           </div>
