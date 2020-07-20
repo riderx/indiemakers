@@ -382,7 +382,7 @@
                 </div>
                 <div class="row bg-primary pt-4 border-10 border-light">
                   <div class="col-12 pt-2 text-white text-center">
-                    <p>Récupère ton lien de login reçût par email et click dessus, c'est tout❤️</p>
+                    <p>Tu viens de recevoir ton lien de login par email, click dessus, c'est tout❤️</p>
                   </div>
                   <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                     <button
@@ -409,12 +409,11 @@
                 </div>
                 <div class="row bg-primary pt-4 border-10 border-light">
                   <div class="col-12 pt-2 text-white">
-                    <p>Pour pouvoir te tenir au courant de la sortie de l'épisode et éviter les faux votes</p>
+                    <p>Pour te tenir au courant de la sortie de l'épisode et éviter les faux votes</p>
                     <h5 class="text-center">
                       j’ai besoin que tu valides ton email
                     </h5>
-                    <p>Tu ne recevras des emails seulement pour les makers pour qui tu as voté, et si j'ai une grande nouvelle a te partager (max 3 par ans).</p>
-                    <p>Et bien entendu, je ne refile ton e-mail à personne, je déteste ceux qui font ça !</p>
+                    <p>Tu ne recevras des emails seulement pour les makers pour qui tu as voté, et si j'ai une grande nouvelle a te partager.</p>
                   </div>
                   <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
                     <div class="form-group mb-0">
