@@ -15,10 +15,16 @@ export default {
   ** See https://nuxtjs.org/api/configuration-head
   */
   env: {
-    baseRSS: 'https://anchor.fm/s/414d1d4/podcast/rss',
+    dev: (process.env.NODE_ENV !== 'production'),
+    rss: 'https://anchor.fm/s/414d1d4/podcast/rss',
+    baseRSS: 'api/rss',
     domain: 'https://indiemakers.fr',
+    domain_local: 'http://localhost:3000',
     domain_unsecure: 'http://indiemakers.fr',
     handler: 'indiemakersfr'
+  },
+  proxy: {
+    '/api/rss': 'https://anchor.fm/s/414d1d4/podcast/rss'
   },
   head: {
     title: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
@@ -76,7 +82,8 @@ export default {
   */
   modules: [
     '@nuxtjs/component-cache',
-    'bootstrap-vue/nuxt'
+    'bootstrap-vue/nuxt',
+    '@nuxtjs/proxy'
   ],
   fontawesome: {
     component: 'fa',
