@@ -134,7 +134,7 @@
                     class="text-white d-block px-2 py-3 py-md-0"
                     target="_blank"
                     rel="noreferrer"
-                    href="https://apps.apple.com/us/app/captime-crossfit-timer/id1369288585"
+                    href="https://lkstats.web.app/welcome"
                   >Lk stats | Linkedin analytics</a>
                 </div>
               </div>
