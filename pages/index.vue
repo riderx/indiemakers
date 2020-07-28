@@ -54,7 +54,7 @@
                 <div v-tooltip="'Ecouter l\'épisode'" class="col-12 col-md-8 order-2 pl-2 pl-md-0 order-md-2 text-center text-md-left">
                   <h3>{{ episode.title }}</h3>
                   <p
-                    v-if="!episode.twitter"
+                    v-if="episode.twitter"
                     class="text-success fit-content cursor-pointer mb-0 d-none d-md-block"
                   >
                     @{{ episode.twitter }}
@@ -65,6 +65,7 @@
                 </div>
                 <div class="col-12 px-0 px-md-5 pt-1 pt-md-3 order-3 d-block d-md-none">
                   <p
+                    v-if="episode.twitter"
                     class="text-success text-center text-md-left mb-0"
                   >
                     @{{ episode.twitter }}
@@ -156,8 +157,8 @@ import { feed } from '../plugins/rss'
 import { crispLoader } from '../plugins/crisp.client'
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/'
 const linkTwitterRe = /Son Twitter : <a href="https:\/\/twitter\.com\/(.*)"/g
-const linkInstagram = 'Son Instagram : <a href="https://instagram.com/'
-const linkInstagramRe = /Son Instagram : <a href="https:\/\/instagram\.com\/(.*)"/g
+const linkInstagram = 'Son Instagram : <a href="https://www.instagram.com/'
+const linkInstagramRe = /Son Instagram : <a href="https:\/\/www\.instagram\.com\/(.*)"/g
 
 export default {
   components: {
@@ -215,9 +216,6 @@ export default {
     document.getElementById('scrollable').addEventListener('scroll', () => {
       crispLoader()
     }, { once: true })
-    // setTimeout(() => {
-    //   crispLoader()
-    // }, 2500)
   },
   methods: {
     joinUs () {
@@ -238,9 +236,6 @@ export default {
     },
     goMakers () {
       this.$router.push('/makers')
-    },
-    openAccount (name) {
-      window.open(`https://twitter.com/${name}`, '_blank')
     },
     findTw (text) {
       const found = text.match(linkTwitterRe)

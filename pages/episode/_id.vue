@@ -1,6 +1,7 @@
 <template>
   <LazyHydrate when-idle>
     <div id="emission">
+      <script src="https://ratethispodcast.com/embed.js" defer />
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 offset-xl-1 col-xl-5">
@@ -114,22 +115,21 @@
               </div>
               <div class="col-12 px-md-5 pt-1 pt-md-3">
                 <button
-                  v-tooltip="'Ecouter'"
+                  v-tooltip="'Ecoute sur ta plateforme préféré !'"
                   type="button"
                   class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="listen()"
                 >
                   <fa :icon="['fas', 'headphones']" />
-                  Ecouter
+                  Ecoute
                 </button>
                 <button
-                  v-tooltip="'Noter l\'épisode'"
+                  id="rtp-button"
+                  v-tooltip="'Note l\'épisode pour soutenir le podcast'"
                   type="button"
-                  class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
-                  @click="rate()"
+                  class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-2 px-0 px-md-2 h1"
                 >
-                  <fa :icon="['fas', 'heart']" />
-                  Noter
+                  Note
                 </button>
                 <button
                   v-tooltip="'Partager via twitter'"
@@ -138,10 +138,10 @@
                   @click="tweetIt()"
                 >
                   <fa :icon="['fas', 'pizza-slice']" />
-                  Partager
+                  Partage
                 </button>
                 <button
-                  v-tooltip="'Rejoin nous'"
+                  v-tooltip="'Commence a gagner ta vie sur internet'"
                   type="button"
                   class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="joinUs()"
@@ -150,16 +150,13 @@
                   Deviens Indie maker
                 </button>
                 <button
-                  v-tooltip="'buymeacoffee'"
+                  v-tooltip="'Multiplie ton CA en 4 semaines !'"
                   type="button"
                   class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="bmc()"
                 >
-                  <img
-                    src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
-                    alt="Buy me a coffee"
-                    class="bmc"
-                  > Soutenir
+                  <fa :icon="['fas', 'chart-line']" />
+                  Passe à l'étape supérieure
                 </button>
               </div>
             </div>
@@ -374,6 +371,7 @@ export default {
   },
   mounted () {
     require('../../plugins/modal.client')
+    window.RTP_CONFIG = { link: 'imf', mode: 'button' }
     this.setSizeHead()
     setTimeout(() => {
       this.showAudio = true
@@ -386,7 +384,7 @@ export default {
     findTw (text) {
       const found = text.match(linkTwitterRe)
       let name = 'error'
-      if (found.length > 0) {
+      if (found && found.length > 0) {
         name = found[0].replace(linkTwitter, '')
         name = name.replace('"', '')
       }
@@ -488,6 +486,11 @@ export default {
         { hid: 'og:audio', property: 'og:image:audio', content: this.audio },
         { hid: 'og:audio:type', property: 'og:image:audio:type', content: 'audio/mpeg' }
       ]
+      // script: [
+      //   {
+      //     src: 'https://ratethispodcast.com/embed.js'
+      //   }
+      // ]
     }
   }
 }
