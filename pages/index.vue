@@ -54,6 +54,7 @@
                 <div v-tooltip="'Ecouter l\'épisode'" class="col-12 col-md-8 order-2 pl-2 pl-md-0 order-md-2 text-center text-md-left">
                   <h3>{{ episode.title }}</h3>
                   <p
+                    v-if="!episode.twitter"
                     class="text-success fit-content cursor-pointer mb-0 d-none d-md-block"
                   >
                     @{{ episode.twitter }}
@@ -106,7 +107,7 @@
                   @click="joinUs()"
                 >
                   <fa :icon="['fas', 'hand-point-right']" />
-                  Rejoint nous !
+                  Deviens Indie maker
                 </button>
               </div>
               <div class="col-12 pt-5 px-md-3 order-3 text-white text-center text-sm-left">
@@ -155,6 +156,8 @@ import { feed } from '../plugins/rss'
 import { crispLoader } from '../plugins/crisp.client'
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/'
 const linkTwitterRe = /Son Twitter : <a href="https:\/\/twitter\.com\/(.*)"/g
+const linkInstagram = 'Son Instagram : <a href="https://instagram.com/'
+const linkInstagramRe = /Son Instagram : <a href="https:\/\/instagram\.com\/(.*)"/g
 
 export default {
   components: {
@@ -169,10 +172,14 @@ export default {
       this.episodes = res.items
       this.episodes.forEach((element) => {
         const twitter = this.findTw(element.content)
+        const insta = this.findInst(element.content)
         const preview = this.previewText(element.contentSnippet)
         element.preview = preview
         if (twitter !== 'error') {
           element.twitter = twitter
+        }
+        if (!element.twitter && insta !== 'error') {
+          element.twitter = insta
         }
       })
       this.loading = false
@@ -240,6 +247,15 @@ export default {
       let name = 'error'
       if (found && found.length > 0) {
         name = found[0].replace(linkTwitter, '')
+        name = name.replace('"', '')
+      }
+      return name
+    },
+    findInst (text) {
+      const found = text.match(linkInstagramRe)
+      let name = 'error'
+      if (found && found.length > 0) {
+        name = found[0].replace(linkInstagram, '')
         name = name.replace('"', '')
       }
       return name

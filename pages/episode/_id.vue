@@ -147,7 +147,7 @@
                   @click="joinUs()"
                 >
                   <fa :icon="['fas', 'hand-point-right']" />
-                  Rejoint nous !
+                  Deviens Indie maker
                 </button>
                 <button
                   v-tooltip="'buymeacoffee'"
