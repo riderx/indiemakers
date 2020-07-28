@@ -141,7 +141,7 @@
                   Partage
                 </button>
                 <button
-                  v-tooltip="'Commence a gagner ta vie sur internet'"
+                  v-tooltip="'Commence à gagner ta vie sur internet'"
                   type="button"
                   class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="joinUs()"

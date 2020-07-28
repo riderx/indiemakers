@@ -103,6 +103,7 @@
               </div>
               <div class="col-12 pt-3 text-center">
                 <button
+                  v-tooltip="'Commence à gagner ta vie sur internet'"
                   type="button"
                   class="btn btn-primary border-5 border-light btn-lg text-light px-4 h1"
                   @click="joinUs()"
