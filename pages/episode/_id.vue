@@ -1,7 +1,6 @@
 <template>
   <LazyHydrate when-idle>
     <div id="emission">
-      <script src="https://ratethispodcast.com/embed.js" defer />
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 offset-xl-1 col-xl-5">
@@ -48,7 +47,7 @@
             <div v-if="!loading" class="row bg-primary py-4 d-block d-md-none">
               <div class="col-12 px-1 px-md-3 text-center">
                 <button
-                  v-tooltip="'Ecouter'"
+                  v-tooltip="'Ecoute sur ta plateforme préféré'"
                   type="button"
                   class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                   @click="listen()"
@@ -61,29 +60,17 @@
                   class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                   @click="rate()"
                 >
-                  <fa :icon="['fas', 'heart']" />
-                  Noter
+                  <fa :icon="['fas', 'star']" />
+                  Note
                 </button>
                 <button
-                  v-tooltip="'Partager via twitter'"
+                  v-tooltip="'Partage sur twitter'"
                   type="button"
                   class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                   @click="tweetIt()"
                 >
                   <fa :icon="['fas', 'pizza-slice']" />
-                  Partager
-                </button>
-                <button
-                  v-tooltip="'buymeacoffee'"
-                  type="button"
-                  class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
-                  @click="bmc()"
-                >
-                  <img
-                    src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
-                    class="bmc"
-                    alt="Buy me a coffee"
-                  > Soutenir
+                  Partage
                 </button>
                 <button
                   v-tooltip="'Rejoin nous'"
@@ -92,7 +79,16 @@
                   @click="joinUs()"
                 >
                   <fa :icon="['fas', 'hand-point-right']" />
-                  Rejoint nous !
+                  Deviens Indie maker
+                </button>
+                <button
+                  v-tooltip="'buymeacoffee'"
+                  type="button"
+                  class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                  @click="bmc()"
+                >
+                  <fa :icon="['fas', 'chart-line']" />
+                  Passe à l'étape supérieure
                 </button>
               </div>
             </div>
@@ -128,7 +124,9 @@
                   v-tooltip="'Note l\'épisode pour soutenir le podcast'"
                   type="button"
                   class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-2 px-0 px-md-2 h1"
+                  @click="rate()"
                 >
+                  <fa :icon="['fas', 'star']" />
                   Note
                 </button>
                 <button
