@@ -123,7 +123,7 @@
                   id="rtp-button"
                   v-tooltip="'Note l\'épisode pour soutenir le podcast'"
                   type="button"
-                  class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-2 px-0 px-md-2 h1"
+                  class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="rate()"
                 >
                   <fa :icon="['fas', 'star']" />
