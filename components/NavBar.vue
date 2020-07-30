@@ -32,9 +32,9 @@ export default {
       },
       icones: [
         {
-          title: 'Spotify',
-          lien: 'https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg',
-          class: ['fab', 'spotify']
+          title: 'Communauté',
+          lien: 'https://comu.indiemakers.fr',
+          class: ['fas', 'comments']
         },
         {
           title: 'Instagram',
