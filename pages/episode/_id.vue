@@ -313,8 +313,19 @@
             </div>
           </div>
         </modal>
-        <modal height="560px" adaptive name="join">
-          <iframe frameborder="0" width="100%" height="100%" src="https://cdn.forms-content.sg-form.com/7b46df84-c9ba-11ea-8d2c-9aae4ee15967" />
+        <modal height="500px" adaptive name="join">
+          <div class="bg-primary h-100 text-white">
+            <h1 class="pl-2 py-2 text-center">
+              Mes Emails Privés !
+            </h1>
+            <p class="px-5">
+              Un email chaque semaine rempli de mes conseils actionables pour devenir independant, et gagner sa liberté ...
+            </p>
+            <p class="px-5">
+              Tu seras également informé de la sortie des épisodes !
+            </p>
+            <iframe frameborder="0" width="100%" height="100%" src="https://cdn.forms-content.sg-form.com/7b46df84-c9ba-11ea-8d2c-9aae4ee15967" />
+          </div>
         </modal>
       </client-only>
     </div>

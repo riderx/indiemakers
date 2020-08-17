@@ -1,6 +1,42 @@
 
 <template>
   <div>
+    <div class="container-fluid">
+      <div class="row pt-md-5">
+        <div class="col-12 offset-md-1 col-md-5">
+          <div class="row bg-primary py-0">
+            <div class="col pt-3 px-0 border-10 border-light text-white text-center">
+              <h1>🔑Email Verification</h1>
+            </div>
+          </div>
+          <div class="row bg-primary border-10 border-light pb-4">
+            <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+              <div class="form-group mb-0">
+                <input
+                  v-model="email"
+                  type="email"
+                  class="form-control pb-0"
+                  aria-describedby="emailHelp"
+                  placeholder="elon@musk.com"
+                >
+              </div>
+            </div>
+            <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
+              <button
+                type="button"
+                class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                @click="sendConfirm()"
+              >
+                🚀valider
+              </button>
+            </div>
+          </div>
+        </div>
+        <div v-if="image" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
+          <img class="img-fluid border-10 border-light" alt="Logo IM" :src="image">
+        </div>
+      </div>
+    </div>
     <client-only>
       <modal height="auto" adaptive name="loading">
         <div class="container-fluid">
@@ -51,42 +87,6 @@
         </div>
       </modal>
     </client-only>
-    <div class="container-fluid">
-      <div class="row pt-md-5">
-        <div class="col-12 offset-md-1 col-md-5">
-          <div class="row bg-primary py-0">
-            <div class="col pt-3 px-0 border-10 border-light text-white text-center">
-              <h1>🔑Email Verification</h1>
-            </div>
-          </div>
-          <div class="row bg-primary border-10 border-light pb-4">
-            <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-              <div class="form-group mb-0">
-                <input
-                  v-model="email"
-                  type="email"
-                  class="form-control pb-0"
-                  aria-describedby="emailHelp"
-                  placeholder="elon@musk.com"
-                >
-              </div>
-            </div>
-            <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
-              <button
-                type="button"
-                class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                @click="sendConfirm()"
-              >
-                🚀valider
-              </button>
-            </div>
-          </div>
-        </div>
-        <div v-if="image" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
-          <img class="img-fluid border-10 border-light" alt="Logo IM" :src="image">
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
