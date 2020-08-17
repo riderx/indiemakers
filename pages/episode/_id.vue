@@ -313,9 +313,9 @@
             </div>
           </div>
         </modal>
-        <modal height="500px" adaptive name="join">
-          <div class="bg-primary h-100 text-white">
-            <h1 class="pl-2 py-2 text-center">
+        <modal height="550px" adaptive name="join">
+          <div class="bg-primary h-100 text-white border-10 border-light">
+            <h1 class="pl-2 py-2 m-0 text-center">
               Mes Emails Privés !
             </h1>
             <p class="px-5">
