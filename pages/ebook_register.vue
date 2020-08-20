@@ -1,3 +1,4 @@
+
 <template>
   <LazyHydrate when-idle>
     <div id="register">
@@ -6,10 +7,13 @@
           <div class="col-12 offset-xl-3 col-xl-6 form-size p-0 p-md-3">
             <div class="bg-primary h-100 text-white border-10 border-light">
               <h1 class="pl-2 py-2 m-0 text-center">
-                Mes Emails Privés !
+                Le guide pour enfin lancer ton propre projet !
               </h1>
               <p class="px-5">
-                Un email chaque semaine avec mes conseils actionables pour lancer son side-projet, et gagner sa liberté ...
+                Tu veux lancer ton projet mais tu ne sais pas par où commencer ?
+              </p>
+              <p class="px-5">
+                Télécharge ce guide en 6 étapes qui te fera éviter bien des erreurs et gagner un temps précieux !
               </p>
               <p class="px-5">
                 Tu seras également informé de la sortie des épisodes !
@@ -64,11 +68,11 @@ export default {
 <style scoped>
 
 .form-size {
-  height: 550px;
+  height: 600px;
 }
 @media (max-width: 400px) {
   .form-size {
-    height: 650px;
+    height: 700px;
   }
 }
 </style>
