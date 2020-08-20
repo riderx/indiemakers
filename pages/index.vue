@@ -151,7 +151,7 @@
             Mes Emails Privés !
           </h1>
           <p class="px-5">
-            Un email chaque semaine rempli de mes conseils actionables pour devenir independant, et gagner sa liberté ...
+            Un email chaque semaine avec mes conseils actionables pour lancer son side-projet, et gagner sa liberté ...
           </p>
           <p class="px-5">
             Tu seras également informé de la sortie des épisodes !
