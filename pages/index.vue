@@ -210,7 +210,7 @@ export default {
       loadingImg: require('~/assets/cover-im_empty.png'),
       episodes: [],
       feed: null,
-      title: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
+      title: '🚀Le 1er podcast qui t\'aide pour vivre de tes projets',
       messages: [
         'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en en business florissant.',
         'Au-delà des success-story, nous décryptons leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables.',
