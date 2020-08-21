@@ -113,6 +113,14 @@ export default {
       if (this.user && this.user.displayName === null) {
         this.$modal.show('confirmName')
       } else if (this.user) {
+        this.$firebase
+          .firestore()
+          .collection('users/')
+          .doc(this.user.id)
+          .set({
+            name: this.user.displayName,
+            email: this.user.email
+          })
         this.$router.push('/makers')
       }
     })
@@ -138,7 +146,7 @@ export default {
           try {
             await this.$firebase
               .firestore()
-              .collection('user/')
+              .collection('users/')
               .doc(this.user.id)
               .set({
                 name: this.myName,
