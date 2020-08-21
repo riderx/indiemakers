@@ -134,7 +134,19 @@ export default {
         .updateProfile({
           displayName: this.myName
         })
-        .then(() => {
+        .then(async () => {
+          try {
+            await this.$firebase
+              .firestore()
+              .collection('user/')
+              .doc(this.user.id)
+              .set({
+                name: this.myName,
+                email: this.user.email
+              })
+          } catch (err) {
+            console.error('exist already', err)
+          }
           this.$modal.hide('loading')
           this.$router.push('/')
         })

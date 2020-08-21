@@ -346,13 +346,14 @@ export default {
   async fetch () {
     const res = await feed()
     if (res && res.items) {
-      res.items.forEach((element) => {
+      res.items.some((element) => {
         if (element.guid === this.$route.params.id) {
           this.title = element.title
           this.content = element.content
           this.tw = this.findTw(this.content)
           this.image.src = element.itunes.image
           this.audio = element.enclosure.url
+          return true
         }
       })
       if (this.title === '') {
@@ -382,6 +383,19 @@ export default {
     require('../../plugins/modal.client')
     window.RTP_CONFIG = { link: 'imf', mode: 'button' }
     this.setSizeHead()
+    this.$firebase
+      .firestore()
+      .collection('episodes/')
+      .doc(this.$route.params.id)
+      .set({
+        udi: this.$route.params.id,
+        title: this.title,
+        twitter: this.tw,
+        image: this.image.src,
+        content: this.content
+      }).catch((err) => {
+        console.error('exist already', err)
+      })
     setTimeout(() => {
       this.showAudio = true
     }, 2000)
