@@ -5,17 +5,18 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 offset-xl-3 col-xl-6 form-size p-0 p-md-3">
-            <div class="bg-primary h-100 text-white border-10 border-light">
+            <div class="bg-primary h-100 text-white text-center border-10 border-light">
+              <img class="w-25 pb-5 pb-md-3" src="/book.svg">
               <h1 class="pl-2 py-2 m-0 text-center">
                 Le guide pour enfin lancer ton propre projet !
               </h1>
-              <p class="px-5">
+              <p class="px-4 px-md-5 text-left">
                 Tu veux lancer ton projet mais tu ne sais pas par où commencer ?
               </p>
-              <p class="px-5">
+              <p class="px-4 px-md-5 text-left">
                 Télécharge ce guide en 6 étapes qui te fera éviter bien des erreurs et gagner un temps précieux !
               </p>
-              <p class="px-5">
+              <p class="px-4 px-md-5 text-left">
                 Tu seras également informé de la sortie des épisodes !
               </p>
               <iframe frameborder="0" width="100%" height="100%" src="https://cdn.forms-content.sg-form.com/7b46df84-c9ba-11ea-8d2c-9aae4ee15967" />
@@ -68,11 +69,11 @@ export default {
 <style scoped>
 
 .form-size {
-  height: 600px;
+  height: 800px;
 }
 @media (max-width: 400px) {
   .form-size {
-    height: 700px;
+    height: 900px;
   }
 }
 </style>
