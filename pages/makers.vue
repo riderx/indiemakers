@@ -167,7 +167,7 @@
               </div>
             </div>
           </div>
-          <Modals :email.sync="email" :name.sync="currentName" :maker.sync="addName" />
+          <Modals :email.sync="email" :name.sync="addName" :maker.sync="currentName" />
         </div>
       </div>
     </div>
@@ -281,12 +281,6 @@ export default {
       this.$modal.hide('added')
       this.$modal.hide('voted')
     },
-    tweetIt () {
-      const text = `@${this.currentName}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @${process.env.handler} 🚀.`
-      window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank')
-      this.$modal.hide('added')
-      this.$modal.hide('voted')
-    },
     getTextLink (text) {
       return linkifyHtml(text, {
         defaultProtocol: 'https',
@@ -357,7 +351,9 @@ export default {
             this.$modal.hide('loading')
             person.votes += 1
             this.currentName = '' + person.login
-            this.$modal.show('voted')
+            setTimeout(() => {
+              this.$modal.show('voted')
+            }, 50)
           })
           .catch((error) => {
             this.$modal.hide('loading')

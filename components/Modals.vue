@@ -282,7 +282,7 @@
                   <button
                     type="button"
                     class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                    @click="tweetIt()"
+                    @click="tweetItMaker()"
                   >
                     🦚Voir
                   </button>
@@ -340,7 +340,7 @@
                   <button
                     type="button"
                     class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                    @click="tweetIt(name)"
+                    @click="tweetItMaker()"
                   >
                     🦚Voir
                   </button>
@@ -473,7 +473,7 @@
                   <button
                     type="button"
                     class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
-                    @click="tweetIt()"
+                    @click="tweetItMaker()"
                   >
                     🦚Voir
                   </button>
@@ -651,19 +651,15 @@ export default {
             const added = addJson.data
             this.$modal.hide('loading')
             if (added.error && added.error === 'Already voted') {
-              this.currentName = '' + this.newMaker
               this.$modal.show('fail-exist-vote')
             } else if (added.error) {
               console.error(added)
               this.$modal.show('fail-add')
             } else if (added.done && added.done === 'Voted') {
-              this.currentName = '' + this.newMaker
               this.$modal.show('fail-exist')
             } else {
-              this.currentName = '' + this.newMaker
               this.$modal.show('added')
             }
-            this.newMaker = ''
           })
           .catch((err) => {
             this.$modal.hide('loading')
@@ -694,6 +690,12 @@ export default {
             console.error(error)
           })
       }
+    },
+    tweetItMaker () {
+      const text = `@${this.maker}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @${process.env.handler} 🚀.`
+      window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank')
+      this.$modal.hide('added')
+      this.$modal.hide('voted')
     },
     tweetIt () {
       const linkEp = `${process.env.domain}/episode/${this.epGui}`
