@@ -18,6 +18,7 @@
           </div>
         </div>
       </div>
+      <Modals />
     </div>
   </LazyHydrate>
 </template>

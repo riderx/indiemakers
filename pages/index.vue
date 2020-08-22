@@ -145,20 +145,7 @@
           </div>
         </div>
       </div>
-      <modal height="550px" adaptive name="join">
-        <div class="bg-primary h-100 text-white border-10 border-light">
-          <h1 class="pl-2 py-2 m-0 text-center">
-            Mes Emails Privés !
-          </h1>
-          <p class="px-5">
-            Un email chaque semaine avec mes conseils actionables pour lancer son side-projet, et gagner sa liberté ...
-          </p>
-          <p class="px-5">
-            Tu seras également informé de la sortie des épisodes !
-          </p>
-          <iframe frameborder="0" width="100%" height="100%" src="https://cdn.forms-content.sg-form.com/7b46df84-c9ba-11ea-8d2c-9aae4ee15967" />
-        </div>
-      </modal>
+      <Modals />
     </div>
   </LazyHydrate>
 </template>
@@ -174,6 +161,7 @@ const linkInstagramRe = /Son Instagram : <a href="https:\/\/www\.instagram\.com\
 
 export default {
   components: {
+    Modals: () => import('~/components/Modals.vue'),
     LazyHydrate
   },
   async fetch () {
@@ -222,12 +210,14 @@ export default {
         '#Independant, #Makers, #AutoFormation, #Productivite, #Business, #MRR'
     }
   },
+  beforeMount () {
+    window.addEventListener('scroll', () => {
+      crispLoader()
+    }, { capture: true, once: true, passive: true })
+  },
   mounted () {
     require('../plugins/modal.client')
     this.setSizeHead()
-    document.getElementById('scrollable').addEventListener('scroll', () => {
-      crispLoader()
-    }, { once: true })
   },
   methods: {
     joinUs () {
