@@ -194,6 +194,7 @@ export default {
           this.postEp(element.guid)
           return true
         }
+        return false
       })
       if (this.title === '') {
         this.$router.push('/')
@@ -231,7 +232,8 @@ export default {
   },
   methods: {
     postEp (gui) {
-      this.$firebase
+      try {
+        this.$firebase
         .firestore()
         .collection('episodes')
         .doc(gui)
@@ -243,9 +245,10 @@ export default {
           instagram: this.instagram,
           image: this.image.src,
           content: this.content
-        }).catch((err) => {
-          this.sendToDB = err
         })
+      } catch (err) {
+        console.log('already exist');
+      }
     },
     tweetIt () {
       const linkEp = `${process.env.domain}/episode/${this.epGui}`
