@@ -161,17 +161,18 @@
           </div>
         </div>
       </div>
-      <Modals :ep-gui="this.$route.params.id" :maker="tw" />
+      <Modals :ep-gui="this.$route.params.id" :maker="twitter" />
     </div>
   </LazyHydrate>
 </template>
 
 <script>
-import stripHtml from 'string-strip-html'
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '~/plugins/rss'
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/'
 const linkTwitterRe = /Son Twitter : <a href="https:\/\/twitter\.com\/(.*)"/g
+const linkInstagram = 'Son Instagram : <a href="https://www.instagram.com/'
+const linkInstagramRe = /Son Instagram : <a href="https:\/\/www\.instagram\.com\/(.*)"/g
 
 export default {
   components: {
@@ -185,7 +186,9 @@ export default {
         if (element.guid === this.$route.params.id) {
           this.title = element.title
           this.content = element.content
-          this.tw = this.findTw(this.content)
+          this.twitter = this.findTw(this.content)
+          this.insta = this.findInst(this.content)
+          this.preview = this.previewText(element.contentSnippet)
           this.image.src = element.itunes.image
           this.audio = element.enclosure.url
           return true
@@ -203,7 +206,9 @@ export default {
       loading: true,
       showAudio: false,
       title: '',
-      tw: '',
+      twitter: '',
+      insta: '',
+      preview: '',
       sizeHead: '100vh',
       content: '',
       image: {
@@ -225,7 +230,9 @@ export default {
       .set({
         udi: this.$route.params.id,
         title: this.title,
-        twitter: this.tw,
+        twitter: this.twitter,
+        preview: this.preview,
+        instagram: this.instagram,
         image: this.image.src,
         content: this.content
       }).catch((err) => {
@@ -254,6 +261,15 @@ export default {
       let name = 'error'
       if (found && found.length > 0) {
         name = found[0].replace(linkTwitter, '')
+        name = name.replace('"', '')
+      }
+      return name
+    },
+    findInst (text) {
+      const found = text.match(linkInstagramRe)
+      let name = 'error'
+      if (found && found.length > 0) {
+        name = found[0].replace(linkInstagram, '')
         name = name.replace('"', '')
       }
       return name
@@ -330,9 +346,9 @@ export default {
       meta: [
         { hid: 'og:url', property: 'og:url', content: `${process.env.domain}${this.$route.fullPath}` },
         { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
-        { hid: 'description', name: 'description', content: this.previewText(this.removeEmoji(stripHtml(this.content))) },
+        { hid: 'description', name: 'description', content: this.removeEmoji(this.preview) },
         { hid: 'og:title', property: 'og:title', content: this.removeEmoji(this.title) },
-        { hid: 'og:description', property: 'og:description', content: this.previewText(this.removeEmoji(stripHtml(this.content))) },
+        { hid: 'og:description', property: 'og:description', content: this.removeEmoji(this.preview) },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.removeEmoji(this.title) },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/jpg' },
         { hid: 'og:image', property: 'og:image', content: this.image },
@@ -341,11 +357,6 @@ export default {
         { hid: 'og:audio', property: 'og:image:audio', content: this.audio },
         { hid: 'og:audio:type', property: 'og:image:audio:type', content: 'audio/mpeg' }
       ]
-      // script: [
-      //   {
-      //     src: 'https://ratethispodcast.com/embed.js'
-      //   }
-      // ]
     }
   }
 }
