@@ -1,7 +1,9 @@
 import * as sgClient from '@sendgrid/client'
 import { ClientRequest } from '@sendgrid/client/src/request'
 
-const sgList = 'f96e367b-1501-4992-b3f5-55f4d60128dc'
+const sgListIndie = '9d1a4cc5-92bf-4253-a408-b3277fc36ea4'
+const sgListEp = 'f96e367b-1501-4992-b3f5-55f4d60128dc'
+
 const sgEpdDesignId = '1362115d-6d78-437f-a8a6-c6c4921e5fee'
 const suppressionGroupId = '28378'
 
@@ -72,7 +74,7 @@ export const sendEpToContactList = async (title: string, designId: string) => {
     body: {
       name: title,
       send_to: {
-        list_ids: [sgList]
+        list_ids: [sgListEp]
       },
       email_config: {
         subject: title,
@@ -116,7 +118,7 @@ export const sendUserToSendrid = async (email: string, first_name: string) => {
     method: 'PUT',
     url: '/v3/marketing/contacts',
     body: {
-      list_ids: [sgList],
+      list_ids: [sgListIndie, sgListEp],
       contacts: [{ email, first_name }]
     }
   }
