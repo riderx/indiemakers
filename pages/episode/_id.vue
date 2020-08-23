@@ -225,7 +225,9 @@ export default {
     require('../../plugins/modal.client')
     window.RTP_CONFIG = { link: 'imf', mode: 'button' }
     this.setSizeHead()
-    this.postEp(this.$route.params.id)
+    if (!this.$fetchState.pending) {
+      this.postEp(this.$route.params.id)
+    }
     setTimeout(() => {
       this.showAudio = true
     }, 2000)
