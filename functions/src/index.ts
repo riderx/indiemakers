@@ -22,7 +22,7 @@ sgClient.setApiKey(configSecret.sendgrid.apikey)
 
 const PixelsId = configSecret.pixelme.pixels_id.split(',')
 axios.defaults.baseURL = 'https://api.pixelme.me'
-axios.defaults.headers.common.Authorization = `Bearer ${configSecret.pixelme.pixelsId.apikey}`
+axios.defaults.headers.common.Authorization = `Bearer ${configSecret.pixelme.pixelsId}`
 
 interface TwEntities {
     url: {

@@ -26,7 +26,7 @@ export interface Design {
   editor: string,
   categories: string[]
 }
-export const initEmail = async (apiKey: string) => {
+export const initEmail = (apiKey: string): void => {
   sgClient.setApiKey(apiKey)
 }
 export const CopyDesign = async (episodeName: string): Promise<Design> => {
@@ -77,7 +77,7 @@ export const sendEpToContactList = async (title: string, designId: string) => {
       email_config: {
         subject: title,
         design_id: designId,
-        suppression_group_id: suppressionGroupId,
+        suppression_group_id: suppressionGroupId
       }
     }
   }
