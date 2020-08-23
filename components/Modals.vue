@@ -620,8 +620,8 @@ export default {
           try {
             await this.$firebase
               .firestore()
-              .collection('users/')
-              .doc(this.user.id)
+              .collection('users')
+              .doc(this.user.uid)
               .set({
                 name: this.newName,
                 email: this.user.email
