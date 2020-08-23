@@ -567,6 +567,7 @@ export default {
   props: { name: { type: String, default: null }, epGui: { type: String, default: null }, maker: { type: String, default: null }, email: { type: String, default: null } },
   data () {
     return {
+      user: null,
       isFalse: false,
       newMaker: null,
       newName: null,
@@ -603,6 +604,9 @@ export default {
     }
   },
   mounted () {
+    this.$firebase.auth().onAuthStateChanged((user) => {
+      this.user = user
+      });
   },
   methods: {
     addName () {
