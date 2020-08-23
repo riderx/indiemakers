@@ -114,12 +114,14 @@ export const sendEmailEp = async (episode: Episode) => {
 }
 
 export const sendUserToSendrid = async (email: string, first_name: string) => {
+  const contact = { email, first_name }
+  console.log('contact', contact);
   const request: ClientRequest = {
     method: 'PUT',
     url: '/v3/marketing/contacts',
     body: {
       list_ids: [sgListIndie, sgListEp],
-      contacts: [{ email, first_name }]
+      contacts: [contact]
     }
   }
   try {
