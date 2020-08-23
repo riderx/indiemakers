@@ -90,3 +90,4 @@ sw.*
 *.swp
 functions/indiemakerfr-firebase.json
 functions/src/test.ts
+functions/src/email.ts
