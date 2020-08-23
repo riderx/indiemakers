@@ -188,6 +188,9 @@
             <div class="col-12 pt-2 text-white text-center">
               <p>Ajoute ton prénom pour que je puisse savoir a qui s'adresse mes emails !</p>
             </div>
+            <div class="col-12 pt-2 text-white text-center">
+              <p>Si tu choisie de ne pas en mettre tu t'apelleras Bob </p>
+            </div>
             <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
               <div class="form-group mb-0">
                 <input
@@ -200,7 +203,6 @@
                   @keyup.enter="addName()"
                 >
               </div>
-              <p>Si tu choisie de ne pas en mettre tu t'apelleras Bob </p>
             </div>
             <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
               <button
@@ -208,7 +210,7 @@
                 class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
                 @click="addName()"
               >
-                Comfirme mon prénom
+                Comfirmer
               </button>
             </div>
           </div>
