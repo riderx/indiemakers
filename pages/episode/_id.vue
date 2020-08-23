@@ -231,6 +231,11 @@ export default {
     setTimeout(() => {
       this.showAudio = true
     }, 2000)
+    if (!window.localStorage.getItem('emailForSignIn')) {
+      setTimeout(() => {
+        this.$modal.show('join')
+      }, 10000);
+    }
   },
   methods: {
     async postEp (gui) {
