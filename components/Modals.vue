@@ -625,7 +625,7 @@ export default {
               .collection('users')
               .doc(this.user.uid)
               .set({
-                name: this.newName,
+                first_name: this.newName,
                 email: this.user.email
               })
           } catch (err) {
