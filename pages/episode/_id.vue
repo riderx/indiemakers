@@ -195,7 +195,6 @@ export default {
         }
         return false
       })
-      await this.postEp(this.$route.params.id)
       if (this.title === '') {
         this.$router.push('/')
       }
@@ -226,6 +225,7 @@ export default {
     require('../../plugins/modal.client')
     window.RTP_CONFIG = { link: 'imf', mode: 'button' }
     this.setSizeHead()
+    await this.postEp(this.$route.params.id)
     setTimeout(() => {
       this.showAudio = true
     }, 2000)
