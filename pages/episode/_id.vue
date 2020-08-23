@@ -191,11 +191,11 @@ export default {
           this.preview = this.previewText(element.contentSnippet)
           this.image.src = element.itunes.image
           this.audio = element.enclosure.url
-          this.postEp(element.guid)
           return true
         }
         return false
       })
+      await this.postEp(this.$route.params.id)
       if (this.title === '') {
         this.$router.push('/')
       }
@@ -231,23 +231,23 @@ export default {
     }, 2000)
   },
   methods: {
-    postEp (gui) {
+    async postEp (gui) {
       try {
-        this.$firebase
-        .firestore()
-        .collection('episodes')
-        .doc(gui)
-        .set({
-          udi: gui,
-          title: this.title,
-          twitter: this.twitter,
-          preview: this.preview,
-          instagram: this.instagram,
-          image: this.image.src,
-          content: this.content
-        })
+        await this.$firebase
+          .firestore()
+          .collection('episodes')
+          .doc(gui)
+          .set({
+            udi: gui,
+            title: this.title,
+            twitter: this.twitter,
+            preview: this.preview,
+            instagram: this.instagram,
+            image: this.image.src,
+            content: this.content
+          })
       } catch (err) {
-        console.log('already exist');
+        console.log('already exist')
       }
     },
     tweetIt () {
