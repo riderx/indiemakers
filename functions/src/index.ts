@@ -10,7 +10,6 @@ const Twitter = require('twitter')
 
 // PixelMeApiToken
 const configSecret = functions.config()
-initEmail(configSecret.sendgrid.apikey)
 const TwitterApiToken = {
   consumer_key: configSecret.twitter.consumer_key,
   consumer_secret: configSecret.twitter.consumer_secret,
@@ -348,6 +347,7 @@ export const onCreatUser = functions.firestore
   .onCreate(async (snapshot) => {
     const user = snapshot.data()
     if (user) {
+      initEmail(configSecret.sendgrid.apikey)
       await sendUserToSendrid(user.email, user.first_name)
     }
   })
@@ -356,7 +356,10 @@ export const onCreatEpisode = functions.firestore
   .document('/episodes/{uid}')
   .onCreate(async (snapshot) => {
     const ep = <Episode>snapshot.data()
-    await sendEmailEp(ep)
+    if (ep) {
+      initEmail(configSecret.sendgrid.apikey)
+      await sendEmailEp(ep)
+    }
   })
 
 export const onUpdatePeople = functions.firestore
