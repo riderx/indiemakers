@@ -225,7 +225,7 @@ export default {
     this.$firebase.auth().onAuthStateChanged((user) => {
       this.loggin = user
       if (this.loggin && this.loggin.displayName === null) {
-        this.$router.push('/login')
+        this.$modal.show('confirmName')
       }
     })
     await this.$bind(

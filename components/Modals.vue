@@ -179,14 +179,14 @@
       </modal>
       <modal height="auto" adaptive :click-to-close="isFalse" name="confirmName">
         <div class="container-fluid">
-          <div class="row bg-primary py-2">
+          <div class="row bg-primary py-2 border-10 border-light">
             <div class="col-12 pt-2 text-white text-center">
-              <h1>😨 Spam ou pas Spam ?</h1>
+              <h1>😨 Mais qui est tu ?</h1>
             </div>
           </div>
-          <div class="row bg-success pt-4">
+          <div class="row bg-primary pt-4 h-100 border-10 border-light">
             <div class="col-12 pt-2 text-white text-center">
-              <p>Ajoute ton nom pour recevoir par email les épisodes pour lesquels tu as voté.</p>
+              <p>Ajoute ton prénom pour que je puisse savoir a qui s'adresse mes emails !</p>
             </div>
             <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
               <div class="form-group mb-0">
@@ -200,15 +200,15 @@
                   @keyup.enter="addName()"
                 >
               </div>
-              <p>Si tu choisie un faux nom ca seras a jamais dans les spams 😢</p>
+              <p>Si tu choisie de ne pas en mettre tu t'apelleras Bob </p>
             </div>
             <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
               <button
                 type="button"
-                class="btn btn-primary btn-lg btn-block text-light px-4 h1"
+                class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
                 @click="addName()"
               >
-                Valider mon Nom
+                Comfirme mon prénom
               </button>
             </div>
           </div>
