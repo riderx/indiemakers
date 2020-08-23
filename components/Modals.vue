@@ -5,7 +5,7 @@
         <div class="container-fluid">
           <div class="row bg-primary border-10 border-light">
             <div class="col-12">
-              <div class="row bg-success pt-4 h-100">
+              <div class="row pt-4 h-100">
                 <div class="col-12 pt-2 pb-3 text-white text-center">
                   <p>Lien Copié</p>
                 </div>
@@ -152,18 +152,68 @@
           </div>
         </div>
       </modal>
-      <modal height="550px" adaptive name="join">
-        <div class="bg-primary h-100 text-white border-10 border-light">
-          <h1 class="pl-2 py-2 m-0 text-center">
-            Mes Emails Privés !
-          </h1>
-          <p class="px-5">
-            Un email chaque semaine avec mes conseils actionables pour lancer son side-projet, et gagner sa liberté ...
-          </p>
-          <p class="px-5">
-            Tu seras également informé de la sortie des épisodes !
-          </p>
-          <iframe frameborder="0" width="100%" height="100%" src="https://cdn.forms-content.sg-form.com/7b46df84-c9ba-11ea-8d2c-9aae4ee15967" />
+      <modal height="auto" adaptive name="thanks_register">
+        <div class="container-fluid">
+          <div class="row bg-primary border-10 border-light">
+            <div class="col-12">
+              <div class="row pt-4 h-100">
+                <div class="col-12 pt-2 pb-3 text-white text-center">
+                  <p>Check tes emails, tu y trouveras mon premier email, si tu ne le vois pas check tes spams !</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal height="auto" adaptive name="join">
+        <div class="container-fluid">
+          <div class="row bg-primary py-2 border-10 border-light">
+            <div class="col-12">
+              <h1 class="pl-2 py-2 m-0 text-white text-center">
+                Mes Emails Privés !
+              </h1>
+              <p class="px-5 text-white">
+                Un email chaque semaine avec mes conseils actionables pour lancer son side-projet, et gagner sa liberté ...
+              </p>
+              <p class="px-5 text-white">
+                Tu seras également informé de la sortie des épisodes !
+              </p>
+              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+                  <div class="form-group mb-0">
+                    <input
+                      ref="name"
+                      v-model="emailInput"
+                      type="text"
+                      class="form-control pb-0"
+                      aria-describedby="TweetnameHelp"
+                      placeholder="Elon@tesla.com"
+                    >
+                  </div>
+              </div>
+              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+                <div class="form-group mb-0">
+                  <input
+                    ref="name"
+                    v-model="nameInput"
+                    type="text"
+                    class="form-control pb-0"
+                    aria-describedby="TweetnameHelp"
+                    placeholder="Elon Musk"
+                  >
+                </div>
+              </div>
+              <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <button
+                  type="button"
+                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                  @click="addEMailSub()"
+                >
+                  Comfirmer
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- <iframe frameborder="0" width="100%" height="100%" src="https://cdn.forms-content.sg-form.com/7b46df84-c9ba-11ea-8d2c-9aae4ee15967" /> -->
         </div>
       </modal>
       <modal height="auto" adaptive name="loading">
@@ -608,9 +658,22 @@ export default {
   mounted () {
     this.$firebase.auth().onAuthStateChanged((user) => {
       this.user = user
-      });
+    })
   },
   methods: {
+    addEMailSub () {
+      this.$firebase
+        .firestore()
+        .collection('users')
+        .doc(this.newEmail)
+        .set({
+          first_name: this.newName,
+          email: this.newEmail
+        }).then(() => {
+          this.$modal.hide('join')
+          this.$modal.show('thanks_register')
+        })
+    },
     addName () {
       this.$modal.hide('confirmName')
       this.$modal.show('loading')
@@ -623,7 +686,7 @@ export default {
             await this.$firebase
               .firestore()
               .collection('users')
-              .doc(this.user.uid)
+              .doc(this.user.email)
               .set({
                 first_name: this.newName,
                 email: this.user.email
@@ -643,6 +706,12 @@ export default {
     },
     openEp (guid) {
       this.$router.push(`/episode/${guid}`)
+    },
+    openRegister () {
+      this.$modal.show('register')
+      setTimeout(() => {
+        this.$refs.register.focus()
+      }, 50)
     },
     addMaker () {
       this.$modal.hide('add')

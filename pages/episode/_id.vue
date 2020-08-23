@@ -234,7 +234,7 @@ export default {
     if (!window.localStorage.getItem('emailForSignIn')) {
       setTimeout(() => {
         this.$modal.show('join')
-      }, 10000);
+      }, 10000)
     }
   },
   methods: {
