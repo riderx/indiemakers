@@ -210,6 +210,7 @@ export default {
       insta: '',
       preview: '',
       sizeHead: '100vh',
+      sendToDB: '',
       content: '',
       image: {
         src: '',
@@ -236,7 +237,7 @@ export default {
         image: this.image.src,
         content: this.content
       }).catch((err) => {
-        console.error('exist already', err)
+        this.sendToDB = err
       })
     setTimeout(() => {
       this.showAudio = true
