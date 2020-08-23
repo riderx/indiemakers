@@ -2,7 +2,6 @@
 **/*.js
 **/*.js.map
 
-src/twitter_api.ts
 # Typescript v1 declaration files
 typings/
 

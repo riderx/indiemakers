@@ -225,29 +225,35 @@ export default {
     require('../../plugins/modal.client')
     window.RTP_CONFIG = { link: 'imf', mode: 'button' }
     this.setSizeHead()
-    await this.postEp(this.$route.params.id)
+    this.postEp(this.$route.params.id)
     setTimeout(() => {
       this.showAudio = true
     }, 2000)
   },
   methods: {
     async postEp (gui) {
+      console.log('postEP', gui)
+      const ep = {
+        udi: gui,
+        title: this.title,
+        preview: this.preview,
+        image: this.image.src,
+        content: this.content
+      }
+      if (this.instagram) {
+        ep.instagram = this.instagram
+      }
+      if (this.twitter) {
+        ep.twitter = this.twitter
+      }
       try {
         await this.$firebase
           .firestore()
           .collection('episodes')
           .doc(gui)
-          .set({
-            udi: gui,
-            title: this.title,
-            twitter: this.twitter,
-            preview: this.preview,
-            instagram: this.instagram,
-            image: this.image.src,
-            content: this.content
-          })
+          .set(ep)
       } catch (err) {
-        console.log('already exist')
+        console.log('already exist', err)
       }
     },
     tweetIt () {

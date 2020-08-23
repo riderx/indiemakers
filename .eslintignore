@@ -88,5 +88,4 @@ sw.*
 
 # Vim swap files
 *.swp
-functions/indiemakerfr-firebase.json
-functions/src/test.ts
+functions
