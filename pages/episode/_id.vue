@@ -191,6 +191,7 @@ export default {
           this.preview = this.previewText(element.contentSnippet)
           this.image.src = element.itunes.image
           this.audio = element.enclosure.url
+          this.postEp(element.guid)
           return true
         }
       })
@@ -224,26 +225,28 @@ export default {
     require('../../plugins/modal.client')
     window.RTP_CONFIG = { link: 'imf', mode: 'button' }
     this.setSizeHead()
-    this.$firebase
-      .firestore()
-      .collection('episodes/')
-      .doc(this.$route.params.id)
-      .set({
-        udi: this.$route.params.id,
-        title: this.title,
-        twitter: this.twitter,
-        preview: this.preview,
-        instagram: this.instagram,
-        image: this.image.src,
-        content: this.content
-      }).catch((err) => {
-        this.sendToDB = err
-      })
     setTimeout(() => {
       this.showAudio = true
     }, 2000)
   },
   methods: {
+    postEp (gui) {
+      this.$firebase
+        .firestore()
+        .collection('episodes')
+        .doc(gui)
+        .set({
+          udi: gui,
+          title: this.title,
+          twitter: this.twitter,
+          preview: this.preview,
+          instagram: this.instagram,
+          image: this.image.src,
+          content: this.content
+        }).catch((err) => {
+          this.sendToDB = err
+        })
+    },
     tweetIt () {
       const linkEp = `${process.env.domain}/episode/${this.epGui}`
       const tweet = `J'écoute le podcast @${process.env.handler} avec @${this.maker} ${linkEp}`
