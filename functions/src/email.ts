@@ -2,7 +2,7 @@ import * as sgClient from '@sendgrid/client'
 import { ClientRequest } from '@sendgrid/client/src/request'
 
 const sgListIndie = '9d1a4cc5-92bf-4253-a408-b3277fc36ea4'
-const sgListEp = 'f96e367b-1501-4992-b3f5-55f4d60128dc'
+const sgListEp = 'dbedce13-afa8-48f6-8149-030a8505f50e'
 
 const sgEpdDesignId = '1362115d-6d78-437f-a8a6-c6c4921e5fee'
 const suppressionGroupId = '28378'
