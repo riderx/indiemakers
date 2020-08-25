@@ -48,16 +48,16 @@
                     v-lazy="getImgObj(episode.itunes.image)"
                     :src="loadingImg"
                     class="w-100 w-md-75 img-fluid border-5 border-light"
-                    :alt="'Cover ' + episode.twitter"
+                    :alt="'Cover ' + episode.title"
                   >
                 </div>
                 <div v-tooltip="'Ecouter l\'épisode'" class="col-12 col-md-8 order-2 pl-2 pl-md-0 order-md-2 text-center text-md-left">
                   <h3>{{ episode.title }}</h3>
                   <p
-                    v-if="episode.twitter"
+                    v-if="episode.social"
                     class="text-success fit-content cursor-pointer mb-0 d-none d-md-block"
                   >
-                    @{{ episode.twitter }}
+                    {{ episode.social.name }}
                   </p>
                   <p class="text-center text-md-left px-3 px-md-0 d-none d-md-block">
                     {{ episode.preview }}
@@ -65,10 +65,10 @@
                 </div>
                 <div class="col-12 px-0 px-md-5 pt-1 pt-md-3 order-3 d-block d-md-none">
                   <p
-                    v-if="episode.twitter"
+                    v-if="episode.social"
                     class="text-success text-center text-md-left mb-0"
                   >
-                    @{{ episode.twitter }}
+                    @{{ episode.social.name }}
                   </p>
                   <p class="text-center text-md-left px-3 px-md-0">
                     {{ episode.preview }}
@@ -154,11 +154,8 @@
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '../plugins/rss'
 import { crispLoader } from '../plugins/crisp.client'
-const linkTwitter = 'Son Twitter : <a href="https://twitter.com/'
-const linkTwitterRe = /Son Twitter : <a href="https:\/\/twitter\.com\/(.*)"/g
-const linkInstagram = 'Son Instagram : <a href="https://www.instagram.com/'
-const linkInstagramRe = /Son Instagram : <a href="https:\/\/www\.instagram\.com\/(.*)"/g
-
+const linkTwitterRe = /Son Twitter : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
+const linkInstagramRe = /Son Instagram : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 export default {
   components: {
     Modals: () => import('~/components/Modals.vue'),
@@ -172,16 +169,16 @@ export default {
       this.feed = res
       this.episodes = res.items
       this.episodes.forEach((element) => {
-        const twitter = this.findTw(element.content)
-        const insta = this.findInst(element.content)
         const preview = this.previewText(element.contentSnippet)
         element.preview = preview
-        if (twitter !== 'error') {
-          element.twitter = twitter
+        const twitter = this.findTw(element.content)
+        const insta = this.findInst(element.content)
+        if (twitter) {
+          element.social = twitter
+        } else if (insta) {
+          element.social = insta
         }
-        if (!element.twitter && insta !== 'error') {
-          element.twitter = insta
-        }
+        // console.log('element', element)
       })
       this.loading = false
     }
@@ -240,22 +237,18 @@ export default {
       this.$router.push('/makers')
     },
     findTw (text) {
-      const found = text.match(linkTwitterRe)
-      let name = 'error'
-      if (found && found.length > 0) {
-        name = found[0].replace(linkTwitter, '')
-        name = name.replace('"', '')
+      const founds = linkTwitterRe.exec(text)
+      if (!founds || !founds.groups) {
+        return null
       }
-      return name
+      return founds.groups
     },
     findInst (text) {
-      const found = text.match(linkInstagramRe)
-      let name = 'error'
-      if (found && found.length > 0) {
-        name = found[0].replace(linkInstagram, '')
-        name = name.replace('"', '')
+      const founds = linkInstagramRe.exec(text)
+      if (!founds || !founds.groups) {
+        return null
       }
-      return name
+      return founds.groups
     },
     nextEpisode () {
       const oneDay = 24 * 60 * 60 * 1000 // hours*minutes*seconds*milliseconds

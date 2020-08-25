@@ -179,16 +179,16 @@
                 Tu seras également informé de la sortie des épisodes !
               </p>
               <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-                  <div class="form-group mb-0">
-                    <input
-                      ref="name"
-                      v-model="emailInput"
-                      type="text"
-                      class="form-control pb-0"
-                      aria-describedby="TweetnameHelp"
-                      placeholder="Elon@tesla.com"
-                    >
-                  </div>
+                <div class="form-group mb-0">
+                  <input
+                    ref="name"
+                    v-model="emailInput"
+                    type="text"
+                    class="form-control pb-0"
+                    aria-describedby="TweetnameHelp"
+                    placeholder="Elon@tesla.com"
+                  >
+                </div>
               </div>
               <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
                 <div class="form-group mb-0">
@@ -716,7 +716,7 @@ export default {
     addMaker () {
       this.$modal.hide('add')
       this.$modal.show('loading')
-      if (!this.loggin) {
+      if (!this.user) {
         this.$modal.hide('loading')
         this.openRegister()
       } else {
@@ -774,7 +774,7 @@ export default {
     },
     tweetIt () {
       const linkEp = `${process.env.domain}/episode/${this.epGui}`
-      const tweet = `J'écoute le podcast @${process.env.handler} avec @${this.maker} ${linkEp}`
+      const tweet = `J'écoute le podcast @${process.env.handler} avec ${this.maker} ${linkEp}`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`

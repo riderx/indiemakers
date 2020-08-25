@@ -161,7 +161,7 @@
           </div>
         </div>
       </div>
-      <Modals :ep-gui="this.$route.params.id" :maker="twitter" />
+      <Modals :ep-gui="this.$route.params.id" :maker="twitter.name" />
     </div>
   </LazyHydrate>
 </template>
@@ -169,10 +169,8 @@
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '~/plugins/rss'
-const linkTwitter = 'Son Twitter : <a href="https://twitter.com/'
-const linkTwitterRe = /Son Twitter : <a href="https:\/\/twitter\.com\/(.*)"/g
-const linkInstagram = 'Son Instagram : <a href="https://www.instagram.com/'
-const linkInstagramRe = /Son Instagram : <a href="https:\/\/www\.instagram\.com\/(.*)"/g
+const linkTwitterRe = /Son Twitter : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
+const linkInstagramRe = /Son Instagram : a href="(?<link>.*)">(?<name>.*)<\/a>/g
 
 export default {
   components: {
@@ -207,8 +205,8 @@ export default {
       loading: true,
       showAudio: false,
       title: '',
-      twitter: '',
-      insta: '',
+      twitter: { name: '', link: '' },
+      instagram: { name: '', link: '' },
       preview: '',
       sizeHead: '100vh',
       sendToDB: '',
@@ -239,7 +237,7 @@ export default {
   },
   methods: {
     async postEp (gui) {
-      console.log('postEP', gui)
+      // console.log('postEP', gui)
       const ep = {
         udi: gui,
         title: this.title,
@@ -265,7 +263,7 @@ export default {
     },
     tweetIt () {
       const linkEp = `${process.env.domain}/episode/${this.epGui}`
-      const tweet = `J'écoute le podcast @${process.env.handler} avec @${this.maker} ${linkEp}`
+      const tweet = `J'écoute le podcast @${process.env.handler} avec ${this.twitter.name} ${linkEp}`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`
@@ -277,22 +275,18 @@ export default {
       this.$modal.show('join')
     },
     findTw (text) {
-      const found = text.match(linkTwitterRe)
-      let name = 'error'
-      if (found && found.length > 0) {
-        name = found[0].replace(linkTwitter, '')
-        name = name.replace('"', '')
+      const founds = linkTwitterRe.exec(text)
+      if (!founds || !founds.groups) {
+        return null
       }
-      return name
+      return founds.groups
     },
     findInst (text) {
-      const found = text.match(linkInstagramRe)
-      let name = 'error'
-      if (found && found.length > 0) {
-        name = found[0].replace(linkInstagram, '')
-        name = name.replace('"', '')
+      const founds = linkInstagramRe.exec(text)
+      if (!founds || !founds.groups) {
+        return null
       }
-      return name
+      return founds.groups
     },
     setSizeHead () {
       if (process.client && document.getElementById('header-title') && document.getElementById('header') && document.getElementById('header-title').offsetWidth !== window.innerWidth) {

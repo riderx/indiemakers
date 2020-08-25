@@ -18,13 +18,13 @@ export default {
     dev: (process.env.NODE_ENV !== 'production'),
     rss: 'https://anchor.fm/s/414d1d4/podcast/rss',
     baseRSS: 'api/rss',
-    domain: 'https://indiemakers.fr',
-    domain_local: 'http://localhost:3000',
+    domain: (process.env.NODE_ENV === 'production') ? 'https://indiemakers.fr' : 'http://localhost:3000',
     domain_unsecure: 'http://indiemakers.fr',
     handler: 'indiemakersfr'
   },
   proxy: {
-    '/api/rss': 'https://anchor.fm/s/414d1d4/podcast/rss'
+    '/api/rss': 'https://anchor.fm/s/414d1d4/podcast/rss',
+    '/an': 'https://www.googletagmanager.com/gtag/js?id=UA-111666797-4'
   },
   head: {
     title: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
@@ -75,8 +75,13 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-111666797-4',
+      customResourceURL: (process.env.NODE_ENV === 'production') ? 'https://indiemakers.fr/an' : 'http://localhost:3000/an'
+    }],
     ['@nuxtjs/pwa', { workbox: false, oneSignal: false }]
   ],
+
   /*
   ** Nuxt.js modules
   */
