@@ -165,6 +165,19 @@
           </div>
         </div>
       </modal>
+      <modal height="auto" adaptive name="already_register">
+        <div class="container-fluid">
+          <div class="row bg-primary border-10 border-light">
+            <div class="col-12">
+              <div class="row pt-4 h-100">
+                <div class="col-12 pt-2 pb-3 text-white text-center">
+                  <p>Tu est deja inscrit ! </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
       <modal height="auto" adaptive name="join">
         <div class="container-fluid">
           <div class="row bg-primary py-2 border-10 border-light">
@@ -213,7 +226,6 @@
               </div>
             </div>
           </div>
-          <!-- <iframe frameborder="0" width="100%" height="100%" src="https://cdn.forms-content.sg-form.com/7b46df84-c9ba-11ea-8d2c-9aae4ee15967" /> -->
         </div>
       </modal>
       <modal height="auto" adaptive name="loading">
@@ -656,6 +668,7 @@ export default {
     }
   },
   mounted () {
+    require('../plugins/modal.client')
     this.$firebase.auth().onAuthStateChanged((user) => {
       this.user = user
     })

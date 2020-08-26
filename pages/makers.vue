@@ -218,8 +218,6 @@ export default {
     }
   },
   async mounted () {
-    require('../plugins/modal.client')
-
     this.email = window.localStorage.getItem('emailForSignIn')
     // this.loggin = fb.auth().currentUser
     this.$firebase.auth().onAuthStateChanged((user) => {

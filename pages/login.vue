@@ -43,7 +43,6 @@
 <script>
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 // import { firebaseLib } from '../plugins/firebase.client'
-// import '../plugins/modal.client'
 
 export default {
   components: {
@@ -61,7 +60,6 @@ export default {
     }
   },
   mounted () {
-    require('../plugins/modal.client')
     this.$firebase.auth().onAuthStateChanged((user) => {
       this.user = user
       if (this.user && this.user.displayName === null) {

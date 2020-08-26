@@ -213,7 +213,6 @@ export default {
     }, { capture: true, once: true, passive: true })
   },
   mounted () {
-    require('../plugins/modal.client')
     this.setSizeHead()
   },
   methods: {

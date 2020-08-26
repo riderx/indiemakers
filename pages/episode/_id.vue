@@ -220,7 +220,6 @@ export default {
     }
   },
   mounted () {
-    require('../../plugins/modal.client')
     window.RTP_CONFIG = { link: 'imf', mode: 'button' }
     this.setSizeHead()
     if (!this.$fetchState.pending) {
