@@ -173,7 +173,7 @@ export default {
         element.preview = preview
         const twitter = this.findTw(element.content)
         const insta = this.findInst(element.content)
-        if (twitter) {
+        if (twitter && twitter.name) {
           element.social = twitter
         } else if (insta) {
           element.social = insta
@@ -238,14 +238,14 @@ export default {
     findTw (text) {
       const founds = linkTwitterRe.exec(text)
       if (!founds || !founds.groups) {
-        return null
+        return { name: null, link: null }
       }
       return founds.groups
     },
     findInst (text) {
       const founds = linkInstagramRe.exec(text)
       if (!founds || !founds.groups) {
-        return null
+        return { name: null, link: null }
       }
       return founds.groups
     },

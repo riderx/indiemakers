@@ -205,8 +205,8 @@ export default {
       loading: true,
       showAudio: false,
       title: '',
-      twitter: { name: '', link: '' },
-      instagram: { name: '', link: '' },
+      twitter: { name: null, link: null },
+      instagram: { name: null, link: null },
       preview: '',
       sizeHead: '100vh',
       sendToDB: '',
@@ -276,14 +276,14 @@ export default {
     findTw (text) {
       const founds = linkTwitterRe.exec(text)
       if (!founds || !founds.groups) {
-        return null
+        return { name: null, link: null }
       }
       return founds.groups
     },
     findInst (text) {
       const founds = linkInstagramRe.exec(text)
       if (!founds || !founds.groups) {
-        return null
+        return { name: null, link: null }
       }
       return founds.groups
     },
