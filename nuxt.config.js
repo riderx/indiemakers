@@ -23,8 +23,7 @@ export default {
     handler: 'indiemakersfr'
   },
   proxy: {
-    '/p/rss': 'https://anchor.fm/s/414d1d4/podcast/rss',
-    '/p/an': 'https://www.googletagmanager.com/gtag/js?id=UA-111666797-4'
+    '/p/rss': 'https://anchor.fm/s/414d1d4/podcast/rss'
   },
   head: {
     title: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
@@ -81,10 +80,6 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    ['@nuxtjs/google-analytics', {
-      id: 'UA-111666797-4',
-      customResourceURL: (process.env.NODE_ENV === 'production') ? 'https://indiemakers.fr/p/an' : 'http://localhost:3000/p/an'
-    }],
     ['@nuxtjs/pwa', { workbox: false, oneSignal: false }]
   ],
 

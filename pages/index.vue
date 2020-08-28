@@ -99,7 +99,8 @@
                 <p class="pt-5">
                   {{ banner }}
                 </p>
-                <p>Par <b>Martin DONADIEU</b></p>
+                <p>Par <a target="_blank" href="https://twitter.com/martindonadieu">Martin DONADIEU</a></p>
+                <p>Ici pas de cookie, juste de l'<a target="_blank" href="https://plausible.io/indiemakers.fr">Open stats</a> qui te respecte </p>
               </div>
               <div class="col-12 pt-3 text-center">
                 <button
