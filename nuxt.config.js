@@ -17,18 +17,25 @@ export default {
   env: {
     dev: (process.env.NODE_ENV !== 'production'),
     rss: 'https://anchor.fm/s/414d1d4/podcast/rss',
-    baseRSS: 'api/rss',
+    baseRSS: 'p/rss',
     domain: (process.env.NODE_ENV === 'production') ? 'https://indiemakers.fr' : 'http://localhost:3000',
     domain_unsecure: 'http://indiemakers.fr',
     handler: 'indiemakersfr'
   },
   proxy: {
-    '/api/rss': 'https://anchor.fm/s/414d1d4/podcast/rss',
-    '/an': 'https://www.googletagmanager.com/gtag/js?id=UA-111666797-4'
+    '/p/rss': 'https://anchor.fm/s/414d1d4/podcast/rss',
+    '/p/an': 'https://www.googletagmanager.com/gtag/js?id=UA-111666797-4'
+    // '/p/pls': { changeOrigin: false, target: 'https://plausible.io/js/plausible.js' }
   },
   head: {
     title: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
     script: [
+      {
+        src: 'https://plausible.io/js/plausible.js',
+        'data-domain': 'indiemakers.fr',
+        async: true,
+        defer: true
+      }
     ],
     meta: [
       { charset: 'utf-8' },
@@ -77,7 +84,7 @@ export default {
     '@nuxtjs/eslint-module',
     ['@nuxtjs/google-analytics', {
       id: 'UA-111666797-4',
-      customResourceURL: (process.env.NODE_ENV === 'production') ? 'https://indiemakers.fr/an' : 'http://localhost:3000/an'
+      customResourceURL: (process.env.NODE_ENV === 'production') ? 'https://indiemakers.fr/p/an' : 'http://localhost:3000/p/an'
     }],
     ['@nuxtjs/pwa', { workbox: false, oneSignal: false }]
   ],
@@ -88,7 +95,23 @@ export default {
   modules: [
     '@nuxtjs/component-cache',
     'bootstrap-vue/nuxt',
-    '@nuxtjs/proxy'
+    [
+      '@nuxtjs/proxy',
+      {
+        logProvider: () => {
+          const provider = {
+            log: console.log,
+            debug: console.log,
+            info: console.info,
+            warn: console.warn,
+            error: console.error
+          }
+
+          return provider
+        },
+        logLevel: 'debug'
+      }
+    ]
   ],
   fontawesome: {
     component: 'fa',
