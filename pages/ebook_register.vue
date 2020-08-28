@@ -67,8 +67,8 @@ export default {
     return {
       email: '',
       name: '',
-      title: 'Le guide pour enfin lancer ton propre projet !',
-      desc: 'Télécharge ce guide en 6 étapes qui te fera éviter bien des erreurs et gagner un temps précieux !'
+      title: 'Le guide pour lancer ton projet !',
+      desc: 'Reçoit mon guide en 6 étapes qui te fera éviter bien des erreurs et gagner un temps précieux !'
     }
   },
   mounted () {

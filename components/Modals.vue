@@ -165,6 +165,19 @@
           </div>
         </div>
       </modal>
+      <modal height="auto" adaptive name="thanks_ebook">
+        <div class="container-fluid">
+          <div class="row bg-primary border-10 border-light">
+            <div class="col-12">
+              <div class="row pt-4 h-100">
+                <div class="col-12 pt-2 pb-3 text-white text-center">
+                  <p>Check tes emails, tu y trouveras le lien vers l'ebook et une petite surprise, si tu ne le vois pas check tes spams !</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
       <modal height="auto" adaptive name="already_register">
         <div class="container-fluid">
           <div class="row bg-primary border-10 border-light">
@@ -220,6 +233,56 @@
                   type="button"
                   class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
                   @click="addEMailSub()"
+                >
+                  Comfirmer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal height="auto" adaptive name="ebook">
+        <div class="container-fluid">
+          <div class="row bg-primary py-2 border-10 border-light">
+            <div class="col-12">
+              <h1 class="pl-2 py-2 m-0 text-white text-center">
+                Le guide pour lancer ton projet !
+              </h1>
+              <p class="px-5 text-white">
+                Reçoit mon guide en 6 étapes qui te fera éviter bien des erreurs et gagner un temps précieux !
+              </p>
+              <p class="px-5 text-white">
+                Tu seras également informé de la sortie des épisodes !
+              </p>
+              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+                <div class="form-group mb-0">
+                  <input
+                    ref="name"
+                    v-model="emailInput"
+                    type="text"
+                    class="form-control pb-0"
+                    aria-describedby="TweetnameHelp"
+                    placeholder="Elon@tesla.com"
+                  >
+                </div>
+              </div>
+              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+                <div class="form-group mb-0">
+                  <input
+                    ref="name"
+                    v-model="nameInput"
+                    type="text"
+                    class="form-control pb-0"
+                    aria-describedby="TweetnameHelp"
+                    placeholder="Elon Musk"
+                  >
+                </div>
+              </div>
+              <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <button
+                  type="button"
+                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                  @click="addEMailSub('ebook')"
                 >
                   Comfirmer
                 </button>
@@ -674,7 +737,7 @@ export default {
     })
   },
   methods: {
-    addEMailSub () {
+    addEMailSub (name) {
       this.$firebase
         .firestore()
         .collection('users')
@@ -684,7 +747,11 @@ export default {
           email: this.newEmail
         }).then(() => {
           this.$modal.hide('join')
-          this.$modal.show('thanks_register')
+          if (name === 'ebook') {
+            this.$modal.show('thanks_ebook')
+          } else {
+            this.$modal.show('thanks_register')
+          }
         })
     },
     addName () {
