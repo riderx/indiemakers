@@ -25,13 +25,12 @@ export default {
   proxy: {
     '/p/rss': 'https://anchor.fm/s/414d1d4/podcast/rss',
     '/p/an': 'https://www.googletagmanager.com/gtag/js?id=UA-111666797-4'
-    // '/p/pls': { changeOrigin: false, target: 'https://plausible.io/js/plausible.js' }
   },
   head: {
     title: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
     script: [
       {
-        src: 'https://plausible.io/js/plausible.js',
+        src: 'https://pls.indiemakers.fr/js/index.js',
         'data-domain': 'indiemakers.fr',
         async: true,
         defer: true
