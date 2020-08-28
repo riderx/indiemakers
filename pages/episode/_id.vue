@@ -230,11 +230,36 @@ export default {
     }, 2000)
     if (!window.localStorage.getItem('emailForSignIn')) {
       setTimeout(() => {
-        this.$modal.show('join')
-      }, 10000)
+        this.showRandomModal()
+      }, 15000)
     }
   },
   methods: {
+    showRandomModal () {
+      const rand = this.getRandomInt(100)
+      let modalName = 'join'
+      switch (true) {
+        case (rand < 50):
+          modalName = 'ebook'
+          break
+        case (rand < 70):
+          modalName = 'share'
+          break
+        case (rand < 90):
+          modalName = 'rate'
+          break
+        case (rand < 95):
+          modalName = 'listen'
+          break
+        case (rand < 100):
+          modalName = 'upgrade'
+          break
+      }
+      this.$modal.show(modalName)
+    },
+    getRandomInt (max) {
+      return Math.floor(Math.random() * Math.floor(max))
+    },
     async postEp (gui) {
       // console.log('postEP', gui)
       const ep = {
