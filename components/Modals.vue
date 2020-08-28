@@ -20,7 +20,7 @@
             <div class="col-12">
               <div class="row bg-primary border-10 border-light py-4">
                 <div class="col-12 pt-1 px-1 px-md-3 text-white text-center">
-                  <h3>Tu peux aussi écouter l'épisode sur :</h3>
+                  <h3>Tu peux aussi écouter sur :</h3>
                 </div>
                 <div class="col-12 pt-1 px-1 px-md-3 text-center">
                   <button
@@ -89,7 +89,7 @@
                   </button>
                 </div>
                 <div class="col-12 pt-1 px-1 px-md-3 text-white text-center">
-                  <p>Abonner toi, ça m'aide énormement !</p>
+                  <h5>Abonner toi, ça m'aide énormement !</h5>
                 </div>
               </div>
             </div>

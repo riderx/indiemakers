@@ -33,8 +33,8 @@ export default {
       icones: [
         {
           title: 'Communauté',
-          lien: 'https://comu.indiemakers.fr',
-          class: ['fas', 'comments']
+          lien: 'modal_listen',
+          class: ['fas', 'headphones']
         },
         {
           title: 'Instagram',
@@ -54,6 +54,11 @@ export default {
     openPage (name) {
       if (name.includes('https')) {
         window.open(name, '_blank')
+      } if (name.includes('modal_')) {
+        const nameModal = name.split('modal_')[1]
+        if (nameModal) {
+          this.$modal.show(nameModal)
+        }
       } else {
         this.$router.push(name)
       }
