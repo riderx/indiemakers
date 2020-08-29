@@ -287,8 +287,8 @@ export default {
           .collection('episodes')
           .doc(gui)
           .set(ep)
-      } catch (err) {
-        console.log('already exist', err)
+      } catch {
+        return null
       }
     },
     tweetIt () {
