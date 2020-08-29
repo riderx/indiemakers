@@ -204,6 +204,7 @@ export default {
     return {
       loading: true,
       showAudio: false,
+      timeoutModal: null,
       title: '',
       twitter: { name: null, link: null },
       instagram: { name: null, link: null },
@@ -219,6 +220,11 @@ export default {
       audio: ''
     }
   },
+  destroyed () {
+    if (this.timeoutModal) {
+      clearTimeout(this.timeoutModal)
+    }
+  },
   mounted () {
     window.RTP_CONFIG = { link: 'imf', mode: 'button' }
     this.setSizeHead()
@@ -229,7 +235,7 @@ export default {
       this.showAudio = true
     }, 2000)
     if (!window.localStorage.getItem('emailForSignIn')) {
-      setTimeout(() => {
+      this.timeoutModal = setTimeout(() => {
         this.showRandomModal()
       }, 15000)
     }
