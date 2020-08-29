@@ -180,7 +180,7 @@
                   <input
                     ref="name"
                     v-model="emailInput"
-                    type="text"
+                    type="email"
                     class="form-control pb-0"
                     aria-describedby="TweetnameHelp"
                     placeholder="Elon@tesla.com"
@@ -230,7 +230,7 @@
                   <input
                     ref="name"
                     v-model="emailInput"
-                    type="text"
+                    type="email"
                     class="form-control pb-0"
                     aria-describedby="TweetnameHelp"
                     placeholder="Elon@tesla.com"
