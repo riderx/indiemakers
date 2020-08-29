@@ -68,7 +68,7 @@
                     v-if="episode.social"
                     class="text-success text-center text-md-left mb-0"
                   >
-                    @{{ episode.social.name }}
+                    {{ episode.social.name }}
                   </p>
                   <p class="text-center text-md-left px-3 px-md-0">
                     {{ episode.preview }}
