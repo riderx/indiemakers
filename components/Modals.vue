@@ -797,17 +797,18 @@ export default {
     bmc () {
       window.open(`https://www.buymeacoffee.com/${process.env.handler}`, '_blank')
     },
-    addEMailSub (name) {
+    addEMailSub (kind = 'email') {
       this.$firebase
         .firestore()
         .collection('users')
         .doc(this.newEmail)
         .set({
           first_name: this.newName,
+          kind,
           email: this.newEmail
         }).then(() => {
           this.$modal.hide('join')
-          if (name === 'ebook') {
+          if (kind === 'ebook') {
             this.$modal.show('thanks_ebook')
           } else {
             this.$modal.show('thanks_register')
