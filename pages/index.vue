@@ -51,7 +51,7 @@
                     :alt="'Cover ' + episode.title"
                   >
                 </div>
-                <div v-tooltip="'Ecouter l\'épisode'" class="col-12 col-md-8 order-2 pl-2 pl-md-0 order-md-2 text-center text-md-left">
+                <div class="col-12 col-md-8 order-2 pl-2 pl-md-0 order-md-2 text-center text-md-left">
                   <h3>{{ episode.title }}</h3>
                   <p
                     v-if="episode.social"
