@@ -178,7 +178,7 @@
               <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
                 <div class="form-group mb-0">
                   <input
-                    ref="name"
+                    ref="email"
                     v-model="emailInput"
                     type="email"
                     class="form-control pb-0"
@@ -228,7 +228,7 @@
               <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
                 <div class="form-group mb-0">
                   <input
-                    ref="name"
+                    ref="email"
                     v-model="emailInput"
                     type="email"
                     class="form-control pb-0"
