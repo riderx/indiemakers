@@ -803,8 +803,8 @@ export default {
         .collection('users')
         .doc(this.newEmail)
         .set({
-          first_name: this.newName,
           kind,
+          first_name: this.newName,
           email: this.newEmail
         }).then(() => {
           this.$modal.hide('join')
