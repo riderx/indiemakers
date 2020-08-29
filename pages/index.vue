@@ -176,7 +176,7 @@ export default {
         const insta = this.findInst(element.content)
         if (twitter && twitter.name) {
           element.social = twitter
-        } else if (insta) {
+        } else if (insta && twitter.name) {
           element.social = insta
         }
         // console.log('element', element)
