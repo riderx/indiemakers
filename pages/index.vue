@@ -99,8 +99,6 @@
                 <p class="pt-5">
                   {{ banner }}
                 </p>
-                <p>Par <a target="_blank" href="https://twitter.com/martindonadieu">Martin DONADIEU</a></p>
-                <p>Ici pas de cookie, juste de l'<a target="_blank" href="https://plausible.io/indiemakers.fr">Open stats</a> qui te respecte </p>
               </div>
               <div class="col-12 pt-3 text-center">
                 <button
@@ -113,7 +111,12 @@
                   Deviens Indie maker
                 </button>
               </div>
-              <div class="col-12 pt-5 px-md-3 order-3 text-white text-center text-sm-left">
+              <div class="col-12 pt-3">
+                <p>Par <a target="_blank" href="https://twitter.com/martindonadieu">Martin DONADIEU</a></p>
+                <p>Ici pas de cookie, juste de l'<a target="_blank" href="https://plausible.io/indiemakers.fr">Open data</a> qui te respecte </p>
+                <p><a target="_blank" href="/tools">Mes outils</a> quotidiens pour gerer mes projets !</p>
+              </div>
+              <div class="col-12 pt-3 pb-3 px-md-3 order-3 text-white text-center text-sm-left">
                 <h5>Mes autres projets:</h5>
                 <div class="d-flex flex-column flex-md-row">
                   <a
