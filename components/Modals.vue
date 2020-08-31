@@ -808,6 +808,7 @@ export default {
           first_name: this.newName,
           email: this.newEmail
         }).then(() => {
+          window.localStorage.setItem('emailForNewletter', true)
           this.$modal.hide('join')
           if (kind === 'ebook') {
             this.$modal.show('thanks_ebook')

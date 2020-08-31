@@ -234,18 +234,19 @@ export default {
     setTimeout(() => {
       this.showAudio = true
     }, 2000)
-    if (!window.localStorage.getItem('emailForSignIn')) {
-      this.timeoutModal = setTimeout(() => {
-        this.showRandomModal()
-      }, 15000)
-    }
+    this.timeoutModal = setTimeout(() => {
+      this.showRandomModal()
+    }, 15000)
   },
   methods: {
     showRandomModal () {
       const rand = this.getRandomInt(100)
-      let modalName = 'join'
+      let modalName = 'upgrade'
       switch (true) {
-        case (rand < 50):
+        case (rand < 25 && !window.localStorage.getItem('emailForNewletter')):
+          modalName = 'join'
+          break
+        case (rand < 50 && !window.localStorage.getItem('emailForNewletter')):
           modalName = 'ebook'
           break
         case (rand < 70):
@@ -256,9 +257,6 @@ export default {
           break
         case (rand < 95):
           modalName = 'listen'
-          break
-        case (rand < 100):
-          modalName = 'upgrade'
           break
       }
       this.$modal.show(modalName)
