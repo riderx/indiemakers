@@ -804,6 +804,7 @@ export default {
         .doc(this.newEmail)
         .set({
           kind,
+          created_at: new Date(),
           first_name: this.newName,
           email: this.newEmail
         }).then(() => {
