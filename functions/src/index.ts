@@ -346,7 +346,7 @@ export const onCreatUser = functions.firestore
   .document('/users/{uid}')
   .onCreate(async (snapshot) => {
     const user = snapshot.data()
-    if (user) {
+    if (user && user.email && user.email !== '') {
       initEmail(configSecret.sendgrid.apikey)
       await sendUserToSendrid(user.email, user.first_name)
     }
@@ -356,7 +356,7 @@ export const onCreatEpisode = functions.firestore
   .document('/episodes/{uid}')
   .onCreate(async (snapshot) => {
     const ep = <Episode>snapshot.data()
-    if (ep) {
+    if (ep && ep.title && ep.title !== '') {
       initEmail(configSecret.sendgrid.apikey)
       await sendEmailEp(ep)
     }
