@@ -787,6 +787,7 @@ export default {
     require('../plugins/modal.client')
     this.$firebase.auth().onAuthStateChanged((user) => {
       this.user = user
+      this.user = user.setUser({ uid: user.uid })
     })
   },
   methods: {

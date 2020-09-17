@@ -89,6 +89,7 @@ export default {
   modules: [
     '@nuxtjs/component-cache',
     'bootstrap-vue/nuxt',
+    '@nuxtjs/sentry',
     [
       '@nuxtjs/proxy',
       {
@@ -107,6 +108,10 @@ export default {
       }
     ]
   ],
+  sentry: {
+    dsn: 'https://1e9603c479b54389ab04a4be985e1768@o449238.ingest.sentry.io/5431873', // Enter your project's DSN here
+    config: {} // Additional config
+  },
   fontawesome: {
     component: 'fa',
     icons: {
