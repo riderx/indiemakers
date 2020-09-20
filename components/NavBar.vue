@@ -9,10 +9,10 @@
         <li
           v-for="(icon, index) in icones"
           :key="index"
+          v-tooltip="'Commence à gagner ta vie sur internet'"
           class="list-group-item bg-transparent text-white p-2 p-md-3 cursor-pointer"
           @click="openPage(icon.lien)"
         >
-          <!-- <i :class="icon.class" /> -->
           <fa :icon="icon.class" class="fa-2x" />
         </li>
       </ul>
@@ -32,14 +32,14 @@ export default {
       },
       icones: [
         {
-          title: 'Communauté',
+          title: 'Ecoute',
           lien: 'modal_listen',
           class: ['fas', 'headphones']
         },
         {
-          title: 'Instagram',
-          lien: `https://instagram.com/${process.env.handler}`,
-          class: ['fab', 'instagram']
+          title: 'Communauté le chantier',
+          lien: 'https://discord.gg/2XyUn3A',
+          class: ['fas', 'fa-discord']
         },
         {
           title: 'twitter',
