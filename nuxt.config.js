@@ -116,7 +116,7 @@ export default {
     component: 'fa',
     icons: {
       solid: ['faHeadphones', 'faHeart', 'faPizzaSlice', 'faCaretUp', 'faCaretCircleRight'],
-      brands: ['faSpotify', 'faInstagram', 'faTwitter']
+      brands: ['faDiscord', 'faTwitter']
     }
   }
   /*

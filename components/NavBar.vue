@@ -39,7 +39,7 @@ export default {
         {
           title: 'Communauté le chantier',
           lien: 'https://discord.gg/2XyUn3A',
-          class: ['fas', 'fa-discord']
+          class: ['fab', 'discord']
         },
         {
           title: 'twitter',
