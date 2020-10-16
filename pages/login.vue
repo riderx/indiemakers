@@ -61,8 +61,10 @@ export default {
   },
   mounted () {
     this.$firebase.auth().onAuthStateChanged((user) => {
-      this.user = user.setUser({ uid: user.uid })
-      this.$sentry.set(new Error('example'))
+      this.user = user
+      if (user) {
+        this.$sentry.setUser({ uid: user.uid })
+      }
       if (this.user && this.user.displayName === null) {
         this.$modal.show('confirmName')
       } else if (this.user) {

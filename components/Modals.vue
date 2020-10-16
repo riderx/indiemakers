@@ -787,7 +787,9 @@ export default {
     require('../plugins/modal.client')
     this.$firebase.auth().onAuthStateChanged((user) => {
       this.user = user
-      this.user = user.setUser({ uid: user.uid })
+      if (user) {
+        this.$sentry.setUser({ uid: user.uid })
+      }
     })
   },
   methods: {
@@ -797,6 +799,41 @@ export default {
     },
     bmc () {
       window.open(`https://www.buymeacoffee.com/${process.env.handler}`, '_blank')
+    },
+    copyTextToClipboard (text) {
+      if (!navigator.clipboard) {
+        this.fallbackCopyTextToClipboard(text)
+        return
+      }
+      navigator.clipboard.writeText(text).then(
+        () => {
+          // console.log("Async: Copying to clipboard was successful!");
+          this.$modal.hide('listen')
+          this.$modal.show('copied')
+        },
+        (err) => {
+          console.error('Async: Could not copy text: ', err)
+        }
+      )
+    },
+    fallbackCopyTextToClipboard (text) {
+      const textArea = document.createElement('textarea')
+      textArea.value = text
+      textArea.style.position = 'fixed' // avoid scrolling to bottom
+      document.body.appendChild(textArea)
+      textArea.focus()
+      textArea.select()
+      try {
+        if (!document.execCommand('copy')) {
+          console.error('unsuccessful')
+        } else {
+          this.$modal.hide('listen')
+          this.$modal.show('copied')
+        }
+      } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err)
+      }
+      document.body.removeChild(textArea)
     },
     addEMailSub (kind = 'email') {
       this.$firebase
