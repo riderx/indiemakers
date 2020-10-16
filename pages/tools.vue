@@ -3,7 +3,12 @@
     <div class="container">
       <div class="row bg-primary py-2 border-10 border-light">
         <div class="col-12 text-center">
-          <img class="w-25 pb-5 pb-md-3" src="/tools.svg">
+          <img
+            class="w-25 pb-5 pb-md-3"
+            width="100%"
+            height="100%"
+            src="/tools.svg"
+          >
           <h1 class="pl-2 py-2 m-0 text-white text-center">
             {{ title }}
           </h1>
@@ -18,12 +23,18 @@
                 class="col-lg-4 col-md-6 col-sm-12 mb-4"
               >
                 <div class="card bg-primary border-5 border-light ">
-                  <img class="card-img-top" :src="tool.image" :alt="`${tool.name} Logo`"><div class="card-body">
+                  <img
+                    width="100%"
+                    height="100%"
+                    class="card-img-top"
+                    :src="tool.image"
+                    :alt="`${tool.name} Logo`"
+                  ><div class="card-body">
                     <h4 class="card-title text-white">
                       {{ tool.name }}
                     </h4><p class="card-text text-white">
                       {{ tool.description }}
-                    </p><a :href="tool.link" target="_blank" class="btn border-5 border-light btn-lg btn-primary">Voir</a>
+                    </p><a rel="noreferrer" :href="tool.link" target="_blank" class="btn border-5 border-light btn-lg btn-primary">Voir</a>
                   </div>
                 </div>
               </div>

@@ -46,6 +46,8 @@
                 <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 pr-0 pr-md-3 pb-3 pb-md-0">
                   <img
                     v-lazy="getImgObj(episode.itunes.image)"
+                    width="100%"
+                    height="100%"
                     :src="loadingImg"
                     class="w-100 w-md-75 img-fluid border-5 border-light"
                     :alt="'Cover ' + episode.title"
@@ -80,7 +82,14 @@
           <div id="content" class="col-12 col-md-6 pt-md-0 px-md-5 text-white">
             <div class="row">
               <div class="col-md-3 offset-3 offset-md-0 col-6 py-3 pt-md-0 px-3 pl-md-0 pr-md-5">
-                <img v-lazy="image" class="img-fluid border-10 border-light" alt="IM COVER" :src="loadingImg">
+                <img
+                  v-lazy="image"
+                  width="100%"
+                  height="100%"
+                  class="img-fluid border-10 border-light"
+                  alt="IM COVER"
+                  :src="loadingImg"
+                >
               </div>
               <div class="col-12 col-md-9 text-center text-sm-left">
                 <h1 class="pb-2">
@@ -88,7 +97,7 @@
                 </h1>
               </div>
               <div class="col-12 py-1 py-md-3 text-center text-sm-left">
-                <h3>Prochain episode dans : {{ nextEpisode() }} !</h3>
+                <h4>Prochain episode dans : {{ nextEpisode() }} !</h4>
               </div>
               <div class="col-12 pt-3 text-center text-sm-left">
                 <div v-for="(message, index) in messages" :key="`ep-${index}`">
@@ -112,9 +121,9 @@
                 </button>
               </div>
               <div class="col-12 pt-3">
-                <p>Par <a target="_blank" href="https://twitter.com/martindonadieu">Martin DONADIEU</a></p>
-                <p>Ici pas de cookie, juste de l'<a target="_blank" href="https://plausible.io/indiemakers.fr">Open data</a> qui te respecte </p>
-                <p><a target="_blank" href="/tools">Mes outils</a> quotidiens pour gerer mes projets !</p>
+                <p>Par <a rel="noreferrer" target="_blank" href="https://twitter.com/martindonadieu">Martin DONADIEU</a></p>
+                <p>Ici pas de cookie, juste de l'<a rel="noreferrer" target="_blank" href="https://plausible.io/indiemakers.fr">Open data</a> qui te respecte </p>
+                <p><a rel="noreferrer" target="_blank" href="/tools">Mes outils</a> quotidiens pour gerer mes projets !</p>
               </div>
               <div class="col-12 pt-3 pb-3 px-md-3 order-3 text-white text-center text-sm-left">
                 <h5>Mes autres projets:</h5>

@@ -88,7 +88,14 @@
           <div id="content" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block text-white">
             <div class="row">
               <div class="col-md-3 offset-3 offset-md-0 col-6 py-3 pt-md-0 px-3 pl-md-0 pr-md-5">
-                <img v-lazy="image" class="img-fluid border-10 border-light" alt="IM COVER" :src="loadingImg">
+                <img
+                  v-lazy="image"
+                  width="100%"
+                  height="100%"
+                  class="img-fluid border-10 border-light"
+                  alt="IM COVER"
+                  :src="loadingImg"
+                >
               </div>
               <div class="col-12 col-md-9 text-center text-sm-left">
                 <h1 class="pb-2">
