@@ -66,7 +66,7 @@ export default {
       email: '',
       name: '',
       title: 'Mes Emails privée',
-      desc: 'Un email chaque semaine avec mes conseils actionables pour lancer son side-projet, et gagner sa liberté !'
+      desc: 'Un email chaque semaine avec mes conseils actionables pour lancer son projet, et gagner sa liberté !'
     }
   },
   mounted () {

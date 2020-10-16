@@ -5,19 +5,19 @@
         <div class="row">
           <div class="col-12 offset-xl-1 col-xl-5">
             <div id="header-mk" class="row bg-primary border-10 border-light py-1 py-md-4">
-              <div class="col col-md-10 pt-3 px-0 text-white text-center">
-                <h1>🔥Makers</h1>
+              <div class="col pt-3 px-0 text-white text-center">
+                <h1>💃 Makers</h1>
               </div>
               <div
-                class="col-3 col-md-2 pt-3 text-white"
+                class="col-3 col-md-2 p-0"
               >
                 <button
                   v-tooltip="'Ajouter un·e maker'"
                   type="button"
-                  class="btn btn-primary btn-lg border-5 border-light text-light px-3 px-md-4 display-1"
+                  class="btn-primary border-0 bigg"
                   @click="showAddForm()"
                 >
-                  <strong>+</strong>
+                  +
                 </button>
               </div>
             </div>
@@ -65,17 +65,14 @@
                       <p class="text-center text-md-left px-2 px-md-0 d-none d-md-block" v-html="getTextLink(person.bio)" /></p>
                     </div>
                   </div>
-                  <div class="col-3 col-md-2 pl-0" @click="vote(person)">
+                  <div class="col-3 col-md-3 pl-md-5 pr-md-4" @click="vote(person)">
                     <button
                       v-tooltip="tooltipVote(person)"
                       type="button"
-                      class="btn btn-primary border-5 border-light btn-lg text-white px-2 px-md-4 py-2 py-md-3 h1"
+                      class="btn-primary border-0 py-2 py-md-3 pl-md-4 text-white h1"
                     >
-                      <fa :icon="['fas', 'play-circle']" class="fa-2x invisible" />
-                      <div class="position-absolute ml-2 top">
-                        <fa :icon="['fas', 'caret-up']" class="fa-2x" />
-                        <p>{{ person.votes }}</p>
-                      </div>
+                      👍<br>
+                      {{ person.votes }}
                     </button>
                   </div>
                   <div class="col-12 px-md-5 pt-0 d-block d-md-none">
@@ -87,47 +84,52 @@
           </div>
           <div id="content" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block text-white">
             <div class="row">
-              <div class="col-md-3 offset-3 offset-md-0 col-6 py-3 pt-md-0 px-3 pl-md-0 pr-md-5">
-                <img
-                  v-lazy="image"
-                  width="100%"
-                  height="100%"
-                  class="img-fluid border-10 border-light"
-                  alt="IM COVER"
-                  :src="loadingImg"
-                >
-              </div>
-              <div class="col-12 col-md-9 text-center text-sm-left">
-                <h1 class="pb-2">
+              <div class="col-12 text-center text-sm-left">
+                <h1 class="pb-2 pt-md-5">
                   Les Makers Français les plus 🔥!
                 </h1>
               </div>
-              <div class="col-12 text-left">
-                <p class="h3 pt-3">
-                  Ici tu trouveras les maker les plus demandé dans le podcast !
+              <div class="col-12 text-left pt-md-5">
+                <p class="pl-2">
+                  Les Makers sont une espece d'entrepreneurs encore méconnue en France.<br><br>
+                  Parfois ils ne postent qu'en anglais...<br>
+                  Parfois ils ne font pas de personal branding !<br>
+                  Et parfois on découvre seulement 10 ans plus tard qui était aux commandes !<br><br>
+                  Pourtant l'écosysteme est le facteur numéro 1 de sucess, ensemble nous allons plus loin, cassons les barriere vers le sucess !<br>
+                  C'est pour cela que cette liste existe !<br><br>
+                  Comme Producthunt,<br>
+                  Suis, ajoute et votes pour tes MAKERS Favorie, en bonus tu gagne une chance de les voir dans le podcast !
                 </p>
-                <p class="h5 pt-3">
-                  Si tu aimerais qu'un d'eux vienne dans le podcast:
+                <p class="h5 pt-5">
+                  Tu aimerais qu'un d'eux vienne dans le podcast ?
                 </p>
                 <p class="pl-2">
-                  - Clique sur la fleche a côté de son nom pour voter pour lui
+                  Vote pour lui en cliquant sur "👍" a côté de son nom.
                 </p>
                 <p class="pl-2">
-                  - Partage sur tweeter ton interet pour lui, cela le motivera a venir !
+                  Partage sur tweeter ton vote cela le motivera a venir !
                 </p>
-                <p class="h5 pt-3">
+                <p class="h5 pt-5">
                   Ton maker préféré n'est pas dans la liste ?
                 </p>
                 <p class="pl-2">
-                  - Clique sur le bonton "plus" pour l'ajouter !
+                  Clique sur le bonton "+" pour l'ajouter !
                 </p>
-                <p class="pl-2">
-                  - Partage sur tweeter ton interet pour lui, cela le motivera a venir !
+                <p class="pl-2 pb-5">
+                  Partage sur tweeter ton action, cela le motivera a venir !
                 </p>
-                <p class="h5 pt-3">
-                  Tu veux m'aider ?
+                <p class="h3 pt-3 text-center">
+                  Avance maintenant sur la voie du maker !
                 </p>
-                <div class="col-12 px-md-5 pt-1 pt-md-3 text-center">
+                <div class="col-12 px-md-5 pt-0 text-center">
+                  <button
+                    v-tooltip="'Commence à gagner ta vie sur internet'"
+                    type="button"
+                    class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                    @click="joinUs()"
+                  >
+                    👉 Reçoit mes emails
+                  </button>
                   <button
                     id="rtp-button"
                     v-tooltip="'Note l\'épisode pour soutenir le podcast'"
@@ -135,8 +137,7 @@
                     class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                     @click="rate()"
                   >
-                    <fa :icon="['fas', 'star']" />
-                    Note
+                    ⭐️ Note
                   </button>
                   <button
                     v-tooltip="'Partager via twitter'"
@@ -144,31 +145,7 @@
                     class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                     @click="tweetItShare()"
                   >
-                    <fa :icon="['fas', 'pizza-slice']" />
-                    Partage
-                  </button>
-                </div>
-                <p class="h5 pt-3">
-                  Tu veux avancer plus vite sur la voie du maker ?
-                </p>
-                <div class="col-12 px-md-5 pt-1 pt-md-3 text-center">
-                  <button
-                    v-tooltip="'Commence à gagner ta vie sur internet'"
-                    type="button"
-                    class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
-                    @click="joinUs()"
-                  >
-                    <fa :icon="['fas', 'hand-point-right']" />
-                    Deviens Indie maker
-                  </button>
-                  <button
-                    v-tooltip="'Multiplie ton CA en 4 semaines !'"
-                    type="button"
-                    class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
-                    @click="bmc()"
-                  >
-                    <fa :icon="['fas', 'chart-line']" />
-                    Passe à l'étape supérieure
+                    ❤️ Partage
                   </button>
                 </div>
               </div>
@@ -464,5 +441,8 @@ export default {
 </script>
 
 <style scoped>
-
+.bigg {
+    font-size: 6rem;
+    line-height: 0.5;
+}
 </style>

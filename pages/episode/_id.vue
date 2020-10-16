@@ -41,20 +41,18 @@
                 <h3>{{ title }}</h3>
               </div>
             </div>
-            <!-- <div v-if="!loading" class="row"> -->
             <div v-if="!loading" class="custom-scroll fix-marging border-5 px-2 border-light border-right-0" :style="{ height: sizeHead }">
               <div class="px-1 px-md-5 pt-3 text-light" v-html="content" />
             </div>
-            <!-- </div> -->
             <div v-if="!loading" class="row bg-primary py-4 d-block d-md-none">
-              <div class="col-12 px-1 px-md-3 text-center">
+              <div class="col-12 px-1 text-center">
                 <button
                   v-tooltip="'Ecoute sur ta plateforme préféré'"
                   type="button"
                   class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                   @click="listen()"
                 >
-                  <fa :icon="['fas', 'headphones']" /> Ecouter
+                  🎧 Ecouter1
                 </button>
                 <button
                   v-tooltip="'Noter l\'épisode'"
@@ -62,8 +60,7 @@
                   class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                   @click="rate()"
                 >
-                  <fa :icon="['fas', 'star']" />
-                  Note
+                  ⭐️ Note
                 </button>
                 <button
                   v-tooltip="'Partage sur twitter'"
@@ -71,8 +68,7 @@
                   class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                   @click="tweetIt()"
                 >
-                  <fa :icon="['fas', 'pizza-slice']" />
-                  Partage
+                  ❤️ Partage
                 </button>
                 <button
                   v-tooltip="'Rejoin nous'"
@@ -80,17 +76,7 @@
                   class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                   @click="joinUs()"
                 >
-                  <fa :icon="['fas', 'hand-point-right']" />
-                  Deviens Indie maker
-                </button>
-                <button
-                  v-tooltip="'buymeacoffee'"
-                  type="button"
-                  class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
-                  @click="bmc()"
-                >
-                  <fa :icon="['fas', 'chart-line']" />
-                  Passe à l'étape supérieure
+                  👉 Lance toi
                 </button>
               </div>
             </div>
@@ -120,8 +106,7 @@
                   class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="listen()"
                 >
-                  <fa :icon="['fas', 'headphones']" />
-                  Ecoute
+                  🎧 Ecoute
                 </button>
                 <button
                   id="rtp-button"
@@ -130,8 +115,7 @@
                   class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="rate()"
                 >
-                  <fa :icon="['fas', 'star']" />
-                  Note
+                  ⭐️ Note
                 </button>
                 <button
                   v-tooltip="'Partager via twitter'"
@@ -139,8 +123,7 @@
                   class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="tweetIt()"
                 >
-                  <fa :icon="['fas', 'pizza-slice']" />
-                  Partage
+                  ❤️ Partage
                 </button>
                 <button
                   v-tooltip="'Commence à gagner ta vie sur internet'"
@@ -148,17 +131,7 @@
                   class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="joinUs()"
                 >
-                  <fa :icon="['fas', 'hand-point-right']" />
-                  Deviens Indie maker
-                </button>
-                <button
-                  v-tooltip="'Multiplie ton CA en 4 semaines !'"
-                  type="button"
-                  class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
-                  @click="bmc()"
-                >
-                  <fa :icon="['fas', 'chart-line']" />
-                  Passe à l'étape supérieure
+                  👉 Lance toi
                 </button>
               </div>
             </div>

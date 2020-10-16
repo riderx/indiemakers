@@ -50,8 +50,7 @@ export default {
   ** Global CSS
   */
   css: [
-    'plyr/dist/plyr.css',
-    '@fortawesome/fontawesome-svg-core/styles.css'
+    'plyr/dist/plyr.css'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -60,7 +59,6 @@ export default {
   plugins: [
     { src: '~/plugins/player.js' },
     { src: '~/plugins/oldPath.js' },
-    { src: '~/plugins/fontawesome.js' },
     { src: '~/plugins/global.client.js' },
     { src: '~/plugins/firebase.client.js' }
   ],
@@ -108,16 +106,8 @@ export default {
     dsn: 'https://1e9603c479b54389ab04a4be985e1768@o449238.ingest.sentry.io/5431873', // Enter your project's DSN here
     config: {} // Additional config
   },
-  fontawesome: {
-    component: 'fa',
-    icons: {
-      solid: ['faHeadphones', 'faHeart', 'faPizzaSlice', 'faCaretUp', 'faCaretCircleRight'],
-      brands: ['faDiscord', 'faTwitter']
-    }
-  },
   bootstrapVue: {
-    icons: false,
-    bootstrapCSS: false
+    icons: false
   }
   /*
   ** Build configuration

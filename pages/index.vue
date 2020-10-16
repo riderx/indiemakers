@@ -5,19 +5,8 @@
         <div class="row">
           <div class="col-12 offset-xl-1 col-xl-5">
             <div id="header-eps" class="row bg-primary border-10 border-light py-1 py-md-4">
-              <div class="col col-md-9 pt-3 px-0 text-white text-center">
-                <h1>🎙Episodes</h1>
-              </div>
-              <div class="col-4 col-md-3 pt-1 pt-md-2 text-white">
-                <button
-                  v-tooltip="'Aide moi a trouver les prochain invités'"
-                  aria-label="Maker hunt"
-                  type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-light px-3 px-md-4 display-1"
-                  @click="openAdd()"
-                >
-                  <fa :icon="['fab', 'product-hunt']" class="fa-2x" />
-                </button>
+              <div class="col pt-3 px-0 text-white text-center">
+                <h1>🎙 Episodes</h1>
               </div>
             </div>
             <div v-if="loading" class="row bg-white px-3">
@@ -81,7 +70,7 @@
           </div>
           <div id="content" class="col-12 col-md-6 pt-md-0 px-md-5 text-white">
             <div class="row">
-              <div class="col-md-3 offset-3 offset-md-0 col-6 py-3 pt-md-0 px-3 pl-md-0 pr-md-5">
+              <div class="col-md-2 offset-3 offset-md-0 col-6 py-3 pt-md-0 px-3 pl-md-0">
                 <img
                   v-lazy="image"
                   width="100%"
@@ -97,7 +86,7 @@
                 </h1>
               </div>
               <div class="col-12 py-1 py-md-3 text-center text-sm-left">
-                <h4>Prochain episode dans : {{ nextEpisode() }} !</h4>
+                <h4>Prochain episode dans {{ nextEpisode() }} </h4>
               </div>
               <div class="col-12 pt-3 text-center text-sm-left">
                 <div v-for="(message, index) in messages" :key="`ep-${index}`">
@@ -105,19 +94,14 @@
                     {{ message }}
                   </p>
                 </div>
-                <p class="pt-5">
-                  {{ banner }}
-                </p>
               </div>
               <div class="col-12 pt-3 text-center">
                 <button
-                  v-tooltip="'Commence à gagner ta vie sur internet'"
                   type="button"
                   class="btn btn-primary border-5 border-light btn-lg text-light px-4 h1"
-                  @click="joinUs()"
+                  @click="openAdd()"
                 >
-                  <fa :icon="['fas', 'hand-point-right']" />
-                  Deviens Indie maker
+                  👉 Découvre les meilleurs Indie makers Fr
                 </button>
               </div>
               <div class="col-12 pt-3">
@@ -215,9 +199,7 @@ export default {
         'J’interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur business pérenne.',
         'Qui que tu sois, dans ce podcast tu apprendras à devenir un Indie Maker !',
         'Un épisode tous les 15 jours'
-      ],
-      banner:
-        '#Independant, #Makers, #AutoFormation, #Productivite, #Business, #MRR'
+      ]
     }
   },
   beforeMount () {
@@ -285,7 +267,7 @@ export default {
       this.$router.push(`/episode/${id}`)
     },
     openAdd () {
-      this.$router.push('/makers')
+      this.$router.push('/makers_hunt')
     },
     setSizeHead () {
       if (process.client && document.getElementById('header-eps') && document.getElementById('header') && document.getElementById('content') && document.getElementById('content').offsetWidth !== window.innerWidth) {
