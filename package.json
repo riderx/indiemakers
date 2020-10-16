@@ -25,6 +25,7 @@
     "firebase": "^7.24.0",
     "linkifyjs": "^2.1.9",
     "nuxt": "^2.14.7",
+    "nuxt-purgecss": "^1.0.0",
     "rss-parser": "^3.9.0",
     "string-strip-html": "^6.1.0",
     "vue": "^2.6.12",

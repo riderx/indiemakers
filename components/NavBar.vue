@@ -9,7 +9,7 @@
         <li
           v-for="(icon, index) in icones"
           :key="index"
-          v-tooltip="'Commence à gagner ta vie sur internet'"
+          :v-tooltip="icon.title"
           class="list-group-item bg-transparent text-white p-2 p-md-3 cursor-pointer"
           @click="openPage(icon.lien)"
         >

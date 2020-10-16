@@ -74,6 +74,7 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
+    'nuxt-purgecss',
     '@nuxtjs/eslint-module',
     ['@nuxtjs/pwa', { workbox: false, oneSignal: false }]
   ],
@@ -113,6 +114,10 @@ export default {
       solid: ['faHeadphones', 'faHeart', 'faPizzaSlice', 'faCaretUp', 'faCaretCircleRight'],
       brands: ['faDiscord', 'faTwitter']
     }
+  },
+  bootstrapVue: {
+    icons: false,
+    bootstrapCSS: false
   }
   /*
   ** Build configuration
