@@ -184,7 +184,7 @@
                 Mes Emails Privés
               </h1>
               <p class="px-md-5 text-white">
-                Un email chaque semaine avec mes conseils actionables pour lancer son projet, et gagner sa liberté !
+                Reçoit ton email chaque semaine avec mes conseils actionables pour lancer ton projet, et gagner ta liberté !
               </p>
               <p class="px-md-5 text-white">
                 Tu seras également informé de la sortie des épisodes !
@@ -237,7 +237,7 @@
                 Le guide pour lancer ton projet !
               </h1>
               <p class="px-5 text-white">
-                Reçoit mon guide en 6 étapes qui te fera éviter bien des erreurs et gagner un temps précieux !
+                Reçoit ton guide en 6 étapes, il te fera éviter bien des erreurs et gagner un temps précieux !
               </p>
               <p class="px-5 text-white">
                 Tu seras également informé de la sortie des épisodes !
