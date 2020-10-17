@@ -29,10 +29,10 @@
               <div
                 v-for="episode in episodes"
                 :key="episode.guid"
-                :class="'row cursor-pointer bg-primary text-white py-2 py-md-3 border-bottom align-items-top ' + episode.guid"
+                :class="'row cursor-pointer bg-primary text-white py-2 py-md-0 border-bottom align-items-top ' + episode.guid"
                 @click="openEp(episode.guid)"
               >
-                <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 pr-0 pr-md-3 pb-3 pb-md-0">
+                <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 px-0 py-3 py-md-0">
                   <img
                     v-lazy="getImgObj(episode.itunes.image)"
                     width="100%"
@@ -42,7 +42,7 @@
                     :alt="'Cover ' + episode.title"
                   >
                 </div>
-                <div class="col-12 col-md-8 order-2 pl-2 pl-md-0 order-md-2 text-center text-md-left">
+                <div class="col-12 col-md-8 order-2 p-2 order-md-2 text-center text-md-left">
                   <h3>{{ episode.title }}</h3>
                   <p
                     v-if="episode.social"

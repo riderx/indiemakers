@@ -14,7 +14,7 @@
                 <button
                   v-tooltip="'Ajouter un·e maker'"
                   type="button"
-                  class="btn-primary border-0 bigg"
+                  class="btn-primary border-0 bigg pb-3"
                   @click="showAddForm()"
                 >
                   +
@@ -41,16 +41,16 @@
                 <div
                   v-for="person in people"
                   :key="person.id"
-                  :class="'row bg-primary text-white py-2 py-md-3 border-bottom align-items-top ' + person.id"
+                  :class="'row bg-primary text-white py-0 border-bottom align-items-top ' + person.id"
                 >
-                  <div class="col-3 col-md-4 pr-0 pr-md-5">
+                  <div class="col-3 p-0">
                     <img
                       v-lazy="getImgObj(person.img)"
-                      class="w-100 img-fluid border-5 border-light"
+                      class="w-100 h-100 img-fluid border-5 border-light"
                       :alt="'Picture ' + person.name"
                     >
                   </div>
-                  <div class="col-6 col-md-5">
+                  <div class="col-6 col-md-7 pt-3">
                     <h3 class="mb-0">
                       {{ person.name }}
                     </h3>
@@ -65,11 +65,11 @@
                       <p class="text-center text-md-left px-2 px-md-0 d-none d-md-block" v-html="getTextLink(person.bio)" /></p>
                     </div>
                   </div>
-                  <div class="col-3 col-md-3 pl-md-5 pr-md-4" @click="vote(person)">
+                  <div class="col-3 col-md-2 pt-3" @click="vote(person)">
                     <button
                       v-tooltip="tooltipVote(person)"
                       type="button"
-                      class="btn-primary border-0 py-2 py-md-3 pl-md-4 text-white h1"
+                      class="btn-primary border-0 py-0 mb-0 py-md-3 w-100 text-white h1"
                     >
                       👍<br>
                       {{ person.votes }}
