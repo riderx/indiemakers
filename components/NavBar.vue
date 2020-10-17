@@ -52,7 +52,7 @@ export default {
   methods: {
     openPage (name) {
       if (name.includes('https')) {
-        window.open(name, '_blank')
+        return window.open(name, '_blank')
       } if (name.includes('modal_')) {
         const nameModal = name.split('modal_')[1]
         if (nameModal) {
