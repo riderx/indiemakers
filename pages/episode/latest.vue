@@ -1,3 +1,5 @@
+<template />
+
 <script>
 import { feed } from '~/plugins/rss'
 
