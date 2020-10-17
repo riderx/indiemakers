@@ -43,6 +43,7 @@ export default {
       { hid: 'og:description', property: 'og:description', content: 'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en en business florissant.' }
     ],
     link: [
+      { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css' },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
@@ -72,7 +73,6 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    'nuxt-purgecss',
     '@nuxtjs/eslint-module',
     ['@nuxtjs/pwa', { workbox: false, oneSignal: false }]
   ],
@@ -82,7 +82,6 @@ export default {
   */
   modules: [
     '@nuxtjs/component-cache',
-    'bootstrap-vue/nuxt',
     '@nuxtjs/sentry',
     [
       '@nuxtjs/proxy',
@@ -105,9 +104,6 @@ export default {
   sentry: {
     dsn: 'https://1e9603c479b54389ab04a4be985e1768@o449238.ingest.sentry.io/5431873', // Enter your project's DSN here
     config: {} // Additional config
-  },
-  bootstrapVue: {
-    icons: false
   }
   /*
   ** Build configuration

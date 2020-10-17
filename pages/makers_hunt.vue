@@ -213,20 +213,20 @@ export default {
         this.$modal.show('confirmName')
       }
     })
-    await this.$bind(
-      'people',
-      this.$firebase
-        .firestore()
-        .collection('people')
-        .orderBy('votes', 'desc')
-        .orderBy('addDate', 'asc')
-    )
-    this.people.forEach((person) => {
-      person.img = this.personImg(person)
-    })
-
-    this.setSizeHead()
-    this.loading = false
+    this.$firebase
+      .firestore()
+      .collection('people')
+      .orderBy('votes', 'desc')
+      .orderBy('addDate', 'asc')
+      .onSnapshot((querySnapshot) => {
+        this.people = querySnapshot.docs.map((doc) => {
+          const data = doc.data()
+          data.img = this.personImg(data)
+          return data
+        })
+        this.setSizeHead()
+        this.loading = false
+      })
   },
   methods: {
     bmc () {
