@@ -194,7 +194,7 @@ export default {
       feed: null,
       title: '🚀Le 1er podcast qui t\'aide à vivre de tes projets',
       messages: [
-        'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en en business florissant.',
+        'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en business florissant.',
         'Au-delà des success-story, nous décryptons leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables.',
         'J’interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur business pérenne.',
         'Qui que tu sois, dans ce podcast tu apprendras à devenir un Indie Maker !',
