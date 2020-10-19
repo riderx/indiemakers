@@ -86,7 +86,7 @@
                 </h1>
               </div>
               <div class="col-12 py-1 py-md-3 text-center text-sm-left">
-                <h4>Prochain episode dans {{ nextEpisode() }} </h4>
+                <h3>Prochain episode dans {{ nextEpisode() }} </h3>
               </div>
               <div class="col-12 pt-3 text-center text-sm-left">
                 <div v-for="(message, index) in messages" :key="`ep-${index}`">
@@ -257,7 +257,7 @@ export default {
     },
     previewText (text) {
       let first = text.split(/[.!]+/)[0]
-      if (first.split(' ').length > 20) {
+      if (first.split(' ').length > 30) {
         first = `${first.split(' ').splice(0, 17).join(' ')} ...`
       }
       return first
