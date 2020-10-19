@@ -31,7 +31,7 @@
                 >
               </div>
               <div class="col-12 d-block d-sm-none text-white px-0">
-                <vue-plyr v-if="showAudio">
+                <vue-plyr v-if="showAudio" ref="plyr">
                   <audio>
                     <source :src="audio" type="audio/mp3">
                   </audio>
@@ -93,7 +93,7 @@
                 >
               </div>
               <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-0">
-                <vue-plyr v-if="showAudio">
+                <vue-plyr v-if="showAudio" ref="plyr2">
                   <audio>
                     <source :src="audio" type="audio/mp3">
                   </audio>
@@ -197,6 +197,14 @@ export default {
       audio: ''
     }
   },
+  computed: {
+    player () {
+      return this.$refs.plyr.player
+    },
+    player2 () {
+      return this.$refs.plyr2.player
+    }
+  },
   destroyed () {
     if (this.timeoutModal) {
       clearTimeout(this.timeoutModal)
@@ -210,6 +218,21 @@ export default {
     }
     setTimeout(() => {
       this.showAudio = true
+      setTimeout(() => {
+        const currentTime = parseFloat(localStorage.getItem(this.$route.params.id))
+        if (this.player) {
+          this.player.currentTime = currentTime || 0
+          this.player.on('pause', () => {
+            localStorage.setItem(this.$route.params.id, this.player.currentTime)
+          })
+        }
+        if (this.player2) {
+          this.player2.currentTime = currentTime || 0
+          this.player2.on('pause', () => {
+            localStorage.setItem(this.$route.params.id, this.player2.currentTime)
+          })
+        }
+      }, 50)
     }, 2000)
     this.timeoutModal = setTimeout(() => {
       this.showRandomModal()
