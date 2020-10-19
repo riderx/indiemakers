@@ -219,20 +219,20 @@ export default {
     setTimeout(() => {
       this.showAudio = true
       setTimeout(() => {
-        const currentTime = parseFloat(localStorage.getItem(this.$route.params.id))
+        const currentTime = localStorage.getItem(this.$route.params.id)
         if (this.player) {
-          this.player.currentTime = currentTime || 0
+          this.player.currentTime = parseFloat(currentTime || 0)
           this.player.on('pause', () => {
             localStorage.setItem(this.$route.params.id, this.player.currentTime)
           })
         }
         if (this.player2) {
-          this.player2.currentTime = currentTime || 0
+          this.player2.currentTime = parseFloat(currentTime || 0)
           this.player2.on('pause', () => {
             localStorage.setItem(this.$route.params.id, this.player2.currentTime)
           })
         }
-      }, 50)
+      }, 150)
     }, 2000)
     this.timeoutModal = setTimeout(() => {
       this.showRandomModal()
