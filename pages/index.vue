@@ -1,5 +1,5 @@
 <template>
-  <LazyHydrate when-idle>
+  <LazyHydrate when-visible>
     <div id="episodes">
       <div class="container-fluid">
         <div class="row">
