@@ -335,7 +335,7 @@ export default {
         { hid: 'og:description', property: 'og:description', content: this.removeEmoji(this.preview) },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.removeEmoji(this.title) },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/jpg' },
-        { hid: 'og:image', property: 'og:image', content: this.image },
+        { hid: 'og:image', property: 'og:image', content: this.image.src },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 },
         { hid: 'og:audio', property: 'og:audio', content: this.audio },
