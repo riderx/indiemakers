@@ -232,7 +232,7 @@ export default {
             localStorage.setItem(this.$route.params.id, this.player2.currentTime)
           })
         }
-      }, 250)
+      }, 350)
     }, 2000)
     this.timeoutModal = setTimeout(() => {
       this.showRandomModal()
