@@ -339,7 +339,7 @@ export default {
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 },
         { hid: 'og:audio', property: 'og:audio', content: this.audio },
-        { hid: 'og:audio:type', property: 'og:audio:type', content: 'audio/mp3' }
+        { hid: 'og:audio:type', property: 'og:audio:type', content: 'audio/mpeg' }
       ]
     }
   }
