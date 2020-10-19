@@ -221,20 +221,16 @@ export default {
       setTimeout(() => {
         const currentTime = localStorage.getItem(this.$route.params.id)
         if (this.player) {
-          this.player.on('ready', () => {
-            setTimeout(() => {
-              this.player.currentTime = parseFloat(currentTime || 0)
-            }, 400)
+          this.player.on('play', () => {
+            this.player.currentTime = parseFloat(currentTime || 0)
           })
           this.player.on('pause', () => {
             localStorage.setItem(this.$route.params.id, this.player.currentTime)
           })
         }
         if (this.player2) {
-          this.player2.on('ready', () => {
-            setTimeout(() => {
-              this.player2.currentTime = parseFloat(currentTime || 0)
-            }, 400)
+          this.player2.on('play', () => {
+            this.player2.currentTime = parseFloat(currentTime || 0)
           })
           this.player2.on('pause', () => {
             localStorage.setItem(this.$route.params.id, this.player2.currentTime)
