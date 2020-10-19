@@ -222,21 +222,25 @@ export default {
         const currentTime = localStorage.getItem(this.$route.params.id)
         if (this.player) {
           this.player.on('ready', () => {
-            this.player.currentTime = parseFloat(currentTime || 0)
-            this.player.on('pause', () => {
-              localStorage.setItem(this.$route.params.id, this.player.currentTime)
-            })
+            setTimeout(() => {
+              this.player.currentTime = parseFloat(currentTime || 0)
+            }, 400)
+          })
+          this.player.on('pause', () => {
+            localStorage.setItem(this.$route.params.id, this.player.currentTime)
           })
         }
         if (this.player2) {
           this.player2.on('ready', () => {
-            this.player2.currentTime = parseFloat(currentTime || 0)
-            this.player2.on('pause', () => {
-              localStorage.setItem(this.$route.params.id, this.player2.currentTime)
-            })
+            setTimeout(() => {
+              this.player2.currentTime = parseFloat(currentTime || 0)
+            }, 400)
+          })
+          this.player2.on('pause', () => {
+            localStorage.setItem(this.$route.params.id, this.player2.currentTime)
           })
         }
-      }, 100)
+      }, 150)
     }, 2000)
     this.timeoutModal = setTimeout(() => {
       this.showRandomModal()
