@@ -300,5 +300,7 @@ export default {
 </script>
 
 <style scoped>
-
+:root {
+  --plyr-color-main: rgba(75, 39, 155, 1);
+}
 </style>
