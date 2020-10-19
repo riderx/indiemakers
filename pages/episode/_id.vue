@@ -52,7 +52,7 @@
                   class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
                   @click="listen()"
                 >
-                  🎧 Ecouter1
+                  🎧 Ecouter
                 </button>
                 <button
                   v-tooltip="'Noter l\'épisode'"
@@ -106,7 +106,7 @@
                   class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="listen()"
                 >
-                  🎧 Ecoute
+                  🎧 Ecouter
                 </button>
                 <button
                   id="rtp-button"
