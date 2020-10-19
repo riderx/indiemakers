@@ -302,5 +302,6 @@ export default {
 <style>
 :root {
   --plyr-color-main: rgba(75, 39, 155, 1);
+  --plyr-badge-border-radius: 0;
 }
 </style>
