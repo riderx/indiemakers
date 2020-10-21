@@ -310,6 +310,7 @@ export default {
           })
           .catch((error) => {
             this.$modal.hide('loading')
+            // eslint-disable-next-line no-console
             console.error(error)
           })
       }
@@ -342,6 +343,7 @@ export default {
           })
           .catch((error) => {
             this.$modal.hide('loading')
+            // eslint-disable-next-line no-console
             console.error('Error writing document: ', error)
             this.currentName = '' + person.login
             this.$modal.show('fail-vote')
@@ -386,6 +388,7 @@ export default {
               this.currentName = '' + this.addName
               this.$modal.show('fail-exist-vote')
             } else if (added.error) {
+              // eslint-disable-next-line no-console
               console.error(added)
               this.$modal.show('fail-add')
             } else if (added.done && added.done === 'Voted') {
@@ -400,6 +403,7 @@ export default {
           .catch((err) => {
             this.$modal.hide('loading')
             this.$modal.show('error')
+            // eslint-disable-next-line no-console
             console.error(err)
           })
       }
