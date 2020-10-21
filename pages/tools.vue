@@ -1,49 +1,58 @@
 <template>
   <LazyHydrate when-idle>
     <div class="container">
-      <div class="row bg-primary py-2 border-10 border-light">
+      <div class="row bg-primary py-2">
         <div class="col-12 text-center">
           <img
-            class="w-25 pb-5 pb-md-3"
+            class="w-25 pb-3 header-image"
             width="100%"
             height="100%"
             src="/tools.svg"
           >
-          <h1 class="pl-2 py-2 m-0 text-white text-center">
-            {{ title }}
-          </h1>
-          <p class="px-5 text-white">
-            {{ desc }}
-          </p>
-          <div class="example col-md-12 ml-auto mr-auto">
-            <div class="row">
+        </div>
+        <h1 class="text-white text-center w-100 py-4 px-2">
+          {{ title }}
+        </h1>
+        <div class="example col-md-12 ml-auto mr-auto">
+          <div v-if="loading" class="row bg-white px-3">
+            <div class="col-12 p-5 text-center">
               <div
-                v-for="tool in tools"
-                :key="tool.name"
-                class="col-lg-4 col-md-6 col-sm-12 mb-4"
+                class="spinner-grow text-primary"
+                style="width: 6rem; height: 6rem;"
+                role="status"
               >
-                <div class="card bg-primary border-5 border-light ">
-                  <img
-                    width="100%"
-                    height="100%"
-                    class="card-img-top"
-                    :src="tool.image"
-                    :alt="`${tool.name} Logo`"
-                  ><div class="card-body">
-                    <h4 class="card-title text-white">
-                      {{ tool.name }}
-                    </h4><p class="card-text text-white">
-                      {{ tool.description }}
-                    </p><a rel="noreferrer" :href="tool.link" target="_blank" class="btn border-5 border-light btn-lg btn-primary">Voir</a>
-                  </div>
+                <span class="sr-only">Chargement...</span>
+              </div>
+            </div>
+          </div>
+          <div v-if="!loading" class="row">
+            <div
+              v-for="tool in tools"
+              :key="tool.name"
+              class="col-lg-4 col-md-6 col-sm-12 mb-4"
+              @click="openBlank(tool.link)"
+            >
+              <div class="card bg-primary border-5 border-light ">
+                <img
+                  width="100%"
+                  height="100%"
+                  class="card-img-top"
+                  :src="tool.image"
+                  :alt="`${tool.name} Logo`"
+                ><div class="card-body">
+                  <h4 class="card-title text-white">
+                    {{ tool.name }}
+                  </h4><p class="card-text text-white">
+                    {{ tool.description }}
+                  </p><a rel="noreferrer" :href="tool.link" target="_blank" class="btn border-5 border-light btn-lg btn-primary text-center w-100">J'en profite</a>
                 </div>
               </div>
             </div>
           </div>
-          <p class="px-5 text-white">
-            {{ submessage }}
-          </p>
         </div>
+        <p class="px-5 text-white">
+          {{ submessage }}
+        </p>
       </div>
       <Modals />
     </div>
@@ -63,13 +72,14 @@ export default {
       email: '',
       name: '',
       loggin: false,
+      loading: true,
       tools: [],
-      title: 'Les outils que j\'utilise au quotidiens !',
+      title: 'Mes outils quotidiens',
       desc: 'Voici les meilleurs outils pour concretiser ses projets !',
-      submessage: 'Pour le moment seul mes outils  qui ont un parrainage sont présents !'
+      submessage: 'Pour le moment seul mes outils qui ont un parrainage sont présents !'
     }
   },
-  async mounted () {
+  mounted () {
     this.email = window.localStorage.getItem('emailForSignIn')
     // this.loggin = fb.auth().currentUser
     this.$firebase.auth().onAuthStateChanged((user) => {
@@ -81,16 +91,20 @@ export default {
         this.$modal.show('confirmName')
       }
     })
-    await this.$bind(
-      'tools',
-      this.$firebase
-        .firestore()
-        .collection('tools')
-        .orderBy('votes', 'desc')
-        .orderBy('addDate', 'asc')
-    )
+    this.$firebase
+      .firestore()
+      .collection('tools')
+      .orderBy('votes', 'desc')
+      .orderBy('addDate', 'asc')
+      .onSnapshot((querySnapshot) => {
+        this.tools = querySnapshot.docs.map(doc => doc.data())
+        this.loading = false
+      })
   },
   methods: {
+    openBlank (link) {
+      window.open(link, '_blank')
+    },
     addEMailSub () {
       this.$firebase
         .firestore()
@@ -141,6 +155,15 @@ export default {
 @media (max-width: 400px) {
   .form-size {
     height: 800px;
+  }
+}
+@media (max-width: 400px) {
+  .header-image {
+    width: 50% !important;
+  }
+  .card-img-top {
+    /* height: auto !important; */
+    height: 170px !important;
   }
 }
 .card-img-top {

@@ -201,7 +201,7 @@ export default {
       people: []
     }
   },
-  async mounted () {
+  mounted () {
     this.email = window.localStorage.getItem('emailForSignIn')
     // this.loggin = fb.auth().currentUser
     this.$firebase.auth().onAuthStateChanged((user) => {
