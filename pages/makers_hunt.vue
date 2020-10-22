@@ -39,44 +39,48 @@
                 :style="{ height: sizeHead }"
               >
                 <div
-                  v-for="person in people"
-                  :key="person.id"
-                  :class="'row bg-primary text-white py-0 border-bottom align-items-top ' + person.id"
+                  v-for="episode in people"
+                  :key="episode.id"
+                  :class="'row cursor-pointer bg-primary text-white py-2 py-md-0 border-bottom align-items-top ' + episode.id"
                 >
-                  <div class="col-3 p-0">
+                  <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 px-0 py-3 py-md-0" @click="vote(episode)">
                     <img
-                      v-lazy="getImgObj(person.img)"
-                      class="w-100 h-100 img-fluid border-5 border-light"
-                      :alt="'Picture ' + person.name"
+                      v-lazy="getImgObj(episode.img)"
+                      width="100%"
+                      height="100%"
+                      :src="loadingImg"
+                      class="w-100 w-md-75 img-fluid border-5 border-light"
+                      :alt="'Picture ' + episode.name"
                     >
-                  </div>
-                  <div class="col-6 col-md-7 pt-3">
-                    <h3 class="mb-0">
-                      {{ person.name }}
-                    </h3>
-                    <div>
-                      <p
-                        v-tooltip="'Ouvrir son profils Twitter'"
-                        class="text-success fit-content cursor-pointer"
-                        @click="openAccount(person.login)"
-                      >
-                        @{{ person.login }}
-                      </p>
-                      <p class="text-center text-md-left px-2 px-md-0 d-none d-md-block" v-html="getTextLink(person.bio)" /></p>
+                    <div class="tumb_up px-2 px-md-3 my-2 border-5 border-light text-center bg-primary">
+                      👍<br>
+                      {{ episode.votes }}
                     </div>
                   </div>
-                  <div class="col-3 col-md-2 pt-3" @click="vote(person)">
-                    <button
-                      v-tooltip="tooltipVote(person)"
-                      type="button"
-                      class="btn-primary border-0 py-0 mb-0 py-md-3 w-100 text-white h1"
+                  <div class="col-12 col-md-8 order-2 p-2 order-md-2 text-center text-md-left">
+                    <h3>{{ episode.name }}</h3>
+                    <p
+                      v-if="episode.login"
+                      class="text-success fit-content cursor-pointer mb-0 d-none d-md-block"
+                      @click="openAccount(episode.login)"
                     >
-                      👍<br>
-                      {{ person.votes }}
-                    </button>
+                      {{ episode.login }}
+                    </p>
+                    <div class="text-center text-md-left px-3 px-md-0 d-none d-md-block">
+                      <p class v-html="getTextLink(episode.bio)" />
+                    </div>
                   </div>
-                  <div class="col-12 px-md-5 pt-0 d-block d-md-none">
-                    <p class v-html="getTextLink(person.bio)" />
+                  <div class="col-12 px-0 px-md-5 pt-1 pt-md-3 order-3 d-block d-md-none">
+                    <p
+                      v-if="episode.login"
+                      class="text-success text-center text-md-left mb-0"
+                      @click="openAccount(episode.login)"
+                    >
+                      {{ episode.login }}
+                    </p>
+                    <div class="text-center text-md-left px-3 px-md-0">
+                      <p class v-html="getTextLink(episode.bio)" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -453,5 +457,17 @@ export default {
 .bigg {
     font-size: 6rem;
     line-height: 0.5;
+}
+.tumb_up {
+  position: absolute;
+  bottom: 10px;
+  right: 0px;
+}
+
+@media screen and (min-width: 768px) {
+.tumb_up {
+  bottom: -10px;
+  font-size: 30px;
+  }
 }
 </style>
