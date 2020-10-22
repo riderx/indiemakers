@@ -317,11 +317,6 @@ export default {
     },
     vote (person) {
       const found = this.findInEp(person.login)
-      if (found) {
-        this.guid = found
-        this.$modal.show('found')
-        return
-      }
       if (!this.loggin) {
         this.openRegister()
       } else {
@@ -338,15 +333,25 @@ export default {
             person.votes += 1
             this.currentName = '' + person.login
             setTimeout(() => {
-              this.$modal.show('voted')
+              if (found) {
+                this.guid = found
+                this.$modal.show('found')
+              } else {
+                this.$modal.show('voted')
+              }
             }, 50)
           })
           .catch((error) => {
             this.$modal.hide('loading')
             // eslint-disable-next-line no-console
             console.error('Error writing document: ', error)
-            this.currentName = '' + person.login
-            this.$modal.show('fail-vote')
+            if (found) {
+              this.guid = found
+              this.$modal.show('found')
+            } else {
+              this.currentName = '' + person.login
+              this.$modal.show('fail-vote')
+            }
           })
       }
     },
