@@ -99,7 +99,7 @@
                   Parfois ils ne postent qu'en anglais...<br>
                   Parfois ils ne font pas de personal branding !<br>
                   Et parfois on découvre seulement 10 ans plus tard qui était aux commandes !<br><br>
-                  Pourtant l'écosysteme est le facteur numéro 1 de sucess, <br>
+                  Pourtant l'écosysteme est le facteur numéro 1 de success, <br>
                   ensemble nous allons plus loin, cassons les barriere vers le sucess !<br>
                   C'est pour cela que cette liste existe !<br><br>
                   Comme Producthunt,<br>
