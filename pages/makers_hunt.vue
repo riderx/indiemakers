@@ -64,7 +64,7 @@
                       class="text-success fit-content cursor-pointer mb-0 d-none d-md-block"
                       @click="openAccount(episode.login)"
                     >
-                      {{ episode.login }}
+                      @{{ episode.login }}
                     </p>
                     <div class="text-center text-md-left px-3 px-md-0 d-none d-md-block">
                       <p class v-html="getTextLink(episode.bio)" />
@@ -99,10 +99,12 @@
                   Parfois ils ne postent qu'en anglais...<br>
                   Parfois ils ne font pas de personal branding !<br>
                   Et parfois on découvre seulement 10 ans plus tard qui était aux commandes !<br><br>
-                  Pourtant l'écosysteme est le facteur numéro 1 de sucess, ensemble nous allons plus loin, cassons les barriere vers le sucess !<br>
+                  Pourtant l'écosysteme est le facteur numéro 1 de sucess, <br>
+                  ensemble nous allons plus loin, cassons les barriere vers le sucess !<br>
                   C'est pour cela que cette liste existe !<br><br>
                   Comme Producthunt,<br>
-                  Suis, ajoute et votes pour tes MAKERS Favorie, en bonus tu gagne une chance de les voir dans le podcast !
+                  Suis, ajoute et votes pour tes MAKERS Favorie,<br>
+                  en bonus tu gagne une chance de les voir dans le podcast !
                 </p>
                 <p class="h5 pt-5">
                   Tu aimerais qu'un d'eux vienne dans le podcast ?
@@ -111,7 +113,8 @@
                   Vote pour lui en cliquant sur "👍" a côté de son nom.
                 </p>
                 <p class="pl-2">
-                  Partage sur tweeter ton vote cela le motivera a venir !
+                  Partage sur tweeter ton vote pour montrer ton soutiens au maker,<br>
+                  s'il n'est pas encore venue dans le podcast cela le motivera a venir !
                 </p>
                 <p class="h5 pt-5">
                   Ton maker préféré n'est pas dans la liste ?
