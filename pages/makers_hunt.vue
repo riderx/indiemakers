@@ -14,7 +14,7 @@
                 <button
                   v-tooltip="'Ajouter un·e maker'"
                   type="button"
-                  class="btn-primary border-0 bigg pb-3"
+                  class="btn-primary border-0 bigg"
                   @click="showAddForm()"
                 >
                   +
@@ -43,7 +43,7 @@
                   :key="episode.id"
                   :class="'row cursor-pointer bg-primary text-white py-2 py-md-0 border-bottom align-items-top ' + episode.id"
                 >
-                  <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 px-0 py-3 py-md-0" @click="vote(episode)">
+                  <div class="offset-2 offset-md-0 col-8 col-4 order-1 order-md-2 px-0 py-3 py-md-0" @click="vote(episode)">
                     <img
                       v-lazy="getImgObj(episode.img)"
                       width="100%"
@@ -52,7 +52,7 @@
                       class="w-100 w-md-75 img-fluid border-5 border-light"
                       :alt="'Picture ' + episode.name"
                     >
-                    <div class="tumb_up px-2 px-md-3 my-2 border-5 border-light text-center bg-primary">
+                    <div class="tumb_up px-3 my-3 my-md-2 border-5 border-light text-center bg-primary">
                       👍<br>
                       {{ episode.votes }}
                     </div>
@@ -463,7 +463,7 @@ export default {
 }
 .tumb_up {
   position: absolute;
-  bottom: 10px;
+  bottom: 0px;
   right: 0px;
 }
 

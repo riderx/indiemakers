@@ -10,7 +10,7 @@
           v-for="(icon, index) in icones"
           :key="index"
           :v-tooltip="icon.title"
-          class="list-group-item bg-transparent border-0 text-white p-2 p-md-3 cursor-pointer"
+          class="list-group-item bg-transparent border-0 text-white p-1 p-md-2 p-md-3 cursor-pointer"
           @click="openPage(icon.lien)"
           v-html="icon.icon"
         />
