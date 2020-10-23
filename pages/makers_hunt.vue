@@ -95,26 +95,26 @@
               </div>
               <div class="col-12 text-left pt-md-5">
                 <p class="pl-2">
-                  Les Makers sont une espece d'entrepreneurs encore méconnue en France.<br><br>
+                  Les Makers sont une espèce d'entrepreneurs encore méconnue en France.<br><br>
                   Parfois ils ne postent qu'en anglais...<br>
                   Parfois ils ne font pas de personal branding !<br>
                   Et parfois on découvre seulement 10 ans plus tard qui était aux commandes !<br><br>
-                  Pourtant l'écosysteme est le facteur numéro 1 de success, <br>
-                  ensemble nous allons plus loin, cassons les barriere vers le sucess !<br>
+                  Pourtant l'écosysteme est le facteur numéro 1 de succès,<br>
+                  ensemble nous allons plus loin, cassons les barrières vers le succès !<br>
                   C'est pour cela que cette liste existe !<br><br>
                   Comme Producthunt,<br>
-                  Suis, ajoute et votes pour tes MAKERS Favorie,<br>
-                  en bonus tu gagne une chance de les voir dans le podcast !
+                  Suis, ajoute et votes pour tes MAKERS favoris,<br>
+                  en bonus tu gagnes une chance de les voir dans le podcast !
                 </p>
                 <p class="h5 pt-5">
                   Tu aimerais qu'un d'eux vienne dans le podcast ?
                 </p>
                 <p class="pl-2">
-                  Vote pour lui en cliquant sur "👍" a côté de son nom.
+                  Vote pour lui en cliquant sur "👍" sur sa photo
                 </p>
                 <p class="pl-2">
-                  Partage sur tweeter ton vote pour montrer ton soutiens au maker,<br>
-                  s'il n'est pas encore venue dans le podcast cela le motivera a venir !
+                  Partage sur Twitter ton vote pour montrer ton soutiens au maker,<br>
+                  s'il n'est pas encore venue dans le podcast cela le motivera à venir !
                 </p>
                 <p class="h5 pt-5">
                   Ton maker préféré n'est pas dans la liste ?
@@ -123,7 +123,7 @@
                   Clique sur le bonton "+" pour l'ajouter !
                 </p>
                 <p class="pl-2 pb-5">
-                  Partage sur tweeter ton action, cela le motivera a venir !
+                  Partage sur Twitter ton vote, cela le motivera à venir !
                 </p>
                 <p class="h3 pt-3 text-center">
                   Avance maintenant sur la voie du maker !
