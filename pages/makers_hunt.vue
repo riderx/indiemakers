@@ -9,7 +9,7 @@
                 <h1>💃 Makers</h1>
               </div>
               <div
-                class="col-3 col-md-2 p-0"
+                class="col-4 col-md-2"
               >
                 <button
                   v-tooltip="'Ajouter un·e maker'"
