@@ -9,12 +9,12 @@
                 <h1>💃 Makers</h1>
               </div>
               <div
-                class="col-4 col-md-2"
+                class="col-3 col-md-2 py-2"
               >
                 <button
                   v-tooltip="'Ajouter un·e maker'"
                   type="button"
-                  class="btn-primary border-0 bigg"
+                  class="btn-primary border-0 bigg p-0"
                   @click="showAddForm()"
                 >
                   +
@@ -43,7 +43,7 @@
                   :key="episode.id"
                   :class="'row cursor-pointer bg-primary text-white py-2 py-md-0 border-bottom align-items-top ' + episode.id"
                 >
-                  <div class="offset-2 offset-md-0 col-8 col-4 order-1 order-md-2 px-0 py-3 py-md-0" @click="vote(episode)">
+                  <div class="offset-2 offset-md-0 col-8 col-md-4 order-1 order-md-2 px-0 py-3 py-md-0" @click="vote(episode)">
                     <img
                       v-lazy="getImgObj(episode.img)"
                       width="100%"
