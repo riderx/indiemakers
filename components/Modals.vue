@@ -184,7 +184,7 @@
                 Mes Emails Privés
               </h1>
               <p class="px-md-5 text-white">
-                Reçoit ton email chaque semaine avec mes conseils actionables pour lancer ton projet, et gagner ta liberté !
+                Reçoit ton email hebdomadaire avec mes conseils actionables pour lancer ton projet, et gagner ta liberté !
               </p>
               <p class="px-md-5 text-white">
                 Tu seras également informé de la sortie des épisodes !
@@ -249,7 +249,7 @@
                     v-model="emailInput"
                     type="email"
                     class="form-control pb-0"
-                    aria-describedby="TweetnameHelp"
+                    aria-describedby="Email"
                     placeholder="Elon@tesla.com"
                   >
                 </div>
@@ -261,7 +261,7 @@
                     v-model="nameInput"
                     type="text"
                     class="form-control pb-0"
-                    aria-describedby="TweetnameHelp"
+                    aria-describedby="Ton nom"
                     placeholder="Elon Musk"
                   >
                 </div>
