@@ -3,15 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt-start",
+    "dev": "npx nuxt",
+    "build": "npx nuxt build",
+    "start": "npx nuxt-start",
     "export": "nuxt export",
     "serve": "nuxt serve",
     "lint:js": "eslint --ext .js,.vue .",
     "lint": "npm run lint:js"
   },
   "dependencies": {
+    "@nuxtjs/cloudinary": "^1.0.2",
     "@nuxtjs/component-cache": "^1.1.6",
     "@nuxtjs/proxy": "^2.0.1",
     "@nuxtjs/pwa": "^3.2.2",

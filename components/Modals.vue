@@ -26,7 +26,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="col-12 pt-1 px-1 px-md-3 text-white text-center">
-                  <h3>Tu peux aussi écouter sur :</h3>
+                  <h3>Écoute sur :</h3>
                 </div>
                 <div class="col-12 pt-1 px-1 px-md-3 text-center">
                   <button
@@ -52,46 +52,6 @@
                     @click="listenExternal('https://www.youtube.com/channel/UCMedW_Y4K0alzeVz1bSBvjA?sub_confirmation=1')"
                   >
                     Youtube
-                  </button>
-                  <button
-                    v-tooltip="'Ecouter l\'épisode sur Google podcast'"
-                    type="button"
-                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                    @click="listenExternal('https://podcasts.google.com/?feed=aHR0cHM6Ly9hbmNob3IuZm0vcy80MTRkMWQ0L3BvZGNhc3QvcnNz')"
-                  >
-                    Google Podcast
-                  </button>
-                  <button
-                    v-tooltip="'Ecouter l\'épisode sur Deezer'"
-                    type="button"
-                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                    @click="listenExternal('https://deezer.com/show/689072')"
-                  >
-                    Deezer
-                  </button>
-                  <button
-                    v-tooltip="'Ecouter l\'épisode sur Podcast Addict'"
-                    type="button"
-                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                    @click="listenExternal('https://podcastaddict.com/podcast/2482236')"
-                  >
-                    Podcast Addict
-                  </button>
-                  <button
-                    v-tooltip="'Ecouter l\'épisode sur Anchor'"
-                    type="button"
-                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                    @click="listenExternal('https://anchor.fm/indiemakers')"
-                  >
-                    Anchor
-                  </button>
-                  <button
-                    v-tooltip="'Copier le flux RSS'"
-                    type="button"
-                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
-                    @click="copyTextToClipboard('https://anchor.fm/s/414d1d4/podcast/rss')"
-                  >
-                    RSS
                   </button>
                 </div>
                 <div class="col-12 pt-1 px-1 px-md-3 text-white text-center">

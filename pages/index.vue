@@ -34,7 +34,7 @@
               >
                 <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 px-0 py-3 py-md-0">
                   <img
-                    v-lazy="getImgObj(episode.itunes.image)"
+                    v-lazy="getImgObj(episode.optimizedImage)"
                     width="100%"
                     height="100%"
                     :src="loadingImg"
@@ -163,6 +163,21 @@ export default {
       this.episodes = res.items
       this.episodes.forEach((element) => {
         const preview = this.previewText(element.contentSnippet)
+        let imageUid = null
+        if (element.guid.indexOf('/') > 0) {
+          imageUid = element.guid.split('/').slice(-1).pop()
+        } else {
+          imageUid = element.guid
+        }
+        element.optimizedImage = this.$cloudinary.image
+          .url(`indiemakers/${imageUid}`, { crop: 'scale', width: 250 })
+        if (!element.optimizedImage) {
+          this.$cloudinary.upload(element.itunes.image, {
+            public_id: imageUid,
+            folder: 'indiemakers'
+          })
+          element.optimizedImage = element.itunes.image
+        }
         element.preview = preview
         const twitter = this.findTw(element.content)
         const insta = this.findInst(element.content)

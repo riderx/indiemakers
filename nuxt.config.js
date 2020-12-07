@@ -83,6 +83,7 @@ export default {
   modules: [
     '@nuxtjs/component-cache',
     '@nuxtjs/sentry',
+    '@nuxtjs/cloudinary',
     [
       '@nuxtjs/proxy',
       {
@@ -104,6 +105,11 @@ export default {
   sentry: {
     dsn: 'https://1e9603c479b54389ab04a4be985e1768@o449238.ingest.sentry.io/5431873', // Enter your project's DSN here
     config: {} // Additional config
+  },
+  cloudinary: {
+    cloudName: 'forgr',
+    apiKey: '741532581937178',
+    apiSecret: 'WSTdfL0MRDAxoKHq63G09h9LjsE'
   }
   /*
   ** Build configuration
