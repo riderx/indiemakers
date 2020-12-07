@@ -191,12 +191,11 @@ export default {
       loadingImg: require('~/assets/cover-im_empty.png'),
       episodes: [],
       feed: null,
-      title: '🚀Le 1er podcast qui t\'aide à vivre de tes projets',
+      title: '🚀Le podcast pour lancer sa startup en indépendant',
       messages: [
-        'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en business florissant.',
-        'Au-delà des success-story, nous décryptons leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables.',
-        'J’interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur business pérenne.',
-        'Qui que tu sois, dans ce podcast tu apprendras à devenir un Indie Maker !',
+        'J\'échange avec ceux qui ont su transformer leurs idées en business florissant.',
+        'Au-delà des belles histoires, nous décryptons leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables en indépendant.',
+        'J’interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur projet profitable.',
         'Un épisode tous les 15 jours'
       ]
     }
