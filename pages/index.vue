@@ -153,6 +153,7 @@ import { feed } from '../plugins/rss'
 import { crispLoader } from '../plugins/crisp.client'
 const linkTwitterRe = /Son Twitter : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 const linkInstagramRe = /Son Instagram : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
+const linkLinkedinRe = /Son Linkedin : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 export default {
   components: {
     Modals: () => import('~/components/Modals.vue'),
@@ -170,10 +171,13 @@ export default {
         element.preview = preview
         const twitter = this.findTw(element.content)
         const insta = this.findInst(element.content)
+        const linkedin = this.findLinkedin(element.content)
         if (twitter && twitter.name) {
           element.social = twitter
-        } else if (insta && twitter.name) {
+        } else if (insta && insta.name) {
           element.social = insta
+        } else if (linkedin && linkedin.name) {
+          element.social = linkedin
         }
         // console.log('element', element)
       })
@@ -232,6 +236,13 @@ export default {
     },
     findTw (text) {
       const founds = linkTwitterRe.exec(text)
+      if (!founds || !founds.groups) {
+        return { name: null, link: null }
+      }
+      return founds.groups
+    },
+    findLinkedin (text) {
+      const founds = linkLinkedinRe.exec(text)
       if (!founds || !founds.groups) {
         return { name: null, link: null }
       }

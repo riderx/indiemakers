@@ -254,7 +254,7 @@ export default {
       const rand = this.getRandomInt(100)
       let modalName = 'upgrade'
       switch (true) {
-        case (rand < 25 && !window.localStorage.getItem('emailForNewletter')):
+        case (rand < 75 && !window.localStorage.getItem('emailForNewletter')):
           modalName = 'join'
           break
         case (rand < 50 && !window.localStorage.getItem('emailForNewletter')):
