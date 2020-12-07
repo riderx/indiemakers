@@ -108,22 +108,11 @@
                 <p>Par <a rel="noreferrer" target="_blank" href="https://twitter.com/martindonadieu">Martin DONADIEU</a></p>
                 <p>Ici pas de cookie, juste de l'<a rel="noreferrer" target="_blank" href="https://plausible.io/indiemakers.fr">Open data</a> qui te respecte </p>
                 <p><a rel="noreferrer" target="_blank" href="/tools">Mes outils</a> quotidiens pour gerer mes projets !</p>
+                <p><a rel="noreferrer" target="_blank" href="https://amzn.to/3lXjALg">Mon Livre</a>Lancer sa startup en indépendant, publié au éditions Broché </p>
               </div>
               <div class="col-12 pt-3 pb-3 px-md-3 order-3 text-white text-center text-sm-left">
                 <h5>Mes autres projets:</h5>
                 <div class="d-flex flex-column flex-md-row">
-                  <a
-                    class="text-white d-block px-2 py-3 py-md-0"
-                    target="_blank"
-                    rel="noreferrer"
-                    href="https://forgr.ee"
-                  >Forgr.ee | Startup studio</a>
-                  <a
-                    class="text-white d-block px-2 py-3 py-md-0"
-                    target="_blank"
-                    rel="noreferrer"
-                    href="https://bewise.love"
-                  >Bewise | Une citation par jour</a>
                   <a
                     class="text-white d-block px-2 py-3 py-md-0"
                     target="_blank"
@@ -136,6 +125,12 @@
                     rel="noreferrer"
                     href="https://lkstats.web.app/welcome"
                   >Lk stats | Linkedin analytics</a>
+                  <a
+                    class="text-white d-block px-2 py-3 py-md-0"
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://bewise.love"
+                  >Bewise | Une citation par jour</a>
                 </div>
               </div>
             </div>
