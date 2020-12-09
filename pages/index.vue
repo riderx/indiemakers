@@ -28,13 +28,13 @@
             >
               <div
                 v-for="episode in episodes"
-                :key="episode.guid"
-                :class="'row cursor-pointer bg-primary text-white py-2 py-md-0 border-bottom align-items-top ' + episode.guid"
-                @click="openEp(episode.guid)"
+                :key="episode.guid_fix"
+                :class="'row cursor-pointer bg-primary text-white py-2 py-md-0 border-bottom align-items-top ' + episode.guid_fix"
+                @click="openEp(episode.guid_fix)"
               >
                 <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 px-0 py-3 py-md-0">
                   <img
-                    v-lazy="getImgObj(episode.optimizedImage)"
+                    v-lazy="getImgObj(episode.image_optimized, episode.image_loading)"
                     width="100%"
                     height="100%"
                     :src="loadingImg"
@@ -101,7 +101,7 @@
                   class="btn btn-primary border-5 border-light btn-lg text-light px-4 h1"
                   @click="openAdd()"
                 >
-                  👉 Découvre les meilleurs Indie makers Fr
+                  👉 Découvre les Makers Français
                 </button>
               </div>
               <div class="col-12 pt-3">
@@ -155,42 +155,9 @@ export default {
     LazyHydrate
   },
   async fetch () {
-    const res = await feed()
-    // eslint-disable-next-line no-console
-    // console.log(res)
-    if (res && res.items) {
-      this.feed = res
-      this.episodes = res.items
-      this.episodes.forEach((element) => {
-        const preview = this.previewText(element.contentSnippet)
-        let imageUid = null
-        if (element.guid.indexOf('/') > 0) {
-          imageUid = element.guid.split('/').slice(-1).pop()
-        } else {
-          imageUid = element.guid
-        }
-        element.optimizedImage = this.$cloudinary.image
-          .url(`indiemakers/${imageUid}`, { crop: 'scale', width: 250 })
-        if (!element.optimizedImage) {
-          this.$cloudinary.upload(element.itunes.image, {
-            public_id: imageUid,
-            folder: 'indiemakers'
-          })
-          element.optimizedImage = element.itunes.image
-        }
-        element.preview = preview
-        const twitter = this.findTw(element.content)
-        const insta = this.findInst(element.content)
-        const linkedin = this.findLinkedin(element.content)
-        if (twitter && twitter.name) {
-          element.social = twitter
-        } else if (insta && insta.name) {
-          element.social = insta
-        } else if (linkedin && linkedin.name) {
-          element.social = linkedin
-        }
-        // console.log('element', element)
-      })
+    const items = await feed()
+    if (items) {
+      this.episodes = items
       this.loading = false
     }
   },
@@ -205,7 +172,6 @@ export default {
       },
       loadingImg: require('~/assets/cover-im_empty.png'),
       episodes: [],
-      feed: null,
       title: '🚀Le podcast pour lancer sa startup en indépendant',
       messages: [
         'J\'échange avec ceux qui ont su transformer leurs idées en business florissant.',
@@ -230,11 +196,11 @@ export default {
     removeEmoji (str) {
       return str.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')
     },
-    getImgObj (img) {
+    getImgObj (imageOptimized, imageLoading) {
       return {
-        src: img,
+        src: imageOptimized,
         error: require('~/assets/cover-im_user.png'),
-        loading: require('~/assets/cover-im_empty.png')
+        loading: imageLoading
       }
     },
     removeAccent (str) {

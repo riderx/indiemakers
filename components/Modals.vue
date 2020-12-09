@@ -30,7 +30,6 @@
                 </div>
                 <div class="col-12 pt-1 px-1 px-md-3 text-center">
                   <button
-                    v-tooltip="'Ecouter l\'épisode sur spotify'"
                     type="button"
                     class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                     @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
@@ -38,7 +37,6 @@
                     Spotify
                   </button>
                   <button
-                    v-tooltip="'Ecouter l\'épisode sur Apple podcast'"
                     type="button"
                     class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                     @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
@@ -46,7 +44,6 @@
                     Apple Podcast
                   </button>
                   <button
-                    v-tooltip="'Ecouter l\'épisode sur Youtube'"
                     type="button"
                     class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                     @click="listenExternal('https://www.youtube.com/channel/UCMedW_Y4K0alzeVz1bSBvjA?sub_confirmation=1')"
@@ -635,8 +632,8 @@
               </div>
               <div class="row bg-primary pt-4">
                 <div class="col-12 pt-2 text-white text-center">
-                  <p>Parfois pour se lancer, un podcast, un ebook ne suffit pas</p>
-                  <p>J'ai crée pour toi des outils pour passer a l'étape superieure !</p>
+                  <p>Parfois pour se lancer, un podcast ne suffit pas</p>
+                  <p>J'ai crée pour toi des outils pour passer a l'étape supérieure !</p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
@@ -645,6 +642,36 @@
                     @click="bmc()"
                   >
                     C'est parti
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal height="auto" adaptive name="share_hunt">
+        <div class="container-fluid">
+          <div class="row">
+            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('rate')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="col-12 h-100">
+              <div class="row bg-primary py-2">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1>Partage le classement des makers</h1>
+                </div>
+              </div>
+              <div class="row bg-primary pt-2">
+                <div class="col-12 text-white text-center">
+                  <p>Voici un tweet tout prêt, pour partager la page et faire réagir tweeter</p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    @click="tweetItHunt()"
+                  >
+                    Tweeter
                   </button>
                 </div>
               </div>
@@ -661,12 +688,12 @@
             <div class="col-12 h-100">
               <div class="row bg-primary py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>Tu aimes cet épisode ?</h1>
+                  <h1>Soutiens le podcast</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4">
-                <div class="col-12 pt-2 text-white text-center">
-                  <p>Click en dessous et note le 5 ⭐️, c'est ce qui m'aide le plus !</p>
+              <div class="row bg-primary pt-2">
+                <div class="col-12 text-white text-center">
+                  <p>Note le 5 ⭐️, en cliquant ci dessous, ca permet au podcast d'être découvert par d'autres !</p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
@@ -694,9 +721,9 @@
                   <h1>Tu aimes cet épisode ?</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4">
-                <div class="col-12 pt-2 text-white text-center">
-                  <p>Fait le savoir a l'invité du podcast en partagant sur twitter </p>
+              <div class="row bg-primary pt-2">
+                <div class="col-12 text-white text-center">
+                  <p>Envois du love a l'invité du podcast via twitter </p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
@@ -704,7 +731,7 @@
                     class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetIt()"
                   >
-                    Partager
+                    Envoyer
                   </button>
                 </div>
               </div>
@@ -972,15 +999,28 @@ export default {
           })
       }
     },
+    tweetItHunt () {
+      const linkEp = 'https://indiemakers.fr/makers_hunt'
+      const tweet = `Je viens de découvrir les Makers Français les plus chaud sur ${linkEp} @${process.env.handler}`
+      const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        tweet
+      )}`
+      window.open(tweetLink, '_blank')
+      this.$modal.hide('share_hunt')
+    },
     tweetItMaker () {
-      const text = `@${this.maker}, j'aimerais beaucoup que tu sois le·a prochain invité·e du podcast @${process.env.handler} 🚀.`
-      window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank')
+      const linkPage = `${process.env.domain}/makers_hunt`
+      const tweet = `@${this.maker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${process.env.handler} 🚀`
+      const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        tweet
+      )}`
+      window.open(tweetLink, '_blank')
       this.$modal.hide('added')
       this.$modal.hide('voted')
     },
     tweetIt () {
       const linkEp = `${process.env.domain}/episode/${this.epGui}`
-      const tweet = `J'écoute le podcast @${process.env.handler} avec ${this.maker} ${linkEp}`
+      const tweet = `@${process.env.handler} et @${this.twitter.name} merci pour le podcast ${linkEp} <3`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`

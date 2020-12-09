@@ -12,13 +12,11 @@ export default {
   env: {
     dev: (process.env.NODE_ENV !== 'production'),
     rss: 'https://anchor.fm/s/414d1d4/podcast/rss',
-    baseRSS: 'p/rss',
+    baseRSS: 'api/feed',
+    baseAPI: 'api',
     domain: (process.env.NODE_ENV === 'production') ? 'https://indiemakers.fr' : 'http://localhost:3000',
     domain_unsecure: 'http://indiemakers.fr',
     handler: 'indiemakersfr'
-  },
-  proxy: {
-    '/p/rss': 'https://anchor.fm/s/414d1d4/podcast/rss'
   },
   head: {
     title: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
@@ -47,6 +45,9 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  serverMiddleware: [
+    { path: '/api', handler: '~/api/rest.js' }
+  ],
   /*
   ** Global CSS
   */
@@ -74,7 +75,7 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    ['@nuxtjs/pwa', { workbox: false, oneSignal: false }]
+    '@nuxtjs/pwa'
   ],
 
   /*
@@ -82,34 +83,11 @@ export default {
   */
   modules: [
     '@nuxtjs/component-cache',
-    '@nuxtjs/sentry',
-    '@nuxtjs/cloudinary',
-    [
-      '@nuxtjs/proxy',
-      {
-        logProvider: () => {
-          const provider = {
-            log: console.log,
-            debug: console.log,
-            info: console.info,
-            warn: console.warn,
-            error: console.error
-          }
-
-          return provider
-        },
-        logLevel: 'debug'
-      }
-    ]
+    '@nuxtjs/sentry'
   ],
   sentry: {
     dsn: 'https://1e9603c479b54389ab04a4be985e1768@o449238.ingest.sentry.io/5431873', // Enter your project's DSN here
     config: {} // Additional config
-  },
-  cloudinary: {
-    cloudName: 'forgr',
-    apiKey: '741532581937178',
-    apiSecret: 'WSTdfL0MRDAxoKHq63G09h9LjsE'
   }
   /*
   ** Build configuration

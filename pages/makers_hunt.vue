@@ -12,7 +12,6 @@
                 class="col-3 col-md-2 py-2"
               >
                 <button
-                  v-tooltip="'Ajouter un·e maker'"
                   type="button"
                   class="btn-primary border-0 bigg p-0"
                   @click="showAddForm()"
@@ -90,7 +89,7 @@
             <div class="row">
               <div class="col-12 text-center text-sm-left">
                 <h1 class="pb-2 pt-md-5">
-                  Les Makers Français les plus 🔥!
+                  {{ title }}
                 </h1>
               </div>
               <div class="col-12 text-left pt-md-5">
@@ -130,7 +129,6 @@
                 </p>
                 <div class="col-12 px-md-5 pt-0 text-center">
                   <button
-                    v-tooltip="'Commence à gagner ta vie sur internet'"
                     type="button"
                     class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                     @click="joinUs()"
@@ -139,7 +137,6 @@
                   </button>
                   <button
                     id="rtp-button"
-                    v-tooltip="'Note l\'épisode pour soutenir le podcast'"
                     type="button"
                     class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                     @click="rate()"
@@ -147,7 +144,6 @@
                     ⭐️ Note
                   </button>
                   <button
-                    v-tooltip="'Partager via twitter'"
                     type="button"
                     class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                     @click="tweetItShare()"
@@ -179,11 +175,11 @@ export default {
     LazyHydrate
   },
   async fetch () {
-    const res = await feed()
+    const items = await feed()
     // eslint-disable-next-line no-console
     // console.log(res)
-    if (res && res.items) {
-      this.episodes = res.items
+    if (items) {
+      this.episodes = items
     }
   },
   data () {
@@ -194,8 +190,8 @@ export default {
         error: require('~/assets/cover-im_user.png'),
         loading: require('~/assets/cover-im_empty.png')
       },
-      title: 'Vote pour ton maker preféré',
-      message: 'Cela me permettra de decouvrir de nouveau maker a inviter',
+      title: 'Les Makers Français les plus chaud !',
+      message: 'Suis, ajoute et votes pour tes MAKERS favoris, en bonus tu gagnes une chance de les voir dans le podcast !',
       email: '',
       guid: null,
       episodes: [],
@@ -236,17 +232,11 @@ export default {
       })
   },
   methods: {
-    bmc () {
-      window.open(`https://www.buymeacoffee.com/${process.env.handler}`, '_blank')
-    },
     joinUs () {
       this.$modal.show('join')
     },
     rate () {
-      window.open('https://ratethispodcast.com/imf', '_blank')
-    },
-    removeEmoji (str) {
-      return str.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')
+      this.$modal.show('rate')
     },
     findInEp (name) {
       let found = false
@@ -258,20 +248,11 @@ export default {
       })
       return found
     },
-    tooltipVote (person) {
-      return `Voter pour avoir ${person.name} dans le podcast`
-    },
     personImg (person) {
-      return `https://twitter-avatar.now.sh/${person.login}`
+      return `/api/makers/${person.login}`
     },
     tweetItShare () {
-      const tweet = 'J\'écoute le podcast @indiemakers https://indiemakers.fr'
-      const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        tweet
-      )}`
-      window.open(tweetLink, '_blank')
-      this.$modal.hide('added')
-      this.$modal.hide('voted')
+      this.$modal.show('share_hunt')
     },
     getTextLink (text) {
       return linkifyHtml(text, {
@@ -441,10 +422,10 @@ export default {
       title: this.title,
       meta: [
         { hid: 'og:url', property: 'og:url', content: `${process.env.domain}${this.$route.fullPath}` },
-        { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
-        { hid: 'description', name: 'description', content: this.removeEmoji(this.message) },
-        { hid: 'og:title', property: 'og:title', content: this.removeEmoji(this.title) },
-        { hid: 'og:description', property: 'og:description', content: this.removeEmoji(this.message) },
+        { hid: 'title', name: 'title', content: this.title },
+        { hid: 'description', name: 'description', content: this.message },
+        { hid: 'og:title', property: 'og:title', content: this.title },
+        { hid: 'og:description', property: 'og:description', content: this.message },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
         { hid: 'og:image', property: 'og:image', content: `${process.env.domain_unsecure}${require('~/assets/cover-im@0.5x.png')}` },
