@@ -1,5 +1,5 @@
 
-const isServerlessEnvironment = process.env.ON_VERCEL == 'true'
+const isServerlessEnvironment = process.env.ON_VERCEL === 'true'
 export default {
   /*
   ** Nuxt target

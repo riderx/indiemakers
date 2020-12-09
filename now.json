@@ -6,7 +6,7 @@
   "builds": [
       {
           "src": "api/**/*.js",
-          "use": "@now/node"
+          "use": "@vercel/node"
       },
       {
         "src": "nuxt.config.js",
