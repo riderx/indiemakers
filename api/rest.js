@@ -13,21 +13,6 @@ const linkTwitterRe = /Son Twitter : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 const linkInstagramRe = /Son Instagram : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 const linkLinkedinRe = /Son Linkedin : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 
-// "access_token_secret": "QaDol7JdpVMzTqEDyiykbhMMM38x2a5IUKFMsZ6Fo0dhs",
-// "consumer_key": "FlAWfz12qce6flIK3DfSBOqIp",
-// "consumer_secret": "rJEhGGvkQQ21mEPJ9K0yIdHE9ux2jUqAS2SZz7OS67HrmdkapF",
-// "access_token_key": "365398423-jfcTlZs6thokCSgeqBNdHHoKrl0hF9JrMt5i7q0l"
-
-const redisCache = cacheManager.caching({
-  store: redisStore,
-  host: 'redis-16500.c239.us-east-1-2.ec2.cloud.redislabs.com',
-  port: 16500,
-  auth_pass: 'pazbYDibG2EO1WMIbgzU5HV8MYSogbtP',
-  db: 0,
-  ttl: 3600
-})
-
-const cacheMiddleware = new ExpressCache(redisCache)
 const imagekit = new ImageKit({
   publicKey: 'public_9vWOr643awJiLr6HqhpNNF1ZVkQ=',
   privateKey: 'private_fnm/B2spgFy+0xqXGz6C3+eSW00=',
@@ -147,7 +132,18 @@ const feed = async () => {
   return items
 }
 
-// cacheMiddleware.attach(app)
+if (process.env.redis_host) {
+  const redisCache = cacheManager.caching({
+    store: redisStore,
+    host: process.env.redis_host,
+    port: process.env.redis_port,
+    auth_pass: process.env.redis_pass,
+    db: 0,
+    ttl: 3600
+  })
+  const cacheMiddleware = new ExpressCache(redisCache)
+  cacheMiddleware.attach(app)
+}
 app.use(bodyParser.json())
 app.all('/feed', async (req, res) => {
   res.json(await feed())
