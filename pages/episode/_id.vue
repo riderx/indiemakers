@@ -1,76 +1,76 @@
 <template>
   <LazyHydrate when-idle>
     <div id="emission">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 offset-xl-1 col-xl-5">
-            <div v-if="loading" class="row bg-white px-3">
-              <div class="col-12 p-5 text-center">
+      <div class="container mx-auto mx-auto">
+        <div class="flex flex-wrap">
+          <div class="w-1/62 xl:mx-1/6 xl:w-2/5 pr-4 pl-4">
+            <div v-if="loading" class="flex flex-wrap bg-white px-3">
+              <div class="w-1/62 p-5 text-center">
                 <div
-                  class="spinner-grow text-primary"
+                  class="spinner-gflex flex-wrap text-blue"
                   style="width: 6rem; height: 6rem;"
                   role="status"
                 >
-                  <span class="sr-only">Chargement...</span>
+                  <span class="">Chargement...</span>
                 </div>
               </div>
             </div>
-            <div id="header-title" class="row bg-primary border-10 border-light">
-              <div class="col-12 pt-md-3 text-white text-center">
-                <h1 class="d-none d-sm-block">
+            <div id="header-title" class="flex flex-wrap bg-blue border-10 border-light">
+              <div class="w-1/62 pt-md-3 text-white text-center">
+                <h1 class="hidden sm:block">
                   {{ title }}
                 </h1>
               </div>
-              <div v-if="!loading" class="col-12 d-block d-sm-none px-0">
+              <div v-if="!loading" class="w-1/62 block sm:hidden px-0">
                 <img
                   v-lazy="image"
                   width="100%"
                   height="100%"
                   :src="loadingImg"
-                  class="w-100 img-fluid border-10 border-light"
+                  class="w-full max-w-full h-auto border-10 border-light"
                   :alt="title"
                 >
               </div>
-              <div v-if="!loading" class="col-12 d-block d-sm-none text-white px-0">
+              <div v-if="!loading" class="w-1/62 block sm:hidden text-white px-0">
                 <vue-plyr v-if="showAudio" ref="plyr">
                   <audio>
                     <source :src="audio" type="audio/mp3">
                   </audio>
                 </vue-plyr>
               </div>
-              <div v-if="!loading" class="col-12 pt-3 d-block d-sm-none text-white">
+              <div v-if="!loading" class="w-1/62 pt-3 block sm:hidden text-white">
                 <h3>{{ title }}</h3>
               </div>
             </div>
-            <div v-if="!loading" class="custom-scroll fix-marging border-5 px-2 border-light border-right-0" :style="{ height: sizeHead }">
-              <div class="px-1 px-md-5 pt-3 text-light" v-html="content" />
+            <div v-if="!loading" class="custom-scroll fix-marging border-5 px-2 border-light border-r-0" :style="{ height: sizeHead }">
+              <div class="px-1 px-md-5 pt-3 text-grey-lightest" v-html="content" />
             </div>
-            <div v-if="!loading" class="row bg-primary py-4 d-block d-md-none">
-              <div class="col-12 px-1 text-center">
+            <div v-if="!loading" class="flex flex-wrap bg-blue py-4 block d-mhidden">
+              <div class="w-1/62 px-1 text-center">
                 <button
                   type="button"
-                  class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
                   @click="listen()"
                 >
                   🎧 Ecouter
                 </button>
                 <button
                   type="button"
-                  class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="btn bg-primary border-5 border-light btn-lg bnt-block text-white m-1 m-md-3 px-4"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
                   @click="joinUs()"
                 >
                   👉 Lance toi
@@ -78,28 +78,28 @@
               </div>
             </div>
           </div>
-          <div v-if="!loading" class="col-12 col-md-6 text-center d-none d-md-block">
-            <div class="row align-items-center">
-              <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-0">
+          <div v-if="!loading" class="w-1/62 md:w-1/2 pr-4 pl-4 text-center hidden d-mblock">
+            <div class="flex flex-wrap align-items-center">
+              <div class="w-1/62 md:mx-1/6 md:w-1/6 pr-4 pl-40 px-md-3 pt-0">
                 <img
                   v-lazy="image"
                   width="100%"
                   height="100%"
-                  class="w-100 img-fluid border-10 border-light"
+                  class="w-full max-w-full h-auto border-10 border-light"
                   alt="Logo person"
                 >
               </div>
-              <div class="col-12 offset-md-1 col-md-10 px-md-3 pt-0">
+              <div class="w-1/62 md:mx-1/6 md:w-1/6 pr-4 pl-40 px-md-3 pt-0">
                 <vue-plyr v-if="showAudio" ref="plyr2">
                   <audio>
                     <source :src="audio" type="audio/mp3">
                   </audio>
                 </vue-plyr>
               </div>
-              <div class="col-12 px-md-5 pt-1 pt-md-3">
+              <div class="w-1/62 px-md-5 pt-1 pt-md-3">
                 <button
                   type="button"
-                  class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="listen()"
                 >
                   🎧 Ecouter
@@ -107,21 +107,21 @@
                 <button
                   id="rtp-button"
                   type="button"
-                  class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                   @click="joinUs()"
                 >
                   👉 Lance toi
@@ -135,11 +135,9 @@
     </div>
   </LazyHydrate>
 </template>
-
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import { ep } from '~/plugins/rss'
-
 export default {
   components: {
     LazyHydrate,
@@ -341,7 +339,6 @@ export default {
   }
 }
 </script>
-
 <style>
 :root {
   --plyr-color-main: rgba(75, 39, 155, 1);

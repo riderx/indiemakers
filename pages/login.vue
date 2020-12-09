@@ -1,30 +1,29 @@
-
 <template>
   <div>
-    <div class="container-fluid">
-      <div class="row pt-md-5">
-        <div class="col-12 offset-md-1 col-md-5">
-          <div class="row bg-primary py-0">
-            <div class="col pt-3 px-0 border-10 border-light text-white text-center">
+    <div class="container mx-auto mx-auto">
+      <div class="flex flex-wrap pt-md-5">
+        <div class="w-1/62 md:mx-1/6 md:w-2/5 pr-4 pl-4">
+          <div class="flex flex-wrap bg-blue py-0">
+            <div class="flex-grow pt-3 px-0 border-10 border-light text-white text-center">
               <h1>🔑Email Verification</h1>
             </div>
           </div>
-          <div class="row bg-primary border-10 border-light pb-4">
-            <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-              <div class="form-group mb-0">
+          <div class="flex flex-wrap bg-blue border-10 border-light pb-4">
+            <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-3 text-white text-center">
+              <div class="mb-4 mb-0">
                 <input
                   v-model="email"
                   type="email"
-                  class="form-control pb-0"
+                  class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-grey-darker border border-grey rounded pb-0"
                   aria-describedby="emailHelp"
                   placeholder="elon@musk.com"
                 >
               </div>
             </div>
-            <div class="offset-md-3 col-md-6 pt-0 text-white text-center">
+            <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-0 text-white text-center">
               <button
                 type="button"
-                class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline text-blue-lightest bg-blue hover:bg-blue-light border-5 border-light py-3 px-4 text-xl leading-tight block w-full text-grey-lightest px-4 h1"
                 @click="sendConfirm()"
               >
                 🚀valider
@@ -32,8 +31,8 @@
             </div>
           </div>
         </div>
-        <div v-if="image" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block">
-          <img class="img-fluid border-10 border-light" alt="Logo IM" :src="image">
+        <div v-if="image" class="w-1/62 md:w-1/2 pr-4 pl-4 pt-0 px-md-5 order-1 order-md-2 hidden xl:block">
+          <img class="max-w-full h-auto border-10 border-light" alt="Logo IM" :src="image">
         </div>
       </div>
     </div>
@@ -43,7 +42,6 @@
 <script>
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 // import { firebaseLib } from '../plugins/firebase.client'
-
 export default {
   components: {
     Modals: () => import('~/components/Modals.vue')
@@ -126,6 +124,5 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 </style>

@@ -1,11 +1,9 @@
-
 <template>
   <LazyHydrate when-idle>
-    <div class="container">
-      <div class="row bg-primary py-2 border-10 border-light">
-        <div class="col-12 text-center">
-          <img class="w-25 pb-5 pb-md-3" src="/book.svg">
-
+    <div class="container mx-auto">
+      <div class="flex flex-wrap bg-blue py-2 border-10 border-light">
+        <div class="w-1/62 text-center">
+          <img class="w-1/4 pb-5 pb-md-3" src="/book.svg">
           <h1 class="pl-2 py-2 m-0 text-white text-center">
             {{ title }}
           </h1>
@@ -15,34 +13,34 @@
           <p class="px-5 text-white">
             Tu seras également informé de la sortie des épisodes !
           </p>
-          <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-            <div class="form-group mb-0">
+          <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-3 text-white text-center">
+            <div class="mb-4 mb-0">
               <input
                 ref="name"
                 v-model="email"
                 type="text"
-                class="form-control pb-0"
+                class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-grey-darker border border-grey rounded pb-0"
                 aria-describedby="TweetnameHelp"
                 placeholder="Elon@tesla.com"
               >
             </div>
           </div>
-          <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-            <div class="form-group mb-0">
+          <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-3 text-white text-center">
+            <div class="mb-4 mb-0">
               <input
                 ref="name"
                 v-model="name"
                 type="text"
-                class="form-control pb-0"
+                class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-grey-darker border border-grey rounded pb-0"
                 aria-describedby="TweetnameHelp"
                 placeholder="Elon Musk"
               >
             </div>
           </div>
-          <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+          <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-3 pb-3 text-white text-center">
             <button
               type="button"
-              class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+              class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline text-blue-lightest bg-blue hover:bg-blue-light border-5 border-light py-3 px-4 text-xl leading-tight block w-full text-grey-lightest px-4 h1"
               @click="addEMailSub()"
             >
               Comfirmer
@@ -54,10 +52,8 @@
     </div>
   </LazyHydrate>
 </template>
-
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
-
 export default {
   components: {
     LazyHydrate,
@@ -115,9 +111,7 @@ export default {
   }
 }
 </script>
-
 <style scoped>
-
 .form-size {
   height: 800px;
 }

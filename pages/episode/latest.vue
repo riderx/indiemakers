@@ -1,8 +1,6 @@
 <template />
-
 <script>
 import { feed } from '~/plugins/rss'
-
 export default {
   async fetch () {
     const res = await feed()

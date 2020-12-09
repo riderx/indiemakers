@@ -1,63 +1,63 @@
 <template>
   <LazyHydrate when-visible>
     <div id="episodes">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 offset-xl-1 col-xl-5">
-            <div id="header-eps" class="row bg-primary border-10 border-light py-1 py-md-4">
-              <div class="col pt-3 px-0 text-white text-center">
+      <div class="container mx-auto mx-auto">
+        <div class="flex flex-wrap">
+          <div class="w-1/62 xl:mx-1/6 xl:w-2/5 pr-4 pl-4">
+            <div id="header-eps" class="flex flex-wrap bg-blue border-10 border-light py-1 py-md-4">
+              <div class="flex-grow pt-3 px-0 text-white text-center">
                 <h1>🎙 Episodes</h1>
               </div>
             </div>
-            <div v-if="loading" class="row bg-white px-3">
-              <div class="col-12 p-5 text-center">
+            <div v-if="loading" class="flex flex-wrap bg-white px-3">
+              <div class="w-1/62 p-5 text-center">
                 <div
-                  class="spinner-grow text-primary"
+                  class="spinner-gflex flex-wrap text-blue"
                   style="width: 6rem; height: 6rem;"
                   role="status"
                 >
-                  <span class="sr-only">Chargement...</span>
+                  <span class="">Chargement...</span>
                 </div>
               </div>
             </div>
             <div
               v-if="!loading"
               id="scrollable"
-              class="custom-scroll fix-marging border-5 px-2 border-light border-right-0"
+              class="custom-scroll fix-marging border-5 px-2 border-light border-r-0"
               :style="{ height: sizeHead }"
             >
               <div
                 v-for="episode in episodes"
                 :key="episode.guid_fix"
-                :class="'row cursor-pointer bg-primary text-white py-2 py-md-0 border-bottom align-items-top ' + episode.guid_fix"
+                :class="'flex flex-wrap cursor-pointer bg-blue text-white py-2 py-md-0 border-b align-items-top ' + episode.guid_fix"
                 @click="openEp(episode.guid_fix)"
               >
-                <div class="offset-4 offset-md-0 col-4 order-1 order-md-2 px-0 py-3 py-md-0">
+                <div class="offset-4 offset-md-0 w-1/3 order-1 order-md-2 px-0 py-3 py-md-0">
                   <img
                     v-lazy="getImgObj(episode.image_optimized, episode.image_loading)"
                     width="100%"
                     height="100%"
                     :src="loadingImg"
-                    class="w-100 w-md-75 img-fluid border-5 border-light"
+                    class="w-full w-md-75 max-w-full h-auto border-5 border-light"
                     :alt="'Cover ' + episode.title"
                   >
                 </div>
-                <div class="col-12 col-md-8 order-2 p-2 order-md-2 text-center text-md-left">
+                <div class="w-1/62 md:w-2/3 pr-4 pl-4 order-2 p-2 order-md-2 text-center text-md-left">
                   <h3>{{ episode.title }}</h3>
                   <p
                     v-if="episode.social"
-                    class="text-success fit-content cursor-pointer mb-0 d-none d-md-block"
+                    class="text-green fit-content cursor-pointer mb-0 hidden d-mblock"
                   >
                     {{ episode.social.name }}
                   </p>
-                  <p class="text-center text-md-left px-3 px-md-0 d-none d-md-block">
+                  <p class="text-center text-md-left px-3 px-md-0 hidden d-mblock">
                     {{ episode.preview }}
                   </p>
                 </div>
-                <div class="col-12 px-0 px-md-5 pt-1 pt-md-3 order-3 d-block d-md-none">
+                <div class="w-1/62 px-0 px-md-5 pt-1 pt-md-3 order-3 block d-mhidden">
                   <p
                     v-if="episode.social"
-                    class="text-success text-center text-md-left mb-0"
+                    class="text-green text-center text-md-left mb-0"
                   >
                     {{ episode.social.name }}
                   </p>
@@ -68,65 +68,65 @@
               </div>
             </div>
           </div>
-          <div id="content" class="col-12 col-md-6 pt-md-0 px-md-5 text-white">
-            <div class="row">
-              <div class="col-md-2 offset-3 offset-md-0 col-6 py-3 pt-md-0 px-3 pl-md-0">
+          <div id="content" class="w-1/62 md:w-1/2 pr-4 pl-4 pt-md-0 px-md-5 text-white">
+            <div class="flex flex-wrap">
+              <div class="md:w-1/5 pr-4 pl-4 offset-3 offset-md-0 w-1/2 py-3 pt-md-0 px-3 pl-md-0">
                 <img
                   v-lazy="image"
                   width="100%"
                   height="100%"
-                  class="img-fluid border-10 border-light"
+                  class="max-w-full h-auto border-10 border-light"
                   alt="IM COVER"
                   :src="loadingImg"
                 >
               </div>
-              <div class="col-12 col-md-9 text-center text-sm-left">
+              <div class="w-1/62 md:w-3/4 pr-4 pl-4 text-center text-sm-left">
                 <h1 class="pb-2">
                   {{ title }}
                 </h1>
               </div>
-              <div class="col-12 py-1 py-md-3 text-center text-sm-left">
+              <div class="w-1/62 py-1 py-md-3 text-center text-sm-left">
                 <h3>Prochain episode dans {{ nextEpisode() }} </h3>
               </div>
-              <div class="col-12 pt-3 text-center text-sm-left">
+              <div class="w-1/62 pt-3 text-center text-sm-left">
                 <div v-for="(message, index) in messages" :key="`ep-${index}`">
                   <p class="pb-0">
                     {{ message }}
                   </p>
                 </div>
               </div>
-              <div class="col-12 pt-3 text-center">
+              <div class="w-1/62 pt-3 text-center">
                 <button
                   type="button"
-                  class="btn btn-primary border-5 border-light btn-lg text-light px-4 h1"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline text-blue-lightest bg-blue hover:bg-blue-light border-5 border-light py-3 px-4 text-xl leading-tight text-grey-lightest px-4 h1"
                   @click="openAdd()"
                 >
                   👉 Découvre les Makers Français
                 </button>
               </div>
-              <div class="col-12 pt-3">
+              <div class="w-1/62 pt-3">
                 <p>Par <a rel="noreferrer" target="_blank" href="https://twitter.com/martindonadieu">Martin DONADIEU</a></p>
                 <p>Ici pas de cookie, juste de l'<a rel="noreferrer" target="_blank" href="https://plausible.io/indiemakers.fr">Open data</a> qui te respecte </p>
                 <p><a rel="noreferrer" target="_blank" href="/tools">Mes outils</a> quotidiens pour gerer mes projets !</p>
                 <p><a rel="noreferrer" target="_blank" href="https://amzn.to/3lXjALg">Mon Livre</a> Lancer sa startup en indépendant, publié au éditions Broché </p>
               </div>
-              <div class="col-12 pt-3 pb-3 px-md-3 order-3 text-white text-center text-sm-left">
+              <div class="w-1/62 pt-3 pb-3 px-md-3 order-3 text-white text-center text-sm-left">
                 <h5>Mes autres projets:</h5>
-                <div class="d-flex flex-column flex-md-row">
+                <div class="flex flex-column flex-md-row">
                   <a
-                    class="text-white d-block px-2 py-3 py-md-0"
+                    class="text-white block px-2 py-3 py-md-0"
                     target="_blank"
                     rel="noreferrer"
                     href="https://apps.apple.com/us/app/captime-crossfit-timer/id1369288585"
                   >Captime | Crossfit timer</a>
                   <a
-                    class="text-white d-block px-2 py-3 py-md-0"
+                    class="text-white block px-2 py-3 py-md-0"
                     target="_blank"
                     rel="noreferrer"
                     href="https://lkstats.web.app/welcome"
                   >Lk stats | Linkedin analytics</a>
                   <a
-                    class="text-white d-block px-2 py-3 py-md-0"
+                    class="text-white block px-2 py-3 py-md-0"
                     target="_blank"
                     rel="noreferrer"
                     href="https://bewise.love"
@@ -141,7 +141,6 @@
     </div>
   </LazyHydrate>
 </template>
-
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '../plugins/rss'
@@ -284,7 +283,5 @@ export default {
   }
 }
 </script>
-
 <style>
-
 </style>

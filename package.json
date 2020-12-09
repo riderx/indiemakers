@@ -14,6 +14,7 @@
     "@nuxtjs/component-cache": "^1.1.6",
     "@nuxtjs/pwa": "^3.2.2",
     "@nuxtjs/sentry": "^4.3.5",
+    "@nuxtjs/tailwindcss": "^3.3.3",
     "@nuxtjs/vercel-builder": "^0.17.12",
     "@vercel/node": "^1.8.5",
     "axios": "^0.21.0",

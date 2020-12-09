@@ -1,19 +1,19 @@
 <template>
   <LazyHydrate when-idle>
     <div id="makers">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 offset-xl-1 col-xl-5">
-            <div id="header-mk" class="row bg-primary border-10 border-light py-1 py-md-4">
-              <div class="col pt-3 px-0 text-white text-center">
+      <div class="container mx-auto mx-auto">
+        <div class="flex flex-wrap">
+          <div class="w-1/62 xl:mx-1/6 xl:w-2/5 pr-4 pl-4">
+            <div id="header-mk" class="flex flex-wrap bg-blue border-10 border-light py-1 py-md-4">
+              <div class="flex-grow pt-3 px-0 text-white text-center">
                 <h1>💃 Makers</h1>
               </div>
               <div
-                class="col-3 col-md-2 py-2"
+                class="w-1/4 md:w-1/5 pr-4 pl-4 py-2"
               >
                 <button
                   type="button"
-                  class="btn-primary border-0 bigg p-0"
+                  class="text-blue-lightest bg-blue hover:bg-blue-light border-0 bigg p-0"
                   @click="showAddForm()"
                 >
                   +
@@ -21,58 +21,58 @@
               </div>
             </div>
             <client-only>
-              <div v-if="loading" slot="placeholder" class="row bg-white px-3">
-                <div class="col-12 p-5 text-center">
+              <div v-if="loading" slot="placeholder" class="flex flex-wrap bg-white px-3">
+                <div class="w-1/62 p-5 text-center">
                   <div
-                    class="spinner-grow text-primary"
+                    class="spinner-gflex flex-wrap text-blue"
                     style="width: 6rem; height: 6rem;"
                     role="status"
                   >
-                    <span class="sr-only">Chargement...</span>
+                    <span class="">Chargement...</span>
                   </div>
                 </div>
               </div>
               <div
                 v-if="!loading"
-                class="custom-scroll fix-marging border-5 px-2 border-light border-right-0"
+                class="custom-scroll fix-marging border-5 px-2 border-light border-r-0 w-full"
                 :style="{ height: sizeHead }"
               >
                 <div
                   v-for="episode in people"
                   :key="episode.id"
-                  :class="'row cursor-pointer bg-primary text-white py-2 py-md-0 border-bottom align-items-top ' + episode.id"
+                  :class="'w-full flex flex-wrap cursor-pointer bg-blue text-white py-2 py-md-0 border-b align-items-top ' + episode.id"
                 >
-                  <div class="offset-2 offset-md-0 col-8 col-md-4 order-1 order-md-2 px-0 py-3 py-md-0" @click="vote(episode)">
+                  <div class="offset-2 offset-md-0 w-2/3 md:w-1/3 pr-4 pl-4 order-1 order-md-2 px-0 py-3 py-md-0" @click="vote(episode)">
                     <img
                       v-lazy="getImgObj(episode.img)"
                       width="100%"
                       height="100%"
                       :src="loadingImg"
-                      class="w-100 w-md-75 img-fluid border-5 border-light"
+                      class="w-full w-md-75 max-w-full h-auto border-5 border-light"
                       :alt="'Picture ' + episode.name"
                     >
-                    <div class="tumb_up px-3 my-3 my-md-2 border-5 border-light text-center bg-primary">
+                    <div class="tumb_up px-3 my-3 my-md-2 border-5 border-light text-center bg-blue">
                       👍<br>
                       {{ episode.votes }}
                     </div>
                   </div>
-                  <div class="col-12 col-md-8 order-2 p-2 order-md-2 text-center text-md-left">
+                  <div class="w-1/62 md:w-2/3 pr-4 pl-4 order-2 p-2 order-md-2 text-center text-md-left">
                     <h3>{{ episode.name }}</h3>
                     <p
                       v-if="episode.login"
-                      class="text-success fit-content cursor-pointer mb-0 d-none d-md-block"
+                      class="text-green fit-content cursor-pointer mb-0 hidden d-mblock"
                       @click="openAccount(episode.login)"
                     >
                       @{{ episode.login }}
                     </p>
-                    <div class="text-center text-md-left px-3 px-md-0 d-none d-md-block">
+                    <div class="text-center text-md-left px-3 px-md-0 hidden d-mblock">
                       <p class v-html="getTextLink(episode.bio)" />
                     </div>
                   </div>
-                  <div class="col-12 px-0 px-md-5 pt-1 pt-md-3 order-3 d-block d-md-none">
+                  <div class="w-1/62 px-0 px-md-5 pt-1 pt-md-3 order-3 block d-mhidden">
                     <p
                       v-if="episode.login"
-                      class="text-success text-center text-md-left mb-0"
+                      class="text-green text-center text-md-left mb-0"
                       @click="openAccount(episode.login)"
                     >
                       {{ episode.login }}
@@ -85,14 +85,14 @@
               </div>
             </client-only>
           </div>
-          <div id="content" class="col-12 col-md-6 pt-0 px-md-5 order-1 order-md-2 d-none d-xl-block text-white">
-            <div class="row">
-              <div class="col-12 text-center text-sm-left">
+          <div id="content" class="w-1/62 md:w-1/2 pr-4 pl-4 pt-0 px-md-5 order-1 order-md-2 hidden xl:block text-white">
+            <div class="flex flex-wrap">
+              <div class="w-1/62 text-center text-sm-left">
                 <h1 class="pb-2 pt-md-5">
                   {{ title }}
                 </h1>
               </div>
-              <div class="col-12 text-left pt-md-5">
+              <div class="w-1/62 text-left pt-md-5">
                 <p class="pl-2">
                   Les Makers sont une espèce d'entrepreneurs encore méconnue en France.<br><br>
                   Parfois ils ne postent qu'en anglais...<br>
@@ -127,10 +127,10 @@
                 <p class="h3 pt-3 text-center">
                   Avance maintenant sur la voie du maker !
                 </p>
-                <div class="col-12 px-md-5 pt-0 text-center">
+                <div class="w-1/62 px-md-5 pt-0 text-center">
                   <button
                     type="button"
-                    class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                    class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                     @click="joinUs()"
                   >
                     👉 Reçoit mes emails
@@ -138,14 +138,14 @@
                   <button
                     id="rtp-button"
                     type="button"
-                    class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                    class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                     @click="rate()"
                   >
                     ⭐️ Note
                   </button>
                   <button
                     type="button"
-                    class="btn bg-primary border-5 border-light btn-lg text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                    class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
                     @click="tweetItShare()"
                   >
                     ❤️ Partage
@@ -160,7 +160,6 @@
     </div>
   </lazyhydrate>
 </template>
-
 <script>
 import linkifyHtml from 'linkifyjs/html'
 import LazyHydrate from 'vue-lazy-hydration'
@@ -168,7 +167,6 @@ import { feed } from '../plugins/rss'
 // eslint-disable-next-line no-unused-vars
 // import { fb } from '../plugins/firebase.client'
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/USERNAME">@USERNAME</a>'
-
 export default {
   components: {
     Modals: () => import('~/components/Modals.vue'),
@@ -436,7 +434,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 .bigg {
     font-size: 6rem;
@@ -447,7 +444,6 @@ export default {
   bottom: 0px;
   right: 0px;
 }
-
 @media screen and (min-width: 768px) {
 .tumb_up {
   bottom: -10px;

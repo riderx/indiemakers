@@ -1,50 +1,50 @@
 <template>
   <LazyHydrate when-idle>
-    <div class="container">
-      <div class="row bg-primary py-2">
-        <div class="col-12 text-center">
+    <div class="container mx-auto">
+      <div class="flex flex-wrap bg-blue py-2">
+        <div class="w-1/62 text-center">
           <img
-            class="w-25 pb-3 header-image"
+            class="w-1/4 pb-3 header-image"
             width="100%"
             height="100%"
             src="/tools.svg"
           >
         </div>
-        <h1 class="text-white text-center w-100 py-4 px-2">
+        <h1 class="text-white text-center w-full py-4 px-2">
           {{ title }}
         </h1>
-        <div class="example col-md-12 ml-auto mr-auto">
-          <div v-if="loading" class="row bg-white px-3">
-            <div class="col-12 p-5 text-center">
+        <div class="example md:w-1/6 pr-4 pl-42 ml-auto mr-auto">
+          <div v-if="loading" class="flex flex-wrap bg-white px-3">
+            <div class="w-1/62 p-5 text-center">
               <div
-                class="spinner-grow text-primary"
+                class="spinner-gflex flex-wrap text-blue"
                 style="width: 6rem; height: 6rem;"
                 role="status"
               >
-                <span class="sr-only">Chargement...</span>
+                <span class="">Chargement...</span>
               </div>
             </div>
           </div>
-          <div v-if="!loading" class="row">
+          <div v-if="!loading" class="flex flex-wrap">
             <div
               v-for="tool in tools"
               :key="tool.name"
-              class="col-lg-4 col-md-6 col-sm-12 mb-4"
+              class="lg:w-1/3 pr-4 pl-4 md:w-1/2 pr-4 pl-4 sm:w-1/6 pr-4 pl-42 mb-4"
               @click="openBlank(tool.link)"
             >
-              <div class="card bg-primary border-5 border-light ">
+              <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-grey-light bg-blue border-5 border-light ">
                 <img
                   width="100%"
                   height="100%"
-                  class="card-img-top"
+                  class="w-full rounded rounded-t"
                   :src="tool.image"
                   :alt="`${tool.name} Logo`"
-                ><div class="card-body">
-                  <h4 class="card-title text-white">
+                ><div class="flex-auto p-6">
+                  <h4 class="mb-3 text-white">
                     {{ tool.name }}
-                  </h4><p class="card-text text-white">
+                  </h4><p class="mb-0 text-white">
                     {{ tool.description }}
-                  </p><a rel="noreferrer" :href="tool.link" target="_blank" class="btn border-5 border-light btn-lg btn-primary text-center w-100">J'en profite</a>
+                  </p><a rel="noreferrer" :href="tool.link" target="_blank" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline border-5 border-light py-3 px-4 text-xl leading-tight text-blue-lightest bg-blue hover:bg-blue-light text-center w-full">J'en profite</a>
                 </div>
               </div>
             </div>
@@ -58,10 +58,8 @@
     </div>
   </LazyHydrate>
 </template>
-
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
-
 export default {
   components: {
     LazyHydrate,
@@ -146,9 +144,7 @@ export default {
   }
 }
 </script>
-
 <style scoped>
-
 .form-size {
   height: 750px;
 }
