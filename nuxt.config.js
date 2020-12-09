@@ -75,6 +75,7 @@ export default {
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
+    'nuxt-purgecss',
     '@nuxtjs/eslint-module',
     '@nuxtjs/pwa'
   ],
