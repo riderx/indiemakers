@@ -1,4 +1,5 @@
 
+const isServerlessEnvironment = process.env.ON_VERCEL == 'true'
 export default {
   /*
   ** Nuxt target
@@ -45,7 +46,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  serverMiddleware: [
+  serverMiddleware: isServerlessEnvironment ? [] : [
     { path: '/api', handler: '~/api/rest.js' }
   ],
   /*
