@@ -148,6 +148,9 @@ app.use(bodyParser.json())
 app.all('/feed', async (req, res) => {
   res.json(await feed())
 })
+app.all('/healthcheck', (req, res) => {
+  res.sendStatus(200)
+})
 app.all('/makers/:guid', async (req, res) => {
   const url = await getTwitter(req.params.guid, '_200x200')
   let data = ''
