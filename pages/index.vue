@@ -1,19 +1,24 @@
 <template>
   <LazyHydrate when-visible>
     <div id="episodes">
-      <div class="container mx-auto mx-auto">
+      <div class="container mx-auto">
         <div class="flex flex-wrap">
-          <div class="w-1/62 xl:mx-1/6 xl:w-2/5 pr-4 pl-4">
-            <div id="header-eps" class="flex flex-wrap bg-blue border-10 border-light py-1 py-md-4">
-              <div class="flex-grow pt-3 px-0 text-white text-center">
+          <div class="lg:w-1/2 pr-4 pl-4">
+            <div
+              id="header-eps"
+              class="flex flex-wrap bg-blue border-10 border-light py-1 py-md-4"
+            >
+              <div
+                class="flex-grow pt-3 px-0 text-white text-center font-indie text-3xl"
+              >
                 <h1>🎙 Episodes</h1>
               </div>
             </div>
             <div v-if="loading" class="flex flex-wrap bg-white px-3">
-              <div class="w-1/62 p-5 text-center">
+              <div class="p-5 text-center">
                 <div
                   class="spinner-gflex flex-wrap text-blue"
-                  style="width: 6rem; height: 6rem;"
+                  style="width: 6rem; height: 6rem"
                   role="status"
                 >
                   <span class="">Chargement...</span>
@@ -23,22 +28,30 @@
             <div
               v-if="!loading"
               id="scrollable"
-              class="custom-scroll fix-marging border-5 px-2 border-light border-r-0"
+              class="custom-scroll fix-marging border-5 border-light border-r-0"
               :style="{ height: sizeHead }"
             >
               <div
                 v-for="episode in episodes"
                 :key="episode.guid_fix"
-                :class="'flex flex-wrap cursor-pointer bg-blue text-white py-2 py-md-0 border-b align-items-top ' + episode.guid_fix"
+                :class="
+                  'flex flex-wrap cursor-pointer bg-blue text-white border-b align-items-top' +
+                    episode.guid_fix
+                "
                 @click="openEp(episode.guid_fix)"
               >
                 <Episode :episode="episode" />
               </div>
             </div>
           </div>
-          <div id="content" class="w-1/62 md:w-1/2 pr-4 pl-4 pt-md-0 px-md-5 text-white">
+          <div
+            id="content"
+            class="md:w-1/2 pr-4 pl-4 pt-md-0 px-md-5 text-white"
+          >
             <div class="flex flex-wrap">
-              <div class="md:w-1/5 pr-4 pl-4 offset-3 offset-md-0 w-1/2 py-3 pt-md-0 px-3 pl-md-0">
+              <div
+                class="md:w-1/5 pr-4 pl-4 offset-3 offset-md-0 w-1/2 py-3 pt-md-0 px-3 pl-md-0"
+              >
                 <img
                   v-lazy="image"
                   width="100%"
@@ -48,39 +61,71 @@
                   :src="loadingImg"
                 >
               </div>
-              <div class="w-1/62 md:w-3/4 pr-4 pl-4 text-center text-sm-left">
-                <h1 class="pb-2">
+              <div class="md:w-3/4 pr-4 pl-4 text-center text-sm-left">
+                <h1 class="pb-2 font-indie text-3xl">
                   {{ title }}
                 </h1>
               </div>
-              <div class="w-1/62 py-1 py-md-3 text-center text-sm-left">
-                <h3>Prochain episode dans {{ nextEpisode() }} </h3>
+              <div class="py-1 text-sm">
+                <h3 class="font-indie text-xl">
+                  Prochain episode dans {{ nextEpisode() }}
+                </h3>
               </div>
-              <div class="w-1/62 pt-3 text-center text-sm-left">
+              <div class="pt-3 text-sm">
                 <div v-for="(message, index) in messages" :key="`ep-${index}`">
-                  <p class="pb-0">
+                  <p class="pb-2">
                     {{ message }}
                   </p>
                 </div>
               </div>
-              <div class="w-1/62 pt-3 text-center">
+              <div class="pt-3 flex justify-center w-full">
                 <button
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline text-blue-lightest bg-blue hover:bg-blue-light border-5 border-light py-3 px-4 text-xl leading-tight text-grey-lightest px-4 h1"
+                  class="border-4 border-white font-indie py-2 px-5"
                   @click="openAdd()"
                 >
                   👉 Découvre les Makers Français
                 </button>
               </div>
-              <div class="w-1/62 pt-3">
-                <p>Par <a rel="noreferrer" target="_blank" href="https://twitter.com/martindonadieu">Martin DONADIEU</a></p>
-                <p>Ici pas de cookie, juste de l'<a rel="noreferrer" target="_blank" href="https://plausible.io/indiemakers.fr">Open data</a> qui te respecte </p>
-                <p><a rel="noreferrer" target="_blank" href="/tools">Mes outils</a> quotidiens pour gerer mes projets !</p>
-                <p><a rel="noreferrer" target="_blank" href="https://amzn.to/3lXjALg">Mon Livre</a> Lancer sa startup en indépendant, publié au éditions Broché </p>
+              <div class="pt-3 text-sm">
+                <p class="pb-2">
+                  Par
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href="https://twitter.com/martindonadieu"
+                  >Martin DONADIEU</a>
+                </p>
+                <p class="pb-2">
+                  Ici pas de cookie, juste de l'<a
+                    rel="noreferrer"
+                    target="_blank"
+                    href="https://plausible.io/indiemakers.fr"
+                  >Open data</a>
+                  qui te respecte
+                </p>
+                <p class="pb-2">
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href="/tools"
+                  >Mes outils</a>
+                  quotidiens pour gerer mes projets !
+                </p>
+                <p>
+                  <a
+                    rel="noreferrer"
+                    target="_blank"
+                    href="https://amzn.to/3lXjALg"
+                  >Mon Livre</a>
+                  Lancer sa startup en indépendant, publié au éditions Broché
+                </p>
               </div>
-              <div class="w-1/62 pt-3 pb-3 px-md-3 order-3 text-white text-center text-sm-left">
-                <h5>Mes autres projets:</h5>
-                <div class="flex flex-column flex-md-row">
+              <div class="pt-3 pb-3 text-white">
+                <h5 class="font-indie">
+                  Mes autres projets:
+                </h5>
+                <div class="flex flex-column flex-md-row text-sm">
                   <a
                     class="text-white block px-2 py-3 py-md-0"
                     target="_blank"
@@ -144,7 +189,7 @@ export default {
       episodes: [],
       title: '🚀Le podcast pour lancer sa startup en indépendant',
       messages: [
-        'J\'échange avec ceux qui ont su transformer leurs idées en business florissant.',
+        "J'échange avec ceux qui ont su transformer leurs idées en business florissant.",
         'Au-delà des belles histoires, nous décryptons leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables en indépendant.',
         'J’interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur projet profitable.',
         'Un épisode tous les 15 jours'
@@ -152,9 +197,13 @@ export default {
     }
   },
   beforeMount () {
-    window.addEventListener('scroll', () => {
-      crispLoader()
-    }, { capture: true, once: true, passive: true })
+    window.addEventListener(
+      'scroll',
+      () => {
+        crispLoader()
+      },
+      { capture: true, once: true, passive: true }
+    )
   },
   mounted () {
     this.setSizeHead()
@@ -164,7 +213,10 @@ export default {
       this.$modal.show('join')
     },
     removeEmoji (str) {
-      return str.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')
+      return str.replace(
+        /([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g,
+        ''
+      )
     },
     getImgObj (imageOptimized, imageLoading) {
       return {
@@ -226,8 +278,18 @@ export default {
       this.$router.push('/makers_hunt')
     },
     setSizeHead () {
-      if (process.client && document.getElementById('header-eps') && document.getElementById('header') && document.getElementById('content') && document.getElementById('content').offsetWidth !== window.innerWidth) {
-        const size = `${document.getElementById('header-eps').offsetHeight + document.getElementById('header').offsetHeight + 5}px`
+      if (
+        process.client &&
+        document.getElementById('header-eps') &&
+        document.getElementById('header') &&
+        document.getElementById('content') &&
+        document.getElementById('content').offsetWidth !== window.innerWidth
+      ) {
+        const size = `${
+          document.getElementById('header-eps').offsetHeight +
+          document.getElementById('header').offsetHeight +
+          5
+        }px`
         this.sizeHead = `calc(100vh - ${size})`
       } else {
         this.sizeHead = 'auto'
@@ -240,9 +302,21 @@ export default {
       meta: [
         { hid: 'og:url', property: 'og:url', content: `${domain}${this.$route.fullPath}` },
         { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
-        { hid: 'description', name: 'description', content: this.removeEmoji(this.messages[0]) },
-        { hid: 'og:title', property: 'og:title', content: this.removeEmoji(this.title) },
-        { hid: 'og:description', property: 'og:description', content: this.removeEmoji(this.messages[0]) },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.removeEmoji(this.messages[0])
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: this.removeEmoji(this.title)
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: this.removeEmoji(this.messages[0])
+        },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
         { hid: 'og:image', property: 'og:image', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },

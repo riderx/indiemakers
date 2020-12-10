@@ -3,25 +3,27 @@
     <div id="emission">
       <div class="container mx-auto mx-auto">
         <div class="flex flex-wrap">
-          <div class="w-1/62 xl:mx-1/6 xl:w-2/5 pr-4 pl-4">
+          <div class="lg:w-1/2 px-4 text-white text-sm">
             <div v-if="loading" class="flex flex-wrap bg-white px-3">
-              <div class="w-1/62 p-5 text-center">
+              <div class="p-5 text-center">
                 <div
                   class="spinner-gflex flex-wrap text-blue"
-                  style="width: 6rem; height: 6rem;"
+                  style="width: 6rem; height: 6rem"
                   role="status"
                 >
                   <span class="">Chargement...</span>
                 </div>
               </div>
             </div>
-            <div id="header-title" class="flex flex-wrap bg-blue border-10 border-light">
-              <div class="w-1/62 pt-md-3 text-white text-center">
-                <h1 class="hidden sm:block">
-                  {{ title }}
-                </h1>
-              </div>
-              <div v-if="!loading" class="w-1/62 block sm:hidden px-0">
+            <div
+              id="header-title"
+              class="flex flex-wrap justify-center pt-3 pb-1 bg-blue border-10 border-light"
+            >
+              <h1 class="font-indie text-3xl text-center">
+                {{ title }}
+              </h1>
+
+              <div v-if="!loading" class="block sm:hidden px-0">
                 <img
                   v-lazy="image"
                   width="100%"
@@ -31,22 +33,32 @@
                   :alt="title"
                 >
               </div>
-              <div v-if="!loading" class="w-1/62 block sm:hidden text-white px-0">
+              <div v-if="!loading" class="block sm:hidden text-white px-0">
                 <vue-plyr v-if="showAudio" ref="plyr">
                   <audio>
                     <source :src="audio" type="audio/mp3">
                   </audio>
                 </vue-plyr>
               </div>
-              <div v-if="!loading" class="w-1/62 pt-3 block sm:hidden text-white">
+              <div v-if="!loading" class="pt-3 block sm:hidden text-white">
                 <h3>{{ title }}</h3>
               </div>
             </div>
-            <div v-if="!loading" class="custom-scroll fix-marging border-5 px-2 border-light border-r-0" :style="{ height: sizeHead }">
-              <div class="px-1 px-md-5 pt-3 text-grey-lightest" v-html="content" />
+            <div
+              v-if="!loading"
+              class="custom-scroll fix-marging border-5 px-2 border-light rounded-none"
+              :style="{ height: sizeHead }"
+            >
+              <div
+                class="px-1 px-md-5 pt-3 text-grey-lightest"
+                v-html="content"
+              />
             </div>
-            <div v-if="!loading" class="flex flex-wrap bg-blue py-4 block d-mhidden">
-              <div class="w-1/62 px-1 text-center">
+            <div
+              v-if="!loading"
+              class="flex flex-wrap bg-blue py-4 block md:hidden"
+            >
+              <div class="px-1 text-center">
                 <button
                   type="button"
                   class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
@@ -78,9 +90,12 @@
               </div>
             </div>
           </div>
-          <div v-if="!loading" class="w-1/62 md:w-1/2 pr-4 pl-4 text-center hidden md:block">
-            <div class="flex flex-wrap align-items-center">
-              <div class="w-1/62 md:mx-1/6 md:w-1/6 pr-4 pl-40 px-md-3 pt-0">
+          <div
+            v-if="!loading"
+            class="lg:w-1/2 px-6 text-center hidden md:block"
+          >
+            <div class="flex flex-wrap flex-col align-items-center">
+              <div class="w-11/12 flex flex-col">
                 <img
                   v-lazy="image"
                   width="100%"
@@ -88,18 +103,18 @@
                   class="w-full max-w-full h-auto border-10 border-light"
                   alt="Logo person"
                 >
-              </div>
-              <div class="w-1/62 md:mx-1/6 md:w-1/6 pr-4 pl-40 px-md-3 pt-0">
                 <vue-plyr v-if="showAudio" ref="plyr2">
                   <audio>
                     <source :src="audio" type="audio/mp3">
                   </audio>
                 </vue-plyr>
               </div>
-              <div class="w-1/62 px-md-5 pt-1 pt-md-3">
+              <div
+                class="flex justify-between pt-4 font-indie text-white text-lg w-10/12"
+              >
                 <button
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                  class="border-2 border-light px-3 pt-2 pb-1"
                   @click="listen()"
                 >
                   🎧 Ecouter
@@ -107,21 +122,21 @@
                 <button
                   id="rtp-button"
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                  class="border-2 border-light px-3 pt-2 pb-1"
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                  class="border-2 border-light px-3 pt-2 pb-1"
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                  class="border-2 border-light px-3 pt-2 pb-1"
                   @click="joinUs()"
                 >
                   👉 Lance toi
@@ -231,7 +246,10 @@ export default {
             }
           })
           this.player.on('pause', () => {
-            localStorage.setItem(this.$route.params.id, this.player.currentTime)
+            localStorage.setItem(
+              this.$route.params.id,
+              this.player.currentTime
+            )
           })
         }
         if (this.player2) {
@@ -242,7 +260,10 @@ export default {
             }
           })
           this.player2.on('pause', () => {
-            localStorage.setItem(this.$route.params.id, this.player2.currentTime)
+            localStorage.setItem(
+              this.$route.params.id,
+              this.player2.currentTime
+            )
           })
         }
       }, 150)
@@ -256,16 +277,16 @@ export default {
       const rand = this.getRandomInt(100)
       let modalName = 'upgrade'
       switch (true) {
-        case (rand < 70 && !window.localStorage.getItem('emailForNewletter')):
+        case rand < 70 && !window.localStorage.getItem('emailForNewletter'):
           modalName = 'join'
           break
-        case (rand < 80):
+        case rand < 80:
           modalName = 'share'
           break
-        case (rand < 90):
+        case rand < 90:
           modalName = 'rate'
           break
-        case (rand < 95):
+        case rand < 95:
           modalName = 'listen'
           break
       }
@@ -290,10 +311,7 @@ export default {
         ep.twitter = this.twitter
       }
       try {
-        await this.$firebase
-          .db
-          .ref(`episodes/${gui}`)
-          .set(ep)
+        await this.$firebase.db.ref(`episodes/${gui}`).set(ep)
       } catch {
         return null
       }
@@ -305,8 +323,18 @@ export default {
       this.$modal.show('join')
     },
     setSizeHead () {
-      if (process.client && document.getElementById('header-title') && document.getElementById('header') && document.getElementById('header-title').offsetWidth !== window.innerWidth) {
-        const size = `${document.getElementById('header-title').offsetHeight + document.getElementById('header').offsetHeight + 5}px`
+      if (
+        process.client &&
+        document.getElementById('header-title') &&
+        document.getElementById('header') &&
+        document.getElementById('header-title').offsetWidth !==
+          window.innerWidth
+      ) {
+        const size = `${
+          document.getElementById('header-title').offsetHeight +
+          document.getElementById('header').offsetHeight +
+          5
+        }px`
         this.sizeHead = `calc(100vh - ${size})`
       } else {
         this.sizeHead = 'auto'
@@ -325,16 +353,36 @@ export default {
       meta: [
         { hid: 'og:url', property: 'og:url', content: `${domain}${this.$route.fullPath}` },
         { hid: 'title', name: 'title', content: this.titleNoEmoji },
-        { hid: 'description', name: 'description', content: this.previewNoEmoji },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.previewNoEmoji
+        },
         { hid: 'og:title', property: 'og:title', content: this.titleNoEmoji },
-        { hid: 'og:description', property: 'og:description', content: this.previewNoEmoji },
-        { hid: 'og:image:alt', property: 'og:image:alt', content: this.titleNoEmoji },
-        { hid: 'og:image:type', property: 'og:image:type', content: 'image/jpg' },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: this.previewNoEmoji
+        },
+        {
+          hid: 'og:image:alt',
+          property: 'og:image:alt',
+          content: this.titleNoEmoji
+        },
+        {
+          hid: 'og:image:type',
+          property: 'og:image:type',
+          content: 'image/jpg'
+        },
         { hid: 'og:image', property: 'og:image', content: this.imageOptimized },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 },
         { hid: 'og:audio', property: 'og:audio', content: this.audio },
-        { hid: 'og:audio:type', property: 'og:audio:type', content: 'audio/mpeg' }
+        {
+          hid: 'og:audio:type',
+          property: 'og:audio:type',
+          content: 'audio/mpeg'
+        }
       ]
     }
   }
@@ -346,6 +394,7 @@ export default {
   --plyr-badge-border-radius: 0px;
 }
 hr {
-    border-top: 10px solid rgba(255, 255, 255, 1);
+  border-top: 10px solid rgba(255, 255, 255, 1);
+  border-radius: 0px;
 }
 </style>

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import '~/static/custom.boostrap.css'
+// import '~/static/custom.boostrap.css'
 import LazyHydrate from 'vue-lazy-hydration'
 
 export default {
@@ -23,7 +23,11 @@ export default {
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { hid: 'og:type', property: 'og:type', content: 'website' },
         { hid: 'og:type', property: 'og:type', content: 'website' },
-        { hid: 'og:site_name', property: 'og:site_name', content: 'indiemakers.fr' },
+        {
+          hid: 'og:site_name',
+          property: 'og:site_name',
+          content: 'indiemakers.fr'
+        },
         { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' }
         // { hid: 'og:article:author', property: 'og:article:author', content: 'Martin DONADIEU' },
       ]
@@ -44,18 +48,23 @@ body {
   overflow-x: hidden;
   background-color: rgba(75, 39, 155, 1);
 }
-img:not([src]) { display: none; }
+a {
+  color: #df99d8;
+}
+img:not([src]) {
+  display: none;
+}
 /* @media screen and (max-width: 768px) {
   body {
       overflow-y: auto;
   }
 } */
-.border-10{
-    border-style:solid;
-    border-width: 10px;
+.border-10 {
+  border-style: solid;
+  border-width: 10px;
 }
-.border-5{
-  border-style:solid;
+.border-5 {
+  border-style: solid;
   border-width: 5px;
 }
 .cursor-pointer {
@@ -78,7 +87,7 @@ img:not([src]) { display: none; }
 }
 
 @media screen and (max-width: 768px) {
-.fix-marging {
+  .fix-marging {
     margin-right: -15px;
   }
 }
@@ -94,7 +103,7 @@ img:not([src]) { display: none; }
   overflow-x: hidden;
 }
 @media screen and (max-width: 768px) {
-.custom-scroll {
+  .custom-scroll {
     position: inherit;
     /* overflow: hidden; */
   }

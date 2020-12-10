@@ -171,7 +171,7 @@ app.all('/makers/:guid', async (req, res) => {
 app.all('/ep/:guid', async (req, res) => {
   const items = await feed()
   let elem = null
-  items.some((element) => {
+  items.forEach((element) => {
     if (element.guid_fix === req.params.guid) {
       elem = element
       // return res.json(element)
