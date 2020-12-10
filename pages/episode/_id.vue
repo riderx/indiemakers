@@ -137,7 +137,9 @@
 </template>
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
+import { domain } from '../plugins/domain'
 import { ep } from '~/plugins/rss'
+
 export default {
   components: {
     LazyHydrate,
@@ -321,7 +323,7 @@ export default {
     return {
       title: this.titleNoEmoji,
       meta: [
-        { hid: 'og:url', property: 'og:url', content: `${process.env.domain}${this.$route.fullPath}` },
+        { hid: 'og:url', property: 'og:url', content: `${domain}${this.$route.fullPath}` },
         { hid: 'title', name: 'title', content: this.titleNoEmoji },
         { hid: 'description', name: 'description', content: this.previewNoEmoji },
         { hid: 'og:title', property: 'og:title', content: this.titleNoEmoji },

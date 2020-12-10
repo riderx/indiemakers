@@ -164,8 +164,8 @@
 import linkifyHtml from 'linkifyjs/html'
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '../plugins/rss'
-// eslint-disable-next-line no-unused-vars
-// import { fb } from '../plugins/firebase.client'
+import { domain } from '../plugins/domain'
+
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/USERNAME">@USERNAME</a>'
 export default {
   components: {
@@ -395,14 +395,14 @@ export default {
     return {
       title: this.title,
       meta: [
-        { hid: 'og:url', property: 'og:url', content: `${process.env.domain}${this.$route.fullPath}` },
+        { hid: 'og:url', property: 'og:url', content: `${domain}${this.$route.fullPath}` },
         { hid: 'title', name: 'title', content: this.title },
         { hid: 'description', name: 'description', content: this.message },
         { hid: 'og:title', property: 'og:title', content: this.title },
         { hid: 'og:description', property: 'og:description', content: this.message },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', property: 'og:image', content: `${process.env.domain_unsecure}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image', property: 'og:image', content: `${domain_unsecure}${require('~/assets/cover-im@0.5x.png')}` },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 }
       ]

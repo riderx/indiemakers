@@ -112,6 +112,8 @@
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '../plugins/rss'
+import { domain } from '../plugins/domain'
+
 import { crispLoader } from '../plugins/crisp.client'
 const linkTwitterRe = /Son Twitter : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 const linkInstagramRe = /Son Instagram : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
@@ -236,15 +238,15 @@ export default {
     return {
       title: this.removeEmoji(this.title),
       meta: [
-        { hid: 'og:url', property: 'og:url', content: `${process.env.domain}${this.$route.fullPath}` },
+        { hid: 'og:url', property: 'og:url', content: `${domain}${this.$route.fullPath}` },
         { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
         { hid: 'description', name: 'description', content: this.removeEmoji(this.messages[0]) },
         { hid: 'og:title', property: 'og:title', content: this.removeEmoji(this.title) },
         { hid: 'og:description', property: 'og:description', content: this.removeEmoji(this.messages[0]) },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', property: 'og:image', content: `${process.env.domain}${require('~/assets/cover-im@0.5x.png')}` },
-        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${process.env.domain}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image', property: 'og:image', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 }
       ]

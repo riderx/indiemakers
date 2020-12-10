@@ -791,6 +791,7 @@
 </template>
 
 <script>
+import { domain } from '../plugins/domain'
 
 export default {
   name: 'Modals',
@@ -998,7 +999,7 @@ export default {
       this.$modal.hide('share_hunt')
     },
     tweetItMaker () {
-      const linkPage = `${process.env.domain}/makers_hunt`
+      const linkPage = `${domain}/makers_hunt`
       const tweet = `@${this.maker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${process.env.handler} 🚀`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
@@ -1008,7 +1009,7 @@ export default {
       this.$modal.hide('voted')
     },
     tweetIt () {
-      const linkEp = `${process.env.domain}/episode/${this.epGui}`
+      const linkEp = `${domain}/episode/${this.epGui}`
       const tweet = `@${process.env.handler} et @${this.twitter.name} merci pour le podcast ${linkEp} <3`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet

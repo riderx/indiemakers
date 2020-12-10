@@ -1,6 +1,6 @@
+import { domain } from './domain'
 const axios = require('axios')
 
-const domain = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.domain
 export const feed = () => {
   return axios
     .get(`${domain}/${process.env.baseAPI}/feed`)
