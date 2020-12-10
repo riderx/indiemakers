@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const domain = `${window.location.protocol}//${window.location.host}`
+const domain = `${process.env.VERCEL_URL || process.env.domain}//${window.location.host}`
 export const feed = () => {
   return axios
     .get(`${domain}/${process.env.baseAPI}/feed`)
