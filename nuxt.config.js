@@ -46,9 +46,11 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  serverMiddleware: isServerlessEnvironment ? [] : [
-    { path: '/api', handler: '~/api/rest.js' }
-  ],
+  serverMiddleware: isServerlessEnvironment
+    ? []
+    : [
+        { path: '/api', handler: '~/api/index.js' }
+      ],
   /*
   ** Global CSS
   */
