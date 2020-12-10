@@ -1,8 +1,9 @@
 const axios = require('axios')
 
+const domain = `${window.location.protocol}//${window.location.host}`
 export const feed = () => {
   return axios
-    .get(`${process.env.domain}/${process.env.baseAPI}/feed`)
+    .get(`${domain}/${process.env.baseAPI}/feed`)
     .then((response) => {
       return response.data
     }).catch((err) => {
@@ -13,7 +14,7 @@ export const feed = () => {
 
 export const ep = (guid) => {
   return axios
-    .get(`${process.env.domain}/${process.env.baseAPI}/ep/${guid}`)
+    .get(`${domain}/${process.env.baseAPI}/ep/${guid}`)
     .then((response) => {
       return response.data
     }).catch((err) => {
