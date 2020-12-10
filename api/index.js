@@ -118,6 +118,8 @@ const feed = async () => {
           element.social = element.insta
         } else if (element.linkedin && element.linkedin.name) {
           element.social = element.linkedin
+        } else {
+          element.social = { name: null, link: null }
         }
         items.push(element)
         element.image_optimized = `https://ik.imagekit.io/gyc0uxoln1/indiemakers/${element.guid_fix}?tr=h-300,w-300`

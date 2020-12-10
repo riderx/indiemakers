@@ -7,27 +7,32 @@
         height="100%"
         :src="loadingImg"
         class="w-full h-auto border-5 border-white"
-        :alt="'Picture ' + episode.title"
+        :alt="'Picture ' + title"
       >
     </div>
     <div class="w-2/3 p-2">
       <h3 class="font-indie text-xl mb-1">
-        {{ episode.title }}
+        {{ title }}
       </h3>
-      <p v-if="episode.social" class="text-indiePink text-sm">
-        {{ episode.social.name }}
+      <p v-if="name" class="text-indiePink text-sm">
+        {{ name }}
       </p>
-      <p class="text-sm">
-        {{ episode.preview }}
-      </p>
+      <p class="text-sm" v-html="preview" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Episode',
-  props: { episode: { type: Object, default: null } },
+  name: 'ListItem',
+  props: {
+    title: { type: String, default: null },
+    name: { type: String, default: null },
+    image: { type: String, default: null },
+    votes: { type: String, default: null },
+    loadingImage: { type: String, default: null },
+    preview: { type: String, default: null }
+  },
   data () {
     return {
       loadingImg: require('~/assets/cover-im_empty.png')
@@ -36,9 +41,9 @@ export default {
   computed: {
     getImgObj () {
       return {
-        src: this.episode.image_optimized,
+        src: this.image,
         error: require('~/assets/cover-im_user.png'),
-        loading: this.episode.image_loading
+        loading: this.loadingImage || require('~/assets/cover-im_empty.png')
       }
     }
   },

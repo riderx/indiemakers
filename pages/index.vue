@@ -40,7 +40,7 @@
                 "
                 @click="openEp(episode.guid_fix)"
               >
-                <Episode :episode="episode" />
+                <ListItem :title="episode.title" :name="episode.social.name" :preview="preview" :image="episode.image_optimized" :loading-image="episode.image_loading" />
               </div>
             </div>
           </div>
@@ -166,7 +166,7 @@ const linkLinkedinRe = /Son Linkedin : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 export default {
   components: {
     Modals: () => import('~/components/Modals.vue'),
-    Episode: () => import('~/components/Episode.vue'),
+    ListItem: () => import('~/components/ListItem.vue'),
     LazyHydrate
   },
   async fetch () {
