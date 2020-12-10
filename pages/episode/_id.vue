@@ -152,7 +152,7 @@
 </template>
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
-import { domain } from '../plugins/domain'
+import { domain } from '../../plugins/domain'
 import { ep } from '~/plugins/rss'
 
 export default {
