@@ -78,7 +78,7 @@
               </div>
             </div>
           </div>
-          <div v-if="!loading" class="w-1/62 md:w-1/2 pr-4 pl-4 text-center hidden d-mblock">
+          <div v-if="!loading" class="w-1/62 md:w-1/2 pr-4 pl-4 text-center hidden md:block">
             <div class="flex flex-wrap align-items-center">
               <div class="w-1/62 md:mx-1/6 md:w-1/6 pr-4 pl-40 px-md-3 pt-0">
                 <img
@@ -289,9 +289,8 @@ export default {
       }
       try {
         await this.$firebase
-          .firestore()
-          .collection('episodes')
-          .doc(gui)
+          .db
+          .ref(`episodes/${gui}`)
           .set(ep)
       } catch {
         return null

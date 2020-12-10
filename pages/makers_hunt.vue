@@ -60,12 +60,12 @@
                     <h3>{{ episode.name }}</h3>
                     <p
                       v-if="episode.login"
-                      class="text-green fit-content cursor-pointer mb-0 hidden d-mblock"
+                      class="text-green fit-content cursor-pointer mb-0 hidden md:block"
                       @click="openAccount(episode.login)"
                     >
                       @{{ episode.login }}
                     </p>
-                    <div class="text-center text-md-left px-3 px-md-0 hidden d-mblock">
+                    <div class="text-center text-md-left px-3 px-md-0 hidden md:block">
                       <p class v-html="getTextLink(episode.bio)" />
                     </div>
                   </div>
@@ -205,7 +205,7 @@ export default {
   mounted () {
     this.email = window.localStorage.getItem('emailForSignIn')
     // this.loggin = fb.auth().currentUser
-    this.$firebase.auth().onAuthStateChanged((user) => {
+    this.$firebase.auth.listen((user) => {
       this.loggin = user
       if (user) {
         this.$sentry.setUser({ uid: user.uid })
@@ -215,13 +215,14 @@ export default {
       }
     })
     this.$firebase
-      .firestore()
-      .collection('people')
+      .db
+      .ref('people')
+      .query()
       .orderBy('votes', 'desc')
       .orderBy('addDate', 'asc')
-      .onSnapshot((querySnapshot) => {
-        this.people = querySnapshot.docs.map((doc) => {
-          const data = doc.data()
+      .run()
+      .then((results) => {
+        this.people = results.map((data) => {
           data.img = this.personImg(data)
           return data
         })
@@ -277,30 +278,6 @@ export default {
         validate: true
       })
     },
-    sendLogin () {
-      if (this.email) {
-        window.localStorage.setItem('emailForSignIn', this.email)
-        const actionCodeSettings = {
-          url: `${process.env.domain}/login`,
-          handleCodeInApp: true
-        }
-        this.$modal.hide('register')
-        this.$modal.show('loading')
-        this.$firebase
-          .auth()
-          .sendSignInLinkToEmail(this.email, actionCodeSettings)
-          .then(() => {
-            window.localStorage.setItem('emailForSignIn', this.email)
-            this.$modal.hide('loading')
-            this.$modal.show('checkEmail')
-          })
-          .catch((error) => {
-            this.$modal.hide('loading')
-            // eslint-disable-next-line no-console
-            console.error(error)
-          })
-      }
-    },
     vote (person) {
       const found = this.findInEp(person.login)
       if (!this.loggin) {
@@ -308,9 +285,8 @@ export default {
       } else {
         this.$modal.show('loading')
         this.$firebase
-          .firestore()
-          .collection(`people/${person.id}/votes`)
-          .doc(this.loggin.uid)
+          .db
+          .ref(`people/${person.id}/votes/${this.loggin.uid}`)
           .set({
             date: Date()
           })
@@ -371,7 +347,7 @@ export default {
         this.openRegister()
       } else {
         this.$firebase
-          .functions().httpsCallable('addTwiterUser')({ name: this.addName })
+          .func('addTwiterUser', { name: this.addName })
           .then((addJson) => {
             const added = addJson.data
             this.$modal.hide('loading')

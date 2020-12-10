@@ -794,8 +794,6 @@
 
 export default {
   name: 'Modals',
-  components: {
-  },
   props: { name: { type: String, default: null }, epGui: { type: String, default: null }, maker: { type: String, default: null }, email: { type: String, default: null } },
   data () {
     return {
@@ -837,7 +835,7 @@ export default {
   },
   mounted () {
     require('../plugins/modal.client')
-    this.$firebase.auth().onAuthStateChanged((user) => {
+    this.$firebase.auth.listen((user) => {
       this.user = user
       if (user) {
         this.$sentry.setUser({ uid: user.uid })
@@ -889,9 +887,8 @@ export default {
     },
     addEMailSub (kind = 'email') {
       this.$firebase
-        .firestore()
-        .collection('users')
-        .doc(this.newEmail)
+        .db
+        .ref(`users/${this.newEmail}`)
         .set({
           kind,
           created_at: new Date(),
@@ -917,9 +914,8 @@ export default {
         .then(async () => {
           try {
             await this.$firebase
-              .firestore()
-              .collection('users')
-              .doc(this.user.email)
+              .db
+              .ref(`users/${this.user.email}`)
               .set({
                 first_name: this.newName,
                 email: this.user.email
@@ -954,7 +950,7 @@ export default {
         this.openRegister()
       } else {
         this.$firebase
-          .functions().httpsCallable('addTwiterUser')({ name: this.newMaker })
+          .func('addTwiterUser', { name: this.newMaker })
           .then((addJson) => {
             const added = addJson.data
             this.$modal.hide('loading')
@@ -978,16 +974,9 @@ export default {
     },
     sendLogin () {
       if (this.newEmail) {
-        window.localStorage.setItem('emailForSignIn', this.newEmail)
-        const actionCodeSettings = {
-          url: `${process.env.domain}/login`,
-          handleCodeInApp: true
-        }
         this.$modal.hide('register')
         this.$modal.show('loading')
-        this.$firebase
-          .auth()
-          .sendSignInLinkToEmail(this.newEmail, actionCodeSettings)
+        this.$firebase.auth.sendOobCode('EMAIL_SIGNIN', this.newEmail)
           .then(() => {
             window.localStorage.setItem('emailForSignIn', this.newEmail)
             this.$modal.hide('loading')

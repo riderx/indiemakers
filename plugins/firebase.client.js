@@ -1,22 +1,22 @@
 import Vue from 'vue'
+import axios from 'axios'
 
-import firebase from 'firebase/app'
-import 'firebase/firestore/memory'
-import 'firebase/auth'
-import 'firebase/functions'
+import { Database } from 'firebase-firestore-lite'
 
-// Get a Firestore instance
-const config = {
+import Auth from 'firebase-auth-lite'
+
+const auth = new Auth({
   apiKey: 'AIzaSyAC0aCq1umg8bZtOuhzH8GkflqUCtInOp8',
-  authDomain: 'indiemakerfr.firebaseapp.com',
-  databaseURL: 'https://indiemakerfr.firebaseio.com',
-  projectId: 'indiemakerfr',
-  storageBucket: 'indiemakerfr.appspot.com',
-  messagingSenderId: '600956995728',
-  appId: '1:600956995728:web:17aacb03e66648e2d63015'
+  redirectUri: 'https://indiemakers.fr/login'
+})
+const zone = 'us-central1'
+const projectId = 'indiemakerfr'
+const url = `https://${zone}-${projectId}.cloudfunctions.net/`
+// Now pass the auth instance as well as the projectId.
+const db = new Database({ projectId, auth })
+
+const func = (name, data) => {
+  return axios.get(url + name, data, { headers: auth.authorizedRequest })
 }
 
-firebase
-  .initializeApp(config)
-  .firestore()
-Vue.prototype.$firebase = firebase
+Vue.prototype.$firebase = { auth, db, func }

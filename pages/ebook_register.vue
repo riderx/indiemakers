@@ -72,9 +72,8 @@ export default {
   methods: {
     addEMailSub () {
       this.$firebase
-        .firestore()
-        .collection('users')
-        .doc(this.name)
+        .db
+        .ref(`users/${this.name}`)
         .set({
           first_name: this.name,
           email: this.email

@@ -73,7 +73,7 @@ img:not([src]) { display: none; }
 }
 
 .fix-marging {
-  margin-left: -15px;
+  /* margin-left: -15px; */
   margin-right: 0px;
 }
 
@@ -90,7 +90,7 @@ img:not([src]) { display: none; }
 .custom-scroll {
   scrollbar-color: #f1f1f1 #df99d8;
   overflow-y: scroll;
-  position: absolute;
+  /* position: absolute; */
   overflow-x: hidden;
 }
 @media screen and (max-width: 768px) {

@@ -1,4 +1,8 @@
-<template />
+<template>
+  <div id="load">
+    Loading
+  </div>
+</template>
 <script>
 import { feed } from '~/plugins/rss'
 export default {

@@ -32,39 +32,7 @@
                 :class="'flex flex-wrap cursor-pointer bg-blue text-white py-2 py-md-0 border-b align-items-top ' + episode.guid_fix"
                 @click="openEp(episode.guid_fix)"
               >
-                <div class="offset-4 offset-md-0 w-1/3 order-1 order-md-2 px-0 py-3 py-md-0">
-                  <img
-                    v-lazy="getImgObj(episode.image_optimized, episode.image_loading)"
-                    width="100%"
-                    height="100%"
-                    :src="loadingImg"
-                    class="w-full w-md-75 max-w-full h-auto border-5 border-light"
-                    :alt="'Cover ' + episode.title"
-                  >
-                </div>
-                <div class="w-1/62 md:w-2/3 pr-4 pl-4 order-2 p-2 order-md-2 text-center text-md-left">
-                  <h3>{{ episode.title }}</h3>
-                  <p
-                    v-if="episode.social"
-                    class="text-green fit-content cursor-pointer mb-0 hidden d-mblock"
-                  >
-                    {{ episode.social.name }}
-                  </p>
-                  <p class="text-center text-md-left px-3 px-md-0 hidden d-mblock">
-                    {{ episode.preview }}
-                  </p>
-                </div>
-                <div class="w-1/62 px-0 px-md-5 pt-1 pt-md-3 order-3 block d-mhidden">
-                  <p
-                    v-if="episode.social"
-                    class="text-green text-center text-md-left mb-0"
-                  >
-                    {{ episode.social.name }}
-                  </p>
-                  <p class="text-center text-md-left px-3 px-md-0">
-                    {{ episode.preview }}
-                  </p>
-                </div>
+                <Episode :episode="episode" />
               </div>
             </div>
           </div>
@@ -151,6 +119,7 @@ const linkLinkedinRe = /Son Linkedin : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 export default {
   components: {
     Modals: () => import('~/components/Modals.vue'),
+    Episode: () => import('~/components/Episode.vue'),
     LazyHydrate
   },
   async fetch () {

@@ -58,7 +58,7 @@ export default {
     }
   },
   mounted () {
-    this.$firebase.auth().onAuthStateChanged((user) => {
+    this.$firebase.auth.listen((user) => {
       this.user = user
       if (user) {
         this.$sentry.setUser({ uid: user.uid })
@@ -67,9 +67,8 @@ export default {
         this.$modal.show('confirmName')
       } else if (this.user) {
         this.$firebase
-          .firestore()
-          .collection('users/')
-          .doc(this.user.id)
+          .db
+          .ref(`users/${this.user.id}`)
           .set({
             name: this.user.displayName,
             email: this.user.email
@@ -77,11 +76,9 @@ export default {
         this.$router.push('/makers')
       }
     })
-    if (this.$firebase.auth().isSignInWithEmailLink(window.location.href)) {
-      this.email = window.localStorage.getItem('emailForSignIn')
-      if (this.email) {
-        this.sendConfirm()
-      }
+    this.email = window.localStorage.getItem('emailForSignIn')
+    if (this.email) {
+      this.sendConfirm()
     }
   },
   methods: {
@@ -91,17 +88,16 @@ export default {
     sendConfirm () {
       if (this.email) {
         this.$modal.show('loading')
-        this.$firebase.auth()
-          .signInWithEmailLink(this.email, window.location.href)
-          .then(() => {
-            window.localStorage.removeItem('emailForSignIn')
-            this.$modal.hide('loading')
-          })
-          .catch((error) => {
-            console.error(error)
-            this.$modal.hide('loading')
-            this.$router.push('/')
-          })
+        this.$firebase.auth.handleSignInRedirect({
+          email: window.localStorage.getItem('emailForSignIn')
+        }).then(() => {
+          window.localStorage.removeItem('emailForSignIn')
+          this.$modal.hide('loading')
+        }).catch((error) => {
+          console.error(error)
+          this.$modal.hide('loading')
+          this.$router.push('/')
+        })
       }
     }
   },

@@ -80,7 +80,7 @@ export default {
   mounted () {
     this.email = window.localStorage.getItem('emailForSignIn')
     // this.loggin = fb.auth().currentUser
-    this.$firebase.auth().onAuthStateChanged((user) => {
+    this.$firebase.auth.listen((user) => {
       this.loggin = user
       if (user) {
         this.$sentry.setUser({ uid: user.uid })
@@ -90,38 +90,20 @@ export default {
       }
     })
     this.$firebase
-      .firestore()
-      .collection('tools')
+      .db
+      .ref('tools')
+      .query()
       .orderBy('votes', 'desc')
       .orderBy('addDate', 'asc')
-      .onSnapshot((querySnapshot) => {
-        this.tools = querySnapshot.docs.map(doc => doc.data())
+      .run()
+      .then((results) => {
+        this.tools = results
         this.loading = false
       })
   },
   methods: {
     openBlank (link) {
       window.open(link, '_blank')
-    },
-    addEMailSub () {
-      this.$firebase
-        .firestore()
-        .collection('users')
-        .doc(this.email)
-        .set({
-          first_name: this.name,
-          email: this.email
-        }).then(() => {
-          this.$modal.show('thanks_register')
-          setTimeout(() => {
-            this.$router.push('/')
-          }, 2000)
-        }).catch(() => {
-          this.$modal.show('already_register')
-          setTimeout(() => {
-            this.$router.push('/')
-          }, 2000)
-        })
     }
   },
   head () {
