@@ -5,6 +5,7 @@ module.exports = {
         indie: 'Rex Bold'
       },
       colors: {
+        indiePurple: '#4b279b',
         indiePink: '#df99d8'
       }
     }

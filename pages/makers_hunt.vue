@@ -1,28 +1,25 @@
 <template>
   <LazyHydrate when-idle>
     <div id="makers">
-      <div class="container mx-auto mx-auto">
+      <div class="container mx-auto">
         <div class="flex flex-wrap">
-          <div class="w-1/62 xl:mx-1/6 xl:w-2/5 pr-4 pl-4">
-            <div id="header-mk" class="flex flex-wrap bg-blue border-10 border-light py-1 py-md-4">
-              <div class="flex-grow pt-3 px-0 text-white text-center">
-                <h1>💃 Makers</h1>
-              </div>
-              <div
-                class="w-1/4 md:w-1/5 pr-4 pl-4 py-2"
+          <div class="md:w-1/2 pr-4 pl-4">
+            <div id="header-mk" class="flex flex-wrap justify-between items-center bg-blue border-10 border-light text-white pb-1 pt-2">
+              <h1 class="w-4/5 text-center font-indie text-3xl">
+                💃 Makers
+              </h1>
+
+              <button
+                type="button"
+                class="border-0 p-0 text-6xl w-1/4 md:w-1/5 px-4 pb-3"
+                @click="showAddForm()"
               >
-                <button
-                  type="button"
-                  class="text-blue-lightest bg-blue hover:bg-blue-light border-0 bigg p-0"
-                  @click="showAddForm()"
-                >
-                  +
-                </button>
-              </div>
+                +
+              </button>
             </div>
             <client-only>
               <div v-if="loading" slot="placeholder" class="flex flex-wrap bg-white px-3">
-                <div class="w-1/62 p-5 text-center">
+                <div class="p-5 text-center">
                   <div
                     class="spinner-gflex flex-wrap text-blue"
                     style="width: 6rem; height: 6rem;"
@@ -34,45 +31,47 @@
               </div>
               <div
                 v-if="!loading"
-                class="custom-scroll fix-marging border-5 px-2 border-light border-r-0 w-full"
+                class="custom-scroll fix-marging border-5 border-light border-r-0 w-full"
                 :style="{ height: sizeHead }"
               >
                 <div
                   v-for="episode in people"
                   :key="episode.id"
-                  :class="'w-full flex flex-wrap cursor-pointer bg-blue text-white py-2 py-md-0 border-b align-items-top ' + episode.id"
+                  :class="'w-full flex flex-wrap cursor-pointer bg-blue text-white border-b align-items-top ' + episode.id"
                 >
-                  <div class="offset-2 offset-md-0 w-2/3 md:w-1/3 pr-4 pl-4 order-1 order-md-2 px-0 py-3 py-md-0" @click="vote(episode)">
+                  <div class="relative offset-2 offset-md-0 w-2/3 md:w-1/3" @click="vote(episode)">
                     <img
                       v-lazy="getImgObj(episode.img)"
                       width="100%"
                       height="100%"
                       :src="loadingImg"
-                      class="w-full w-md-75 max-w-full h-auto border-5 border-light"
+                      class="w-full max-w-full h-auto border-5 border-light"
                       :alt="'Picture ' + episode.name"
                     >
-                    <div class="tumb_up px-3 my-3 my-md-2 border-5 border-light text-center bg-blue">
+                    <div class="absolute tumb_up px-3 my-3 my-md-2 border-5 border-light text-center bg-indiePurple">
                       👍<br>
                       {{ episode.votes }}
                     </div>
                   </div>
-                  <div class="w-1/62 md:w-2/3 pr-4 pl-4 order-2 p-2 order-md-2 text-center text-md-left">
-                    <h3>{{ episode.name }}</h3>
+                  <div class="md:w-2/3 pr-4 pl-4 order-2 p-2 order-md-2 text-center text-md-left">
+                    <h3 class="text-xl font-indie py-2">
+                      {{ episode.name }}
+                    </h3>
                     <p
                       v-if="episode.login"
-                      class="text-green fit-content cursor-pointer mb-0 hidden md:block"
+                      class="fit-content cursor-pointer mb-0 hidden md:block text-indiePink text-xs"
                       @click="openAccount(episode.login)"
                     >
                       @{{ episode.login }}
                     </p>
-                    <div class="text-center text-md-left px-3 px-md-0 hidden md:block">
+                    <div class="text-center text-md-left px-3 px-md-0 hidden md:block text-xs">
                       <p class v-html="getTextLink(episode.bio)" />
                     </div>
                   </div>
-                  <div class="w-1/62 px-0 px-md-5 pt-1 pt-md-3 order-3 block d-mhidden">
+                  <div class="px-0 px-md-5 pt-1 pt-md-3 order-3 block md:hidden text-xs">
                     <p
                       v-if="episode.login"
-                      class="text-green text-center text-md-left mb-0"
+                      class="text-center text-md-left mb-0 text-indiePink"
                       @click="openAccount(episode.login)"
                     >
                       {{ episode.login }}
@@ -85,14 +84,14 @@
               </div>
             </client-only>
           </div>
-          <div id="content" class="w-1/62 md:w-1/2 pr-4 pl-4 pt-0 px-md-5 order-1 order-md-2 hidden xl:block text-white">
+          <div id="content" class="md:w-1/2 pr-4 pl-4 pt-0 px-md-5 order-1 order-md-2 hidden xl:block text-white">
             <div class="flex flex-wrap">
-              <div class="w-1/62 text-center text-sm-left">
-                <h1 class="pb-2 pt-md-5">
+              <div class="text-center text-sm-left">
+                <h1 class="pb-2 font-indie text-3xl">
                   {{ title }}
                 </h1>
               </div>
-              <div class="w-1/62 text-left pt-md-5">
+              <div class="text-left pt-md-5 text-sm">
                 <p class="pl-2">
                   Les Makers sont une espèce d'entrepreneurs encore méconnue en France.<br><br>
                   Parfois ils ne postent qu'en anglais...<br>
@@ -105,7 +104,7 @@
                   Suis, ajoute et votes pour tes MAKERS favoris,<br>
                   en bonus tu gagnes une chance de les voir dans le podcast !
                 </p>
-                <p class="h5 pt-5">
+                <p class="h5 pt-5 font-indie">
                   Tu aimerais qu'un d'eux vienne dans le podcast ?
                 </p>
                 <p class="pl-2">
@@ -115,7 +114,7 @@
                   Partage sur Twitter ton vote pour montrer ton soutiens au maker,<br>
                   s'il n'est pas encore venue dans le podcast cela le motivera à venir !
                 </p>
-                <p class="h5 pt-5">
+                <p class="h5 pt-5 font-indie">
                   Ton maker préféré n'est pas dans la liste ?
                 </p>
                 <p class="pl-2">
@@ -127,7 +126,7 @@
                 <p class="h3 pt-3 text-center">
                   Avance maintenant sur la voie du maker !
                 </p>
-                <div class="w-1/62 px-md-5 pt-0 text-center">
+                <div class="px-md-5 pt-0 text-center">
                   <button
                     type="button"
                     class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
@@ -423,7 +422,7 @@ export default {
 @media screen and (min-width: 768px) {
 .tumb_up {
   bottom: -10px;
-  font-size: 30px;
+  font-size: 20px;
   }
 }
 </style>
