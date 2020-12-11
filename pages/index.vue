@@ -40,7 +40,14 @@
                 "
                 @click="openEp(episode.guid_fix)"
               >
-                <ListItem :title="episode.title" :name="episode.social.name" :preview="preview" :image="episode.image_optimized" :loading-image="episode.image_loading" />
+                <ListItem
+                  :title="episode.title"
+                  :name="episode.social.name"
+                  :name-link="episode.social.link"
+                  :preview="preview"
+                  :image="episode.image_optimized"
+                  :loading-image="episode.image_loading"
+                />
               </div>
             </div>
           </div>

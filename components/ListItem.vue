@@ -14,7 +14,7 @@
       <h3 class="font-indie text-xl mb-1">
         {{ title }}
       </h3>
-      <p v-if="name" class="text-indiePink text-sm">
+      <p v-if="name" class="text-indiePink text-sm" @click="openLink()">
         {{ name }}
       </p>
       <p class="text-sm" v-html="preview" />
@@ -28,6 +28,7 @@ export default {
   props: {
     title: { type: String, default: null },
     name: { type: String, default: null },
+    linkName: { type: String, default: null },
     image: { type: String, default: null },
     votes: { type: String, default: null },
     loadingImage: { type: String, default: null },
@@ -47,7 +48,13 @@ export default {
       }
     }
   },
-  methods: {}
+  methods: {
+    openLink () {
+      if (this.linkName) {
+        window.open(this.linkName, '_blank')
+      }
+    }
+  }
 }
 </script>
 
