@@ -3,10 +3,8 @@ const isServerlessEnvironment = process.env.ON_VERCEL === 'true'
 const serverMiddleware = isServerlessEnvironment ? [] : [{ path: '/api', handler: '~/api_index.js' }]
 export default {
   target: 'server',
-  publicRuntimeConfig: {
-    NEXT_PUBLIC_VERCEL_URL: process.env.VERCEL_URL || 'https://indiemakers.fr'
-  },
   env: {
+    VERCEL_URL: process.env.VERCEL_URL,
     dev: (process.env.NODE_ENV !== 'production'),
     rss: 'https://anchor.fm/s/414d1d4/podcast/rss',
     baseAPI: 'api',
