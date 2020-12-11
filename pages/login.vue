@@ -2,7 +2,7 @@
   <div>
     <div class="container mx-auto mx-auto">
       <div class="flex flex-wrap pt-md-5">
-        <div class="w-1/62 md:mx-1/6 md:w-2/5 pr-4 pl-4">
+        <div class="w-1/2 md:mx-1/6 md:w-2/5 pr-4 pl-4">
           <div class="flex flex-wrap bg-blue py-0">
             <div class="flex-grow pt-3 px-0 border-10 border-light text-white text-center">
               <h1 class="text-3xl font-indie">
@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-        <div v-if="image" class="w-1/62 md:w-1/2 pr-4 pl-4 pt-0 px-md-5 order-1 order-md-2 hidden xl:block">
+        <div v-if="image" class="w-1/2 md:w-1/2 pr-4 pl-4 pt-0 px-md-5 order-1 order-md-2 hidden xl:block">
           <img class="max-w-full h-auto border-10 border-light" alt="Logo IM" :src="image">
         </div>
       </div>

@@ -10,7 +10,7 @@
         :alt="'Picture ' + title"
         @click="openImage()"
       >
-      <div v-if="votes" class="absolute tumb_up px-3 my-3 my-md-2 border-5 border-light text-center bg-indiePurple">
+      <div v-if="votes" class="absolute cursor-pointer tumb_up px-3 my-3 my-md-2 border-5 border-light text-center bg-indiePurple" @click="vote()">
         👍<br>
         {{ votes }}
       </div>
@@ -55,6 +55,10 @@ export default {
     }
   },
   methods: {
+    vote () {
+      console.log('voted')
+      this.$emit('voted')
+    },
     openLink () {
       if (this.linkName) {
         window.open(this.linkName, '_blank')

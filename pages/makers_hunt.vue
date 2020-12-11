@@ -47,49 +47,8 @@
                     :name="episode.login"
                     :preview="getTextLink(episode.bio)"
                     :image="episode.img"
+                    @voted="vote(episode)"
                   />
-
-                  <!-- <div class="relative offset-2 offset-md-0 w-2/3 md:w-1/3" @click="vote(episode)">
-                    <img
-                      v-lazy="getImgObj(episode.img)"
-                      width="100%"
-                      height="100%"
-                      :src="loadingImg"
-                      class="w-full max-w-full h-auto border-5 border-light"
-                      :alt="'Picture ' + episode.name"
-                    >
-                    <div class="absolute tumb_up px-3 my-3 my-md-2 border-5 border-light text-center bg-indiePurple">
-                      👍<br>
-                      {{ episode.votes }}
-                    </div>
-                  </div>
-                  <div class="md:w-2/3 pr-4 pl-4 order-2 p-2 order-md-2 text-center text-md-left">
-                    <h3 class="text-xl font-indie py-2">
-                      {{ episode.name }}
-                    </h3>
-                    <p
-                      v-if="episode.login"
-                      class="fit-content cursor-pointer mb-0 hidden md:block text-indiePink text-xs"
-                      @click="openAccount(episode.login)"
-                    >
-                      @{{ episode.login }}
-                    </p>
-                    <div class="text-center text-md-left px-3 px-md-0 hidden md:block text-xs">
-                      <p class v-html="getTextLink(episode.bio)" />
-                    </div>
-                  </div>
-                  <div class="px-0 px-md-5 pt-1 pt-md-3 order-3 block md:hidden text-xs">
-                    <p
-                      v-if="episode.login"
-                      class="text-center text-md-left mb-0 text-indiePink"
-                      @click="openAccount(episode.login)"
-                    >
-                      {{ episode.login }}
-                    </p>
-                    <div class="text-center text-md-left px-3 px-md-0">
-                      <p class v-html="getTextLink(episode.bio)" />
-                    </div>
-                  </div> -->
                 </div>
               </div>
             </client-only>
@@ -133,13 +92,13 @@
                 <p class="pl-2 pb-5">
                   Partage sur Twitter ton vote, cela le motivera à venir !
                 </p>
-                <p class="h3 pt-3 text-center font-indie">
+                <p class="h3 pt-3 text-left font-indie">
                   Avance maintenant sur la voie du maker !
                 </p>
-                <div class="px-md-5 pt-0 text-center font-indie text-lg">
+                <div class="flex justify-between pt-4 font-indie text-white text-lg w-10/12">
                   <button
                     type="button"
-                    class="border-2 border-light px-3 pt-2 pb-1 mr-1"
+                    class="border-2 border-light px-3 pt-2 pb-1"
                     @click="joinUs()"
                   >
                     👉 Reçoit mes emails
@@ -147,7 +106,7 @@
                   <button
                     id="rtp-button"
                     type="button"
-                    class="border-2 border-light px-3 pt-2 pb-1 mr-1"
+                    class="border-2 border-light px-3 pt-2 pb-1"
                     @click="rate()"
                   >
                     ⭐️ Note
@@ -183,8 +142,6 @@ export default {
   },
   async fetch () {
     const items = await feed()
-    // eslint-disable-next-line no-console
-    // console.log(res)
     if (items) {
       this.episodes = items
     }
@@ -197,8 +154,8 @@ export default {
         error: require('~/assets/cover-im_user.png'),
         loading: require('~/assets/cover-im_empty.png')
       },
-      title: 'Les Makers Français les plus chaud !',
-      message: 'Suis, ajoute et votes pour tes MAKERS favoris, en bonus tu gagnes une chance de les voir dans le podcast !',
+      title: 'Les Makers Français les plus chaud 🔥',
+      message: 'Vote et ajoute tes MAKERS favoris, cela les insite a venir podcast !',
       email: '',
       guid: null,
       episodes: [],
@@ -399,13 +356,35 @@ export default {
       }
     },
     setSizeHead () {
-      if (process.client && document.getElementById('header-mk') && document.getElementById('header') && document.getElementById('cover') && document.getElementById('cover').offsetHeight > 0) {
-        const size = `${document.getElementById('header-mk').offsetHeight + document.getElementById('header').offsetHeight + 5}px`
+      if (
+        process.client &&
+        document.getElementById('header-mk') &&
+        document.getElementById('header') &&
+        document.getElementById('content') &&
+        document.getElementById('content').offsetWidth !== window.innerWidth
+      ) {
+        const size = `${
+          document.getElementById('header-mk').offsetHeight +
+          document.getElementById('header').offsetHeight +
+          5
+        }px`
         this.sizeHead = `calc(100vh - ${size})`
       } else {
         this.sizeHead = 'auto'
       }
     }
+    // setSizeHead () {
+    //   if (process.client &&
+    //   document.getElementById('header-mk') &&
+    //    document.getElementById('header') &&
+    //    document.getElementById('cover') &&
+    //    document.getElementById('cover').offsetHeight > 0) {
+    //     const size = `${document.getElementById('header-mk').offsetHeight + document.getElementById('header').offsetHeight + 5}px`
+    //     this.sizeHead = `calc(100vh - ${size})`
+    //   } else {
+    //     this.sizeHead = 'auto'
+    //   }
+    // }
   },
   head () {
     return {

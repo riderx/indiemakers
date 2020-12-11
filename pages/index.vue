@@ -103,12 +103,11 @@
                   >Martin DONADIEU</a>
                 </p>
                 <p class="pb-2">
-                  Ici pas de cookie, juste de l'<a
+                  <a
                     rel="noreferrer"
                     target="_blank"
-                    href="https://plausible.io/indiemakers.fr"
-                  >Open data</a>
-                  qui te respecte
+                    href="https://amzn.to/3lXjALg"
+                  >Lancer sa startup en indépendant</a>, mon Livre publié aux éditions Broché
                 </p>
                 <p class="pb-2">
                   <a
@@ -117,14 +116,6 @@
                     href="/tools"
                   >Mes outils</a>
                   quotidiens pour gerer mes projets !
-                </p>
-                <p>
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href="https://amzn.to/3lXjALg"
-                  >Mon Livre</a>
-                  Lancer sa startup en indépendant, publié aux éditions Broché
                 </p>
               </div>
               <div class="pt-3 pb-3 text-white">
@@ -276,10 +267,6 @@ export default {
       }
       return first
     },
-    // openEp (guid) {
-    //   const id = encodeURIComponent(guid)
-    //   this.$router.push(`/episode/${id}`)
-    // },
     openAdd () {
       this.$router.push('/makers_hunt')
     },

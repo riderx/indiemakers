@@ -13,10 +13,8 @@ export default {
   env: {
     dev: (process.env.NODE_ENV !== 'production'),
     rss: 'https://anchor.fm/s/414d1d4/podcast/rss',
-    baseRSS: 'api/feed',
     baseAPI: 'api',
     domain: (process.env.NODE_ENV === 'production') ? 'https://indiemakers.fr' : 'http://localhost:3000',
-    domain_unsecure: 'http://indiemakers.fr',
     handler: 'indiemakersfr'
   },
   head: {

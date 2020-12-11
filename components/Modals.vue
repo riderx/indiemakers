@@ -26,7 +26,9 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="col-12 pt-1 px-1 px-md-3 text-white text-center">
-                  <h3>Écoute sur :</h3>
+                  <h1 class="text-3xl font-indie">
+                    Écoute sur :
+                  </h1>
                 </div>
                 <div class="col-12 pt-1 px-1 px-md-3 text-center">
                   <button

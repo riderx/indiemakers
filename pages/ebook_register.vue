@@ -2,7 +2,7 @@
   <LazyHydrate when-idle>
     <div class="container mx-auto">
       <div class="flex flex-wrap bg-blue py-2 border-10 border-light">
-        <div class="w-1/62 text-center">
+        <div class="w-1/2 text-center">
           <img class="w-1/4 pb-5 pb-md-3" src="/book.svg">
           <h1 class="text-3xl font-indie">
             {{ title }}

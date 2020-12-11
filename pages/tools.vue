@@ -2,20 +2,20 @@
   <LazyHydrate when-idle>
     <div class="container mx-auto">
       <div class="flex flex-wrap bg-blue py-2">
-        <div class="w-1/62 text-center">
+        <div class="w-1/2 text-center mx-auto">
           <img
-            class="w-1/4 pb-3 header-image"
+            class="w-1/4 pb-3 header-image mx-auto"
             width="100%"
             height="100%"
             src="/tools.svg"
           >
         </div>
-        <h1 class="text-white text-center w-full py-4 px-2">
+        <h1 class="text-white text-center text-6xl font-indie w-full py-4 px-2">
           {{ title }}
         </h1>
-        <div class="example md:w-1/6 pr-4 pl-42 ml-auto mr-auto">
+        <div class="w-full ml-auto mr-auto">
           <div v-if="loading" class="flex flex-wrap bg-white px-3">
-            <div class="w-1/62 p-5 text-center">
+            <div class="w-1/2 p-5 text-center">
               <div
                 class="spinner-gflex flex-wrap text-blue"
                 style="width: 6rem; height: 6rem;"
@@ -29,28 +29,30 @@
             <div
               v-for="tool in tools"
               :key="tool.name"
-              class="lg:w-1/3 pr-4 pl-4 md:w-1/2 pr-4 pl-4 sm:w-1/6 pr-4 pl-42 mb-4"
+              class="lg:w-1/3 pr-4 pl-4 md:w-1/2 pr-4 pl-4 sm:w-1/6 mb-4"
               @click="openBlank(tool.link)"
             >
-              <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-grey-light bg-blue border-5 border-light ">
+              <div class="relative flex flex-col min-w-0 rounded break-words border-light border-10">
                 <img
                   width="100%"
                   height="100%"
-                  class="w-full rounded rounded-t"
+                  class="w-full"
                   :src="tool.image"
                   :alt="`${tool.name} Logo`"
                 ><div class="flex-auto p-6">
-                  <h4 class="mb-3 text-white">
+                  <h4 class="mb-3 text-white text-xl font-indie">
                     {{ tool.name }}
-                  </h4><p class="mb-0 text-white">
+                  </h4>
+                  <p class="mb-3 text-white">
                     {{ tool.description }}
-                  </p><a rel="noreferrer" :href="tool.link" target="_blank" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline border-5 border-light py-3 px-4 text-xl leading-tight text-blue-lightest bg-blue hover:bg-blue-light text-center w-full">J'en profite</a>
+                  </p>
+                  <a rel="noreferrer" :href="tool.link" target="_blank" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline border-5 border-light py-3 px-4 text-xl leading-tight text-blue-lightest bg-blue hover:bg-blue-light text-center w-full">J'en profite</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <p class="px-5 text-white">
+        <p class="px-5 text-white text-center w-full">
           {{ submessage }}
         </p>
       </div>
