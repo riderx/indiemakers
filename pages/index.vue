@@ -11,7 +11,9 @@
               <div
                 class="flex-grow pt-3 px-0 text-white text-center font-indie text-3xl"
               >
-                <h1>🎙 Episodes</h1>
+                <h1 class="text-3xl font-indie">
+                  🎙 Episodes
+                </h1>
               </div>
             </div>
             <div v-if="loading" class="flex flex-wrap bg-white px-3">
@@ -34,18 +36,15 @@
               <div
                 v-for="episode in episodes"
                 :key="episode.guid_fix"
-                :class="
-                  'flex flex-wrap cursor-pointer bg-blue text-white border-b align-items-top' +
-                    episode.guid_fix
-                "
-                @click="openEp(episode.guid_fix)"
+                class="flex flex-wrap bg-blue text-white border-b align-items-top"
               >
                 <ListItem
                   :title="episode.title"
                   :name="episode.social.name"
-                  :name-link="episode.social.link"
+                  :link-name="episode.social.link"
                   :preview="episode.preview"
                   :image="episode.image_optimized"
+                  :link-image="`/episode/${episode.guid_fix}`"
                   :loading-image="episode.image_loading"
                 />
               </div>
@@ -125,7 +124,7 @@
                     target="_blank"
                     href="https://amzn.to/3lXjALg"
                   >Mon Livre</a>
-                  Lancer sa startup en indépendant, publié au éditions Broché
+                  Lancer sa startup en indépendant, publié aux éditions Broché
                 </p>
               </div>
               <div class="pt-3 pb-3 text-white">
@@ -277,10 +276,10 @@ export default {
       }
       return first
     },
-    openEp (guid) {
-      const id = encodeURIComponent(guid)
-      this.$router.push(`/episode/${id}`)
-    },
+    // openEp (guid) {
+    //   const id = encodeURIComponent(guid)
+    //   this.$router.push(`/episode/${id}`)
+    // },
     openAdd () {
       this.$router.push('/makers_hunt')
     },

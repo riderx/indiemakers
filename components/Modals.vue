@@ -63,7 +63,7 @@
         <div class="container-fluid">
           <div class="row bg-indiePurple pt-4">
             <div class="text-center text-white w-100">
-              <h1>
+              <h1 class="text-3xl font-indie">
                 ✅C'est fait !
               </h1>
             </div>
@@ -137,7 +137,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <h1 class="pl-md-2 py-2 m-0 text-white text-center">
+              <h1 class="text-3xl font-indie pl-md-2 py-2 m-0 text-white text-center">
                 Mes Emails Privés
               </h1>
               <p class="px-md-5 text-white">
@@ -190,7 +190,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <h1 class="pl-2 py-2 m-0 text-white text-center">
+              <h1 class="text-3xl font-indie pl-2 py-2 m-0 text-white text-center">
                 Le guide pour lancer ton projet !
               </h1>
               <p class="px-5 text-white">
@@ -257,7 +257,9 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 pt-2 text-white text-center">
-              <h1>😨 Mais qui est tu ?</h1>
+              <h1 class="text-3xl font-indie">
+                😨 Mais qui est tu ?
+              </h1>
             </div>
           </div>
           <div class="row bg-indiePurple pt-4 h-100">
@@ -301,7 +303,9 @@
             <div class="col-12">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>😨 Quelque chose n'as pas marché</h1>
+                  <h1 class="text-3xl font-indie">
+                    😨 Quelque chose n'as pas marché
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-4 h-100">
@@ -322,7 +326,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>Cet Episode existe !</h1>
+                  <h1 class="text-3xl font-indie">
+                    Cet Episode existe !
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-4 h-100">
@@ -353,7 +359,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>🏄‍♂️ Ajout pris en compte</h1>
+                  <h1 class="text-3xl font-indie">
+                    🏄‍♂️ Ajout pris en compte
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-4 h-100">
@@ -388,7 +396,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>👀Je ne trouve pas ce·tte Maker</h1>
+                  <h1 class="text-3xl font-indie">
+                    👀Je ne trouve pas ce·tte Maker
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-4 h-100">
@@ -418,7 +428,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>😨 Hoho</h1>
+                  <h1 class="text-3xl font-indie">
+                    😨 Hoho
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-4 h-100">
@@ -452,7 +464,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>😝 OUPS</h1>
+                  <h1 class="text-3xl font-indie">
+                    😝 OUPS
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-4 h-100">
@@ -486,7 +500,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>😝 OUPS</h1>
+                  <h1 class="text-3xl font-indie">
+                    😝 OUPS
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-4 h-100">
@@ -520,7 +536,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>👌Ajouter un·e Maker</h1>
+                  <h1 class="text-3xl font-indie">
+                    👌Ajouter un·e Maker
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-4">
@@ -563,7 +581,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>💪Vote pris en compte</h1>
+                  <h1 class="text-3xl font-indie">
+                    💪Vote pris en compte
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-4 h-100">
@@ -597,7 +617,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>✅Check ta boite email</h1>
+                  <h1 class="text-3xl font-indie">
+                    ✅Check ta boite email
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-4">
@@ -627,7 +649,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>Besoin de plus ?</h1>
+                  <h1 class="text-3xl font-indie">
+                    Besoin de plus ?
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-4">
@@ -658,7 +682,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>Partage le classement des makers</h1>
+                  <h1 class="text-3xl font-indie">
+                    Partage le classement des makers
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-2">
@@ -688,7 +714,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>Soutiens le podcast</h1>
+                  <h1 class="text-3xl font-indie">
+                    Soutiens le podcast
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-2">
@@ -718,7 +746,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>Tu aimes cet épisode ?</h1>
+                  <h1 class="text-3xl font-indie">
+                    Tu aimes cet épisode ?
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-2">
@@ -748,7 +778,9 @@
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
-                  <h1>🔐Pas tout de suite !</h1>
+                  <h1 class="text-3xl font-indie">
+                    🔐Pas tout de suite !
+                  </h1>
                 </div>
               </div>
               <div class="row bg-indiePurple pt-4">

@@ -5,7 +5,7 @@
         <div class="w-1/62 md:mx-1/6 md:w-2/5 pr-4 pl-4">
           <div class="flex flex-wrap bg-blue py-0">
             <div class="flex-grow pt-3 px-0 border-10 border-light text-white text-center">
-              <h1>🔑Email Verification</h1>
+              <h1 class="text-3xl font-indie">🔑Email Verification</h1>
             </div>
           </div>
           <div class="flex flex-wrap bg-blue border-10 border-light pb-4">

@@ -37,9 +37,17 @@
                 <div
                   v-for="episode in people"
                   :key="episode.id"
-                  :class="'w-full flex flex-wrap cursor-pointer bg-blue text-white border-b align-items-top ' + episode.id"
+                  :class="'w-full flex flex-wrap bg-blue text-white border-b align-items-top ' + episode.id"
                 >
-                  <ListItem :title="episode.name" :votes="episode.votes" :name="episode.login" :preview="getTextLink(episode.bio)" :image="episode.img" />
+                  <ListItem
+                    :title="episode.name"
+                    :link-image="linkEp(episode.guid)"
+                    :link-name="`https://twitter.com/${episode.login}`"
+                    :votes="episode.votes"
+                    :name="episode.login"
+                    :preview="getTextLink(episode.bio)"
+                    :image="episode.img"
+                  />
 
                   <!-- <div class="relative offset-2 offset-md-0 w-2/3 md:w-1/3" @click="vote(episode)">
                     <img
@@ -167,7 +175,6 @@ import LazyHydrate from 'vue-lazy-hydration'
 import { feed } from '../plugins/rss'
 import { domain } from '../plugins/domain'
 
-const linkTwitter = 'Son Twitter : <a href="https://twitter.com/USERNAME">@USERNAME</a>'
 export default {
   components: {
     ListItem: () => import('~/components/ListItem.vue'),
@@ -225,6 +232,8 @@ export default {
       .run()
       .then((results) => {
         this.people = results.map((data) => {
+          const found = this.findInEp(data.login)
+          data.guid = found
           data.img = this.personImg(data)
           return data
         })
@@ -240,10 +249,9 @@ export default {
       this.$modal.show('rate')
     },
     findInEp (name) {
-      let found = false
-      const link = linkTwitter.replace(/USERNAME/g, name)
+      let found = null
       this.episodes.forEach((element) => {
-        if (element.content.includes(link)) {
+        if (element?.twitter?.name === name) {
           found = element.guid
         }
       })
@@ -254,6 +262,12 @@ export default {
     },
     tweetItShare () {
       this.$modal.show('share_hunt')
+    },
+    linkEp (guid) {
+      if (guid) {
+        return `/episode/${guid}`
+      }
+      return null
     },
     getTextLink (text) {
       return linkifyHtml(text, {

@@ -6,8 +6,9 @@
         width="100%"
         height="100%"
         :src="loadingImg"
-        class="w-full h-auto border-5 border-white"
+        class="w-full h-auto border-5 border-white cursor-pointer"
         :alt="'Picture ' + title"
+        @click="openImage()"
       >
       <div v-if="votes" class="absolute tumb_up px-3 my-3 my-md-2 border-5 border-light text-center bg-indiePurple">
         👍<br>
@@ -18,7 +19,7 @@
       <h3 class="font-indie text-xl mb-1">
         {{ title }}
       </h3>
-      <p v-if="name" class="text-indiePink text-sm mb-1 z-10" @click="openLink()">
+      <p v-if="name" class="text-indiePink text-sm mb-1 z-10 cursor-pointer" @click="openLink()">
         @{{ name }}
       </p>
       <p class="text-sm" v-html="preview" />
@@ -33,8 +34,9 @@ export default {
     title: { type: String, default: null },
     name: { type: String, default: null },
     linkName: { type: String, default: null },
+    linkImage: { type: String, default: null },
     image: { type: String, default: null },
-    votes: { type: String, default: null },
+    votes: { type: Number, default: null },
     loadingImage: { type: String, default: null },
     preview: { type: String, default: null }
   },
@@ -56,6 +58,11 @@ export default {
     openLink () {
       if (this.linkName) {
         window.open(this.linkName, '_blank')
+      }
+    },
+    openImage () {
+      if (this.linkImage) {
+        this.$router.push(this.linkImage)
       }
     }
   }
