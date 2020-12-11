@@ -1,4 +1,4 @@
-import { feed } from '../plugins/feed'
+const feed = require('../plugins/feed')
 
 module.exports = async (req, res) => {
   return res.json(await feed())

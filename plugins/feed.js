@@ -75,11 +75,11 @@ const previewText = (text) => {
   return first
 }
 
-export const removeEmoji = (str) => {
+const removeEmoji = (str) => {
   return str.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')
 }
 
-export const feed = async () => {
+module.exports = async () => {
   const items = []
   try {
     const parsed = await parser.parseURL(rss)
