@@ -3,7 +3,7 @@
     <div>
       <modal height="auto" adaptive name="copied">
         <div class="container-fluid">
-          <div class="row bg-primary">
+          <div class="row bg-indiePurple">
             <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('copied')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -21,7 +21,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-              <div class="row bg-primary py-4">
+              <div class="row bg-indiePurple py-4">
                 <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('listen')">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -31,21 +31,21 @@
                 <div class="col-12 pt-1 px-1 px-md-3 text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    class="rounded-none border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                     @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
                   >
                     Spotify
                   </button>
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    class="rounded-none border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                     @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
                   >
                     Apple Podcast
                   </button>
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    class="rounded-none border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                     @click="listenExternal('https://www.youtube.com/channel/UCMedW_Y4K0alzeVz1bSBvjA?sub_confirmation=1')"
                   >
                     Youtube
@@ -61,7 +61,7 @@
       </modal>
       <modal height="auto" adaptive name="copied">
         <div class="container-fluid">
-          <div class="row bg-primary pt-4">
+          <div class="row bg-indiePurple pt-4">
             <div class="text-center text-white w-100">
               <h1>
                 ✅C'est fait !
@@ -73,7 +73,7 @@
             <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
               <button
                 type="button"
-                class="btn btn-primary border-5 border-light btn-lg btn-block text-white px-4 h1"
+                class="rounded-none border-5 border-light btn-lg btn-block text-white px-4 h1"
                 @click="$modal.hide('copied')"
               >
                 😎Cool
@@ -84,7 +84,7 @@
       </modal>
       <modal height="auto" adaptive name="thanks_register">
         <div class="container-fluid">
-          <div class="row bg-primary">
+          <div class="row bg-indiePurple">
             <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('thanks_register')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -100,7 +100,7 @@
       </modal>
       <modal height="auto" adaptive name="thanks_ebook">
         <div class="container-fluid">
-          <div class="row bg-primary">
+          <div class="row bg-indiePurple">
             <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('thanks_ebook')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -116,7 +116,7 @@
       </modal>
       <modal height="auto" adaptive name="already_register">
         <div class="container-fluid">
-          <div class="row bg-primary">
+          <div class="row bg-indiePurple">
             <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('already_register')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -132,7 +132,7 @@
       </modal>
       <modal height="auto" adaptive name="join">
         <div class="container-fluid">
-          <div class="row bg-primary py-2">
+          <div class="row bg-indiePurple py-2">
             <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('join')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -173,10 +173,10 @@
               <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                 <button
                   type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                  class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                   @click="addEMailSub()"
                 >
-                  Comfirmer
+                  Confirmer
                 </button>
               </div>
             </div>
@@ -185,7 +185,7 @@
       </modal>
       <modal height="auto" adaptive name="ebook">
         <div class="container-fluid">
-          <div class="row bg-primary py-2">
+          <div class="row bg-indiePurple py-2">
             <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('ebook')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -226,7 +226,7 @@
               <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                 <button
                   type="button"
-                  class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                  class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                   @click="addEMailSub('ebook')"
                 >
                   Comfirmer
@@ -252,7 +252,7 @@
       </modal>
       <modal height="auto" adaptive :click-to-close="isFalse" name="confirmName">
         <div class="container-fluid">
-          <div class="row bg-primary py-2">
+          <div class="row bg-indiePurple py-2">
             <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('confirmName')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -260,7 +260,7 @@
               <h1>😨 Mais qui est tu ?</h1>
             </div>
           </div>
-          <div class="row bg-primary pt-4 h-100">
+          <div class="row bg-indiePurple pt-4 h-100">
             <div class="col-12 pt-2 text-white text-center">
               <p>Ajoute ton prénom pour que je puisse savoir a qui s'adresse mes emails !</p>
             </div>
@@ -283,7 +283,7 @@
             <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
               <button
                 type="button"
-                class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                 @click="addName()"
               >
                 Comfirmer
@@ -299,12 +299,12 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>😨 Quelque chose n'as pas marché</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4 h-100">
+              <div class="row bg-indiePurple pt-4 h-100">
                 <div class="col-12 pt-2 pb-3 text-white text-center">
                   <p>Essais plus tard</p>
                 </div>
@@ -320,12 +320,12 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>Cet Episode existe !</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4 h-100">
+              <div class="row bg-indiePurple pt-4 h-100">
                 <div class="col-12 pt-2 text-white text-center">
                   <p>Grace a ton vote et ceux des autres, ce·tte maker a accepter de venir dans le podcast !</p>
                   <p>Merci ❤❤</p>
@@ -333,7 +333,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="openEp(guid)"
                   >
                     Ecouter
@@ -351,12 +351,12 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>🏄‍♂️ Ajout pris en compte</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4 h-100">
+              <div class="row bg-indiePurple pt-4 h-100">
                 <div class="col-12 pt-2 text-white text-center">
                   <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
                   <p>J'ai supposé que tu voulais aussi voter pour lui/elle, alors c'est fait .✅</p>
@@ -368,7 +368,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -386,19 +386,19 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>👀Je ne trouve pas ce·tte Maker</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4 h-100">
+              <div class="row bg-indiePurple pt-4 h-100">
                 <div class="col-12 pt-2 text-white text-center">
                   <p>Je ne peut pas ajouter de Maker qui n'est pas sur Twitter pour le moment.</p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="$modal.hide('fail-add')"
                   >
                     Fermer
@@ -416,12 +416,12 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>😨 Hoho</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4 h-100">
+              <div class="row bg-indiePurple pt-4 h-100">
                 <div class="col-12 pt-2 text-white text-center">
                   <p>tu as deja voté pour ce·tte Maker</p>
                   <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
@@ -432,7 +432,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -450,12 +450,12 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>😝 OUPS</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4 h-100">
+              <div class="row bg-indiePurple pt-4 h-100">
                 <div class="col-12 pt-2 text-white text-center">
                   <p>Ce·tte maker est déjà présent dans la liste, J'ai ajouté ton vote pour lui/elle.</p>
                   <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
@@ -466,7 +466,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -484,12 +484,12 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>😝 OUPS</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4 h-100">
+              <div class="row bg-indiePurple pt-4 h-100">
                 <div class="col-12 pt-2 text-white text-center">
                   <p>Ce·tte maker est déjà présent dans la liste, et tu as déjà voté pour lui/elle 😇.</p>
                   <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
@@ -500,7 +500,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -518,12 +518,12 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>👌Ajouter un·e Maker</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4">
+              <div class="row bg-indiePurple pt-4">
                 <div class="col-12 pt-2 text-white text-center">
                   <p>Saisie le nom de son compte Twitter</p>
                 </div>
@@ -543,7 +543,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="addMaker()"
                   >
                     Ajouter
@@ -561,12 +561,12 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>💪Vote pris en compte</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4 h-100">
+              <div class="row bg-indiePurple pt-4 h-100">
                 <div class="col-12 pt-2 text-white">
                   <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
                   <p class="font-weight-bold">
@@ -577,7 +577,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -595,19 +595,19 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>✅Check ta boite email</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4">
+              <div class="row bg-indiePurple pt-4">
                 <div class="col-12 pt-2 text-white text-center">
                   <p>Tu viens de recevoir ton lien de login par email, click dessus, c'est tout❤️</p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="$modal.hide('checkEmail')"
                   >
                     😎Cool
@@ -625,12 +625,12 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>Besoin de plus ?</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4">
+              <div class="row bg-indiePurple pt-4">
                 <div class="col-12 pt-2 text-white text-center">
                   <p>Parfois pour se lancer, un podcast ne suffit pas</p>
                   <p>J'ai crée pour toi des outils pour passer a l'étape supérieure !</p>
@@ -638,7 +638,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="bmc()"
                   >
                     C'est parti
@@ -656,19 +656,19 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>Partage le classement des makers</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-2">
+              <div class="row bg-indiePurple pt-2">
                 <div class="col-12 text-white text-center">
                   <p>Voici un tweet tout prêt, pour partager la page et faire réagir tweeter</p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetItHunt()"
                   >
                     Tweeter
@@ -686,19 +686,19 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>Soutiens le podcast</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-2">
+              <div class="row bg-indiePurple pt-2">
                 <div class="col-12 text-white text-center">
                   <p>Note le 5 ⭐️, en cliquant ci dessous, ca permet au podcast d'être découvert par d'autres !</p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="rate()"
                   >
                     Noter
@@ -716,19 +716,19 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>Tu aimes cet épisode ?</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-2">
+              <div class="row bg-indiePurple pt-2">
                 <div class="col-12 text-white text-center">
                   <p>Envois du love a l'invité du podcast via twitter </p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetIt()"
                   >
                     Envoyer
@@ -746,12 +746,12 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-primary py-2">
+              <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1>🔐Pas tout de suite !</h1>
                 </div>
               </div>
-              <div class="row bg-primary pt-4">
+              <div class="row bg-indiePurple pt-4">
                 <div class="col-12 pt-2 text-white">
                   <p>Pour te tenir au courant de la sortie de l'épisode et éviter les faux votes</p>
                   <h5 class="text-center">
@@ -775,7 +775,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="btn btn-primary border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
                     @click="sendLogin()"
                   >
                     🚀VALIDER

@@ -44,7 +44,7 @@
                   :title="episode.title"
                   :name="episode.social.name"
                   :name-link="episode.social.link"
-                  :preview="preview"
+                  :preview="episode.preview"
                   :image="episode.image_optimized"
                   :loading-image="episode.image_loading"
                 />

@@ -39,7 +39,9 @@
                   :key="episode.id"
                   :class="'w-full flex flex-wrap cursor-pointer bg-blue text-white border-b align-items-top ' + episode.id"
                 >
-                  <div class="relative offset-2 offset-md-0 w-2/3 md:w-1/3" @click="vote(episode)">
+                  <ListItem :title="episode.name" :votes="episode.votes" :name="episode.login" :preview="getTextLink(episode.bio)" :image="episode.img" />
+
+                  <!-- <div class="relative offset-2 offset-md-0 w-2/3 md:w-1/3" @click="vote(episode)">
                     <img
                       v-lazy="getImgObj(episode.img)"
                       width="100%"
@@ -79,7 +81,7 @@
                     <div class="text-center text-md-left px-3 px-md-0">
                       <p class v-html="getTextLink(episode.bio)" />
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </client-only>
@@ -123,13 +125,13 @@
                 <p class="pl-2 pb-5">
                   Partage sur Twitter ton vote, cela le motivera à venir !
                 </p>
-                <p class="h3 pt-3 text-center">
+                <p class="h3 pt-3 text-center font-indie">
                   Avance maintenant sur la voie du maker !
                 </p>
-                <div class="px-md-5 pt-0 text-center">
+                <div class="px-md-5 pt-0 text-center font-indie text-lg">
                   <button
                     type="button"
-                    class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                    class="border-2 border-light px-3 pt-2 pb-1 mr-1"
                     @click="joinUs()"
                   >
                     👉 Reçoit mes emails
@@ -137,14 +139,14 @@
                   <button
                     id="rtp-button"
                     type="button"
-                    class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                    class="border-2 border-light px-3 pt-2 pb-1 mr-1"
                     @click="rate()"
                   >
                     ⭐️ Note
                   </button>
                   <button
                     type="button"
-                    class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight text-white m-1 m-md-3 py-0 py-md-3 px-0 px-md-3 h1"
+                    class="border-2 border-light px-3 pt-2 pb-1"
                     @click="tweetItShare()"
                   >
                     ❤️ Partage
@@ -168,6 +170,7 @@ import { domain } from '../plugins/domain'
 const linkTwitter = 'Son Twitter : <a href="https://twitter.com/USERNAME">@USERNAME</a>'
 export default {
   components: {
+    ListItem: () => import('~/components/ListItem.vue'),
     Modals: () => import('~/components/Modals.vue'),
     LazyHydrate
   },

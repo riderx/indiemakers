@@ -1,6 +1,6 @@
 <template>
-  <div class="flex">
-    <div class="w-1/3">
+  <div class="flex w-full">
+    <div class="relative w-1/3">
       <img
         v-lazy="getImgObj"
         width="100%"
@@ -9,13 +9,17 @@
         class="w-full h-auto border-5 border-white"
         :alt="'Picture ' + title"
       >
+      <div v-if="votes" class="absolute tumb_up px-3 my-3 my-md-2 border-5 border-light text-center bg-indiePurple">
+        👍<br>
+        {{ votes }}
+      </div>
     </div>
     <div class="w-2/3 p-2">
       <h3 class="font-indie text-xl mb-1">
         {{ title }}
       </h3>
-      <p v-if="name" class="text-indiePink text-sm" @click="openLink()">
-        {{ name }}
+      <p v-if="name" class="text-indiePink text-sm mb-1 z-10" @click="openLink()">
+        @{{ name }}
       </p>
       <p class="text-sm" v-html="preview" />
     </div>
@@ -59,4 +63,15 @@ export default {
 </script>
 
 <style>
+.tumb_up {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+@media screen and (min-width: 768px) {
+.tumb_up {
+  bottom: -10px;
+  font-size: 20px;
+  }
+}
 </style>

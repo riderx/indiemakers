@@ -27,11 +27,16 @@ const guidConvert = (guid) => {
   }
 }
 
+const cleanHandler = (handler) => {
+  return handler.replace('@', '')
+}
+
 const findTw = (text) => {
   const founds = linkTwitterRe.exec(text)
   if (!founds || !founds.groups) {
     return { name: null, link: null }
   }
+  founds.groups.name = cleanHandler(founds.groups.name)
   return founds.groups
 }
 
@@ -40,6 +45,7 @@ const findLinkedin = (text) => {
   if (!founds || !founds.groups) {
     return { name: null, link: null }
   }
+  founds.groups.name = cleanHandler(founds.groups.name)
   return founds.groups
 }
 
@@ -48,6 +54,7 @@ const findInst = (text) => {
   if (!founds || !founds.groups) {
     return { name: null, link: null }
   }
+  founds.groups.name = cleanHandler(founds.groups.name)
   return founds.groups
 }
 
