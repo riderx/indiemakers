@@ -25,7 +25,6 @@ The project’s is realized in Vue.Js and consists of 2 pages, dynamically loade
 - Vue.js  
 - Visual Code Studio
 
-
 ## Team
 
 THe development team is: 
