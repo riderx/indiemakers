@@ -12,6 +12,9 @@ const rss = 'https://anchor.fm/s/414d1d4/podcast/rss'
 const linkTwitterRe = /Son Twitter : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 const linkInstagramRe = /Son Instagram : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 const linkLinkedinRe = /Son Linkedin : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
+const isServerlessEnvironment = process.env.ON_VERCEL === 'true'
+
+const appRouter = express.Router();
 
 const imagekit = new ImageKit({
   publicKey: 'public_9vWOr643awJiLr6HqhpNNF1ZVkQ=',
@@ -154,13 +157,14 @@ if (process.env.redis_host) {
   cacheMiddleware.attach(app)
 }
 app.use(bodyParser.json())
-app.all('/feed', async (req, res) => {
+
+appRouter.get('/feed', async (req, res) => {
   res.json(await feed())
 })
-app.all('/healthcheck', (req, res) => {
+appRouter.get('/healthcheck', (req, res) => {
   res.sendStatus(200)
 })
-app.all('/makers/:guid', async (req, res) => {
+appRouter.get('/makers/:guid', async (req, res) => {
   const url = await getTwitter(req.params.guid, '_200x200')
   let data = ''
   const headers = { 'Content-Type': 'image/jpeg' }
@@ -177,7 +181,7 @@ app.all('/makers/:guid', async (req, res) => {
   }
   return res.end(data, 'binary')
 })
-app.all('/ep/:guid', async (req, res) => {
+appRouter.get('/ep/:guid', async (req, res) => {
   const items = await feed()
   let elem = null
   items.forEach((element) => {
@@ -188,5 +192,6 @@ app.all('/ep/:guid', async (req, res) => {
   })
   return res.json(elem)
 })
+app.use(`/${isServerlessEnvironment ? api : ''}`, appRouter);
 
 module.exports = app
