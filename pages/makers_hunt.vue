@@ -1,17 +1,17 @@
 <template>
   <LazyHydrate when-idle>
     <div id="makers">
-      <div class="container mx-auto">
+      <div class="container px-0 mx-auto w-full">
         <div class="flex flex-wrap">
-          <div class="md:w-1/2 pr-4 pl-4">
-            <div id="header-mk" class="flex flex-wrap justify-between items-center bg-blue border-10 border-light text-white pb-1 pt-2">
+          <div class="md:w-1/2 md:px-4 w-full">
+            <div id="header-mk" class="flex flex-wrap w-full justify-between items-center bg-blue border-10 border-light text-white pb-1 pt-2">
               <h1 class="w-4/5 text-center font-indie text-3xl">
                 💃 Makers
               </h1>
 
               <button
                 type="button"
-                class="border-0 p-0 text-6xl w-1/4 md:w-1/5 px-4 pb-3"
+                class="border-0 p-0 text-6xl w-1/5 md:w-1/5 px-4 pb-3"
                 @click="showAddForm()"
               >
                 +
@@ -62,15 +62,15 @@
               </div>
               <div class="text-left pt-md-5 text-sm">
                 <p class="pl-2">
-                  Les Makers sont une espèce d'entrepreneurs encore méconnue en France.<br><br>
+                  Les Makers sont encore méconnue en France !<br><br>
+                  Parfois ils ne font pas de personal branding...<br>
                   Parfois ils ne postent qu'en anglais...<br>
-                  Parfois ils ne font pas de personal branding !<br>
                   Et parfois on découvre seulement 10 ans plus tard qui était aux commandes !<br><br>
-                  Pourtant l'écosysteme est le facteur numéro 1 de succès,<br>
-                  ensemble nous allons plus loin, cassons les barrières vers le succès !<br>
+                  L'écosysteme est le facteur numéro 1 de succès !<br>
+                  Ensemble allons plus loin, cassons les barrières vers le succès !<br>
                   C'est pour cela que cette liste existe !<br><br>
                   Comme Producthunt,<br>
-                  Suis, ajoute et votes pour tes MAKERS favoris,<br>
+                  Vote et ajoute pour tes MAKERS favoris,<br>
                   en bonus tu gagnes une chance de les voir dans le podcast !
                 </p>
                 <p class="h5 pt-5 font-indie">
@@ -89,34 +89,16 @@
                 <p class="pl-2">
                   Clique sur le bonton "+" pour l'ajouter !
                 </p>
-                <p class="pl-2 pb-5">
+                <p class="pl-2 pb-4">
                   Partage sur Twitter ton vote, cela le motivera à venir !
                 </p>
-                <p class="h3 pt-3 text-left font-indie">
-                  Avance maintenant sur la voie du maker !
-                </p>
-                <div class="flex justify-between pt-4 font-indie text-white text-lg w-10/12">
+                <div class="flex justify-between font-indie text-white text-lg w-10/12">
                   <button
                     type="button"
                     class="border-2 border-light px-3 pt-2 pb-1"
                     @click="joinUs()"
                   >
-                    👉 Reçoit mes emails
-                  </button>
-                  <button
-                    id="rtp-button"
-                    type="button"
-                    class="border-2 border-light px-3 pt-2 pb-1"
-                    @click="rate()"
-                  >
-                    ⭐️ Note
-                  </button>
-                  <button
-                    type="button"
-                    class="border-2 border-light px-3 pt-2 pb-1"
-                    @click="tweetItShare()"
-                  >
-                    ❤️ Partage
+                    👉 Deviens un Maker
                   </button>
                 </div>
               </div>
@@ -171,6 +153,7 @@ export default {
   mounted () {
     this.email = window.localStorage.getItem('emailForSignIn')
     // this.loggin = fb.auth().currentUser
+    this.setSizeHead()
     this.$firebase.auth.listen((user) => {
       this.loggin = user
       if (user) {
@@ -194,7 +177,9 @@ export default {
           data.img = this.personImg(data)
           return data
         })
-        this.setSizeHead()
+        setTimeout(() => {
+          this.setSizeHead()
+        }, 500)
         this.loading = false
       })
   },

@@ -1,42 +1,41 @@
 <template>
-  <div>
-    <div class="container mx-auto mx-auto">
-      <div class="flex flex-wrap pt-md-5">
-        <div class="w-1/2 md:mx-1/6 md:w-2/5 pr-4 pl-4">
-          <div class="flex flex-wrap bg-blue py-0">
-            <div class="flex-grow pt-3 px-0 border-10 border-light text-white text-center">
-              <h1 class="text-3xl font-indie">
-                🔑Email Verification
-              </h1>
-            </div>
-          </div>
-          <div class="flex flex-wrap bg-blue border-10 border-light pb-4">
-            <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-3 text-white text-center">
-              <div class="mb-4 mb-0">
-                <input
-                  v-model="email"
-                  type="email"
-                  class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-grey-darker border border-grey rounded pb-0"
-                  aria-describedby="emailHelp"
-                  placeholder="elon@musk.com"
-                >
-              </div>
-            </div>
-            <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-0 text-white text-center">
-              <button
-                type="button"
-                class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline text-blue-lightest bg-blue hover:bg-blue-light border-5 border-light py-3 px-4 text-xl leading-tight block w-full text-grey-lightest px-4 h1"
-                @click="sendConfirm()"
-              >
-                🚀valider
-              </button>
-            </div>
-          </div>
-        </div>
-        <div v-if="image" class="w-1/2 md:w-1/2 pr-4 pl-4 pt-0 px-md-5 order-1 order-md-2 hidden xl:block">
-          <img class="max-w-full h-auto border-10 border-light" alt="Logo IM" :src="image">
-        </div>
+  <div class="pt-40 flex items-center justify-center">
+    <div class="max-w-md w-full space-y-8 px-4 sm:px-4">
+      <div>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-white">
+          🔑 Email Verification
+        </h2>
       </div>
+      <form class="mt-8 space-y-6" action="#" method="POST">
+        <input type="hidden" name="remember" value="true">
+        <div class="shadow-sm -space-y-px">
+          <div>
+            <label for="email-address" class="sr-only">Email address</label>
+            <input
+              id="email-address"
+              v-model="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="elon@musk.com"
+              required
+              class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            >
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" @click="sendConfirm()">
+            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+              <!-- Heroicon name: lock-closed -->
+              <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+              </svg>
+            </span>
+            🚀 valider
+          </button>
+        </div>
+      </form>
     </div>
     <Modals :email.sync="email" :name.sync="myName" />
   </div>

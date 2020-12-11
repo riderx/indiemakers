@@ -86,11 +86,11 @@ img:not([src]) {
   margin-right: 0px;
 }
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .fix-marging {
     margin-right: -15px;
   }
-}
+} */
 @-moz-document url-prefix() {
   .fix-marging {
     border-right: 5px solid white !important;
@@ -105,7 +105,7 @@ img:not([src]) {
 @media screen and (max-width: 768px) {
   .custom-scroll {
     position: inherit;
-    /* overflow: hidden; */
+    overflow: hidden;
   }
 }
 

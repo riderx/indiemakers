@@ -22,7 +22,7 @@
       <p v-if="name" class="text-indiePink text-sm mb-1 z-10 cursor-pointer" @click="openLink()">
         @{{ name }}
       </p>
-      <p class="text-sm" v-html="preview" />
+      <p class="text-sm line-clamp" v-html="preview" />
     </div>
   </div>
 </template>
@@ -84,5 +84,11 @@ export default {
   bottom: -10px;
   font-size: 20px;
   }
+}
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>

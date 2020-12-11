@@ -1,9 +1,9 @@
 <template>
   <LazyHydrate when-visible>
     <div id="episodes">
-      <div class="container mx-auto">
-        <div class="flex flex-wrap">
-          <div class="lg:w-1/2 pr-4 pl-4">
+      <div class="container px-0 mx-auto w-full">
+        <div class="flex flex-wrap w-full">
+          <div class="lg:w-1/2 md:px-4">
             <div
               id="header-eps"
               class="flex flex-wrap bg-blue border-10 border-light py-1 py-md-4"
@@ -52,11 +52,11 @@
           </div>
           <div
             id="content"
-            class="md:w-1/2 pr-4 pl-4 pt-md-0 px-md-5 text-white"
+            class="md:w-1/2 px-4 pt-md-0 px-md-5 text-white"
           >
             <div class="flex flex-wrap">
               <div
-                class="md:w-1/5 pr-4 pl-4 offset-3 offset-md-0 w-1/2 py-3 pt-md-0 px-3 pl-md-0"
+                class="md:w-1/5 md:px-4 offset-3 offset-md-0 w-1/2 py-3 pt-md-0 px-3 pl-md-0"
               >
                 <img
                   v-lazy="image"
@@ -67,7 +67,7 @@
                   :src="loadingImg"
                 >
               </div>
-              <div class="md:w-3/4 pr-4 pl-4 text-center text-sm-left">
+              <div class="md:w-3/4 md:px-4 text-center text-sm-left">
                 <h1 class="pb-2 font-indie text-3xl">
                   {{ title }}
                 </h1>

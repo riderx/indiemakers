@@ -1,9 +1,9 @@
 <template>
   <LazyHydrate when-idle>
     <div id="emission">
-      <div class="container mx-auto mx-auto">
+      <div class="container mx-auto mx-auto px-0">
         <div class="flex flex-wrap">
-          <div class="lg:w-1/2 px-4 text-white text-sm">
+          <div class="lg:w-1/2 md:px-4 text-white text-sm">
             <div v-if="loading" class="flex flex-wrap bg-white px-3">
               <div class="p-5 text-center">
                 <div
@@ -39,9 +39,6 @@
                     <source :src="audio" type="audio/mp3">
                   </audio>
                 </vue-plyr>
-              </div>
-              <div v-if="!loading" class="pt-3 block sm:hidden text-white">
-                <h3>{{ title }}</h3>
               </div>
             </div>
             <div
@@ -396,5 +393,26 @@ export default {
 hr {
   border-top: 10px solid rgba(255, 255, 255, 1);
   border-radius: 0px;
+}
+ol,
+ul {
+  list-style: initial;
+  margin: initial;
+  padding: initial;
+}
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: initial;
 }
 </style>
