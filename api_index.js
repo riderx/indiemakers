@@ -7,7 +7,7 @@ const feed = require('./api/feed')
 const healthcheck = require('./api')
 const maker = require('./api/maker/[guid]')
 const ep = require('./api/ep/[guid]')
-const isServerlessEnvironment = process.env.NEXT_PUBLIC_VERCEL_URL === 'true'
+const isServerlessEnvironment = process.env.VERCEL_URL === 'true'
 
 const app = express()
 const appRouter = express.Router()
