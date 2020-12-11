@@ -169,6 +169,7 @@ export default {
       this.previewNoEmoji = element.preview_no_emoji
       this.content = element.content
       this.imageBig = element.image_big
+      this.imageFallback = element.itunes.image
       this.imageOptimized = element.image_optimized
       this.imageLoading = element.image_loading
       this.twitter = element.twitter
@@ -183,6 +184,7 @@ export default {
       loading: true,
       loadingImg: require('~/assets/cover-im_empty.png'),
       imageOptimized: null,
+      imageFallback: null,
       imageLoading: null,
       titleNoEmoji: null,
       contentNoEmoji: null,
@@ -206,7 +208,7 @@ export default {
     image () {
       return {
         src: this.imageBig,
-        error: require('~/assets/cover-im_user.png'),
+        error: this.imageFallback || require('~/assets/cover-im_user.png'),
         loading: this.imageLoading
       }
     },
@@ -231,9 +233,6 @@ export default {
     this.timeoutPlayer = setTimeout(() => {
       setTimeout(() => {
         this.showAudio = true
-        if (!this.$fetchState.pending) {
-          this.postEp(this.$route.params.id)
-        }
         const currentTime = localStorage.getItem(this.$route.params.id)
         if (this.player) {
           this.player.on('play', () => {
@@ -291,27 +290,6 @@ export default {
     },
     getRandomInt (max) {
       return Math.floor(Math.random() * Math.floor(max))
-    },
-    async postEp (gui) {
-      // console.log('postEP', gui)
-      const ep = {
-        udi: gui,
-        title: this.title,
-        preview: this.preview,
-        image: this.imageOptimized,
-        content: this.content
-      }
-      if (this.instagram) {
-        ep.instagram = this.instagram
-      }
-      if (this.twitter) {
-        ep.twitter = this.twitter
-      }
-      try {
-        await this.$firebase.db.ref(`episodes/${gui}`).set(ep)
-      } catch {
-        return null
-      }
     },
     tweetIt () {
       this.$modal.show('share')

@@ -30,7 +30,7 @@ const prefix = isServerlessEnvironment ? '/api' : ''
 
 appRouter.get('/feed', feed)
 appRouter.get('/healthcheck', healthcheck)
-appRouter.get('/makers/:guid', maker)
+appRouter.get('/maker/:guid', maker)
 appRouter.get('/ep/:guid', ep)
 app.use(`/${prefix}`, appRouter)
 

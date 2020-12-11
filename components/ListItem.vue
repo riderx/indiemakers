@@ -36,6 +36,7 @@ export default {
     linkName: { type: String, default: null },
     linkImage: { type: String, default: null },
     image: { type: String, default: null },
+    imageFallback: { type: String, default: null },
     votes: { type: Number, default: null },
     loadingImage: { type: String, default: null },
     preview: { type: String, default: null }
@@ -49,7 +50,7 @@ export default {
     getImgObj () {
       return {
         src: this.image,
-        error: require('~/assets/cover-im_user.png'),
+        error: this.imageFallback || require('~/assets/cover-im_user.png'),
         loading: this.loadingImage || require('~/assets/cover-im_empty.png')
       }
     }

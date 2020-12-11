@@ -163,27 +163,30 @@ export default {
         this.$modal.show('confirmName')
       }
     })
-    this.$firebase
-      .db
-      .ref('people')
-      .query()
-      .orderBy('votes', 'desc')
-      .orderBy('addDate', 'asc')
-      .run()
-      .then((results) => {
-        this.people = results.map((data) => {
-          const found = this.findInEp(data.login)
-          data.guid = found
-          data.img = this.personImg(data)
-          return data
-        })
-        setTimeout(() => {
-          this.setSizeHead()
-        }, 500)
-        this.loading = false
-      })
+    this.loadData()
   },
   methods: {
+    loadData () {
+      this.$firebase
+        .db
+        .ref('people')
+        .query()
+        .orderBy('votes', 'desc')
+        .orderBy('addDate', 'asc')
+        .run()
+        .then((results) => {
+          this.people = results.map((data) => {
+            const found = this.findInEp(data.login)
+            data.guid = found
+            data.img = this.personImg(data)
+            return data
+          })
+          setTimeout(() => {
+            this.setSizeHead()
+          }, 500)
+          this.loading = false
+        })
+    },
     joinUs () {
       this.$modal.show('join')
     },
@@ -258,6 +261,7 @@ export default {
                 this.$modal.show('found')
               } else {
                 this.$modal.show('voted')
+                this.loadData()
               }
             }, 50)
           })
@@ -322,6 +326,7 @@ export default {
             } else {
               this.currentName = '' + this.addName
               this.$modal.show('added')
+              this.loadData()
             }
             this.addName = ''
           })
@@ -358,18 +363,6 @@ export default {
         this.sizeHead = 'auto'
       }
     }
-    // setSizeHead () {
-    //   if (process.client &&
-    //   document.getElementById('header-mk') &&
-    //    document.getElementById('header') &&
-    //    document.getElementById('cover') &&
-    //    document.getElementById('cover').offsetHeight > 0) {
-    //     const size = `${document.getElementById('header-mk').offsetHeight + document.getElementById('header').offsetHeight + 5}px`
-    //     this.sizeHead = `calc(100vh - ${size})`
-    //   } else {
-    //     this.sizeHead = 'auto'
-    //   }
-    // }
   },
   head () {
     return {

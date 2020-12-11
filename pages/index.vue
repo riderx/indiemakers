@@ -43,6 +43,7 @@
                   :name="episode.social.name"
                   :link-name="episode.social.link"
                   :preview="episode.preview"
+                  :image-fallback="episode.itunes.image"
                   :image="episode.image_optimized"
                   :link-image="`/episode/${episode.guid_fix}`"
                   :loading-image="episode.image_loading"
@@ -157,9 +158,6 @@ import { feed } from '../plugins/rss'
 import { domain } from '../plugins/domain'
 
 import { crispLoader } from '../plugins/crisp.client'
-const linkTwitterRe = /Son Twitter : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
-const linkInstagramRe = /Son Instagram : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
-const linkLinkedinRe = /Son Linkedin : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 export default {
   components: {
     Modals: () => import('~/components/Modals.vue'),
@@ -228,44 +226,13 @@ export default {
     goMakers () {
       this.$router.push('/makers')
     },
-    findTw (text) {
-      const founds = linkTwitterRe.exec(text)
-      if (!founds || !founds.groups) {
-        return { name: null, link: null }
-      }
-      return founds.groups
-    },
-    findLinkedin (text) {
-      const founds = linkLinkedinRe.exec(text)
-      if (!founds || !founds.groups) {
-        return { name: null, link: null }
-      }
-      return founds.groups
-    },
-    findInst (text) {
-      const founds = linkInstagramRe.exec(text)
-      if (!founds || !founds.groups) {
-        return { name: null, link: null }
-      }
-      return founds.groups
-    },
     nextEpisode () {
       const oneDay = 24 * 60 * 60 * 1000 // hours*minutes*seconds*milliseconds
       const firstDate = new Date(2019, 10, 19)
       const now = new Date()
       const diffDays = Math.round(Math.abs((firstDate - now) / oneDay))
       const nextEp = 14 - (diffDays % 14)
-      // const nextEpDate = new Date();
-      // nextEpDate.setHours(10, 0, 0);
-      // nextEpDate.setDate(now.getDate() + nextEp);
       return nextEp !== 14 ? `${nextEp} jours` : 'DEMAIN 10 heures'
-    },
-    previewText (text) {
-      let first = text.split(/[.!]+/)[0]
-      if (first.split(' ').length > 30) {
-        first = `${first.split(' ').splice(0, 17).join(' ')} ...`
-      }
-      return first
     },
     openAdd () {
       this.$router.push('/makers_hunt')
