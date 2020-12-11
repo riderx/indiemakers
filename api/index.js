@@ -1,5 +1,5 @@
 const bodyParser = require('body-parser')
-const express = require('express')()
+const express = require('express')
 const axios = require('axios')
 const cheerio = require('cheerio')
 const Parser = require('rss-parser')
@@ -159,6 +159,8 @@ if (process.env.redis_host) {
 }
 app.use(bodyParser.json())
 
+const prefix = isServerlessEnvironment ? '/api' : ''
+
 appRouter.get('/feed', async (req, res) => {
   res.json(await feed())
 })
@@ -193,6 +195,6 @@ appRouter.get('/ep/:guid', async (req, res) => {
   })
   return res.json(elem)
 })
-app.use(`/${isServerlessEnvironment ? api : ''}`, appRouter);
+app.use(`/${prefix}`, appRouter);
 
 module.exports = app
