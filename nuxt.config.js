@@ -1,6 +1,6 @@
 
 const isServerlessEnvironment = process.env.ON_VERCEL === 'true'
-const serverMiddleware = isServerlessEnvironment ? [] : [{ path: '/api', handler: '~/api/index.js' }]
+const serverMiddleware = isServerlessEnvironment ? [] : [{ path: '/api', handler: '~/api_index.js' }]
 export default {
   target: 'server',
   env: {
