@@ -5,7 +5,7 @@
   },
   "builds": [
       {
-          "src": "api/index.js",
+          "src": "api/**/*.js",
           "use": "@vercel/node"
       },
       {
@@ -17,7 +17,6 @@
       }
   ],
   "routes": [
-    {  "src": "/api/(.*)", "dest": "api/index.js" },
     { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=31557600" } },
     {
       "src": "/sw.js",

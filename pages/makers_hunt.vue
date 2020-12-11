@@ -200,7 +200,7 @@ export default {
       return found
     },
     personImg (person) {
-      return `/api/makers/${person.login}`
+      return `/api/maker/${person.login}`
     },
     tweetItShare () {
       this.$modal.show('share_hunt')
