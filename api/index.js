@@ -1,5 +1,5 @@
 const bodyParser = require('body-parser')
-const app = require('express')()
+const express = require('express')()
 const axios = require('axios')
 const cheerio = require('cheerio')
 const Parser = require('rss-parser')
@@ -14,7 +14,8 @@ const linkInstagramRe = /Son Instagram : <a href="(?<link>.*)">(?<name>.*)<\/a>/
 const linkLinkedinRe = /Son Linkedin : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 const isServerlessEnvironment = process.env.ON_VERCEL === 'true'
 
-const appRouter = express.Router();
+const app = express()
+const appRouter = express.Router()
 
 const imagekit = new ImageKit({
   publicKey: 'public_9vWOr643awJiLr6HqhpNNF1ZVkQ=',
