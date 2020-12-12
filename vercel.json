@@ -23,7 +23,7 @@
       "src": "/api/(?<endpoint>[^/]*)/(?<guid>[^/]*)",
       "dest": "/api/$endpoint.js?guid=$guid"
     },
-    { "src": "/api/(.*)", "dest": "$1.js" },
+    { "src": "/api/(?<endpoint>[^/]*)", "dest": "$endpoint.js" },
     {
       "src": "/sw.js",
       "dest": "/_nuxt/static/sw.js",
