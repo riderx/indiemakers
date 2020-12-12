@@ -17,16 +17,13 @@
       }
   ],
   "routes": [
+    { "src": "/api.*", "headers": { "Cache-Control": "max-age=3600" }, "continue": true },
+    { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=3600" }, "continue": true },
     {
-      "src": "/api/ep/:guid",
-      "dest": "/api/ep/[guid].js?guid=$guid"
+      "src": "/api/(?<endpoint>[^/]*)/(?<:guid>[^/]*)",
+      "dest": "/api/$endpoint/[guid].js?guid=$guid"
     },
-    {
-      "src": "/api/maker/:guid",
-      "dest": "/api/maker/[guid].js?guid=$guid"
-    },
-    { "src": "/api/feed", "dest": "api/feed.js" },
-    { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=31557600" } },
+    { "src": "/api/(.*)", "dest": "$1.js" },
     {
       "src": "/sw.js",
       "dest": "/_nuxt/static/sw.js",
@@ -34,7 +31,6 @@
         "cache-control": "public, max-age=43200, immutable",
         "Service-Worker-Allowed": "/"
       }
-    },
-    { "src": "/(.*)", "dest": "$1" }
+    }
   ]
 }
