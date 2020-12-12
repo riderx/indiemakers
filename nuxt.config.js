@@ -40,10 +40,10 @@ export default {
   },
   serverMiddleware,
   css: [
-    'plyr/dist/plyr.css'
+    // 'plyr/dist/plyr.css'
   ],
   plugins: [
-    { src: '~/plugins/player.js' },
+    { src: '~/plugins/vue-plyr', ssr: false },
     { src: '~/plugins/oldPath.js' },
     { src: '~/plugins/global.client.js' },
     { src: '~/plugins/firebase.client.js' }
