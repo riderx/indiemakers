@@ -20,7 +20,7 @@
     { "src": "/api.*", "headers": { "Cache-Control": "max-age=3600" }, "continue": true },
     { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=3600" }, "continue": true },
     {
-      "src": "/api/(?<endpoint>[^/]*)/(?<:guid>[^/]*)",
+      "src": "/api/(?<endpoint>[^/]*)/(?<guid>[^/]*)",
       "dest": "/api/$endpoint/[guid].js?guid=$guid"
     },
     { "src": "/api/(.*)", "dest": "$1.js" },
