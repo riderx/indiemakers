@@ -132,6 +132,59 @@
           </div>
         </div>
       </modal>
+      <modal height="auto" adaptive name="discord">
+        <div class="container-fluid">
+          <div class="row bg-indiePurple py-2">
+            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('join')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="col-12">
+              <h1 class="text-3xl font-indie pl-md-2 py-2 m-0 text-white text-center">
+                Rejoint le Discord
+              </h1>
+              <p class="px-md-5 text-white">
+                300 Makers là pour échanger et disponible pour répondre à tes questions !
+              </p><br>
+              <p class="px-md-5 text-white">
+                Tu seras également informé de la sortie des épisodes !
+              </p>
+              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+                <div class="form-group mb-0">
+                  <input
+                    ref="email"
+                    v-model="emailInput"
+                    type="email"
+                    class="form-control pb-0"
+                    aria-describedby="TweetnameHelp"
+                    placeholder="Elon@tesla.com"
+                  >
+                </div>
+              </div>
+              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+                <div class="form-group mb-0">
+                  <input
+                    ref="name"
+                    v-model="nameInput"
+                    type="text"
+                    class="form-control pb-0"
+                    aria-describedby="TweetnameHelp"
+                    placeholder="Elon Musk"
+                  >
+                </div>
+              </div>
+              <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <button
+                  type="button"
+                  class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                  @click="joinDiscord()"
+                >
+                  Rejoindre
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
       <modal height="auto" adaptive name="join">
         <div class="container-fluid">
           <div class="row bg-indiePurple py-2">
@@ -920,8 +973,12 @@ export default {
       }
       document.body.removeChild(textArea)
     },
+    async joinDiscord () {
+      await this.addEMailSub('discord')
+      window.open('https://discord.gg/2XyUn3A', '_blank')
+    },
     addEMailSub (kind = 'email') {
-      this.$firebase
+      return this.$firebase
         .db
         .ref(`users/${this.newEmail}`)
         .set({
