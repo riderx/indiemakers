@@ -17,6 +17,7 @@
     "@nuxtjs/tailwindcss": "^3.3.3",
     "@nuxtjs/vercel-builder": "^0.17.12",
     "@vercel/node": "^1.8.5",
+    "access-log": "^0.4.1",
     "axios": "^0.21.0",
     "cache-manager-redis": "^0.6.0",
     "cheerio": "^1.0.0-rc.3",
