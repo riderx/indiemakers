@@ -1,6 +1,6 @@
 const Parser = require('rss-parser')
 const ImageKit = require('imagekit')
-const firestore = require('firebase-firestore-lite')
+// const firestore = require('firebase-firestore-lite')
 
 const rss = 'https://anchor.fm/s/414d1d4/podcast/rss'
 const linkTwitterRe = /Son Twitter : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
@@ -13,7 +13,7 @@ const imagekit = new ImageKit({
   urlEndpoint: 'https://ik.imagekit.io/gyc0uxoln1/'
 })
 const projectId = 'indiemakerfr'
-const db = new firestore.Database({ projectId })
+// const db = new firestore.Database({ projectId })
 
 const guidConvert = (guid) => {
   if (guid && guid.indexOf('/') > 0) {
@@ -83,24 +83,24 @@ const removeEmoji = (str) => {
 }
 
 const postEp = async (element) => {
-  const ep = {
-    udi: element.guid,
-    title: element.title,
-    preview: element.preview,
-    image: element.imageOptimized,
-    content: element.content
-  }
-  if (element.instagram) {
-    ep.instagram = element.instagram
-  }
-  if (element.twitter) {
-    ep.twitter = element.twitter
-  }
-  try {
-    await db.ref(`episodes/${element.guid}`).set(ep)
-  } catch {
-    return null
-  }
+  // const ep = {
+  //   udi: element.guid,
+  //   title: element.title,
+  //   preview: element.preview,
+  //   image: element.imageOptimized,
+  //   content: element.content
+  // }
+  // if (element.instagram) {
+  //   ep.instagram = element.instagram
+  // }
+  // if (element.twitter) {
+  //   ep.twitter = element.twitter
+  // }
+  // try {
+  //   await db.ref(`episodes/${element.guid}`).set(ep)
+  // } catch {
+  //   return null
+  // }
 }
 
 const feed = async () => {
