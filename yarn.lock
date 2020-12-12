@@ -6345,13 +6345,6 @@ num2fraction@^1.2.2:
   resolved "https://registry.yarnpkg.com/num2fraction/-/num2fraction-1.2.2.tgz#6f682b6a027a4e9ddfa4564cd2589d1d4e669ede"
   integrity sha1-b2gragJ6Tp3fpFZM0lidHU5mnt4=
 
-nuxt-plugin-vercel@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/nuxt-plugin-vercel/-/nuxt-plugin-vercel-1.0.0.tgz#c22a9e55813cf3a7e2aed467a6964aaa0f3254f6"
-  integrity sha512-StvqXRJwu3SVvYjHmyIIjH8D+EhGNY+zJNxkABjTCzndG9FJOAJnMfSP3cAFic3uKGHURjTzgmpJxJq13t9A4g==
-  dependencies:
-    web-vitals "0.2.4"
-
 nuxt-purgecss@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/nuxt-purgecss/-/nuxt-purgecss-1.0.0.tgz#7c275205f0b727a5822781908d684f2e094ff5e7"
@@ -9527,11 +9520,6 @@ watchpack@^1.7.4:
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
-
-web-vitals@0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-0.2.4.tgz#ec3df43c834a207fd7cdefd732b2987896e08511"
-  integrity sha512-6BjspCO9VriYy12z356nL6JBS0GYeEcA457YyRzD+dD6XYCQ75NKhcOHUMHentOE7OcVCIXXDvOm0jKFfQG2Gg==
 
 webpack-bundle-analyzer@^3.9.0:
   version "3.9.0"
