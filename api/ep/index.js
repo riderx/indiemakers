@@ -1,4 +1,4 @@
-const util = require('../plugins/feed')
+const util = require('../../plugins/feed')
 
 module.exports = async (req, res) => {
   const items = await util.feed()
