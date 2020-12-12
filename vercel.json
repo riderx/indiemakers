@@ -18,7 +18,6 @@
   ],
   "routes": [
     { "src": "/api/feed", "dest": "api/feed.js" },
-    { "src": "/api/(.*)", "dest": "api/$1.js" },
     { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=31557600" } },
     {
       "src": "/sw.js",
