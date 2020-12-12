@@ -18,11 +18,11 @@
   ],
   "routes": [
     {
-      "src": "/api/ep/(?<guid>[^/]+)",
+      "src": "/api/ep/:guid)",
       "dest": "/api/ep/[guid].js?guid=$guid"
     },
     {
-      "src": "/api/maker/(?<guid>[^/]+)",
+      "src": "/api/maker/:guid",
       "dest": "/api/maker/[guid].js?guid=$guid"
     },
     { "src": "/api/feed", "dest": "api/feed.js" },
