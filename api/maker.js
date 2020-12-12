@@ -22,7 +22,7 @@ const getTwitter = (username, size) => {
 }
 
 module.exports = async (req, res) => {
-  const url = await getTwitter(req.params.guid, '_200x200')
+  const url = await getTwitter(req.query.guid, '_200x200')
   let data = ''
   const headers = { 'Content-Type': 'image/jpeg' }
   res.writeHead(200, headers)

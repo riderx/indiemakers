@@ -5,8 +5,8 @@ const cacheManager = require('cache-manager')
 const redisStore = require('cache-manager-redis')
 const feed = require('./api/feed')
 const healthcheck = require('./api')
-const maker = require('./api/maker/[guid]')
-const ep = require('./api/ep/[guid]')
+const maker = require('./maker')
+const ep = require('./ep')
 const isServerlessEnvironment = process.env.VERCEL_URL === 'true'
 
 const app = express()
@@ -30,8 +30,8 @@ const prefix = isServerlessEnvironment ? '/api' : ''
 
 appRouter.get('/feed', feed)
 appRouter.get('/healthcheck', healthcheck)
-appRouter.get('/maker/:guid', maker)
-appRouter.get('/ep/:guid', ep)
+appRouter.get('/maker', maker)
+appRouter.get('/ep', ep)
 app.use(`/${prefix}`, appRouter)
 
 module.exports = app

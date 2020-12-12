@@ -1,10 +1,10 @@
-const util = require('../../plugins/feed')
+const util = require('../plugins/feed')
 
 module.exports = async (req, res) => {
   const items = await util.feed()
   let elem = null
   items.forEach((element) => {
-    if (element.guid_fix === req.params.guid) {
+    if (element.guid_fix === req.query.guid) {
       elem = element
     }
   })

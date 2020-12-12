@@ -14,7 +14,7 @@ export const feed = () => {
 
 export const ep = (guid) => {
   return axios
-    .get(`${domain}/${process.env.baseAPI}/ep/${guid}`)
+    .get(`${domain}/${process.env.baseAPI}/ep?guid=${guid}`)
     .then((response) => {
       return response.data
     }).catch((err) => {
