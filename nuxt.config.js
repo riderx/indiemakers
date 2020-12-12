@@ -57,11 +57,13 @@ export default {
   ],
   modules: [
     '@nuxtjs/component-cache',
-    'nuxt-plugin-vercel',
-    {
-      // Prints metrics in the console when 1
-      debug: 0
-    },
+    [
+      'nuxt-plugin-vercel',
+      {
+        // Prints metrics in the console when 1
+        debug: 0
+      }
+    ],
     '@nuxtjs/sentry'
   ],
   sentry: {
