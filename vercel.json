@@ -17,11 +17,15 @@
       }
   ],
   "routes": [
-    { "src": "/api/ep/(.*)", "dest": "api/[guid].js" },
-    { "src": "/api/maker/(.*)", "dest": "api/[guid].js" },
+    {
+      "src": "/api/ep/(?<guid>[^/]+)",
+      "dest": "/api/ep/[guid].js?guid=$guid"
+    },
+    {
+      "src": "/api/ep/(?<guid>[^/]+)",
+      "dest": "/api/maker/[guid].js?guid=$guid"
+    },
     { "src": "/api/feed", "dest": "api/feed.js" },
-    { "src": "/apiii/(.*)", "dest": "api/$1.js" },
-    { "src": "/apii/(.*)", "dest": "api/$1" },
     { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=31557600" } },
     {
       "src": "/sw.js",
