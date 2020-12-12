@@ -5,6 +5,5 @@ import 'vue-plyr/dist/vue-plyr.css'
 Vue.use(VuePlyr, {
   plyr: {
     fullscreen: { enabled: false }
-  },
-  emit: ['ended']
+  }
 })

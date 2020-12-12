@@ -34,11 +34,11 @@
                 >
               </div>
               <div v-if="!loading" class="block sm:hidden text-white px-0">
-                <vue-plyr v-if="showAudio" ref="plyr">
+                <!-- <vue-plyr v-if="showAudio" ref="plyr">
                   <audio>
                     <source :src="audio" type="audio/mp3">
                   </audio>
-                </vue-plyr>
+                </vue-plyr> -->
               </div>
             </div>
             <div
@@ -100,11 +100,11 @@
                   class="w-full max-w-full h-auto border-10 border-light"
                   alt="Logo person"
                 >
-                <vue-plyr v-if="showAudio" ref="plyr2">
+                <!-- <vue-plyr v-if="showAudio" ref="plyr2">
                   <audio>
                     <source :src="audio" type="audio/mp3">
                   </audio>
-                </vue-plyr>
+                </vue-plyr> -->
               </div>
               <div
                 class="flex justify-between pt-4 font-indie text-white text-lg w-10/12"
