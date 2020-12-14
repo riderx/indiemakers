@@ -17,35 +17,24 @@
               </button>
             </div>
             <client-only>
-              <div v-if="loading" class="flex flex-wrap bg-white px-3 w-full">
-                <div class="p-5 text-center w-full">
-                  <div
-                    class="spinner-gflex flex-wrap text-blue"
-                    role="status"
-                  >
-                    <span class="">Chargement...</span>
-                  </div>
-                </div>
-              </div>
               <div
-                v-if="!loading"
                 class="custom-scroll fix-marging border-4 border-light border-r-0 w-full"
                 :style="{ height: sizeHead }"
               >
                 <div
-                  v-for="episode in people"
-                  :key="episode.id"
-                  :class="'w-full flex flex-wrap bg-blue text-white border-b align-items-top ' + episode.id"
+                  v-for="maker in makers"
+                  :key="maker.id"
+                  :class="'w-full flex flex-wrap bg-blue text-white border-b align-items-top ' + maker.id"
                 >
                   <ListItem
-                    :title="episode.name"
-                    :link-image="linkEp(episode.guid)"
-                    :link-name="`https://twitter.com/${episode.login}`"
-                    :votes="episode.votes"
-                    :name="episode.login"
-                    :preview="getTextLink(episode.bio)"
-                    :image="episode.img"
-                    @voted="vote(episode)"
+                    :title="maker.name"
+                    :link-image="linkEp(maker.guid)"
+                    :link-name="`https://twitter.com/${maker.login}`"
+                    :votes="maker.votes"
+                    :name="maker.login"
+                    :preview="getTextLink(maker.bio)"
+                    :image="maker.img"
+                    @voted="vote(maker)"
                   />
                 </div>
               </div>
@@ -128,8 +117,7 @@ export default {
       email: '',
       guid: null,
       isFalse: false,
-      loggin: false,
-      loading: true,
+      user: false,
       sizeHead: '100vh',
       currentName: '',
       people: []
@@ -138,11 +126,11 @@ export default {
   mounted () {
     this.setSizeHead()
     this.$firebase.auth.listen((user) => {
-      this.loggin = user
+      this.user = user
       if (user) {
         this.$sentry.setUser({ uid: user.uid })
       }
-      if (this.loggin && this.loggin.displayName === null) {
+      if (this.user && this.user.displayName === null) {
         this.$modal.show('confirmName')
       }
     })
@@ -183,13 +171,13 @@ export default {
       })
     },
     vote (person) {
-      if (!this.loggin) {
+      if (!this.user) {
         this.openRegister()
       } else {
         this.$modal.show('loading')
         this.$firebase
           .db
-          .ref(`people/${person.id}/votes/${this.loggin.uid}`)
+          .ref(`people/${person.id}/votes/${this.user.uid}`)
           .set({
             date: Date()
           })
@@ -228,7 +216,7 @@ export default {
       this.$modal.show('add')
     },
     showAddForm () {
-      if (!this.loggin) {
+      if (!this.user) {
         this.openRegister()
       } else {
         this.openAdd()
