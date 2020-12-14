@@ -15,21 +15,21 @@ const loadData = () => {
     .orderBy('votes', 'desc')
     .orderBy('addDate', 'asc')
     .run()
-    .then((results) => {
-      return results.map(async (data) => {
-        const found = await findInEp(data.login)
-        data.guid = found.guid_fix
+    .then(async (results) => {
+      const episodes = await util.feed()
+      return results.map((data) => {
+        const guid = findInEp(data.login, episodes)
+        data.guid = guid
         data.img = `/api/maker?guid=${data.login}`
         return data
       })
     })
 }
 
-const findInEp = async (name) => {
-  const episodes = await util.feed()
+const findInEp = (name, episodes) => {
   let found = null
   episodes.forEach((element) => {
-    if (element?.twitter?.name === name) {
+    if (element && element.twitter && element.twitter.name === name) {
       found = element.guid
     }
   })

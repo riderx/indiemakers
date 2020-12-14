@@ -5,34 +5,37 @@ export const domain = (VERCEL_URL, DOMAIN) => {
 }
 
 export const makers = ($config) => {
+  const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${$config.BASEAPI}/makers`
   return axios
-    .get(`${domain($config.VERCEL_URL, $config.DOMAIN)}/${$config.BASEAPI}/makers`)
+    .get(url)
     .then((response) => {
       return response.data
     }).catch((err) => {
-      console.error(err)
+      console.error('makers err', err)
       return []
     })
 }
 
 export const feed = ($config) => {
+  const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${$config.BASEAPI}/feed`
   return axios
-    .get(`${domain($config.VERCEL_URL, $config.DOMAIN)}/${$config.BASEAPI}/feed`)
+    .get(url)
     .then((response) => {
       return response.data
     }).catch((err) => {
-      console.error(err)
+      console.error('feed err', err)
       return []
     })
 }
 
 export const ep = (guid, $config) => {
+  const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${$config.BASEAPI}/ep?guid=${guid}`
   return axios
-    .get(`${domain($config.VERCEL_URL, $config.DOMAIN)}/${$config.BASEAPI}/ep?guid=${guid}`)
+    .get(url)
     .then((response) => {
       return response.data
     }).catch((err) => {
-      console.error(err)
+      console.error('ep err', err)
       return []
     })
 }
