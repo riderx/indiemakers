@@ -153,6 +153,7 @@
                   <input
                     ref="email"
                     v-model="newEmail"
+                    autofocus
                     type="email"
                     class="form-control pb-0"
                     aria-describedby="TweetnameHelp"
@@ -206,6 +207,7 @@
                   <input
                     ref="email"
                     v-model="newEmail"
+                    autofocus
                     type="email"
                     class="form-control pb-0"
                     aria-describedby="TweetnameHelp"
@@ -259,6 +261,7 @@
                   <input
                     ref="email"
                     v-model="newEmail"
+                    autofocus
                     type="email"
                     class="form-control pb-0"
                     aria-describedby="Email"
@@ -853,6 +856,7 @@
                     <input
                       ref="register"
                       v-model="newEmail"
+                      autofocus
                       type="email"
                       class="form-control pb-0"
                       aria-describedby="emailHelp"
@@ -880,8 +884,7 @@
 </template>
 
 <script>
-import { domain } from '../plugins/domain'
-import { ep } from '~/plugins/rss'
+import { domain, ep } from '~/plugins/rss'
 
 export default {
   name: 'Modals',
@@ -896,7 +899,7 @@ export default {
     }
   },
   async mounted () {
-    require('../plugins/modal')
+    require('~/plugins/modal')
     this.$firebase.auth.listen((user) => {
       this.user = user
       if (user) {
@@ -904,9 +907,9 @@ export default {
       }
     })
     if (this.$route?.params?.id) {
-      console.log('modal ID', this.$route.params.id)
+      console.log('modal ID', this.$route.params.id, this.$config)
       try {
-        const element = await ep(this.$route.params.id)
+        const element = await ep(this.$route.params.id, this.$config)
         if (element) {
           this.twitter = element.twitter
         }
@@ -921,7 +924,7 @@ export default {
       window.open('https://ratethispodcast.com/imf', '_blank')
     },
     bmc () {
-      window.open(`https://www.buymeacoffee.com/${process.env.handler}`, '_blank')
+      window.open(`https://www.buymeacoffee.com/${this.$config.handler}`, '_blank')
     },
     copyTextToClipboard (text) {
       if (!navigator.clipboard) {
@@ -1001,7 +1004,11 @@ export default {
             console.error('exist already', err)
           }
           this.$modal.hide('loading')
-          this.$router.push('/makers')
+          const next = window.localStorage.getItem('nextAfterSign')
+          if (next) {
+            window.localStorage.removeItem('nextAfterSign')
+          }
+          this.$router.push(next || '/makers_hunt')
         })
         .catch(() => {
           this.$modal.hide('loading')
@@ -1015,9 +1022,6 @@ export default {
     },
     openRegister () {
       this.$modal.show('register')
-      setTimeout(() => {
-        this.$refs.register.focus()
-      }, 50)
     },
     addMaker () {
       this.$modal.hide('add')
@@ -1053,9 +1057,12 @@ export default {
       if (this.newEmail) {
         this.$modal.hide('register')
         this.$modal.show('loading')
-        this.$firebase.auth.sendOobCode('EMAIL_SIGNIN', this.newEmail)
+        const loginPage = `${window.location.protocol}//${window.location.host}/login`
+        console.log('loginPage', loginPage)
+        this.$firebase.emailSigning(this.newEmail, loginPage)
           .then(() => {
             window.localStorage.setItem('emailForSignIn', this.newEmail)
+            window.localStorage.setItem('nextAfterSign', window.location.pathname)
             this.$modal.hide('loading')
             this.$modal.show('checkEmail')
           })
@@ -1067,7 +1074,7 @@ export default {
     },
     tweetItHunt () {
       const linkEp = 'https://indiemakers.fr/makers_hunt'
-      const tweet = `Je viens de découvrir les Makers Français les plus chaud sur ${linkEp} @${process.env.handler}`
+      const tweet = `Je viens de découvrir les Makers Français les plus chaud sur ${linkEp} @${this.$config.handler}`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`
@@ -1075,8 +1082,8 @@ export default {
       this.$modal.hide('share_hunt')
     },
     tweetItMaker () {
-      const linkPage = `${domain}/makers_hunt`
-      const tweet = `@${this.newMaker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${process.env.handler} 🚀`
+      const linkPage = `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}/makers_hunt`
+      const tweet = `@${this.newMaker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${this.$config.handler} 🚀`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`
@@ -1085,8 +1092,8 @@ export default {
       this.$modal.hide('voted')
     },
     tweetIt () {
-      const linkEp = `${domain}/episode/${this.epGui}`
-      const tweet = `@${process.env.handler} et @${this.twitter.name} merci pour le podcast ${linkEp} <3`
+      const linkEp = `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}/episode/${this.epGui}`
+      const tweet = `@${this.$config.handler} et @${this.twitter.name} merci pour le podcast ${linkEp} <3`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`

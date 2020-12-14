@@ -53,7 +53,7 @@
 </template>
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
-import { domain } from '../plugins/domain'
+import { domain } from '~/plugins/rss'
 export default {
   components: {
     LazyHydrate
@@ -94,7 +94,7 @@ export default {
     return {
       title: this.title,
       meta: [
-        { hid: 'og:url', property: 'og:url', content: `${domain}${this.$route.fullPath}` },
+        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
         { hid: 'title', name: 'title', content: this.title },
         { hid: 'description', name: 'description', content: this.desc },
         { hid: 'og:title', property: 'og:title', content: this.title },

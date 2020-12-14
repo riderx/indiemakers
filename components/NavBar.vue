@@ -1,21 +1,25 @@
 <template>
-  <div id="header" class="pb-md-5">
-    <nav class="navbar navbar-light bg-transparent pr-0">
-      <a class="navbar-brand w-50 mr-0" href="/" @click="openPage('/')">
-        <img :id="logo.title" :src="logo.source" class="d-none d-md-inline-block align-top w-50" :alt="logo.title">
-        <img id="IM" :src="logo.source" class="d-inline-block d-md-none align-top w-100" :alt="logo.title">
+  <nav class="flex items-center justify-between flex-wrap py-3 p-1 md:p-6">
+    <div class="flex items-center flex-no-shrink text-white">
+      <a href="/">
+        <img :id="logo.title" :src="logo.source" class="h-8 w-auto sm:h-10" :alt="logo.title">
       </a>
-      <ul class="list-group list-group-horizontal">
-        <li
+    </div>
+    <div class="block flex items-center w-max-1/3">
+      <div class="text-sm lg:flex-grow" />
+      <div class="ml-3 md:ml-0">
+        <a
           v-for="(icon, index) in icones"
           :key="index"
-          class="list-group-item bg-transparent border-0 text-white p-1 p-md-2 p-md-3 cursor-pointer"
+          href="#"
+          class="inline-block text-base font-medium hover:text-white px-2 md:px-3"
           @click="openPage(icon.lien)"
           v-html="icon.icon"
         />
-      </ul>
-    </nav>
-  </div>
+      </div>
+    </div>
+    </div>
+  </nav>
 </template>
 
 <script>

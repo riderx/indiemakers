@@ -18,5 +18,12 @@ const db = new Database({ projectId, auth })
 const func = (name, data) => {
   return axios.get(url + name, data, { headers: auth.authorizedRequest })
 }
+const emailSigning = (email, url) => {
+  const authRedir = new Auth({
+    apiKey: 'AIzaSyAC0aCq1umg8bZtOuhzH8GkflqUCtInOp8',
+    redirectUri: url
+  })
+  return authRedir.sendOobCode('EMAIL_SIGNIN', email)
+}
 
-Vue.prototype.$firebase = { auth, db, func }
+Vue.prototype.$firebase = { auth, db, func, emailSigning }

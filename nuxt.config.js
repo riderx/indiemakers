@@ -3,13 +3,14 @@ const isServerlessEnvironment = process.env.ON_VERCEL === 'true'
 const serverMiddleware = isServerlessEnvironment ? [] : [{ path: '/api', handler: '~/api_index.js' }]
 export default {
   target: 'server',
-  env: {
+  publicRuntimeConfig: {
+    DOMAIN: (process.env.NODE_ENV === 'production') ? 'https://indiemakers.fr' : 'http://localhost:3000',
     VERCEL_URL: process.env.VERCEL_URL,
-    dev: (process.env.NODE_ENV !== 'production'),
-    rss: 'https://anchor.fm/s/414d1d4/podcast/rss',
-    baseAPI: 'api',
-    domain: (process.env.NODE_ENV === 'production') ? 'https://indiemakers.fr' : 'http://localhost:3000',
+    BASEAPI: 'api',
     handler: 'indiemakersfr'
+  },
+  env: {
+    dev: (process.env.NODE_ENV !== 'production')
   },
   head: {
     title: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
@@ -34,7 +35,6 @@ export default {
       { hid: 'og:description', property: 'og:description', content: 'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en business florissant.' }
     ],
     link: [
-      { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css' },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
@@ -57,20 +57,15 @@ export default {
     '@nuxtjs/sentry'
   ],
   purgeCSS: {
-    content: [
-      '~/node_modules/vue-js-modal/dist/ssr.nocss.js',
-      '~/node_modules/vue-plyr/dist/vue-plyr.ssr.js'
-    ],
-    css: [
-      '~/node_modules/vue-js-modal/dist/styles.css',
-      '~/node_modules/vue-plyr/dist/vue-plyr.css'
-    ],
-    whitelistPatterns: [/(?:@keyframes)?[^(--)|:|]plyr[^"{]*/, /vm--/, /icon--/, /label--/]
-    // whitelistPatterns: [/([^(--)|:]|\s|.)plyr*/]
-    // whitelistPatterns: [/[^(--)|:]plyr[^\s"]./],
-    // whitelistPatterns: [/plyr[^\s"]./],
-    // whitelistPatterns: [/[^(--)|:]plyr[^"{]*/],
-
+    // content: [
+    //   '~/node_modules/vue-js-modal/dist/ssr.nocss.js',
+    //   '~/node_modules/vue-plyr/dist/vue-plyr.ssr.js'
+    // ],
+    // css: [
+    //   '~/node_modules/vue-js-modal/dist/styles.css',
+    //   '~/node_modules/vue-plyr/dist/vue-plyr.css'
+    // ],
+    whitelistPatterns: [/plyr/, /vm--/, /icon--/, /label--/, /vue-dialog/, /vue-modal/]
   },
   sentry: {
     dsn: 'https://1e9603c479b54389ab04a4be985e1768@o449238.ingest.sentry.io/5431873', // Enter your project's DSN here

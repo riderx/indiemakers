@@ -40,7 +40,7 @@
   </div>
 </template>
 <script>
-import { domain } from '../plugins/domain'
+import { domain } from '~/plugins/rss'
 
 export default {
   components: {
@@ -51,10 +51,12 @@ export default {
       message: 'To allow you vote for makers',
       image: require('~/assets/cover-im@0.5x.png'),
       isFalse: false,
-      user: null
+      user: null,
+      email: null
     }
   },
   mounted () {
+    this.email = window.localStorage.getItem('emailForSignIn')
     this.$firebase.auth.listen((user) => {
       this.user = user
       if (user) {
@@ -70,10 +72,13 @@ export default {
             name: this.user.displayName,
             email: this.user.email
           })
-        this.$router.push('/makers')
+        const next = window.localStorage.getItem('nextAfterSign')
+        if (next) {
+          window.localStorage.removeItem('nextAfterSign')
+        }
+        this.$router.push(next || '/makers_hunt')
       }
     })
-    this.email = window.localStorage.getItem('emailForSignIn')
     if (this.email) {
       this.sendConfirm()
     }
@@ -86,9 +91,10 @@ export default {
       if (this.email) {
         this.$modal.show('loading')
         this.$firebase.auth.handleSignInRedirect({
-          email: window.localStorage.getItem('emailForSignIn')
+          email: this.email
         }).then(() => {
           window.localStorage.removeItem('emailForSignIn')
+          this.email = null
           this.$modal.hide('loading')
         }).catch((error) => {
           console.error(error)
@@ -102,14 +108,14 @@ export default {
     return {
       title: this.title,
       meta: [
-        { hid: 'og:url', property: 'og:url', content: `${domain}${this.$route.fullPath}` },
+        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
         { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
         { hid: 'description', name: 'description', content: this.removeEmoji(this.message) },
         { hid: 'og:title', property: 'og:title', content: this.removeEmoji(this.title) },
         { hid: 'og:description', property: 'og:description', content: this.removeEmoji(this.message) },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', property: 'og:image', content: `${process.env.domain}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image', property: 'og:image', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${require('~/assets/cover-im@0.5x.png')}` },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 }
       ]

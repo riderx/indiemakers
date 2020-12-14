@@ -16,18 +16,7 @@
                 </h1>
               </div>
             </div>
-            <div v-if="loading" class="flex flex-wrap bg-white px-3 w-full">
-              <div class="p-5 text-center w-full">
-                <div
-                  class="spinner-gflex flex-wrap text-blue"
-                  role="status"
-                >
-                  <span class="">Chargement...</span>
-                </div>
-              </div>
-            </div>
             <div
-              v-if="!loading"
               id="scrollable"
               class="custom-scroll fix-marging border-4 border-light border-r-0"
               :style="{ height: sizeHead }"
@@ -152,25 +141,20 @@
 </template>
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
-import { feed } from '../plugins/rss'
-import { domain } from '../plugins/domain'
+import { feed, domain } from '~/plugins/rss'
 
-import { crispLoader } from '../plugins/crisp.client'
+import { crispLoader } from '~/plugins/crisp.client'
 export default {
   components: {
     ListItem: () => import('~/components/ListItem.vue'),
     LazyHydrate
   },
-  async fetch () {
-    const items = await feed()
-    if (items) {
-      this.episodes = items
-      this.loading = false
-    }
+  async asyncData ({ params, $config }) {
+    const items = await feed($config)
+    return { episodes: items }
   },
   data () {
     return {
-      loading: true,
       sizeHead: '100vh',
       image: {
         src: require('~/assets/cover-im@0.5x.png'),
@@ -220,9 +204,6 @@ export default {
     removeAccent (str) {
       return str.normalize('NFD').replace(/[\u0300-\u036F]/g, '')
     },
-    goMakers () {
-      this.$router.push('/makers')
-    },
     nextEpisode () {
       const oneDay = 24 * 60 * 60 * 1000 // hours*minutes*seconds*milliseconds
       const firstDate = new Date(2019, 10, 19)
@@ -257,7 +238,7 @@ export default {
     return {
       title: this.removeEmoji(this.title),
       meta: [
-        { hid: 'og:url', property: 'og:url', content: `${domain}${this.$route.fullPath}` },
+        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
         { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
         {
           hid: 'description',
@@ -276,8 +257,8 @@ export default {
         },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', property: 'og:image', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },
-        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image', property: 'og:image', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${require('~/assets/cover-im@0.5x.png')}` },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 }
       ]

@@ -24,6 +24,7 @@
     "firebase-firestore-lite": "^1.0.0-RC2.1",
     "imagekit": "^3.1.1",
     "linkifyjs": "^2.1.9",
+    "node-fetch": "^2.6.1",
     "nuxt": "^2.14.7",
     "nuxt-purgecss": "^1.0.0",
     "rss-parser": "^3.9.0",

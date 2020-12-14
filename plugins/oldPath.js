@@ -6,6 +6,10 @@ export default ({ app }) => {
       const path = to.fullPath.substr(2)
       next(path)
       return
+    } else if (to.fullPath.endsWith('episode/latest')) {
+      const path = to.fullPath.substr(2)
+      next(path)
+      return
     }
     next()
   })

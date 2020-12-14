@@ -12,7 +12,7 @@ const imagekit = new ImageKit({
   privateKey: 'private_fnm/B2spgFy+0xqXGz6C3+eSW00=',
   urlEndpoint: 'https://ik.imagekit.io/gyc0uxoln1/'
 })
-const projectId = 'indiemakerfr'
+// const projectId = 'indiemakerfr'
 // const db = new firestore.Database({ projectId })
 
 const guidConvert = (guid) => {

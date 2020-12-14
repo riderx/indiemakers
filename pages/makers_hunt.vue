@@ -110,19 +110,16 @@
 <script>
 import linkifyHtml from 'linkifyjs/html'
 import LazyHydrate from 'vue-lazy-hydration'
-import { feed } from '../plugins/rss'
-import { domain } from '../plugins/domain'
+import { domain, makers } from '~/plugins/rss'
 
 export default {
   components: {
     ListItem: () => import('~/components/ListItem.vue'),
     LazyHydrate
   },
-  async fetch () {
-    const items = await feed()
-    if (items) {
-      this.episodes = items
-    }
+  async asyncData ({ params, $config }) {
+    const mkrs = await makers($config)
+    return { makers: mkrs }
   },
   data () {
     return {
@@ -130,7 +127,6 @@ export default {
       message: 'Vote et ajoute tes MAKERS favoris, cela les insite a venir podcast !',
       email: '',
       guid: null,
-      episodes: [],
       isFalse: false,
       loggin: false,
       loading: true,
@@ -150,44 +146,10 @@ export default {
         this.$modal.show('confirmName')
       }
     })
-    this.loadData()
   },
   methods: {
-    loadData () {
-      this.$firebase
-        .db
-        .ref('people')
-        .query()
-        .orderBy('votes', 'desc')
-        .orderBy('addDate', 'asc')
-        .run()
-        .then((results) => {
-          this.people = results.map((data) => {
-            const found = this.findInEp(data.login)
-            data.guid = found
-            data.img = this.personImg(data)
-            return data
-          })
-          setTimeout(() => {
-            this.setSizeHead()
-          }, 500)
-          this.loading = false
-        })
-    },
     joinUs () {
       this.$modal.show('join')
-    },
-    findInEp (name) {
-      let found = null
-      this.episodes.forEach((element) => {
-        if (element?.twitter?.name === name) {
-          found = element.guid
-        }
-      })
-      return found
-    },
-    personImg (person) {
-      return `/api/maker?guid=${person.login}`
     },
     linkEp (guid) {
       if (guid) {
@@ -221,7 +183,6 @@ export default {
       })
     },
     vote (person) {
-      const found = this.findInEp(person.login)
       if (!this.loggin) {
         this.openRegister()
       } else {
@@ -237,12 +198,12 @@ export default {
             person.votes += 1
             this.currentName = '' + person.login
             setTimeout(() => {
-              if (found) {
-                this.guid = found
+              if (person.guid) {
+                this.guid = person.guid
                 this.$modal.show('found')
               } else {
                 this.$modal.show('voted')
-                this.loadData()
+                this.reload()
               }
             }, 50)
           })
@@ -250,8 +211,8 @@ export default {
             this.$modal.hide('loading')
             // eslint-disable-next-line no-console
             console.error('Error writing document: ', error)
-            if (found) {
-              this.guid = found
+            if (person.guid) {
+              this.guid = person.guid
               this.$modal.show('found')
             } else {
               this.currentName = '' + person.login
@@ -262,15 +223,9 @@ export default {
     },
     openRegister () {
       this.$modal.show('register')
-      setTimeout(() => {
-        this.$refs.register.focus()
-      }, 50)
     },
     openAdd () {
       this.$modal.show('add')
-      setTimeout(() => {
-        this.$refs.addMaker.focus()
-      }, 50)
     },
     showAddForm () {
       if (!this.loggin) {
@@ -302,14 +257,14 @@ export default {
     return {
       title: this.title,
       meta: [
-        { hid: 'og:url', property: 'og:url', content: `${domain}${this.$route.fullPath}` },
+        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
         { hid: 'title', name: 'title', content: this.title },
         { hid: 'description', name: 'description', content: this.message },
         { hid: 'og:title', property: 'og:title', content: this.title },
         { hid: 'og:description', property: 'og:description', content: this.message },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', property: 'og:image', content: `${process.env.domain}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image', property: 'og:image', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${require('~/assets/cover-im@0.5x.png')}` },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 }
       ]

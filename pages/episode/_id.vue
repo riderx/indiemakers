@@ -4,11 +4,6 @@
       <div class="container mx-auto mx-auto px-0 w-full">
         <div class="flex flex-wrap">
           <div class="w-full lg:w-1/2 md:px-4 text-white text-sm">
-            <div v-if="loading" class="flex flex-wrap text-black bg-white w-full">
-              <div class="p-5 text-center w-full">
-                <span class="">Chargement...</span>
-              </div>
-            </div>
             <div
               id="header-title"
               class="flex flex-wrap justify-center pt-3 md:pb-1 bg-blue border-t-8 md:border-8 border-light"
@@ -17,7 +12,7 @@
                 {{ title }}
               </h1>
 
-              <div v-if="!loading" class="block sm:hidden px-0">
+              <div class="block sm:hidden px-0">
                 <img
                   v-lazy="image"
                   width="100%"
@@ -27,7 +22,7 @@
                   :alt="title"
                 >
               </div>
-              <div v-if="!loading" class="block sm:hidden text-white px-0">
+              <div class="block sm:hidden text-white px-0">
                 <vue-plyr v-if="showAudio" ref="plyr">
                   <audio>
                     <source :src="audio" type="audio/mp3">
@@ -36,7 +31,6 @@
               </div>
             </div>
             <div
-              v-if="!loading"
               class="custom-scroll fix-marging border-4 px-2 border-light rounded-none"
               :style="{ height: sizeHead }"
             >
@@ -46,7 +40,6 @@
               />
             </div>
             <div
-              v-if="!loading"
               class="flex flex-wrap bg-blue py-4 block md:hidden"
             >
               <div class="px-1 text-center">
@@ -82,7 +75,6 @@
             </div>
           </div>
           <div
-            v-if="!loading"
             class="lg:w-1/2 px-6 text-center hidden md:block"
           >
             <div class="flex flex-wrap flex-col align-items-center">
@@ -142,38 +134,35 @@
 </template>
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
-import { domain } from '../../plugins/domain'
-import { ep } from '~/plugins/rss'
+import { domain, ep } from '~/plugins/rss'
 
 export default {
   components: {
     LazyHydrate
   },
-  async fetch () {
-    const element = await ep(this.$route.params.id)
-    if (element.error) {
-      this.$router.push('/')
+  async asyncData ({ params, redirect, $config }) {
+    const element = await ep(params.id, $config)
+    if (params.id === 'latest') {
+      redirect(`episode/${element.guid_fix}`)
     }
-    if (element) {
-      this.title = element.title
-      this.titleNoEmoji = element.title_no_emoji
-      this.contentNoEmoji = element.content_no_emoji
-      this.previewNoEmoji = element.preview_no_emoji
-      this.content = element.content
-      this.imageBig = element.image_big
-      this.imageFallback = element.itunes.image
-      this.imageOptimized = element.image_optimized
-      this.imageLoading = element.image_loading
-      this.twitter = element.twitter
-      this.instagram = element.instagram
-      this.linkedin = element.linkedin
-      this.audio = element.enclosure.url
-      this.loading = false
+    return {
+      title: element.title,
+      titleNoEmoji: element.title_no_emoji,
+      contentNoEmoji: element.content_no_emoji,
+      previewNoEmoji: element.preview_no_emoji,
+      content: element.content,
+      imageBig: element.image_big,
+      imageFallback: element.itunes.image,
+      imageOptimized: element.image_optimized,
+      imageLoading: element.image_loading,
+      twitter: element.twitter,
+      instagram: element.instagram,
+      linkedin: element.linkedin,
+      audio: element.enclosure.url
     }
   },
   data () {
     return {
-      loading: true,
       loadingImg: require('~/assets/cover-im_empty.png'),
       imageOptimized: null,
       imageFallback: null,
@@ -318,7 +307,7 @@ export default {
     return {
       title: this.titleNoEmoji,
       meta: [
-        { hid: 'og:url', property: 'og:url', content: `${domain}${this.$route.fullPath}` },
+        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
         { hid: 'title', name: 'title', content: this.titleNoEmoji },
         {
           hid: 'description',

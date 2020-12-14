@@ -3,6 +3,7 @@ const express = require('express')
 const feed = require('./api/feed/index')
 const healthcheck = require('./api/index')
 const maker = require('./api/maker/index')
+const makers = require('./api/makers/index')
 const ep = require('./api/ep/index')
 const isServerlessEnvironment = process.env.VERCEL_URL === 'true'
 
@@ -16,6 +17,7 @@ const prefix = isServerlessEnvironment ? '/api' : ''
 appRouter.get('/feed', feed)
 appRouter.get('/', healthcheck)
 appRouter.get('/maker', maker)
+appRouter.get('/makers', makers)
 appRouter.get('/ep', ep)
 app.use(`/${prefix}`, appRouter)
 
