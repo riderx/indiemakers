@@ -45,18 +45,18 @@
           >
             <div class="flex flex-wrap">
               <div
-                class="md:w-1/5 md:px-4 offset-3 offset-md-0 w-1/2 py-3 pt-md-0 px-3 pl-md-0"
+                class="w-full md:w-1/5 offset-3 offset-md-0 w-1/2 mb-3"
               >
                 <img
                   v-lazy="image"
                   width="100%"
                   height="100%"
-                  class="max-w-full h-auto border-8 border-light"
+                  class="mx-auto my-10 w-1/2 md:m-0 md:w-4/5 h-auto border-8 border-light"
                   alt="IM COVER"
                   :src="loadingImg"
                 >
               </div>
-              <div class="md:w-3/4 md:px-4 text-center text-sm-left">
+              <div class="md:w-3/5 md:px-4 text-center md:text-left">
                 <h1 class="pb-2 font-indie text-3xl">
                   {{ title }}
                 </h1>
@@ -76,7 +76,7 @@
               <div class="pt-3 flex justify-center w-full">
                 <button
                   type="button"
-                  class="border-4 border-white font-indie py-2 px-5"
+                  class="border-4 border-white font-indie py-2 px-5 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                   @click="openAdd()"
                 >
                   👉 Découvre les Makers Français

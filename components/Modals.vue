@@ -18,11 +18,11 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="listen">
-        <div class="container-fluid">
+        <div class="container-fluid relative">
           <div class="row">
             <div class="col-12">
-              <div class="row bg-indiePurple py-4">
-                <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('listen')">
+              <div class="row bg-indiePurple py-5">
+                <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('listen')">
                   <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="col-12 pt-1 px-1 px-md-3 text-white text-center">
@@ -30,30 +30,30 @@
                     Écoute sur :
                   </h1>
                 </div>
-                <div class="col-12 pt-1 px-1 px-md-3 text-center">
+                <div class="col-12 pt-3 px-1 px-md-3 text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    class="rounded-none border-4 border-light btn-lg text-white m-1 m-md-3 px-3 py-1 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                     @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
                   >
                     Spotify
                   </button>
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    class="rounded-none border-4 border-light btn-lg text-white m-1 m-md-3 px-3 py-1 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                     @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
                   >
                     Apple Podcast
                   </button>
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    class="rounded-none border-4 border-light btn-lg text-white m-1 m-md-3 px-3 py-1 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                     @click="listenExternal('https://www.youtube.com/channel/UCMedW_Y4K0alzeVz1bSBvjA?sub_confirmation=1')"
                   >
                     Youtube
                   </button>
                 </div>
-                <div class="col-12 pt-1 px-1 px-md-3 text-white text-center">
+                <div class="col-12 pt-3 px-1 px-md-3 text-white text-center">
                   <h5>Abonner toi, ça m'aide énormement !</h5>
                 </div>
               </div>

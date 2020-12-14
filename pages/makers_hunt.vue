@@ -3,14 +3,14 @@
     <div id="makers">
       <div class="container px-0 mx-auto w-full">
         <div class="flex flex-wrap">
-          <div class="w-full md:w-1/2 md:px-4 w-full">
+          <div class="w-full md:w-1/2 md:px-4">
             <div id="header-mk" class="flex flex-wrap w-full justify-between items-center bg-blue border-8 border-light text-white md:pb-1 md:pt-2">
               <h1 class="w-4/5 text-center font-indie text-3xl md:text-4xl my-2 md:my-0">
                 💃 Makers
               </h1>
               <button
                 type="button"
-                class="border-0 p-0 text-6xl w-1/5 md:w-1/5 md:w-1/5 px-4 md:pb-3 -mt-4"
+                class="border-0 p-0 text-6xl w-1/5 px-4 md:pb-3 -mt-4"
                 @click="showAddForm()"
               >
                 +
@@ -82,7 +82,7 @@
                 <div class="flex justify-between font-indie text-white text-lg w-10/12">
                   <button
                     type="button"
-                    class="border-2 border-light px-3 pt-2 pb-1"
+                    class="border-2 border-light px-3 pt-2 pb-1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                     @click="joinUs()"
                   >
                     👉 Deviens un Maker
