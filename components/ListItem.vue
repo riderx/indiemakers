@@ -6,20 +6,20 @@
         width="100%"
         height="100%"
         :src="loadingImg"
-        class="w-full h-auto border-5 border-white cursor-pointer"
+        class="w-full h-auto border-4 border-white cursor-pointer"
         :alt="'Picture ' + title"
         @click="openImage()"
       >
-      <div v-if="votes" class="absolute cursor-pointer tumb_up px-3 my-3 my-md-2 border-5 border-light text-center bg-indiePurple" @click="vote()">
+      <div v-if="votes" class="absolute cursor-pointer tumb_up px-3 border-4 border-light text-center bg-indiePurple" @click="vote()">
         👍<br>
         {{ votes }}
       </div>
     </div>
     <div class="w-2/3 p-2">
-      <h3 class="font-indie text-xl mb-1">
+      <h3 class="font-indie md:text-xl md:mb-1">
         {{ title }}
       </h3>
-      <p v-if="name" class="text-indiePink text-sm mb-1 z-10 cursor-pointer" @click="openLink()">
+      <p v-if="name" class="text-indiePink text-sm md:mb-1 z-10 cursor-pointer" @click="openLink()">
         @{{ name }}
       </p>
       <p class="text-sm line-clamp" v-html="preview" />
@@ -82,7 +82,7 @@ export default {
 }
 @media screen and (min-width: 768px) {
 .tumb_up {
-  bottom: -10px;
+  /* bottom: -10px; */
   font-size: 20px;
   }
 }

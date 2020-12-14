@@ -1,23 +1,17 @@
 <template>
   <LazyHydrate when-idle>
     <div id="emission">
-      <div class="container mx-auto mx-auto px-0">
+      <div class="container mx-auto mx-auto px-0 w-full">
         <div class="flex flex-wrap">
-          <div class="lg:w-1/2 md:px-4 text-white text-sm">
-            <div v-if="loading" class="flex flex-wrap bg-white px-3">
-              <div class="p-5 text-center">
-                <div
-                  class="spinner-gflex flex-wrap text-blue"
-                  style="width: 6rem; height: 6rem"
-                  role="status"
-                >
-                  <span class="">Chargement...</span>
-                </div>
+          <div class="w-full lg:w-1/2 md:px-4 text-white text-sm">
+            <div v-if="loading" class="flex flex-wrap text-black bg-white w-full">
+              <div class="p-5 text-center w-full">
+                <span class="">Chargement...</span>
               </div>
             </div>
             <div
               id="header-title"
-              class="flex flex-wrap justify-center pt-3 pb-1 bg-blue border-10 border-light"
+              class="flex flex-wrap justify-center pt-3 md:pb-1 bg-blue border-t-8 md:border-8 border-light"
             >
               <h1 class="font-indie text-3xl text-center">
                 {{ title }}
@@ -29,25 +23,25 @@
                   width="100%"
                   height="100%"
                   :src="loadingImg"
-                  class="w-full max-w-full h-auto border-10 border-light"
+                  class="w-full max-w-full h-auto border-t-8 md:border-8 border-light"
                   :alt="title"
                 >
               </div>
               <div v-if="!loading" class="block sm:hidden text-white px-0">
-                <!-- <vue-plyr v-if="showAudio" ref="plyr">
+                <vue-plyr v-if="showAudio" ref="plyr">
                   <audio>
                     <source :src="audio" type="audio/mp3">
                   </audio>
-                </vue-plyr> -->
+                </vue-plyr>
               </div>
             </div>
             <div
               v-if="!loading"
-              class="custom-scroll fix-marging border-5 px-2 border-light rounded-none"
+              class="custom-scroll fix-marging border-4 px-2 border-light rounded-none"
               :style="{ height: sizeHead }"
             >
               <div
-                class="px-1 px-md-5 pt-3 text-grey-lightest"
+                class="px-1 px-md-5 md:pt-3 text-grey-lightest"
                 v-html="content"
               />
             </div>
@@ -58,28 +52,28 @@
               <div class="px-1 text-center">
                 <button
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-4 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
                   @click="listen()"
                 >
                   🎧 Ecouter
                 </button>
                 <button
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-4 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-4 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-5 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
+                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-4 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
                   @click="joinUs()"
                 >
                   👉 Lance toi
@@ -97,21 +91,21 @@
                   v-lazy="image"
                   width="100%"
                   height="100%"
-                  class="w-full max-w-full h-auto border-10 border-light"
+                  class="w-full max-w-full h-auto border-8 border-light"
                   alt="Logo person"
                 >
-                <!-- <vue-plyr v-if="showAudio" ref="plyr2">
+                <vue-plyr v-if="showAudio" ref="plyr2">
                   <audio>
                     <source :src="audio" type="audio/mp3">
                   </audio>
-                </vue-plyr> -->
+                </vue-plyr>
               </div>
               <div
                 class="flex justify-between pt-4 font-indie text-white text-lg w-10/12"
               >
                 <button
                   type="button"
-                  class="border-2 border-light px-3 pt-2 pb-1"
+                  class="border-4 border-light px-3 pt-2 pb-1"
                   @click="listen()"
                 >
                   🎧 Ecouter
@@ -119,21 +113,21 @@
                 <button
                   id="rtp-button"
                   type="button"
-                  class="border-2 border-light px-3 pt-2 pb-1"
+                  class="border-4 border-light px-3 pt-2 pb-1"
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="border-2 border-light px-3 pt-2 pb-1"
+                  class="border-4 border-light px-3 pt-2 pb-1"
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="border-2 border-light px-3 pt-2 pb-1"
+                  class="border-4 border-light px-3 pt-2 pb-1"
                   @click="joinUs()"
                 >
                   👉 Lance toi
@@ -143,7 +137,6 @@
           </div>
         </div>
       </div>
-      <Modals :ep-gui="this.$route.params.id" :maker="twitter.name" />
     </div>
   </LazyHydrate>
 </template>
@@ -154,8 +147,7 @@ import { ep } from '~/plugins/rss'
 
 export default {
   components: {
-    LazyHydrate,
-    Modals: () => import('~/components/Modals.vue')
+    LazyHydrate
   },
   async fetch () {
     const element = await ep(this.$route.params.id)
@@ -232,7 +224,7 @@ export default {
     this.setSizeHead()
     this.timeoutPlayer = setTimeout(() => {
       setTimeout(() => {
-        this.showAudio = true
+        // this.showAudio = true
         const currentTime = localStorage.getItem(this.$route.params.id)
         if (this.player) {
           this.player.on('play', () => {
@@ -367,18 +359,25 @@ export default {
 :root {
   --plyr-color-main: rgba(75, 39, 155, 1);
   --plyr-badge-border-radius: 0px;
+  --plyr-control-icon-size: 18px;
 }
-hr {
+</style>
+<style scoped>
+
+*[v-html] >>> hr {
   border-top: 10px solid rgba(255, 255, 255, 1);
-  border-radius: 0px;
+  border-radius: 0px!important;
 }
-ol,
+*[v-html] >>> hr.rounded{
+  border-radius: 0px!important;
+}
+*[v-html] >>> ol,
 ul {
-  list-style: initial;
+  list-style: inherit;
   margin: initial;
   padding: initial;
 }
-blockquote,
+*[v-html] >>> blockquote,
 dl,
 dd,
 h1,
@@ -392,5 +391,15 @@ figure,
 p,
 pre {
   margin: initial;
+}
+*[v-html] >>> h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl {
+  margin: 20px 0;
+}
+*[v-html] >>> li, dd, blockquote {
+  margin-left: 40px;
+}
+*[v-html] >>> table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 </style>

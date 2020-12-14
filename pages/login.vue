@@ -37,7 +37,6 @@
         </div>
       </form>
     </div>
-    <Modals :email.sync="email" :name.sync="myName" />
   </div>
 </template>
 <script>
@@ -45,15 +44,12 @@ import { domain } from '../plugins/domain'
 
 export default {
   components: {
-    Modals: () => import('~/components/Modals.vue')
   },
   data () {
     return {
       title: 'Login to indie makers',
       message: 'To allow you vote for makers',
-      email: null,
       image: require('~/assets/cover-im@0.5x.png'),
-      myName: null,
       isFalse: false,
       user: null
     }

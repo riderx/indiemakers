@@ -1,7 +1,7 @@
 <template>
   <LazyHydrate when-idle>
     <div class="container mx-auto">
-      <div class="flex flex-wrap bg-blue py-2 border-10 border-light">
+      <div class="flex flex-wrap bg-blue py-2 border-8 border-light">
         <div class="w-1/2 text-center">
           <img class="w-1/4 pb-5 pb-md-3" src="/book.svg">
           <h1 class="text-3xl font-indie">
@@ -40,7 +40,7 @@
           <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-3 pb-3 text-white text-center">
             <button
               type="button"
-              class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline text-blue-lightest bg-blue hover:bg-blue-light border-5 border-light py-3 px-4 text-xl leading-tight block w-full text-grey-lightest px-4 h1"
+              class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline text-blue-lightest bg-blue hover:bg-blue-light border-4 border-light py-3 px-4 text-xl leading-tight block w-full text-grey-lightest px-4 h1"
               @click="addEMailSub()"
             >
               Comfirmer
@@ -48,7 +48,6 @@
           </div>
         </div>
       </div>
-      <Modals />
     </div>
   </LazyHydrate>
 </template>
@@ -58,8 +57,7 @@ import { domain } from '../plugins/domain'
 
 export default {
   components: {
-    LazyHydrate,
-    Modals: () => import('~/components/Modals.vue')
+    LazyHydrate
   },
   data () {
     return {

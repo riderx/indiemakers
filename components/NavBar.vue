@@ -15,16 +15,12 @@
         />
       </ul>
     </nav>
-    <Modals />
   </div>
 </template>
 
 <script>
 export default {
   name: 'NavBar',
-  components: {
-    Modals: () => import('~/components/Modals.vue')
-  },
   data () {
     return {
       logo: {

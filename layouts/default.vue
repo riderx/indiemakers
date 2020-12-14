@@ -3,12 +3,12 @@
     <LazyHydrate when-idle>
       <NavBar />
     </LazyHydrate>
+    <Modals />
     <Nuxt keep-alive :keep-alive-props="{ max: 10 }" />
   </div>
 </template>
 
 <script>
-// import '~/static/custom.boostrap.css'
 import LazyHydrate from 'vue-lazy-hydration'
 
 export default {
@@ -59,14 +59,7 @@ img:not([src]) {
       overflow-y: auto;
   }
 } */
-.border-10 {
-  border-style: solid;
-  border-width: 10px;
-}
-.border-5 {
-  border-style: solid;
-  border-width: 5px;
-}
+
 .cursor-pointer {
   cursor: pointer;
 }

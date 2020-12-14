@@ -39,12 +39,9 @@ export default {
     ]
   },
   serverMiddleware,
-  css: [
-    // 'plyr/dist/plyr.css'
-  ],
   plugins: [
-    { src: '~/plugins/vue-plyr', ssr: false },
     { src: '~/plugins/oldPath.js' },
+    { src: '~/plugins/vue-plyr.client.js' },
     { src: '~/plugins/global.client.js' },
     { src: '~/plugins/firebase.client.js' }
   ],
@@ -59,6 +56,22 @@ export default {
     '@nuxtjs/component-cache',
     '@nuxtjs/sentry'
   ],
+  purgeCSS: {
+    content: [
+      '~/node_modules/vue-js-modal/dist/ssr.nocss.js',
+      '~/node_modules/vue-plyr/dist/vue-plyr.ssr.js'
+    ],
+    css: [
+      '~/node_modules/vue-js-modal/dist/styles.css',
+      '~/node_modules/vue-plyr/dist/vue-plyr.css'
+    ],
+    whitelistPatterns: [/(?:@keyframes)?[^(--)|:|]plyr[^"{]*/, /vm--/, /icon--/, /label--/]
+    // whitelistPatterns: [/([^(--)|:]|\s|.)plyr*/]
+    // whitelistPatterns: [/[^(--)|:]plyr[^\s"]./],
+    // whitelistPatterns: [/plyr[^\s"]./],
+    // whitelistPatterns: [/[^(--)|:]plyr[^"{]*/],
+
+  },
   sentry: {
     dsn: 'https://1e9603c479b54389ab04a4be985e1768@o449238.ingest.sentry.io/5431873', // Enter your project's DSN here
     config: {} // Additional config

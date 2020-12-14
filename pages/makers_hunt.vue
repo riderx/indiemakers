@@ -3,26 +3,24 @@
     <div id="makers">
       <div class="container px-0 mx-auto w-full">
         <div class="flex flex-wrap">
-          <div class="md:w-1/2 md:px-4 w-full">
-            <div id="header-mk" class="flex flex-wrap w-full justify-between items-center bg-blue border-10 border-light text-white pb-1 pt-2">
-              <h1 class="w-4/5 text-center font-indie text-3xl">
+          <div class="w-full md:w-1/2 md:px-4 w-full">
+            <div id="header-mk" class="flex flex-wrap w-full justify-between items-center bg-blue border-8 border-light text-white md:pb-1 md:pt-2">
+              <h1 class="w-4/5 text-center font-indie text-3xl md:text-4xl my-2 md:my-0">
                 💃 Makers
               </h1>
-
               <button
                 type="button"
-                class="border-0 p-0 text-6xl w-1/5 md:w-1/5 px-4 pb-3"
+                class="border-0 p-0 text-6xl w-1/5 md:w-1/5 md:w-1/5 px-4 md:pb-3 -mt-4"
                 @click="showAddForm()"
               >
                 +
               </button>
             </div>
             <client-only>
-              <div v-if="loading" slot="placeholder" class="flex flex-wrap bg-white px-3">
-                <div class="p-5 text-center">
+              <div v-if="loading" class="flex flex-wrap bg-white px-3 w-full">
+                <div class="p-5 text-center w-full">
                   <div
                     class="spinner-gflex flex-wrap text-blue"
-                    style="width: 6rem; height: 6rem;"
                     role="status"
                   >
                     <span class="">Chargement...</span>
@@ -31,7 +29,7 @@
               </div>
               <div
                 v-if="!loading"
-                class="custom-scroll fix-marging border-5 border-light border-r-0 w-full"
+                class="custom-scroll fix-marging border-4 border-light border-r-0 w-full"
                 :style="{ height: sizeHead }"
               >
                 <div
@@ -104,7 +102,6 @@
               </div>
             </div>
           </div>
-          <Modals :email.sync="email" :name.sync="addName" :maker.sync="currentName" />
         </div>
       </div>
     </div>
@@ -119,7 +116,6 @@ import { domain } from '../plugins/domain'
 export default {
   components: {
     ListItem: () => import('~/components/ListItem.vue'),
-    Modals: () => import('~/components/Modals.vue'),
     LazyHydrate
   },
   async fetch () {
@@ -130,12 +126,6 @@ export default {
   },
   data () {
     return {
-      loadingImg: require('~/assets/cover-im_empty.png'),
-      image: {
-        src: require('~/assets/cover-im@0.5x.png'),
-        error: require('~/assets/cover-im_user.png'),
-        loading: require('~/assets/cover-im_empty.png')
-      },
       title: 'Les Makers Français les plus chaud 🔥',
       message: 'Vote et ajoute tes MAKERS favoris, cela les insite a venir podcast !',
       email: '',
@@ -145,14 +135,11 @@ export default {
       loggin: false,
       loading: true,
       sizeHead: '100vh',
-      addName: '',
       currentName: '',
       people: []
     }
   },
   mounted () {
-    this.email = window.localStorage.getItem('emailForSignIn')
-    // this.loggin = fb.auth().currentUser
     this.setSizeHead()
     this.$firebase.auth.listen((user) => {
       this.loggin = user
@@ -190,9 +177,6 @@ export default {
     joinUs () {
       this.$modal.show('join')
     },
-    rate () {
-      this.$modal.show('rate')
-    },
     findInEp (name) {
       let found = null
       this.episodes.forEach((element) => {
@@ -204,9 +188,6 @@ export default {
     },
     personImg (person) {
       return `/api/maker?guid=${person.login}`
-    },
-    tweetItShare () {
-      this.$modal.show('share_hunt')
     },
     linkEp (guid) {
       if (guid) {
@@ -298,53 +279,6 @@ export default {
         this.openAdd()
       }
     },
-    openAccount (name) {
-      window.open(`https://twitter.com/${name}`, '_blank')
-    },
-    add () {
-      this.$modal.hide('add')
-      this.$modal.show('loading')
-      if (!this.loggin) {
-        this.$modal.hide('loading')
-        this.openRegister()
-      } else {
-        this.$firebase
-          .func('addTwiterUser', { name: this.addName })
-          .then((addJson) => {
-            const added = addJson.data
-            this.$modal.hide('loading')
-            if (added.error && added.error === 'Already voted') {
-              this.currentName = '' + this.addName
-              this.$modal.show('fail-exist-vote')
-            } else if (added.error) {
-              // eslint-disable-next-line no-console
-              console.error(added)
-              this.$modal.show('fail-add')
-            } else if (added.done && added.done === 'Voted') {
-              this.currentName = '' + this.addName
-              this.$modal.show('fail-exist')
-            } else {
-              this.currentName = '' + this.addName
-              this.$modal.show('added')
-              this.loadData()
-            }
-            this.addName = ''
-          })
-          .catch((err) => {
-            this.$modal.hide('loading')
-            this.$modal.show('error')
-            // eslint-disable-next-line no-console
-            console.error(err)
-          })
-      }
-    },
-    getImgObj (img) {
-      return {
-        src: img,
-        error: require('~/assets/cover-im_user.png'),
-        loading: require('~/assets/cover-im_empty.png')
-      }
-    },
     setSizeHead () {
       if (
         process.client &&
@@ -384,19 +318,4 @@ export default {
 }
 </script>
 <style scoped>
-.bigg {
-    font-size: 6rem;
-    line-height: 0.5;
-}
-.tumb_up {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-}
-@media screen and (min-width: 768px) {
-.tumb_up {
-  bottom: -10px;
-  font-size: 20px;
-  }
-}
 </style>

@@ -3,24 +3,23 @@
     <div id="episodes">
       <div class="container px-0 mx-auto w-full">
         <div class="flex flex-wrap w-full">
-          <div class="lg:w-1/2 md:px-4">
+          <div class="w-full md:w-1/2 md:px-4">
             <div
               id="header-eps"
-              class="flex flex-wrap bg-blue border-10 border-light py-1 py-md-4"
+              class="flex flex-wrap bg-blue border-8 border-light py-1 py-md-2 w-full"
             >
               <div
-                class="flex-grow pt-3 px-0 text-white text-center font-indie text-3xl"
+                class="flex-grow py-2 px-0 text-white text-center"
               >
-                <h1 class="text-3xl font-indie">
+                <h1 class="text-3xl md:text-4xl font-indie">
                   🎙 Episodes
                 </h1>
               </div>
             </div>
-            <div v-if="loading" class="flex flex-wrap bg-white px-3">
-              <div class="p-5 text-center">
+            <div v-if="loading" class="flex flex-wrap bg-white px-3 w-full">
+              <div class="p-5 text-center w-full">
                 <div
                   class="spinner-gflex flex-wrap text-blue"
-                  style="width: 6rem; height: 6rem"
                   role="status"
                 >
                   <span class="">Chargement...</span>
@@ -30,7 +29,7 @@
             <div
               v-if="!loading"
               id="scrollable"
-              class="custom-scroll fix-marging border-5 border-light border-r-0"
+              class="custom-scroll fix-marging border-4 border-light border-r-0"
               :style="{ height: sizeHead }"
             >
               <div
@@ -53,7 +52,7 @@
           </div>
           <div
             id="content"
-            class="md:w-1/2 px-4 pt-md-0 px-md-5 text-white"
+            class="w-full md:w-1/2 px-4 pt-md-0 px-md-5 text-white"
           >
             <div class="flex flex-wrap">
               <div
@@ -63,7 +62,7 @@
                   v-lazy="image"
                   width="100%"
                   height="100%"
-                  class="max-w-full h-auto border-10 border-light"
+                  class="max-w-full h-auto border-8 border-light"
                   alt="IM COVER"
                   :src="loadingImg"
                 >
@@ -148,7 +147,6 @@
           </div>
         </div>
       </div>
-      <Modals />
     </div>
   </LazyHydrate>
 </template>
@@ -160,7 +158,6 @@ import { domain } from '../plugins/domain'
 import { crispLoader } from '../plugins/crisp.client'
 export default {
   components: {
-    Modals: () => import('~/components/Modals.vue'),
     ListItem: () => import('~/components/ListItem.vue'),
     LazyHydrate
   },

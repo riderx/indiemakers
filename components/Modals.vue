@@ -33,21 +33,21 @@
                 <div class="col-12 pt-1 px-1 px-md-3 text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    class="rounded-none border-4 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                     @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
                   >
                     Spotify
                   </button>
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    class="rounded-none border-4 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                     @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
                   >
                     Apple Podcast
                   </button>
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
+                    class="rounded-none border-4 border-light btn-lg text-white m-1 m-md-3 px-3 h1"
                     @click="listenExternal('https://www.youtube.com/channel/UCMedW_Y4K0alzeVz1bSBvjA?sub_confirmation=1')"
                   >
                     Youtube
@@ -75,7 +75,7 @@
             <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
               <button
                 type="button"
-                class="rounded-none border-5 border-light btn-lg btn-block text-white px-4 h1"
+                class="rounded-none border-4 border-light btn-lg btn-block text-white px-4 h1"
                 @click="$modal.hide('copied')"
               >
                 😎Cool
@@ -152,7 +152,7 @@
                 <div class="form-group mb-0">
                   <input
                     ref="email"
-                    v-model="emailInput"
+                    v-model="newEmail"
                     type="email"
                     class="form-control pb-0"
                     aria-describedby="TweetnameHelp"
@@ -164,7 +164,7 @@
                 <div class="form-group mb-0">
                   <input
                     ref="name"
-                    v-model="nameInput"
+                    v-model="newName"
                     type="text"
                     class="form-control pb-0"
                     aria-describedby="TweetnameHelp"
@@ -175,7 +175,7 @@
               <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                 <button
                   type="button"
-                  class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                  class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                   @click="joinDiscord()"
                 >
                   Rejoindre
@@ -205,7 +205,7 @@
                 <div class="form-group mb-0">
                   <input
                     ref="email"
-                    v-model="emailInput"
+                    v-model="newEmail"
                     type="email"
                     class="form-control pb-0"
                     aria-describedby="TweetnameHelp"
@@ -217,7 +217,7 @@
                 <div class="form-group mb-0">
                   <input
                     ref="name"
-                    v-model="nameInput"
+                    v-model="newName"
                     type="text"
                     class="form-control pb-0"
                     aria-describedby="TweetnameHelp"
@@ -228,7 +228,7 @@
               <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                 <button
                   type="button"
-                  class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                  class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                   @click="addEMailSub()"
                 >
                   Confirmer
@@ -258,7 +258,7 @@
                 <div class="form-group mb-0">
                   <input
                     ref="email"
-                    v-model="emailInput"
+                    v-model="newEmail"
                     type="email"
                     class="form-control pb-0"
                     aria-describedby="Email"
@@ -270,7 +270,7 @@
                 <div class="form-group mb-0">
                   <input
                     ref="name"
-                    v-model="nameInput"
+                    v-model="newName"
                     type="text"
                     class="form-control pb-0"
                     aria-describedby="Ton nom"
@@ -281,7 +281,7 @@
               <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                 <button
                   type="button"
-                  class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                  class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                   @click="addEMailSub('ebook')"
                 >
                   Comfirmer
@@ -297,8 +297,8 @@
             <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('loading')">
               <span aria-hidden="true">&times;</span>
             </button>
-            <div class="col-12 p-5 text-center">
-              <div class="spinner-grow text-primary" style="width: 6rem; height: 6rem;" role="status">
+            <div class="col-12 p-5 text-center w-full">
+              <div class="spinner-grow text-primary" role="status">
                 <span class="sr-only">Chargement...</span>
               </div>
             </div>
@@ -328,7 +328,7 @@
               <div class="form-group mb-0">
                 <input
                   ref="name"
-                  v-model="nameInput"
+                  v-model="newName"
                   type="text"
                   class="form-control pb-0"
                   aria-describedby="TweetnameHelp"
@@ -340,7 +340,7 @@
             <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
               <button
                 type="button"
-                class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                 @click="addName()"
               >
                 Comfirmer
@@ -394,7 +394,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="openEp(guid)"
                   >
                     Ecouter
@@ -431,7 +431,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -463,7 +463,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="$modal.hide('fail-add')"
                   >
                     Fermer
@@ -499,7 +499,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -535,7 +535,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -571,7 +571,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -604,7 +604,7 @@
                   <div class="form-group mb-0">
                     <input
                       ref="maker"
-                      v-model="makerInput"
+                      v-model="newMaker"
                       type="text"
                       class="form-control pb-0"
                       aria-describedby="TweetnameHelp"
@@ -616,7 +616,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="addMaker()"
                   >
                     Ajouter
@@ -652,7 +652,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -684,7 +684,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="$modal.hide('checkEmail')"
                   >
                     😎Cool
@@ -717,7 +717,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="bmc()"
                   >
                     C'est parti
@@ -749,7 +749,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetItHunt()"
                   >
                     Tweeter
@@ -781,7 +781,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="rate()"
                   >
                     Noter
@@ -800,20 +800,20 @@
             </button>
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+                <div class="col-12 text-white text-center">
                   <h1 class="text-3xl font-indie">
                     Tu aimes cet épisode ?
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-2">
+              <div class="row bg-indiePurple">
                 <div class="col-12 text-white text-center">
                   <p>Envois du love a l'invité du podcast via twitter </p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="tweetIt()"
                   >
                     Envoyer
@@ -838,19 +838,21 @@
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-4">
-                <div class="col-12 pt-2 text-white">
-                  <p>Pour te tenir au courant de la sortie de l'épisode et éviter les faux votes</p>
+              <div class="row bg-indiePurple pt-2">
+                <div class="col-12 text-white">
                   <h5 class="text-center">
-                    j’ai besoin que tu valides ton email
+                    j’ai besoin que tu valides ton email :
                   </h5>
-                  <p>Tu ne recevras des emails seulement pour les makers pour qui tu as voté, et si j'ai une grande nouvelle a te partager.</p>
+                  <ul class="text-center pt-2">
+                    <li>Pour éviter les faux votes</li>
+                    <li>Te tenir au courant de la sortie de l'épisode</li>
+                  </ul>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
                   <div class="form-group mb-0">
                     <input
                       ref="register"
-                      v-model="emailInput"
+                      v-model="newEmail"
                       type="email"
                       class="form-control pb-0"
                       aria-describedby="emailHelp"
@@ -862,7 +864,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-5 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
                     @click="sendLogin()"
                   >
                     🚀VALIDER
@@ -879,12 +881,13 @@
 
 <script>
 import { domain } from '../plugins/domain'
+import { ep } from '~/plugins/rss'
 
 export default {
   name: 'Modals',
-  props: { name: { type: String, default: null }, epGui: { type: String, default: null }, maker: { type: String, default: null }, email: { type: String, default: null } },
   data () {
     return {
+      epGui: this.$route.params.id,
       user: null,
       isFalse: false,
       newMaker: null,
@@ -892,43 +895,25 @@ export default {
       newEmail: null
     }
   },
-  computed: {
-    nameInput: {
-      get () {
-        return this.name
-      },
-      set (newValue) {
-        this.newName = newValue
-        this.$emit('update:name', newValue)
-      }
-    },
-    makerInput: {
-      get () {
-        return this.maker
-      },
-      set (newValue) {
-        this.newMaker = newValue
-        this.$emit('update:maker', newValue)
-      }
-    },
-    emailInput: {
-      get () {
-        return this.email
-      },
-      set (newValue) {
-        this.newEmail = newValue
-        this.$emit('update:email', newValue)
-      }
-    }
-  },
-  mounted () {
-    require('../plugins/modal.client')
+  async mounted () {
+    require('../plugins/modal')
     this.$firebase.auth.listen((user) => {
       this.user = user
       if (user) {
         this.$sentry.setUser({ uid: user.uid })
       }
     })
+    if (this.$route?.params?.id) {
+      console.log('modal ID', this.$route.params.id)
+      try {
+        const element = await ep(this.$route.params.id)
+        if (element) {
+          this.twitter = element.twitter
+        }
+      } catch (err) {
+        console.log('modal ID', err)
+      }
+    }
   },
   methods: {
     rate () {
@@ -1091,7 +1076,7 @@ export default {
     },
     tweetItMaker () {
       const linkPage = `${domain}/makers_hunt`
-      const tweet = `@${this.maker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${process.env.handler} 🚀`
+      const tweet = `@${this.newMaker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${process.env.handler} 🚀`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`

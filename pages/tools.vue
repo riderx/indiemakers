@@ -15,10 +15,9 @@
         </h1>
         <div class="w-full ml-auto mr-auto">
           <div v-if="loading" class="flex flex-wrap bg-white px-3">
-            <div class="w-1/2 p-5 text-center">
+            <div class="w-1/2 p-5 text-center w-full">
               <div
                 class="spinner-gflex flex-wrap text-blue"
-                style="width: 6rem; height: 6rem;"
                 role="status"
               >
                 <span class="">Chargement...</span>
@@ -32,7 +31,7 @@
               class="lg:w-1/3 pr-4 pl-4 md:w-1/2 pr-4 pl-4 sm:w-1/6 mb-4"
               @click="openBlank(tool.link)"
             >
-              <div class="relative flex flex-col min-w-0 rounded break-words border-light border-10">
+              <div class="relative flex flex-col min-w-0 rounded break-words border-light border-8">
                 <img
                   width="100%"
                   height="100%"
@@ -46,7 +45,7 @@
                   <p class="mb-3 text-white">
                     {{ tool.description }}
                   </p>
-                  <a rel="noreferrer" :href="tool.link" target="_blank" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline border-5 border-light py-3 px-4 text-xl leading-tight text-blue-lightest bg-blue hover:bg-blue-light text-center w-full">J'en profite</a>
+                  <a rel="noreferrer" :href="tool.link" target="_blank" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline border-4 border-light py-3 px-4 text-xl leading-tight text-blue-lightest bg-blue hover:bg-blue-light text-center w-full">J'en profite</a>
                 </div>
               </div>
             </div>
@@ -56,7 +55,6 @@
           {{ submessage }}
         </p>
       </div>
-      <Modals />
     </div>
   </LazyHydrate>
 </template>
@@ -66,8 +64,7 @@ import { domain } from '../plugins/domain'
 
 export default {
   components: {
-    LazyHydrate,
-    Modals: () => import('~/components/Modals.vue')
+    LazyHydrate
   },
   data () {
     return {
