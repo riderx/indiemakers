@@ -1,7 +1,7 @@
 <template>
   <LazyHydrate when-idle>
     <div id="emission">
-      <div class="container mx-auto mx-auto px-0 w-full">
+      <div class="container mx-auto px-0 w-full">
         <div class="flex flex-wrap">
           <div class="w-full lg:w-1/2 md:px-4 text-white text-sm">
             <div
@@ -31,8 +31,7 @@
               </div>
             </div>
             <div
-              class="custom-scroll fix-marging border-4 px-2 border-light rounded-none"
-              :style="{ height: sizeHead }"
+              class="h-78 overflow-hidden overflow-y-scroll border-4 border-light px-5 custom-scroll"
             >
               <div
                 id="content_html"
@@ -41,7 +40,7 @@
               />
             </div>
             <div
-              class="flex flex-wrap bg-blue py-4 block md:hidden"
+              class="flex flex-wrap bg-blue py-4 md:hidden"
             >
               <div class="px-1 text-center">
                 <button
@@ -94,11 +93,11 @@
                 </vue-plyr>
               </div>
               <div
-                class="flex justify-between pt-4 font-indie text-white text-lg w-10/12"
+                class="flex justify-between pt-4 font-indie text-white text-lg w-11/12"
               >
                 <button
                   type="button"
-                  class="border-4 border-light px-3 pt-2 pb-1"
+                  class="border-4 border-light px-3 pt-2 pb-1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                   @click="listen()"
                 >
                   🎧 Ecouter
@@ -106,21 +105,21 @@
                 <button
                   id="rtp-button"
                   type="button"
-                  class="border-4 border-light px-3 pt-2 pb-1"
+                  class="border-4 border-light px-3 pt-2 pb-1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="border-4 border-light px-3 pt-2 pb-1"
+                  class="border-4 border-light px-3 pt-2 pb-1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="border-4 border-light px-3 pt-2 pb-1"
+                  class="border-4 border-light px-3 pt-2 pb-1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                   @click="joinUs()"
                 >
                   👉 Lance toi

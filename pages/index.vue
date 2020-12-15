@@ -18,8 +18,7 @@
             </div>
             <div
               id="scrollable"
-              class="custom-scroll fix-marging border-4 border-light border-r-0"
-              :style="{ height: sizeHead }"
+              class="h-78 overflow-hidden overflow-y-scroll border-4 border-light custom-scroll"
             >
               <div
                 v-for="episode in episodes"
@@ -45,7 +44,7 @@
           >
             <div class="flex flex-wrap">
               <div
-                class="w-full md:w-1/5 offset-3 offset-md-0 w-1/2 mb-3"
+                class="w-full md:w-1/5 offset-3 offset-md-0 mb-3"
               >
                 <img
                   v-lazy="image"

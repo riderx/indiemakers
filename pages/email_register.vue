@@ -26,7 +26,7 @@
             </div>
           </div>
           <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-3 text-white text-center">
-            <div class="mb-4 mb-0">
+            <div class="mb-4">
               <input
                 ref="name"
                 v-model="name"
@@ -40,10 +40,10 @@
           <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-3 pb-3 text-white text-center">
             <button
               type="button"
-              class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline text-blue-lightest bg-blue hover:bg-blue-light border-4 border-light py-3 px-4 text-xl leading-tight block w-full text-grey-lightest px-4 h1"
+              class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-1 px-4 h1"
               @click="addEMailSub()"
             >
-              Comfirmer
+              Confirmer
             </button>
           </div>
         </div>

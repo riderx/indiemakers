@@ -5,7 +5,7 @@
         <img :id="logo.title" :src="logo.source" class="h-8 w-auto sm:h-10" :alt="logo.title">
       </a>
     </div>
-    <div class="block flex items-center w-max-1/3">
+    <div class="flex items-center w-max-1/3">
       <div class="text-sm lg:flex-grow" />
       <div class="ml-3 md:ml-0">
         <a

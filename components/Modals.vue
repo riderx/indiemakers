@@ -2,9 +2,9 @@
   <client-only>
     <div>
       <modal height="auto" adaptive name="copied">
-        <div class="container-fluid">
-          <div class="row bg-indiePurple">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('copied')">
+        <div class="container-fluid relative">
+          <div class="row bg-indiePurple py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('copied')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
@@ -25,29 +25,29 @@
                 <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('listen')">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <div class="col-12 pt-1 px-1 px-md-3 text-white text-center">
+                <div class="col-12 pt-1 px-1 md:px-3 text-white text-center">
                   <h1 class="text-3xl font-indie">
                     Écoute sur :
                   </h1>
                 </div>
-                <div class="col-12 pt-3 px-1 px-md-3 text-center">
+                <div class="col-12 pt-3 px-1 md:px-3 text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg text-white m-1 m-md-3 px-3 py-1 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                    class="rounded-none border-4 border-light btn-lg text-white m-1 md:m-3 px-3 py-1 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                     @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
                   >
                     Spotify
                   </button>
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg text-white m-1 m-md-3 px-3 py-1 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                    class="rounded-none border-4 border-light btn-lg text-white m-1 md:m-3 px-3 py-1 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                     @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
                   >
                     Apple Podcast
                   </button>
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg text-white m-1 m-md-3 px-3 py-1 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                    class="rounded-none border-4 border-light btn-lg text-white m-1 md:m-3 px-3 py-1 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                     @click="listenExternal('https://www.youtube.com/channel/UCMedW_Y4K0alzeVz1bSBvjA?sub_confirmation=1')"
                   >
                     Youtube
@@ -75,7 +75,7 @@
             <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
               <button
                 type="button"
-                class="rounded-none border-4 border-light btn-lg btn-block text-white px-4 h1"
+                class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-white px-4 h1"
                 @click="$modal.hide('copied')"
               >
                 😎Cool
@@ -85,9 +85,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="thanks_register">
-        <div class="container-fluid">
-          <div class="row bg-indiePurple">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('thanks_register')">
+        <div class="container-fluid relative">
+          <div class="row bg-indiePurple py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('thanks_register')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
@@ -101,9 +101,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="thanks_ebook">
-        <div class="container-fluid">
-          <div class="row bg-indiePurple">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('thanks_ebook')">
+        <div class="container-fluid relative">
+          <div class="row bg-indiePurple py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('thanks_ebook')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
@@ -117,9 +117,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="already_register">
-        <div class="container-fluid">
-          <div class="row bg-indiePurple">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('already_register')">
+        <div class="container-fluid relative">
+          <div class="row bg-indiePurple py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('already_register')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
@@ -133,19 +133,19 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="discord">
-        <div class="container-fluid">
-          <div class="row bg-indiePurple py-2">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('join')">
+        <div class="container-fluid relative">
+          <div class="row bg-indiePurple py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('discord')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
               <h1 class="text-3xl font-indie pl-md-2 py-2 m-0 text-white text-center">
                 Rejoint le Discord
               </h1>
-              <p class="px-md-5 text-white">
+              <p class="px-2 md:px-5 text-white">
                 300 Makers là pour échanger et disponible pour répondre à tes questions !
               </p><br>
-              <p class="px-md-5 text-white">
+              <p class="px-2 md:px-5 text-white">
                 Tu seras également informé de la sortie des épisodes !
               </p>
               <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
@@ -155,7 +155,7 @@
                     v-model="newEmail"
                     autofocus
                     type="email"
-                    class="form-control pb-0"
+                    class="form-control p-2 text-indiePurple"
                     aria-describedby="TweetnameHelp"
                     placeholder="Elon@tesla.com"
                   >
@@ -167,7 +167,7 @@
                     ref="name"
                     v-model="newName"
                     type="text"
-                    class="form-control pb-0"
+                    class="form-control p-2 text-indiePurple"
                     aria-describedby="TweetnameHelp"
                     placeholder="Elon Musk"
                   >
@@ -176,7 +176,7 @@
               <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                 <button
                   type="button"
-                  class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                  class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-1 px-4 h1"
                   @click="joinDiscord()"
                 >
                   Rejoindre
@@ -187,8 +187,8 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="join">
-        <div class="container-fluid">
-          <div class="row bg-indiePurple py-2">
+        <div class="container-fluid relative">
+          <div class="row bg-indiePurple py-5">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('join')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -209,7 +209,7 @@
                     v-model="newEmail"
                     autofocus
                     type="email"
-                    class="form-control pb-0"
+                    class="form-control p-2 text-indiePurple"
                     aria-describedby="TweetnameHelp"
                     placeholder="Elon@tesla.com"
                   >
@@ -221,7 +221,7 @@
                     ref="name"
                     v-model="newName"
                     type="text"
-                    class="form-control pb-0"
+                    class="form-control p-2 text-indiePurple"
                     aria-describedby="TweetnameHelp"
                     placeholder="Elon Musk"
                   >
@@ -230,7 +230,7 @@
               <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                 <button
                   type="button"
-                  class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                  class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-1 px-4 h1"
                   @click="addEMailSub()"
                 >
                   Confirmer
@@ -241,9 +241,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="ebook">
-        <div class="container-fluid">
-          <div class="row bg-indiePurple py-2">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('ebook')">
+        <div class="container-fluid relative">
+          <div class="row bg-indiePurple py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('ebook')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
@@ -263,7 +263,7 @@
                     v-model="newEmail"
                     autofocus
                     type="email"
-                    class="form-control pb-0"
+                    class="form-control p-2 text-indiePurple"
                     aria-describedby="Email"
                     placeholder="Elon@tesla.com"
                   >
@@ -275,7 +275,7 @@
                     ref="name"
                     v-model="newName"
                     type="text"
-                    class="form-control pb-0"
+                    class="form-control p-2 text-indiePurple"
                     aria-describedby="Ton nom"
                     placeholder="Elon Musk"
                   >
@@ -284,10 +284,10 @@
               <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                 <button
                   type="button"
-                  class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                  class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-1 px-4 h1"
                   @click="addEMailSub('ebook')"
                 >
-                  Comfirmer
+                  Confirmer
                 </button>
               </div>
             </div>
@@ -295,9 +295,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="loading">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('loading')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('loading')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 p-5 text-center w-full">
@@ -309,9 +309,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive :click-to-close="isFalse" name="confirmName">
-        <div class="container-fluid">
-          <div class="row bg-indiePurple py-2">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('confirmName')">
+        <div class="container-fluid relative">
+          <div class="row bg-indiePurple py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('confirmName')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 pt-2 text-white text-center">
@@ -333,7 +333,7 @@
                   ref="name"
                   v-model="newName"
                   type="text"
-                  class="form-control pb-0"
+                  class="form-control p-2 text-indiePurple"
                   aria-describedby="TweetnameHelp"
                   placeholder="Elon Musk"
                   @keyup.enter="addName()"
@@ -343,19 +343,19 @@
             <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
               <button
                 type="button"
-                class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-1 px-4 h1"
                 @click="addName()"
               >
-                Comfirmer
+                Confirmer
               </button>
             </div>
           </div>
         </div>
       </modal>
       <modal height="auto" adaptive name="error">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('error')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('error')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
@@ -376,9 +376,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="found">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('found')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('found')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -397,7 +397,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
                     @click="openEp(guid)"
                   >
                     Ecouter
@@ -409,9 +409,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="added">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('added')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('added')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -434,7 +434,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -446,9 +446,9 @@
         </div>
       </modal>
       <modal adaptive height="auto" name="fail-add">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('fail-add')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('fail-add')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -466,7 +466,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
                     @click="$modal.hide('fail-add')"
                   >
                     Fermer
@@ -478,9 +478,9 @@
         </div>
       </modal>
       <modal adaptive height="auto" name="fail-vote">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('fail-vote')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('fail-vote')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -502,7 +502,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -514,9 +514,9 @@
         </div>
       </modal>
       <modal adaptive height="auto" name="fail-exist">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('fail-exist')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('fail-exist')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -538,7 +538,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -550,9 +550,9 @@
         </div>
       </modal>
       <modal adaptive height="auto" name="fail-exist-vote">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('fail-exist-vote')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('fail-exist-vote')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -574,7 +574,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -586,9 +586,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="add">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('add')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('add')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -609,9 +609,9 @@
                       ref="maker"
                       v-model="newMaker"
                       type="text"
-                      class="form-control pb-0"
+                      class="form-control p-2 text-indiePurple"
                       aria-describedby="TweetnameHelp"
-                      placeholder="elonmusk"
+                      placeholder="Elonmusk"
                       @keyup.enter="addMaker()"
                     >
                   </div>
@@ -619,7 +619,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 h1"
                     @click="addMaker()"
                   >
                     Ajouter
@@ -631,9 +631,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="voted">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('voted')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xlne" aria-label="Close" @click="$modal.hide('voted')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -655,7 +655,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -667,9 +667,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="checkEmail">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('checkEmail')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('checkEmail')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -687,7 +687,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
                     @click="$modal.hide('checkEmail')"
                   >
                     😎Cool
@@ -699,9 +699,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="upgrade">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('upgrade')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('upgrade')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -720,7 +720,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
                     @click="bmc()"
                   >
                     C'est parti
@@ -732,9 +732,9 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="share_hunt">
-        <div class="container-fluid">
-          <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('rate')">
+        <div class="container-fluid relative">
+          <div class="row py-5">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('rate')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -752,7 +752,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
                     @click="tweetItHunt()"
                   >
                     Tweeter
@@ -764,7 +764,7 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="rate">
-        <div class="container-fluid">
+        <div class="container-fluid relative">
           <div class="row">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('rate')">
               <span aria-hidden="true">&times;</span>
@@ -784,7 +784,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
                     @click="rate()"
                   >
                     Noter
@@ -796,13 +796,13 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="share">
-        <div class="container-fluid">
+        <div class="container-fluid relative">
           <div class="row">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('share')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
+              <div class="row bg-indiePurple py-3">
                 <div class="col-12 text-white text-center">
                   <h1 class="text-3xl font-indie">
                     Tu aimes cet épisode ?
@@ -816,7 +816,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 py-1 text-light px-4 h1"
                     @click="tweetIt()"
                   >
                     Envoyer
@@ -828,7 +828,7 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="register">
-        <div class="container-fluid">
+        <div class="container-fluid relative">
           <div class="row">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('register')">
               <span aria-hidden="true">&times;</span>
@@ -861,7 +861,7 @@
                       autofocus
                       type="text"
                       name="email"
-                      class="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-1/2"
+                      class="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-1/2"
                       placeholder="you@example.com"
                       @keyup.enter="sendLogin()"
                     >
@@ -870,7 +870,7 @@
                 <div class="offset-md-3 col-md-6 py-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 py-1text-light px-4 h1"
                     @click="sendLogin()"
                   >
                     🚀VALIDER

@@ -18,8 +18,7 @@
             </div>
             <client-only>
               <div
-                class="custom-scroll fix-marging border-4 border-light border-r-0 w-full"
-                :style="{ height: sizeHead }"
+                class="h-78 overflow-hidden overflow-y-scroll border-4 border-light custom-scroll"
               >
                 <div
                   v-for="maker in makers"

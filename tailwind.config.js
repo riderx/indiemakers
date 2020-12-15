@@ -7,6 +7,9 @@ module.exports = {
       colors: {
         indiePurple: '#4b279b',
         indiePink: '#df99d8'
+      },
+      height: {
+        78: '78vh'
       }
     }
   },

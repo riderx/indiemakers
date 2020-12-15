@@ -91,16 +91,16 @@ img:not([src]) {
 }
 .custom-scroll {
   scrollbar-color: #f1f1f1 #df99d8;
-  overflow-y: scroll;
+  /* overflow-y: scroll;*/
   /* position: absolute; */
-  overflow-x: hidden;
+  /* overflow-x: hidden;  */
 }
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .custom-scroll {
     position: inherit;
     overflow: hidden;
   }
-}
+} */
 
 .custom-scroll::-webkit-scrollbar {
   width: 10px;
