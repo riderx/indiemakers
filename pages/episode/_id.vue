@@ -35,6 +35,7 @@
               :style="{ height: sizeHead }"
             >
               <div
+                id="content_html"
                 class="px-1 px-md-5 md:pt-3 text-grey-lightest"
                 v-html="content"
               />
@@ -350,23 +351,21 @@ export default {
   --plyr-badge-border-radius: 0px;
   --plyr-control-icon-size: 18px;
 }
-</style>
-<style scoped>
 
-*[v-html] >>> hr {
+#content_html  hr {
   border-top: 10px solid rgba(255, 255, 255, 1);
   border-radius: 0px!important;
 }
-*[v-html] >>> hr.rounded{
+#content_html  hr.rounded{
   border-radius: 0px!important;
 }
-*[v-html] >>> ol,
+#content_html  ol,
 ul {
-  list-style: inherit;
+  list-style: disc;
   margin: initial;
   padding: initial;
 }
-*[v-html] >>> blockquote,
+#content_html  blockquote,
 dl,
 dd,
 h1,
@@ -381,13 +380,13 @@ p,
 pre {
   margin: initial;
 }
-*[v-html] >>> h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl {
+#content_html  h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl {
   margin: 20px 0;
 }
-*[v-html] >>> li, dd, blockquote {
+#content_html  li, dd, blockquote {
   margin-left: 40px;
 }
-*[v-html] >>> table {
+#content_html  table {
   border-collapse: collapse;
   border-spacing: 0;
 }
