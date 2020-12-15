@@ -830,7 +830,7 @@
       <modal height="auto" adaptive name="register">
         <div class="container-fluid">
           <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('register')">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('register')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -843,8 +843,8 @@
               </div>
               <div class="row bg-indiePurple pt-2">
                 <div class="col-12 text-white">
-                  <h5 class="text-center">
-                    j’ai besoin que tu valides ton email :
+                  <h5 class="text-center text-1xl">
+                    j’ai besoin que tu valides ton email !
                   </h5>
                   <ul class="text-center pt-2">
                     <li>Pour éviter les faux votes</li>
@@ -852,20 +852,22 @@
                   </ul>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-                  <div class="form-group mb-0">
+                  <div>
+                    <label for="email" class="sr-only">Email</label>
                     <input
+                      id="email"
                       ref="register"
                       v-model="newEmail"
                       autofocus
-                      type="email"
-                      class="form-control pb-0"
-                      aria-describedby="emailHelp"
-                      placeholder="elon@musk.com"
+                      type="text"
+                      name="email"
+                      class="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-1/2"
+                      placeholder="you@example.com"
                       @keyup.enter="sendLogin()"
                     >
                   </div>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                <div class="offset-md-3 col-md-6 py-3 text-white text-center">
                   <button
                     type="button"
                     class="rounded-none border-4 border-light btn-lg btn-block text-light px-4 h1"
