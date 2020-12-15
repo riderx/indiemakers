@@ -65,7 +65,8 @@ export default {
     //   '~/node_modules/vue-js-modal/dist/styles.css',
     //   '~/node_modules/vue-plyr/dist/vue-plyr.css'
     // ],
-    whitelistPatterns: [/plyr/, /vm--/, /icon--/, /label--/, /vue-dialog/, /vue-modal/]
+    whitelistPatterns: [/plyr/, /vm--/, /icon--/, /label--/, /vue-dialog/, /vue-modal/],
+    whitelistPatternsChildren: [/plyr/]
   },
   sentry: {
     dsn: 'https://1e9603c479b54389ab04a4be985e1768@o449238.ingest.sentry.io/5431873', // Enter your project's DSN here

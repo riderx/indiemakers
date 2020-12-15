@@ -213,7 +213,7 @@ export default {
     this.setSizeHead()
     this.timeoutPlayer = setTimeout(() => {
       setTimeout(() => {
-        // this.showAudio = true
+        this.showAudio = true
         const currentTime = localStorage.getItem(this.$route.params.id)
         if (this.player) {
           this.player.on('play', () => {
