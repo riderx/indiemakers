@@ -1,5 +1,32 @@
-const util = require('../../plugins/feed')
+import { Database } from 'firebase-firestore-lite'
 
+const util = require('../../plugins/feed')
+global.fetch = require('node-fetch')
+
+const projectId = 'indiemakerfr'
+// Now pass the auth instance as well as the projectId.
+const db = new Database({ projectId })
+
+const postEp = async (element) => {
+  const ep = {
+    udi: element.guid,
+    title: element.title,
+    preview: element.preview,
+    image: element.imageOptimized,
+    content: element.content
+  }
+  if (element.instagram) {
+    ep.instagram = element.instagram
+  }
+  if (element.twitter) {
+    ep.twitter = element.twitter
+  }
+  try {
+    await db.ref(`episodes/${element.guid}`).set(ep)
+  } catch {
+    return null
+  }
+}
 module.exports = async (req, res) => {
   const items = await util.feed()
   let elem = null
@@ -14,7 +41,7 @@ module.exports = async (req, res) => {
   }
   if (elem) {
     await util.sendImageToCache(elem.itunes.image, elem.guid_fix)
-    await util.postEp(elem)
+    await postEp(elem)
   }
   return res.json(elem)
 }

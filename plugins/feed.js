@@ -81,28 +81,6 @@ const previewText = (text) => {
 const removeEmoji = (str) => {
   return str.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')
 }
-
-const postEp = async (element) => {
-  // const ep = {
-  //   udi: element.guid,
-  //   title: element.title,
-  //   preview: element.preview,
-  //   image: element.imageOptimized,
-  //   content: element.content
-  // }
-  // if (element.instagram) {
-  //   ep.instagram = element.instagram
-  // }
-  // if (element.twitter) {
-  //   ep.twitter = element.twitter
-  // }
-  // try {
-  //   await db.ref(`episodes/${element.guid}`).set(ep)
-  // } catch {
-  //   return null
-  // }
-}
-
 const feed = async () => {
   const items = []
   try {
@@ -140,6 +118,5 @@ const feed = async () => {
 
 module.exports = {
   sendImageToCache,
-  postEp,
   feed
 }
