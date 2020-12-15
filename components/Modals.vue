@@ -189,17 +189,17 @@
       <modal height="auto" adaptive name="join">
         <div class="container-fluid">
           <div class="row bg-indiePurple py-2">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('join')">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('join')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
               <h1 class="text-3xl font-indie pl-md-2 py-2 m-0 text-white text-center">
                 Mes Emails Privés
               </h1>
-              <p class="px-md-5 text-white">
+              <p class="md:px-5 text-white">
                 Reçoit ton email hebdomadaire avec mes conseils actionables pour lancer ton projet, et gagner ta liberté !
               </p>
-              <p class="px-md-5 text-white">
+              <p class="md:px-5 text-white">
                 Tu seras également informé de la sortie des épisodes !
               </p>
               <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
@@ -766,7 +766,7 @@
       <modal height="auto" adaptive name="rate">
         <div class="container-fluid">
           <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('rate')">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('rate')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -798,7 +798,7 @@
       <modal height="auto" adaptive name="share">
         <div class="container-fluid">
           <div class="row">
-            <button type="button" class="close text-white position-absolute z-index-10 pl-2 d-block d-md-none" aria-label="Close" @click="$modal.hide('share')">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('share')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">

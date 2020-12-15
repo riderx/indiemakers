@@ -126,6 +126,7 @@ export default {
   mounted () {
     this.setSizeHead()
     this.$firebase.auth.listen((user) => {
+      console.log('user', user)
       this.user = user
       if (user) {
         this.$sentry.setUser({ uid: user.uid })
