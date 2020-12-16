@@ -22,7 +22,7 @@
                   :alt="title"
                 >
               </div>
-              <div class="block sm:hidden text-white px-0">
+              <div class="block sm:hidden text-white px-0 w-full">
                 <vue-plyr v-if="showAudio" ref="plyr">
                   <audio>
                     <source :src="audio" type="audio/mp3">
