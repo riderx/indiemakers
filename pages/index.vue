@@ -28,12 +28,12 @@
                 <ListItem
                   :title="episode.title"
                   :name="episode.social.name"
-                  :link-name="episode.social.link"
                   :preview="episode.preview"
                   :image-fallback="episode.itunes.image"
                   :image="episode.image_optimized"
-                  :link-image="`/episode/${episode.guid_fix}`"
                   :loading-image="episode.image_loading"
+                  @name="open(episode.social.link)"
+                  @image="open(`/episode/${episode.guid_fix}`)"
                 />
               </div>
             </div>
@@ -76,7 +76,7 @@
                 <button
                   type="button"
                   class="border-4 border-white font-indie py-2 px-5 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
-                  @click="openAdd()"
+                  @click="open('/makers_hunt')"
                 >
                   👉 Découvre les Makers Français
                 </button>
@@ -211,8 +211,12 @@ export default {
       const nextEp = 14 - (diffDays % 14)
       return nextEp !== 14 ? `${nextEp} jours` : 'DEMAIN 10 heures'
     },
-    openAdd () {
-      this.$router.push('/makers_hunt')
+    open (url) {
+      if (url && url.startsWith('http')) {
+        window.open(url, '_blank')
+      } else if (url) {
+        this.$router.push(url)
+      }
     },
     setSizeHead () {
       if (

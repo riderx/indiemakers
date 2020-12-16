@@ -27,13 +27,13 @@
                 >
                   <ListItem
                     :title="maker.name"
-                    :link-image="linkEp(maker.guid)"
-                    :link-name="`https://twitter.com/${maker.login}`"
                     :votes="maker.votes"
                     :name="maker.login"
-                    :preview="getTextLink(maker.bio)"
                     :image="maker.img"
+                    :preview="getTextLink(maker.bio)"
                     @voted="vote(maker)"
+                    @name="open(linkTw(maker.login))"
+                    @image="open(linkEp(maker.guid, maker.login))"
                   />
                 </div>
               </div>
@@ -118,7 +118,6 @@ export default {
       isFalse: false,
       user: false,
       sizeHead: '100vh',
-      currentName: '',
       people: []
     }
   },
@@ -139,11 +138,25 @@ export default {
     joinUs () {
       this.$modal.show('join')
     },
-    linkEp (guid) {
+    open (url) {
+      if (url && url.startsWith('http')) {
+        window.open(url, '_blank')
+      } else if (url && url.startsWith('/episode/')) {
+        console.log('found')
+        this.$modal.show('found')
+      } else if (url) {
+        this.$router.push(url)
+      }
+    },
+    linkTw (login) {
+      return `https://twitter.com/${login}`
+    },
+    linkEp (guid, login) {
       if (guid) {
+        window.localStorage.setItem('epFound', guid)
         return `/episode/${guid}`
       }
-      return null
+      return this.linkTw(login)
     },
     getTextLink (text) {
       return linkifyHtml(text, {
@@ -184,10 +197,9 @@ export default {
           .then(() => {
             this.$modal.hide('loading')
             person.votes += 1
-            this.currentName = '' + person.login
             setTimeout(() => {
               if (person.guid) {
-                this.guid = person.guid
+                window.localStorage.setItem('epFound', person.guid)
                 this.$modal.show('found')
               } else {
                 this.$modal.show('voted')
@@ -203,7 +215,6 @@ export default {
               this.guid = person.guid
               this.$modal.show('found')
             } else {
-              this.currentName = '' + person.login
               this.$modal.show('fail-vote')
             }
           })

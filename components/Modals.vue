@@ -233,7 +233,7 @@
                   class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-1 px-4 h1"
                   @click="addEMailSub()"
                 >
-                  Confirmer
+                  Recevoir mes conseils
                 </button>
               </div>
             </div>
@@ -377,7 +377,7 @@
       </modal>
       <modal height="auto" adaptive name="found">
         <div class="container-fluid relative">
-          <div class="row py-5">
+          <div class="row">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('found')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -385,22 +385,24 @@
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1 class="text-3xl font-indie">
-                    Cet Episode existe !
+                    👏 Cet Épisode existe !
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-4 h-100">
-                <div class="col-12 pt-2 text-white text-center">
-                  <p>Grace a ton vote et ceux des autres, ce·tte maker a accepter de venir dans le podcast !</p>
-                  <p>Merci ❤❤</p>
+              <div class="row bg-indiePurple pt-2">
+                <div class="col-12 text-white">
+                  <ul class="text-center pt-2">
+                    <li>Grace aux votes, ce·tte maker a accepter de venir dans le podcast !</li>
+                    <li>Merci 😍</li>
+                  </ul>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                <div class="offset-md-3 col-md-6 py-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
-                    @click="openEp(guid)"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-2 px-4 h1"
+                    @click="openEp()"
                   >
-                    Ecouter
+                    ❤️ Écouter
                   </button>
                 </div>
               </div>
@@ -434,7 +436,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light py-2 px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -466,7 +468,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
                     @click="$modal.hide('fail-add')"
                   >
                     Fermer
@@ -502,7 +504,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -538,7 +540,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -574,7 +576,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -655,7 +657,7 @@
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -687,7 +689,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
                     @click="$modal.hide('checkEmail')"
                   >
                     😎Cool
@@ -720,7 +722,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
                     @click="bmc()"
                   >
                     C'est parti
@@ -752,7 +754,7 @@
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
                     @click="tweetItHunt()"
                   >
                     Tweeter
@@ -802,21 +804,21 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-3">
-                <div class="col-12 text-white text-center">
+              <div class="row bg-indiePurple py-2">
+                <div class="col-12 pt-2 text-white text-center">
                   <h1 class="text-3xl font-indie">
                     Tu aimes cet épisode ?
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple">
+              <div class="row bg-indiePurple pt-2">
                 <div class="col-12 text-white text-center">
-                  <p>Envois du love a l'invité du podcast via twitter </p>
+                  <p>Envois du love a l'invité du podcast via twitter  !</p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 py-1 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
                     @click="tweetIt()"
                   >
                     Envoyer
@@ -870,7 +872,7 @@
                 <div class="offset-md-3 col-md-6 py-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 py-1text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 py-2 text-light px-4 h1"
                     @click="sendLogin()"
                   >
                     🚀VALIDER
@@ -1019,7 +1021,12 @@ export default {
     listenExternal (url) {
       window.open(url, '_blank')
     },
-    openEp (guid) {
+    openEp () {
+      const guid = window.localStorage.getItem('epFound')
+      if (guid) {
+        window.localStorage.removeItem('epFound')
+      }
+      this.$modal.hide('found')
       this.$router.push(`/episode/${guid}`)
     },
     openRegister () {

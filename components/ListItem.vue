@@ -8,9 +8,9 @@
         :src="loadingImg"
         class="w-full h-auto border-4 border-white cursor-pointer"
         :alt="'Picture ' + title"
-        @click="openImage()"
+        @click="$emit('image')"
       >
-      <div v-if="votes" class="absolute cursor-pointer tumb_up px-3 border-4 border-light text-center bg-indiePurple" @click="vote()">
+      <div v-if="votes" class="absolute cursor-pointer tumb_up px-3 border-4 border-light text-center bg-indiePurple" @click="$emit('voted')">
         👍<br>
         {{ votes }}
       </div>
@@ -19,7 +19,7 @@
       <h3 class="font-indie md:text-xl md:mb-1">
         {{ title }}
       </h3>
-      <p v-if="name" class="text-indiePink text-sm md:mb-1 z-10 cursor-pointer" @click="openLink()">
+      <p v-if="name" class="text-indiePink text-sm md:mb-1 z-10 cursor-pointer" @click="$emit('name')">
         @{{ name }}
       </p>
       <p class="text-sm line-clamp" v-html="preview" />
@@ -33,8 +33,6 @@ export default {
   props: {
     title: { type: String, default: null },
     name: { type: String, default: null },
-    linkName: { type: String, default: null },
-    linkImage: { type: String, default: null },
     image: { type: String, default: null },
     imageFallback: { type: String, default: null },
     votes: { type: Number, default: null },
@@ -56,20 +54,6 @@ export default {
     }
   },
   methods: {
-    vote () {
-      console.log('voted')
-      this.$emit('voted')
-    },
-    openLink () {
-      if (this.linkName) {
-        window.open(this.linkName, '_blank')
-      }
-    },
-    openImage () {
-      if (this.linkImage) {
-        this.$router.push(this.linkImage)
-      }
-    }
   }
 }
 </script>
