@@ -71,8 +71,7 @@ export const UpdateDesign = async (designId: string, html_content: string, subje
 export const getSingleSend = async (id: string) => {
   const request: ClientRequest = {
     method: 'GET',
-    url: `/v3/marketing/singlesends/${id}`,
-    // url: `/v3/marketing/singlesends`,
+    url: `/v3/marketing/singlesends/${id}`
   }
   try {
     return await sgClient.request(request)
@@ -117,7 +116,7 @@ export const sendEpToContactList = async (id: string) => {
     method: 'PUT',
     url: `/v3/marketing/singlesends/${id}/schedule`,
     body: {
-      send_at: 'now',
+      send_at: 'now'
     }
   }
   try {

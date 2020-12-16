@@ -16,7 +16,7 @@ const url = `https://${zone}-${projectId}.cloudfunctions.net/`
 const db = new Database({ projectId, auth })
 
 const func = (name, data) => {
-  return axios.get(url + name, data, { headers: auth.authorizedRequest })
+  return axios.post(url + name, data, { headers: auth.authorizedRequest })
 }
 const emailSigning = (email, url) => {
   const authRedir = new Auth({

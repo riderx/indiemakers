@@ -2,9 +2,11 @@
   "name": "indiemakers",
   "version": "1.0.0",
   "private": true,
+  "engines": {"node": "12"},
   "scripts": {
     "dev": "npx nuxt",
     "build": "npx nuxt build",
+    "functions": "firebase deploy --only functions",
     "start": "npx nuxt-start",
     "export": "nuxt export",
     "lint:js": "eslint --ext .js,.vue .",

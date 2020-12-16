@@ -1,13 +1,5 @@
-/* eslint-disable import/first */
-global.fetch = require('node-fetch')
-
-const firebase = require('firebase-firestore-lite')
-
 const util = require('../../plugins/feed')
-
-const projectId = 'indiemakerfr'
-// Now pass the auth instance as well as the projectId.
-const db = new firebase.Database({ projectId })
+const func = require('../../plugins/firebase_func')
 
 const postEp = async (element) => {
   const ep = {
@@ -24,7 +16,7 @@ const postEp = async (element) => {
     ep.twitter = element.twitter
   }
   try {
-    await db.ref(`episodes/${element.guid}`).set(ep)
+    await func.run('addEp', ep)
   } catch {
     return null
   }

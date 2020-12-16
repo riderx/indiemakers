@@ -265,6 +265,43 @@ const transformURLtoTracked = async (text: string, entities: TwEntities | null) 
   return newDescription
 }
 
+export const getMakers = functions.https.onRequest(async (req, res) => {
+  if (req.get('x-verceladmin-apikey') !== configSecret.verceladmin.apikey) {
+    res.json({ error: 'unAuthorise' })
+    return
+  }
+  try {
+    const resultList =  await admin.firestore()
+    .collection('people')
+    .orderBy('votes', 'desc')
+    .orderBy('addDate', 'asc')
+    .get()
+    .then((querySnapshot) => {
+        return querySnapshot.docs.map(doc => Object.assign(doc.data(), {id: doc.id}));
+    });
+    res.json(resultList)
+  } catch (err) {
+    console.error('err', err);
+    res.json([])
+    }
+})
+
+export const addEp = functions.https.onRequest(async (req, res) => {
+  if (req.get('x-verceladmin-apikey') !== configSecret.verceladmin.apikey) {
+    res.json({ error: 'unAuthorise' })
+    return
+  }
+  try {
+    await admin.firestore()
+    .collection('episodes')
+    .doc(req.body.udi)
+    .update(req.body)
+    res.json({ status: 'done' })
+  } catch (err) {
+    res.json({ error: err, status: 'already done' })
+    }
+})
+
 export const addTwiterUser = functions.https.onCall(async (data, context) => {
   const name = data.name
   const uid = context.auth ? context.auth.uid : null

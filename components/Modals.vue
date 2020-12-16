@@ -296,15 +296,8 @@
       </modal>
       <modal height="auto" adaptive name="loading">
         <div class="container-fluid relative">
-          <div class="row py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('loading')">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="col-12 p-5 text-center w-full">
-              <div class="spinner-grow text-primary" role="status">
-                <span class="sr-only">Chargement...</span>
-              </div>
-            </div>
+          <div class="row py-10">
+            <div class="spinner" />
           </div>
         </div>
       </modal>
@@ -479,10 +472,15 @@
           </div>
         </div>
       </modal>
-      <modal adaptive height="auto" name="fail-vote">
+      <modal height="auto" adaptive name="fail-vote">
         <div class="container-fluid relative">
-          <div class="row py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('fail-vote')">
+          <div class="row">
+            <button
+              type="button"
+              class="absolute top-0 close text-white z-index-10 pl-2 text-3xl"
+              aria-label="Close"
+              @click="$modal.hide('fail-vote')"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -493,21 +491,64 @@
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-4 h-100">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="row bg-indiePurple pt-2">
+                <div class="col-12 text-white text-center">
                   <p>tu as deja voté pour ce·tte Maker</p>
-                  <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p>Twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
                   <p class="font-weight-bold">
                     Voici un message tout pret pour l'inviter 😎
                   </p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
                     @click="tweetItMaker()"
                   >
-                    🦚Voir
+                    🦚 Voir
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal height="auto" adaptive name="fail-open-ep">
+        <div class="container-fluid relative">
+          <div class="row">
+            <button
+              type="button"
+              class="absolute top-0 close text-white z-index-10 pl-2 text-3xl"
+              aria-label="Close"
+              @click="$modal.hide('fail-open-ep')"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="col-12 h-100">
+              <div class="row bg-indiePurple py-2">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1 class="text-3xl font-indie">
+                    😝 OUPS
+                  </h1>
+                </div>
+              </div>
+              <div class="row bg-indiePurple pt-2">
+                <div class="col-12 text-white">
+                  <h5 class="text-center text-1xl">
+                    Ce·tte maker a besoin de plus de force pour venir dans le podcast
+                  </h5>
+                  <ul class="text-center pt-2">
+                    <li>Twitter pour motiver ce·tte Maker à venir!</li>
+                    <li>Voici un message tout pret pour l'inviter 😎</li>
+                  </ul>
+                </div>
+                <div class="offset-md-3 col-md-6 py-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 py-2 text-light px-4 h1"
+                    @click="tweetItMaker()"
+                  >
+                    🦚 Voir
                   </button>
                 </div>
               </div>
@@ -532,7 +573,7 @@
               <div class="row bg-indiePurple pt-4 h-100">
                 <div class="col-12 pt-2 text-white text-center">
                   <p>Ce·tte maker est déjà présent dans la liste, J'ai ajouté ton vote pour lui/elle.</p>
-                  <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p>Twitte pour motiver ce·tte Maker à venir sur le podcast !</p>
                   <p class="font-weight-bold">
                     Voici un message tout pret pour l'inviter 😎
                   </p>
@@ -568,7 +609,7 @@
               <div class="row bg-indiePurple pt-4 h-100">
                 <div class="col-12 pt-2 text-white text-center">
                   <p>Ce·tte maker est déjà présent dans la liste, et tu as déjà voté pour lui/elle 😇.</p>
-                  <p>Tu peux toujour twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p>Twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
                   <p class="font-weight-bold">
                     Voici un message tout pret pour l'inviter 😎
                   </p>
@@ -589,21 +630,28 @@
       </modal>
       <modal height="auto" adaptive name="add">
         <div class="container-fluid relative">
-          <div class="row py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('add')">
+          <div class="row">
+            <button
+              type="button"
+              class="absolute top-0 close text-white z-index-10 pl-2 text-3xl"
+              aria-label="Close"
+              @click="$modal.hide('add')"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1 class="text-3xl font-indie">
-                    👌Ajouter un·e Maker
+                    👌 Ajouter un·e Maker
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-4">
-                <div class="col-12 pt-2 text-white text-center">
-                  <p>Saisie le nom de son compte Twitter</p>
+              <div class="row bg-indiePurple pt-2">
+                <div class="col-12 text-white text-center">
+                  <p>Le moyens le plus simple d'ajouter quelqu'un</p>
+                  <p>C'est avec son nom Twitter</p>
+                  <p>Cela permet de trouver sa photo et description d'un coup !</p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
                   <div class="form-group mb-0">
@@ -618,13 +666,13 @@
                     >
                   </div>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
                     @click="addMaker()"
                   >
-                    Ajouter
+                    🎯 Ajouter
                   </button>
                 </div>
               </div>
@@ -633,6 +681,42 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="voted">
+        <div class="container-fluid relative">
+          <div class="row">
+            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('voted')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="col-12 h-100">
+              <div class="row bg-indiePurple py-2">
+                <div class="col-12 pt-2 text-white text-center">
+                  <h1 class="text-3xl font-indie">
+                    💪 Vote pris en compte
+                  </h1>
+                </div>
+              </div>
+              <div class="row bg-indiePurple pt-2">
+                <div class="col-12 text-white text-center">
+                  <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p class="font-weight-bold">
+                    Voici un message tout pret pour l'inviter 😎
+                  </p>
+                  <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
+                    @click="tweetItMaker()"
+                  >
+                    🦚 Voir
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <!-- <modal height="auto" adaptive name="voted">
         <div class="container-fluid relative">
           <div class="row py-5">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xlne" aria-label="Close" @click="$modal.hide('voted')">
@@ -667,7 +751,7 @@
             </div>
           </div>
         </div>
-      </modal>
+      </modal> -->
       <modal height="auto" adaptive name="checkEmail">
         <div class="container-fluid relative">
           <div class="row py-5">
@@ -894,7 +978,6 @@ export default {
   name: 'Modals',
   data () {
     return {
-      epGui: this.$route.params.id,
       user: null,
       isFalse: false,
       newMaker: null,
@@ -1091,8 +1174,12 @@ export default {
       this.$modal.hide('share_hunt')
     },
     tweetItMaker () {
+      const maker = window.localStorage.getItem('tweetMaker')
+      if (maker) {
+        window.localStorage.removeItem('tweetMaker')
+      }
       const linkPage = `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}/makers_hunt`
-      const tweet = `@${this.newMaker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${this.$config.handler} 🚀`
+      const tweet = `@${maker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${this.$config.handler} 🚀`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`
@@ -1101,8 +1188,16 @@ export default {
       this.$modal.hide('voted')
     },
     tweetIt () {
-      const linkEp = `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}/episode/${this.epGui}`
-      const tweet = `@${this.$config.handler} et @${this.twitter.name} merci pour le podcast ${linkEp} <3`
+      const maker = window.localStorage.getItem('tweetMaker')
+      const epGui = window.localStorage.getItem('epGui')
+      if (maker) {
+        window.localStorage.removeItem('tweetMaker')
+      }
+      if (epGui) {
+        window.localStorage.removeItem('epGui')
+      }
+      const linkEp = `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}/episode/${epGui}`
+      const tweet = `@${this.$config.handler} et @${maker} merci pour le podcast ${linkEp} <3`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`
@@ -1115,6 +1210,25 @@ export default {
 </script>
 
 <style scoped>
+.spinner {
+  display: block;
+  margin: auto;
+  height: 6em;
+  width: 6em;
+  border: 12px solid rgba(0, 174, 239, 0.2);
+  border-top-color:#4b279b;
+  border-radius: 50%;
+  animation: rotation 0.6s infinite linear;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
 .z-index-10 {
   z-index: 10;
 }

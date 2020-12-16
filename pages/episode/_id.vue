@@ -146,6 +146,7 @@ export default {
       redirect(`episode/${element.guid_fix}`)
     }
     return {
+      guid: element.guid_fix,
       title: element.title,
       titleNoEmoji: element.title_no_emoji,
       contentNoEmoji: element.content_no_emoji,
@@ -175,6 +176,7 @@ export default {
       showAudio: false,
       timeoutPlayer: null,
       timeoutModal: null,
+      guid: null,
       title: '',
       twitter: { name: null, link: null },
       linkedin: { name: null, link: null },
@@ -273,6 +275,8 @@ export default {
       return Math.floor(Math.random() * Math.floor(max))
     },
     tweetIt () {
+      window.localStorage.setItem('tweetMaker', this.twitter.name)
+      window.localStorage.setItem('epGui', this.guid)
       this.$modal.show('share')
     },
     joinUs () {

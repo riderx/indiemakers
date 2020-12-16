@@ -1,21 +1,10 @@
-/* eslint-disable import/first */
-global.fetch = require('node-fetch')
-
-const firebase = require('firebase-firestore-lite')
 const util = require('../../plugins/feed')
+const func = require('../../plugins/firebase_func')
 
-const projectId = 'indiemakerfr'
-// Now pass the auth instance as well as the projectId.
-const db = new firebase.Database({ projectId })
-
-const loadData = () => {
-  return db
-    .ref('people')
-    .query()
-    .orderBy('votes', 'desc')
-    .orderBy('addDate', 'asc')
-    .run()
-    .then(async (results) => {
+const loadData = async () => {
+  try {
+    const results = await func.run('getMakers')
+    if (results) {
       const episodes = await util.feed()
       return results.map((data) => {
         const guid = findInEp(data.login, episodes)
@@ -23,7 +12,13 @@ const loadData = () => {
         data.img = `/api/maker?guid=${data.login}`
         return data
       })
-    })
+    } else {
+      return []
+    }
+  } catch (err) {
+    console.error('loadData', err, await func.run('getMakers'))
+    return []
+  }
 }
 
 const findInEp = (name, episodes) => {

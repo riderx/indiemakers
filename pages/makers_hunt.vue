@@ -33,7 +33,7 @@
                     :preview="getTextLink(maker.bio)"
                     @voted="vote(maker)"
                     @name="open(linkTw(maker.login))"
-                    @image="open(linkEp(maker.guid, maker.login))"
+                    @image="openImage(maker.guid, maker.login)"
                   />
                 </div>
               </div>
@@ -138,6 +138,15 @@ export default {
     joinUs () {
       this.$modal.show('join')
     },
+    openImage (guid, login) {
+      if (guid) {
+        window.localStorage.setItem('epFound', guid)
+        this.open(`/episode/${guid}`)
+      } else if (login) {
+        window.localStorage.getItem('tweetMaker', login)
+        this.$modal.show('fail-open-ep')
+      }
+    },
     open (url) {
       if (url && url.startsWith('http')) {
         window.open(url, '_blank')
@@ -202,6 +211,7 @@ export default {
                 window.localStorage.setItem('epFound', person.guid)
                 this.$modal.show('found')
               } else {
+                window.localStorage.setItem('tweetMaker', person.login)
                 this.$modal.show('voted')
                 this.reload()
               }
@@ -215,6 +225,7 @@ export default {
               this.guid = person.guid
               this.$modal.show('found')
             } else {
+              window.localStorage.setItem('tweetMaker', person.login)
               this.$modal.show('fail-vote')
             }
           })
