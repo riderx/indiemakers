@@ -1,7 +1,9 @@
+/* eslint-disable import/first */
+global.fetch = require('node-fetch')
+
 import { Database } from 'firebase-firestore-lite'
 
 const util = require('../../plugins/feed')
-global.fetch = require('node-fetch')
 
 const projectId = 'indiemakerfr'
 // Now pass the auth instance as well as the projectId.
