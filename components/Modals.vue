@@ -985,7 +985,7 @@ export default {
       newEmail: null
     }
   },
-  async mounted () {
+  mounted () {
     require('~/plugins/modal')
     this.$firebase.auth.listen((user) => {
       this.user = user
@@ -993,17 +993,6 @@ export default {
         this.$sentry.setUser({ uid: user.uid })
       }
     })
-    if (this.$route?.params?.id) {
-      console.log('modal ID', this.$route.params.id, this.$config)
-      try {
-        const element = await ep(this.$route.params.id, this.$config)
-        if (element) {
-          this.twitter = element.twitter
-        }
-      } catch (err) {
-        console.log('modal ID', err)
-      }
-    }
   },
   methods: {
     rate () {
