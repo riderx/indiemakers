@@ -18,7 +18,7 @@
             </div>
             <client-only>
               <div
-                class="h-78 overflow-hidden overflow-y-scroll border-4 border-light custom-scroll"
+                class="md:h-78 overflow-hidden md:overflow-y-scroll border-4 border-light md:custom-scroll"
               >
                 <div
                   v-for="maker in makers"

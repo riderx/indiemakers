@@ -31,7 +31,7 @@
               </div>
             </div>
             <div
-              class="h-78 overflow-hidden overflow-y-scroll border-4 border-light px-5 custom-scroll"
+              class="md:h-78 overflow-hidden md:overflow-y-scroll border-4 border-light px-5 md:custom-scroll"
             >
               <div
                 id="content_html"
