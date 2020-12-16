@@ -14,7 +14,7 @@ const postEp = async (element) => {
     udi: element.guid,
     title: element.title,
     preview: element.preview,
-    image: element.imageOptimized,
+    image: element.image_optimized,
     content: element.content
   }
   if (element.instagram) {
