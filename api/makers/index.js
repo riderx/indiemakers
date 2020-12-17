@@ -9,7 +9,7 @@ const loadData = async () => {
       return results.map((data) => {
         const guid = findInEp(data.login, episodes)
         data.guid = guid
-        data.img = `/api/maker?guid=${data.login}`
+        data.img = data.pic
         return data
       })
     } else {

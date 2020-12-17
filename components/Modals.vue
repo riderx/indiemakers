@@ -347,11 +347,11 @@
       </modal>
       <modal height="auto" adaptive name="error">
         <div class="container-fluid relative">
-          <div class="row py-5">
+          <div class="row">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('error')">
               <span aria-hidden="true">&times;</span>
             </button>
-            <div class="col-12">
+            <div class="col-12 h-100">
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1 class="text-3xl font-indie">
@@ -359,9 +359,18 @@
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-4 h-100">
-                <div class="col-12 pt-2 pb-3 text-white text-center">
+              <div class="row bg-indiePurple pt-2">
+                <div class="col-12 text-white text-center">
                   <p>Essais plus tard</p>
+                </div>
+                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                  <button
+                    type="button"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
+                    @click="$modal.hide('error')"
+                  >
+                    😢 Plus tard
+                  </button>
                 </div>
               </div>
             </div>
@@ -716,45 +725,9 @@
           </div>
         </div>
       </modal>
-      <!-- <modal height="auto" adaptive name="voted">
-        <div class="container-fluid relative">
-          <div class="row py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xlne" aria-label="Close" @click="$modal.hide('voted')">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
-                  <h1 class="text-3xl font-indie">
-                    💪Vote pris en compte
-                  </h1>
-                </div>
-              </div>
-              <div class="row bg-indiePurple pt-4 h-100">
-                <div class="col-12 pt-2 text-white">
-                  <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
-                  <p class="font-weight-bold">
-                    Voici un message tout pret pour l'inviter 😎
-                  </p>
-                  <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
-                </div>
-                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
-                  <button
-                    type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
-                    @click="tweetItMaker()"
-                  >
-                    🦚Voir
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </modal> -->
       <modal height="auto" adaptive name="checkEmail">
         <div class="container-fluid relative">
-          <div class="row py-5">
+          <div class="row">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('checkEmail')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -762,21 +735,21 @@
               <div class="row bg-indiePurple py-2">
                 <div class="col-12 pt-2 text-white text-center">
                   <h1 class="text-3xl font-indie">
-                    ✅Check ta boite email
+                    ✅ Check ta boite email
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-4">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="row bg-indiePurple pt-2">
+                <div class="col-12 text-white text-center">
                   <p>Tu viens de recevoir ton lien de login par email, click dessus, c'est tout❤️</p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
+                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
                     @click="$modal.hide('checkEmail')"
                   >
-                    😎Cool
+                    😎 Cool
                   </button>
                 </div>
               </div>
@@ -972,7 +945,7 @@
 </template>
 
 <script>
-import { domain, ep } from '~/plugins/rss'
+import { domain } from '~/plugins/rss'
 
 export default {
   name: 'Modals',

@@ -57,14 +57,6 @@ export default {
     '@nuxtjs/sentry'
   ],
   purgeCSS: {
-    // content: [
-    //   '~/node_modules/vue-js-modal/dist/ssr.nocss.js',
-    //   '~/node_modules/vue-plyr/dist/vue-plyr.ssr.js'
-    // ],
-    // css: [
-    //   '~/node_modules/vue-js-modal/dist/styles.css',
-    //   '~/node_modules/vue-plyr/dist/vue-plyr.css'
-    // ],
     whitelistPatterns: [/plyr/, /vm--/, /icon--/, /label--/, /vue-dialog/, /vue-modal/],
     whitelistPatternsChildren: [/plyr/]
   },

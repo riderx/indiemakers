@@ -48,6 +48,7 @@ interface Episode {
 interface Person {
     addedBy: string;
     addDate: admin.firestore.Timestamp;
+    updateDate: admin.firestore.Timestamp;
     emailSend: boolean | admin.firestore.Timestamp;
     id_str: string;
     name: string;
@@ -302,6 +303,26 @@ export const addEp = functions.https.onRequest(async (req, res) => {
     }
 })
 
+export const updateTwiterUser = functions.pubsub.schedule('0 0 * * *').onRun(async (context) => {
+  const users = await admin.firestore()
+  .collection('people')
+  .get()
+  .then((querySnapshot) => {
+      return querySnapshot.docs.map(doc => Object.assign(doc.data(), {id: doc.id}));
+  });
+  users.forEach(async (user) => {
+    await admin.firestore()
+    .collection('/people')
+    .doc(user.id)
+    .update({ updateDate: admin.firestore.Timestamp.now() }).then(() => {
+      console.log('updateDate updated')
+    }).catch((error: any) => {
+      console.error('Error update person', error)
+    })
+  })
+  return null;
+});
+
 export const addTwiterUser = functions.https.onCall(async (data, context) => {
   const name = data.name
   const uid = context.auth ? context.auth.uid : null
@@ -312,13 +333,14 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
         console.log('user', twUser)
         const newPerson: Person = {
           addedBy: uid,
+          updateDate: admin.firestore.Timestamp.now(),
           addDate: admin.firestore.Timestamp.now(),
           emailSend: true,
           id_str: twUser.id_str,
           name: twUser.name,
           login: twUser.screen_name,
           bio: await transformURLtoTracked(twUser.description || '', twUser.entities),
-          pic: `https://avatars.io/twitter/${twUser.screen_name}/large`,
+          pic: twUser.profile_image_url_https.replace('_normal', ''),
           votes: 1,
           number: Number.MAX_SAFE_INTEGER
         }
@@ -410,12 +432,13 @@ export const onUpdatePeople = functions.firestore
         twUser = await twUserPromise(person.login)
       }
       const bio = await transformURLtoTracked(person.bio, twUser ? twUser.entities : null)
-      if (bio !== person.bio) {
+      const pic = twUser ? twUser.profile_image_url_https.replace('_normal', '') : person.pic
+      if (bio !== person.bio || pic !== person.pic) {
         await admin.firestore()
           .collection('/people')
           .doc(personId)
-          .update({ bio }).then(() => {
-            console.log('bio updated')
+          .update({ bio, pic }).then(() => {
+            console.log('bio updated', personId)
           }).catch((error: any) => {
             console.error('Error update person', error)
           })
