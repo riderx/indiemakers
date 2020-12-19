@@ -103,9 +103,11 @@ const feed = async () => {
           element.social = { name: null, link: null }
         }
         items.push(element)
-        element.image_optimized = `https://ik.imagekit.io/gyc0uxoln1/indiemakers/${element.guid_fix}?tr=h-300,w-300`
-        element.image_big = `https://ik.imagekit.io/gyc0uxoln1/indiemakers/${element.guid_fix}?tr=h-600,w-600`
-        element.image_loading = `https://ik.imagekit.io/gyc0uxoln1/indiemakers/${element.guid_fix}?tr=bl-6`
+        // ik-seo/${element.guid_fix}/${element.social.name}
+        const seoName = element.social.name ? element.social.name.replace('.', '-') : element.guid_fix
+        element.image_optimized = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=h-300,w-300`
+        element.image_big = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=h-600,w-600`
+        element.image_loading = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=q-5,bl-5,h-150,w-150`
       })
     }
   } catch (err) {

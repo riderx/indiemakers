@@ -1,5 +1,5 @@
 <template>
-  <LazyHydrate when-visible>
+  <LazyHydrate when-idle>
     <div id="episodes">
       <div class="container px-0 mx-auto w-full">
         <div class="flex flex-wrap w-full">
@@ -139,14 +139,13 @@
   </LazyHydrate>
 </template>
 <script>
-import LazyHydrate from 'vue-lazy-hydration'
 import { feed, domain } from '~/plugins/rss'
 
 import { crispLoader } from '~/plugins/crisp.client'
 export default {
   components: {
     ListItem: () => import('~/components/ListItem.vue'),
-    LazyHydrate
+    LazyHydrate: () => import('vue-lazy-hydration')
   },
   async asyncData ({ params, $config }) {
     const items = await feed($config)
