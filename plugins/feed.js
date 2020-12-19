@@ -3,9 +3,9 @@ const ImageKit = require('imagekit')
 // const firestore = require('firebase-firestore-lite')
 
 const rss = 'https://anchor.fm/s/414d1d4/podcast/rss'
-const linkTwitterRe = /Son Twitter : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
-const linkInstagramRe = /Son Instagram : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
-const linkLinkedinRe = /Son Linkedin : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
+const linkTwitterRe = /son twitter : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
+const linkInstagramRe = /son instagram : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
+const linkLinkedinRe = /son linkedin : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
 const parser = new Parser()
 const imagekit = new ImageKit({
   publicKey: 'public_9vWOr643awJiLr6HqhpNNF1ZVkQ=',
@@ -26,7 +26,7 @@ const cleanHandler = (handler) => {
 }
 
 const findTw = (text) => {
-  const founds = linkTwitterRe.exec(text)
+  const founds = linkTwitterRe.exec(text.toLowerCase())
   if (!founds || !founds.groups) {
     return { name: null, link: null }
   }
@@ -35,7 +35,7 @@ const findTw = (text) => {
 }
 
 const findLinkedin = (text) => {
-  const founds = linkLinkedinRe.exec(text)
+  const founds = linkLinkedinRe.exec(text.toLowerCase())
   if (!founds || !founds.groups) {
     return { name: null, link: null }
   }
@@ -44,7 +44,7 @@ const findLinkedin = (text) => {
 }
 
 const findInst = (text) => {
-  const founds = linkInstagramRe.exec(text)
+  const founds = linkInstagramRe.exec(text.toLowerCase())
   if (!founds || !founds.groups) {
     return { name: null, link: null }
   }

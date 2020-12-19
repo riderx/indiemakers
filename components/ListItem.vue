@@ -7,7 +7,7 @@
           width="100%"
           height="100%"
           :src="loadingImg"
-          class="w-full h-auto border-4 border-white cursor-pointer"
+          class="w-full h-full border-4 border-white cursor-pointer"
           :alt="'Picture ' + title"
           @click="$emit('image')"
         >
