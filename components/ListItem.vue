@@ -23,6 +23,9 @@
         <p v-if="name" class="text-indiePink text-sm md:mb-1 z-10 cursor-pointer" @click="$emit('name')">
           @{{ name }}
         </p>
+        <p v-if="date" class="text-gray-300 text-sm md:mb-1">
+          {{ date }}
+        </p>
         <p class="text-sm line-clamp" v-html="preview" />
       </div>
     </div>
@@ -39,6 +42,7 @@ export default {
     title: { type: String, default: null },
     name: { type: String, default: null },
     image: { type: String, default: null },
+    date: { type: String, default: null },
     imageFallback: { type: String, default: null },
     votes: { type: Number, default: null },
     loadingImage: { type: String, default: null },

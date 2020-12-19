@@ -1,5 +1,11 @@
 const Parser = require('rss-parser')
 const ImageKit = require('imagekit')
+const dayjs = require('dayjs')
+const relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime)
+require('dayjs/locale/fr')
+
+dayjs.locale('fr')
 // const firestore = require('firebase-firestore-lite')
 
 const rss = 'https://anchor.fm/s/414d1d4/podcast/rss'
@@ -22,6 +28,7 @@ const guidConvert = (guid) => {
 }
 
 const cleanHandler = (handler) => {
+  if (!handler) { return null }
   return handler.replace('@', '')
 }
 
@@ -89,6 +96,7 @@ const feed = async () => {
         element.preview = previewText(element.contentSnippet)
         element.preview_no_emoji = removeEmoji(element.preview)
         element.twitter = findTw(element.content)
+        element.date = dayjs(element.isoDate).fromNow()
         element.insta = findInst(element.content)
         element.linkedin = findLinkedin(element.content)
         element.title_no_emoji = removeEmoji(element.title)
@@ -103,6 +111,8 @@ const feed = async () => {
           element.social = { name: null, link: null }
         }
         items.push(element)
+        console.log('element.twitter.name', element.guid_fix, element.social.name, element.social.link)
+
         // ik-seo/${element.guid_fix}/${element.social.name}
         const seoName = element.social.name ? element.social.name.replace('.', '-') : element.guid_fix
         element.image_optimized = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=h-300,w-300`

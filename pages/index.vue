@@ -28,6 +28,7 @@
                 <ListItem
                   :title="episode.title"
                   :name="episode.social.name"
+                  :date="episode.date"
                   :preview="episode.preview"
                   :image-fallback="episode.itunes.image"
                   :image="episode.image_optimized"
