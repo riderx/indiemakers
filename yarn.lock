@@ -1245,7 +1245,7 @@
     consola "^2.15.0"
     eslint-webpack-plugin "^2.3.0"
 
-"@nuxtjs/pwa@^3.2.2":
+"@nuxtjs/pwa@^3.3.2":
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/@nuxtjs/pwa/-/pwa-3.3.2.tgz#f48b43015282a9465be853087a96137c80a60bd3"
   integrity sha512-yVOaU0MKKmsw44Vtl1Rq+kfhXJF46AqXni2YFGpOMvemcaPbkc+PZDyZTf3mDJQkUKgaY1aiiHMisOS/6rvnPg==
