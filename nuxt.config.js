@@ -75,6 +75,16 @@ export default {
       ]
     }]
   ],
+  pwa: {
+    meta: {
+      theme_color: '#4b279b'
+    },
+    manifest: {
+      name: 'INDIE MAKERS',
+      lang: 'fr',
+      short_name: 'IM'
+    }
+  },
   purgeCSS: {
     whitelistPatterns: [/plyr/, /vm--/, /icon--/, /label--/, /vue-dialog/, /vue-modal/],
     whitelistPatternsChildren: [/plyr/]
