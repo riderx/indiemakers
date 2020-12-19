@@ -34,8 +34,7 @@
               class="md:h-78 overflow-hidden md:overflow-y-scroll border-4 border-light px-5 md:custom-scroll"
             >
               <div
-                id="content_html"
-                class="px-1 px-md-5 md:pt-3 text-grey-lightest"
+                class="content_html px-1 px-md-5 md:pt-3 text-grey-lightest"
                 v-html="content"
               />
             </div>
@@ -348,27 +347,33 @@ export default {
   }
 }
 </script>
-<style>
+<style >
 :root {
   --plyr-color-main: rgba(75, 39, 155, 1);
   --plyr-badge-border-radius: 0px;
   --plyr-control-icon-size: 18px;
 }
+</style >
+<style scoped>
 
-#content_html  hr {
+.content_html >>> hr {
   border-top: 10px solid rgba(255, 255, 255, 1);
   border-radius: 0px!important;
 }
-#content_html  hr.rounded{
+
+.content_html >>> hr {
+  border-top: 10px solid rgba(255, 255, 255, 1);
   border-radius: 0px!important;
 }
-#content_html  ol,
-ul {
+.content_html >>> hr.rounded{
+  border-radius: 0px!important;
+}
+.content_html >>> ul {
   list-style: disc;
   margin: initial;
   padding: initial;
 }
-#content_html  blockquote,
+.content_html >>> p, blockquote,
 dl,
 dd,
 h1,
@@ -379,18 +384,17 @@ h5,
 h6,
 hr,
 figure,
-p,
 pre {
-  margin: initial;
+  margin: revert!important;
 }
-#content_html  h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl {
-  margin: 20px 0;
+.content_html >>> h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl {
+  margin: 20px 0!important;
 }
-#content_html  li, dd, blockquote {
-  margin-left: 40px;
+.content_html >>> li, dd, blockquote {
+  margin-left: 40px!important;
 }
-#content_html  table {
-  border-collapse: collapse;
-  border-spacing: 0;
+.content_html >>> table {
+  border-collapse: collapse!important;
+  border-spacing: 0!important;
 }
 </style>

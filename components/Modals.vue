@@ -759,20 +759,18 @@
       </modal>
       <modal height="auto" adaptive name="upgrade">
         <div class="container-fluid relative">
-          <div class="row py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('upgrade')">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+          <div class="row">
+            <div class="col-12">
+              <div class="row bg-indiePurple py-5">
+                <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('upgrade')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="col-12 pt-1 px-1 md:px-3 text-white text-center">
                   <h1 class="text-3xl font-indie">
                     Besoin de plus ?
                   </h1>
                 </div>
-              </div>
-              <div class="row bg-indiePurple pt-4">
-                <div class="col-12 pt-2 text-white text-center">
+                <div class="col-12 text-white text-center">
                   <p>Parfois pour se lancer, un podcast ne suffit pas</p>
                   <p>J'ai crée pour toi des outils pour passer a l'étape supérieure !</p>
                 </div>
