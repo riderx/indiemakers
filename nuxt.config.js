@@ -54,7 +54,26 @@ export default {
   ],
   modules: [
     '@nuxtjs/component-cache',
-    '@nuxtjs/sentry'
+    '@nuxtjs/sentry',
+    ['nuxt-font-loader-strategy', {
+      ignoreLighthouse: true,
+      ignoredEffectiveTypes: ['2g', 'slow-2g'],
+      fonts: [
+        {
+          fileExtensions: ['woff2', 'woff'],
+          fontFamily: 'Rex Bold',
+          fontFaces: [
+            {
+              preload: true,
+              localSrc: ['Rex Bold', 'Rex-Bold'],
+              src: '@/assets/fonts/Rex-Bold',
+              fontWeight: 400,
+              fontStyle: 'normal'
+            }
+          ]
+        }
+      ]
+    }]
   ],
   purgeCSS: {
     whitelistPatterns: [/plyr/, /vm--/, /icon--/, /label--/, /vue-dialog/, /vue-modal/],

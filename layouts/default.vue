@@ -37,12 +37,6 @@ export default {
 </script>
 
 <style>
-@font-face {
-  font-family: "Rex Bold";
-  font-display: swap;
-  src: url("../assets/Rex-Bold.woff2") format("woff2"),
-    url("../assets/Rex-Bold.woff") format("woff");
-}
 body {
   overscroll-behavior: none;
   overflow-x: hidden;
@@ -54,11 +48,6 @@ a {
 img:not([src]) {
   display: none;
 }
-/* @media screen and (max-width: 768px) {
-  body {
-      overflow-y: auto;
-  }
-} */
 
 .cursor-pointer {
   cursor: pointer;
@@ -79,11 +68,6 @@ img:not([src]) {
   margin-right: 0px;
 }
 
-/* @media screen and (max-width: 768px) {
-  .fix-marging {
-    margin-right: -15px;
-  }
-} */
 @-moz-document url-prefix() {
   .fix-marging {
     border-right: 5px solid white !important;
@@ -91,16 +75,7 @@ img:not([src]) {
 }
 .custom-scroll {
   scrollbar-color: #f1f1f1 #df99d8;
-  /* overflow-y: scroll;*/
-  /* position: absolute; */
-  /* overflow-x: hidden;  */
 }
-/* @media screen and (max-width: 768px) {
-  .custom-scroll {
-    position: inherit;
-    overflow: hidden;
-  }
-} */
 
 .custom-scroll::-webkit-scrollbar {
   width: 10px;

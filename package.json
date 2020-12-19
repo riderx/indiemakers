@@ -2,7 +2,9 @@
   "name": "indiemakers",
   "version": "1.0.0",
   "private": true,
-  "engines": {"node": "12"},
+  "engines": {
+    "node": "12"
+  },
   "scripts": {
     "dev": "npx nuxt",
     "build": "npx nuxt build",
@@ -28,6 +30,7 @@
     "linkifyjs": "^2.1.9",
     "node-fetch": "^2.6.1",
     "nuxt": "^2.14.7",
+    "nuxt-font-loader-strategy": "^1.1.2",
     "nuxt-purgecss": "^1.0.0",
     "rss-parser": "^3.9.0",
     "vue": "^2.6.12",
