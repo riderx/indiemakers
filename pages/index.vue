@@ -154,12 +154,12 @@ export default {
   data () {
     return {
       sizeHead: '100vh',
-      image: {
-        src: require('~/assets/cover-im@0.5x.png'),
+      image: { // https://ik.imagekit.io/gyc0uxoln1/indiemakers/cover-im_0.5x_5ozFHlEvg.png?tr=q-5,bl-5,h-150,w-150
+        src: 'https://ik.imagekit.io/gyc0uxoln1/indiemakers/cover-im_0.5x_5ozFHlEvg.png?tr=h-100,w-100',
         error: require('~/assets/cover-im_user.png'),
-        loading: require('~/assets/cover-im_empty.png')
+        loading: 'https://ik.imagekit.io/gyc0uxoln1/indiemakers/cover-im_0.5x_5ozFHlEvg.png?tr=q-5,bl-5,h-50,w-50'
       },
-      loadingImg: require('~/assets/cover-im_empty.png'),
+      loadingImg: 'https://ik.imagekit.io/gyc0uxoln1/indiemakers/cover-im_0.5x_5ozFHlEvg.png?tr=q-5,bl-5,h-50,w-50',
       episodes: [],
       title: '🚀Le podcast pour lancer sa startup en indépendant',
       messages: [
