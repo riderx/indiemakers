@@ -9,9 +9,10 @@ dayjs.locale('fr')
 // const firestore = require('firebase-firestore-lite')
 
 const rss = 'https://anchor.fm/s/414d1d4/podcast/rss'
-const linkTwitterRe = /son twitter : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
-const linkInstagramRe = /son instagram : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
-const linkLinkedinRe = /son linkedin : <a href="(?<link>.*)">(?<name>.*)<\/a>/g
+
+const linkTwitterRe = /son twitter : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
+const linkInstagramRe = /son instagram : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
+const linkLinkedinRe = /son linkedin : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
 const parser = new Parser()
 const imagekit = new ImageKit({
   publicKey: 'public_9vWOr643awJiLr6HqhpNNF1ZVkQ=',
@@ -33,7 +34,7 @@ const cleanHandler = (handler) => {
 }
 
 const findTw = (text) => {
-  const founds = linkTwitterRe.exec(text.toLowerCase())
+  const founds = linkTwitterRe.exec(text)
   if (!founds || !founds.groups) {
     return { name: null, link: null }
   }
@@ -42,7 +43,7 @@ const findTw = (text) => {
 }
 
 const findLinkedin = (text) => {
-  const founds = linkLinkedinRe.exec(text.toLowerCase())
+  const founds = linkLinkedinRe.exec(text)
   if (!founds || !founds.groups) {
     return { name: null, link: null }
   }
@@ -51,7 +52,7 @@ const findLinkedin = (text) => {
 }
 
 const findInst = (text) => {
-  const founds = linkInstagramRe.exec(text.toLowerCase())
+  const founds = linkInstagramRe.exec(text)
   if (!founds || !founds.groups) {
     return { name: null, link: null }
   }
@@ -111,9 +112,6 @@ const feed = async () => {
           element.social = { name: null, link: null }
         }
         items.push(element)
-        console.log('element.twitter.name', element.guid_fix, element.social.name, element.social.link)
-
-        // ik-seo/${element.guid_fix}/${element.social.name}
         const seoName = element.social.name ? element.social.name.replace('.', '-') : element.guid_fix
         element.image_optimized = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=h-300,w-300`
         element.image_big = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=h-600,w-600`

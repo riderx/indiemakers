@@ -181,7 +181,7 @@ export default {
     )
   },
   mounted () {
-    this.setSizeHead()
+    // this.setSizeHead()
   },
   methods: {
     joinUs () {
@@ -212,6 +212,7 @@ export default {
       return nextEp !== 14 ? `${nextEp} jours` : 'DEMAIN 10 heures'
     },
     open (url) {
+      // console.log('open', url)
       if (url && url.startsWith('http')) {
         window.open(url, '_blank')
       } else if (url) {
