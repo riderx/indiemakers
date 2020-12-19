@@ -334,8 +334,8 @@ export default {
           content: 'image/jpg'
         },
         { hid: 'og:image', property: 'og:image', content: this.imageOptimized },
-        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
-        { hid: 'og:image:height', property: 'og:image:height', content: 400 },
+        { hid: 'og:image:width', property: 'og:image:width', content: 300 },
+        { hid: 'og:image:height', property: 'og:image:height', content: 300 },
         { hid: 'og:audio', property: 'og:audio', content: this.audio },
         {
           hid: 'og:audio:type',
