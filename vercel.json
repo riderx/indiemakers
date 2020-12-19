@@ -18,7 +18,7 @@
   ],
   "routes": [
     { "src": "/api.*", "headers": { "Cache-Control": "max-age=0, s-maxage=1, stale-while-revalidate" }, "continue": true },
-    { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=0, s-maxage=1, stale-while-revalidate" }, "continue": true },
+    { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=14400, s-maxage=1, stale-while-revalidate" }, "continue": true },
     {
       "src": "/sw.js",
       "dest": "/_nuxt/static/sw.js",
