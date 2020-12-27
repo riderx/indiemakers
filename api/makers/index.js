@@ -17,7 +17,7 @@ const loadData = async () => {
       return []
     }
   } catch (err) {
-    console.error('loadData', err, await func.run('getMakers'))
+    console.error('loadData', err)
     return []
   }
 }
@@ -26,7 +26,7 @@ const findInEp = (name, episodes) => {
   let found = null
   const lowName = name.toLowerCase()
   episodes.forEach((element) => {
-    if (element && element.twitter && element.twitter.name.toLowerCase() === lowName) {
+    if (element && element.twitter && element.twitter.name && element.twitter.name.toLowerCase() === lowName) {
       found = element.guid
     }
   })

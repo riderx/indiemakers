@@ -15,8 +15,13 @@ const url = `https://${zone}-${projectId}.cloudfunctions.net/`
 // Now pass the auth instance as well as the projectId.
 const db = new Database({ projectId, auth })
 
-const func = (name, data) => {
-  return axios.post(url + name, data, { headers: auth.authorizedRequest })
+const func = async (name, data) => {
+  const headers = {}
+  if (auth.user) {
+    await auth.refreshIdToken() // Won't do anything if the token didn't expire yet.
+    headers.Authorization = `Bearer ${auth.user.tokenManager.idToken}`
+  }
+  return axios.post(url + name, data, { headers })
 }
 const emailSigning = (email, url) => {
   const authRedir = new Auth({
