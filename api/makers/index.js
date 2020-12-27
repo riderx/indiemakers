@@ -7,8 +7,9 @@ const loadData = async () => {
     if (results) {
       const episodes = await util.feed()
       return results.map((data) => {
-        const guid = findInEp(data.login.toLowerCase(), episodes)
-        data.guid = guid
+        if (data.login) {
+          data.guid = findInEp(data.login, episodes)
+        }
         data.img = data.pic
         return data
       })
@@ -23,8 +24,9 @@ const loadData = async () => {
 
 const findInEp = (name, episodes) => {
   let found = null
+  const lowName = name.toLowerCase()
   episodes.forEach((element) => {
-    if (element && element.twitter && element.twitter.name.toLowerCase() === name) {
+    if (element && element.twitter && element.twitter.name.toLowerCase() === lowName) {
       found = element.guid
     }
   })
