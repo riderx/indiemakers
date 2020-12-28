@@ -414,7 +414,7 @@
       </modal>
       <modal height="auto" adaptive name="added">
         <div class="container-fluid relative">
-          <div class="row py-5">
+          <div class="row">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('added')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -428,12 +428,11 @@
               </div>
               <div class="row bg-indiePurple pt-4 h-100">
                 <div class="col-12 pt-2 text-white text-center">
-                  <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
-                  <p>J'ai supposé que tu voulais aussi voter pour lui/elle, alors c'est fait .✅</p>
+                  <p>Twitte pour motiver ce·tte Maker à venir sur le podcast !</p>
                   <p class="font-weight-bold">
-                    Voici un message tout pret pour l'inviter 😎
+                    Voici un message tout pret 😎
                   </p>
-                  <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
+                  <p>Quand l'épisode sortira je t'enverrais un email pour te remercier 💃</p>
                 </div>
                 <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
                   <button
@@ -451,7 +450,7 @@
       </modal>
       <modal adaptive height="auto" name="fail-add">
         <div class="container-fluid relative">
-          <div class="row py-5">
+          <div class="row">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('fail-add')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -567,7 +566,7 @@
       </modal>
       <modal adaptive height="auto" name="fail-exist">
         <div class="container-fluid relative">
-          <div class="row py-5">
+          <div class="row">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('fail-exist')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -603,7 +602,7 @@
       </modal>
       <modal adaptive height="auto" name="fail-exist-vote">
         <div class="container-fluid relative">
-          <div class="row py-5">
+          <div class="row">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('fail-exist-vote')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -790,7 +789,7 @@
       </modal>
       <modal height="auto" adaptive name="share_hunt">
         <div class="container-fluid relative">
-          <div class="row py-5">
+          <div class="row">
             <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('rate')">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -1090,7 +1089,6 @@ export default {
             if (added.error && added.error === 'Already voted') {
               this.$modal.show('fail-exist-vote')
             } else if (added.error) {
-              console.error(added)
               this.$modal.show('fail-add')
             } else if (added.done && added.done === 'Voted') {
               this.$modal.show('fail-exist')

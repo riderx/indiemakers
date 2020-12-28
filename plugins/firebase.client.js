@@ -21,7 +21,7 @@ const func = async (name, data) => {
     await auth.refreshIdToken() // Won't do anything if the token didn't expire yet.
     headers.Authorization = `Bearer ${auth.user.tokenManager.idToken}`
   }
-  return axios.post(url + name, data, { headers })
+  return axios.post(url + name, { data }, { headers })
 }
 const emailSigning = (email, url) => {
   const authRedir = new Auth({
