@@ -1009,6 +1009,7 @@ export default {
     },
     async joinDiscord () {
       await this.addEMailSub('discord')
+      this.$modal.hide('discord')
       window.open('https://discord.gg/2XyUn3A', '_blank')
     },
     addEMailSub (kind = 'email') {
