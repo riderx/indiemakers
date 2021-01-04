@@ -296,11 +296,19 @@ export const addEp = functions.https.onRequest(async (req, res) => {
     await admin.firestore()
     .collection('episodes')
     .doc(req.body.udi)
-    .update(req.body)
-    res.json({ status: 'done' })
-  } catch (err) {
-    res.json({ error: err, status: 'already done' })
+    .update({ udi: req.body.udi })
+    res.json({ error: 'already done' })
+  } catch {
+    try {
+      await admin.firestore()
+      .collection('episodes')
+      .doc(req.body.udi)
+      .set(req.body)
+      res.json({ status: 'done' })
+    } catch (err) {
+      res.json({ error: err })
     }
+  }
 })
 
 export const updateTwiterUser = functions.pubsub.schedule('0 0 * * *').onRun(async (context) => {
