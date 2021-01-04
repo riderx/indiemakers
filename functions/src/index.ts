@@ -435,7 +435,7 @@ export const onUpdatePeople = functions.firestore
     const person: Person | undefined = <Person>snapshot.after.data()
     const personId = context.params.personId
     if (person && person.bio) {
-      let twUser: TwUser | null = await twUserPromise(person.login)
+      const twUser: TwUser | null = await twUserPromise(person.login)
       const name = twUser.name
       const bio = await transformURLtoTracked(person.bio, twUser ? twUser.entities : null)
       const pic = twUser ? twUser.profile_image_url_https.replace('_normal', '') : person.pic
