@@ -9,6 +9,7 @@
           :src="logo.source"
           class="w-auto h-8 sm:h-10"
           :alt="logo.title"
+          :aria-label="logo.title"
         >
       </a>
     </div>
@@ -19,6 +20,7 @@
           v-for="(icon, index) in icones"
           :key="index"
           :alt="icon.title"
+          :aria-label="icon.title"
           href="#"
           class="inline-block px-2 text-base font-medium hover:text-white md:px-3"
           @click="openPage(icon.lien)"
