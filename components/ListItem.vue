@@ -1,13 +1,13 @@
 <template>
   <LazyHydrate when-visible>
     <div class="flex w-full">
-      <div class="relative w-2/5 md:w-1/3">
+      <div class="relative w-2/5 md:w-1/3 square">
         <img
           v-lazy="getImgObj"
           width="100%"
           height="100%"
           :src="loadingImg"
-          class="w-full h-full border-4 border-white cursor-pointer"
+          class="w-full h-full border-4 border-white cursor-pointer content"
           :alt="'Picture ' + title"
           @click="$emit('image')"
         >
@@ -67,7 +67,26 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.h-w-screen {
+  height: 100vw;
+}
+
+.square {
+  position: relative;
+}
+
+.square:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
 .tumb_up {
   position: absolute;
   bottom: 0px;

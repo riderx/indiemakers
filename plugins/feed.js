@@ -11,7 +11,7 @@ dayjs.locale('fr')
 const rss = 'https://anchor.fm/s/414d1d4/podcast/rss'
 
 const linkTwitterRe = /son twitter : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
-const nameRe = /j’accueille (?<name>.*?)\./i
+const nameRe = /j'accueille (?<name>.*?)\./i
 const linkInstagramRe = /son instagram : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
 const linkLinkedinRe = /son linkedin : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
 const parser = new Parser()

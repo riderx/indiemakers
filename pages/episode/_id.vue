@@ -12,7 +12,7 @@
                 {{ title }}
               </h1>
 
-              <div class="block w-full px-0 sm:hidden">
+              <div class="block w-full px-0 h-w-screen sm:hidden">
                 <img
                   v-lazy="image"
                   width="100%"
