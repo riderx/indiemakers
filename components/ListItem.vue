@@ -1,7 +1,7 @@
 <template>
   <LazyHydrate when-visible>
     <div class="flex w-full">
-      <div class="relative w-1/3">
+      <div class="relative w-2/5 md:w-1/3">
         <img
           v-lazy="getImgObj"
           width="100%"
@@ -11,19 +11,19 @@
           :alt="'Picture ' + title"
           @click="$emit('image')"
         >
-        <div v-if="votes" class="absolute cursor-pointer tumb_up px-3 border-4 border-light text-center bg-indiePurple" @click="$emit('voted')">
+        <div v-if="votes" class="absolute px-3 text-center border-4 cursor-pointer tumb_up border-light bg-indiePurple" @click="$emit('voted')">
           👍<br>
           {{ votes }}
         </div>
       </div>
-      <div class="w-2/3 p-2">
+      <div class="w-3/5 p-2 md:w-2/3">
         <h3 class="font-indie md:text-xl md:mb-1">
           {{ title }}
         </h3>
-        <p v-if="name" class="text-indiePink text-sm md:mb-1 z-10 cursor-pointer" @click="$emit('name')">
+        <p v-if="name" class="z-10 text-sm cursor-pointer text-indiePink md:mb-1" @click="$emit('name')">
           @{{ name }}
         </p>
-        <p v-if="date" class="text-gray-300 text-sm md:mb-1">
+        <p v-if="date" class="text-sm text-gray-300 md:mb-1">
           {{ date }}
         </p>
         <p class="text-sm line-clamp" v-html="preview" />

@@ -11,6 +11,7 @@ dayjs.locale('fr')
 const rss = 'https://anchor.fm/s/414d1d4/podcast/rss'
 
 const linkTwitterRe = /son twitter : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
+const nameRe = /j’accueille (?<name>.*?)\./i
 const linkInstagramRe = /son instagram : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
 const linkLinkedinRe = /son linkedin : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
 const parser = new Parser()
@@ -40,6 +41,14 @@ const findTw = (text) => {
   }
   founds.groups.name = cleanHandler(founds.groups.name)
   return founds.groups
+}
+
+const findName = (text) => {
+  const founds = nameRe.exec(text)
+  if (!founds || !founds.groups) {
+    return null
+  }
+  return founds.groups.name
 }
 
 const findLinkedin = (text) => {
@@ -97,6 +106,7 @@ const feed = async () => {
         element.preview = previewText(element.contentSnippet)
         element.preview_no_emoji = removeEmoji(element.preview)
         element.twitter = findTw(element.content)
+        element.name = findName(element.content)
         element.date = dayjs(element.isoDate).fromNow()
         element.insta = findInst(element.content)
         element.linkedin = findLinkedin(element.content)

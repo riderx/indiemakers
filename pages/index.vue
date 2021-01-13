@@ -1,15 +1,15 @@
 <template>
   <LazyHydrate when-idle>
     <div id="episodes">
-      <div class="container px-0 mx-auto w-full">
+      <div class="container w-full px-0 mx-auto">
         <div class="flex flex-wrap w-full">
           <div class="w-full md:w-1/2 md:px-4">
             <div
               id="header-eps"
-              class="flex flex-wrap bg-blue border-8 border-light py-1 py-md-2 w-full"
+              class="flex flex-wrap w-full py-1 border-8 bg-blue border-light py-md-2"
             >
               <div
-                class="flex-grow py-2 px-0 text-white text-center"
+                class="flex-grow px-0 py-2 text-center text-white"
               >
                 <h1 class="text-3xl md:text-4xl font-indie">
                   🎙 Episodes
@@ -18,12 +18,12 @@
             </div>
             <div
               id="scrollable"
-              class="md:h-78 overflow-hidden md:overflow-y-scroll border-4 border-light md:custom-scroll"
+              class="overflow-hidden border-4 md:h-78 md:overflow-y-scroll border-light md:custom-scroll"
             >
               <div
                 v-for="episode in episodes"
                 :key="episode.guid_fix"
-                class="flex flex-wrap bg-blue text-white border-b align-items-top"
+                class="flex flex-wrap text-white border-b bg-blue align-items-top"
               >
                 <ListItem
                   :title="episode.title"
@@ -41,28 +41,28 @@
           </div>
           <div
             id="content"
-            class="w-full md:w-1/2 px-4 pt-md-0 px-md-5 text-white"
+            class="w-full px-4 text-white md:w-1/2 pt-md-0 px-md-5"
           >
             <div class="flex flex-wrap">
               <div
-                class="w-full md:w-1/5 offset-3 offset-md-0 mb-3"
+                class="w-full mb-3 md:w-1/5 offset-3 offset-md-0"
               >
                 <img
                   v-lazy="image"
                   width="100%"
                   height="100%"
-                  class="mx-auto my-10 w-1/2 md:m-0 md:w-4/5 h-auto border-8 border-light"
+                  class="w-1/2 h-auto mx-auto my-10 border-8 md:m-0 md:w-4/5 border-light"
                   alt="IM COVER"
                   :src="loadingImg"
                 >
               </div>
-              <div class="md:w-3/5 md:px-4 text-center md:text-left">
-                <h1 class="pb-2 font-indie text-3xl">
+              <div class="text-center md:w-3/5 md:px-4 md:text-left">
+                <h1 class="pb-2 text-3xl font-indie">
                   {{ title }}
                 </h1>
               </div>
               <div class="py-1 text-sm">
-                <h3 class="font-indie text-xl">
+                <h3 class="text-xl font-indie">
                   Prochain episode dans {{ nextEpisode() }}
                 </h3>
               </div>
@@ -73,10 +73,10 @@
                   </p>
                 </div>
               </div>
-              <div class="pt-3 flex justify-center w-full">
+              <div class="flex justify-center w-full pt-3">
                 <button
                   type="button"
-                  class="border-4 border-white font-indie py-2 px-5 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                  class="px-5 py-2 border-4 border-white font-indie hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                   @click="open('/makers_hunt')"
                 >
                   👉 Découvre les Makers Français
@@ -111,21 +111,21 @@
                 <h5 class="font-indie">
                   Mes autres projets:
                 </h5>
-                <div class="flex flex-column flex-md-row text-sm">
+                <div class="flex text-sm flex-column flex-md-row">
                   <a
-                    class="text-white block px-2 py-3 py-md-0"
+                    class="block px-2 py-3 text-white py-md-0"
                     target="_blank"
                     rel="noreferrer"
                     href="https://apps.apple.com/us/app/captime-crossfit-timer/id1369288585"
                   >Captime | Crossfit timer</a>
                   <a
-                    class="text-white block px-2 py-3 py-md-0"
+                    class="block px-2 py-3 text-white py-md-0"
                     target="_blank"
                     rel="noreferrer"
                     href="https://lkstats.web.app/welcome"
                   >Lk stats | Linkedin analytics</a>
                   <a
-                    class="text-white block px-2 py-3 py-md-0"
+                    class="block px-2 py-3 text-white py-md-0"
                     target="_blank"
                     rel="noreferrer"
                     href="https://bewise.love"

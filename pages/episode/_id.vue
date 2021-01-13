@@ -1,28 +1,28 @@
 <template>
   <LazyHydrate when-idle>
     <div id="emission">
-      <div class="container mx-auto px-0 w-full">
+      <div class="container w-full px-0 mx-auto">
         <div class="flex flex-wrap">
-          <div class="w-full lg:w-1/2 md:px-4 text-white text-sm">
+          <div class="w-full text-sm text-white lg:w-1/2 md:px-4">
             <div
               id="header-title"
-              class="flex flex-wrap justify-center pt-3 md:pb-1 bg-blue border-t-8 md:border-8 border-light"
+              class="flex flex-wrap justify-center pt-3 border-t-8 md:pb-1 bg-blue md:border-8 border-light"
             >
-              <h1 class="font-indie text-3xl text-center">
+              <h1 class="text-3xl text-center font-indie">
                 {{ title }}
               </h1>
 
-              <div class="block sm:hidden px-0">
+              <div class="block w-full px-0 sm:hidden">
                 <img
                   v-lazy="image"
                   width="100%"
                   height="100%"
                   :src="loadingImg"
-                  class="w-full max-w-full h-auto border-t-8 md:border-8 border-light"
+                  class="w-full h-auto max-w-full border-t-8 md:border-8 border-light"
                   :alt="title"
                 >
               </div>
-              <div class="block sm:hidden text-white px-0 w-full">
+              <div class="block w-full px-0 text-white sm:hidden">
                 <vue-plyr v-if="showAudio" ref="plyr">
                   <audio>
                     <source :src="audio" type="audio/mp3">
@@ -31,41 +31,41 @@
               </div>
             </div>
             <div
-              class="md:h-78 overflow-hidden md:overflow-y-scroll border-4 border-light px-5 md:custom-scroll"
+              class="px-5 overflow-hidden border-4 md:h-78 md:overflow-y-scroll border-light md:custom-scroll"
             >
               <div
-                class="content_html px-1 px-md-5 md:pt-3 text-grey-lightest"
+                class="px-1 content_html px-md-5 md:pt-3 text-grey-lightest"
                 v-html="content"
               />
             </div>
             <div
-              class="flex flex-wrap bg-blue py-4 md:hidden"
+              class="flex flex-wrap py-4 bg-blue md:hidden"
             >
               <div class="px-1 text-center">
                 <button
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-4 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
+                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 rounded select-none bg-blue border-light bnt-block m-md-3"
                   @click="listen()"
                 >
                   🎧 Ecouter
                 </button>
                 <button
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-4 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
+                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 rounded select-none bg-blue border-light bnt-block m-md-3"
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-4 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
+                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 rounded select-none bg-blue border-light bnt-block m-md-3"
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline bg-blue border-4 border-light py-3 px-4 text-xl leading-tight bnt-block text-white m-1 m-md-3 px-4"
+                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 rounded select-none bg-blue border-light bnt-block m-md-3"
                   @click="joinUs()"
                 >
                   👉 Lance toi
@@ -74,15 +74,15 @@
             </div>
           </div>
           <div
-            class="lg:w-1/2 px-6 text-center hidden md:block"
+            class="hidden px-6 text-center lg:w-1/2 md:block"
           >
-            <div class="flex flex-wrap flex-col align-items-center">
-              <div class="w-11/12 flex flex-col">
+            <div class="flex flex-col flex-wrap align-items-center">
+              <div class="flex flex-col w-11/12">
                 <img
                   v-lazy="image"
                   width="100%"
                   height="100%"
-                  class="w-full max-w-full h-auto border-8 border-light"
+                  class="w-full h-auto max-w-full border-8 border-light"
                   alt="Logo person"
                 >
                 <vue-plyr v-if="showAudio" ref="plyr2">
@@ -92,11 +92,11 @@
                 </vue-plyr>
               </div>
               <div
-                class="flex justify-between pt-4 font-indie text-white text-lg w-11/12"
+                class="flex justify-between w-11/12 pt-4 text-lg text-white font-indie"
               >
                 <button
                   type="button"
-                  class="border-4 border-light px-3 pt-2 pb-1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                  class="px-3 pt-2 pb-1 border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                   @click="listen()"
                 >
                   🎧 Ecouter
@@ -104,21 +104,21 @@
                 <button
                   id="rtp-button"
                   type="button"
-                  class="border-4 border-light px-3 pt-2 pb-1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                  class="px-3 pt-2 pb-1 border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="border-4 border-light px-3 pt-2 pb-1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                  class="px-3 pt-2 pb-1 border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="border-4 border-light px-3 pt-2 pb-1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                  class="px-3 pt-2 pb-1 border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                   @click="joinUs()"
                 >
                   👉 Lance toi
