@@ -89,7 +89,7 @@ const previewText = (text) => {
   // return text
   const textSplited = text.split(' ')
   textSplited.length = 50
-  return textSplited.join(' ')
+  return textSplited.join(' ').replace('.', '.<br/>')
   // let first = text.split(/[.!]+/)[0]
   // if (first.split(' ').length > 50) {
   //   first = `${first.split(' ').splice(0, 70).join(' ')} ...`
@@ -107,7 +107,7 @@ const feed = async () => {
     if (parsed.items) {
       parsed.items.forEach((element) => {
         element.guid_fix = guidConvert(element.guid)
-        element.preview = previewText(element.content)
+        element.preview = previewText(element.contentSnippet)
         element.preview_no_emoji = removeEmoji(element.preview)
         element.twitter = findTw(element.content)
         element.name = findName(element.content)

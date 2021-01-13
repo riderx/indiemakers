@@ -1,22 +1,24 @@
 <template>
   <LazyHydrate when-visible>
     <div class="flex w-full">
-      <div class="relative w-2/5 md:w-1/4 square">
-        <img
-          v-lazy="getImgObj"
-          width="100%"
-          height="100%"
-          :src="loadingImg"
-          class="absolute w-full h-auto border-4 border-white cursor-pointer"
-          :alt="'Picture ' + title"
-          @click="$emit('image')"
-        >
-        <div v-if="votes" class="absolute px-3 text-center border-4 cursor-pointer tumb_up border-light bg-indiePurple" @click="$emit('voted')">
-          👍<br>
-          {{ votes }}
+      <div class="w-2/5 md:w-1/4">
+        <div class="relative square">
+          <img
+            v-lazy="getImgObj"
+            width="100%"
+            height="100%"
+            :src="loadingImg"
+            class="w-full h-full border-4 border-white cursor-pointer content"
+            :alt="'Picture ' + title"
+            @click="$emit('image')"
+          >
+          <div v-if="votes" class="absolute px-3 text-center border-4 cursor-pointer tumb_up border-light bg-indiePurple" @click="$emit('voted')">
+            👍<br>
+            {{ votes }}
+          </div>
         </div>
       </div>
-      <div class="w-3/5 h-full p-2 md:w-3/4">
+      <div class="w-3/5 p-2 overflow-hidden md:w-3/4">
         <h3 class="font-indie md:text-xl md:mb-1">
           {{ title }}
         </h3>
@@ -26,7 +28,7 @@
         <p v-if="date" class="text-sm text-gray-300 md:mb-1">
           {{ date }}
         </p>
-        <p class="text-sm line-clamp" v-html="preview" />
+        <p class="text-sm md:leading-7 line-clamp" v-html="preview" />
       </div>
     </div>
   </LazyHydrate>
@@ -72,12 +74,21 @@ export default {
   height: 100vw;
 }
 
+.square {
+  position: relative;
+}
+
 .square:after {
   content: "";
   display: block;
   padding-bottom: 100%;
 }
 
+.content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
 .tumb_up {
   position: absolute;
   bottom: 0px;
