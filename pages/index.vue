@@ -11,9 +11,9 @@
               <div
                 class="flex-grow px-0 py-2 text-center text-white"
               >
-                <h1 class="text-3xl md:text-4xl font-indie">
+                <p class="text-3xl md:text-4xl font-indie">
                   🎙 Episodes
-                </h1>
+                </p>
               </div>
             </div>
             <div
@@ -62,9 +62,9 @@
                 </h1>
               </div>
               <div class="py-1 text-sm">
-                <h4 class="text-xl font-indie">
+                <h2 class="text-xl font-indie">
                   Prochain episode dans {{ nextEpisode() }}
-                </h4>
+                </h2>
               </div>
               <div class="pt-3 text-sm">
                 <div v-for="(message, index) in messages" :key="`ep-${index}`">
@@ -79,7 +79,7 @@
                   class="px-5 py-2 border-4 border-white font-indie hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                   @click="open('/makers_hunt')"
                 >
-                  👉 Découvre les Makers Français
+                  <h3>👉 Découvre les Makers Français</h3>
                 </button>
               </div>
               <div class="pt-3 text-sm">

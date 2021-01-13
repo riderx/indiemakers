@@ -8,9 +8,9 @@
               id="header-title"
               class="flex flex-wrap justify-center pt-3 border-t-8 md:pb-1 bg-blue md:border-8 border-light"
             >
-              <h1 class="text-3xl text-center font-indie">
+              <p class="text-3xl text-center font-indie">
                 {{ title }}
-              </h1>
+              </p>
 
               <div class="block w-full px-0 h-w-screen sm:hidden">
                 <img
