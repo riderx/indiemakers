@@ -108,9 +108,9 @@
                 </p>
               </div>
               <div class="pt-3 pb-3 text-white">
-                <h5 class="font-indie">
+                <p class="font-indie">
                   Mes autres projets:
-                </h5>
+                </p>
                 <div class="flex text-sm flex-column flex-md-row">
                   <a
                     class="block px-2 py-3 text-white py-md-0"
