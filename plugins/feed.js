@@ -86,11 +86,15 @@ const sendImageToCache = async (url, guid) => {
   }
 }
 const previewText = (text) => {
-  let first = text.split(/[.!]+/)[0]
-  if (first.split(' ').length > 30) {
-    first = `${first.split(' ').splice(0, 17).join(' ')} ...`
-  }
-  return first
+  // return text
+  const textSplited = text.split(' ')
+  textSplited.length = 50
+  return textSplited.join(' ')
+  // let first = text.split(/[.!]+/)[0]
+  // if (first.split(' ').length > 50) {
+  //   first = `${first.split(' ').splice(0, 70).join(' ')} ...`
+  // }
+  // return first
 }
 
 const removeEmoji = (str) => {
@@ -103,7 +107,7 @@ const feed = async () => {
     if (parsed.items) {
       parsed.items.forEach((element) => {
         element.guid_fix = guidConvert(element.guid)
-        element.preview = previewText(element.contentSnippet)
+        element.preview = previewText(element.content)
         element.preview_no_emoji = removeEmoji(element.preview)
         element.twitter = findTw(element.content)
         element.name = findName(element.content)
@@ -125,7 +129,7 @@ const feed = async () => {
         const seoName = element.social.name ? element.social.name.replace('.', '-') : element.guid_fix
         element.image_optimized = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=h-300,w-300`
         element.image_big = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=h-600,w-600`
-        element.image_loading = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=q-5,bl-5,h-150,w-150`
+        element.image_loading = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=q-5,bl-5,h-300,w-300`
       })
     }
   } catch (err) {

@@ -18,14 +18,15 @@
             </div>
             <div
               id="scrollable"
-              class="overflow-hidden border-4 md:h-78 md:overflow-y-scroll border-light md:custom-scroll"
+              class="w-full overflow-hidden border-4 md:h-78 md:overflow-y-scroll border-light md:custom-scroll"
             >
               <div
                 v-for="episode in episodes"
                 :key="episode.guid_fix"
-                class="flex flex-wrap text-white border-b bg-blue align-items-top"
+                class="flex flex-wrap w-full text-white border-b bg-blue align-items-top"
               >
                 <ListItem
+                  class="w-full"
                   :title="episode.title"
                   :name="episode.social.name"
                   :date="episode.date"
