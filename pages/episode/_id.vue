@@ -78,18 +78,22 @@
           >
             <div class="flex flex-col flex-wrap align-items-center">
               <div class="flex flex-col w-11/12">
-                <img
-                  v-lazy="image"
-                  width="100%"
-                  height="100%"
-                  class="w-full h-auto max-w-full border-8 border-light"
-                  alt="Logo person"
-                >
-                <vue-plyr v-if="showAudio" ref="plyr2">
-                  <audio>
-                    <source :src="audio" type="audio/mp3">
-                  </audio>
-                </vue-plyr>
+                <div>
+                  <div class="relative square">
+                    <img
+                      v-lazy="image"
+                      width="100%"
+                      height="100%"
+                      class="w-full h-auto max-w-full border-8 border-light square_content"
+                      alt="Logo person"
+                    >
+                  </div>
+                  <vue-plyr v-if="showAudio" ref="plyr2">
+                    <audio>
+                      <source :src="audio" type="audio/mp3">
+                    </audio>
+                  </vue-plyr>
+                </div>
               </div>
               <div
                 class="flex justify-between w-11/12 pt-4 text-lg text-white font-indie"
@@ -356,6 +360,20 @@ export default {
 </style >
 <style scoped>
 
+.h-w-screen {
+  height: 100vw;
+}
+
+.square_content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.square:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
 .content_html >>> hr {
   border-top: 10px solid rgba(255, 255, 255, 1);
   border-radius: 0px!important;

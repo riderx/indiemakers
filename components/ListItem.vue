@@ -74,10 +74,6 @@ export default {
   height: 100vw;
 }
 
-.square {
-  position: relative;
-}
-
 .square:after {
   content: "";
   display: block;

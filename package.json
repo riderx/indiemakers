@@ -34,11 +34,14 @@
     "nuxt-font-loader-strategy": "^1.1.2",
     "nuxt-purgecss": "^1.0.0",
     "rss-parser": "^3.9.0",
+    "sitemap": "^6.3.5",
+    "stream": "^0.0.2",
     "vue": "^2.6.12",
     "vue-js-modal": "^2.0.0-rc.3",
     "vue-lazy-hydration": "^1.0.0-beta.12",
     "vue-lazyload": "^1.3.3",
-    "vue-plyr": "7"
+    "vue-plyr": "7",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "5.0.0",
