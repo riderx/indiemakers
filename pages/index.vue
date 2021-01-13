@@ -62,9 +62,9 @@
                 </h1>
               </div>
               <div class="py-1 text-sm">
-                <h3 class="text-xl font-indie">
+                <h4 class="text-xl font-indie">
                   Prochain episode dans {{ nextEpisode() }}
-                </h3>
+                </h4>
               </div>
               <div class="pt-3 text-sm">
                 <div v-for="(message, index) in messages" :key="`ep-${index}`">

@@ -1,8 +1,15 @@
 <template>
-  <nav class="flex items-center justify-between flex-wrap py-3 p-1 md:p-6">
-    <div class="flex items-center flex-no-shrink text-white">
-      <a href="/">
-        <img :id="logo.title" :src="logo.source" class="h-8 w-auto sm:h-10" :alt="logo.title">
+  <nav class="flex flex-wrap items-center justify-between p-1 py-3 md:p-6">
+    <div class="flex items-center text-white flex-no-shrink">
+      <a href="/" :alt="logo.title">
+        <img
+          :id="logo.title"
+          width="100%"
+          height="100%"
+          :src="logo.source"
+          class="w-auto h-8 sm:h-10"
+          :alt="logo.title"
+        >
       </a>
     </div>
     <div class="flex items-center w-max-1/3">
@@ -11,8 +18,9 @@
         <a
           v-for="(icon, index) in icones"
           :key="index"
+          :alt="icon.title"
           href="#"
-          class="inline-block text-base font-medium hover:text-white px-2 md:px-3"
+          class="inline-block px-2 text-base font-medium hover:text-white md:px-3"
           @click="openPage(icon.lien)"
           v-html="icon.icon"
         />
