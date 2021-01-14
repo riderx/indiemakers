@@ -1,10 +1,10 @@
 <template>
   <LazyHydrate when-idle>
     <div class="container mx-auto">
-      <div class="flex flex-wrap bg-blue py-2 border-8 border-light">
-        <div class="w-1/2 text-center">
-          <img class="w-1/4 pb-5 pb-md-3" src="/newsletter.svg">
-          <h1 class="text-3xl font-indie pl-2 py-2 m-0 text-white text-center">
+      <div class="flex flex-wrap py-2">
+        <div class="w-full mx-auto border-8 md:w-1/2 border-light">
+          <img class="w-1/4 pb-5 mx-auto pb-md-3" src="/newsletter.svg">
+          <h1 class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie">
             {{ title }}
           </h1>
           <p class="px-5 text-white">
@@ -13,37 +13,37 @@
           <p class="px-5 text-white">
             Tu seras également informé de la sortie des épisodes !
           </p>
-          <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-3 text-white text-center">
-            <div class="mb-4 mb-0">
+          <div class="pt-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
+            <div class="mb-0 mb-4">
               <input
                 ref="name"
                 v-model="email"
                 type="text"
-                class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-grey-darker border border-grey rounded pb-0"
+                class="block w-full px-2 py-1 pb-0 mb-1 text-base leading-normal bg-white border rounded appearance-none text-grey-darker border-grey"
                 aria-describedby="TweetnameHelp"
                 placeholder="Elon@tesla.com"
               >
             </div>
           </div>
-          <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-3 text-white text-center">
+          <div class="pt-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
             <div class="mb-4">
               <input
                 ref="name"
                 v-model="name"
                 type="text"
-                class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-grey-darker border border-grey rounded pb-0"
+                class="block w-full px-2 py-1 pb-0 mb-1 text-base leading-normal bg-white border rounded appearance-none text-grey-darker border-grey"
                 aria-describedby="TweetnameHelp"
                 placeholder="Elon Musk"
               >
             </div>
           </div>
-          <div class="md:mx-1/4 md:w-1/2 pr-4 pl-4 pt-3 pb-3 text-white text-center">
+          <div class="pt-3 pb-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
             <button
               type="button"
-              class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-1 px-4 h1"
+              class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
               @click="addEMailSub()"
             >
-              Confirmer
+              Commencer
             </button>
           </div>
         </div>
@@ -62,8 +62,8 @@ export default {
     return {
       email: '',
       name: '',
-      title: 'Mes Emails privée',
-      desc: 'Un email chaque semaine avec mes conseils actionables pour lancer son projet, et gagner sa liberté !'
+      title: 'Mes Emails Hebdo',
+      desc: 'Chaque semaine reçoit mes conseils actionables pour lancer ton projet, et generer un revenue !'
     }
   },
   mounted () {
