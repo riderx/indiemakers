@@ -32,6 +32,7 @@
     "node-fetch": "^2.6.1",
     "nuxt": "^2.14.7",
     "nuxt-font-loader-strategy": "^1.1.2",
+    "nuxt-plugin-vercel": "^1.0.0",
     "nuxt-purgecss": "^1.0.0",
     "rss-parser": "^3.9.0",
     "sitemap": "^6.3.5",

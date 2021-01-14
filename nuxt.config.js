@@ -53,6 +53,7 @@ export default {
     '@nuxtjs/pwa'
   ],
   modules: [
+    'nuxt-plugin-vercel',
     '@nuxtjs/component-cache',
     '@nuxtjs/sentry',
     ['nuxt-font-loader-strategy', {
