@@ -2,14 +2,14 @@
   <client-only>
     <div>
       <modal height="auto" adaptive name="copied">
-        <div class="container-fluid relative">
-          <div class="row bg-indiePurple py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('copied')">
+        <div class="relative container-fluid">
+          <div class="py-5 row bg-indiePurple">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('copied')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <div class="row pt-4 h-100">
-                <div class="col-12 pt-2 pb-3 text-white text-center">
+              <div class="pt-4 row h-100">
+                <div class="pt-2 pb-3 text-center text-white col-12">
                   <p>Lien Copié</p>
                 </div>
               </div>
@@ -18,42 +18,42 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="listen">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
             <div class="col-12">
-              <div class="row bg-indiePurple py-5">
-                <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('listen')">
+              <div class="py-5 row bg-indiePurple">
+                <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('listen')">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <div class="col-12 pt-1 px-1 md:px-3 text-white text-center">
+                <div class="px-1 pt-1 text-center text-white col-12 md:px-3">
                   <h1 class="text-3xl font-indie">
                     Écoute sur :
                   </h1>
                 </div>
-                <div class="col-12 pt-3 px-1 md:px-3 text-center">
+                <div class="px-1 pt-3 text-center col-12 md:px-3">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg text-white m-1 md:m-3 px-3 py-1 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                    class="px-3 py-1 m-1 text-white border-4 rounded-none border-light btn-lg md:m-3 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                     @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
                   >
                     Spotify
                   </button>
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg text-white m-1 md:m-3 px-3 py-1 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                    class="px-3 py-1 m-1 text-white border-4 rounded-none border-light btn-lg md:m-3 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                     @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
                   >
                     Apple Podcast
                   </button>
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light btn-lg text-white m-1 md:m-3 px-3 py-1 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                    class="px-3 py-1 m-1 text-white border-4 rounded-none border-light btn-lg md:m-3 h1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                     @click="listenExternal('https://www.youtube.com/channel/UCMedW_Y4K0alzeVz1bSBvjA?sub_confirmation=1')"
                   >
                     Youtube
                   </button>
                 </div>
-                <div class="col-12 pt-3 px-1 px-md-3 text-white text-center">
+                <div class="px-1 pt-3 text-center text-white col-12 px-md-3">
                   <h5>Abonner toi, ça m'aide énormement !</h5>
                 </div>
               </div>
@@ -63,19 +63,19 @@
       </modal>
       <modal height="auto" adaptive name="copied">
         <div class="container-fluid">
-          <div class="row bg-indiePurple pt-4">
+          <div class="pt-4 row bg-indiePurple">
             <div class="text-center text-white w-100">
               <h1 class="text-3xl font-indie">
                 ✅C'est fait !
               </h1>
             </div>
-            <div class="col-12 pt-2 text-white text-center">
+            <div class="pt-2 text-center text-white col-12">
               <p>Lien Copié, je sais pas trop ce que tu compte en faire mais enjoy, c'est tout❤️</p>
             </div>
-            <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+            <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
               <button
                 type="button"
-                class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-1 text-white px-4 h1"
+                class="px-4 py-1 text-white border-4 rounded-none border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 h1"
                 @click="$modal.hide('copied')"
               >
                 😎Cool
@@ -85,14 +85,14 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="thanks_register">
-        <div class="container-fluid relative">
-          <div class="row bg-indiePurple py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('thanks_register')">
+        <div class="relative container-fluid">
+          <div class="py-5 row bg-indiePurple">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('thanks_register')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <div class="row pt-4 h-100">
-                <div class="col-12 pt-2 pb-3 text-white text-center">
+              <div class="pt-4 row h-100">
+                <div class="pt-2 pb-3 text-center text-white col-12">
                   <p>Check tes emails, tu y trouveras mon premier email, si tu ne le vois pas check tes spams !</p>
                 </div>
               </div>
@@ -101,14 +101,14 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="thanks_ebook">
-        <div class="container-fluid relative">
-          <div class="row bg-indiePurple py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('thanks_ebook')">
+        <div class="relative container-fluid">
+          <div class="py-5 row bg-indiePurple">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('thanks_ebook')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <div class="row pt-4 h-100">
-                <div class="col-12 pt-2 pb-3 text-white text-center">
+              <div class="pt-4 row h-100">
+                <div class="pt-2 pb-3 text-center text-white col-12">
                   <p>Check tes emails, tu y trouveras le lien vers l'ebook et une petite surprise, si tu ne le vois pas check tes spams !</p>
                 </div>
               </div>
@@ -117,14 +117,14 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="already_register">
-        <div class="container-fluid relative">
-          <div class="row bg-indiePurple py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('already_register')">
+        <div class="relative container-fluid">
+          <div class="py-5 row bg-indiePurple">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('already_register')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <div class="row pt-4 h-100">
-                <div class="col-12 pt-2 pb-3 text-white text-center">
+              <div class="pt-4 row h-100">
+                <div class="pt-2 pb-3 text-center text-white col-12">
                   <p>Tu est deja inscrit ! </p>
                 </div>
               </div>
@@ -133,50 +133,50 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="discord">
-        <div class="container-fluid relative">
-          <div class="row bg-indiePurple py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('discord')">
+        <div class="relative container-fluid">
+          <div class="py-5 row bg-indiePurple">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('discord')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <h1 class="text-3xl font-indie pl-md-2 py-2 m-0 text-white text-center">
+              <h1 class="py-2 m-0 text-3xl text-center text-white font-indie pl-md-2">
                 Rejoint le Discord
               </h1>
-              <p class="px-2 md:px-5 text-white">
+              <p class="px-2 text-white md:px-5">
                 300 Makers là pour échanger et disponible pour répondre à tes questions !
               </p><br>
-              <p class="px-2 md:px-5 text-white">
+              <p class="px-2 text-white md:px-5">
                 Tu seras également informé de la sortie des épisodes !
               </p>
-              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-                <div class="form-group mb-0">
+              <div class="pt-3 text-center text-white offset-md-3 col-md-6">
+                <div class="mb-0 form-group">
                   <input
                     ref="email"
                     v-model="newEmail"
                     autofocus
                     type="email"
-                    class="form-control p-2 text-indiePurple"
+                    class="p-2 form-control text-indiePurple"
                     aria-describedby="TweetnameHelp"
                     placeholder="Elon@tesla.com"
                   >
                 </div>
               </div>
-              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-                <div class="form-group mb-0">
+              <div class="pt-3 text-center text-white offset-md-3 col-md-6">
+                <div class="mb-0 form-group">
                   <input
                     ref="name"
                     v-model="newName"
                     type="text"
-                    class="form-control p-2 text-indiePurple"
+                    class="p-2 form-control text-indiePurple"
                     aria-describedby="TweetnameHelp"
                     placeholder="Elon Musk"
                   >
                 </div>
               </div>
-              <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+              <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                 <button
                   type="button"
-                  class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-1 px-4 h1"
+                  class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                   @click="joinDiscord()"
                 >
                   Rejoindre
@@ -187,50 +187,50 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="join">
-        <div class="container-fluid relative">
-          <div class="row bg-indiePurple py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('join')">
+        <div class="relative container-fluid">
+          <div class="py-5 row bg-indiePurple">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('join')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <h1 class="text-3xl font-indie pl-md-2 py-2 m-0 text-white text-center">
+              <h1 class="py-2 m-0 text-3xl text-center text-white font-indie pl-md-2">
                 Mes Emails Privés
               </h1>
-              <p class="md:px-5 text-white">
+              <p class="text-white md:px-5">
                 Reçoit ton email hebdomadaire avec mes conseils actionables pour lancer ton projet, et gagner ta liberté !
               </p>
-              <p class="md:px-5 text-white">
+              <p class="text-white md:px-5">
                 Tu seras également informé de la sortie des épisodes !
               </p>
-              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-                <div class="form-group mb-0">
+              <div class="pt-3 text-center text-white offset-md-3 col-md-6">
+                <div class="mb-0 form-group">
                   <input
                     ref="email"
                     v-model="newEmail"
                     autofocus
                     type="email"
-                    class="form-control p-2 text-indiePurple"
+                    class="p-2 form-control text-indiePurple"
                     aria-describedby="TweetnameHelp"
                     placeholder="Elon@tesla.com"
                   >
                 </div>
               </div>
-              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-                <div class="form-group mb-0">
+              <div class="pt-3 text-center text-white offset-md-3 col-md-6">
+                <div class="mb-0 form-group">
                   <input
                     ref="name"
                     v-model="newName"
                     type="text"
-                    class="form-control p-2 text-indiePurple"
+                    class="p-2 form-control text-indiePurple"
                     aria-describedby="TweetnameHelp"
                     placeholder="Elon Musk"
                   >
                 </div>
               </div>
-              <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+              <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                 <button
                   type="button"
-                  class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-1 px-4 h1"
+                  class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                   @click="addEMailSub()"
                 >
                   Recevoir mes conseils
@@ -241,13 +241,13 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="ebook">
-        <div class="container-fluid relative">
-          <div class="row bg-indiePurple py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('ebook')">
+        <div class="relative container-fluid">
+          <div class="py-5 row bg-indiePurple">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('ebook')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <h1 class="text-3xl font-indie pl-2 py-2 m-0 text-white text-center">
+              <h1 class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie">
                 Le guide pour lancer ton projet !
               </h1>
               <p class="px-5 text-white">
@@ -256,35 +256,35 @@
               <p class="px-5 text-white">
                 Tu seras également informé de la sortie des épisodes !
               </p>
-              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-                <div class="form-group mb-0">
+              <div class="pt-3 text-center text-white offset-md-3 col-md-6">
+                <div class="mb-0 form-group">
                   <input
                     ref="email"
                     v-model="newEmail"
                     autofocus
                     type="email"
-                    class="form-control p-2 text-indiePurple"
+                    class="p-2 form-control text-indiePurple"
                     aria-describedby="Email"
                     placeholder="Elon@tesla.com"
                   >
                 </div>
               </div>
-              <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-                <div class="form-group mb-0">
+              <div class="pt-3 text-center text-white offset-md-3 col-md-6">
+                <div class="mb-0 form-group">
                   <input
                     ref="name"
                     v-model="newName"
                     type="text"
-                    class="form-control p-2 text-indiePurple"
+                    class="p-2 form-control text-indiePurple"
                     aria-describedby="Ton nom"
                     placeholder="Elon Musk"
                   >
                 </div>
               </div>
-              <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+              <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                 <button
                   type="button"
-                  class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-1 px-4 h1"
+                  class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                   @click="addEMailSub('ebook')"
                 >
                   Confirmer
@@ -295,48 +295,48 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="loading">
-        <div class="container-fluid relative">
-          <div class="row py-10">
+        <div class="relative container-fluid">
+          <div class="py-10 row">
             <div class="spinner" />
           </div>
         </div>
       </modal>
       <modal height="auto" adaptive :click-to-close="isFalse" name="confirmName">
-        <div class="container-fluid relative">
-          <div class="row bg-indiePurple py-5">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('confirmName')">
+        <div class="relative container-fluid">
+          <div class="py-5 row bg-indiePurple">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('confirmName')">
               <span aria-hidden="true">&times;</span>
             </button>
-            <div class="col-12 pt-2 text-white text-center">
+            <div class="pt-2 text-center text-white col-12">
               <h1 class="text-3xl font-indie">
                 😨 Mais qui est tu ?
               </h1>
             </div>
           </div>
-          <div class="row bg-indiePurple pt-4 h-100">
-            <div class="col-12 pt-2 text-white text-center">
+          <div class="pt-4 row bg-indiePurple h-100">
+            <div class="pt-2 text-center text-white col-12">
               <p>Ajoute ton prénom pour que je puisse savoir a qui s'adresse mes emails !</p>
             </div>
-            <div class="col-12 pt-2 text-white text-center">
+            <div class="pt-2 text-center text-white col-12">
               <p>Si tu choisie de ne pas en mettre tu t'apelleras Bob </p>
             </div>
-            <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-              <div class="form-group mb-0">
+            <div class="pt-3 text-center text-white offset-md-3 col-md-6">
+              <div class="mb-0 form-group">
                 <input
                   ref="name"
                   v-model="newName"
                   type="text"
-                  class="form-control p-2 text-indiePurple"
+                  class="p-2 form-control text-indiePurple"
                   aria-describedby="TweetnameHelp"
                   placeholder="Elon Musk"
                   @keyup.enter="addName()"
                 >
               </div>
             </div>
-            <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+            <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
               <button
                 type="button"
-                class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-1 px-4 h1"
+                class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                 @click="addName()"
               >
                 Confirmer
@@ -346,27 +346,27 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="error">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('error')">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('error')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     😨 Quelque chose n'as pas marché
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-2">
-                <div class="col-12 text-white text-center">
+              <div class="pt-2 row bg-indiePurple">
+                <div class="text-center text-white col-12">
                   <p>Essais plus tard</p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
+                    class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                     @click="$modal.hide('error')"
                   >
                     😢 Plus tard
@@ -378,30 +378,30 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="found">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('found')">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('found')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     👏 Cet Épisode existe !
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-2">
-                <div class="col-12 text-white">
-                  <ul class="text-center pt-2">
+              <div class="pt-2 row bg-indiePurple">
+                <div class="text-white col-12">
+                  <ul class="pt-2 text-center">
                     <li>Grace aux votes, ce·tte maker a accepter de venir dans le podcast !</li>
                     <li>Merci 😍</li>
                   </ul>
                 </div>
-                <div class="offset-md-3 col-md-6 py-3 text-white text-center">
+                <div class="py-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light py-2 px-4 h1"
+                    class="px-4 py-2 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                     @click="openEp()"
                   >
                     ❤️ Écouter
@@ -413,31 +413,31 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="added">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('added')">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('added')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     🏄‍♂️ Ajout pris en compte
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-4 h-100">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="pt-4 row bg-indiePurple h-100">
+                <div class="pt-2 text-center text-white col-12">
                   <p>Twitte pour motiver ce·tte Maker à venir sur le podcast !</p>
                   <p class="font-weight-bold">
                     Voici un message tout pret 😎
                   </p>
                   <p>Quand l'épisode sortira je t'enverrais un email pour te remercier 💃</p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light py-2 px-4 h1"
+                    class="px-4 py-2 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -448,28 +448,97 @@
           </div>
         </div>
       </modal>
-      <modal adaptive height="auto" name="fail-add">
-        <div class="container-fluid relative">
+      <modal height="auto" adaptive name="next-ep">
+        <div class="relative container-fluid">
           <div class="row">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('fail-add')">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('next-ep')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
+                  <h1 class="text-3xl font-indie">
+                    😎 Épisode terminé !
+                  </h1>
+                </div>
+              </div>
+              <div class="pt-4 row bg-indiePurple h-100">
+                <div class="pt-2 text-center text-white col-12">
+                  <p class="font-weight-bold">
+                    Voici l'épisode suivant, tu vas adorer 💃
+                  </p>
+                </div>
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
+                  <button
+                    type="button"
+                    class="px-4 py-2 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
+                    @click="nextEp()"
+                  >
+                    🦚 Voir
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal height="auto" adaptive name="random-ep">
+        <div class="relative container-fluid">
+          <div class="row">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('random-ep')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="col-12 h-100">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
+                  <h1 class="text-3xl font-indie">
+                    😎 Épisode terminé !
+                  </h1>
+                </div>
+              </div>
+              <div class="pt-4 row bg-indiePurple h-100">
+                <div class="pt-2 text-center text-white col-12">
+                  <p>Tu viens d'écouter l'épisode le plus recent du podcast !</p>
+                  <p class="font-weight-bold">
+                    Voici un épisode que tu vas adorer💃
+                  </p>
+                </div>
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
+                  <button
+                    type="button"
+                    class="px-4 py-2 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
+                    @click="nextEp()"
+                  >
+                    🦚Voir
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </modal>
+      <modal adaptive height="auto" name="fail-add">
+        <div class="relative container-fluid">
+          <div class="row">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('fail-add')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="col-12 h-100">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     👀Je ne trouve pas ce·tte Maker
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-4 h-100">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="pt-4 row bg-indiePurple h-100">
+                <div class="pt-2 text-center text-white col-12">
                   <p>Je ne peut pas ajouter de Maker qui n'est pas sur Twitter pour le moment.</p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
+                    class="px-4 py-2 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                     @click="$modal.hide('fail-add')"
                   >
                     Fermer
@@ -481,36 +550,36 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="fail-vote">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
             <button
               type="button"
-              class="absolute top-0 close text-white z-index-10 pl-2 text-3xl"
+              class="absolute top-0 pl-2 text-3xl text-white close z-index-10"
               aria-label="Close"
               @click="$modal.hide('fail-vote')"
             >
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     😨 Hoho
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-2">
-                <div class="col-12 text-white text-center">
+              <div class="pt-2 row bg-indiePurple">
+                <div class="text-center text-white col-12">
                   <p>tu as deja voté pour ce·tte Maker</p>
                   <p>Twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
                   <p class="font-weight-bold">
                     Voici un message tout pret pour l'inviter 😎
                   </p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
+                    class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                     @click="tweetItMaker()"
                   >
                     🦚 Voir
@@ -522,38 +591,38 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="fail-open-ep">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
             <button
               type="button"
-              class="absolute top-0 close text-white z-index-10 pl-2 text-3xl"
+              class="absolute top-0 pl-2 text-3xl text-white close z-index-10"
               aria-label="Close"
               @click="$modal.hide('fail-open-ep')"
             >
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     😝 OUPS
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-2">
-                <div class="col-12 text-white">
+              <div class="pt-2 row bg-indiePurple">
+                <div class="text-white col-12">
                   <h5 class="text-center text-1xl">
                     Ce·tte maker a besoin de plus de force pour venir dans le podcast
                   </h5>
-                  <ul class="text-center pt-2">
+                  <ul class="pt-2 text-center">
                     <li>Twitter pour motiver ce·tte Maker à venir!</li>
                     <li>Voici un message tout pret pour l'inviter 😎</li>
                   </ul>
                 </div>
-                <div class="offset-md-3 col-md-6 py-3 text-white text-center">
+                <div class="py-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 py-2 text-light px-4 h1"
+                    class="px-4 py-2 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                     @click="tweetItMaker()"
                   >
                     🦚 Voir
@@ -565,31 +634,31 @@
         </div>
       </modal>
       <modal adaptive height="auto" name="fail-exist">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('fail-exist')">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('fail-exist')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     😝 OUPS
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-4 h-100">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="pt-4 row bg-indiePurple h-100">
+                <div class="pt-2 text-center text-white col-12">
                   <p>Ce·tte maker est déjà présent dans la liste, J'ai ajouté ton vote pour lui/elle.</p>
                   <p>Twitte pour motiver ce·tte Maker à venir sur le podcast !</p>
                   <p class="font-weight-bold">
                     Voici un message tout pret pour l'inviter 😎
                   </p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
+                    class="px-4 py-2 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -601,31 +670,31 @@
         </div>
       </modal>
       <modal adaptive height="auto" name="fail-exist-vote">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('fail-exist-vote')">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('fail-exist-vote')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     😝 OUPS
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-4 h-100">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="pt-4 row bg-indiePurple h-100">
+                <div class="pt-2 text-center text-white col-12">
                   <p>Ce·tte maker est déjà présent dans la liste, et tu as déjà voté pour lui/elle 😇.</p>
                   <p>Twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
                   <p class="font-weight-bold">
                     Voici un message tout pret pour l'inviter 😎
                   </p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-0 pb-3 text-white text-center">
+                <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
+                    class="px-4 py-2 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                     @click="tweetItMaker()"
                   >
                     🦚Voir
@@ -637,47 +706,47 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="add">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
             <button
               type="button"
-              class="absolute top-0 close text-white z-index-10 pl-2 text-3xl"
+              class="absolute top-0 pl-2 text-3xl text-white close z-index-10"
               aria-label="Close"
               @click="$modal.hide('add')"
             >
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     👌 Ajouter un·e Maker
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-2">
-                <div class="col-12 text-white text-center">
+              <div class="pt-2 row bg-indiePurple">
+                <div class="text-center text-white col-12">
                   <p>Le moyens le plus simple d'ajouter quelqu'un</p>
                   <p>C'est avec son nom Twitter</p>
                   <p>Cela permet de trouver sa photo et description d'un coup !</p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
-                  <div class="form-group mb-0">
+                <div class="pt-3 text-center text-white offset-md-3 col-md-6">
+                  <div class="mb-0 form-group">
                     <input
                       ref="maker"
                       v-model="newMaker"
                       type="text"
-                      class="form-control p-2 text-indiePurple"
+                      class="p-2 form-control text-indiePurple"
                       aria-describedby="TweetnameHelp"
                       placeholder="Elonmusk"
                       @keyup.enter="addMaker()"
                     >
                   </div>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
+                    class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                     @click="addMaker()"
                   >
                     🎯 Ajouter
@@ -689,31 +758,31 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="voted">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('voted')">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('voted')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     💪 Vote pris en compte
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-2">
-                <div class="col-12 text-white text-center">
+              <div class="pt-2 row bg-indiePurple">
+                <div class="text-center text-white col-12">
                   <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
                   <p class="font-weight-bold">
                     Voici un message tout pret pour l'inviter 😎
                   </p>
                   <p>Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃</p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
+                    class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                     @click="tweetItMaker()"
                   >
                     🦚 Voir
@@ -725,27 +794,27 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="checkEmail">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('checkEmail')">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('checkEmail')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     ✅ Check ta boite email
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-2">
-                <div class="col-12 text-white text-center">
+              <div class="pt-2 row bg-indiePurple">
+                <div class="text-center text-white col-12">
                   <p>Tu viens de recevoir ton lien de login par email, click dessus, c'est tout❤️</p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
+                    class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                     @click="$modal.hide('checkEmail')"
                   >
                     😎 Cool
@@ -757,26 +826,26 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="upgrade">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
             <div class="col-12">
-              <div class="row bg-indiePurple py-5">
-                <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('upgrade')">
+              <div class="py-5 row bg-indiePurple">
+                <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('upgrade')">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <div class="col-12 pt-1 px-1 md:px-3 text-white text-center">
+                <div class="px-1 pt-1 text-center text-white col-12 md:px-3">
                   <h1 class="text-3xl font-indie">
                     Besoin de plus ?
                   </h1>
                 </div>
-                <div class="col-12 text-white text-center">
+                <div class="text-center text-white col-12">
                   <p>Parfois pour se lancer, un podcast ne suffit pas</p>
                   <p>J'ai crée pour toi des outils pour passer a l'étape supérieure !</p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
+                    class="px-4 py-2 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                     @click="bmc()"
                   >
                     C'est parti
@@ -788,27 +857,27 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="share_hunt">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('rate')">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('rate')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     Partage le classement des makers
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-2">
-                <div class="col-12 text-white text-center">
+              <div class="pt-2 row bg-indiePurple">
+                <div class="text-center text-white col-12">
                   <p>Voici un tweet tout prêt, pour partager la page et faire réagir tweeter</p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 py-2 text-light px-4 h1"
+                    class="px-4 py-2 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                     @click="tweetItHunt()"
                   >
                     Tweeter
@@ -820,27 +889,27 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="rate">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('rate')">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('rate')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     Soutiens le podcast
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-2">
-                <div class="col-12 text-white text-center">
+              <div class="pt-2 row bg-indiePurple">
+                <div class="text-center text-white col-12">
                   <p>Note le 5 ⭐️, en cliquant ci dessous, ca permet au podcast d'être découvert par d'autres !</p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
+                    class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                     @click="rate()"
                   >
                     Noter
@@ -852,27 +921,27 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="share">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('share')">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('share')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     Tu aimes cet épisode ?
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-2">
-                <div class="col-12 text-white text-center">
+              <div class="pt-2 row bg-indiePurple">
+                <div class="text-center text-white col-12">
                   <p>Envois du love a l'invité du podcast via twitter  !</p>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-3 pb-3 text-white text-center">
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light px-4 py-1 h1"
+                    class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                     @click="tweetIt()"
                   >
                     Envoyer
@@ -884,30 +953,30 @@
         </div>
       </modal>
       <modal height="auto" adaptive name="register">
-        <div class="container-fluid relative">
+        <div class="relative container-fluid">
           <div class="row">
-            <button type="button" class="absolute top-0 close text-white z-index-10 pl-2 text-3xl" aria-label="Close" @click="$modal.hide('register')">
+            <button type="button" class="absolute top-0 pl-2 text-3xl text-white close z-index-10" aria-label="Close" @click="$modal.hide('register')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
-              <div class="row bg-indiePurple py-2">
-                <div class="col-12 pt-2 text-white text-center">
+              <div class="py-2 row bg-indiePurple">
+                <div class="pt-2 text-center text-white col-12">
                   <h1 class="text-3xl font-indie">
                     🔐Pas tout de suite !
                   </h1>
                 </div>
               </div>
-              <div class="row bg-indiePurple pt-2">
-                <div class="col-12 text-white">
+              <div class="pt-2 row bg-indiePurple">
+                <div class="text-white col-12">
                   <h5 class="text-center text-1xl">
                     j’ai besoin que tu valides ton email !
                   </h5>
-                  <ul class="text-center pt-2">
+                  <ul class="pt-2 text-center">
                     <li>Pour éviter les faux votes</li>
                     <li>Te tenir au courant de la sortie de l'épisode</li>
                   </ul>
                 </div>
-                <div class="offset-md-3 col-md-6 pt-3 text-white text-center">
+                <div class="pt-3 text-center text-white offset-md-3 col-md-6">
                   <div>
                     <label for="email" class="sr-only">Email</label>
                     <input
@@ -917,16 +986,16 @@
                       autofocus
                       type="text"
                       name="email"
-                      class="px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:shadow-outline w-1/2"
+                      class="relative w-1/2 px-3 py-3 text-sm text-gray-700 placeholder-gray-400 bg-white border border-gray-400 rounded outline-none focus:outline-none focus:shadow-outline"
                       placeholder="you@example.com"
                       @keyup.enter="sendLogin()"
                     >
                   </div>
                 </div>
-                <div class="offset-md-3 col-md-6 py-3 text-white text-center">
+                <div class="py-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
-                    class="rounded-none border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 py-2 text-light px-4 h1"
+                    class="px-4 py-2 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
                     @click="sendLogin()"
                   >
                     🚀VALIDER
@@ -965,6 +1034,15 @@ export default {
     })
   },
   methods: {
+    nextEp () {
+      const nextGuid = window.localStorage.getItem('nextGuid')
+      if (nextGuid) {
+        window.localStorage.removeItem('nextGuid')
+      }
+      this.$modal.hide('next-ep')
+      this.$modal.hide('random-ep')
+      this.$router.push(`/episode/${nextGuid}`)
+    },
     rate () {
       this.$modal.hide('rate')
       window.open('https://ratethispodcast.com/imf', '_blank')

@@ -137,13 +137,14 @@
 </template>
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
-import { domain, ep } from '~/plugins/rss'
+import { feed, domain, ep } from '~/plugins/rss'
 
 export default {
   components: {
     LazyHydrate
   },
   async asyncData ({ params, redirect, $config }) {
+    const items = await feed($config)
     const element = await ep(params.id, $config)
     if (params.id === 'latest') {
       redirect(`episode/${element.guid_fix}`)
@@ -162,7 +163,8 @@ export default {
       twitter: element.twitter,
       instagram: element.instagram,
       linkedin: element.linkedin,
-      audio: element.enclosure.url
+      audio: element.enclosure.url,
+      episodes: items
     }
   },
   data () {
@@ -187,7 +189,8 @@ export default {
       preview: '',
       sizeHead: '100vh',
       content: '',
-      audio: ''
+      audio: '',
+      episodes: []
     }
   },
   computed: {
@@ -217,44 +220,77 @@ export default {
     window.RTP_CONFIG = { link: 'imf', mode: 'button' }
     this.setSizeHead()
     this.timeoutPlayer = setTimeout(() => {
+      this.showAudio = true
       setTimeout(() => {
-        this.showAudio = true
-        const currentTime = localStorage.getItem(this.$route.params.id)
         if (this.player) {
-          this.player.on('play', () => {
-            if (!this.playerSet) {
-              this.player.currentTime = parseFloat(currentTime || 0)
-              this.playerSet = true
-            }
-          })
-          this.player.on('pause', () => {
-            localStorage.setItem(
-              this.$route.params.id,
-              this.player.currentTime
-            )
-          })
+          this.playerListener(this.player)
         }
         if (this.player2) {
-          this.player2.on('play', () => {
-            if (!this.playerSet) {
-              this.player2.currentTime = parseFloat(currentTime || 0)
-              this.playerSet = true
-            }
-          })
-          this.player2.on('pause', () => {
-            localStorage.setItem(
-              this.$route.params.id,
-              this.player2.currentTime
-            )
-          })
+          this.playerListener(this.player2)
         }
       }, 150)
     }, 2000)
     this.timeoutModal = setTimeout(() => {
-      this.showRandomModal()
+      if (!window.localStorage.getItem(`randomModal:${this.guid}`)) {
+        this.showRandomModal()
+        window.localStorage.setItem(`randomModal:${this.guid}`, 'done')
+      }
     }, 15000)
   },
   methods: {
+    randomEp (length) {
+      return Math.floor(Math.random() * length) + 0
+    },
+    checkNext () {
+      let epIndex = 0
+      const totalLength = this.episodes.length
+      let randomEp = this.randomEp(totalLength)
+      for (let index = 0; index < this.episodes.length; index++) {
+        const ep = this.episodes[index]
+        if (ep.guid_fix === this.guid) {
+          epIndex = index
+          if (epIndex === 0) {
+            while (randomEp === epIndex) {
+              randomEp = this.randomEp(totalLength)
+            }
+            const nextGuid = this.episodes[randomEp].guid_fix
+            window.localStorage.setItem('nextGuid', nextGuid)
+            console.log('randomEp', nextGuid)
+            this.$modal.show('random-ep')
+          } else {
+            const nextGuid = this.episodes[epIndex - 1].guid_fix
+            window.localStorage.setItem('nextGuid', nextGuid)
+            console.log('nextEp', nextGuid)
+            this.$modal.show('next-ep')
+          }
+          break
+        }
+      }
+    },
+    playerListener (player) {
+      const currentTime = localStorage.getItem(`${this.$route.params.id}:currentTime`)
+      player.on('play', () => {
+        if (!this.playerSet) {
+          player.currentTime = parseFloat(currentTime || 0)
+          this.playerSet = true
+        }
+      })
+      player.on('pause', () => {
+        localStorage.setItem(
+          `${this.$route.params.id}:currentTime`,
+          player.currentTime
+        )
+      })
+      player.on('ended', () => {
+        this.checkNext()
+      })
+      player.on('timeupdate', () => {
+        localStorage.setItem(
+          `${this.$route.params.id}:currentTime`,
+          player.currentTime
+        )
+      })
+    },
     showRandomModal () {
       const rand = this.getRandomInt(100)
       let modalName = 'upgrade'
