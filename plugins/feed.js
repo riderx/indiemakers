@@ -86,15 +86,15 @@ const sendImageToCache = async (url, guid) => {
   }
 }
 const previewText = (text) => {
-  // return text
   const textSplited = text.split(' ')
   textSplited.length = 50
   return textSplited.join(' ').replace('.', '.<br/>')
-  // let first = text.split(/[.!]+/)[0]
-  // if (first.split(' ').length > 50) {
-  //   first = `${first.split(' ').splice(0, 70).join(' ')} ...`
-  // }
-  // return first
+}
+
+const previewEmail = (text) => {
+  const textSplited = text.split(' ')
+  textSplited.length = 20
+  return `${textSplited.join(' ')} ...`
 }
 
 const removeEmoji = (str) => {
@@ -108,6 +108,7 @@ const feed = async () => {
       parsed.items.forEach((element) => {
         element.guid_fix = guidConvert(element.guid)
         element.preview = previewText(element.contentSnippet)
+        element.preview_email = previewEmail(element.contentSnippet)
         element.preview_no_emoji = removeEmoji(element.preview)
         element.twitter = findTw(element.content)
         element.name = findName(element.content)

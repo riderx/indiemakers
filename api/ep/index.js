@@ -4,8 +4,8 @@ const func = require('../../plugins/firebase_func')
 const postEp = async (element) => {
   const ep = {
     udi: element.guid_fix,
-    title: element.title,
-    preview: element.preview,
+    title: element.title_no_emoji,
+    preview: element.preview_email,
     image: element.image_optimized,
     content: element.content
   }
