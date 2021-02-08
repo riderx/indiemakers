@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
         author: `Martin Donadieu and ${element.title}`,
         date: element.pubDate,
         enclosure: {
-          url: element.image_optimized,
+          url: element.image_big,
           type: 'image/jpeg'
         }
       })
