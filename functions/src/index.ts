@@ -1,6 +1,7 @@
 import { shortURLPixel } from './tracker';
 import { TwEntities, TwUrl, TwUser, twUserPromise } from './twitter';
-import { sendUserToSendrid, sendEmailEp, initEmail } from './email';
+// import { sendUserToSendrid, sendEmailEp, initEmail } from './email';
+import { sendUserToSendrid, initEmail } from './email';
 import * as functions from 'firebase-functions'
 import { sendUserToRevue } from './newletter';
 import * as findHashtags from 'find-hashtags'
@@ -12,13 +13,13 @@ import * as findUrl from 'get-urls'
 // PixelMeApiToken
 const configSecret = functions.config()
 sgClient.setApiKey(configSecret.sendgrid.apikey)
-interface Episode {
-  title: string,
-  udi: string,
-  preview: string,
-  image: string,
-  content: string,
-}
+// interface Episode {
+//   title: string,
+//   udi: string,
+//   preview: string,
+//   image: string,
+//   content: string,
+// }
 
 interface Person {
     addedBy: string;
