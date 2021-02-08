@@ -1,42 +1,17 @@
+import { shortURLPixel } from './tracker';
+import { TwEntities, TwUrl, TwUser, twUserPromise } from './twitter';
 import { sendUserToSendrid, sendEmailEp, initEmail } from './email';
 import * as functions from 'firebase-functions'
-import * as admin from 'firebase-admin'
-import axios from 'axios'
-import * as findUrl from 'get-urls'
-import * as findMentions from 'mentions'
+import { sendUserToRevue } from './newletter';
 import * as findHashtags from 'find-hashtags'
 import * as sgClient from '@sendgrid/client'
-const Twitter = require('twitter')
+import * as findMentions from 'mentions'
+import * as admin from 'firebase-admin'
+import * as findUrl from 'get-urls'
 
 // PixelMeApiToken
 const configSecret = functions.config()
-const TwitterApiToken = {
-  consumer_key: configSecret.twitter.consumer_key,
-  consumer_secret: configSecret.twitter.consumer_secret,
-  access_token_key: configSecret.twitter.access_token_key,
-  access_token_secret: configSecret.twitter.access_token_secret
-}
-const client = new Twitter(TwitterApiToken)
 sgClient.setApiKey(configSecret.sendgrid.apikey)
-
-const PixelsId = configSecret.pixelme.pixels_id.split(',')
-axios.defaults.baseURL = 'https://api.pixelme.me'
-axios.defaults.headers.common.Authorization = `Bearer ${configSecret.pixelme.pixelsId}`
-
-interface TwEntities {
-    url: {
-        hashtags: [],
-        symbols: [],
-        user_mentions: [],
-        urls: TwUrl[]
-    },
-    description: {
-        hashtags: [],
-        symbols: [],
-        user_mentions: [],
-        urls: TwUrl[]
-    },
-}
 interface Episode {
   title: string,
   udi: string,
@@ -59,39 +34,6 @@ interface Person {
     votes: number;
     number: number;
 }
-interface TwUrl {
-    url: string,
-    expanded_url: string,
-    display_url: string,
-    indices: [
-        number,
-        number
-    ]
-}
-interface TwUser {
-    created_at: string;
-    default_profile_image: boolean;
-    default_profile: boolean;
-    description?: string | null;
-    entities: TwEntities,
-    favourites_count: number;
-    followers_count: number;
-    friends_count: number;
-    id_str: string;
-    id: number;
-    listed_count: number;
-    location?: string | null;
-    name: string;
-    profile_banner_url?: string;
-    profile_image_url_https: string;
-    protected: boolean;
-    screen_name: string;
-    statuses_count: number;
-    url?: string | null;
-    verified: boolean;
-    withheld_in_countries?: string[];
-    withheld_scope?: string;
-};
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const serviceAccount = require('../indiemakerfr-firebase.json')
 if (!serviceAccount) {
@@ -152,63 +94,6 @@ const getPersonById = async (id: string): Promise<FirebaseFirestore.DocumentRefe
   return admin.firestore()
     .collection('people')
     .doc(id)
-}
-
-const twUserPromise = (screen_name: string): Promise<TwUser> => {
-  return new Promise((resolve, reject) => {
-    const params = { screen_name, include_entities: true }
-    client.get('users/show', params, async (error: any, user: TwUser, response: any) => {
-      if (!error && user) {
-        console.log('User', user, 'response', response)
-        resolve(user)
-      } else {
-        console.error('Cannot find user', error, response)
-        reject(error)
-      }
-    })
-  })
-}
-
-const bestKey = (url: string): string => {
-  if (url.includes('twitter.com/hashtag/')) {
-    return `H_${url.split('/').pop()}`
-  }
-  if (url.includes('twitter.com/')) {
-    return url.split('/').pop() || url
-  }
-  if (url.includes('/') && url.indexOf('/') < (url.length - 1)) {
-    return url.split('/').pop() || url
-  }
-  return url
-}
-
-const shortURLPixel = (url: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const key = bestKey(url)
-    axios.post('/redirects', {
-      url,
-      key,
-      pixels_ids: PixelsId,
-      domain: 'imf.to'
-    })
-      .then((response) => {
-        if (response && response.data && response.data.shorten) {
-          console.log('new link', response.data)
-          resolve(response.data.shorten)
-        } else {
-          console.error('shorten error, no shorten found', response)
-          resolve(url)
-        }
-      })
-      .catch((error) => {
-        if (error.response.data.error_message === 'Key already taken for this domain') {
-          resolve(`https://imf.to/${key}`)
-        } else {
-          console.error('shorten error', error.response.data, error)
-          resolve(url)
-        }
-      })
-  })
 }
 
 const findInTwUrls = (url: string, twUrls: TwUrl[]): string => {
@@ -415,6 +300,7 @@ export const onCreatUser = functions.firestore
     const user = snapshot.data()
     if (user && user.email && user.email !== '') {
       initEmail(configSecret.sendgrid.apikey)
+      await sendUserToRevue(user.email, user.first_name)
       await sendUserToSendrid(user.email, user.first_name)
     }
   })

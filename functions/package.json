@@ -23,7 +23,8 @@
     "firebase-functions": "^3.13.0",
     "get-urls": "^9.2.1",
     "mentions": "^1.0.2",
-    "twitter": "^1.7.1"
+    "twitter": "^1.7.1",
+    "url-metadata": "^2.5.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.10.0",
