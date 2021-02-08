@@ -305,15 +305,15 @@ export const onCreatUser = functions.firestore
     }
   })
 
-export const onCreatEpisode = functions.firestore
-  .document('/episodes/{uid}')
-  .onCreate(async (snapshot) => {
-    const ep = <Episode>snapshot.data()
-    if (ep && ep.title && ep.title !== '') {
-      initEmail(configSecret.sendgrid.apikey)
-      await sendEmailEp(ep)
-    }
-  })
+// export const onCreatEpisode = functions.firestore
+//   .document('/episodes/{uid}')
+//   .onCreate(async (snapshot) => {
+//     const ep = <Episode>snapshot.data()
+//     if (ep && ep.title && ep.title !== '') {
+//       initEmail(configSecret.sendgrid.apikey)
+//       await sendEmailEp(ep)
+//     }
+//   })
 
 export const onUpdatePeople = functions.firestore
   .document('/people/{personId}')
