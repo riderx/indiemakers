@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
     eps.forEach((element) => {
       feed.item({
         title: element.title,
-        description: element.contentSnippet,
+        description: element.content,
         url: `https://indiemakers.fr/episode/${element.guid_fix}`,
         guid: element.guid_fix,
         author: `Martin Donadieu and ${element.title}`,
