@@ -35,6 +35,7 @@ export default {
       { hid: 'og:description', property: 'og:description', content: 'Ici, tu trouveras des podcasts où j\'échange avec ceux qui ont su transformer leurs idées en business florissant.' }
     ],
     link: [
+      { rel: 'alternate', hreflang: 'fr', title: 'RSS INDIE MAKERS', type: 'application/rss+xml', href: 'https://indiemakers/rss.xml' },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
