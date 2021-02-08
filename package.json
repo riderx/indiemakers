@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "12"
+    "node": "15"
   },
   "scripts": {
     "dev": "npx nuxt",
@@ -33,6 +33,7 @@
     "nuxt": "^2.14.7",
     "nuxt-font-loader-strategy": "^1.1.2",
     "nuxt-purgecss": "^1.0.0",
+    "rss": "^1.2.2",
     "rss-parser": "^3.9.0",
     "sitemap": "^6.3.5",
     "stream": "^0.0.2",

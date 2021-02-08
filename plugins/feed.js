@@ -10,8 +10,9 @@ dayjs.locale('fr')
 
 const rss = 'https://anchor.fm/s/414d1d4/podcast/rss'
 
+const regexHtml = /(<([^>]+)>)/ig
 const linkTwitterRe = /son twitter : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
-const nameRe = /j'accueille (?<name>.*?)\./i
+const nameRe = /accueille (?<name>.*?)\./i
 const linkInstagramRe = /son instagram : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
 const linkLinkedinRe = /son linkedin : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
 const parser = new Parser()
@@ -48,7 +49,7 @@ const findName = (text) => {
   if (!founds || !founds.groups) {
     return null
   }
-  return founds.groups.name
+  return founds.groups.name.replace(regexHtml, '')
 }
 
 const findLinkedin = (text) => {
@@ -100,6 +101,8 @@ const previewEmail = (text) => {
 const removeEmoji = (str) => {
   return str.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')
 }
+const rawRss = () => parser.parseURL(rss)
+
 const feed = async () => {
   const items = []
   try {
@@ -141,5 +144,6 @@ const feed = async () => {
 
 module.exports = {
   sendImageToCache,
+  rawRss,
   feed
 }
