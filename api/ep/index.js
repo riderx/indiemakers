@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
   } else {
     let guid = -1
     try {
-      guid = Number(req.query.guid) - 1
+      guid = Number(req.query.guid)
     } catch (error) {
       guid = req.query.guid
     }
