@@ -22,7 +22,7 @@
             >
               <div
                 v-for="episode in episodes"
-                :key="episode.guid_fix"
+                :key="episode.id"
                 class="w-full text-white border-b bg-blue align-items-top"
               >
                 <ListItem
@@ -34,7 +34,7 @@
                   :image="episode.image_optimized"
                   :loading-image="episode.image_loading"
                   @name="open(episode.social.link)"
-                  @image="open(`/episode/${episode.guid_fix}`)"
+                  @image="open(`/episode/${episode.id}`)"
                 />
               </div>
             </div>

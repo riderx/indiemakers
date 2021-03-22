@@ -27,8 +27,14 @@ module.exports = async (req, res) => {
   if (req.query.guid === 'latest') {
     elem = items[0]
   } else {
-    items.forEach((element) => {
-      if (element.guid_fix === req.query.guid) {
+    let guid = -1
+    try {
+      guid = Number(req.query.guid) - 1
+    } catch (error) {
+      guid = req.query.guid
+    }
+    items.forEach((element, index) => {
+      if (element.guid_fix === guid || guid === index) {
         elem = element
       }
     })

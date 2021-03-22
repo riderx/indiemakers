@@ -108,7 +108,8 @@ const feed = async () => {
   try {
     const parsed = await parser.parseURL(rss)
     if (parsed.items) {
-      parsed.items.forEach((element) => {
+      parsed.items.forEach((element, index) => {
+        element.id = index
         element.guid_fix = guidConvert(element.guid)
         element.preview = previewText(element.contentSnippet)
         element.preview_email = previewEmail(element.contentSnippet)
