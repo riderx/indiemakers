@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
       feed.item({
         title: element.title,
         description: element.content,
-        url: `https://indiemakers.fr/episode/${element.guid_fix}`,
+        url: `https://indiemakers.fr/episode/${element.id}`,
         guid: element.guid_fix,
         author: `Martin Donadieu and ${element.title}`,
         date: element.pubDate,

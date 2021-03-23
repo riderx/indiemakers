@@ -147,7 +147,7 @@ export default {
     const items = await feed($config)
     const element = await ep(params.id, $config)
     if (params.id === 'latest') {
-      return redirect(`/episode/${element.guid_fix}`)
+      return redirect(`/episode/${element.id}`)
     }
     return {
       guid: element.guid_fix,

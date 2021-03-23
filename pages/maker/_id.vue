@@ -146,7 +146,7 @@ export default {
   async asyncData ({ params, redirect, $config }) {
     const element = await ep(params.id, $config)
     if (params.id === 'latest') {
-      redirect(`episode/${element.guid_fix}`)
+      redirect(`episode/${element.id}`)
     }
     return {
       guid: element.guid_fix,

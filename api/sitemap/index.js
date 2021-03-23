@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
     let prio = 1.0
 
     eps.forEach((element) => {
-      smStream.write({ url: `/episode/${element.guid_fix}`, changefreq: 'daily', priority: prio })
+      smStream.write({ url: `/episode/${element.id}`, changefreq: 'daily', priority: prio })
       prio = prio / 2
     })
     // results.forEach((element) => {
