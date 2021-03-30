@@ -122,8 +122,8 @@
                     class="block px-2 py-3 text-white py-md-0"
                     target="_blank"
                     rel="noreferrer"
-                    href="https://lkstats.web.app/welcome"
-                  >Lk stats | Linkedin analytics</a>
+                    href="https://naas.ai"
+                  >Naas | outils LowCode </a>
                   <a
                     class="block px-2 py-3 text-white py-md-0"
                     target="_blank"
