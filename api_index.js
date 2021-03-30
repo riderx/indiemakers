@@ -1,4 +1,3 @@
-const bodyParser = require('body-parser')
 const express = require('express')
 const feed = require('./api/feed/index')
 const sitemap = require('./api/sitemap/index')
@@ -11,7 +10,7 @@ const isServerlessEnvironment = process.env.VERCEL_URL === 'true'
 const app = express()
 const appRouter = express.Router()
 
-app.use(bodyParser.json())
+app.use(express.json())
 
 const prefix = isServerlessEnvironment ? '/api' : ''
 

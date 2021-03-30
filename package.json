@@ -25,6 +25,7 @@
     "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.3",
     "dayjs": "^1.10.4",
+    "express": "^4.17.1",
     "firebase-auth-lite": "^0.8.8",
     "firebase-firestore-lite": "^1.0.0-RC2.1",
     "imagekit": "^3.1.2",
