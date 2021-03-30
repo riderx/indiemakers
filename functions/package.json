@@ -16,7 +16,7 @@
   "dependencies": {
     "@sendgrid/client": "^7.2.4",
     "@sendgrid/mail": "^7.2.4",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "eslint-import-resolver-typescript": "^2.2.1",
     "find-hashtags": "^1.0.1",
     "firebase-admin": "^9.4.2",
