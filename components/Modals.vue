@@ -1088,7 +1088,7 @@ export default {
     async joinDiscord () {
       await this.addEMailSub('discord')
       this.$modal.hide('discord')
-      window.open('https://discord.gg/2XyUn3A', '_blank')
+      window.open('https://discord.com/2XyUn3A', '_blank')
     },
     addEMailSub (kind = 'email') {
       return this.$firebase
