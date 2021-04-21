@@ -146,7 +146,7 @@
                 300 Makers là pour échanger et disponible pour répondre à tes questions !
               </p><br>
               <p class="px-2 text-white md:px-5">
-                Tu seras également informé de la sortie des épisodes !
+                Tu seras également informé de la sortie des épisodes par email !
               </p>
               <div class="pt-3 text-center text-white offset-md-3 col-md-6">
                 <div class="mb-0 form-group">
@@ -1088,7 +1088,7 @@ export default {
     async joinDiscord () {
       await this.addEMailSub('discord')
       this.$modal.hide('discord')
-      window.open('https://discord.com/2XyUn3A', '_blank')
+      window.open('https://discord.gg/Wx9HuPRk', '_blank')
     },
     addEMailSub (kind = 'email') {
       return this.$firebase
