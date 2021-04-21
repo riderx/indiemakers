@@ -162,7 +162,7 @@ export default {
       },
       loadingImg: 'https://ik.imagekit.io/gyc0uxoln1/indiemakers/cover-im_0.5x_5ozFHlEvg.png?tr=q-5,bl-5,h-50,w-50',
       episodes: [],
-      title: '🚀Le podcast pour lancer sa startup en indépendant',
+      title: '🚀Le podcast des entrepreneurs indépendant',
       messages: [
         "J'échange avec ceux qui ont su transformer leurs idées en business florissant.",
         'Au-delà des belles histoires, nous décryptons leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables en indépendant.',
