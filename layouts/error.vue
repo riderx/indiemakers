@@ -17,7 +17,7 @@
             class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
             @click="goHome()"
           >
-            Acceuil
+            Accueil
           </button>
         </div>
       </div>
