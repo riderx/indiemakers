@@ -1,16 +1,16 @@
 <template>
   <LazyHydrate when-idle>
     <div id="makers">
-      <div class="container px-0 mx-auto w-full">
+      <div class="container w-full px-0 mx-auto">
         <div class="flex flex-wrap">
           <div class="w-full md:w-1/2 md:px-4">
-            <div id="header-mk" class="flex flex-wrap w-full justify-between items-center bg-blue border-8 border-light text-white md:pb-1 md:pt-2">
-              <h1 class="w-4/5 text-center font-indie text-3xl md:text-4xl my-2 md:my-0">
+            <div id="header-mk" class="flex flex-wrap items-center justify-between w-full text-white border-8 bg-blue border-light md:pb-1 md:pt-2">
+              <h1 class="w-4/5 my-2 text-3xl text-center font-indie md:text-4xl md:my-0">
                 💃 Makers
               </h1>
               <button
                 type="button"
-                class="border-0 p-0 text-6xl w-1/5 px-4 md:pb-3 -mt-4"
+                class="w-1/5 p-0 px-4 -mt-4 text-6xl border-0 md:pb-3"
                 @click="showAddForm()"
               >
                 +
@@ -18,7 +18,7 @@
             </div>
             <client-only>
               <div
-                class="md:h-78 overflow-hidden md:overflow-y-scroll border-4 border-light md:custom-scroll"
+                class="overflow-hidden border-4 md:h-78 md:overflow-y-scroll border-light md:custom-scroll"
               >
                 <div
                   v-for="maker in makers"
@@ -39,14 +39,14 @@
               </div>
             </client-only>
           </div>
-          <div id="content" class="md:w-1/2 pr-4 pl-4 pt-0 px-md-5 order-1 order-md-2 hidden xl:block text-white">
+          <div id="content" class="order-1 hidden pt-0 pl-4 pr-4 text-white md:w-1/2 px-md-5 order-md-2 xl:block">
             <div class="flex flex-wrap">
               <div class="text-center text-sm-left">
-                <h1 class="pb-2 font-indie text-3xl">
+                <h1 class="pb-2 text-3xl font-indie">
                   {{ title }}
                 </h1>
               </div>
-              <div class="text-left pt-md-5 text-sm">
+              <div class="text-sm text-left pt-md-5">
                 <p class="pl-2">
                   Les Makers sont encore méconnue en France !<br><br>
                   Parfois ils ne font pas de personal branding...<br>
@@ -59,7 +59,7 @@
                   Vote et ajoute pour tes MAKERS favoris,<br>
                   en bonus tu gagnes une chance de les voir dans le podcast !
                 </p>
-                <p class="h5 pt-5 font-indie">
+                <p class="pt-5 h5 font-indie">
                   Tu aimerais qu'un d'eux vienne dans le podcast ?
                 </p>
                 <p class="pl-2">
@@ -69,19 +69,19 @@
                   Partage sur Twitter ton vote pour montrer ton soutiens au maker,<br>
                   s'il n'est pas encore venue dans le podcast cela le motivera à venir !
                 </p>
-                <p class="h5 pt-5 font-indie">
+                <p class="pt-5 h5 font-indie">
                   Ton maker préféré n'est pas dans la liste ?
                 </p>
                 <p class="pl-2">
                   Clique sur le bonton "+" pour l'ajouter !
                 </p>
-                <p class="pl-2 pb-4">
+                <p class="pb-4 pl-2">
                   Partage sur Twitter ton vote, cela le motivera à venir !
                 </p>
-                <div class="flex justify-between font-indie text-white text-lg w-10/12">
+                <div class="flex justify-between w-10/12 text-lg text-white font-indie">
                   <button
                     type="button"
-                    class="border-2 border-light px-3 pt-2 pb-1 hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                    class="px-3 pt-2 pb-1 border-2 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
                     @click="joinUs()"
                   >
                     👉 Deviens un Maker
@@ -119,6 +119,23 @@ export default {
       user: false,
       sizeHead: '100vh',
       people: []
+    }
+  },
+  head () {
+    return {
+      title: this.title,
+      meta: [
+        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
+        { hid: 'title', name: 'title', content: this.title },
+        { hid: 'description', name: 'description', content: this.message },
+        { hid: 'og:title', property: 'og:title', content: this.title },
+        { hid: 'og:description', property: 'og:description', content: this.message },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
+        { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
+        { hid: 'og:image', property: 'og:image', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
+        { hid: 'og:image:height', property: 'og:image:height', content: 400 }
+      ]
     }
   },
   mounted () {
@@ -261,23 +278,6 @@ export default {
       } else {
         this.sizeHead = 'auto'
       }
-    }
-  },
-  head () {
-    return {
-      title: this.title,
-      meta: [
-        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
-        { hid: 'title', name: 'title', content: this.title },
-        { hid: 'description', name: 'description', content: this.message },
-        { hid: 'og:title', property: 'og:title', content: this.title },
-        { hid: 'og:description', property: 'og:description', content: this.message },
-        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
-        { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', property: 'og:image', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${require('~/assets/cover-im@0.5x.png')}` },
-        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
-        { hid: 'og:image:height', property: 'og:image:height', content: 400 }
-      ]
     }
   }
 }

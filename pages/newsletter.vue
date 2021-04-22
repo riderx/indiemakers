@@ -66,6 +66,24 @@ export default {
       desc: 'Chaque semaine reçoit mes conseils actionables pour lancer ton projet, et generer un revenue !'
     }
   },
+  head () {
+    return {
+      title: this.title,
+      meta: [
+        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
+        { hid: 'title', name: 'title', content: this.title },
+        { hid: 'description', name: 'description', content: this.desc },
+        { hid: 'og:title', property: 'og:title', content: this.title },
+        { hid: 'og:description', property: 'og:description', content: this.desc },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
+        { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
+        { hid: 'og:image', property: 'og:image', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
+        { hid: 'og:image:height', property: 'og:image:height', content: 400 }
+      ]
+    }
+  },
   mounted () {
   },
   methods: {
@@ -88,24 +106,6 @@ export default {
             this.$router.push('/')
           }, 2000)
         })
-    }
-  },
-  head () {
-    return {
-      title: this.title,
-      meta: [
-        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
-        { hid: 'title', name: 'title', content: this.title },
-        { hid: 'description', name: 'description', content: this.desc },
-        { hid: 'og:title', property: 'og:title', content: this.title },
-        { hid: 'og:description', property: 'og:description', content: this.desc },
-        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
-        { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', property: 'og:image', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },
-        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },
-        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
-        { hid: 'og:image:height', property: 'og:image:height', content: 400 }
-      ]
     }
   }
 }

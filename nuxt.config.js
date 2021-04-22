@@ -76,6 +76,9 @@ export default {
       ]
     }]
   ],
+  tailwindcss: {
+    jit: true
+  },
   pwa: {
     meta: {
       theme_color: '#4b279b'
