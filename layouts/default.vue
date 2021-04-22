@@ -14,7 +14,7 @@ import LazyHydrate from 'vue-lazy-hydration'
 export default {
   components: {
     LazyHydrate,
-    NavBar: () => import('~/components/NavBar.vue'),
+    NavBar: () => import('~/components/NavBar.vue')
   },
   head () {
     return {
