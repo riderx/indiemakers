@@ -21,7 +21,7 @@ export default {
   name: 'Loader',
   props: {
     show: {
-      type: String,
+      type: Boolean,
       required: true
     }
   }

@@ -1187,7 +1187,6 @@ export default {
         this.$modal.hide('register')
         this.$modal.show('loading')
         const loginPage = `${window.location.protocol}//${window.location.host}/login`
-        console.log('loginPage', loginPage)
         this.$firebase.emailSigning(this.newEmail, loginPage)
           .then(() => {
             window.localStorage.setItem('emailForSignIn', this.newEmail)

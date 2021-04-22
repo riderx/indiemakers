@@ -144,8 +144,10 @@ export default {
     LazyHydrate
   },
   async asyncData ({ params, redirect, $config }) {
-    const items = await feed($config)
-    const element = await ep(params.id, $config)
+    const [items, element] = await Promise.all([
+      feed($config),
+      ep(params.id, $config)
+    ])
     if (params.id === 'latest') {
       return redirect(`/episode/${element.id}`)
     }
@@ -191,6 +193,45 @@ export default {
       content: '',
       audio: '',
       episodes: []
+    }
+  },
+  head () {
+    return {
+      title: this.titleNoEmoji,
+      meta: [
+        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
+        { hid: 'title', name: 'title', content: this.titleNoEmoji },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.previewNoEmoji
+        },
+        { hid: 'og:title', property: 'og:title', content: this.titleNoEmoji },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: this.previewNoEmoji
+        },
+        {
+          hid: 'og:image:alt',
+          property: 'og:image:alt',
+          content: this.titleNoEmoji
+        },
+        {
+          hid: 'og:image:type',
+          property: 'og:image:type',
+          content: 'image/jpg'
+        },
+        { hid: 'og:image', property: 'og:image', content: this.imageOptimized },
+        { hid: 'og:image:width', property: 'og:image:width', content: 300 },
+        { hid: 'og:image:height', property: 'og:image:height', content: 300 },
+        { hid: 'og:audio', property: 'og:audio', content: this.audio },
+        {
+          hid: 'og:audio:type',
+          property: 'og:audio:type',
+          content: 'audio/mpeg'
+        }
+      ]
     }
   },
   computed: {
@@ -255,12 +296,10 @@ export default {
             }
             const nextGuid = this.episodes[randomEp].guid_fix
             window.localStorage.setItem('nextGuid', nextGuid)
-            console.log('randomEp', nextGuid)
             this.$modal.show('random-ep')
           } else {
             const nextGuid = this.episodes[epIndex - 1].guid_fix
             window.localStorage.setItem('nextGuid', nextGuid)
-            console.log('nextEp', nextGuid)
             this.$modal.show('next-ep')
           }
           break
@@ -344,45 +383,6 @@ export default {
     },
     listen () {
       this.$modal.show('listen')
-    }
-  },
-  head () {
-    return {
-      title: this.titleNoEmoji,
-      meta: [
-        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
-        { hid: 'title', name: 'title', content: this.titleNoEmoji },
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.previewNoEmoji
-        },
-        { hid: 'og:title', property: 'og:title', content: this.titleNoEmoji },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: this.previewNoEmoji
-        },
-        {
-          hid: 'og:image:alt',
-          property: 'og:image:alt',
-          content: this.titleNoEmoji
-        },
-        {
-          hid: 'og:image:type',
-          property: 'og:image:type',
-          content: 'image/jpg'
-        },
-        { hid: 'og:image', property: 'og:image', content: this.imageOptimized },
-        { hid: 'og:image:width', property: 'og:image:width', content: 300 },
-        { hid: 'og:image:height', property: 'og:image:height', content: 300 },
-        { hid: 'og:audio', property: 'og:audio', content: this.audio },
-        {
-          hid: 'og:audio:type',
-          property: 'og:audio:type',
-          content: 'audio/mpeg'
-        }
-      ]
     }
   }
 }
