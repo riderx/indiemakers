@@ -19,7 +19,12 @@
 
 export default {
   name: 'Loader',
-  props: ['show']
+  props: {
+    show: {
+      type: String,
+      required: true
+    }
+  }
 }
 </script>
 <style>
