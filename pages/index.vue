@@ -21,9 +21,10 @@
                 id="scrollable"
                 class="flex flex-wrap w-full overflow-hidden border-4 md:h-78 md:overflow-y-scroll border-light md:custom-scroll"
               >
-                <div
+                <NuxtLink
                   v-for="episode in episodes"
                   :key="episode.id"
+                  :to="`/episode/${episode.id}`"
                   class="w-full text-white border-b bg-blue align-items-top"
                 >
                   <ListItem
@@ -34,10 +35,8 @@
                     :image-fallback="episode.itunes.image"
                     :image="episode.image_optimized"
                     :loading-image="episode.image_loading"
-                    @name="open(episode.social.link)"
-                    @image="open(`/episode/${episode.id}`)"
                   />
-                </div>
+                </NuxtLink>
               </div>
             </div>
             <div
