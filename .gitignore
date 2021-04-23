@@ -36,6 +36,8 @@ build/Release
 
 # Dependency directories
 node_modules/
+node_modules_dev/
+node_modules_prod/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -91,3 +93,4 @@ sw.*
 functions/indiemakerfr-firebase.json
 functions/src/test.ts
 functions/src/email.ts
+functions/node_modules
