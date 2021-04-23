@@ -17,8 +17,14 @@
       }
   ],
   "routes": [
-    { "src": "/api.*", "headers": { "Cache-Control": "max-age=0, s-maxage=1, stale-while-revalidate" }, "continue": true },
-    { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=14400, s-maxage=1, stale-while-revalidate" }, "continue": true },
+    { "src": "/api/(.*)", "headers": [
+      { "key": "Cache-Control", "value": "max-age=0, s-maxage=1, stale-while-revalidate" },
+      { "key": "Access-Control-Allow-Credentials", "value": "true" },
+      { "key": "Access-Control-Allow-Origin", "value": "*" },
+      { "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
+      { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" }
+    ], "continue": true },
+    { "src": "/_nuxt/.+", "headers": [{ "key": "Cache-Control", "value": "max-age=0, s-maxage=1, stale-while-revalidate" }], "continue": true },
     { "src": "/sitemap.xml", "dest": "/api/sitemap" },
     { "src": "/rss.xml", "dest": "/api/rss" },
     { "src": "^/(?!.*api)(.*)$", "dest": "$1" }
