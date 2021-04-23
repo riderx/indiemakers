@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
     const data = await loadData()
     return res.json(data)
   } catch (err) {
-    console.log(err)
+    console.error(err)
     return res.json([])
   }
 }
