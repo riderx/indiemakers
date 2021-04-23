@@ -1,7 +1,19 @@
-const util = require('../../plugins/feed')
-const func = require('../../plugins/firebase_func')
+const findInEp = (name, episodes) => {
+  let found = null
+  const lowName = name.toLowerCase()
+  for (let index = 0; index < episodes.length; index++) {
+    const element = episodes[index]
+    if (element && element.twitter && element.twitter.name && element.twitter.name.toLowerCase() === lowName) {
+      found = element.guid
+      break
+    }
+  }
+  return found
+}
 
 const loadData = async () => {
+  const util = require('../../plugins/feed')
+  const func = require('../../plugins/firebase_func')
   try {
     const results = await func.run('getMakers')
     if (results) {
@@ -20,17 +32,6 @@ const loadData = async () => {
     console.error('loadData', err)
     return []
   }
-}
-
-const findInEp = (name, episodes) => {
-  let found = null
-  const lowName = name.toLowerCase()
-  episodes.forEach((element) => {
-    if (element && element.twitter && element.twitter.name && element.twitter.name.toLowerCase() === lowName) {
-      found = element.guid
-    }
-  })
-  return found
 }
 
 module.exports = async (req, res) => {

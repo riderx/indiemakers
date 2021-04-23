@@ -1,7 +1,6 @@
-const util = require('../../plugins/feed')
-const func = require('../../plugins/firebase_func')
 
 const postEp = async (element) => {
+  const func = require('../../plugins/firebase_func')
   const ep = {
     udi: element.guid_fix,
     title: element.title_no_emoji,
@@ -21,21 +20,25 @@ const postEp = async (element) => {
     return null
   }
 }
+
 module.exports = async (req, res) => {
+  const util = require('../../plugins/feed')
   const items = await util.feed()
   let elem = null
   if (req.query.guid === 'latest') {
     elem = items[0]
   } else {
-    items.forEach((element) => {
+    for (let index = 0; index < items.length; index++) {
+      const element = items[index]
       if (element.guid_fix === req.query.guid || element.id === req.query.guid) {
         elem = element
+        break
       }
-    })
+    }
   }
+  res.json(elem)
   if (elem) {
     await util.sendImageToCache(elem.itunes.image, elem.guid_fix)
     await postEp(elem)
   }
-  return res.json(elem)
 }
