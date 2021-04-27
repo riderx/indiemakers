@@ -115,6 +115,8 @@ export default {
           name: 'description',
           content: this.page.description
         },
+        { hid: 'twitter:title', name: 'twitter:title', content: this.page.title },
+        { hid: 'twitter:description', name: 'twitter:description', content: this.page.description },
         { hid: 'og:title', property: 'og:title', content: this.page.title },
         {
           hid: 'og:description',

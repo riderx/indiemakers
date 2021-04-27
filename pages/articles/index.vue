@@ -83,7 +83,7 @@ export default {
     return {
       blogImage: require('~/assets/blog.svg'),
       title: 'Les news indie !',
-      description: 'Chaque semaine un maker du discord est désigné pour ecrire un article sur son projet, et nous partager ses avancée !'
+      description: 'Chaque semaine un maker du discord est désigné pour ecrire un article sur son projet, et partager ses avancée !'
     }
   },
   head () {
@@ -97,6 +97,8 @@ export default {
           name: 'description',
           content: this.description
         },
+        { hid: 'twitter:title', name: 'twitter:title', content: this.title },
+        { hid: 'twitter:description', name: 'twitter:description', content: this.description },
         { hid: 'og:title', property: 'og:title', content: this.title },
         {
           hid: 'og:description',
