@@ -95,11 +95,46 @@
 </template>
 
 <script>
+import { domain } from '~/plugins/rss'
+
 export default {
   async asyncData ({ params, $content }) {
     const page = (await $content('articles').where({ slug: params.id }).fetch())[0]
     return {
       page
+    }
+  },
+  head () {
+    return {
+      title: this.page.title,
+      meta: [
+        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
+        { hid: 'title', name: 'title', content: this.page.title },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.page.description
+        },
+        { hid: 'og:title', property: 'og:title', content: this.page.title },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: this.page.description
+        },
+        {
+          hid: 'og:image:alt',
+          property: 'og:image:alt',
+          content: this.page.title
+        },
+        {
+          hid: 'og:image:type',
+          property: 'og:image:type',
+          content: 'image/jpg'
+        },
+        { hid: 'og:image', property: 'og:image', content: this.page.headImage },
+        { hid: 'og:image:width', property: 'og:image:width', content: 300 },
+        { hid: 'og:image:height', property: 'og:image:height', content: 300 }
+      ]
     }
   }
 }
