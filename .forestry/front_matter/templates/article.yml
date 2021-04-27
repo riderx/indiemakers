@@ -35,3 +35,5 @@ fields:
 - type: textarea
   name: authorImage
   label: authorImage
+pages:
+- content/articles/10-conseils-d-entrepreneurs-independants-pour-lancer-ta-propre-entreprise.md
