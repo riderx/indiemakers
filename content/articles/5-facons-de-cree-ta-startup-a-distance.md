@@ -11,7 +11,7 @@ headImage: "/images/robbie-noble-4vtwo3a0xsq-unsplash.jpg"
 readTime: 20 min
 date: 28 Avril 2021
 author: Martin Donadieu
-authorImage: ''
+authorImage: "/images/profil_martin.png"
 
 ---
 _La création et la gestion d'une startup en ligne sont devenues beaucoup plus accessibles grâce à l'émergence de quelques entreprises qui ont pour objectif commun de faciliter la vie des entrepreneurs et des nomades numériques._.
