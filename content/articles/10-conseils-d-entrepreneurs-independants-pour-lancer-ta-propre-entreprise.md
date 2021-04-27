@@ -7,7 +7,7 @@ description: Si tu cherches un moyen de créer ta propre entreprise, je t'invite
   lire cet article de blog, je partage 10 conseils d'entrepreneurs qui ont lancé leur
   projet comme toi.
 type: Article
-headImage: "/images/undraw_runner_start_x0uu.svg"
+headImage: "/images/undraw_runner_start_x0uu.png"
 readTime: 3 min
 date: 27 avril 2020
 author: Martin Donadieu
