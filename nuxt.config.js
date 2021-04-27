@@ -74,8 +74,12 @@ export default {
           ]
         }
       ]
-    }]
+    }],
+    '@nuxt/content'
   ],
+  content: {
+    // Options
+  },
   tailwindcss: {
     jit: true
   },

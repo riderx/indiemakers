@@ -15,6 +15,7 @@
     "lint": "npm run lint:js"
   },
   "dependencies": {
+    "@nuxt/content": "^1.14.0",
     "@nuxtjs/component-cache": "^1.1.6",
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/sentry": "^5.0.3",
