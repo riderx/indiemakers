@@ -1,4 +1,5 @@
 ---
+slug: improve_your_customer_experience
 title: Improve your customer experience
 description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint harum rerum voluptatem quo recusandae magni placeat saepe molestiae, sed excepturi cumque corporis perferendis hic.
 type: Case study

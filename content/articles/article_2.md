@@ -1,4 +1,5 @@
 ---
+slug: how_to_use_search_engine_optimization_to_drive_sales
 title: How to use search engine optimization to drive sales
 description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit facilis asperiores porro quaerat doloribus, eveniet dolore. Adipisci tempora aut inventore optio animi., tempore temporibus quo laudantium.
 type: Video

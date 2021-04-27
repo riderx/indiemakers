@@ -1,4 +1,5 @@
 ---
+slug: javascript_for_beginners
 title: JavaScript for Beginners
 surtitle: INTRODUCING
 subtitle: ''
