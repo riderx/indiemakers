@@ -2,6 +2,7 @@
   <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
     <div class="max-w-3xl mx-auto">
       <article>
+        <a class="mb-6 text-sm font-black tracking-wide text-gray-600 uppercase" href="/articles"> ← Tous les articles </a>
         <div class="relative py-16 overflow-hidden bg-white">
           <div class="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
             <div class="relative h-full mx-auto text-lg max-w-prose" aria-hidden="true">

@@ -74,13 +74,14 @@
                   </div>
                 </div>
                 <div class="flex justify-center w-full pt-3">
-                  <button
+                  <NuxtLink
+                    :to="'/makers_hunt'"
                     type="button"
                     class="px-5 py-2 border-4 border-white font-indie hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
-                    @click="open('/makers_hunt')"
                   >
                     <h3>👉 Découvre les Makers Français</h3>
-                  </button>
+                    </button>
+                  </nuxtlink>
                 </div>
                 <div class="pt-3 text-sm">
                   <p class="pb-2">
