@@ -80,7 +80,7 @@ import { domain } from '~/plugins/rss'
 
 export default {
   async asyncData ({ $content }) {
-    const articles = await $content('articles').sortBy('title').fetch()
+    const articles = await $content('articles').sortBy('order').fetch()
 
     return {
       articles

@@ -9,6 +9,7 @@ description: Si tu cherches un moyen de créer ta propre entreprise, je t'invite
 type: Article
 headImage: "/images/undraw_runner_start_x0uu.png"
 readTime: 3 min
+order: 2
 date: 27 avril 2020
 author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
@@ -28,3 +29,7 @@ Si tu veux créer ta propre entreprise en tant qu'entrepreneur ou si tu le fais 
  8. Prends du temps pour toi ! Si tu n'arrives pas à voir du temps pour toi, tu n'en auras jamais pour ton projet !
  9. Cherche toujours des mentors, imagines-tu un sportif sans coach ? L’entreprenariat c'est pareil, si tu veux grandir et progresser avec un mentor/coach tu iras bien plus vite !
 10. Partage tout avec les autres, Il peut être difficile d'être un entrepreneur de nos jours. Crée un projet pour soit ne veux pas dire être seul !
+
+Conclusion:
+
+Comme tu peux l'entendre dans le podcast le meilleur conseil resteras de simplement te lancer et apprendre en chemin, rester résiliant et avancer un petit peu chaque jour, mais parfois. 
