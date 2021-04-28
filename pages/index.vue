@@ -83,6 +83,16 @@
                     </button>
                   </nuxtlink>
                 </div>
+                <div class="flex justify-center w-full pt-3">
+                  <NuxtLink
+                    :to="'/articles'"
+                    type="button"
+                    class="px-5 py-2 border-4 border-white font-indie hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                  >
+                    <h3>👉 Les articles indie</h3>
+                    </button>
+                  </nuxtlink>
+                </div>
                 <div class="pt-3 text-sm">
                   <p class="pb-2">
                     Par
@@ -142,7 +152,7 @@
                       target="_blank"
                       rel="noreferrer"
                       href="https://msha.ke/martindonadieu"
-                    >Mon site perso</a>
+                    >Martin Donadieu | site perso</a>
                   </div>
                 </div>
               </div>

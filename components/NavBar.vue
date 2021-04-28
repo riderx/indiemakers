@@ -1,7 +1,10 @@
 <template>
   <nav class="flex flex-wrap items-center justify-between p-1 py-3 md:p-6">
     <div class="flex items-center text-white flex-no-shrink w-max-2/3">
-      <a href="/" :alt="logo.title">
+      <NuxtLink
+        :to="'/'"
+        :alt="logo.title"
+      >
         <img
           :id="logo.title"
           width="100%"
@@ -11,7 +14,7 @@
           :alt="logo.title"
           :aria-label="logo.title"
         >
-      </a>
+      </NuxtLink>
     </div>
     <div class="flex items-center w-max-1/3">
       <div class="text-sm lg:flex-grow" />
