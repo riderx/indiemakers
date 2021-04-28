@@ -16,7 +16,13 @@
       <div class="grid max-w-lg gap-5 mx-auto mt-12 lg:grid-cols-3 lg:max-w-none">
         <NuxtLink v-for="article in articles" :key="article.slug" :to="`/articles/${article.slug}`" class="flex flex-col overflow-hidden rounded-lg shadow-lg">
           <div class="flex-shrink-0">
-            <img class="object-cover w-full h-48" :src="article.headImage" alt="">
+            <img
+              class="object-cover w-full h-48"
+              width="100%"
+              height="100%"
+              :src="article.headImage"
+              alt=""
+            >
           </div>
           <div class="flex flex-col justify-between flex-1 p-6 bg-white">
             <div class="flex-1">
