@@ -12,22 +12,19 @@ Qui que vous soyez, dans ce podcast vous apprendrez à devenir un Indie Maker, l
 
 *Tags: podcast, web, indie maker, community*
 
-## Getting Started
+## Debuter
 
-The project’s is realized in Vue.Js and consists of 2 pages, dynamically loaded with a router: a home page and a page to access the different episodes.
+`npm i ` pour installer les modules nécessaires
 
-## Visual
+`npm run dev` pour tester le site en local
 
-![Laptop Home View](./public/assets/home.png)
-![Laptop Podcasts View](./public/assets/podcasts.png)
+Tous les push sur main, déploie le site sur le nom de domaine indiemakers.fr et sur les autres branches cela fait des domaines Vercel pour tester. 
 
-## Built With
-- Vue.js  
-- Visual Code Studio
+## Fait avec 
 
-## Team
+Le site est fait en Vuejs firebase et vercel (pour certaines functions)
 
-THe development team is: 
+## Equipe
 
 
 | Martin DOnadieu | Shannone Controu | 
