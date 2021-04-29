@@ -25,7 +25,7 @@
               >
             </div>
           </div>
-          <div class="pt-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
+          <div class="pt-3 pl-4 pr-4 mx-auto text-center md:w-1/2">
             <div class="mb-4">
               <input
                 ref="name"
@@ -37,7 +37,7 @@
               >
             </div>
           </div>
-          <div class="pt-3 pb-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
+          <div class="pt-3 pb-3 pl-4 pr-4 mx-auto text-center md:w-1/2">
             <button
               type="button"
               class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
@@ -89,9 +89,8 @@ export default {
   methods: {
     addEMailSub () {
       this.$firebase
-        .firestore()
-        .collection('users')
-        .doc(this.email)
+        .db
+        .ref(`users/${this.email}`)
         .set({
           first_name: this.name,
           email: this.email
