@@ -11,10 +11,10 @@ dayjs.locale('fr')
 const rss = 'https://anchor.fm/s/414d1d4/podcast/rss'
 
 const regexHtml = /(<([^>]+)>)/ig
-const linkTwitterRe = /son twitter : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
+const linkTwitterRe = /[sS]on.*[tT]witter.*:.*<a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
 const nameRe = /accueille (?<name>.*?)\./i
-const linkInstagramRe = /son instagram : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
-const linkLinkedinRe = /son linkedin : <a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
+const linkInstagramRe = /[sS]on [iI]nstagram.*:.*<a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
+const linkLinkedinRe = /[sS]on.*[lL]inkedin.*:.*<a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
 const parser = new Parser()
 const imagekit = new ImageKit({
   publicKey: 'public_9vWOr643awJiLr6HqhpNNF1ZVkQ=',
