@@ -1,5 +1,5 @@
 ---
-slug: 5_facons_de_creer_ta_startup_a_distance
+slug: 5_facons_de_cree_ta_startup_a_distance
 title: 5 façons de créer ta startup à distance
 surtitle: ''
 subtitle: ''
