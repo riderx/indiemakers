@@ -1,13 +1,10 @@
 import * as functions from 'firebase-functions'
 import axios from 'axios'
-
-// PixelMeApiToken
 const configSecret = functions.config()
 
-const PixelsId = configSecret.pixelme.pixels_id.split(',')
-axios.defaults.baseURL = 'https://api.pixelme.me'
-axios.defaults.headers.common.Authorization = `Bearer ${configSecret.pixelme.pixelsId}`
-
+const rebrandlyKey = configSecret.rebrandly.key;
+const rebrandlyId = configSecret.rebrandly.id;
+axios.defaults.baseURL = 'https://api.rebrandly.com/'
 
 const bestKey = (url: string): string => {
   if (url.includes('twitter.com/hashtag/')) {
@@ -22,19 +19,27 @@ const bestKey = (url: string): string => {
   return url
 }
 
+let config = {
+  headers: {
+    "Content-Type": "application/json",
+    "apikey": rebrandlyKey,
+    "workspace": rebrandlyId
+  }
+}
+
 export const shortURLPixel = (url: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     const key = bestKey(url)
-    axios.post('/redirects', {
-      url,
-      key,
-      pixels_ids: PixelsId,
-      domain: 'imf.to'
-    })
+    axios.post('/v1/links', {
+      destination: url,
+      domain: { fullName: "imf.to" },
+        //, slashtag: "A_NEW_SLASHTAG"
+  //, title: "Rebrandly YouTube channel"
+    }, config)
       .then((response) => {
-        if (response && response.data && response.data.shorten) {
+        if (response && response.data && response.data.shortUrl) {
           console.log('new link', response.data)
-          resolve(response.data.shorten)
+          resolve(response.data.shortUrl)
         } else {
           console.error('shorten error, no shorten found', response)
           resolve(url)
