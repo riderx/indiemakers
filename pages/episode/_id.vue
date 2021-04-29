@@ -197,6 +197,12 @@ export default {
   },
   head () {
     return {
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://unpkg.com/vue-plyr/dist/vue-plyr.css'
+        }
+      ],
       title: this.titleNoEmoji,
       meta: [
         { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },

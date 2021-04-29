@@ -80,9 +80,6 @@ export default {
   content: {
     // Options
   },
-  tailwindcss: {
-    jit: true
-  },
   pwa: {
     meta: {
       theme_color: '#4b279b'
@@ -94,8 +91,7 @@ export default {
     }
   },
   purgeCSS: {
-    whitelistPatterns: [/plyr/, /vm--/, /icon--/, /label--/, /vue-dialog/, /vue-modal/],
-    whitelistPatternsChildren: [/plyr/]
+    whitelistPatterns: [/vm--/, /icon--/, /label--/, /vue-dialog/, /vue-modal/]
   },
   sentry: {
     dsn: 'https://1e9603c479b54389ab04a4be985e1768@o449238.ingest.sentry.io/5431873', // Enter your project's DSN here
