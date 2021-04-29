@@ -15,7 +15,6 @@ author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
-Si tu cherches un moyen de créer ta propre entreprise, je t'invite à lire cet article de blog, je partage 10 conseils d'entrepreneurs qui ont lancé leur projet comme toi.
 
 Si tu veux créer ta propre entreprise en tant qu'entrepreneur ou si tu le fais déjà et que tu veux de nouvelles idées, ces conseils t'aideront !
 
@@ -32,4 +31,4 @@ Si tu veux créer ta propre entreprise en tant qu'entrepreneur ou si tu le fais 
 
 Conclusion:
 
-Comme tu peux l'entendre dans le podcast le meilleur conseil resteras de simplement te lancer et apprendre en chemin, rester résiliant et avancer un petit peu chaque jour, mais parfois. 
+Comme tu peux l'entendre dans le podcast le meilleur conseil resteras de simplement te lancer et apprendre en chemin, rester résiliant et avancer un petit peu chaque jour, parfois se tromper mais continuer. 
