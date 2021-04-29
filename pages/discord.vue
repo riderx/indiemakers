@@ -1,0 +1,123 @@
+<template>
+  <LazyHydrate when-idle>
+    <div class="container mx-auto">
+      <div class="flex flex-wrap py-2">
+        <div class="w-full mx-auto border-8 md:w-1/2 border-light">
+          <img class="w-1/2 pb-5 mx-auto pb-md-3" src="/undraw_connection_b38q.svg">
+          <h1 class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie">
+            {{ title }}
+          </h1>
+          <p class="px-5 text-white">
+            {{ desc }}
+          </p>
+          <p class="px-5 text-white">
+            Tu seras également informé de la sortie des épisodes !
+          </p>
+          <div class="pt-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
+            <div class="mb-0 mb-4">
+              <input
+                ref="name"
+                v-model="email"
+                type="text"
+                class="block w-full px-2 py-1 pb-0 mb-1 text-base leading-normal bg-white border rounded appearance-none text-grey-darker border-grey"
+                aria-describedby="TweetnameHelp"
+                placeholder="Elon@tesla.com"
+              >
+            </div>
+          </div>
+          <div class="pt-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
+            <div class="mb-4">
+              <input
+                ref="name"
+                v-model="name"
+                type="text"
+                class="block w-full px-2 py-1 pb-0 mb-1 text-base leading-normal bg-white border rounded appearance-none text-grey-darker border-grey"
+                aria-describedby="TweetnameHelp"
+                placeholder="Elon Musk"
+              >
+            </div>
+          </div>
+          <div class="pt-3 pb-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
+            <button
+              type="button"
+              class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
+              @click="joinDiscord()"
+            >
+              Rejoindre
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </LazyHydrate>
+</template>
+<script>
+import LazyHydrate from 'vue-lazy-hydration'
+import { domain } from '~/plugins/rss'
+export default {
+  components: {
+    LazyHydrate
+  },
+  data () {
+    return {
+      email: '',
+      name: '',
+      title: 'Rejoint le Discord',
+      desc: '300 Makers là pour échanger et disponible pour répondre à tes questions !'
+    }
+  },
+  head () {
+    return {
+      title: this.title,
+      meta: [
+        { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
+        { hid: 'title', name: 'title', content: this.title },
+        { hid: 'description', name: 'description', content: this.desc },
+        { hid: 'og:title', property: 'og:title', content: this.title },
+        { hid: 'og:description', property: 'og:description', content: this.desc },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
+        { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
+        { hid: 'og:image', property: 'og:image', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
+        { hid: 'og:image:height', property: 'og:image:height', content: 400 }
+      ]
+    }
+  },
+  mounted () {
+  },
+  methods: {
+    joinDiscord () {
+      this.$firebase
+        .firestore()
+        .collection('users')
+        .doc(this.email)
+        .set({
+          first_name: this.name,
+          email: this.email
+        }).then(() => {
+          window.open('https://discord.gg/Wx9HuPRk', '_blank')
+          setTimeout(() => {
+            this.$router.push('/')
+          }, 2000)
+        }).catch(() => {
+          this.$modal.show('already_register')
+          window.open('https://discord.gg/Wx9HuPRk', '_blank')
+          setTimeout(() => {
+            this.$router.push('/')
+          }, 2000)
+        })
+    }
+  }
+}
+</script>
+<style scoped>
+.form-size {
+  height: 750px;
+}
+@media (max-width: 400px) {
+  .form-size {
+    height: 800px;
+  }
+}
+</style>
