@@ -3,6 +3,7 @@ slug: comment-indie-hackers-et-product-hunt-ont-change-ma-vie
 title: Comment Indie Hackers et Product Hunt ont changé ma vie
 surtitle: ''
 subtitle: ''
+published: false
 description: J'ai aussi découvert des sites comme Product Hunt et Indie Hackers, qui
   partageaient le travail incroyable que faisaient les makers et promouvaient l'image
   que tout le monde pouvait être un maker indé.
@@ -120,7 +121,7 @@ Je viens de créer un [server Discord](https://imf.to/discord) Francophone d'ent
 
 Que tu veuilles que je t'aide sur un article de blog, ou à résoudre un problème d'ingénierie ou que je te donne des conseils pour faire évoluer ta communauté, je suis disponible pour t'aider.
 
-J'organise aussi un [hackathon-makers ](https://imf.to/hackathon "hackathon-makers")une fois par trimestre pour pousser les novices à créer un produit à partir de rien pour l'événement. C'est une excellente occasion pour les gens de se réunir et de construire quelque chose de cool, alors même si tu n'es pas un maker, tu peux participer ou simplement soutenir les projets qui seront créés.
+J'organise aussi un [hackathon-makers](https://imf.to/hackathon)une fois par trimestre pour pousser les novices à créer un produit à partir de rien pour l'événement. C'est une excellente occasion pour les gens de se réunir et de construire quelque chose de cool, alors même si tu n'es pas un maker, tu peux participer ou simplement soutenir les projets qui seront créés.
 
 Chaque jour, je célèbre les efforts incroyables des Maker indépendants du monde entier, ils m'ont inspiré, à travailler plus dur, et à défier les attentes lors de la construction de produits.
 
@@ -128,4 +129,4 @@ Aux Maker indépendants du monde entier, je vous remercie.
 
 Un Message spécial à Ryan Hoover, Abadesi Osunsade, Amrith Shanbhag, Pieter Levels, Ben Tossell, Pat Walls, Product Hunt, Makers Kitchen, Makerlog, WIP et d'autres pour vos contributions inspirantes aux makers indé. ✌️
 
-Tu veux discuter des communautés, de la technologie, des indie makers ou de tout autre sujet ? Contacte-moi @martindonadieu sur Twitter.
+Tu veux discuter des communautés, de la technologie, des indie makers ou de tout autre sujet ? Contacte-moi [@martindonadieu](https://imf.to/martin) sur Twitter.

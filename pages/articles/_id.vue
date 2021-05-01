@@ -2,8 +2,8 @@
   <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
     <div class="max-w-3xl mx-auto">
       <article>
-        <a class="mb-6 text-sm font-black tracking-wide text-gray-600 uppercase" href="/articles"> ← Tous les articles </a>
-        <div class="relative py-16 overflow-hidden bg-white">
+        <a class="text-sm font-black tracking-wide text-gray-300 uppercase" href="/articles"> ← Tous les articles </a>
+        <div class="relative py-16 mt-4 overflow-hidden bg-white">
           <div class="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full">
             <div class="relative h-full mx-auto text-lg max-w-prose" aria-hidden="true">
               <svg class="absolute transform translate-x-32 top-12 left-full" width="404" height="384" fill="none" viewBox="0 0 404 384">

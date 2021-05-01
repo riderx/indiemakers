@@ -3,6 +3,7 @@ slug: 5_facons_de_cree_ta_startup_a_distance
 title: 5 façons de créer ta startup à distance
 surtitle: ''
 subtitle: ''
+published: true
 description: La création et la gestion d'une startup en ligne sont devenues beaucoup
   plus accessibles grâce à l'émergence de quelques entreprises qui ont pour objectif
   commun de faciliter la vie des entrepreneurs et des nomades numériques.

@@ -6,7 +6,7 @@
         <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
           {{ title }}
         </h2>
-        <p class="max-w-2xl mx-auto mt-3 text-xl text-gray-500 sm:mt-4">
+        <p class="max-w-2xl mx-auto mt-3 text-xl text-gray-300 sm:mt-4">
           {{ description }}
         </p>
       </div>
@@ -77,7 +77,7 @@ import { domain } from '~/plugins/rss'
 
 export default {
   async asyncData ({ $content }) {
-    const articles = await $content('articles').sortBy('order').fetch()
+    const articles = await $content('articles').where({ published: true }).sortBy('order').fetch()
 
     return {
       articles

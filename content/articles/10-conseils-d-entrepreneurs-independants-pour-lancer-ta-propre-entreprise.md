@@ -3,6 +3,7 @@ slug: 10_conseils_d_entrepreneurs_independants_pour_lancer_ta_propre_entreprise
 title: 10 conseils d'entrepreneurs indépendants pour lancer ta propre entreprise
 surtitle: ''
 subtitle: ''
+published: true
 description: Si tu cherches un moyen de créer ta propre entreprise, je t'invite à
   lire cet article de blog, je partage 10 conseils d'entrepreneurs qui ont lancé leur
   projet comme toi.
