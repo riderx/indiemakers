@@ -11,6 +11,9 @@ fields:
 - type: text
   name: surtitle
   label: surtitle
+- name: published
+  type: boolean
+  label: published
 - type: text
   name: subtitle
   label: subtitle
