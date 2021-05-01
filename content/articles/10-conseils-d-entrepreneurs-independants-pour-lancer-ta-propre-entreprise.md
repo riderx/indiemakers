@@ -16,11 +16,10 @@ author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
+<img class="w-full rounded-lg" src="/images/victoria-heath-magaxayq_ne-unsplash.jpg" alt="10 conseils" width="1310" height="873">
 
-![](/images/victoria-heath-magaxayq_ne-unsplash.jpg)
-
-Photo by [Victoria Heath](https://unsplash.com/@vheath?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/entrepreneurship?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
-
+Photo by <a href="https://unsplash.com/@vheath?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Victoria Heath</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  
 Si tu veux créer ta propre entreprise en tant qu'entrepreneur ou si tu le fais déjà et que tu veux de nouvelles idées, ces conseils t'aideront !
 
  1. Interroge ta future cible, quand t'est indépendant tu n'as pas d'autre choix que d'aller au contact de tes futurs clients, cela t'appendra énormément de choses sur leur réel besoin.

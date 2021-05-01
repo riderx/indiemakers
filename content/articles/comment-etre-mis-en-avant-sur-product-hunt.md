@@ -21,7 +21,7 @@ Cependant, de nombreuses personnes publient leur produit, attendent l'arrivée d
 
 Ce qu'il faut faire avant de se lancer sur Product Hunt
 
-J'ai pris le temps de parcourir 500hunters.com et de trouver tous les meilleurs chasseurs de Product Hunt sur Twitter (sauf quelques-uns qui ont des comptes privés). Je les ai tous ajoutés à une liste Twitter publique "Top 500 Hunters on Product Hunt".
+J'ai pris le temps de parcourir [makernetwork](https://makernetwork.app/) et de trouver tous les meilleurs chasseurs de Product Hunt sur Twitter (sauf quelques-uns qui ont des comptes privés). Je les ai tous ajoutés à une liste Twitter publique "Top 500 Hunters on Product Hunt".
 
 Pourquoi est-ce important ?
 

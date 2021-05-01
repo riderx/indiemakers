@@ -17,7 +17,8 @@ authorImage: "/images/profil_martin.png"
 
 ---
 <img class="w-full rounded-lg" src="/images/robbie-noble-4vtwo3a0xsq-unsplash.jpg" alt="cree ta boite" width="1310" height="873">
-
+Photo by <a href="https://unsplash.com/@rbbnbl?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Robbie Noble</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  
 _La création et la gestion d'une startup en ligne sont devenues beaucoup plus accessibles grâce à l'émergence de quelques entreprises qui ont pour objectif commun de faciliter la vie des entrepreneurs et des nomades numériques._.
 
 Dans cet article, je vais te fournir un aperçu détaillé et une comparaison entre cinq plateformes qui te permettent de créer une entreprise à distance en Estonie ([Xolo Leap](https://www.xolo.io/leap)), au Portugal ([GrowIN Portugal](https://www.growinportugal.com/)), en Allemagne ([Firma.De](https://www.firma.de/en/)), aux États-Unis ([Stripe Atlas](https://stripe.com/atlas)), et à Singapour ([Osome](https://osome.com/sg/)).
