@@ -8,7 +8,7 @@ description: Si tu cherches un moyen de créer ta propre entreprise, je t'invite
   lire cet article de blog, je partage 10 conseils d'entrepreneurs qui ont lancé leur
   projet comme toi.
 type: Article
-headImage: "/images/undraw_runner_start_x0uu.png"
+headImage: "/images/victoria-heath-magaxayq_ne-unsplash.jpg"
 readTime: 3 min
 order: 2
 date: 27 avril 2020
@@ -16,6 +16,10 @@ author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
+
+![](/images/victoria-heath-magaxayq_ne-unsplash.jpg)
+
+Photo by [Victoria Heath](https://unsplash.com/@vheath?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/entrepreneurship?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
 
 Si tu veux créer ta propre entreprise en tant qu'entrepreneur ou si tu le fais déjà et que tu veux de nouvelles idées, ces conseils t'aideront !
 
@@ -32,4 +36,4 @@ Si tu veux créer ta propre entreprise en tant qu'entrepreneur ou si tu le fais 
 
 Conclusion:
 
-Comme tu peux l'entendre dans le podcast le meilleur conseil resteras de simplement te lancer et apprendre en chemin, rester résiliant et avancer un petit peu chaque jour, parfois se tromper mais continuer. 
+Comme tu peux l'entendre dans le podcast le meilleur conseil resteras de simplement te lancer et apprendre en chemin, rester résiliant et avancer un petit peu chaque jour, parfois se tromper mais continuer.
