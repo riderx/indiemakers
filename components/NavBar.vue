@@ -24,7 +24,6 @@
           :key="index"
           :alt="icon.title"
           :aria-label="icon.title"
-          href="#"
           class="inline-block px-1 text-base font-medium sm:px-2 hover:text-white md:px-3"
           @click="openPage(icon.lien)"
           v-html="icon.icon"

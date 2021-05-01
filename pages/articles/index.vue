@@ -16,7 +16,7 @@
       <div class="grid max-w-lg gap-5 mx-auto mt-12 lg:grid-cols-3 lg:max-w-none">
         <client-only>
           <NuxtLink v-for="article in articles" :key="article.slug" :to="`/articles/${article.slug}`" class="flex flex-col overflow-hidden rounded-lg shadow-lg">
-            <div class="flex-shrink-0 h-48 bg-gray-600">
+            <div class="flex-shrink-0 h-48">
               <img
                 class="object-cover w-full h-48"
                 width="100%"
@@ -25,7 +25,7 @@
                 :alt="article.title"
               >
             </div>
-            <div class="flex flex-col justify-between flex-1 p-6 bg-white">
+            <div class="flex flex-col justify-between flex-1 p-6">
               <div class="flex-1">
                 <p class="text-sm font-medium text-indigo-600">
                   <a href="#" class="hover:underline">
