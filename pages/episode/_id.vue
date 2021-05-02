@@ -171,7 +171,7 @@ export default {
   },
   data () {
     return {
-      loadingImg: require('~/assets/cover-im_empty.png'),
+      loadingImg: require('~/assets/images/cover-im_empty.png'),
       imageOptimized: null,
       imageFallback: null,
       imageLoading: null,
@@ -244,7 +244,7 @@ export default {
     image () {
       return {
         src: this.imageBig,
-        error: this.imageFallback || require('~/assets/cover-im_user.png'),
+        error: this.imageFallback || require('~/assets/images/cover-im_user.png'),
         loading: this.imageLoading
       }
     },

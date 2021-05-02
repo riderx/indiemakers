@@ -49,7 +49,7 @@ export default {
     return {
       title: 'Login to indie makers',
       message: 'To allow you vote for makers',
-      image: require('~/assets/cover-im@0.5x.png'),
+      image: require('~/assets/images/cover-im@0.5x.png'),
       isFalse: false,
       user: null,
       email: null
@@ -66,7 +66,7 @@ export default {
         { hid: 'og:description', property: 'og:description', content: this.removeEmoji(this.message) },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', property: 'og:image', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image', property: 'og:image', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${require('~/assets/images/cover-im@0.5x.png')}` },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 }
       ]

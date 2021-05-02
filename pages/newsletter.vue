@@ -2,8 +2,16 @@
   <LazyHydrate when-idle>
     <div class="container mx-auto">
       <div class="flex flex-wrap py-2">
-        <div class="w-full mx-auto border-8 md:w-1/2 border-white">
-          <img class="w-1/4 pb-5 mx-auto pb-md-3" src="/newsletter.svg">
+        <div class="w-full mx-auto border-8 border-white md:w-1/2">
+          <img
+            :id="logo.title"
+            class="w-1/4 pb-5 mx-auto pb-md-3"
+            width="100%"
+            height="100%"
+            :src="logo.source"
+            :alt="logo.title"
+            :aria-label="logo.title"
+          >
           <h1 class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie">
             {{ title }}
           </h1>
@@ -40,7 +48,7 @@
           <div class="pt-3 pb-3 pl-4 pr-4 mx-auto text-center md:w-1/2">
             <button
               type="button"
-              class="px-4 py-1 border-4 rounded-none border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
+              class="px-4 py-1 text-white border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
               @click="addEMailSub()"
             >
               Commencer
@@ -62,6 +70,10 @@ export default {
     return {
       email: '',
       name: '',
+      logo: {
+        title: 'Newletter LOGO',
+        source: require('~/assets/images/newsletter.svg')
+      },
       title: 'Mes Emails Hebdo',
       desc: 'Chaque semaine reçoit mes conseils actionables pour lancer ton projet, et generer un revenue !'
     }
@@ -77,8 +89,8 @@ export default {
         { hid: 'og:description', property: 'og:description', content: this.desc },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', property: 'og:image', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },
-        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${domain}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image', property: 'og:image', content: `${domain}${require('~/assets/images/cover-im@0.5x.png')}` },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${domain}${require('~/assets/images/cover-im@0.5x.png')}` },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 }
       ]

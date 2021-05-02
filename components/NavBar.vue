@@ -40,7 +40,7 @@ export default {
     return {
       logo: {
         title: 'INDIE MAKERS LOGO',
-        source: require('~/assets/isolated-monochrome-white.svg'),
+        source: require('~/assets/images/isolated-monochrome-white.svg'),
         lien: '/'
       },
       icones: [

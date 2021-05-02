@@ -54,15 +54,15 @@ export default {
   },
   data () {
     return {
-      loadingImg: this.loadingImage || require('~/assets/cover-im_empty.png')
+      loadingImg: this.loadingImage || require('~/assets/images/cover-im_empty.png')
     }
   },
   computed: {
     getImgObj () {
       return {
         src: this.image,
-        error: this.imageFallback || require('~/assets/cover-im_user.png'),
-        loading: this.loadingImage || require('~/assets/cover-im_empty.png')
+        error: this.imageFallback || require('~/assets/images/cover-im_user.png'),
+        loading: this.loadingImage || require('~/assets/images/cover-im_empty.png')
       }
     }
   },

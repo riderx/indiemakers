@@ -77,20 +77,18 @@
                   <NuxtLink
                     :to="'/makers'"
                     type="button"
-                    class="px-5 py-2 border-4 border-white font-indie hover:text-royalblue-700 hover:bg-white"
+                    class="px-5 py-2 text-white border-4 border-white font-indie hover:text-royalblue-700 hover:bg-white"
                   >
                     <h3>👉 Découvre les Makers Français</h3>
-                    </button>
                   </nuxtlink>
                 </div>
                 <div class="flex justify-center w-full pt-3">
                   <NuxtLink
                     :to="'/articles'"
                     type="button"
-                    class="px-5 py-2 border-4 border-white font-indie hover:text-royalblue-700 hover:bg-white"
+                    class="px-5 py-2 text-white border-4 border-white font-indie hover:text-royalblue-700 hover:bg-white"
                   >
                     <h3>👉 Les articles indie</h3>
-                    </button>
                   </nuxtlink>
                 </div>
                 <div class="pt-3 text-sm">
@@ -107,7 +105,7 @@
                       rel="noreferrer"
                       target="_blank"
                       href="https://amzn.to/3lXjALg"
-                    >Lancer sa startup en indépendant</a>, mon Livre publié aux éditions Broché
+                    >Lancer sa startup en indépendant</a>, mon livre publié aux éditions Broché
                   </p>
                   <p class="pb-2">
                     <a
@@ -159,9 +157,9 @@
             </div>
           </div>
         </div>
+        <PageLoader :show="show_loader" />
       </div>
     </LazyHydrate>
-    <PageLoader :show="show_loader" />
   </div>
 </template>
 <script>
@@ -184,7 +182,7 @@ export default {
       sizeHead: '100vh',
       image: { // https://ik.imagekit.io/gyc0uxoln1/indiemakers/cover-im_0.5x_5ozFHlEvg.png?tr=q-5,bl-5,h-150,w-150
         src: 'https://ik.imagekit.io/gyc0uxoln1/indiemakers/cover-im_0.5x_5ozFHlEvg.png?tr=h-100,w-100',
-        error: require('~/assets/cover-im_user.png'),
+        error: require('~/assets/images/cover-im_user.png'),
         loading: 'https://ik.imagekit.io/gyc0uxoln1/indiemakers/cover-im_0.5x_5ozFHlEvg.png?tr=q-5,bl-5,h-50,w-50'
       },
       loadingImg: 'https://ik.imagekit.io/gyc0uxoln1/indiemakers/cover-im_0.5x_5ozFHlEvg.png?tr=q-5,bl-5,h-50,w-50',
@@ -221,8 +219,8 @@ export default {
         },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
         { hid: 'og:image:type', property: 'og:image:type', content: 'image/png' },
-        { hid: 'og:image', property: 'og:image', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${require('~/assets/cover-im@0.5x.png')}` },
-        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${require('~/assets/cover-im@0.5x.png')}` },
+        { hid: 'og:image', property: 'og:image', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${require('~/assets/images/cover-im@0.5x.png')}` },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${require('~/assets/images/cover-im@0.5x.png')}` },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 }
       ]
@@ -253,7 +251,7 @@ export default {
     getImgObj (imageOptimized, imageLoading) {
       return {
         src: imageOptimized,
-        error: require('~/assets/cover-im_user.png'),
+        error: require('~/assets/images/cover-im_user.png'),
         loading: imageLoading
       }
     },
