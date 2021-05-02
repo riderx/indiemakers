@@ -118,7 +118,7 @@ export default {
       title: '🚀Le podcast des entrepreneurs indépendant',
       messages: [
         "J'échange avec ceux qui ont su transformer leurs idées en business florissant.",
-        'Au-delà des belles histoires, nous décryptons leur histoire, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables en indépendant.',
+        'Au-delà des belles histoires, nous décryptons leur passé, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables en indépendant.',
         'J’interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur projet profitable.',
         'Un épisode tous les 15 jours'
       ]
