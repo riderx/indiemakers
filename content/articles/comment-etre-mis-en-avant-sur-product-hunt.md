@@ -13,7 +13,8 @@ author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
-![](/images/product-hunt-books.jpg)
+<img class="w-full rounded-lg" src="/images/product-hunt-books.jpg" alt="product hunt book" width="1310" height="873">
+
 
 Tout le monde rêve d'arriver à la première page de Product Hunt. C'est l'occasion de montrer ta création à des milliers de passionnés de technologie.
 

@@ -7,7 +7,7 @@
             <div class="w-full md:w-1/2 md:px-4">
               <div
                 id="header-eps"
-                class="flex flex-wrap w-full py-1 border-8 bg-blue border-light py-md-2"
+                class="flex flex-wrap w-full py-1 border-8 border-white py-md-2"
               >
                 <div
                   class="flex-grow px-0 py-2 text-center text-white"
@@ -19,13 +19,13 @@
               </div>
               <div
                 id="scrollable"
-                class="flex flex-wrap w-full overflow-hidden border-4 md:h-78 md:overflow-y-scroll border-light md:custom-scroll"
+                class="flex flex-wrap w-full overflow-hidden border-4 border-white md:h-78 md:overflow-y-scroll md:custom-scroll"
               >
                 <NuxtLink
                   v-for="episode in episodes"
                   :key="episode.id"
                   :to="`/episode/${episode.id}`"
-                  class="w-full text-white border-b bg-blue align-items-top"
+                  class="w-full text-white border-b align-items-top"
                 >
                   <ListItem
                     class="w-full"
@@ -51,7 +51,7 @@
                     v-lazy="image"
                     width="100%"
                     height="100%"
-                    class="w-1/2 h-auto mx-auto my-10 border-8 md:m-0 md:w-4/5 border-light"
+                    class="w-1/2 h-auto mx-auto my-10 border-8 border-white md:m-0 md:w-4/5"
                     alt="IM COVER"
                     :src="loadingImg"
                   >
@@ -75,9 +75,9 @@
                 </div>
                 <div class="flex justify-center w-full pt-3">
                   <NuxtLink
-                    :to="'/makers_hunt'"
+                    :to="'/makers'"
                     type="button"
-                    class="px-5 py-2 border-4 border-white font-indie hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                    class="px-5 py-2 border-4 border-white font-indie hover:text-royalblue-700 hover:bg-white"
                   >
                     <h3>👉 Découvre les Makers Français</h3>
                     </button>
@@ -87,7 +87,7 @@
                   <NuxtLink
                     :to="'/articles'"
                     type="button"
-                    class="px-5 py-2 border-4 border-white font-indie hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                    class="px-5 py-2 border-4 border-white font-indie hover:text-royalblue-700 hover:bg-white"
                   >
                     <h3>👉 Les articles indie</h3>
                     </button>

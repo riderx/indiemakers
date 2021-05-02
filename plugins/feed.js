@@ -12,7 +12,7 @@ const rss = 'https://anchor.fm/s/414d1d4/podcast/rss'
 
 const regexHtml = /(<([^>]+)>)/ig
 const linkTwitterRe = /[sS]on.*[tT]witter.*:.*<a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
-const nameRe = /accueille (?<name>.*?)\./i
+const nameRe = /accueille (?<name>.*?)[.,]/i
 const linkInstagramRe = /[sS]on [iI]nstagram.*:.*<a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
 const linkLinkedinRe = /[sS]on.*[lL]inkedin.*:.*<a href="(?<link>.*?)">(?<name>.*?)<\/a>/i
 const parser = new Parser()

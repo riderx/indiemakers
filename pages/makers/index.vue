@@ -4,7 +4,7 @@
       <div class="container w-full px-0 mx-auto">
         <div class="flex flex-wrap">
           <div class="w-full md:w-1/2 md:px-4">
-            <div id="header-mk" class="flex flex-wrap items-center justify-between w-full text-white border-8 bg-blue border-light md:pb-1 md:pt-2">
+            <div id="header-mk" class="flex flex-wrap items-center justify-between w-full text-white border-8 border-white md:pb-1 md:pt-2">
               <h1 class="w-4/5 my-2 text-3xl text-center font-indie md:text-4xl md:my-0">
                 💃 Makers
               </h1>
@@ -16,28 +16,26 @@
                 +
               </button>
             </div>
-            <client-only>
+            <div
+              class="overflow-hidden border-4 border-white md:h-78 md:overflow-y-scroll md:custom-scroll"
+            >
               <div
-                class="overflow-hidden border-4 md:h-78 md:overflow-y-scroll border-light md:custom-scroll"
+                v-for="maker in makers"
+                :key="maker.id"
+                :class="'w-full flex flex-wrap text-white border-b align-items-top ' + maker.id"
               >
-                <div
-                  v-for="maker in makers"
-                  :key="maker.id"
-                  :class="'w-full flex flex-wrap bg-blue text-white border-b align-items-top ' + maker.id"
-                >
-                  <ListItem
-                    :title="maker.name"
-                    :votes="maker.votes"
-                    :name="maker.login"
-                    :image="maker.img"
-                    :preview="getTextLink(maker.bio)"
-                    @voted="vote(maker)"
-                    @name="open(linkTw(maker.login))"
-                    @image="openImage(maker.guid, maker.login)"
-                  />
-                </div>
+                <ListItem
+                  :title="maker.name"
+                  :votes="maker.votes"
+                  :name="maker.login"
+                  :image="maker.img"
+                  :preview="getTextLink(maker.bio)"
+                  @voted="vote(maker)"
+                  @name="open(linkTw(maker.login))"
+                  @image="openImage(maker.guid, maker.login)"
+                />
               </div>
-            </client-only>
+            </div>
           </div>
           <div id="content" class="order-1 hidden pt-0 pl-4 pr-4 text-white md:w-1/2 px-md-5 order-md-2 xl:block">
             <div class="flex flex-wrap">
@@ -81,7 +79,7 @@
                 <div class="flex justify-between w-10/12 text-lg text-white font-indie">
                   <button
                     type="button"
-                    class="px-3 pt-2 pb-1 border-2 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                    class="px-5 py-2 border-4 border-white font-indie hover:text-royalblue-700 hover:bg-white"
                     @click="joinUs()"
                   >
                     👉 Deviens un Maker
@@ -141,7 +139,6 @@ export default {
   mounted () {
     this.setSizeHead()
     this.$firebase.auth.listen((user) => {
-      console.log('user', user)
       this.user = user
       if (user) {
         this.$sentry.setUser({ uid: user.uid })
@@ -168,7 +165,6 @@ export default {
       if (url && url.startsWith('http')) {
         window.open(url, '_blank')
       } else if (url && url.startsWith('/episode/')) {
-        console.log('found')
         this.$modal.show('found')
       } else if (url) {
         this.$router.push(url)

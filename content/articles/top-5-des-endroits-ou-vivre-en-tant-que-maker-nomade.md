@@ -13,9 +13,9 @@ author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
-![](/images/pawel-janiak-foa_hz1bxii-unsplash.jpg)
+<img class="w-full rounded-lg" src="/images/pawel-janiak-foa_hz1bxii-unsplash.jpg" alt="top 5 ou vivre" width="1310" height="873">
 
-Photo by [Pawel Janiak](https://unsplash.com/@pawelj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/nomad?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+<p class="text-xs">Photo by <a href="https://unsplash.com/@pawelj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Pawel Janiak</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
 
 Être un indie maker (créateur indépendant) signifie souvent être plus frugal qu'un employé à temps plein avec un revenu prévisible.
 

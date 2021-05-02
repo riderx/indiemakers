@@ -42,37 +42,10 @@ body {
   overflow-x: hidden;
   background-color: rgba(75, 39, 155, 1);
 }
-a {
-  color: #df99d8;
-}
 img:not([src]) {
   display: none;
 }
 
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.top {
-  top: 0;
-}
-.fit-content {
-  width: fit-content;
-}
-.bmc {
-  height: 20px;
-}
-
-.fix-marging {
-  /* margin-left: -15px; */
-  margin-right: 0px;
-}
-
-@-moz-document url-prefix() {
-  .fix-marging {
-    border-right: 5px solid white !important;
-  }
-}
 .custom-scroll {
   scrollbar-color: #f1f1f1 #df99d8;
 }

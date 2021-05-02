@@ -85,8 +85,8 @@
                 {{ page.description }}
               </p>
             </div>
-            <div class="mx-auto mt-6 prose prose-lg text-gray-500 prose-indigo">
-              <nuxt-content class="mx-auto prose-sm prose sm:prose lg:prose-lg xl:prose-2xl" :document="page" />
+            <div class="mx-auto mt-6">
+              <nuxt-content class="mx-auto prose-sm prose prose-blue sm:prose lg:prose-lg xl:prose-2xl" :document="page" />
             </div>
           </div>
         </div>

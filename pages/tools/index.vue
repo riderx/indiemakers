@@ -1,59 +1,53 @@
 <template>
   <LazyHydrate when-idle>
     <div class="container mx-auto">
-      <div class="flex flex-wrap py-2 bg-blue">
-        <div class="w-1/2 mx-auto text-center">
-          <img
-            class="w-1/4 pb-3 mx-auto header-image"
-            width="100%"
-            height="100%"
-            src="/tools.svg"
-          >
-        </div>
-        <h1 class="w-full px-2 py-4 text-6xl text-center text-white font-indie">
-          {{ title }}
-        </h1>
-        <div class="w-full ml-auto mr-auto">
-          <div v-if="loading" class="flex flex-wrap px-3 bg-white">
-            <div class="w-1/2 w-full p-5 text-center">
-              <div
-                class="flex-wrap spinner-gflex text-blue"
-                role="status"
-              >
-                <span class="">Chargement...</span>
-              </div>
-            </div>
+      <div class="relative px-4 pt-10 pb-20 sm:px-6 lg:pt-14 lg:pb-16 lg:px-8">
+        <div class="relative mx-auto max-w-7xl">
+          <div class="text-center">
+            <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+              {{ title }}
+            </h1>
+            <p class="max-w-2xl mx-auto mt-3 text-xl text-gray-300 sm:mt-4">
+              {{ description }}
+            </p>
           </div>
-          <div v-if="!loading" class="flex flex-wrap">
-            <div
-              v-for="tool in tools"
-              :key="tool.name"
-              class="pl-4 pr-4 mb-4 lg:w-1/3 md:w-1/2 sm:w-1/6"
-              @click="openBlank(tool.link)"
-            >
-              <div class="relative flex flex-col min-w-0 break-words border-8 rounded border-light">
-                <img
-                  width="100%"
-                  height="100%"
-                  class="w-full"
-                  :src="tool.image"
-                  :alt="`${tool.name} Logo`"
-                ><div class="flex-auto p-6">
-                  <h4 class="mb-3 text-xl text-white font-indie">
-                    {{ tool.name }}
-                  </h4>
-                  <p class="mb-3 text-white">
-                    {{ tool.description }}
+          <div class="grid max-w-lg gap-5 mx-auto mt-12 lg:grid-cols-3 lg:max-w-none">
+            <NuxtLink v-for="tool in tools" :key="tool.name" :to="`/articles/${tool.slug}`" class="flex flex-col overflow-hidden rounded-lg shadow-lg">
+              <div class="flex-shrink-0 h-48 bg-gray-600">
+                <client-only>
+                  <img
+                    class="object-cover w-full h-48"
+                    width="100%"
+                    height="100%"
+                    :src="tool.image"
+                    :alt="`${tool.name} Logo`"
+                  >
+                </client-only>
+              </div>
+              <div class="flex flex-col justify-between flex-1 p-6 bg-white">
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-indigo-600">
+                    <a href="#" class="hover:underline">
+                      {{ tool.type }}
+                    </a>
                   </p>
-                  <a rel="noreferrer" :href="tool.link" target="_blank" class="inline-block w-full px-4 py-2 py-3 text-base text-xl font-normal leading-tight leading-normal text-center no-underline whitespace-no-wrap align-middle border border-4 rounded select-none border-light text-blue-lightest bg-blue hover:bg-blue-light">J'en profite</a>
+                  <a href="#" class="block mt-2">
+                    <p class="text-xl font-semibold text-gray-900">
+                      {{ tool.name }}
+                    </p>
+                    <p class="mt-3 text-base text-gray-500">
+                      {{ tool.description }}
+                    </p>
+                  </a>
+                </div>
+                <div class="flex items-center mt-6">
+                  <a rel="noreferrer" :href="tool.link" target="_blank" class="inline-block w-full px-4 py-3 text-base text-xl font-normal leading-tight leading-normal text-center no-underline whitespace-no-wrap align-middle border border-4 rounded select-none hover:text-orchid-600 hover:border-orchid-600 border-orchid-300">J'en profite</a>
                 </div>
               </div>
-            </div>
+            </NuxtLink>
           </div>
         </div>
-        <p class="w-full px-5 text-center text-white">
-          {{ submessage }}
-        </p>
+        <PageLoader :show="loading" />
       </div>
     </div>
   </LazyHydrate>
@@ -74,7 +68,7 @@ export default {
       loading: true,
       tools: [],
       title: 'Mes outils quotidiens',
-      desc: 'Voici les meilleurs outils pour concretiser ses projets !',
+      description: 'Voici mles meilleurs outils que j\'ai trouvé pour concretiser mes projets !'
       submessage: 'Pour le moment seul mes outils qui ont un parrainage sont présents !'
     }
   },

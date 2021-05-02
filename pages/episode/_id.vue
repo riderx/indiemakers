@@ -6,9 +6,9 @@
           <div class="w-full text-sm text-white lg:w-1/2 md:px-4">
             <div
               id="header-title"
-              class="flex flex-wrap justify-center pt-3 border-t-8 md:pb-1 bg-blue md:border-8 border-light"
+              class="flex flex-wrap justify-center pt-3 border-t-8 border-white md:pb-1 md:border-8"
             >
-              <p class="text-3xl text-center font-indie">
+              <p class="px-3 text-3xl text-center font-indie">
                 {{ title }}
               </p>
 
@@ -18,11 +18,11 @@
                   width="100%"
                   height="100%"
                   :src="loadingImg"
-                  class="w-full h-auto max-w-full border-t-8 md:border-8 border-light"
+                  class="w-full h-auto max-w-full border-t-8 border-white md:border-8"
                   :alt="title"
                 >
               </div>
-              <div class="block w-full px-0 text-white sm:hidden">
+              <div class="block w-full px-0 text-white border-b-8 sm:hidden border-royalblue-700">
                 <vue-plyr v-if="showAudio" ref="plyr">
                   <audio>
                     <source :src="audio" type="audio/mp3">
@@ -31,41 +31,41 @@
               </div>
             </div>
             <div
-              class="px-5 overflow-hidden border-4 md:h-78 md:overflow-y-scroll border-light md:custom-scroll"
+              class="px-5 overflow-hidden border-4 border-white md:h-78 md:overflow-y-scroll md:custom-scroll"
             >
               <div
-                class="px-1 content_html px-md-5 md:pt-3 text-grey-lightest"
+                class="px-1 prose-sm prose prose-orchid sm:prose lg:prose-lg xl:prose-xl px-md-5 md:pt-3"
                 v-html="content"
               />
             </div>
             <div
-              class="flex flex-wrap py-4 bg-blue md:hidden"
+              class="flex flex-wrap py-4 md:hidden"
             >
               <div class="px-1 text-center">
                 <button
                   type="button"
-                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 rounded select-none bg-blue border-light bnt-block m-md-3"
+                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 border-white rounded select-none bnt-block m-md-3"
                   @click="listen()"
                 >
                   🎧 Ecouter
                 </button>
                 <button
                   type="button"
-                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 rounded select-none bg-blue border-light bnt-block m-md-3"
+                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 border-white rounded select-none bnt-block m-md-3"
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 rounded select-none bg-blue border-light bnt-block m-md-3"
+                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 border-white rounded select-none bnt-block m-md-3"
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 rounded select-none bg-blue border-light bnt-block m-md-3"
+                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 border-white rounded select-none bnt-block m-md-3"
                   @click="joinUs()"
                 >
                   👉 Lance toi
@@ -84,7 +84,7 @@
                       v-lazy="image"
                       width="100%"
                       height="100%"
-                      class="w-full h-auto max-w-full border-8 border-light square_content"
+                      class="w-full h-auto max-w-full border-8 border-white square_content"
                       alt="Logo person"
                     >
                   </div>
@@ -100,7 +100,7 @@
               >
                 <button
                   type="button"
-                  class="px-3 pt-2 pb-1 border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                  class="px-3 pt-2 pb-1 border-4 border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
                   @click="listen()"
                 >
                   🎧 Ecouter
@@ -108,21 +108,21 @@
                 <button
                   id="rtp-button"
                   type="button"
-                  class="px-3 pt-2 pb-1 border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                  class="px-3 pt-2 pb-1 border-4 border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="px-3 pt-2 pb-1 border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                  class="px-3 pt-2 pb-1 border-4 border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="px-3 pt-2 pb-1 border-4 border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200"
+                  class="px-3 pt-2 pb-1 border-4 border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
                   @click="joinUs()"
                 >
                   👉 Lance toi
@@ -416,45 +416,7 @@ export default {
   display: block;
   padding-bottom: 100%;
 }
-.content_html >>> hr {
-  border-top: 10px solid rgba(255, 255, 255, 1);
-  border-radius: 0px!important;
-}
-
-.content_html >>> hr {
-  border-top: 10px solid rgba(255, 255, 255, 1);
-  border-radius: 0px!important;
-}
-.content_html >>> hr.rounded{
-  border-radius: 0px!important;
-}
-.content_html >>> ul {
-  list-style: disc;
-  margin: initial;
-  padding: initial;
-}
-.content_html >>> p, blockquote,
-dl,
-dd,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hr,
-figure,
-pre {
-  margin: revert!important;
-}
-.content_html >>> h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl {
-  margin: 20px 0!important;
-}
-.content_html >>> li, dd, blockquote {
-  margin-left: 40px!important;
-}
-.content_html >>> table {
-  border-collapse: collapse!important;
-  border-spacing: 0!important;
+.prose {
+  color: white;
 }
 </style>

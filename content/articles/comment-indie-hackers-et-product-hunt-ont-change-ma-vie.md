@@ -15,9 +15,10 @@ author: Martin donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
-![](/images/joshua-aragon-eab4ml7c7fe-unsplash.jpg)
+<img class="w-full rounded-lg" src="/images/joshua-aragon-eab4ml7c7fe-unsplash.jpg" alt="illustration indie hacker" width="1310" height="873">
+  
 
-Photo by [Joshua Aragon](https://unsplash.com/@goshua13?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/code?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+<p class="text-xs">Photo by <a href="https://unsplash.com/@goshua13?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Joshua Aragon</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
 
 Il y a environ cinq ans, j'ai découvert l'Indie Making lorsque le terme en était à ses débuts. 
 

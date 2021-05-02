@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto">
     <div class="flex flex-wrap py-2">
-      <div class="w-full mx-auto border-8 md:w-1/2 border-light">
+      <div class="w-full mx-auto border-8 md:w-1/2 border-white">
         <img class="w-1/2 mx-auto my-10" src="/404.svg">
         <h1 class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie">
           Tu SEMBLES ÊTRE PERDU!
@@ -14,7 +14,7 @@
         <div class="pt-3 pb-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
           <button
             type="button"
-            class="px-4 py-1 border-4 rounded-none border-light hover:border-gray-200 hover:text-indiePurple hover:bg-gray-200 text-light h1"
+            class="px-4 py-1 border-4 rounded-none border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
             @click="goHome()"
           >
             Accueil
