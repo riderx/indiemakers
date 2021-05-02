@@ -13,13 +13,15 @@ author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
-![](/images/pawel-janiak-foa_hz1bxii-unsplash.jpg)Photo by [Pawel Janiak](https://unsplash.com/@pawelj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/nomad?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+![](/images/pawel-janiak-foa_hz1bxii-unsplash.jpg)
+
+Photo by [Pawel Janiak](https://unsplash.com/@pawelj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/nomad?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
 
 Être un indie maker (créateur indépendant) signifie souvent être plus frugal qu'un employé à temps plein avec un revenu prévisible.
 
-Mais cela signifie aussi plus de liberté, et la possibilité de travailler de n'importe où. 
+Mais cela signifie aussi plus de liberté, et la possibilité de travailler de n'importe où.
 
-De plus en plus de makers indés se lancer dans le nomadisme pour explorer le monde tout en travaillant sur leur entreprise, parfois en faisant du freelancing en même temps. 
+De plus en plus de makers indés se lancer dans le nomadisme pour explorer le monde tout en travaillant sur leur entreprise, parfois en faisant du freelancing en même temps.
 
 Le nomadisme peut aussi être un excellent moyen de garder tes dépenses sous contrôle. Alors quels sont les meilleurs endroits où vivre en tant que indie maker ?
 
