@@ -86,7 +86,7 @@ export default {
   data () {
     return {
       blogImage: require('~/assets/images/blog.svg'),
-      title: 'Les news indie !',
+      title: 'Les articles indie !',
       description: 'Chaque semaine un maker du discord est désigné pour ecrire un article sur son projet, partager ses avancée, ou enrichir l\'univer indie !'
     }
   },
