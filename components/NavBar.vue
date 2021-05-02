@@ -195,7 +195,7 @@ const solutions = [
 const resources = [
   { name: 'Écouter le podcast', description: 'Choisi ta plateforme préféré où l\'écouter.', href: '/' },
   { name: 'Outils Makers', description: 'Découvre les meilleurs outils pour faire ses projets', href: '/tools' },
-  { name: 'Construire ensemble', description: 'Participe a l\'amélioration de la communauté en votant et proposant de nouvelles fonctionnalitée, tu peut aussi aider en les codant!', href: '/canny' },
+  { name: 'Construisons ensemble', description: 'Participe a l\'amélioration de la communauté en votant et proposant de nouvelles fonctionnalitée, tu peut aussi aider en les codant!', href: '/canny' },
   {
     name: 'Le livre',
     description: 'Lancer sa startup en indépendant, publié aux éditions Broché',
