@@ -32,37 +32,11 @@ const guidConvert = (guid) => {
 
 const cleanHandler = (handler) => {
   if (!handler) { return null }
-  return handler.replace('@', '')
+  return handler.replace('@', '').replace(regexHtml, '')
 }
 
-const findTw = (text) => {
-  const founds = linkTwitterRe.exec(text)
-  if (!founds || !founds.groups) {
-    return { name: null, link: null }
-  }
-  founds.groups.name = cleanHandler(founds.groups.name)
-  return founds.groups
-}
-
-const findName = (text) => {
-  const founds = nameRe.exec(text)
-  if (!founds || !founds.groups) {
-    return null
-  }
-  return founds.groups.name.replace(regexHtml, '')
-}
-
-const findLinkedin = (text) => {
-  const founds = linkLinkedinRe.exec(text)
-  if (!founds || !founds.groups) {
-    return { name: null, link: null }
-  }
-  founds.groups.name = cleanHandler(founds.groups.name)
-  return founds.groups
-}
-
-const findInst = (text) => {
-  const founds = linkInstagramRe.exec(text)
+const findRegx = (regx, text) => {
+  const founds = regx.exec(text)
   if (!founds || !founds.groups) {
     return { name: null, link: null }
   }
@@ -114,11 +88,11 @@ const feed = async () => {
         element.preview = previewText(element.contentSnippet)
         element.preview_email = previewEmail(element.contentSnippet)
         element.preview_no_emoji = removeEmoji(element.preview)
-        element.twitter = findTw(element.content)
-        element.name = findName(element.content)
         element.date = dayjs(element.isoDate).fromNow()
-        element.insta = findInst(element.content)
-        element.linkedin = findLinkedin(element.content)
+        element.twitter = findRegx(linkTwitterRe, element.content)
+        element.name = findRegx(nameRe, element.content)
+        element.insta = findRegx(linkInstagramRe, element.content)
+        element.linkedin = findRegx(linkLinkedinRe, element.content)
         element.title_no_emoji = removeEmoji(element.title)
         element.content_no_emoji = removeEmoji(element.content)
         if (element.twitter && element.twitter.name) {
@@ -130,11 +104,11 @@ const feed = async () => {
         } else {
           element.social = { name: null, link: null }
         }
-        items.push(element)
         const seoName = element.social.name ? element.social.name.replace('.', '-') : element.guid_fix
         element.image_optimized = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=h-300,w-300`
         element.image_big = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=h-600,w-600`
         element.image_loading = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=q-5,bl-5,h-300,w-300`
+        items.push(element)
       })
     }
   } catch (err) {

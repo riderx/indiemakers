@@ -157,7 +157,6 @@
             </div>
           </div>
         </div>
-        <PageLoader :show="show_loader" />
       </div>
     </LazyHydrate>
   </div>
@@ -168,7 +167,6 @@ import { feed, domain } from '~/plugins/rss'
 import { crispLoader } from '~/plugins/crisp.client'
 export default {
   components: {
-    PageLoader: () => import('~/components/PageLoader.vue'),
     ListItem: () => import('~/components/ListItem.vue'),
     LazyHydrate: () => import('vue-lazy-hydration')
   },
@@ -265,15 +263,6 @@ export default {
       const diffDays = Math.round(Math.abs((firstDate - now) / oneDay))
       const nextEp = 14 - (diffDays % 14)
       return (nextEp !== 14 ? `${nextEp} jours` : 'DEMAIN 10 heures')
-    },
-    open (url) {
-      // console.log('open', url)
-      if (url && url.startsWith('http')) {
-        window.open(url, '_blank')
-      } else if (url) {
-        this.show_loader = true
-        this.$router.push(url)
-      }
     },
     setSizeHead () {
       if (
