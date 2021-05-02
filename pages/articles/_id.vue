@@ -122,7 +122,7 @@ export default {
         { hid: 'twitter:site', name: 'twitter:site', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
         { hid: 'twitter:creator', name: 'twitter:creator', content: this.page.author },
         { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
-        { hid: 'twitter:image', name: 'twitter:image', content: this.page.headImage },
+        { hid: 'twitter:image', name: 'twitter:image', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.page.headImage}` },
         { hid: 'twitter:title', name: 'twitter:title', content: this.page.title },
         { hid: 'twitter:description', name: 'twitter:description', content: this.page.description },
         { hid: 'title', name: 'title', content: this.page.title },
@@ -143,7 +143,7 @@ export default {
           property: 'og:image:type',
           content: 'image/jpg'
         },
-        { hid: 'og:image', property: 'og:image', content: this.page.headImage },
+        { hid: 'og:image', property: 'og:image', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.page.headImage}` },
         { hid: 'og:image:width', property: 'og:image:width', content: 300 },
         { hid: 'og:image:height', property: 'og:image:height', content: 300 }
       ]

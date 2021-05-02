@@ -119,7 +119,7 @@ export default {
           property: 'og:image:type',
           content: 'image/jpg'
         },
-        { hid: 'og:image', property: 'og:image', content: this.blogImage },
+        { hid: 'og:image', property: 'og:image', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.blogImage}` },
         { hid: 'og:image:width', property: 'og:image:width', content: 300 },
         { hid: 'og:image:height', property: 'og:image:height', content: 300 }
       ]
