@@ -154,10 +154,10 @@ export default {
     },
     openImage (guid, login) {
       if (guid) {
-        window.localStorage.setItem('epFound', guid)
+        this.$warehouse.set('epFound', guid)
         this.open(`/episode/${guid}`)
       } else if (login) {
-        window.localStorage.getItem('tweetMaker', login)
+        this.$warehouse.get('tweetMaker', login)
         this.$modal.show('fail-open-ep')
       }
     },
@@ -175,7 +175,7 @@ export default {
     },
     linkEp (guid, login) {
       if (guid) {
-        window.localStorage.setItem('epFound', guid)
+        this.$warehouse.set('epFound', guid)
         return `/episode/${guid}`
       }
       return this.linkTw(login)
@@ -221,10 +221,10 @@ export default {
             person.votes += 1
             setTimeout(() => {
               if (person.guid) {
-                window.localStorage.setItem('epFound', person.guid)
+                this.$warehouse.set('epFound', person.guid)
                 this.$modal.show('found')
               } else {
-                window.localStorage.setItem('tweetMaker', person.login)
+                this.$warehouse.set('tweetMaker', person.login)
                 this.$modal.show('voted')
                 this.reload()
               }
@@ -238,7 +238,7 @@ export default {
               this.guid = person.guid
               this.$modal.show('found')
             } else {
-              window.localStorage.setItem('tweetMaker', person.login)
+              this.$warehouse.set('tweetMaker', person.login)
               this.$modal.show('fail-vote')
             }
           })

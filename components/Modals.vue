@@ -1035,9 +1035,9 @@ export default {
   },
   methods: {
     nextEp () {
-      const nextGuid = window.localStorage.getItem('nextGuid')
+      const nextGuid = this.$warehouse.get('nextGuid')
       if (nextGuid) {
-        window.localStorage.removeItem('nextGuid')
+        this.$warehouse.remove('nextGuid')
       }
       this.$modal.hide('next-ep')
       this.$modal.hide('random-ep')
@@ -1100,7 +1100,7 @@ export default {
           first_name: this.newName,
           email: this.newEmail
         }).then(() => {
-          window.localStorage.setItem('emailForNewletter', true)
+          this.$warehouse.set('emailForNewletter', true)
           this.$modal.hide('join')
           if (kind === 'ebook') {
             this.$modal.show('thanks_ebook')
@@ -1129,9 +1129,9 @@ export default {
             console.error('exist already', err)
           }
           this.$modal.hide('loading')
-          const next = window.localStorage.getItem('nextAfterSign')
+          const next = this.$warehouse.get('nextAfterSign')
           if (next) {
-            window.localStorage.removeItem('nextAfterSign')
+            this.$warehouse.remove('nextAfterSign')
           }
           this.$router.push(next || '/makers')
         })
@@ -1143,9 +1143,9 @@ export default {
       window.open(url, '_blank')
     },
     openEp () {
-      const guid = window.localStorage.getItem('epFound')
+      const guid = this.$warehouse.get('epFound')
       if (guid) {
-        window.localStorage.removeItem('epFound')
+        this.$warehouse.remove('epFound')
       }
       this.$modal.hide('found')
       this.$router.push(`/episode/${guid}`)
@@ -1189,8 +1189,8 @@ export default {
         const loginPage = `${window.location.protocol}//${window.location.host}/login`
         this.$firebase.emailSigning(this.newEmail, loginPage)
           .then(() => {
-            window.localStorage.setItem('emailForSignIn', this.newEmail)
-            window.localStorage.setItem('nextAfterSign', window.location.pathname)
+            this.$warehouse.set('emailForSignIn', this.newEmail)
+            this.$warehouse.set('nextAfterSign', window.location.pathname)
             this.$modal.hide('loading')
             this.$modal.show('checkEmail')
           })
@@ -1210,9 +1210,9 @@ export default {
       this.$modal.hide('share_hunt')
     },
     tweetItMaker () {
-      const maker = window.localStorage.getItem('tweetMaker')
+      const maker = this.$warehouse.get('tweetMaker')
       if (maker) {
-        window.localStorage.removeItem('tweetMaker')
+        this.$warehouse.remove('tweetMaker')
       }
       const linkPage = `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}/makers_hunt`
       const tweet = `@${maker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${this.$config.handler} 🚀`
@@ -1224,13 +1224,13 @@ export default {
       this.$modal.hide('voted')
     },
     tweetIt () {
-      const maker = window.localStorage.getItem('tweetMaker')
-      const epGui = window.localStorage.getItem('epGui')
+      const maker = this.$warehouse.get('tweetMaker')
+      const epGui = this.$warehouse.get('epGui')
       if (maker) {
-        window.localStorage.removeItem('tweetMaker')
+        this.$warehouse.remove('tweetMaker')
       }
       if (epGui) {
-        window.localStorage.removeItem('epGui')
+        this.$warehouse.remove('epGui')
       }
       const linkEp = `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}/episode/${epGui}`
       const tweet = `@${this.$config.handler} et @${maker} merci pour le podcast ${linkEp} <3`
@@ -1245,14 +1245,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 .spinner {
   display: block;
   margin: auto;
   height: 6em;
   width: 6em;
   border: 12px solid rgba(0, 174, 239, 0.2);
-  border-top-color:#4b279b;
+  border-top-color: var(--royalblue-700);
   border-radius: 50%;
   animation: rotation 0.6s infinite linear;
 }

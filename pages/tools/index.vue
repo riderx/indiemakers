@@ -91,7 +91,7 @@ export default {
     }
   },
   mounted () {
-    this.email = window.localStorage.getItem('emailForSignIn')
+    this.email = this.$warehouse.get('emailForSignIn')
     // this.loggin = fb.auth().currentUser
     this.$firebase.auth.listen((user) => {
       this.loggin = user

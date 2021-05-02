@@ -22,7 +22,8 @@ export default {
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { hid: 'og:type', property: 'og:type', content: 'website' },
-        { hid: 'og:type', property: 'og:type', content: 'website' },
+        { hid: 'apple-mobile-web-app-title', name: 'apple-mobile-web-app-title', content: 'indiemakers.fr' },
+        { hid: 'theme-color', name: 'theme-color', content: '#4b279b' },
         {
           hid: 'og:site_name',
           property: 'og:site_name',

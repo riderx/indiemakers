@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
     "module": "commonjs",
-    "noImplicitAny": false,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
+    "esModuleInterop": true,
     "outDir": "lib",
     "sourceMap": true,
     "strict": true,
-    "target": "es2018"
+    "target": "es2017"
   },
   "compileOnSave": true,
-    "include": [
-      "src"
-    ]
+  "include": [
+    "src"
+  ]
 }

@@ -54,6 +54,7 @@ export default {
     '@nuxtjs/pwa'
   ],
   modules: [
+    'vue-warehouse/nuxt',
     '@nuxtjs/component-cache',
     '@nuxtjs/sentry',
     ['nuxt-font-loader-strategy', {

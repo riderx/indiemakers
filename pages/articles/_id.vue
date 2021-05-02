@@ -109,21 +109,30 @@ export default {
     return {
       title: this.page.title,
       meta: [
+        { hid: 'author', name: 'author', content: this.page.author },
+        { hid: 'apple-mobile-web-app-title', name: 'apple-mobile-web-app-title', content: this.page.title },
+        { hid: 'theme-color', name: 'theme-color', content: '#4b279b' },
+        { hid: 'publisher', name: 'publisher', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
         { hid: 'og:url', property: 'og:url', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
-        { hid: 'title', name: 'title', content: this.page.title },
         {
           hid: 'description',
           name: 'description',
           content: this.page.description
         },
+        { hid: 'twitter:site', name: 'twitter:site', content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${this.$route.fullPath}` },
+        { hid: 'twitter:creator', name: 'twitter:creator', content: this.page.author },
+        { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
+        { hid: 'twitter:image', name: 'twitter:image', content: this.page.headImage },
         { hid: 'twitter:title', name: 'twitter:title', content: this.page.title },
         { hid: 'twitter:description', name: 'twitter:description', content: this.page.description },
+        { hid: 'title', name: 'title', content: this.page.title },
         { hid: 'og:title', property: 'og:title', content: this.page.title },
         {
           hid: 'og:description',
           property: 'og:description',
           content: this.page.description
         },
+        { name: 'og:article:author', content: this.page.author },
         {
           hid: 'og:image:alt',
           property: 'og:image:alt',

@@ -73,24 +73,6 @@
                     </p>
                   </div>
                 </div>
-                <div class="flex justify-center w-full pt-3">
-                  <NuxtLink
-                    :to="'/makers'"
-                    type="button"
-                    class="px-5 py-2 text-white border-4 border-white font-indie hover:text-royalblue-700 hover:bg-white"
-                  >
-                    <h3>👉 Découvre les Makers Français</h3>
-                  </nuxtlink>
-                </div>
-                <div class="flex justify-center w-full pt-3">
-                  <NuxtLink
-                    :to="'/articles'"
-                    type="button"
-                    class="px-5 py-2 text-white border-4 border-white font-indie hover:text-royalblue-700 hover:bg-white"
-                  >
-                    <h3>👉 Les articles indie</h3>
-                  </nuxtlink>
-                </div>
                 <div class="pt-3 text-sm">
                   <p class="pb-2">
                     Par
@@ -100,58 +82,6 @@
                       href="https://twitter.com/martindonadieu"
                     >Martin DONADIEU</a>
                   </p>
-                  <p class="pb-2">
-                    <a
-                      rel="noreferrer"
-                      target="_blank"
-                      href="https://amzn.to/3lXjALg"
-                    >Lancer sa startup en indépendant</a>, mon livre publié aux éditions Broché
-                  </p>
-                  <p class="pb-2">
-                    <a
-                      rel="noreferrer"
-                      target="_blank"
-                      href="/tools"
-                    >Mes outils</a>
-                    quotidiens pour gerer mes projets !
-                  </p>
-                </div>
-                <div class="pt-3 pb-3 text-white">
-                  <p class="font-indie">
-                    Mes autres projets:
-                  </p>
-                  <div class="flex text-sm flex-column flex-md-row">
-                    <a
-                      class="block px-2 py-3 text-white py-md-0"
-                      target="_blank"
-                      rel="noreferrer"
-                      href="https://apps.apple.com/us/app/captime-crossfit-timer/id1369288585"
-                    >Captime | Crossfit timer</a>
-                    <a
-                      class="block px-2 py-3 text-white py-md-0"
-                      target="_blank"
-                      rel="noreferrer"
-                      href="https://naas.ai"
-                    >Naas | outils LowCode </a>
-                    <a
-                      class="block px-2 py-3 text-white py-md-0"
-                      target="_blank"
-                      rel="noreferrer"
-                      href="https://bewise.love"
-                    >Bewise | Une citation par jour</a>
-                    <a
-                      class="block px-2 py-3 text-white py-md-0"
-                      target="_blank"
-                      rel="noreferrer"
-                      href="https://mimesis.fun"
-                    >Mimesis | Mime des expressions entre amis</a>
-                    <a
-                      class="block px-2 py-3 text-white py-md-0"
-                      target="_blank"
-                      rel="noreferrer"
-                      href="https://msha.ke/martindonadieu"
-                    >Martin Donadieu | site perso</a>
-                  </div>
                 </div>
               </div>
             </div>

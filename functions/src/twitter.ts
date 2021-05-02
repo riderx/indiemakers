@@ -1,5 +1,5 @@
-import * as functions from 'firebase-functions'
-const Twitter = require('twitter')
+import * as functions from "firebase-functions";
+import * as Twitter from "twitter";
 
 export interface TwUrl {
   url: string,
@@ -49,39 +49,39 @@ export interface TwUser {
   verified: boolean;
   withheld_in_countries?: string[];
   withheld_scope?: string;
-};
+}
 
 // PixelMeApiToken
-const configSecret = functions.config()
+const configSecret = functions.config();
 const TwitterApiToken = {
   consumer_key: configSecret.twitter.consumer_key,
   consumer_secret: configSecret.twitter.consumer_secret,
   access_token_key: configSecret.twitter.access_token_key,
-  access_token_secret: configSecret.twitter.access_token_secret
-}
-const client = new Twitter(TwitterApiToken)
+  access_token_secret: configSecret.twitter.access_token_secret,
+};
+const client = new Twitter(TwitterApiToken);
 
 export const twUserPromise = (screen_name: string): Promise<TwUser> => {
   return new Promise((resolve, reject) => {
-    const params = { screen_name, include_entities: true }
-    client.get('users/show', params, async (error: any, user: TwUser, response: any) => {
+    const params = {screen_name, include_entities: true};
+    client.get("users/show", params, async (error: any, user: TwUser, response: any) => {
       if (!error && user) {
-        console.log('User', user, 'response', response)
-        resolve(user)
+        console.log("User", user, "response", response);
+        resolve(user);
       } else {
-        console.error('Cannot find user', error, response)
-        reject(error)
+        console.error("Cannot find user", error, response);
+        reject(error);
       }
-    })
-  })
-}
+    });
+  });
+};
 
 export const getTwiterAccounts = (text: string) => {
   const list: Promise<TwUser>[] = [];
   const reTwitter = /^@?([a-zA-Z0-9_]){1,15}$/;
   text.replace(reTwitter, function(match, login) {
-    list.push(twUserPromise(login))
+    list.push(twUserPromise(login));
     return login;
   });
   return Promise.all(list);
-}
+};

@@ -278,9 +278,9 @@ export default {
       }, 150)
     }, 2000)
     this.timeoutModal = setTimeout(() => {
-      if (!window.localStorage.getItem(`randomModal:${this.guid}`)) {
+      if (!this.$warehouse.get(`randomModal:${this.guid}`)) {
         this.showRandomModal()
-        window.localStorage.setItem(`randomModal:${this.guid}`, 'done')
+        this.$warehouse.set(`randomModal:${this.guid}`, 'done')
       }
     }, 15000)
   },
@@ -301,11 +301,11 @@ export default {
               randomEp = this.randomEp(totalLength)
             }
             const nextGuid = this.episodes[randomEp].guid_fix
-            window.localStorage.setItem('nextGuid', nextGuid)
+            this.$warehouse.set('nextGuid', nextGuid)
             this.$modal.show('random-ep')
           } else {
             const nextGuid = this.episodes[epIndex - 1].guid_fix
-            window.localStorage.setItem('nextGuid', nextGuid)
+            this.$warehouse.set('nextGuid', nextGuid)
             this.$modal.show('next-ep')
           }
           break
@@ -340,7 +340,7 @@ export default {
       const rand = this.getRandomInt(100)
       let modalName = 'upgrade'
       switch (true) {
-        case rand < 70 && !window.localStorage.getItem('emailForNewletter'):
+        case rand < 70 && !this.$warehouse.get('emailForNewletter'):
           modalName = 'join'
           break
         case rand < 80:
@@ -359,8 +359,8 @@ export default {
       return Math.floor(Math.random() * Math.floor(max))
     },
     tweetIt () {
-      window.localStorage.setItem('tweetMaker', this.twitter.name)
-      window.localStorage.setItem('epGui', this.guid)
+      this.$warehouse.set('tweetMaker', this.twitter.name)
+      this.$warehouse.set('epGui', this.guid)
       this.$modal.show('share')
     },
     joinUs () {

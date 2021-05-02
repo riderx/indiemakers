@@ -73,7 +73,7 @@ export default {
     }
   },
   mounted () {
-    this.email = window.localStorage.getItem('emailForSignIn')
+    this.email = this.$warehouse.get('emailForSignIn')
     this.$firebase.auth.listen((user) => {
       this.user = user
       if (user) {
@@ -89,9 +89,9 @@ export default {
             name: this.user.displayName,
             email: this.user.email
           })
-        const next = window.localStorage.getItem('nextAfterSign')
+        const next = this.$warehouse.get('nextAfterSign')
         if (next) {
-          window.localStorage.removeItem('nextAfterSign')
+          this.$warehouse.remove('nextAfterSign')
         }
         this.$router.push(next || '/makers')
       }
@@ -110,7 +110,7 @@ export default {
         this.$firebase.auth.handleSignInRedirect({
           email: this.email
         }).then(() => {
-          window.localStorage.removeItem('emailForSignIn')
+          this.$warehouse.remove('emailForSignIn')
           this.email = null
           this.$modal.hide('loading')
         }).catch((error) => {
