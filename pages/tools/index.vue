@@ -68,7 +68,7 @@ export default {
       loading: true,
       tools: [],
       title: 'Mes outils quotidiens',
-      description: 'Voici mles meilleurs outils que j\'ai trouvé pour concretiser mes projets !'
+      description: 'Voici les meilleurs outils que j\'ai trouvé pour concretiser mes projets !',
       submessage: 'Pour le moment seul mes outils qui ont un parrainage sont présents !'
     }
   },

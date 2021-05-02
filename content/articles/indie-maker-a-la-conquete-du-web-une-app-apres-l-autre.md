@@ -4,9 +4,9 @@ title:  À la conquete du web
 surtitle: Indie makers
 subtitle: une app après l'autre
 published: true
-description: Les grandes entreprises maléfiques nous ont dit que les logiciels ne pouvaient pas être réalisés par une seule personne ou de petites équipes sans capital, nous leur prouvons chaque jour qu'ils ont tort.
+description: Les grandes entreprises nous ont dit que les logiciels ne pouvaient pas être réalisés par une seule personne ou de petites équipes sans capital, nous leur prouvons chaque jour qu'ils ont tort.
 type: Article
-headImage: "/images//images/nghia-le-v3dokm1nqcs-unsplash.jpg"
+headImage: "/images/nghia-le-v3dokm1nqcs-unsplash.jpg"
 readTime: 3 min
 order: 1
 date: 02 mai 2020
@@ -14,7 +14,7 @@ author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
-<img class="w-full rounded-lg" src="/images//images/nghia-le-v3dokm1nqcs-unsplash.jpg" alt="10 conseils" width="1310" height="873">
+<img class="w-full rounded-lg" src="/images/nghia-le-v3dokm1nqcs-unsplash.jpg" alt="a la conquete du web" width="1310" height="873">
 
 <p class="text-xs">Photo by <a href="https://unsplash.com/@lephunghia?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Nghia Le</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
 
@@ -32,9 +32,9 @@ Une autre grande réussite est [nomad list](https://nomadlist.com/) développée
 
 Contrairement à la politique twitter ou à ce que j'imagine être facebook, la communauté des maker indépendants est ouverte à tous et amicale, tout ce que tu dois faire c'est avoir le désir de rendre le monde meilleur, littéralement le rendre meilleur.
 
-Les gens (pas les utilisateurs) n'ont pas besoin d'être soumis aux terribles caprices des grandes sociétés maléfiques, range toi de notre côté !
+Les gens (pas les utilisateurs) n'ont pas besoin d'être soumis aux terribles caprices des grandes sociétés, range toi de notre côté !
 
-Nous ne mettons pas de publicités ou d'algorithmes sous le nez, nous nous efforçons de faire le meilleur travail possible et cela signifie NE PAS faire ce que les grands groupes maléfiques font.
+Nous ne mettons pas de publicités ou d'algorithmes sous le nez, nous nous efforçons de faire le meilleur travail possible et cela signifie *NE PAS* faire ce que les grands groupes font.
 
 Il existe une excellente liste d'applications indépendantes alternatives qui pourraient te convenir sur [no more google](https://nomoregoogle.com/).
 
@@ -54,5 +54,5 @@ Les foules sont dures, mais si tu parviens à gagner quelques cœurs sur ces deu
 
 ### La fin du monde tel qu'on la connais
 
-C'est le début de la fin pour les grandes entreprises maléfiques qui dirigent le monde. Si vous êtes grandes entreprises maléfique, [nous vous avons dans le viseur](https://genius.com/15311181) 🎯. Ce n'est pas une question de si, c'est une question de quand.
+C'est le début de la fin pour les grandes entreprises qui dirigent le monde. Si vous êtes grandes entreprises maléfique, [nous vous avons dans le viseur](https://genius.com/15311181) 🎯. Ce n'est pas une question de si, c'est une question de quand.
 Attention au monde, nous prenons le pouvoir et Internet va redevenir sympa et amusant !
