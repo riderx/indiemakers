@@ -3,9 +3,7 @@ import {firestore} from "firebase-admin";
 import {Request, Response} from "express";
 import axios from "axios";
 
-import {config} from "firebase-functions";
-const CLIENT_PUBLIC_KEY = config().discord.bot_public_key;
-// const CLIENT_PUBLIC_KEY = "76a1cf12caec747f872ee6ea064269d4acd2538b2f1e26f89853f93c32d045db";
+const CLIENT_PUBLIC_KEY = "76a1cf12caec747f872ee6ea064269d4acd2538b2f1e26f89853f93c32d045db";
 
 const getAllKarma = async () => {
   const documents = await firestore().collection("karma").get();
