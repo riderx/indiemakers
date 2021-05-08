@@ -1,9 +1,11 @@
+import * as admin from "firebase-admin";
+
 export type Nullable<T> = T | null;
 export type Optional<T> = T | undefined;
 
 export type AccessTokenObject = {
   access_token: string;
-  token_type: 'Bearer';
+  token_type: "Bearer";
   expires_in: number;
   refresh_token: string;
   scope: string;
@@ -24,3 +26,42 @@ export type DiscordUser = {
 export class InvalidCodeError extends Error {}
 export class NoAccessTokenError extends Error {}
 export class ExpiredAccessTokenError extends Error {}
+
+/**
+ * User  discord interface
+ *
+ */
+export interface User {
+  uid: string;
+  twitter: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  karma: number;
+}
+
+/**
+ * User  discord interface
+ *
+ */
+export interface Person {
+  addedBy: string;
+  addDate: admin.firestore.Timestamp;
+  updateDate: admin.firestore.Timestamp;
+  emailSend: boolean | admin.firestore.Timestamp;
+  id_str: string;
+  name: string;
+  login: string;
+  description?: string;
+  bio: string;
+  pic: string;
+  votes: number;
+  number: number;
+}
+
+export type EncryptedUser = User;
+export type EmptyUser = Pick<User, "uid">;
+
+export interface UserWithAccessToken extends User {
+  accessToken: AccessTokenObject;
+}

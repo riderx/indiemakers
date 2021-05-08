@@ -1,28 +1,29 @@
 import * as functions from "firebase-functions";
-import * as Twitter from "twitter";
+
+const Twitter = require("twitter");
 
 export interface TwUrl {
   url: string,
   expanded_url: string,
   display_url: string,
   indices: [
-      number,
-      number
+    number,
+    number,
   ]
 }
 
 export interface TwEntities {
   url: {
-      hashtags: [],
-      symbols: [],
-      user_mentions: [],
-      urls: TwUrl[]
+    hashtags: [],
+    symbols: [],
+    user_mentions: [],
+    urls: TwUrl[]
   },
   description: {
-      hashtags: [],
-      symbols: [],
-      user_mentions: [],
-      urls: TwUrl[]
+    hashtags: [],
+    symbols: [],
+    user_mentions: [],
+    urls: TwUrl[]
   },
 }
 
@@ -61,25 +62,23 @@ const TwitterApiToken = {
 };
 const client = new Twitter(TwitterApiToken);
 
-export const twUserPromise = (screen_name: string): Promise<TwUser> => {
-  return new Promise((resolve, reject) => {
-    const params = {screen_name, include_entities: true};
-    client.get("users/show", params, async (error: any, user: TwUser, response: any) => {
-      if (!error && user) {
-        console.log("User", user, "response", response);
-        resolve(user);
-      } else {
-        console.error("Cannot find user", error, response);
-        reject(error);
-      }
-    });
+export const twUserPromise = (screen_name: string): Promise<TwUser> => new Promise((resolve, reject) => {
+  const params = {screen_name, include_entities: true};
+  client.get("users/show", params, async (error: any, user: TwUser, response: any) => {
+    if (!error && user) {
+      console.log("User", user, "response", response);
+      resolve(user);
+    } else {
+      console.error("Cannot find user", error, response);
+      reject(error);
+    }
   });
-};
+});
 
 export const getTwiterAccounts = (text: string) => {
   const list: Promise<TwUser>[] = [];
   const reTwitter = /^@?([a-zA-Z0-9_]){1,15}$/;
-  text.replace(reTwitter, function(match, login) {
+  text.replace(reTwitter, (match, login) => {
     list.push(twUserPromise(login));
     return login;
   });

@@ -1,5 +1,6 @@
 import * as functions from "firebase-functions";
 import axios from "axios";
+
 const configSecret = functions.config();
 
 const rebrandlyKey = configSecret.rebrandly.key;
@@ -27,31 +28,29 @@ const config = {
   },
 };
 
-export const shortURLPixel = (url: string): Promise<string> => {
-  return new Promise((resolve) => {
-    const key = bestKey(url);
-    axios.post("/v1/links", {
-      destination: url,
-      domain: {fullName: "imf.to"},
-      // , slashtag: "A_NEW_SLASHTAG"
-      // , title: "Rebrandly YouTube channel"
-    }, config)
-        .then((response) => {
-          if (response && response.data && response.data.shortUrl) {
-            console.log("new link", response.data);
-            resolve(response.data.shortUrl);
-          } else {
-            console.error("shorten error, no shorten found", response);
-            resolve(url);
-          }
-        })
-        .catch((error) => {
-          if (error.response.data.error_message === "Key already taken for this domain") {
-            resolve(`https://imf.to/${key}`);
-          } else {
-            console.error("shorten error", error.response.data, error);
-            resolve(url);
-          }
-        });
-  });
-};
+export const shortURLPixel = (url: string): Promise<string> => new Promise((resolve) => {
+  const key = bestKey(url);
+  axios.post("/v1/links", {
+    destination: url,
+    domain: {fullName: "imf.to"},
+    // , slashtag: "A_NEW_SLASHTAG"
+    // , title: "Rebrandly YouTube channel"
+  }, config)
+      .then((response) => {
+        if (response && response.data && response.data.shortUrl) {
+          console.log("new link", response.data);
+          resolve(response.data.shortUrl);
+        } else {
+          console.error("shorten error, no shorten found", response);
+          resolve(url);
+        }
+      })
+      .catch((error) => {
+        if (error.response.data.error_message === "Key already taken for this domain") {
+          resolve(`https://imf.to/${key}`);
+        } else {
+          console.error("shorten error", error.response.data, error);
+          resolve(url);
+        }
+      });
+});

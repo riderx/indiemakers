@@ -1,87 +1,44 @@
-import {shortURLPixel} from "./tracker";
-import {TwEntities, TwUrl, TwUser, twUserPromise} from "./twitter";
 import * as functions from "firebase-functions";
-import {sendUserToRevue} from "./newletter";
-import * as findHashtags from "find-hashtags";
-import * as findMentions from "mentions";
 import * as admin from "firebase-admin";
-import * as findUrl from "get-urls";
+import {initializeApp, firestore} from "firebase-admin";
+import findUrl from "get-urls";
+import {getPerson, getPersonById} from "./users";
+import {shortURLPixel} from "./tracker";
+import {
+  TwEntities, TwUrl, TwUser, twUserPromise,
+} from "./twitter";
+import {sendUserToRevue} from "./newletter";
 
-// PixelMeApiToken
+import discordInteraction from "./discord_bot";
+import {Person} from "./types";
+
+const findHashtags = require("find-hashtags");
+const findMentions = require("mentions");
+
+// import DiscordService from './discord_login';
+// import { StatusCodes } from 'http-status-codes';
+// import { AccessTokenObject, InvalidCodeError, Person } from './types';
+// import { createUser } from './db';
+// import qs from 'querystring';
+
 const configSecret = functions.config();
-// interface Episode {
-//   title: string,
-//   udi: string,
-//   preview: string,
-//   image: string,
-//   content: string,
-// }
 
-interface Person {
-    addedBy: string;
-    addDate: admin.firestore.Timestamp;
-    updateDate: admin.firestore.Timestamp;
-    emailSend: boolean | admin.firestore.Timestamp;
-    id_str: string;
-    name: string;
-    login: string;
-    description?: string;
-    bio: string;
-    pic: string;
-    votes: number;
-    number: number;
-}
-admin.initializeApp();
+initializeApp();
 
 const voteIfNotDone = (personId: string, uid: string) => {
-  const voteRef = admin.firestore().collection(`/people/${personId}/votes`).doc(uid);
+  const voteRef = firestore().collection(`/people/${personId}/votes`).doc(uid);
   return voteRef.get()
       .then(async (docSnapshot): Promise<{ error: string } | { done: string }> => {
         if (docSnapshot.exists) {
           return {error: "Already voted"};
         }
-        return await voteRef.set({date: Date()})
-            .then(() => {
-              return {done: "Voted"};
-            })
-            .catch(() => {
-              return {error: "Fail vote"};
-            });
+        return voteRef.set({date: Date()})
+            .then(() => ({done: "Voted"}))
+            .catch(() => ({error: "Fail vote"}));
       }).catch((err: any) => {
         console.error("Fail vote", err);
         return {error: "Fail vote"};
       });
-};
-
-const getPerson = async (id_str: string): Promise<FirebaseFirestore.DocumentReference | null> => {
-  const person: FirebaseFirestore.DocumentReference | null = await await admin.firestore()
-      .collection("people")
-      .where("id_str", "==", id_str)
-      .get()
-      .then((snapshot) => {
-        let result: FirebaseFirestore.DocumentReference | null = null;
-        if (snapshot.empty) {
-          console.error("No matching person", id_str);
-          return null;
-        }
-        snapshot.forEach((doc) => {
-          console.log(doc.id, "=>", doc.data());
-          result = doc.ref;
-        });
-        return result;
-      })
-      .catch((err) => {
-        console.error("Error getting person", err);
-        return null;
-      });
-  console.log("Person", person);
-  return person;
-};
-
-const getPersonById = async (id: string): Promise<FirebaseFirestore.DocumentReference> => {
-  return admin.firestore()
-      .collection("people")
-      .doc(id);
 };
 
 const findInTwUrls = (url: string, twUrls: TwUrl[]): string => {
@@ -150,9 +107,7 @@ export const getMakers = functions.https.onRequest(async (req, res) => {
         .orderBy("votes", "desc")
         .orderBy("addDate", "asc")
         .get()
-        .then((querySnapshot) => {
-          return querySnapshot.docs.map((doc) => Object.assign(doc.data(), {id: doc.id}));
-        });
+        .then((querySnapshot) => querySnapshot.docs.map((doc) => Object.assign(doc.data(), {id: doc.id})));
     res.json(resultList);
   } catch (err) {
     console.error("err", err);
@@ -188,16 +143,16 @@ export const updateTwiterUser = functions.pubsub.schedule("0 0 * * *").onRun(asy
   const users = await admin.firestore()
       .collection("people")
       .get()
-      .then((querySnapshot) => {
-        return querySnapshot.docs.map((doc) => Object.assign(doc.data(), {id: doc.id}));
-      });
+      .then((querySnapshot) => querySnapshot.docs.map((doc) => Object.assign(doc.data(), {id: doc.id})));
   users.forEach(async (user) => {
     await admin.firestore()
         .collection("/people")
         .doc(user.id)
-        .update({updateDate: admin.firestore.Timestamp.now()}).then(() => {
+        .update({updateDate: admin.firestore.Timestamp.now()})
+        .then(() => {
           console.log("updateDate updated");
-        }).catch((error: any) => {
+        })
+        .catch((error: any) => {
           console.error("Error update person", error);
         });
   });
@@ -205,7 +160,7 @@ export const updateTwiterUser = functions.pubsub.schedule("0 0 * * *").onRun(asy
 });
 
 export const addTwiterUser = functions.https.onCall(async (data, context) => {
-  const name = data.name;
+  const {name} = data;
   const uid = context.auth ? context.auth.uid : null;
   if (uid) {
     try {
@@ -239,13 +194,13 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
                 await voteIfNotDone(person.id, uid);
                 console.log("New account added");
                 return {done: "New account added"};
-              }).catch((err) => {
+              })
+              .catch((err) => {
                 console.error("Cannot create", err);
                 return {error: "Cannot create"};
               });
-        } else {
-          return await voteIfNotDone(exist.id, uid);
         }
+        return await voteIfNotDone(exist.id, uid);
       }
       return {error: "Not found on api twitter"};
     } catch (err) {
@@ -262,8 +217,8 @@ export const calcVotesByPerson = functions.firestore
     .onCreate(async (snapshot, context) => {
       const vote = snapshot.data();
       if (vote) {
-        const personId = context.params.personId;
-        const id_str = vote.id_str;
+        const {personId} = context.params;
+        const {id_str} = vote;
         const person = await getPersonById(personId);
         const snap = await admin.firestore()
             .collection(`/people/${personId}/votes`)
@@ -275,9 +230,8 @@ export const calcVotesByPerson = functions.firestore
           }).catch((error) => {
             console.error("Error", error);
           });
-        } else {
-          console.error("No votes");
         }
+        console.error("No votes");
       }
       return snapshot;
     });
@@ -305,19 +259,21 @@ export const onUpdatePeople = functions.firestore
     .document("/people/{personId}")
     .onUpdate(async (snapshot, context) => {
       const person: Person | undefined = <Person>snapshot.after.data();
-      const personId = context.params.personId;
+      const {personId} = context.params;
       if (person && person.bio) {
         const twUser: TwUser | null = await twUserPromise(person.login);
-        const name = twUser.name;
+        const {name} = twUser;
         const bio = await transformURLtoTracked(person.bio, twUser ? twUser.entities : null);
         const pic = twUser ? twUser.profile_image_url_https.replace("_normal", "") : person.pic;
         if (bio !== person.bio || pic !== person.pic || name !== person.name) {
           await admin.firestore()
               .collection("/people")
               .doc(personId)
-              .update({bio, pic, name}).then(() => {
+              .update({bio, pic, name})
+              .then(() => {
                 console.log("bio updated", personId);
-              }).catch((error: any) => {
+              })
+              .catch((error: any) => {
                 console.error("Error update person", error);
               });
         }
@@ -327,11 +283,56 @@ export const onUpdatePeople = functions.firestore
         await admin.firestore()
             .collection("/people")
             .doc(personId)
-            .update(update).then(() => {
+            .update(update)
+            .then(() => {
               console.log("emailSend updated");
-            }).catch((error: any) => {
+            })
+            .catch((error: any) => {
               console.error("Error update emailSend", error);
             });
       }
       return snapshot;
     });
+
+export const discord_interaction = functions.https.onRequest(discordInteraction);
+
+// export const discord_login = functions.https.onRequest((req, res) => {
+//   const discordService = new DiscordService();
+
+//   const redirectUri = discordService.generateRedirectURI();
+
+//   return res.redirect(redirectUri);
+// });
+
+// export const discord_return = functions.https.onRequest(async(req, res) => {
+//   const discordService = new DiscordService();
+
+//   if (!req.query.code) {
+//     console.info('No code provided to discord oauth return');
+//     return res.status(StatusCodes.BAD_REQUEST).send('discord access token is missing.').end();
+//   }
+
+//   try {
+//     await discordService.getAccessToken(req.query.code as string);
+//     const user = await discordService.getProfile();
+//     const exists = await userExists(user.id);
+
+//     if (exists) {
+//       const authToken = await auth().createCustomToken(user.id);
+//       return res.redirect('/?' + qs.stringify({ token: authToken }));
+//     }
+
+//     const createdUser = await createUser({ uid: user.id }, user.avatar || undefined);
+
+//     const authToken = await auth().createCustomToken(createdUser.uid);
+//     return res.redirect('/?' + qs.stringify({ token: authToken }));
+//   } catch (e) {
+//     if (e instanceof InvalidCodeError) {
+//       console.warn('Provided with bad Discord Access token');
+//       return res.status(StatusCodes.BAD_REQUEST).send('Invalid OAuth Token.').end();
+//     } else {
+//       console.error(e);
+//       return res.status(500).send('Unknown Error Occurred').end();
+//     }
+//   }
+// });
