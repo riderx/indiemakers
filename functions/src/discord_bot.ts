@@ -58,9 +58,9 @@ const updateProjecttotalTask = async (userId: string, projectId: string, totalTa
 };
 
 const deleteAllProjectsTasks = async (userId: string, projectId: string) => {
-  const documents = await firestore().collection(`karma/${userId}/projects/${projectId}/tasks`).get();
-  const listDel: Promise<any>[] = [];
   try {
+    const documents = await firestore().collection(`karma/${userId}/projects/${projectId}/tasks`).get();
+    const listDel: Promise<any>[] = [];
     documents.docs.forEach((doc) => {
       listDel.push(doc.ref.delete());
     });
@@ -72,9 +72,8 @@ const deleteAllProjectsTasks = async (userId: string, projectId: string) => {
 };
 
 const getAllProjectsTasks = async (userId: string, projectId: string) => {
-  const documents = await firestore().collection(`karma/${userId}/projects/${projectId}/tasks`).get();
-
   try {
+    const documents = await firestore().collection(`karma/${userId}/projects/${projectId}/tasks`).get();
     const tasks: any[] = documents.docs
         .map((doc) => ({docId: doc.id, ...doc.data()}));
     const total = tasks.reduce((tt, current) => tt + current.value, 0);
@@ -86,9 +85,8 @@ const getAllProjectsTasks = async (userId: string, projectId: string) => {
 };
 
 const getKarmaById = async (id: string) => {
-  const documents = await firestore().collection(`karma/${id}/votes`).get();
-
   try {
+    const documents = await firestore().collection(`karma/${id}/votes`).get();
     const votes: any[] = documents.docs
         .map((doc) => ({docId: doc.id, ...doc.data()}));
     const total = votes.reduce((tt, current) => tt + current.value, 0);
@@ -376,19 +374,24 @@ const karma_fn = async (res:Response, interaction:any, option:any, senderId:stri
 };
 
 const im = async (res:Response, interaction: any, option:any, senderId:string) => {
-  if (option.name === "karma" && option.options.length > 0) {
-    await sendTxtLoading(res);
-    return karma_fn(res, interaction, option.options[0], senderId);
+  try {
+    if (option.name === "karma" && option.options.length > 0) {
+      await sendTxtLoading(res);
+      return karma_fn(res, interaction, option.options[0], senderId);
+    }
+    if (option.name === "projet" && option.options.length > 0) {
+      await sendTxtLoading(res);
+      return projetc_fn(res, interaction, option.options[0], senderId);
+    }
+    if (option.name === "tache" && option.options.length > 0) {
+      await sendTxtLoading(res);
+      return task_fn(res, interaction, option.options[0], senderId);
+    }
+    return sendTxt(res, `La Commande ${option.name} n'est pas pris en charge`);
+  } catch (err) {
+    console.error(err);
+    return sendTxtLater(res, `La Commande ${option.name} a échoué`, interaction.application_id, interaction.token);
   }
-  if (option.name === "projet" && option.options.length > 0) {
-    await sendTxtLoading(res);
-    return projetc_fn(res, interaction, option.options[0], senderId);
-  }
-  if (option.name === "tache" && option.options.length > 0) {
-    await sendTxtLoading(res);
-    return task_fn(res, interaction, option.options[0], senderId);
-  }
-  return sendTxt(res, `La Commande ${option.name} n'est pas pris en charge`);
 };
 
 const discordInteraction = async (req:Request, res:Response) => {
