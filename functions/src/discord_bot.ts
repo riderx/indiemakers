@@ -1,6 +1,6 @@
 import {InteractionResponseType, InteractionType, verifyKey} from "discord-interactions";
 import {firestore} from "firebase-admin";
-// import {config, firestore} from "firebase-admin";
+import {config} from "firebase-functions";
 import {Request, Response} from "express";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -132,8 +132,7 @@ const sendTxtLater = async (res:Response, text:string, application_id:string, in
 const getUserData: any = (userId:string) => {
   const url = `https://discord.com/api//v8/users/${userId}`;
   const headers = {
-    // "Authorization": `Bot ${config().discord.bot_token}`
-    "Authorization": "Bot ODM2NzIwNTI0MzUyNDIxOTE5.YIiGtg.g3MkGZORTh1EO75OASRL2Ekw4dw",
+    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : config().discord.bot_token}`,
   };
   return axios.get(url, {headers}).catch((err) => {
     console.error(err);
@@ -157,7 +156,8 @@ const karma_add = async (res:Response, interaction: any, option:any, senderId:st
   const curKarma = await getKarmaById(userId);
   await updateKarmaById(userId, curKarma.total + 1);
   await addKarmaVotesById(userId, senderId, 1);
-  return sendTxtLater(res, `Tu as donné du karma a <@${userId}>\nIl a maintenant: ${curKarma.total - 1} karma!`, interaction.application_id, interaction.token);
+  const botString = `Tu as donné du karma a <@${userId}>\nIl a maintenant: ${curKarma.total + 1} karma!`;
+  return sendTxtLater(res, botString, interaction.application_id, interaction.token);
 };
 
 const karma_rm = async (res:Response, interaction: any, option:any, senderId:string) => {
@@ -170,7 +170,8 @@ const karma_rm = async (res:Response, interaction: any, option:any, senderId:str
   if (curKarma.total > 0) {
     await updateKarmaById(userId, curKarma.total - 1);
     await addKarmaVotesById(userId, senderId, 1);
-    return sendTxtLater(res, `Tu as enlevé du karma a <@${userId}>\nIl lui reste: ${curKarma.total - 1} karma`, interaction.application_id, interaction.token);
+    const botString = `Tu as enlevé du karma a <@${userId}>\nIl lui reste: ${curKarma.total - 1} karma`;
+    return sendTxtLater(res, botString, interaction.application_id, interaction.token);
   }
   return sendTxtLater(res, `<@${userId}> n'as plus de karma...\n Laisse le tranquile!`, interaction.application_id, interaction.token);
 };

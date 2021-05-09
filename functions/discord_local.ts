@@ -4,7 +4,9 @@ import {initializeApp, credential} from "firebase-admin";
 import discordInteraction from "./src/discord_bot";
 /* eslint-disable @typescript-eslint/no-var-requires */
 const serviceAccount = require("./indiemakerfr-firebase-adminsdk-jvx27-86da276b76.json");
+import * as dotenv from "dotenv";
 
+dotenv.config();
 initializeApp({
   credential: credential.cert(serviceAccount),
   databaseURL: "https://indiemakerfr.firebaseio.com",
