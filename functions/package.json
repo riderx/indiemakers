@@ -3,6 +3,8 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
     "build": "tsc",
+    "discord_deploy": "firebase deploy --only \"functions:discord_interaction\"",
+    "discord_config": "ts-node create_discord_command.ts",
     "discord_local": "ts-node discord_local.ts",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
@@ -15,10 +17,13 @@
   },
   "main": "lib/index.js",
   "dependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/twitter": "^1.7.0",
     "axios": "^0.21.1",
+    "dayjs": "^1.10.4",
     "discord-interactions": "^2.0.2",
     "discord.js": "^12.5.3",
+    "dotenv": "^9.0.0",
     "find-hashtags": "^1.0.1",
     "firebase-admin": "^9.2.0",
     "firebase-functions": "^3.11.0",

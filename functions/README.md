@@ -4,12 +4,15 @@
 - create service account
 - create test discord guild
 - use ngrock `./ngrok http 4000` to connect your local env to discord intent url
-- set your app_id, guid_id, and bot token in create_commands.py
-- deploy your discord command guild with `python3 create_commands.py`
-- connect your discord bot to the intent with url `http://UUID.ngrok.io/discord_interaction` in bot setting
-- run your server with `npm run discord_local.ts`
+- set your app_id, guid_id, and bot_token in .env file (use .env.template as template)
+- deploy your discord command guild with `npm run discord_config`
+- connect your discord bot to the intent with url `http://UUID.ngrok.io/discord_interaction` in bot setting (`INTERACTIONS ENDPOINT URL`)
+- run your server with `npm run discord_local`
 - test discord command /im
-- then deploy and use the prod `https://us-central1-indiemakerfr.cloudfunctions.net/discord_interaction`
+- then deploy and use the prod url `https://us-central1-indiemakerfr.cloudfunctions.net/discord_interaction`
 
+# How it's working 
+
+The current bot respond fast a loading message, and then take time to process ans send the final responde, it's allowed by discord to take up to 15min, instead of the 3 sec usual wait time.
 ## doc discord
 https://discord.com/developers/docs/interactions/slash-commands#what-is-a-slash-command
