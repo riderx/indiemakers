@@ -9,7 +9,7 @@ import {
 } from "./twitter";
 import {sendUserToRevue} from "./newletter";
 
-import discordInteraction from "./discord_bot";
+import discordInteraction from "./discord/bot";
 import {Person} from "./types";
 
 const findHashtags = require("find-hashtags");
