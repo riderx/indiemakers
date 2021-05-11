@@ -219,11 +219,12 @@ export const onUpdatePeople = functions.firestore
       return snapshot;
     });
 
-const runtimeOpts: functions.RuntimeOptions = {
-  memory: "512MB",
-};
+// const runtimeOpts: functions.RuntimeOptions = {
+//   memory: "512MB",
+// };
 
-export const discord_interaction = functions.runWith(runtimeOpts).https.onRequest(discordInteraction);
+// export const discord_interaction = functions.runWith(runtimeOpts).https.onRequest(discordInteraction);
+export const discord_interaction = functions.https.onRequest(discordInteraction);
 export const scheduledBotBIP = functions.pubsub.schedule("0 18 * * *")
     .timeZone("Europe/Paris")
     .onRun(async (context) => {
