@@ -22,7 +22,7 @@ export interface User {
   updatedAt: string
 }
 const userPublicKey = ["username", "karma", "avatarUrl", "taches", "projets", "strikes", "createdAt"];
-const userProtectedKey = ["userId", "username", "karma", "avatar", "taches", "projets", "strikes", "createdAt", "updatedAt"];
+const userProtectedKey = ["userId", "username", "karma", "avatar", "taches", "projets", "strikes", "createdAt", "updatedAt", "lastTaskAt"];
 
 export const getAllUsers = async (): Promise<{users: User[], total: number}> => {
   try {

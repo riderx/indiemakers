@@ -17,6 +17,8 @@ export interface Project {
   website?: string,
   stripeKey?: string,
 }
+const projectPublicKey = ["hashtag", "name", "pitch", "taches", "strikes", "website"];
+const projectProtectedKey = ["taches", "strikes", "createdAt", "updatedAt", "lastTaskAt"];
 
 export const getAllProjects = async (userId: string): Promise<{projects: Project[], total: number}> => {
   try {
@@ -103,7 +105,9 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
 const projectEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], senderId:string): Promise<void> => {
   const newProj: Partial<Project> = {};
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    (newProj as any)[element.name] = element.value;
+    if (!projectProtectedKey.includes(element.name)) {
+      (newProj as any)[element.name] = element.value;
+    }
   });
   if (newProj["hashtag"]) {
     console.log("projectEdit", newProj);
@@ -131,7 +135,9 @@ const projectView = async (interaction: Interaction, projId:string, senderId:str
     const project = await getProjectsById(senderId, projId);
     if (project) {
       Object.keys(project).forEach((element: string) => {
-        projInfo += `${(project as any)[element].name} : ${(project as any)[element].value}\n`;
+        if (projectPublicKey.includes(element)) {
+          projInfo += `${(project as any)[element].name} : ${(project as any)[element].value}\n`;
+        }
       });
     }
     console.log("projectEdit", projInfo);
