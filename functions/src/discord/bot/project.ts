@@ -72,6 +72,7 @@ export const updateProject = async (userId: string, hashtag: string, project: Pa
     const newProject: Project = Object.assign({
       hashtag: "",
       nom: "",
+      logo: "",
       emoji: "",
       color: "",
       taches: 0,
