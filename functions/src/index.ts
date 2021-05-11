@@ -1,4 +1,4 @@
-import functions, {config} from "firebase-functions";
+import {config, https, pubsub, firestore, runWith, RuntimeOptions} from "firebase-functions";
 import admin, {initializeApp} from "firebase-admin";
 import {getPerson, getPersonById, voteIfNotDone} from "./users";
 import {
@@ -21,7 +21,7 @@ import {transformURLtoTracked} from "./tracker";
 
 initializeApp();
 
-export const getMakers = functions.https.onRequest(async (req, res) => {
+export const getMakers = https.onRequest(async (req, res) => {
   if (req.get("x-verceladmin-apikey") !== config().verceladmin.apikey) {
     res.json({error: "unAuthorise"});
     return;
@@ -40,7 +40,7 @@ export const getMakers = functions.https.onRequest(async (req, res) => {
   }
 });
 
-export const addEp = functions.https.onRequest(async (req, res) => {
+export const addEp = https.onRequest(async (req, res) => {
   if (req.get("x-verceladmin-apikey") !== config().verceladmin.apikey) {
     res.json({error: "unAuthorise"});
     return;
@@ -64,7 +64,7 @@ export const addEp = functions.https.onRequest(async (req, res) => {
   }
 });
 
-export const updateTwiterUser = functions.pubsub.schedule("0 0 * * *").onRun(async (context) => {
+export const updateTwiterUser = pubsub.schedule("0 0 * * *").onRun(async (context) => {
   const users = await admin.firestore()
       .collection("people")
       .get()
@@ -84,7 +84,7 @@ export const updateTwiterUser = functions.pubsub.schedule("0 0 * * *").onRun(asy
   return null;
 });
 
-export const addTwiterUser = functions.https.onCall(async (data, context) => {
+export const addTwiterUser = https.onCall(async (data, context) => {
   const {name} = data;
   const uid = context.auth ? context.auth.uid : null;
   if (uid) {
@@ -137,7 +137,7 @@ export const addTwiterUser = functions.https.onCall(async (data, context) => {
   return {error: "Not loggin"};
 });
 
-export const calcVotesByPerson = functions.firestore
+export const calcVotesByPerson = firestore
     .document("/people/{personId}/votes/{voteId}")
     .onCreate(async (snapshot, context) => {
       const vote = snapshot.data();
@@ -161,7 +161,7 @@ export const calcVotesByPerson = functions.firestore
       return snapshot;
     });
 
-export const onCreatUser = functions.firestore
+export const onCreatUser = firestore
     .document("/users/{uid}")
     .onCreate(async (snapshot) => {
       const user = snapshot.data();
@@ -180,7 +180,7 @@ export const onCreatUser = functions.firestore
 //     }
 //   })
 
-export const onUpdatePeople = functions.firestore
+export const onUpdatePeople = firestore
     .document("/people/{personId}")
     .onUpdate(async (snapshot, context) => {
       const person: Person | undefined = <Person>snapshot.after.data();
@@ -219,13 +219,12 @@ export const onUpdatePeople = functions.firestore
       return snapshot;
     });
 
-// const runtimeOpts: functions.RuntimeOptions = {
-//   memory: "512MB",
-// };
+const runtimeOpts: RuntimeOptions = {
+  memory: "512MB",
+};
 
-// export const discord_interaction = functions.runWith(runtimeOpts).https.onRequest(discordInteraction);
-export const discord_interaction = functions.https.onRequest(discordInteraction);
-export const scheduledBotBIP = functions.pubsub.schedule("0 18 * * *")
+export const discord_interaction = runWith(runtimeOpts).https.onRequest(discordInteraction);
+export const scheduledBotBIP = pubsub.schedule("0 18 * * *")
     .timeZone("Europe/Paris")
     .onRun(async (context) => {
       console.log("This will be run every day at 18:00 AM Paris!");
@@ -233,7 +232,7 @@ export const scheduledBotBIP = functions.pubsub.schedule("0 18 * * *")
       return null;
     });
 
-export const scheduledBotBIPMorning = functions.pubsub.schedule("0 9 * * *")
+export const scheduledBotBIPMorning = pubsub.schedule("0 9 * * *")
     .timeZone("Europe/Paris")
     .onRun(async (context) => {
       console.log("This will be run every day at 9:00 AM Paris!");
