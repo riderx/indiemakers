@@ -23,7 +23,7 @@ interface Task {
   updatedAt: string,
 }
 const taskPublicKey = ["id", "content", "status", "doneAt", "createdAt"];
-const taskProtectedKey = ["id", "wipId", "makerlogHook", "createdAt", "updatedAt"];
+// const taskProtectedKey = ["id", "wipId", "makerlogHook", "createdAt", "updatedAt"];
 
 const createProjectTask = async (user: User, projectId: string, task: Partial<Task>): Promise<firestore.DocumentReference<firestore.DocumentData>> => {
   try {
