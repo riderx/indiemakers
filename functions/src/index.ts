@@ -298,7 +298,7 @@ export const onUpdatePeople = functions.firestore
 
 export const discord_interaction = functions.https.onRequest(discordInteraction);
 export const scheduledFunctionBotBIP = functions.pubsub.schedule("0 18 * * *")
-    .timeZone("France/Paris")
+    .timeZone("Europe/Paris")
     .onRun(async (context) => {
       console.log("This will be run every day at 18:00 AM Paris!");
       await sendToWebhook(config().discord.biphook, "Hey Makers, il est temps de noter vos taches dans vos projets et d'aller chill !");
@@ -306,7 +306,7 @@ export const scheduledFunctionBotBIP = functions.pubsub.schedule("0 18 * * *")
     });
 
 export const scheduledFunctionBotBIPMorning = functions.pubsub.schedule("0 9 * * *")
-    .timeZone("France/Paris")
+    .timeZone("Europe/Paris")
     .onRun(async (context) => {
       console.log("This will be run every day at 9:00 AM Paris!");
       await sendToWebhook(config().discord.biphook, "Hey Makers, Encore une belle journée pour shipper !");
