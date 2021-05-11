@@ -218,6 +218,7 @@ export const onUpdatePeople = functions.firestore
       }
       return snapshot;
     });
+
 const runtimeOpts: functions.RuntimeOptions = {
   memory: "512MB",
 };
