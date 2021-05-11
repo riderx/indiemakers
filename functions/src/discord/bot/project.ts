@@ -69,12 +69,12 @@ export const updateProject = async (userId: string, hashtag: string, project: Pa
       nom: "",
       taches: 0,
       flammes: 0,
-      updateAt: dayjs().toISOString(),
+      updatedAt: dayjs().toISOString(),
       createdAt: dayjs().toISOString(),
     }, project);
     return firestore().collection(`discord/${userId}/projects`).doc(hashtag).set(newProject);
   }
-  return userDoc.ref.update({...project, updateAt: dayjs().toISOString()});
+  return userDoc.ref.update({...project, updatedAt: dayjs().toISOString()});
 };
 
 const deleteProject = async (userId: string, projectId: string): Promise<firestore.WriteResult> => {

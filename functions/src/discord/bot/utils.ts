@@ -15,16 +15,18 @@ export const sendTxt = (res: Res, text:string): Res => res.send({
   },
 });
 
-export const getUserData = async (userId: string): Promise<DiscorUser> => {
+export const getUserData = async (userId: string): Promise<DiscorUser| undefined> => {
   const url = `https://discord.com/api/v8/users/${userId}`;
   const headers = {
     "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : config().discord.bot_token}`,
   };
-  const res = await axios.get(url, {headers}).catch((err) => {
-    console.error("getUserData", err);
-    return err;
-  });
-  return Promise.resolve(res.data as DiscorUser);
+  try {
+    const res = await axios.get(url, {headers});
+    return Promise.resolve(res.data as DiscorUser);
+  } catch (err) {
+    console.error('getUserData', err);
+    return Promise.resolve(undefined);
+  }
 };
 
 export const sendTxtLoading = (res: Res): Res => res.send({
@@ -36,7 +38,8 @@ export const sendTxtLoading = (res: Res): Res => res.send({
 
 export const sendTxtLater = async (text:string, applicationId:string, interactionToken: string): Promise<void> => {
   const url = `https://discord.com/api/v8/webhooks/${applicationId}/${interactionToken}/messages/@original`;
-  await axios.patch(url,
+  try {
+    await axios.patch(url,
       {
         content: text,
       }, {}).catch((err) => {
@@ -44,4 +47,8 @@ export const sendTxtLater = async (text:string, applicationId:string, interactio
     return err;
   });
   return Promise.resolve();
+  } catch (err) {
+    console.error('sendTxtLater', err);
+    return Promise.resolve();
+  }
 };

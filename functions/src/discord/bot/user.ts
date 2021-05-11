@@ -74,23 +74,28 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<f
   const userDoc = await firestore().collection("discord").doc(userId).get();
   if (!userDoc.exists || !userDoc.data) {
     const userInfo = await getUserData(userId);
-    const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${userInfo.avatar}.png`;
-    const newUser: User = Object.assign({
+    const base: User = {
       userId,
-      avatar: userInfo.avatar,
-      avatarUrl,
+      avatar: '',
+      avatarUrl: '',
       flammes: 0,
       incomes: 0,
       karma: 0,
       projets: 0,
       taches: 0,
-      username: userInfo.username,
+      username: '',
       createdAt: dayjs().toISOString(),
-      updateAt: dayjs().toISOString(),
-    }, user as User);
+      updatedAt: dayjs().toISOString(),
+    };
+    if (userInfo) {
+      base.avatar = userInfo.avatar;
+      base.avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${userInfo.avatar}.png`;
+      base.username = userInfo.username
+    }
+    const newUser: User = Object.assign(base, user as User);
     return firestore().collection("discord").doc(userId).set(newUser);
   }
-  return userDoc.ref.update({...user, updateAt: dayjs().toISOString()});
+  return userDoc.ref.update({...user, updatedAt: dayjs().toISOString()});
 };
 
 const userEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {

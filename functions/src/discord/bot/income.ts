@@ -29,7 +29,7 @@ const updateProjecttotalIncome = async (userId: string, projectId: string, total
   if (!projDoc.exists || !projDoc.data) {
     console.error(`Cannot add total to userId: ${userId}, projectId: ${projectId}, totalIncome: ${totalIncome}`);
   }
-  return projDoc.ref.update({totalIncome, updateAt: dayjs().toISOString()});
+  return projDoc.ref.update({totalIncome, updatedAt: dayjs().toISOString()});
 };
 
 export const getAllProjectsIncomes = async (userId: string, projectId: string) => {
