@@ -224,7 +224,7 @@ const projectView = async (interaction: Interaction, projId:string, userId:strin
     if (project) {
       Object.keys(project).forEach((element: string) => {
         if (projectPublicKey.includes(element)) {
-          projInfo += `${(project as any)[element].name} : ${(project as any)[element].value}\n`;
+          projInfo += `${element} : ${(project as any)[element]}\n`;
         }
       });
     }

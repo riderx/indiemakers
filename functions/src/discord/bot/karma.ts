@@ -1,4 +1,4 @@
-import {updateUser, getAllUsers} from "./user";
+import {updateUser, getAllUsers, User} from "./user";
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
 import {sendTxtLater} from "./utils";
@@ -74,7 +74,7 @@ const karmaRm = async (interaction: Interaction, option: ApplicationCommandInter
 const generateKarmaStats = async (): Promise<string> => {
   let result = "";
   const allUsers = await getAllUsers();
-  allUsers.users = allUsers.users.sort((firstEl, secondEl) => secondEl.karma - firstEl.karma);
+  allUsers.users = allUsers.users.sort((firstEl: User, secondEl: User) => secondEl.karma - firstEl.karma);
   allUsers.users.forEach((element) => {
     result += `<@${element.userId}> = ${element.karma}\n`;
   });
