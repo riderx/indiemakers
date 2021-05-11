@@ -1,27 +1,39 @@
-import {projetc_fn} from "./project";
+import {userFn} from "./user";
+import {incomeFn} from "./income";
+import {projectFn} from "./project";
 import {sendTxt, sendTxtLater, sendTxtLoading} from "./utils";
-import {karma_fn} from "./karma";
-import {task_fn} from "./tasks";
+import {karmaFn} from "./karma";
+import {taskFn} from "./tasks";
 import {InteractionResponseType, InteractionType, verifyKey} from "discord-interactions";
 import {Request, Response} from "express";
+import {ApplicationCommandInteractionDataOption, Interaction} from "./create_command";
 
 const CLIENT_PUBLIC_KEY = "76a1cf12caec747f872ee6ea064269d4acd2538b2f1e26f89853f93c32d045db";
 
-const im = async (res:Response, interaction: any, option:any, senderId:string) => {
+const im = async (res:Response, interaction: Interaction, option:ApplicationCommandInteractionDataOption, senderId:string): Promise<void> => {
   try {
-    if (option.name === "karma" && option.options.length > 0) {
+    if (option.name === "karma" && option.options && option.options.length > 0) {
       await sendTxtLoading(res);
-      return karma_fn(res, interaction, option.options[0], senderId);
+      return karmaFn(interaction, option.options[0], senderId);
     }
-    if (option.name === "projet" && option.options.length > 0) {
+    if (option.name === "projet" && option.options && option.options.length > 0) {
       await sendTxtLoading(res);
-      return projetc_fn(res, interaction, option.options[0], senderId);
+      return projectFn(interaction, option.options[0], senderId);
     }
-    if (option.name === "tache" && option.options.length > 0) {
+    if (option.name === "tache" && option.options && option.options.length > 0) {
       await sendTxtLoading(res);
-      return task_fn(res, interaction, option.options[0], senderId);
+      return taskFn(interaction, option.options[0], senderId);
     }
-    return sendTxt(res, `La Commande ${option.name} n'est pas pris en charge`);
+    if (option.name === "revenue" && option.options && option.options.length > 0) {
+      await sendTxtLoading(res);
+      return incomeFn(interaction, option.options[0], senderId);
+    }
+    if (option.name === "maker" && option.options && option.options.length > 0) {
+      await sendTxtLoading(res);
+      return userFn(interaction, option.options[0], senderId);
+    }
+    await sendTxt(res, `La Commande ${option.name} n'est pas pris en charge`);
+    return Promise.resolve();
   } catch (err) {
     console.error(err);
     return sendTxtLater(`La Commande ${option.name} a échoué`, interaction.application_id, interaction.token);
@@ -37,9 +49,9 @@ const discordInteraction = async (req:Request, res:Response) => {
     return res.status(401).end("Bad request signature");
   }
 
-  const interaction = req.body;
-  if (interaction && interaction.type === InteractionType.APPLICATION_COMMAND) {
-    if (interaction.data.name === "im" && interaction.data.options.length > 0) {
+  const interaction: Interaction = req.body;
+  if (interaction && interaction.type === InteractionType.APPLICATION_COMMAND && interaction.data) {
+    if (interaction.data.name === "im" && interaction.data.options && interaction.data.options.length > 0 && interaction.member.user) {
       return im(res, interaction, interaction.data.options[0], interaction.member.user.id);
     }
     return sendTxt(res, `La Commande ${interaction.data.name} n'est pas pris en charge`);

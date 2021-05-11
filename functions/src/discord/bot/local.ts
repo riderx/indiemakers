@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express";
 
 import {initializeApp, credential} from "firebase-admin";
-import discordInteraction from "./src/discord/bot";
+import discordInteraction from ".";
 /* eslint-disable @typescript-eslint/no-var-requires */
 const serviceAccount = require("./indiemakerfr-firebase-adminsdk-jvx27-86da276b76.json");
 import * as dotenv from "dotenv";
