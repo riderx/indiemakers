@@ -110,13 +110,24 @@ const userEdit = async (interaction: Interaction, options:ApplicationCommandInte
   ]).then(() => Promise.resolve());
 };
 
-const userList = async (interaction: Interaction): Promise<void> => {
+export const usersViewStreak = async (): Promise<string> => {
   let usersInfo = "";
-
   const res = await getAllUsers();
+  const limitStreak = dayjs();
+  limitStreak.subtract(1, "day");
+  limitStreak.set("minute", 0);
+  limitStreak.set("hour", 0);
+  limitStreak.set("second", 0);
+  res.users = res.users.sort((firstEl: User, secondEl: User) => secondEl.strikes - firstEl.strikes);
+  res.users = res.users.filter((user: User) => user.lastTaskAt ? dayjs(user.lastTaskAt).isAfter(limitStreak) : false);
   res.users.forEach((element: User) => {
-    usersInfo += `${element.username} projets: ${element.projets} taches: ${element.taches} karma: ${element.karma} strikes: ${element.strikes}  Crée le ${dayjs(element.createdAt).format("DD/MM/YYYY")}\n`;
+    usersInfo += `${element.username} a shipper ${element.strikes} jours d'affilés pour ${element.taches} taches faites depuis le debut sur ${element.projets} projets !`;
   });
+  return usersInfo;
+};
+
+const userList = async (interaction: Interaction): Promise<void> => {
+  const usersInfo = await usersViewStreak();
   console.log("userList", usersInfo);
   return sendTxtLater(`Voici la liste des makers !\n\n${usersInfo}`, interaction.application_id, interaction.token);
 };

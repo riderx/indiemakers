@@ -11,6 +11,7 @@ import {sendToWebhook} from "./discord/bot/dm";
 import {updateRevenueAllProject} from "./discord/bot/stripe_charges";
 import dayjs from "dayjs";
 import {transformURLtoTracked} from "./tracker";
+import {usersViewStreak} from "./discord/bot/user";
 
 // import DiscordService from './discord_login';
 // import { StatusCodes } from 'http-status-codes';
@@ -236,7 +237,8 @@ export const scheduledBotBIPMorning = pubsub.schedule("0 9 * * *")
     .timeZone("Europe/Paris")
     .onRun(async (context) => {
       console.log("This will be run every day at 9:00 AM Paris!");
-      await sendToWebhook(config().discord.biphook, "Hey Makers, Encore une belle journée pour shipper !");
+      const usersInfo = await usersViewStreak();
+      await sendToWebhook(config().discord.biphook, `Hey Makers, Encore une belle journée pour shipper !\n\n${usersInfo}\n\nContinuez comme ça !`);
       if (dayjs().day() === 1) {
         await sendToWebhook(config().discord.genhook, "Hey Makers, Faites moi un petit récap de votre semaine 1 Bon point / 1 point relou, minimum 💪!");
         await updateRevenueAllProject();
