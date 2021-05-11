@@ -90,10 +90,9 @@ sw.*
 
 # Vim swap files
 *.swp
-functions/indiemakerfr-firebase.json
 functions/src/test.ts
 functions/src/email.ts
 functions/node_modules
 functions/ngrok
 functions/.env
-*indiemakerfr-firebase-adminsdk-jvx27-86da276b76.json
+*googlekey.json
