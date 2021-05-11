@@ -22,6 +22,8 @@ interface Task {
   createdAt: string,
   updatedAt: string,
 }
+const taskPublicKey = ["id", "content", "status", "doneAt", "createdAt"];
+const taskProtectedKey = ["id", "wipId", "makerlogHook", "createdAt", "updatedAt"];
 
 const createProjectTask = async (user: User, projectId: string, task: Partial<Task>): Promise<firestore.DocumentReference<firestore.DocumentData>> => {
   try {
@@ -75,6 +77,14 @@ const getAllProjectsTasks = async (userId: string, projectId: string): Promise<{
     return {tasks: [], total: 0};
   }
 };
+const transformKey = (key: string): string => {
+  switch (key) {
+    case "contenue":
+      return "content";
+    default:
+      return key;
+  }
+};
 
 const taskAdd = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
   let projectId = "";
@@ -84,10 +94,8 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (element.name === "hashtag" && element.value) {
       projectId = element.value;
-    } else if (element.name === "content" && element.value) {
-      task["content"] = element.value;
-    } else if (element.name === "status" && element.value) {
-      task["status"] = element.value as TaskStatus;
+    } else if (taskPublicKey.includes(element.name)) {
+      (task as any)[transformKey(element.name)] = element.value;
     }
   });
   const curUser = await getUsersById(userId);
@@ -138,8 +146,8 @@ const taskEdit = async (interaction: Interaction, options:ApplicationCommandInte
       projectId = element.value;
     } else if (element.name === "id" && element.value) {
       taskId = element.value;
-    } else if (element.name === "content" && element.value) {
-      task["content"] = element.value;
+    } else if (element.name === "contenue" && element.value) {
+      (task as any)[transformKey(element.name)];
     } else if (element.name === "status" && element.value) {
       task["status"] = element.value as TaskStatus;
     }
