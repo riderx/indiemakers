@@ -17,15 +17,15 @@ export interface Project {
   flammes: number,
   lastTaskAt?:string,
   website?: string,
-  stripeKey?: string,
+  stripeHook?: string,
 }
 const projectPublicKey = ["hashtag", "nom", "pitch", "taches", "flammes", "website"];
 const projectProtectedKey = ["taches", "flammes", "createdAt", "updatedAt", "lastTaskAt"];
 
 const transformKey = (key: string): string => {
   switch (key) {
-    case "stripekey":
-      return "stripestripeKeyApiKey";
+    case "stripe_hook":
+      return "stripeHook";
     default:
       return key;
   }
@@ -152,18 +152,18 @@ const cleanPastStripe = async (userId: string, projectId: string| undefined) => 
   Promise.all(all).then(() => Promise.resolve());
 };
 
-const addStripe = (userId: string, projectId: string| undefined, stripeKey: string| undefined) => {
-  if (!stripeKey) {
+const addStripe = (userId: string, projectId: string| undefined, stripeHook: string| undefined) => {
+  if (!stripeHook) {
     return Promise.resolve();
   }
   return getPastCharges(userId, projectId);
 };
 
-const updateStripe = (userId: string, projectId: string| undefined, stripeKey: string| undefined) => {
-  if (!stripeKey) {
+const updateStripe = (userId: string, projectId: string| undefined, stripeHook: string| undefined) => {
+  if (!stripeHook) {
     return Promise.resolve();
   }
-  if (stripeKey && !stripeKey.startsWith("rk_live")) {
+  if (stripeHook && !stripeHook.startsWith("rk_live")) {
     return cleanPastStripe(userId, projectId);
   }
   return cleanPastStripe(userId, projectId).then(() => getPastCharges(userId, projectId));
@@ -181,7 +181,7 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
     console.log("add project", newProj);
     return Promise.all([
       sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus 💪!`, interaction.application_id, interaction.token),
-      addStripe(userId, newProj["hashtag"], newProj["stripeKey"]),
+      addStripe(userId, newProj["hashtag"], newProj["stripeHook"]),
       updateProject(userId, newProj["hashtag"], newProj),
       getAllProjects(userId).then((allProj) => updateUser(userId, {projets: allProj.length + 1})),
     ]).then(() => Promise.resolve());
@@ -203,7 +203,7 @@ const projectEdit = async (interaction: Interaction, options:ApplicationCommandI
     console.log("projectEdit", update);
     return Promise.all([
       sendTxtLater(`Tu as mis a jours le projet:\n#${update["hashtag"]}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`, interaction.application_id, interaction.token),
-      updateStripe(userId, update["hashtag"], update["stripeKey"]),
+      updateStripe(userId, update["hashtag"], update["stripeHook"]),
       updateProject(userId, update["hashtag"], update),
     ]).then(() => Promise.resolve());
   } else {

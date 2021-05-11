@@ -148,6 +148,7 @@ const projetOptions = [
   optionGen("website", "le site de ton projet", SlashCommandOptionType.STRING),
   optionGen("emoji", "l'émoji qui correspond le plus a ton projet", SlashCommandOptionType.STRING),
   optionGen("logo", "l'url vers le logo de ton projet", SlashCommandOptionType.STRING),
+  optionGen("stripe_hook", "l'url vers la webhook stripe pour get les charges en auto tous les lundi", SlashCommandOptionType.STRING),
   optionGen("categorie", "la categorie de ton projet", SlashCommandOptionType.STRING, undefined, [
     choiceGen("SaaS", "saas"),
     choiceGen("Application", "app"),
