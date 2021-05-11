@@ -9,7 +9,7 @@ export interface Project {
   createdAt: string,
   updateAt: string,
   hashtag: string,
-  name: string,
+  nom: string,
   pitch?: string,
   taches: number,
   strikes: number,
@@ -17,7 +17,7 @@ export interface Project {
   website?: string,
   stripeKey?: string,
 }
-const projectPublicKey = ["hashtag", "name", "pitch", "taches", "strikes", "website"];
+const projectPublicKey = ["hashtag", "nom", "pitch", "taches", "strikes", "website"];
 const projectProtectedKey = ["taches", "strikes", "createdAt", "updatedAt", "lastTaskAt"];
 
 export const getAllProjects = async (userId: string): Promise<{projects: Project[], total: number}> => {
@@ -56,7 +56,7 @@ export const updateProject = async (userId: string, hashtag: string, project: Pa
   if (!userDoc.exists || !userDoc.data) {
     const newProject: Project = Object.assign({
       hashtag: "",
-      name: "",
+      nom: "",
       taches: 0,
       strikes: 0,
       updateAt: dayjs().toISOString(),
@@ -122,7 +122,7 @@ const projectList = async (interaction: Interaction, userId:string, me= false): 
   let projsInfo = "";
   const proj = await getAllProjects(userId);
   proj.projects.forEach((proj: Project) => {
-    projsInfo += `${proj.name} #${proj.hashtag} taches:${proj.taches} strikes:${proj.strikes} Crée le ${dayjs(proj.createdAt).format("DD/MM/YYYY")}\n`;
+    projsInfo += `${proj.nom} #${proj.hashtag} taches:${proj.taches} strikes:${proj.strikes} Crée le ${dayjs(proj.createdAt).format("DD/MM/YYYY")}\n`;
   });
   console.log("project_list", projsInfo);
   const sentence = me ? "Voici la liste de tes projets !" : "Voici la liste des projets de <@${userId}> !";
