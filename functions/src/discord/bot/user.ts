@@ -12,6 +12,8 @@ export interface User {
   avatarUrl: string,
   flammes: number,
   karma: number,
+  emoji: string,
+  color: string,
   projets: number,
   incomes: number,
   taches: number,
@@ -25,7 +27,7 @@ export interface User {
   createdAt: string,
   updatedAt: string
 }
-const userPublicKey = ["username", "karma", "avatarUrl", "taches", "projets", "flammes", "createdAt"];
+const userPublicKey = ["username", "karma", "avatarUrl", "taches", "projets", "emoji", "color", "flammes", "createdAt"];
 const userProtectedKey = ["userId", "username", "karma", "avatar", "taches", "projets", "flammes", "createdAt", "updatedAt", "lastTaskAt"];
 
 export const getAllUsers = async (): Promise<{users: User[], total: number}> => {
@@ -48,6 +50,8 @@ export const getAllUsers = async (): Promise<{users: User[], total: number}> => 
 
 const transformKey = (key: string): string => {
   switch (key) {
+    case "couleur":
+      return "color";
     case "makerlog_hook":
       return "makerlogHook";
     case "wip_key":
@@ -78,6 +82,8 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<f
       userId,
       avatar: "",
       avatarUrl: "",
+      emoji: "",
+      color: "",
       flammes: 0,
       incomes: 0,
       karma: 0,

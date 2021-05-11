@@ -11,7 +11,10 @@ export interface Project {
   createdAt: string,
   updatedAt?: string,
   hashtag: string,
+  emoji: string,
+  color: string,
   nom: string,
+  logo: string,
   description?: string,
   taches: number,
   flammes: number,
@@ -19,11 +22,13 @@ export interface Project {
   website?: string,
   stripeHook?: string,
 }
-const projectPublicKey = ["hashtag", "nom", "description", "taches", "flammes", "website"];
+const projectPublicKey = ["hashtag", "nom", "description", "logo", "emoji", "color", "taches", "flammes", "website"];
 const projectProtectedKey = ["taches", "flammes", "createdAt", "updatedAt", "lastTaskAt"];
 
 const transformKey = (key: string): string => {
   switch (key) {
+    case "couleur":
+      return "color";
     case "stripe_hook":
       return "stripeHook";
     default:
@@ -67,6 +72,8 @@ export const updateProject = async (userId: string, hashtag: string, project: Pa
     const newProject: Project = Object.assign({
       hashtag: "",
       nom: "",
+      emoji: "",
+      color: "",
       taches: 0,
       flammes: 0,
       updatedAt: dayjs().toISOString(),

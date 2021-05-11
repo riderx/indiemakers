@@ -144,11 +144,7 @@ const makerIdOptional = optionGen("maker", "Le maker désiré", SlashCommandOpti
 const projetOptions = [
   projetHashtag,
   optionGen("nom", "Le nom de ton projet", SlashCommandOptionType.STRING),
-  optionGen("description", "une description courte de ton projet", SlashCommandOptionType.STRING),
   optionGen("website", "le site de ton projet", SlashCommandOptionType.STRING),
-  optionGen("emoji", "l'émoji qui correspond le plus a ton projet", SlashCommandOptionType.STRING),
-  optionGen("logo", "l'url vers le logo de ton projet", SlashCommandOptionType.STRING),
-  optionGen("stripe_hook", "l'url vers la webhook stripe pour get les charges en auto tous les lundi", SlashCommandOptionType.STRING),
   optionGen("categorie", "la categorie de ton projet", SlashCommandOptionType.STRING, undefined, [
     choiceGen("SaaS", "saas"),
     choiceGen("Application", "app"),
@@ -159,14 +155,19 @@ const projetOptions = [
     choiceGen("Ecommerce", "ecommerce"),
     choiceGen("Autre", "autre"),
   ]),
+  optionGen("logo", "l'url vers le logo de ton projet", SlashCommandOptionType.STRING),
+  optionGen("emoji", "l'émoji qui correspond le plus a ton projet", SlashCommandOptionType.STRING),
+  optionGen("coouleur", "la couleur de ton projet", SlashCommandOptionType.STRING),
+  optionGen("stripe_hook", "l'url vers la webhook stripe pour get les charges en auto tous les lundi", SlashCommandOptionType.STRING),
 ];
 
 const makerOptions = [
   optionGen("nom", "Ton nom de Maker", SlashCommandOptionType.STRING),
   optionGen("bio", "Ta bio", SlashCommandOptionType.STRING),
   optionGen("website", "Ton site perso", SlashCommandOptionType.STRING),
-  optionGen("emoji", "l'émoji qui te correspond le plus", SlashCommandOptionType.STRING),
   optionGen("photo", "l'url vers ta photo", SlashCommandOptionType.STRING),
+  optionGen("emoji", "l'émoji qui te correspond le plus", SlashCommandOptionType.STRING),
+  optionGen("coouleur", "ta couleur préféré", SlashCommandOptionType.STRING),
   optionGen("makerlog_hook", "la web hook de ton compte makerlog, pour que le bot poste tes taches", SlashCommandOptionType.STRING),
   optionGen("wip_key", "la clé api de ton compte wip.co web hook, pour que le bot poste tes taches", SlashCommandOptionType.STRING),
 ];
