@@ -10,7 +10,7 @@ export interface User {
   avatar: string,
   username: string,
   avatarUrl: string,
-  strikes: number,
+  streak: number,
   karma: number,
   projets: number,
   incomes: number,
@@ -25,8 +25,8 @@ export interface User {
   createdAt: string,
   updatedAt: string
 }
-const userPublicKey = ["username", "karma", "avatarUrl", "taches", "projets", "strikes", "createdAt"];
-const userProtectedKey = ["userId", "username", "karma", "avatar", "taches", "projets", "strikes", "createdAt", "updatedAt", "lastTaskAt"];
+const userPublicKey = ["username", "karma", "avatarUrl", "taches", "projets", "streak", "createdAt"];
+const userProtectedKey = ["userId", "username", "karma", "avatar", "taches", "projets", "streak", "createdAt", "updatedAt", "lastTaskAt"];
 
 export const getAllUsers = async (): Promise<{users: User[], total: number}> => {
   try {
@@ -79,7 +79,7 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<f
       userId,
       avatar: userInfo.avatar,
       avatarUrl,
-      strikes: 0,
+      streak: 0,
       incomes: 0,
       karma: 0,
       projets: 0,
@@ -118,10 +118,10 @@ export const usersViewStreak = async (): Promise<string> => {
   limitStreak.set("minute", 0);
   limitStreak.set("hour", 0);
   limitStreak.set("second", 0);
-  res.users = res.users.sort((firstEl: User, secondEl: User) => secondEl.strikes - firstEl.strikes);
+  res.users = res.users.sort((firstEl: User, secondEl: User) => secondEl.streak - firstEl.streak);
   res.users = res.users.filter((user: User) => user.lastTaskAt ? dayjs(user.lastTaskAt).isAfter(limitStreak) : false);
   res.users.forEach((element: User) => {
-    usersInfo += `${element.username} a shipper ${element.strikes} jours d'affilés pour ${element.taches} taches faites depuis le debut sur ${element.projets} projets !`;
+    usersInfo += `${element.username} a shipper ${element.streak} jours d'affilés pour ${element.taches} taches faites depuis le debut sur ${element.projets} projets !`;
   });
   return usersInfo;
 };

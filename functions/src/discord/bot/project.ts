@@ -14,13 +14,13 @@ export interface Project {
   nom: string,
   pitch?: string,
   taches: number,
-  strikes: number,
+  streak: number,
   lastTaskAt?:string,
   website?: string,
   stripeKey?: string,
 }
-const projectPublicKey = ["hashtag", "nom", "pitch", "taches", "strikes", "website"];
-const projectProtectedKey = ["taches", "strikes", "createdAt", "updatedAt", "lastTaskAt"];
+const projectPublicKey = ["hashtag", "nom", "pitch", "taches", "streak", "website"];
+const projectProtectedKey = ["taches", "streak", "createdAt", "updatedAt", "lastTaskAt"];
 
 const transformKey = (key: string): string => {
   switch (key) {
@@ -68,7 +68,7 @@ export const updateProject = async (userId: string, hashtag: string, project: Pa
       hashtag: "",
       nom: "",
       taches: 0,
-      strikes: 0,
+      streak: 0,
       updateAt: dayjs().toISOString(),
       createdAt: dayjs().toISOString(),
     }, project);
@@ -215,7 +215,7 @@ const projectList = async (interaction: Interaction, userId:string, me= false): 
   let projsInfo = "";
   const projects = await getAllProjects(userId);
   projects.forEach((proj: Project) => {
-    projsInfo += `${proj.nom} #${proj.hashtag} taches:${proj.taches} strikes:${proj.strikes} Crée le ${dayjs(proj.createdAt).format("DD/MM/YYYY")}\n`;
+    projsInfo += `${proj.nom} #${proj.hashtag} taches:${proj.taches} streak:${proj.streak} Crée le ${dayjs(proj.createdAt).format("DD/MM/YYYY")}\n`;
   });
   console.log("project_list", projsInfo);
   const sentence = me ? "Voici la liste de tes projets !" : "Voici la liste des projets de <@${userId}> !";
