@@ -5,7 +5,7 @@ import {updateUser, User, getUsersById} from "./user";
 
 import {sendToWip, updateToWip} from "./wip";
 import {sendToMakerlog} from "./makerlog";
-import {getAllProjects, Project, updateProject} from "./project";
+import {getAllProjects, getProjectById, Project, updateProject} from "./project";
 import {Interaction, ApplicationCommandInteractionDataOption} from "./create_command";
 
 enum TaskStatus {
@@ -91,35 +91,34 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
     }
   });
   const curUser = await getUsersById(userId);
-  if (curUser) {
+  const curProject = await getProjectById(userId, projectId);
+  if (curUser && curProject) {
     const curTasks = await getAllProjectsTasks(userId, projectId);
     await createProjectTask(curUser, projectId, task);
     const updatedProject: Partial<Project> = {
       taches: curTasks.total + 1,
-      lastTaskAt: dayjs().toISOString(),
     };
     const superTotal = await getTotalTaskByUser(userId);
     const updatedUser: Partial<User> = {
       taches: superTotal,
-      lastTaskAt: dayjs().toISOString(),
     };
     const lastDay = dayjs();
-    lastDay.subtract(1, "day");
     lastDay.set("minute", 0);
     lastDay.set("hour", 0);
     lastDay.set("second", 0);
-    if (curUser.lastTaskAt && dayjs(curUser.lastTaskAt).isAfter(lastDay)) {
-      updatedProject.strikes = curUser.strikes ? curUser.strikes + 1 : 1;
+    if (curUser.lastTaskAt && dayjs(curUser.lastTaskAt).isBefore(lastDay) || !curUser.lastTaskAt) {
       updatedUser.strikes = curUser.strikes ? curUser.strikes + 1 : 1;
-    } else {
-      updatedProject.strikes = 0;
-      updatedUser.strikes = 0;
+      updatedUser.lastTaskAt = dayjs().toISOString();
+    }
+    if (curProject.lastTaskAt && dayjs(curProject.lastTaskAt).isBefore(lastDay) || !curProject.lastTaskAt) {
+      updatedProject.strikes = curUser.strikes ? curUser.strikes + 1 : 1;
+      updatedProject.lastTaskAt = dayjs().toISOString();
     }
     await updateProject(userId, projectId, updatedProject);
     await updateUser(userId, updatedUser);
     return sendTxtLater(`La tache:\n${task["content"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token);
   } else {
-    return sendTxtLater("Le Maker est introuvable 🤫!", interaction.application_id, interaction.token);
+    return sendTxtLater("Le Maker ou le projet est introuvable 🤫!", interaction.application_id, interaction.token);
   }
 };
 

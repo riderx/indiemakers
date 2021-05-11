@@ -40,7 +40,7 @@ export const getAllProjects = async (userId: string): Promise<{projects: Project
   }
 };
 
-export const getProjectsById = async (userId: string, projectId: string): Promise<Project | null> => {
+export const getProjectById = async (userId: string, projectId: string): Promise<Project | null> => {
   try {
     const res = await firestore().collection(`discord/${userId}/projects`).doc(projectId).get();
     const data = res.data();
@@ -132,7 +132,7 @@ const projectList = async (interaction: Interaction, userId:string, me= false): 
 const projectView = async (interaction: Interaction, projId:string, senderId:string): Promise<void> => {
   let projInfo = "";
   if (projId) {
-    const project = await getProjectsById(senderId, projId);
+    const project = await getProjectById(senderId, projId);
     if (project) {
       Object.keys(project).forEach((element: string) => {
         if (projectPublicKey.includes(element)) {
