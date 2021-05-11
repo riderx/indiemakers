@@ -39,7 +39,9 @@ export const sendTxtLater = async (text:string, applicationId:string, interactio
   await axios.patch(url,
       {
         content: text,
-      }, {}).catch((err) => {
+      }, {}).then((res) => {
+    console.log(res, text, applicationId, interactionToken);
+  }).catch((err) => {
     console.error(err);
     return err;
   });
