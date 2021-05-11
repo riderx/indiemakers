@@ -3,6 +3,7 @@ import {ApplicationCommandInteractionDataOption, Interaction} from "./create_com
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
 import {getUserData, sendTxtLater} from "./utils";
+import {Project} from "./project";
 
 export interface User {
   userId: string,
@@ -12,11 +13,13 @@ export interface User {
   strikes: number,
   karma: number,
   projets: number,
+  incomes: number,
   taches: number,
-  website?: string,
   bio?: string,
+  website?: string,
   lastTaskAt?: string,
   makerlogHook?: string,
+  projectsData?: Project[],
   wipApiKey?: string,
   createdAt: string,
   updatedAt: string
@@ -76,6 +79,7 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<f
       avatar: userInfo.avatar,
       avatarUrl,
       strikes: 0,
+      incomes: 0,
       karma: 0,
       projets: 0,
       taches: 0,
@@ -90,7 +94,7 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<f
 
 const userEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
   const updatedUser: Partial<User> = {};
-  options.forEach((element: any) => {
+  options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (!userProtectedKey.includes(element.name)) {
       (updateUser as any)[transformKey(element.name)] = element.value;
     }
@@ -129,16 +133,16 @@ const userView = async (interaction: Interaction, myId:string, userId:string|und
       userInfo += `${element} : ${(user as any)[element]}\n`;
     });
     console.log("userEdit", userInfo);
-    const channel = await openDmChannel(myId);
-    Promise.all([sendDmChannel(channel.id, `Voici tes infos !\n${userInfo}`), sendTxtLater("Je t'ai envoyé tes info en privé 🤫", interaction.application_id, interaction.token)]);
-    await sendDmChannel(channel.id, `Voici tes infos !\n${userInfo}`);
-    return sendTxtLater("Je t'ai envoyé tes info en privé 🤫", interaction.application_id, interaction.token);
+    return Promise.all([
+      sendTxtLater("Je t'ai envoyé tes info en privé 🤫", interaction.application_id, interaction.token),
+      openDmChannel(myId).then((channel) => sendDmChannel(channel.id, `Voici tes infos !\n${userInfo}`)),
+    ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater(`Je n'ai pas trouvé le maker : ${userId}`, interaction.application_id, interaction.token);
   }
 };
 
-export const userFn = async (interaction: Interaction, option: ApplicationCommandInteractionDataOption, senderId:string): Promise<any> => {
+export const userFn = async (interaction: Interaction, option: ApplicationCommandInteractionDataOption, senderId:string): Promise<void> => {
   if (option.name === "modifier" && option.options && option.options.length > 0) {
     return userEdit(interaction, option.options, senderId);
   } if (option.name === "liste") {

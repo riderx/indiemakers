@@ -41,7 +41,7 @@ const karmaAdd = async (interaction: Interaction, option: ApplicationCommandInte
     const curKarma = await getKarmaById(userId);
     const botString = `Tu as donné du karma a <@${userId}>\nIl a maintenant: ${curKarma.total + 1} karma!`;
     return Promise.all([
-      updateUser(userId, {karma: curKarma.total - 1}),
+      updateUser(userId, {karma: curKarma.total + 1}),
       addKarmaVotesById(userId, senderId, 1),
       sendTxtLater(botString, interaction.application_id, interaction.token),
     ]).then(() => Promise.resolve());

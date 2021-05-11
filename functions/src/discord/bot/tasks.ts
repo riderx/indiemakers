@@ -81,43 +81,46 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
   const task: Partial<Task> = {
     status: TaskStatus.DONE,
   };
-  options.forEach((element: any) => {
-    if (element.name === "hashtag") {
+  options.forEach((element: ApplicationCommandInteractionDataOption) => {
+    if (element.name === "hashtag" && element.value) {
       projectId = element.value;
-    } else if (element.name === "content") {
+    } else if (element.name === "content" && element.value) {
       task["content"] = element.value;
-    } else if (element.name === "status") {
-      task["status"] = element.value;
+    } else if (element.name === "status" && element.value) {
+      task["status"] = element.value as TaskStatus;
     }
   });
   const curUser = await getUsersById(userId);
-  const curProject = await getProjectById(userId, projectId);
-  if (curUser && curProject) {
-    const curTasks = await getAllProjectsTasks(userId, projectId);
-    await createProjectTask(curUser, projectId, task);
-    const updatedProject: Partial<Project> = {
-      taches: curTasks.total + 1,
-    };
-    const superTotal = await getTotalTaskByUser(userId);
-    const updatedUser: Partial<User> = {
-      taches: superTotal,
-    };
+  if (curUser) {
     const lastDay = dayjs();
     lastDay.set("minute", 0);
     lastDay.set("hour", 0);
     lastDay.set("second", 0);
-    if (curUser.lastTaskAt && dayjs(curUser.lastTaskAt).isBefore(lastDay) || !curUser.lastTaskAt) {
-      updatedUser.strikes = curUser.strikes ? curUser.strikes + 1 : 1;
-      updatedUser.lastTaskAt = dayjs().toISOString();
-    }
-    if (curProject.lastTaskAt && dayjs(curProject.lastTaskAt).isBefore(lastDay) || !curProject.lastTaskAt) {
-      updatedProject.strikes = curUser.strikes ? curUser.strikes + 1 : 1;
-      updatedProject.lastTaskAt = dayjs().toISOString();
-    }
     return Promise.all([
-      updateProject(userId, projectId, updatedProject),
-      updateUser(userId, updatedUser),
       sendTxtLater(`La tache:\n${task["content"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token),
+      getProjectById(userId, projectId).then(async (curProject) => {
+        const curTasks = await getAllProjectsTasks(userId, projectId);
+        const updatedProject: Partial<Project> = {
+          taches: curTasks.total + 1,
+        };
+        if (!curProject) return Promise.reject(Error("Projet introuvable"));
+        if (curProject.lastTaskAt && dayjs(curProject.lastTaskAt).isBefore(lastDay) || !curProject.lastTaskAt) {
+          updatedProject.strikes = curUser.strikes ? curUser.strikes + 1 : 1;
+          updatedProject.lastTaskAt = dayjs().toISOString();
+        }
+        return updateProject(userId, projectId, updatedProject);
+      }),
+      createProjectTask(curUser, projectId, task),
+      getTotalTaskByUser(userId).then((superTotal) => {
+        const updatedUser: Partial<User> = {
+          taches: superTotal + 1,
+        };
+        if (curUser.lastTaskAt && dayjs(curUser.lastTaskAt).isBefore(lastDay) || !curUser.lastTaskAt) {
+          updatedUser.strikes = curUser.strikes ? curUser.strikes + 1 : 1;
+          updatedUser.lastTaskAt = dayjs().toISOString();
+        }
+        return updateUser(userId, updatedUser);
+      }),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("Le Maker ou le projet est introuvable 🤫!", interaction.application_id, interaction.token);
@@ -141,8 +144,10 @@ const taskEdit = async (interaction: Interaction, options:ApplicationCommandInte
       task["status"] = element.value as TaskStatus;
     }
   });
-  await updateProjectTask(userId, projectId, taskId, task);
-  return sendTxtLater(`La tache:\n${taskId}: ${task["content"]}\n ${taskId}\nA été mise a jours dans le projet #${projectId}, 🎉!`, interaction.application_id, interaction.token);
+  return Promise.all([
+    sendTxtLater(`La tache:\n${taskId}: ${task["content"]}\n ${taskId}\nA été mise a jours dans le projet #${projectId}, 🎉!`, interaction.application_id, interaction.token),
+    updateProjectTask(userId, projectId, taskId, task),
+  ]).then(() => Promise.resolve());
 };
 
 const tasksView = async (interaction: Interaction, option:ApplicationCommandInteractionDataOption, userId:string): Promise<void> => {
@@ -150,8 +155,8 @@ const tasksView = async (interaction: Interaction, option:ApplicationCommandInte
   if (projectId) {
     const allTaks = await getAllProjectsTasks(userId, projectId);
     let taskInfos = `Tu a fait un total de ${allTaks.total} sur ce projet, BRAVO 🎉!\n\nVoici La liste:\n`;
-    allTaks.tasks.forEach((element: any) => {
-      taskInfos += `${element.text} . Crée le ${dayjs(element.createdAt).format("DD/MM/YYYY")}\n`;
+    allTaks.tasks.forEach((element: Task) => {
+      taskInfos += `${element.content} . Crée le ${dayjs(element.createdAt).format("DD/MM/YYYY")}\n`;
     });
     return sendTxtLater(taskInfos, interaction.application_id, interaction.token);
   } else {
@@ -160,8 +165,8 @@ const tasksView = async (interaction: Interaction, option:ApplicationCommandInte
 };
 
 const getTotalTaskByUser = async (userId: string): Promise<number> => {
-  const res = await getAllProjects(userId);
-  return res.projects.reduce((tt, project) => tt + project.taches, 0);
+  const projects = await getAllProjects(userId);
+  return projects.reduce((tt, project) => tt + project.taches, 0);
 };
 
 const tasksDelete = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
@@ -174,16 +179,16 @@ const tasksDelete = async (interaction: Interaction, options:ApplicationCommandI
       taskId = element.value;
     }
   });
-  await deleteProjectTask(userId, projectId, taskId);
-  const curTasks = await getAllProjectsTasks(userId, projectId);
-  const superTotal = await getTotalTaskByUser(userId);
-  const updatedUser: Partial<User> = {
-    taches: superTotal,
-    lastTaskAt: dayjs().toISOString(),
-  };
   return Promise.all([
-    updateUser(userId, updatedUser),
-    updateUser(userId, {taches: curTasks.total + 1}),
+    getTotalTaskByUser(userId).then((superTotal) => {
+      const updatedUser: Partial<User> = {
+        taches: superTotal - 1,
+        lastTaskAt: dayjs().toISOString(),
+      };
+      return updateUser(userId, updatedUser);
+    }),
+    getAllProjectsTasks(userId, projectId).then((curTasks) => updateUser(userId, {taches: curTasks.total - 1})),
+    deleteProjectTask(userId, projectId, taskId),
     sendTxtLater(`Tu as supprimé la tache ${taskId} !`, interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };

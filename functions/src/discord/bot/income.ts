@@ -3,21 +3,22 @@ import dayjs from "dayjs";
 import {sendTxtLater} from "./utils";
 import {Interaction, ApplicationCommandInteractionDataOption} from "./create_command";
 
-interface income {
+export interface Income {
   id?: string,
   ammount: number,
+  stripeCharges?: Income[],
   status: "expense" | "income",
   date: string,
 }
-const createProjectIncome = async (userId: string, projectId: string, income: income) => {
+export const createProjectIncome = async (userId: string, projectId: string, income: Partial<Income>) => {
   return firestore().collection(`discord/${userId}/projects/${projectId}/incomes`).add({...income, createdAt: dayjs().toISOString()});
 };
 
-const deleteProjectIncome = async (userId: string, projectId: string, incomeId:string) => {
+export const deleteProjectIncome = async (userId: string, projectId: string, incomeId:string) => {
   return firestore().collection(`discord/${userId}/projects/${projectId}/incomes`).doc(incomeId).delete();
 };
 
-const updateProjectIncome = async (userId: string, projectId: string, incomeId:string, income: income) => {
+export const updateProjectIncome = async (userId: string, projectId: string, incomeId:string, income: Partial<Income>) => {
   return firestore().collection(`discord/${userId}/projects/${projectId}/incomes`).doc(incomeId).update({...income, updatesAt: dayjs().toISOString()});
 };
 
@@ -29,13 +30,13 @@ const updateProjecttotalIncome = async (userId: string, projectId: string, total
   return projDoc.ref.update({totalIncome, updateAt: dayjs().toISOString()});
 };
 
-const getAllProjectsIncomes = async (userId: string, projectId: string) => {
+export const getAllProjectsIncomes = async (userId: string, projectId: string) => {
   try {
     const documents = await firestore().collection(`discord/${userId}/projects/${projectId}/incomes`).get();
-    const incomes: income[] = [];
+    const incomes: Income[] = [];
     documents.docs
         .map((doc) => {
-          const data = (doc.data() as income);
+          const data = (doc.data() as Income);
           if (data !== undefined) {
             incomes.push({id: doc.id, ...data});
           }
@@ -52,7 +53,12 @@ const getAllProjectsIncomes = async (userId: string, projectId: string) => {
 
 const incomeAdd = async (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], senderId:string) => {
   let projectId = "";
-  const newIncome: any = {};
+  const newIncome: Partial<Income> = {};
+  const date = dayjs();
+  date.set("minute", 0);
+  date.set("hour", 0);
+  date.set("second", 0);
+  date.date(1);
   options.forEach((element: any) => {
     if (element.name === "hashtag") {
       projectId = element.value;
@@ -60,12 +66,16 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
       newIncome["ammount"] = element.value;
     } else if (element.name === "status") {
       newIncome["status"] = element.value;
+    } else if (element.name === "mois") {
+      date.set("month", Number(element.value) - 1);
+    } else if (element.name === "année") {
+      date.set("year", Number(element.value));
     }
   });
-  const curIncomes = await getAllProjectsIncomes(senderId, projectId);
+  newIncome["date"] = date.toISOString();
   return Promise.all([
+    getAllProjectsIncomes(senderId, projectId).then((curIncomes) => updateProjecttotalIncome(senderId, projectId, curIncomes.total + 1)),
     createProjectIncome(senderId, projectId, newIncome),
-    updateProjecttotalIncome(senderId, projectId, curIncomes.total + 1),
     sendTxtLater(`Le revenue :\n${newIncome["status"]}: ${newIncome["ammount"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };
@@ -73,7 +83,12 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
 const incomeEdit = async (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], senderId:string) => {
   let projectId = "";
   let incomeId = "";
-  const update: any = {};
+  const update: Partial<Income> = {};
+  const date = dayjs();
+  date.set("minute", 0);
+  date.set("hour", 0);
+  date.set("second", 0);
+  date.date(1);
   options.forEach((element: any) => {
     if (element.name === "hashtag") {
       projectId = element.value;
@@ -81,12 +96,15 @@ const incomeEdit = async (interaction: Interaction, options: ApplicationCommandI
       update["ammount"] = element.value;
     } else if (element.name === "status") {
       update["status"] = element.value;
-    } else if (element.name === "date") {
-      update["date"] = element.value;
+    } else if (element.name === "mois") {
+      date.set("month", Number(element.value) - 1);
+    } else if (element.name === "année") {
+      date.set("year", Number(element.value));
     } else if (element.name === "id") {
       incomeId = element.value;
     }
   });
+  update["date"] = date.toISOString();
   return Promise.all([
     updateProjectIncome(senderId, projectId, incomeId, update),
     sendTxtLater(`Le revenue ${incomeId} a été mise a jours dans le projet #${projectId}, 🎉!`, interaction.application_id, interaction.token),

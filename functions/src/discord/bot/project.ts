@@ -1,8 +1,10 @@
+import {getStripeCharges, Charge} from "./stripe_charges";
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
 import {sendTxtLater} from "./utils";
 import {updateUser} from "./user";
 import {Interaction, ApplicationCommandInteractionDataOption} from "./create_command";
+import {createProjectIncome, deleteProjectIncome, getAllProjectsIncomes, Income} from "./income";
 
 export interface Project {
   id?: string,
@@ -20,7 +22,16 @@ export interface Project {
 const projectPublicKey = ["hashtag", "nom", "pitch", "taches", "strikes", "website"];
 const projectProtectedKey = ["taches", "strikes", "createdAt", "updatedAt", "lastTaskAt"];
 
-export const getAllProjects = async (userId: string): Promise<{projects: Project[], total: number}> => {
+const transformKey = (key: string): string => {
+  switch (key) {
+    case "stripekey":
+      return "stripestripeKeyApiKey";
+    default:
+      return key;
+  }
+};
+
+export const getAllProjects = async (userId: string): Promise<Project[]> => {
   try {
     const documents = await firestore().collection(`discord/${userId}/projects`).get();
 
@@ -32,11 +43,10 @@ export const getAllProjects = async (userId: string): Promise<{projects: Project
             projects.push({id: doc.id, ...(data as Project)});
           }
         });
-    const total = projects.reduce((tt, current) => tt + current.taches, 0);
-    return {projects, total};
+    return projects;
   } catch (err) {
     console.error(err);
-    return {projects: [], total: 0};
+    return [];
   }
 };
 
@@ -86,36 +96,110 @@ export const deleteAllProjectsTasks = async (userId: string, projectId: string):
   }
 };
 
-const projectAdd = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], senderId:string): Promise<void> => {
+const getPastCharges = async (userId: string, projectId: string| undefined) => {
+  if (!projectId) return Promise.resolve();
+  const charges: Charge[] = await getStripeCharges(projectId);
+  const incomes: {[key: string]: Income} = {};
+  const all: Promise<any>[] = [];
+  charges.forEach((charge) => {
+    const dateKey = dayjs(charge.date).format("MM_YYYY");
+    if (incomes[dateKey]) {
+      const newAmmount = incomes[dateKey].ammount + charge.ammount;
+      incomes[dateKey] = {
+        ammount: Math.abs(newAmmount),
+        status: newAmmount >= 0 ? "income" : "expense",
+        date: charge.date,
+        stripeCharges: incomes[dateKey].stripeCharges?.concat([
+          {
+            id: charge.stripeId,
+            ammount: charge.ammount,
+            status: charge.status,
+            date: charge.date,
+          },
+        ]),
+      };
+    } else {
+      incomes[dateKey] = {
+        ammount: charge.ammount,
+        status: charge.status,
+        date: charge.date,
+        stripeCharges: [
+          {
+            id: charge.stripeId,
+            ammount: charge.ammount,
+            status: charge.status,
+            date: charge.date,
+          },
+        ],
+      };
+    }
+  });
+  Object.keys(incomes).forEach((InKey: string) => {
+    all.push(createProjectIncome(userId, projectId, incomes[InKey]));
+  });
+  Promise.all(all).then(() => Promise.resolve());
+};
+
+const cleanPastStripe = async (userId: string, projectId: string| undefined) => {
+  if (!projectId) return Promise.resolve();
+  const res = await getAllProjectsIncomes(userId, projectId);
+  const all: Promise<any>[] = [];
+  res.incomes.forEach((income) => {
+    if (income.id && income.stripeCharges) {
+      all.push(deleteProjectIncome(userId, projectId, income.id));
+    }
+  });
+  Promise.all(all).then(() => Promise.resolve());
+};
+
+const addStripe = (userId: string, projectId: string| undefined, stripeKey: string| undefined) => {
+  if (!stripeKey) {
+    return Promise.resolve();
+  }
+  return getPastCharges(userId, projectId);
+};
+
+const updateStripe = (userId: string, projectId: string| undefined, stripeKey: string| undefined) => {
+  if (!stripeKey) {
+    return Promise.resolve();
+  }
+  if (stripeKey && !stripeKey.startsWith("rk_live")) {
+    return cleanPastStripe(userId, projectId);
+  }
+  return cleanPastStripe(userId, projectId).then(() => getPastCharges(userId, projectId));
+};
+
+const projectAdd = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
   const newProj: Partial<Project> = {};
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    (newProj as any)[element.name] = element.value;
+    (newProj as any)[transformKey(element.name)] = element.value;
   });
   if (newProj["hashtag"]) {
     console.log("add project", newProj);
-    const allProj = await getAllProjects(senderId);
     return Promise.all([
-      updateProject(senderId, newProj["hashtag"], newProj),
-      updateUser(senderId, {projets: allProj.total + 1}),
       sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus 💪!`, interaction.application_id, interaction.token),
+      addStripe(userId, newProj["hashtag"], newProj["stripeKey"]),
+      updateProject(userId, newProj["hashtag"], newProj),
+      getAllProjects(userId).then((allProj) => updateUser(userId, {projets: allProj.length + 1})),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("hashtag manquant!", interaction.application_id, interaction.token);
   }
 };
 
-const projectEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], senderId:string): Promise<void> => {
+const projectEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
   const newProj: Partial<Project> = {};
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (!projectProtectedKey.includes(element.name)) {
-      (newProj as any)[element.name] = element.value;
+      (newProj as any)[transformKey(element.name)] = element.value;
     }
   });
   if (newProj["hashtag"]) {
     console.log("projectEdit", newProj);
     return Promise.all([
-      updateProject(senderId, newProj["hashtag"], newProj),
       sendTxtLater(`Tu as mis a jours le projet:\n#${newProj["hashtag"]}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`, interaction.application_id, interaction.token),
+      updateStripe(userId, newProj["hashtag"], newProj["stripeKey"]),
+      updateProject(userId, newProj["hashtag"], newProj),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("hashtag manquant!", interaction.application_id, interaction.token);
@@ -124,8 +208,8 @@ const projectEdit = async (interaction: Interaction, options:ApplicationCommandI
 
 const projectList = async (interaction: Interaction, userId:string, me= false): Promise<void> => {
   let projsInfo = "";
-  const proj = await getAllProjects(userId);
-  proj.projects.forEach((proj: Project) => {
+  const projects = await getAllProjects(userId);
+  projects.forEach((proj: Project) => {
     projsInfo += `${proj.nom} #${proj.hashtag} taches:${proj.taches} strikes:${proj.strikes} Crée le ${dayjs(proj.createdAt).format("DD/MM/YYYY")}\n`;
   });
   console.log("project_list", projsInfo);
@@ -133,10 +217,10 @@ const projectList = async (interaction: Interaction, userId:string, me= false): 
   return sendTxtLater(`${sentence}\n\n${projsInfo}`, interaction.application_id, interaction.token);
 };
 
-const projectView = async (interaction: Interaction, projId:string, senderId:string): Promise<void> => {
+const projectView = async (interaction: Interaction, projId:string, userId:string): Promise<void> => {
   let projInfo = "";
   if (projId) {
-    const project = await getProjectById(senderId, projId);
+    const project = await getProjectById(userId, projId);
     if (project) {
       Object.keys(project).forEach((element: string) => {
         if (projectPublicKey.includes(element)) {
@@ -151,13 +235,13 @@ const projectView = async (interaction: Interaction, projId:string, senderId:str
   }
 };
 
-const projectDelete = async (interaction: Interaction, option:ApplicationCommandInteractionDataOption, senderId:string): Promise<void> => {
+const projectDelete = async (interaction: Interaction, option:ApplicationCommandInteractionDataOption, userId:string): Promise<void> => {
   const projId = option.value;
   if (projId) {
     console.log("projectDelete", projId);
     return Promise.all([
-      deleteProject(senderId, projId),
-      deleteAllProjectsTasks(senderId, projId),
+      deleteProject(userId, projId),
+      deleteAllProjectsTasks(userId, projId),
       sendTxtLater(`Tu as supprimé ton projet ${projId} et ses taches !\nSavoir terminer un projet est une force!`, interaction.application_id, interaction.token),
     ]).then(() => Promise.resolve());
   } else {
@@ -166,19 +250,19 @@ const projectDelete = async (interaction: Interaction, option:ApplicationCommand
 };
 
 
-export const projectFn = async (interaction:Interaction, option:ApplicationCommandInteractionDataOption, senderId:string): Promise<void> => {
+export const projectFn = async (interaction:Interaction, option:ApplicationCommandInteractionDataOption, userId:string): Promise<void> => {
   if (option.name === "creer" && option.options && option.options.length > 0) {
-    return projectAdd(interaction, option.options, senderId);
+    return projectAdd(interaction, option.options, userId);
   } if (option.name === "modifier" && option.options && option.options.length > 0) {
-    return projectEdit(interaction, option.options, senderId);
+    return projectEdit(interaction, option.options, userId);
   } if (option.name === "liste" && option.options && option.options.length > 0 && option.options[0].value) {
     return projectList(interaction, option.options[0].value);
   } if (option.name === "liste") {
-    return projectList(interaction, senderId, true);
+    return projectList(interaction, userId, true);
   } if (option.name === "voir" && option.options && option.options.length > 0 && option.options[0].value) {
-    return projectView(interaction, option.options[0].value, senderId);
+    return projectView(interaction, option.options[0].value, userId);
   } if (option.name === "supprimer" && option.options && option.options.length > 0) {
-    return projectDelete(interaction, option.options[0], senderId);
+    return projectDelete(interaction, option.options[0], userId);
   }
   return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge`, interaction.application_id, interaction.token);
 };

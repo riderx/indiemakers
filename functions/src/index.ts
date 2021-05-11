@@ -8,6 +8,7 @@ import {sendUserToRevue} from "./newletter";
 import discordInteraction from "./discord/bot";
 import {Person} from "./types";
 import {sendToWebhook} from "./discord/bot/dm";
+import {updateRevenueAllProject} from "./discord/bot/stripe_charges";
 import dayjs from "dayjs";
 import {transformURLtoTracked} from "./tracker";
 
@@ -237,6 +238,7 @@ export const scheduledBotBIPMorning = functions.pubsub.schedule("0 9 * * *")
       await sendToWebhook(config().discord.biphook, "Hey Makers, Encore une belle journée pour shipper !");
       if (dayjs().day() === 1) {
         await sendToWebhook(config().discord.genhook, "Hey Makers, Faites moi un petit récap de votre semaine 1 Bon point / 1 point relou, minimum 💪!");
+        await updateRevenueAllProject();
       }
       return null;
     });
