@@ -2,7 +2,7 @@ import {updateUser, getAllUsers, User} from "./user";
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
 import {sendTxtLater} from "./utils";
-import {Interaction, ApplicationCommandInteractionDataOption} from "./create_command";
+import {Interaction, ApplicationCommandInteractionDataOption} from "../create_command";
 
 interface Karma {
   id?: string,

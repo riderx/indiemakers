@@ -3,7 +3,7 @@ import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
 import {sendTxtLater} from "./utils";
 import {updateUser} from "./user";
-import {Interaction, ApplicationCommandInteractionDataOption} from "./create_command";
+import {Interaction, ApplicationCommandInteractionDataOption} from "../create_command";
 import {createProjectIncome, deleteProjectIncome, getAllProjectsIncomes, Income} from "./income";
 
 export interface Project {
@@ -191,20 +191,20 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
 };
 
 const projectEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
-  const newProj: Partial<Project> = {
+  const update: Partial<Project> = {
     updatedAt: dayjs().toISOString(),
   };
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (!projectProtectedKey.includes(transformKey(element.name))) {
-      (newProj as any)[transformKey(element.name)] = element.value;
+      (update as any)[transformKey(element.name)] = element.value;
     }
   });
-  if (newProj["hashtag"]) {
-    console.log("projectEdit", newProj);
+  if (update["hashtag"]) {
+    console.log("projectEdit", update);
     return Promise.all([
-      sendTxtLater(`Tu as mis a jours le projet:\n#${newProj["hashtag"]}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`, interaction.application_id, interaction.token),
-      updateStripe(userId, newProj["hashtag"], newProj["stripeKey"]),
-      updateProject(userId, newProj["hashtag"], newProj),
+      sendTxtLater(`Tu as mis a jours le projet:\n#${update["hashtag"]}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`, interaction.application_id, interaction.token),
+      updateStripe(userId, update["hashtag"], update["stripeKey"]),
+      updateProject(userId, update["hashtag"], update),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("hashtag manquant!", interaction.application_id, interaction.token);

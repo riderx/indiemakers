@@ -1,5 +1,5 @@
 import {openDmChannel, sendDmChannel} from "./dm";
-import {ApplicationCommandInteractionDataOption, Interaction} from "./create_command";
+import {ApplicationCommandInteractionDataOption, Interaction} from "../create_command";
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
 import {getUserData, sendTxtLater} from "./utils";
@@ -15,6 +15,7 @@ export interface User {
   projets: number,
   incomes: number,
   taches: number,
+  nom?: string,
   bio?: string,
   website?: string,
   lastTaskAt?: string,
@@ -93,17 +94,18 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<f
 };
 
 const userEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
-  const updatedUser: Partial<User> = {
+  const update: Partial<User> = {
     updatedAt: dayjs().toISOString(),
   };
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    if (!userProtectedKey.includes(transformKey(element.name))) {
-      (updateUser as any)[transformKey(element.name)] = element.value;
+    const realKey = transformKey(element.name);
+    if (!userProtectedKey.includes(realKey)) {
+      (update as any)[realKey] = element.value;
     }
   });
-  console.log("userEdit", updatedUser);
+  console.log("userEdit", update);
   return Promise.all([
-    updateUser(userId, updatedUser),
+    updateUser(userId, update),
     sendTxtLater("Tu as mis a jours ton profil !\n Cela aideras les autres makers a te connaitre !", interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };

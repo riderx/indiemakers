@@ -6,7 +6,7 @@ import {karmaFn} from "./karma";
 import {taskFn} from "./tasks";
 import {InteractionResponseType, InteractionType, verifyKey} from "discord-interactions";
 import {Request, Response} from "express";
-import {ApplicationCommandInteractionDataOption, Interaction} from "./create_command";
+import {ApplicationCommandInteractionDataOption, Interaction} from "../create_command";
 
 const CLIENT_PUBLIC_KEY = "76a1cf12caec747f872ee6ea064269d4acd2538b2f1e26f89853f93c32d045db";
 

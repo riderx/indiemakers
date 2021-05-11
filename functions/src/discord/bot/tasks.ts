@@ -6,7 +6,7 @@ import {updateUser, User, getUsersById} from "./user";
 import {sendToWip, updateToWip} from "./wip";
 import {sendToMakerlog} from "./makerlog";
 import {getAllProjects, getProjectById, Project, updateProject} from "./project";
-import {Interaction, ApplicationCommandInteractionDataOption} from "./create_command";
+import {Interaction, ApplicationCommandInteractionDataOption} from "../create_command";
 
 enum TaskStatus {
   TODO = "A faire",
@@ -23,7 +23,7 @@ interface Task {
   updatedAt: string,
 }
 const taskPublicKey = ["id", "content", "status", "doneAt", "createdAt"];
-// const taskProtectedKey = ["id", "wipId", "makerlogHook", "createdAt", "updatedAt"];
+const taskProtectedKey = ["id", "wipId", "makerlogHook", "createdAt", "updatedAt"];
 
 const createProjectTask = async (user: User, projectId: string, task: Partial<Task>): Promise<firestore.DocumentReference<firestore.DocumentData>> => {
   try {
@@ -147,10 +147,8 @@ const taskEdit = async (interaction: Interaction, options:ApplicationCommandInte
       projectId = element.value;
     } else if (element.name === "id" && element.value) {
       taskId = element.value;
-    } else if (element.name === "contenue" && element.value) {
-      (task as any)[transformKey(element.name)];
-    } else if (element.name === "status" && element.value) {
-      task["status"] = element.value as TaskStatus;
+    } else if (taskProtectedKey.includes(transformKey(element.name)) && element.value) {
+      (task as any)[transformKey(element.name)] = element.value;
     }
   });
   return Promise.all([

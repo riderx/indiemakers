@@ -1,7 +1,7 @@
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
 import {sendTxtLater} from "./utils";
-import {Interaction, ApplicationCommandInteractionDataOption} from "./create_command";
+import {Interaction, ApplicationCommandInteractionDataOption} from "../create_command";
 
 export interface Income {
   id?: string,
