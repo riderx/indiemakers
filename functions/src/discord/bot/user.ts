@@ -95,7 +95,7 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<f
 const userEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
   const updatedUser: Partial<User> = {};
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    if (!userProtectedKey.includes(element.name)) {
+    if (!userProtectedKey.includes(transformKey(element.name))) {
       (updateUser as any)[transformKey(element.name)] = element.value;
     }
   });

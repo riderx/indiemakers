@@ -94,7 +94,7 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (element.name === "hashtag" && element.value) {
       projectId = element.value;
-    } else if (taskPublicKey.includes(element.name)) {
+    } else if (taskPublicKey.includes(transformKey(element.name))) {
       (task as any)[transformKey(element.name)] = element.value;
     }
   });

@@ -190,7 +190,7 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
 const projectEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
   const newProj: Partial<Project> = {};
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    if (!projectProtectedKey.includes(element.name)) {
+    if (!projectProtectedKey.includes(transformKey(element.name))) {
       (newProj as any)[transformKey(element.name)] = element.value;
     }
   });
