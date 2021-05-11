@@ -1,3 +1,4 @@
+import {openDmChannel, sendDmChannel} from "./dm";
 import {ApplicationCommandInteractionDataOption, Interaction} from "./create_command";
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
@@ -110,10 +111,10 @@ const userList = async (interaction: Interaction): Promise<void> => {
   return sendTxtLater(`Voici la liste des makers !\n\n${usersInfo}`, interaction.application_id, interaction.token);
 };
 
-const userView = async (interaction: Interaction, userId:string): Promise<void> => {
+const userView = async (interaction: Interaction, myId:string, userId:string|undefined): Promise<void> => {
   let userInfo = "";
-  const user = await getUsersById(userId);
-  if (user) {
+  const user = await getUsersById(userId || myId);
+  if (user && userId && myId !== userId) {
     Object.keys(user).forEach((element: string) => {
       if (userPublicKey.includes(element)) {
         userInfo += `${element} : ${(user as any)[element]}\n`;
@@ -121,8 +122,16 @@ const userView = async (interaction: Interaction, userId:string): Promise<void> 
     });
     console.log("userEdit", userInfo);
     return sendTxtLater(`Voici les infos sur ce maker !\n${userInfo}`, interaction.application_id, interaction.token);
+  } else if (user) {
+    Object.keys(user).forEach((element: string) => {
+      userInfo += `${element} : ${(user as any)[element]}\n`;
+    });
+    console.log("userEdit", userInfo);
+    const channel = await openDmChannel(myId);
+    await sendDmChannel(channel.id, `Voici tes infos !\n${userInfo}`);
+    return sendTxtLater("Je t'ai envoyé tes info en privé 🤫", interaction.application_id, interaction.token);
   } else {
-    return sendTxtLater(`J'ai pas trouvé le maker : ${userId}`, interaction.application_id, interaction.token);
+    return sendTxtLater(`Je n'ai pas trouvé le maker : ${userId}`, interaction.application_id, interaction.token);
   }
 };
 
@@ -134,7 +143,7 @@ export const userFn = async (interaction: Interaction, option: ApplicationComman
     await userList(interaction);
     return Promise.resolve();
   } if (option.name === "voir" && option.options && option.options.length > 0) {
-    await userView(interaction, senderId);
+    await userView(interaction, senderId, option.options[0].value);
     return Promise.resolve();
   }
   return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge`, interaction.application_id, interaction.token);

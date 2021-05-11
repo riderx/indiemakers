@@ -16,7 +16,7 @@ export const sendTxt = (res: Res, text:string): Res => res.send({
 });
 
 export const getUserData = async (userId: string): Promise<DiscorUser> => {
-  const url = `https://discord.com/api//v8/users/${userId}`;
+  const url = `https://discord.com/api/v8/users/${userId}`;
   const headers = {
     "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : config().discord.bot_token}`,
   };

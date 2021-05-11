@@ -40,7 +40,7 @@ const im = async (res:Response, interaction: Interaction, option:ApplicationComm
   }
 };
 
-const discordInteraction = async (req:Request, res:Response) => {
+const discordInteraction = async (req:Request, res:Response): Promise<void> => {
   // Verify the request
   const signature = req.get("X-Signature-Ed25519") || "";
   const timestamp = req.get("X-Signature-Timestamp") || "";
@@ -54,11 +54,13 @@ const discordInteraction = async (req:Request, res:Response) => {
     if (interaction.data.name === "im" && interaction.data.options && interaction.data.options.length > 0 && interaction.member.user) {
       return im(res, interaction, interaction.data.options[0], interaction.member.user.id);
     }
-    return sendTxt(res, `La Commande ${interaction.data.name} n'est pas pris en charge`);
+    await sendTxt(res, `La Commande ${interaction.data.name} n'est pas pris en charge`);
+    return Promise.resolve();
   }
-  return res.send({
+  await res.send({
     type: InteractionResponseType.PONG,
   });
+  return Promise.resolve();
 };
 
 export default discordInteraction;
