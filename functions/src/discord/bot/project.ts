@@ -97,7 +97,7 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
     return Promise.all([
       updateProject(senderId, newProj["hashtag"], newProj),
       updateUser(senderId, {projets: allProj.total + 1}),
-      sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus 💪!`, interaction.application_id, interaction.token)
+      sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus 💪!`, interaction.application_id, interaction.token),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("hashtag manquant!", interaction.application_id, interaction.token);
@@ -115,7 +115,7 @@ const projectEdit = async (interaction: Interaction, options:ApplicationCommandI
     console.log("projectEdit", newProj);
     return Promise.all([
       updateProject(senderId, newProj["hashtag"], newProj),
-      sendTxtLater(`Tu as mis a jours le projet:\n#${newProj["hashtag"]}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`, interaction.application_id, interaction.token)
+      sendTxtLater(`Tu as mis a jours le projet:\n#${newProj["hashtag"]}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`, interaction.application_id, interaction.token),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("hashtag manquant!", interaction.application_id, interaction.token);
@@ -158,7 +158,7 @@ const projectDelete = async (interaction: Interaction, option:ApplicationCommand
     return Promise.all([
       deleteProject(senderId, projId),
       deleteAllProjectsTasks(senderId, projId),
-      sendTxtLater(`Tu as supprimé ton projet ${projId} et ses taches !\nSavoir terminer un projet est une force!`, interaction.application_id, interaction.token)
+      sendTxtLater(`Tu as supprimé ton projet ${projId} et ses taches !\nSavoir terminer un projet est une force!`, interaction.application_id, interaction.token),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("Donne moi un projet !", interaction.application_id, interaction.token);

@@ -66,7 +66,7 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
   return Promise.all([
     createProjectIncome(senderId, projectId, newIncome),
     updateProjecttotalIncome(senderId, projectId, curIncomes.total + 1),
-    sendTxtLater(`Le revenue :\n${newIncome["status"]}: ${newIncome["ammount"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token)
+    sendTxtLater(`Le revenue :\n${newIncome["status"]}: ${newIncome["ammount"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };
 
@@ -89,7 +89,7 @@ const incomeEdit = async (interaction: Interaction, options: ApplicationCommandI
   });
   return Promise.all([
     updateProjectIncome(senderId, projectId, incomeId, update),
-    sendTxtLater(`Le revenue ${incomeId} a été mise a jours dans le projet #${projectId}, 🎉!`, interaction.application_id, interaction.token)
+    sendTxtLater(`Le revenue ${incomeId} a été mise a jours dans le projet #${projectId}, 🎉!`, interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };
 
@@ -121,7 +121,7 @@ const incomesDelete = async (interaction: Interaction, options: ApplicationComma
   return Promise.all([
     deleteProjectIncome(senderId, projectId, incomeId),
     updateProjecttotalIncome(senderId, projectId, curIncomes.total),
-    sendTxtLater(`Tu as supprimé le revenue ${incomeId} !`, interaction.application_id, interaction.token)
+    sendTxtLater(`Tu as supprimé le revenue ${incomeId} !`, interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };
 

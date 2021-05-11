@@ -98,7 +98,7 @@ const userEdit = async (interaction: Interaction, options:ApplicationCommandInte
   console.log("userEdit", updateUser);
   return Promise.all([
     updateUser(userId, updatedUser),
-    sendTxtLater("Tu as mis a jours ton profil !\n Cela aideras les autres makers a te connaitre !", interaction.application_id, interaction.token)
+    sendTxtLater("Tu as mis a jours ton profil !\n Cela aideras les autres makers a te connaitre !", interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };
 
@@ -130,7 +130,7 @@ const userView = async (interaction: Interaction, myId:string, userId:string|und
     });
     console.log("userEdit", userInfo);
     const channel = await openDmChannel(myId);
-    Promise.all([sendDmChannel(channel.id, `Voici tes infos !\n${userInfo}`), sendTxtLater("Je t'ai envoyé tes info en privé 🤫", interaction.application_id, interaction.token)])
+    Promise.all([sendDmChannel(channel.id, `Voici tes infos !\n${userInfo}`), sendTxtLater("Je t'ai envoyé tes info en privé 🤫", interaction.application_id, interaction.token)]);
     await sendDmChannel(channel.id, `Voici tes infos !\n${userInfo}`);
     return sendTxtLater("Je t'ai envoyé tes info en privé 🤫", interaction.application_id, interaction.token);
   } else {

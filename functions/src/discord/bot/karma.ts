@@ -43,7 +43,7 @@ const karmaAdd = async (interaction: Interaction, option: ApplicationCommandInte
     return Promise.all([
       updateUser(userId, {karma: curKarma.total - 1}),
       addKarmaVotesById(userId, senderId, 1),
-      sendTxtLater(botString, interaction.application_id, interaction.token)
+      sendTxtLater(botString, interaction.application_id, interaction.token),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("Donne moi un Maker !", interaction.application_id, interaction.token);
@@ -65,7 +65,7 @@ const karmaRm = async (interaction: Interaction, option: ApplicationCommandInter
     return Promise.all([
       updateUser(userId, {karma: curKarma.total - 1}),
       addKarmaVotesById(userId, senderId, -1),
-      sendTxtLater(botString, interaction.application_id, interaction.token)
+      sendTxtLater(botString, interaction.application_id, interaction.token),
     ]).then(() => Promise.resolve());
   }
   return sendTxtLater(`<@${userId}> n'as plus de karma...\n Laisse le tranquile!`, interaction.application_id, interaction.token);

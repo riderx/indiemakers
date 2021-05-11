@@ -117,7 +117,7 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
     return Promise.all([
       updateProject(userId, projectId, updatedProject),
       updateUser(userId, updatedUser),
-      sendTxtLater(`La tache:\n${task["content"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token)
+      sendTxtLater(`La tache:\n${task["content"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("Le Maker ou le projet est introuvable 🤫!", interaction.application_id, interaction.token);
@@ -184,7 +184,7 @@ const tasksDelete = async (interaction: Interaction, options:ApplicationCommandI
   return Promise.all([
     updateUser(userId, updatedUser),
     updateUser(userId, {taches: curTasks.total + 1}),
-    sendTxtLater(`Tu as supprimé la tache ${taskId} !`, interaction.application_id, interaction.token)
+    sendTxtLater(`Tu as supprimé la tache ${taskId} !`, interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };
 
