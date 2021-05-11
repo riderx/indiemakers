@@ -65,7 +65,7 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
   const curIncomes = await getAllProjectsIncomes(senderId, projectId);
   await createProjectIncome(senderId, projectId, newIncome);
   await updateProjecttotalIncome(senderId, projectId, curIncomes.total + 1);
-  return sendTxtLater(`Le revenue a été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token);
+  return sendTxtLater(`Le revenue :\n${newIncome["status"]}: ${newIncome["ammount"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token);
 };
 
 const incomeEdit = async (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], senderId:string) => {

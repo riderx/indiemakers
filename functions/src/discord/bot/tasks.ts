@@ -117,7 +117,7 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
     }
     await updateProject(userId, projectId, updatedProject);
     await updateUser(userId, updatedUser);
-    return sendTxtLater(`La tache a été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token);
+    return sendTxtLater(`La tache:\n${task["content"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token);
   } else {
     return sendTxtLater("Le Maker est introuvable 🤫!", interaction.application_id, interaction.token);
   }
@@ -141,7 +141,7 @@ const taskEdit = async (interaction: Interaction, options:ApplicationCommandInte
     }
   });
   await updateProjectTask(userId, projectId, taskId, task);
-  return sendTxtLater(`La tache ${taskId} a été mise a jours dans le projet #${projectId}, 🎉!`, interaction.application_id, interaction.token);
+  return sendTxtLater(`La tache:\n${taskId}: ${task["content"]}\n ${taskId}\nA été mise a jours dans le projet #${projectId}, 🎉!`, interaction.application_id, interaction.token);
 };
 
 const tasksView = async (interaction: Interaction, option:ApplicationCommandInteractionDataOption, userId:string): Promise<void> => {

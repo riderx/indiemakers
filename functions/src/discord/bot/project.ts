@@ -96,7 +96,7 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
     const allProj = await getAllProjects(senderId);
     await updateProject(senderId, newProj["hashtag"], newProj);
     await updateUser(senderId, {projets: allProj.total + 1});
-    return sendTxtLater("Tu as crée un nouveau projet !\nIl est temps de shiper ta premiere tache dessus 💪!", interaction.application_id, interaction.token);
+    return sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus 💪!`, interaction.application_id, interaction.token);
   } else {
     return sendTxtLater("hashtag manquant!", interaction.application_id, interaction.token);
   }
@@ -112,7 +112,7 @@ const projectEdit = async (interaction: Interaction, options:ApplicationCommandI
   if (newProj["hashtag"]) {
     console.log("projectEdit", newProj);
     await updateProject(senderId, newProj["hashtag"], newProj);
-    return sendTxtLater("Tu as mis a jours ton projet !\nBravo 💪, une marche après l'autre tu fais grandir ce projet!", interaction.application_id, interaction.token);
+    return sendTxtLater(`Tu as mis a jours le projet:\n#${newProj["hashtag"]}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`, interaction.application_id, interaction.token);
   } else {
     return sendTxtLater("hashtag manquant!", interaction.application_id, interaction.token);
   }
