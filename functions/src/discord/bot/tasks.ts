@@ -114,9 +114,11 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
       updatedProject.strikes = curUser.strikes ? curUser.strikes + 1 : 1;
       updatedProject.lastTaskAt = dayjs().toISOString();
     }
-    await updateProject(userId, projectId, updatedProject);
-    await updateUser(userId, updatedUser);
-    return sendTxtLater(`La tache:\n${task["content"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token);
+    return Promise.all([
+      updateProject(userId, projectId, updatedProject),
+      updateUser(userId, updatedUser),
+      sendTxtLater(`La tache:\n${task["content"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token)
+    ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("Le Maker ou le projet est introuvable 🤫!", interaction.application_id, interaction.token);
   }
@@ -179,23 +181,21 @@ const tasksDelete = async (interaction: Interaction, options:ApplicationCommandI
     taches: superTotal,
     lastTaskAt: dayjs().toISOString(),
   };
-  await updateUser(userId, updatedUser);
-  await updateUser(userId, {taches: curTasks.total + 1});
-  return sendTxtLater(`Tu as supprimé la tache ${taskId} !`, interaction.application_id, interaction.token);
+  return Promise.all([
+    updateUser(userId, updatedUser),
+    updateUser(userId, {taches: curTasks.total + 1}),
+    sendTxtLater(`Tu as supprimé la tache ${taskId} !`, interaction.application_id, interaction.token)
+  ]).then(() => Promise.resolve());
 };
 
 export const taskFn = async (interaction: Interaction, option: ApplicationCommandInteractionDataOption, userId:string): Promise<void> => {
   if (option.name === "ajouter" && option.options && option.options.length > 0) {
-    await taskAdd(interaction, option.options, userId);
-    return Promise.resolve();
+    return taskAdd(interaction, option.options, userId);
   } if (option.name === "liste" && option.options && option.options.length > 0) {
-    await tasksView(interaction, option.options[0], userId);
-    return Promise.resolve();
+    return tasksView(interaction, option.options[0], userId);
   } if (option.name === "modifier" && option.options && option.options.length > 0) {
-    await taskEdit(interaction, option.options, userId);
-    return Promise.resolve();
+    return taskEdit(interaction, option.options, userId);
   } if (option.name === "supprimer" && option.options && option.options.length > 0) {
-    await tasksDelete(interaction, option.options, userId);
-    return Promise.resolve();
+    return tasksDelete(interaction, option.options, userId);
   }
 };

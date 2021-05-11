@@ -63,9 +63,11 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
     }
   });
   const curIncomes = await getAllProjectsIncomes(senderId, projectId);
-  await createProjectIncome(senderId, projectId, newIncome);
-  await updateProjecttotalIncome(senderId, projectId, curIncomes.total + 1);
-  return sendTxtLater(`Le revenue :\n${newIncome["status"]}: ${newIncome["ammount"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token);
+  return Promise.all([
+    createProjectIncome(senderId, projectId, newIncome),
+    updateProjecttotalIncome(senderId, projectId, curIncomes.total + 1),
+    sendTxtLater(`Le revenue :\n${newIncome["status"]}: ${newIncome["ammount"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token)
+  ]).then(() => Promise.resolve());
 };
 
 const incomeEdit = async (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], senderId:string) => {
@@ -85,8 +87,10 @@ const incomeEdit = async (interaction: Interaction, options: ApplicationCommandI
       incomeId = element.value;
     }
   });
-  await updateProjectIncome(senderId, projectId, incomeId, update);
-  return sendTxtLater(`Le revenue ${incomeId} a été mise a jours dans le projet #${projectId}, 🎉!`, interaction.application_id, interaction.token);
+  return Promise.all([
+    updateProjectIncome(senderId, projectId, incomeId, update),
+    sendTxtLater(`Le revenue ${incomeId} a été mise a jours dans le projet #${projectId}, 🎉!`, interaction.application_id, interaction.token)
+  ]).then(() => Promise.resolve());
 };
 
 const incomesView = async (interaction: Interaction, option: ApplicationCommandInteractionDataOption, senderId:string) => {
@@ -113,24 +117,22 @@ const incomesDelete = async (interaction: Interaction, options: ApplicationComma
       incomeId = element.value;
     }
   });
-  await deleteProjectIncome(senderId, projectId, incomeId);
   const curIncomes = await getAllProjectsIncomes(senderId, projectId);
-  await updateProjecttotalIncome(senderId, projectId, curIncomes.total);
-  return sendTxtLater(`Tu as supprimé le revenue ${incomeId} !`, interaction.application_id, interaction.token);
+  return Promise.all([
+    deleteProjectIncome(senderId, projectId, incomeId),
+    updateProjecttotalIncome(senderId, projectId, curIncomes.total),
+    sendTxtLater(`Tu as supprimé le revenue ${incomeId} !`, interaction.application_id, interaction.token)
+  ]).then(() => Promise.resolve());
 };
 
 export const incomeFn = async (interaction:any, option: ApplicationCommandInteractionDataOption, senderId:string): Promise<void> => {
   if (option.name === "ajouter" && option.options && option.options.length > 0) {
-    await incomeAdd(interaction, option.options, senderId);
-    return Promise.resolve();
+    return incomeAdd(interaction, option.options, senderId);
   } if (option.name === "liste" && option.options && option.options.length > 0) {
-    await incomesView(interaction, option.options[0], senderId);
-    return Promise.resolve();
+    return incomesView(interaction, option.options[0], senderId);
   } if (option.name === "modifier" && option.options && option.options.length > 0) {
-    await incomeEdit(interaction, option.options, senderId);
-    return Promise.resolve();
+    return incomeEdit(interaction, option.options, senderId);
   } if (option.name === "supprimer" && option.options && option.options.length > 0) {
-    await incomesDelete(interaction, option.options, senderId);
-    return Promise.resolve();
+    return incomesDelete(interaction, option.options, senderId);
   }
 };

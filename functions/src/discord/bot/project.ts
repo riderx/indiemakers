@@ -94,9 +94,11 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
   if (newProj["hashtag"]) {
     console.log("add project", newProj);
     const allProj = await getAllProjects(senderId);
-    await updateProject(senderId, newProj["hashtag"], newProj);
-    await updateUser(senderId, {projets: allProj.total + 1});
-    return sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus 💪!`, interaction.application_id, interaction.token);
+    return Promise.all([
+      updateProject(senderId, newProj["hashtag"], newProj),
+      updateUser(senderId, {projets: allProj.total + 1}),
+      sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus 💪!`, interaction.application_id, interaction.token)
+    ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("hashtag manquant!", interaction.application_id, interaction.token);
   }
@@ -111,8 +113,10 @@ const projectEdit = async (interaction: Interaction, options:ApplicationCommandI
   });
   if (newProj["hashtag"]) {
     console.log("projectEdit", newProj);
-    await updateProject(senderId, newProj["hashtag"], newProj);
-    return sendTxtLater(`Tu as mis a jours le projet:\n#${newProj["hashtag"]}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`, interaction.application_id, interaction.token);
+    return Promise.all([
+      updateProject(senderId, newProj["hashtag"], newProj),
+      sendTxtLater(`Tu as mis a jours le projet:\n#${newProj["hashtag"]}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`, interaction.application_id, interaction.token)
+    ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("hashtag manquant!", interaction.application_id, interaction.token);
   }
@@ -151,9 +155,11 @@ const projectDelete = async (interaction: Interaction, option:ApplicationCommand
   const projId = option.value;
   if (projId) {
     console.log("projectDelete", projId);
-    await deleteProject(senderId, projId);
-    await deleteAllProjectsTasks(senderId, projId);
-    return sendTxtLater(`Tu as supprimé ton projet ${projId} et ses taches !\nSavoir terminer un projet est une force!`, interaction.application_id, interaction.token);
+    return Promise.all([
+      deleteProject(senderId, projId),
+      deleteAllProjectsTasks(senderId, projId),
+      sendTxtLater(`Tu as supprimé ton projet ${projId} et ses taches !\nSavoir terminer un projet est une force!`, interaction.application_id, interaction.token)
+    ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("Donne moi un projet !", interaction.application_id, interaction.token);
   }
@@ -162,23 +168,17 @@ const projectDelete = async (interaction: Interaction, option:ApplicationCommand
 
 export const projectFn = async (interaction:Interaction, option:ApplicationCommandInteractionDataOption, senderId:string): Promise<void> => {
   if (option.name === "creer" && option.options && option.options.length > 0) {
-    await projectAdd(interaction, option.options, senderId);
-    return Promise.resolve();
+    return projectAdd(interaction, option.options, senderId);
   } if (option.name === "modifier" && option.options && option.options.length > 0) {
-    await projectEdit(interaction, option.options, senderId);
-    return Promise.resolve();
+    return projectEdit(interaction, option.options, senderId);
   } if (option.name === "liste" && option.options && option.options.length > 0 && option.options[0].value) {
-    await projectList(interaction, option.options[0].value);
-    return Promise.resolve();
+    return projectList(interaction, option.options[0].value);
   } if (option.name === "liste") {
-    await projectList(interaction, senderId, true);
-    return Promise.resolve();
+    return projectList(interaction, senderId, true);
   } if (option.name === "voir" && option.options && option.options.length > 0 && option.options[0].value) {
-    await projectView(interaction, option.options[0].value, senderId);
-    return Promise.resolve();
+    return projectView(interaction, option.options[0].value, senderId);
   } if (option.name === "supprimer" && option.options && option.options.length > 0) {
-    await projectDelete(interaction, option.options[0], senderId);
-    return Promise.resolve();
+    return projectDelete(interaction, option.options[0], senderId);
   }
   return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge`, interaction.application_id, interaction.token);
 };

@@ -88,7 +88,7 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<f
   return userDoc.ref.update({...user, updateAt: dayjs().toISOString()});
 };
 
-const userEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], senderId:string): Promise<void> => {
+const userEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
   const updatedUser: Partial<User> = {};
   options.forEach((element: any) => {
     if (!userProtectedKey.includes(element.name)) {
@@ -96,8 +96,10 @@ const userEdit = async (interaction: Interaction, options:ApplicationCommandInte
     }
   });
   console.log("userEdit", updateUser);
-  await updateUser(senderId, updatedUser);
-  return sendTxtLater("Tu as mis a jours ton profil !\n Cela aideras les autres makers a te connaitre !", interaction.application_id, interaction.token);
+  return Promise.all([
+    updateUser(userId, updatedUser),
+    sendTxtLater("Tu as mis a jours ton profil !\n Cela aideras les autres makers a te connaitre !", interaction.application_id, interaction.token)
+  ]).then(() => Promise.resolve());
 };
 
 const userList = async (interaction: Interaction): Promise<void> => {
@@ -128,6 +130,7 @@ const userView = async (interaction: Interaction, myId:string, userId:string|und
     });
     console.log("userEdit", userInfo);
     const channel = await openDmChannel(myId);
+    Promise.all([sendDmChannel(channel.id, `Voici tes infos !\n${userInfo}`), sendTxtLater("Je t'ai envoyé tes info en privé 🤫", interaction.application_id, interaction.token)])
     await sendDmChannel(channel.id, `Voici tes infos !\n${userInfo}`);
     return sendTxtLater("Je t'ai envoyé tes info en privé 🤫", interaction.application_id, interaction.token);
   } else {
@@ -137,14 +140,11 @@ const userView = async (interaction: Interaction, myId:string, userId:string|und
 
 export const userFn = async (interaction: Interaction, option: ApplicationCommandInteractionDataOption, senderId:string): Promise<any> => {
   if (option.name === "modifier" && option.options && option.options.length > 0) {
-    await userEdit(interaction, option.options, senderId);
-    return Promise.resolve();
+    return userEdit(interaction, option.options, senderId);
   } if (option.name === "liste") {
-    await userList(interaction);
-    return Promise.resolve();
+    return userList(interaction);
   } if (option.name === "voir" && option.options && option.options.length > 0) {
-    await userView(interaction, senderId, option.options[0].value);
-    return Promise.resolve();
+    return userView(interaction, senderId, option.options[0].value);
   }
   return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge`, interaction.application_id, interaction.token);
 };
