@@ -29,7 +29,7 @@ const createProjectTask = async (user: User, projectId: string, task: Partial<Ta
   try {
     const done = task.status === "A faire" ? false : true;
     if (task.status === "Fait") {
-      task.doneAt = dayjs().toISOString()
+      task.doneAt = dayjs().toISOString();
     }
     const taskWithProjectId = `${task.content} #${projectId}`;
     if (user?.makerlogHook && task?.content) {
@@ -53,7 +53,7 @@ const updateProjectTask = async (userId: string, projectId: string, taskId:strin
     const user = await getUsersById(userId);
     const done = task.status === "A faire" ? false : true;
     if (task.status === "Fait") {
-      task.doneAt = dayjs().toISOString()
+      task.doneAt = dayjs().toISOString();
     }
     const taskWithProjectId = `${task.content} #${projectId}`;
     if (task?.makerlogHook && task?.content) {
