@@ -204,6 +204,7 @@ const maker = optionGen("maker", "Gerer ton profil de maker", SlashCommandOption
   optionGen("creer", "Cree ton profil", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, makerOptions),
   optionGen("modifier", "Modifie ton profil", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, makerOptions),
   optionGen("liste", "Voir la liste des makers", 1),
+  optionGen("flammes", "Voir la liste des makers avec des flammes", 1),
   optionGen("voir", "Voir un seul maker", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerIdOptional]),
 ]);
 if (makerOptions) {

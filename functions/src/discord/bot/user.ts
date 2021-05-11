@@ -127,9 +127,19 @@ export const usersViewStreak = async (): Promise<string> => {
 };
 
 const userList = async (interaction: Interaction): Promise<void> => {
+  let usersInfo = "await usersViewStreak()";
+  const res = await getAllUsers();
+  console.log("userList", usersInfo);
+  res.users.forEach((element: User) => {
+    usersInfo += `${element.username} a shipper ${element.flammes} jours d'affilés pour ${element.taches} taches faites depuis le debut sur ${element.projets} projets !`;
+  });
+  return sendTxtLater(`Voici la liste des makers !\n\n${usersInfo}`, interaction.application_id, interaction.token);
+};
+
+const userListStreak = async (interaction: Interaction): Promise<void> => {
   const usersInfo = await usersViewStreak();
   console.log("userList", usersInfo);
-  return sendTxtLater(`Voici la liste des makers !\n\n${usersInfo}`, interaction.application_id, interaction.token);
+  return sendTxtLater(`Voici la liste des makers avec les flammes !\n\n${usersInfo}`, interaction.application_id, interaction.token);
 };
 
 const userView = async (interaction: Interaction, myId:string, userId:string|undefined): Promise<void> => {
@@ -162,6 +172,8 @@ export const userFn = async (interaction: Interaction, option: ApplicationComman
     return userEdit(interaction, option.options, senderId);
   } if (option.name === "liste") {
     return userList(interaction);
+  } if (option.name === "flammes") {
+    return userListStreak(interaction);
   } if (option.name === "voir" && option.options && option.options.length > 0) {
     return userView(interaction, senderId, option.options[0].value);
   }
