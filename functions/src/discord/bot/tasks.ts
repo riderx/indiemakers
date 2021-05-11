@@ -28,6 +28,9 @@ const taskProtectedKey = ["id", "wipId", "makerlogHook", "createdAt", "updatedAt
 const createProjectTask = async (user: User, projectId: string, task: Partial<Task>): Promise<firestore.DocumentReference<firestore.DocumentData>> => {
   try {
     const done = task.status === "A faire" ? false : true;
+    if (task.status === "Fait") {
+      task.doneAt = dayjs().toISOString()
+    }
     const taskWithProjectId = `${task.content} #${projectId}`;
     if (user?.makerlogHook && task?.content) {
       task.makerlogHook = await sendToMakerlog(user.makerlogHook, taskWithProjectId, done);
@@ -49,6 +52,9 @@ const updateProjectTask = async (userId: string, projectId: string, taskId:strin
   try {
     const user = await getUsersById(userId);
     const done = task.status === "A faire" ? false : true;
+    if (task.status === "Fait") {
+      task.doneAt = dayjs().toISOString()
+    }
     const taskWithProjectId = `${task.content} #${projectId}`;
     if (task?.makerlogHook && task?.content) {
       task.makerlogHook = await sendToMakerlog(task.makerlogHook, taskWithProjectId, done);
