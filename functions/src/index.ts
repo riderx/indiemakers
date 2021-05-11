@@ -9,7 +9,7 @@ import discordInteraction from "./discord/bot";
 import {Person} from "./types";
 import {sendToWebhook} from "./discord/bot/dm";
 import dayjs from "dayjs";
-import { transformURLtoTracked } from './tracker';
+import {transformURLtoTracked} from "./tracker";
 
 // import DiscordService from './discord_login';
 // import { StatusCodes } from 'http-status-codes';
@@ -218,8 +218,8 @@ export const onUpdatePeople = functions.firestore
       return snapshot;
     });
 const runtimeOpts: functions.RuntimeOptions = {
-  memory: '512MB'
-}
+  memory: "512MB",
+};
 
 export const discord_interaction = functions.runWith(runtimeOpts).https.onRequest(discordInteraction);
 export const scheduledBotBIP = functions.pubsub.schedule("0 18 * * *")
