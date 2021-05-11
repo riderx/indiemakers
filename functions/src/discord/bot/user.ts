@@ -95,7 +95,7 @@ const userEdit = async (interaction: Interaction, options:ApplicationCommandInte
       (updateUser as any)[transformKey(element.name)] = element.value;
     }
   });
-  console.log("userEdit", updateUser);
+  console.log("userEdit", updatedUser);
   return Promise.all([
     updateUser(userId, updatedUser),
     sendTxtLater("Tu as mis a jours ton profil !\n Cela aideras les autres makers a te connaitre !", interaction.application_id, interaction.token),
