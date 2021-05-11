@@ -12,14 +12,14 @@ export interface Project {
   updatedAt?: string,
   hashtag: string,
   nom: string,
-  pitch?: string,
+  description?: string,
   taches: number,
   flammes: number,
   lastTaskAt?:string,
   website?: string,
   stripeHook?: string,
 }
-const projectPublicKey = ["hashtag", "nom", "pitch", "taches", "flammes", "website"];
+const projectPublicKey = ["hashtag", "nom", "description", "taches", "flammes", "website"];
 const projectProtectedKey = ["taches", "flammes", "createdAt", "updatedAt", "lastTaskAt"];
 
 const transformKey = (key: string): string => {
