@@ -28,11 +28,12 @@ const taskProtectedKey = ["id", "wipId", "makerlogHook", "createdAt", "updatedAt
 const createProjectTask = async (user: User, projectId: string, task: Partial<Task>): Promise<firestore.DocumentReference<firestore.DocumentData>> => {
   try {
     const done = task.status === "A faire" ? false : true;
+    const taskWithProjectId = `${task.content} #${projectId}`;
     if (user?.makerlogHook && task?.content) {
-      task.makerlogHook = await sendToMakerlog(user.makerlogHook, task.content, done);
+      task.makerlogHook = await sendToMakerlog(user.makerlogHook, taskWithProjectId, done);
     }
     if (user?.wipApiKey && task?.content) {
-      task.wipId = await sendToWip(user.wipApiKey, task.content, done);
+      task.wipId = await sendToWip(user.wipApiKey, taskWithProjectId, done);
     }
   } catch (err) {
     console.error("createProjectTask", err);
@@ -48,11 +49,12 @@ const updateProjectTask = async (userId: string, projectId: string, taskId:strin
   try {
     const user = await getUsersById(userId);
     const done = task.status === "A faire" ? false : true;
+    const taskWithProjectId = `${task.content} #${projectId}`;
     if (task?.makerlogHook && task?.content) {
-      task.makerlogHook = await sendToMakerlog(task.makerlogHook, task.content, done);
+      task.makerlogHook = await sendToMakerlog(task.makerlogHook, taskWithProjectId, done);
     }
     if (user?.wipApiKey && task?.wipId && task?.content) {
-      task.wipId = await updateToWip(user.wipApiKey, task.wipId, task.content, done);
+      task.wipId = await updateToWip(user.wipApiKey, task.wipId, taskWithProjectId, done);
     }
   } catch (err) {
     console.error("updateProjectTask", err);
