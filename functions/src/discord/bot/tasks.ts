@@ -103,7 +103,7 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
   const curUser = await getUsersById(userId);
   if (curUser) {
     const lastDay = dayjs();
-    lastDay.set("minute", 0);
+    lastDay.set("minute", 1);
     lastDay.set("hour", 0);
     lastDay.set("second", 0);
     return Promise.all([
@@ -115,7 +115,7 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
         };
         if (!curProject) return Promise.reject(Error("Projet introuvable"));
         if (curProject.lastTaskAt && dayjs(curProject.lastTaskAt).isBefore(lastDay) || !curProject.lastTaskAt) {
-          updatedProject.streak = curUser.streak ? curUser.streak + 1 : 1;
+          updatedProject.flammes = curUser.flammes ? curUser.flammes + 1 : 1;
           updatedProject.lastTaskAt = dayjs().toISOString();
         }
         return updateProject(userId, projectId, updatedProject);
@@ -126,7 +126,7 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
           taches: superTotal + 1,
         };
         if (curUser.lastTaskAt && dayjs(curUser.lastTaskAt).isBefore(lastDay) || !curUser.lastTaskAt) {
-          updatedUser.streak = curUser.streak ? curUser.streak + 1 : 1;
+          updatedUser.flammes = curUser.flammes ? curUser.flammes + 1 : 1;
           updatedUser.lastTaskAt = dayjs().toISOString();
         }
         return updateUser(userId, updatedUser);
