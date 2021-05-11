@@ -1,21 +1,15 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-import {initializeApp, firestore} from "firebase-admin";
-import findUrl from "get-urls";
-import {getPerson, getPersonById} from "./users";
-import {shortURLPixel} from "./tracker";
+import functions, {config} from "firebase-functions";
+import admin, {initializeApp} from "firebase-admin";
+import {getPerson, getPersonById, voteIfNotDone} from "./users";
 import {
-  TwEntities, TwUrl, TwUser, twUserPromise,
+  TwUser, twUserPromise,
 } from "./twitter";
 import {sendUserToRevue} from "./newletter";
-import {config} from "firebase-functions";
 import discordInteraction from "./discord/bot";
 import {Person} from "./types";
 import {sendToWebhook} from "./discord/bot/dm";
 import dayjs from "dayjs";
-
-const findHashtags = require("find-hashtags");
-const findMentions = require("mentions");
+import { transformURLtoTracked } from './tracker';
 
 // import DiscordService from './discord_login';
 // import { StatusCodes } from 'http-status-codes';
@@ -23,83 +17,11 @@ const findMentions = require("mentions");
 // import { createUser } from './db';
 // import qs from 'querystring';
 
-const configSecret = functions.config();
 
 initializeApp();
 
-const voteIfNotDone = (personId: string, uid: string) => {
-  const voteRef = firestore().collection(`/people/${personId}/votes`).doc(uid);
-  return voteRef.get()
-      .then(async (docSnapshot): Promise<{ error: string } | { done: string }> => {
-        if (docSnapshot.exists) {
-          return {error: "Already voted"};
-        }
-        return voteRef.set({date: Date()})
-            .then(() => ({done: "Voted"}))
-            .catch(() => ({error: "Fail vote"}));
-      }).catch((err: any) => {
-        console.error("Fail vote", err);
-        return {error: "Fail vote"};
-      });
-};
-
-const findInTwUrls = (url: string, twUrls: TwUrl[]): string => {
-  console.log("twUrls", twUrls);
-  const found = twUrls.find((twUrl) => {
-    if (twUrl.url === url) {
-      return twUrl.expanded_url;
-    }
-    return null;
-  });
-  return found ? found.expanded_url : url;
-};
-
-const transformURLtoTracked = async (text: string, entities: TwEntities | null) => {
-  let newDescription = "" + text;
-  const links = Array.from(findUrl(text));
-  const hashtags = findHashtags(text);
-  const mentions = findMentions(text).get();
-  for (const link of links) {
-    let newHref = link;
-    try {
-      if (!link.includes("https://imf.to/")) {
-        if (entities) {
-          const twUrl = findInTwUrls(link, entities.description.urls);
-          newHref = await shortURLPixel(twUrl);
-        } else {
-          newHref = await shortURLPixel(link);
-        }
-      }
-      newDescription = newDescription.split(link).join(newHref);
-    } catch (err) {
-      console.error("error transform link", link, err);
-    }
-  }
-  for (const hashtag of hashtags) {
-    const hHashtag = `#${hashtag}`;
-    let newHref = `https://twitter.com/hashtag/${hashtag}`;
-    try {
-      newHref = await shortURLPixel(newHref);
-    } catch (err) {
-      console.error("error transform hashtag", hashtag, err);
-    }
-    newDescription = newDescription.split(hHashtag).join(newHref);
-  }
-  for (const mention of mentions) {
-    const mMention = mention.substring(1);
-    let newHref = `https://twitter.com/${mMention}`;
-    try {
-      newHref = await shortURLPixel(newHref);
-    } catch (err) {
-      console.error("error transform mention", mention, err);
-    }
-    newDescription = newDescription.split(mention).join(newHref);
-  }
-  return newDescription;
-};
-
 export const getMakers = functions.https.onRequest(async (req, res) => {
-  if (req.get("x-verceladmin-apikey") !== configSecret.verceladmin.apikey) {
+  if (req.get("x-verceladmin-apikey") !== config().verceladmin.apikey) {
     res.json({error: "unAuthorise"});
     return;
   }
@@ -118,7 +40,7 @@ export const getMakers = functions.https.onRequest(async (req, res) => {
 });
 
 export const addEp = functions.https.onRequest(async (req, res) => {
-  if (req.get("x-verceladmin-apikey") !== configSecret.verceladmin.apikey) {
+  if (req.get("x-verceladmin-apikey") !== config().verceladmin.apikey) {
     res.json({error: "unAuthorise"});
     return;
   }
@@ -295,9 +217,12 @@ export const onUpdatePeople = functions.firestore
       }
       return snapshot;
     });
+const runtimeOpts: functions.RuntimeOptions = {
+  memory: '512MB'
+}
 
-export const discord_interaction = functions.https.onRequest(discordInteraction);
-export const scheduledFunctionBotBIP = functions.pubsub.schedule("0 18 * * *")
+export const discord_interaction = functions.runWith(runtimeOpts).https.onRequest(discordInteraction);
+export const scheduledBotBIP = functions.pubsub.schedule("0 18 * * *")
     .timeZone("Europe/Paris")
     .onRun(async (context) => {
       console.log("This will be run every day at 18:00 AM Paris!");
@@ -305,7 +230,7 @@ export const scheduledFunctionBotBIP = functions.pubsub.schedule("0 18 * * *")
       return null;
     });
 
-export const scheduledFunctionBotBIPMorning = functions.pubsub.schedule("0 9 * * *")
+export const scheduledBotBIPMorning = functions.pubsub.schedule("0 9 * * *")
     .timeZone("Europe/Paris")
     .onRun(async (context) => {
       console.log("This will be run every day at 9:00 AM Paris!");
