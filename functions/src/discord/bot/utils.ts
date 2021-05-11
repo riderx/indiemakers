@@ -21,7 +21,7 @@ export const getUserData = async (userId: string): Promise<DiscorUser> => {
     "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : config().discord.bot_token}`,
   };
   const res = await axios.get(url, {headers}).catch((err) => {
-    console.error(err);
+    console.error("getUserData", err);
     return err;
   });
   return Promise.resolve(res.data as DiscorUser);
@@ -42,7 +42,7 @@ export const sendTxtLater = async (text:string, applicationId:string, interactio
       }, {}).then((res) => {
     console.log(res, text, applicationId, interactionToken);
   }).catch((err) => {
-    console.error(err);
+    console.error("sendTxtLater", err);
     return err;
   });
   return Promise.resolve();

@@ -165,9 +165,9 @@ const makerOptions = [
   optionGen("bio", "Ta bio", SlashCommandOptionType.STRING),
   optionGen("website", "Ton site perso", SlashCommandOptionType.STRING),
   optionGen("emoji", "l'émoji qui te correspond le plus", SlashCommandOptionType.STRING),
-  optionGen("avatarurl", "l'url vers ta photo", SlashCommandOptionType.STRING),
-  optionGen("makerloghook", "la web hook de ton compte makerlog, pour que le bot poste tes taches", SlashCommandOptionType.STRING),
-  optionGen("wipapikey", "la clé api de ton compte wip.co web hook, pour que le bot poste tes taches", SlashCommandOptionType.STRING),
+  optionGen("photo", "l'url vers ta photo", SlashCommandOptionType.STRING),
+  optionGen("makerlog_hook", "la web hook de ton compte makerlog, pour que le bot poste tes taches", SlashCommandOptionType.STRING),
+  optionGen("wip_key", "la clé api de ton compte wip.co web hook, pour que le bot poste tes taches", SlashCommandOptionType.STRING),
 ];
 
 const karma = optionGen("karma", "Echange du karma avec un autre membre du discord", SlashCommandOptionType.SUB_COMMAND_GROUP, undefined, undefined, [

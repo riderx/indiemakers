@@ -9,7 +9,7 @@ import {createProjectIncome, deleteProjectIncome, getAllProjectsIncomes, Income}
 export interface Project {
   id?: string,
   createdAt: string,
-  updateAt: string,
+  updatedAt?: string,
   hashtag: string,
   nom: string,
   pitch?: string,
@@ -45,7 +45,7 @@ export const getAllProjects = async (userId: string): Promise<Project[]> => {
         });
     return projects;
   } catch (err) {
-    console.error(err);
+    console.error("getAllProjects", err);
     return [];
   }
 };
@@ -56,7 +56,7 @@ export const getProjectById = async (userId: string, projectId: string): Promise
     const data = res.data();
     return data !== undefined ? (data as Project): null;
   } catch (err) {
-    console.error(err);
+    console.error("getProjectById", err);
     return null;
   }
 };
@@ -91,7 +91,7 @@ export const deleteAllProjectsTasks = async (userId: string, projectId: string):
     await Promise.all(listDel);
     return Promise.resolve();
   } catch (err) {
-    console.error("err", err);
+    console.error("deleteAllProjectsTasks", err);
     return Promise.resolve();
   }
 };
@@ -170,7 +170,10 @@ const updateStripe = (userId: string, projectId: string| undefined, stripeKey: s
 };
 
 const projectAdd = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
-  const newProj: Partial<Project> = {};
+  const newProj: Partial<Project> = {
+    createdAt: dayjs().toISOString(),
+  };
+
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     (newProj as any)[transformKey(element.name)] = element.value;
   });
@@ -188,7 +191,9 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
 };
 
 const projectEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
-  const newProj: Partial<Project> = {};
+  const newProj: Partial<Project> = {
+    updatedAt: dayjs().toISOString(),
+  };
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (!projectProtectedKey.includes(transformKey(element.name))) {
       (newProj as any)[transformKey(element.name)] = element.value;

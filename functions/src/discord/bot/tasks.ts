@@ -35,7 +35,7 @@ const createProjectTask = async (user: User, projectId: string, task: Partial<Ta
       task.wipId = await sendToWip(user.wipApiKey, task.content, done);
     }
   } catch (err) {
-    console.error(err);
+    console.error("createProjectTask", err);
   }
   return firestore().collection(`discord/${user.userId}/projects/${projectId}/tasks`).add({...task, createdAt: dayjs().toISOString()});
 };
@@ -55,7 +55,7 @@ const updateProjectTask = async (userId: string, projectId: string, taskId:strin
       task.wipId = await updateToWip(user.wipApiKey, task.wipId, task.content, done);
     }
   } catch (err) {
-    console.error(err);
+    console.error("updateProjectTask", err);
   }
   return firestore().collection(`discord/${userId}/projects/${projectId}/tasks`).doc(taskId).update({...task, updatesAt: dayjs().toISOString()});
 };
@@ -73,7 +73,7 @@ const getAllProjectsTasks = async (userId: string, projectId: string): Promise<{
         });
     return {tasks, total: tasks.length};
   } catch (err) {
-    console.error("err", err);
+    console.error("getAllProjectsTasks", err);
     return {tasks: [], total: 0};
   }
 };
@@ -139,6 +139,7 @@ const taskEdit = async (interaction: Interaction, options:ApplicationCommandInte
   let projectId = "";
   const task: Partial<Task> = {
     status: TaskStatus.DONE,
+    updatedAt: dayjs().toISOString(),
   };
   let taskId = "";
   options.forEach((element: ApplicationCommandInteractionDataOption) => {

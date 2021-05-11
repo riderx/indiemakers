@@ -6,7 +6,7 @@ export const sendToMakerlog = async (webhook:string, content:string, done=true):
     content,
     done,
   }).then((res) => res.data).catch((err) => {
-    console.error(err);
+    console.error("sendToMakerlog", err);
     return null;
   });
   return Promise.resolve(task ? task.update_hook : undefined);

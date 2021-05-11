@@ -24,7 +24,7 @@ const getKarmaById = async (id: string): Promise<{karmas: Karma[], total: number
     const total = karmas.reduce((tt, current) => tt + current.value, 0);
     return {karmas, total};
   } catch (err) {
-    console.error("err", err);
+    console.error("getKarmaById", err);
     return {karmas: [], total: 0};
   }
 };

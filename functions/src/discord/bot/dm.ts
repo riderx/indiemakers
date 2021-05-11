@@ -11,7 +11,7 @@ export const openDmChannel = async (userId: string): Promise<any> => {
   };
   const res = await axios.post(url, {recipient_id: userId}, {headers})
       .catch((err) => {
-        console.error(err);
+        console.error("openDmChannel", err);
         return err;
       });
   return Promise.resolve(res.data as any);
@@ -25,7 +25,7 @@ export const sendDmChannel = async (channelId: string, content: string): Promise
   };
   const res = await axios.post(url, {content}, {headers})
       .catch((err) => {
-        console.error(err);
+        console.error("sendDmChannel", err);
         return err;
       });
   return Promise.resolve(res.data as any);
@@ -37,7 +37,7 @@ export const sendToWebhook = async (webhook: string, content: string): Promise<a
   };
   const res = await axios.post(webhook, {content}, {headers})
       .catch((err) => {
-        console.error(err);
+        console.error("sendToWebhook", err);
         return err;
       });
   return Promise.resolve(res.data as any);

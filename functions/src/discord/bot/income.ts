@@ -9,6 +9,8 @@ export interface Income {
   stripeCharges?: Income[],
   status: "expense" | "income",
   date: string,
+  createdAt?: string,
+  updatedAt?: string,
 }
 export const createProjectIncome = async (userId: string, projectId: string, income: Partial<Income>) => {
   return firestore().collection(`discord/${userId}/projects/${projectId}/incomes`).add({...income, createdAt: dayjs().toISOString()});
@@ -46,14 +48,16 @@ export const getAllProjectsIncomes = async (userId: string, projectId: string) =
     }, 0);
     return {incomes, total};
   } catch (err) {
-    console.error("err", err);
+    console.error("getAllProjectsIncomes", err);
     return {incomes: [], total: 0};
   }
 };
 
 const incomeAdd = async (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], senderId:string) => {
   let projectId = "";
-  const newIncome: Partial<Income> = {};
+  const newIncome: Partial<Income> = {
+    createdAt: dayjs().toISOString(),
+  };
   const date = dayjs();
   date.set("minute", 0);
   date.set("hour", 0);
@@ -83,7 +87,9 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
 const incomeEdit = async (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], senderId:string) => {
   let projectId = "";
   let incomeId = "";
-  const update: Partial<Income> = {};
+  const update: Partial<Income> = {
+    updatedAt: dayjs().toISOString(),
+  };
   const date = dayjs();
   date.set("minute", 0);
   date.set("hour", 0);

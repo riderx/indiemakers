@@ -40,16 +40,16 @@ export const getAllUsers = async (): Promise<{users: User[], total: number}> => 
         });
     return {users, total: users.length};
   } catch (err) {
-    console.error(err);
+    console.error("getAllUsers", err);
     return {users: [], total: 0};
   }
 };
 
 const transformKey = (key: string): string => {
   switch (key) {
-    case "makerloghook":
+    case "makerlog_hook":
       return "makerlogHook";
-    case "wipapikey":
+    case "wip_key":
       return "wipApiKey";
     case "photo":
       return "avatarUrl";
@@ -64,7 +64,7 @@ export const getUsersById = async (userId: string): Promise<User | null> => {
     const data = res.data();
     return data !== undefined ? (data as User): null;
   } catch (err) {
-    console.error(err);
+    console.error("getUsersById", err);
     return null;
   }
 };
@@ -93,7 +93,9 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<f
 };
 
 const userEdit = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
-  const updatedUser: Partial<User> = {};
+  const updatedUser: Partial<User> = {
+    updatedAt: dayjs().toISOString(),
+  };
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (!userProtectedKey.includes(transformKey(element.name))) {
       (updateUser as any)[transformKey(element.name)] = element.value;

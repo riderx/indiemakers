@@ -18,7 +18,7 @@ export const doneToWip = async (key:string, id:string): Promise<string | undefin
   `};
   // `,variables: { body: content }};
   const res = await axios.post(url, queryDone, {headers}).then((res) => res.data.data.completeTodo).catch((err) => {
-    console.error(err);
+    console.error("doneToWip", err);
     return {};
   });
   return Promise.resolve(res ? res.id: undefined);
@@ -38,7 +38,7 @@ export const unDoneToWip = async (key:string, id:string): Promise<string | undef
     }
   `};
   const res = await axios.post(url, queryDone, {headers}).then((res) => res.data.data.completeTodo).catch((err) => {
-    console.error(err);
+    console.error("unDoneToWip", err);
     return {};
   });
   return Promise.resolve(res ? res.id: undefined);
@@ -58,7 +58,7 @@ export const updateToWip = async (key:string, id:string, content:string, done=tr
     }
   `};
   const task = await axios.post(url, queryDone, {headers}).then((res) => res.data.data.completeTodo).catch((err) => {
-    console.error(err);
+    console.error("updateToWip", err);
     return {};
   });
   if (done && task && !task.errors) {
@@ -84,7 +84,7 @@ export const sendToWip = async (key:string, content:string, done=true): Promise<
     }
   `};
   const task = await axios.post(url, queryCreate, {headers}).then((res) => res.data.data.createTodo).catch((err) => {
-    console.error(err);
+    console.error("sendToWip", err);
     return null;
   });
   if (done && task && !task.errors) {
