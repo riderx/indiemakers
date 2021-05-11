@@ -24,7 +24,7 @@ export const getUserData = async (userId: string): Promise<DiscorUser| undefined
     const res = await axios.get(url, {headers});
     return Promise.resolve(res.data as DiscorUser);
   } catch (err) {
-    console.error('getUserData', err);
+    console.error("getUserData", err);
     return Promise.resolve(undefined);
   }
 };
@@ -40,15 +40,15 @@ export const sendTxtLater = async (text:string, applicationId:string, interactio
   const url = `https://discord.com/api/v8/webhooks/${applicationId}/${interactionToken}/messages/@original`;
   try {
     await axios.patch(url,
-      {
-        content: text,
-      }, {}).catch((err) => {
-    console.error("sendTxtLater", err);
-    return err;
-  });
-  return Promise.resolve();
+        {
+          content: text,
+        }, {}).catch((err) => {
+      console.error("sendTxtLater", err);
+      return err;
+    });
+    return Promise.resolve();
   } catch (err) {
-    console.error('sendTxtLater', err);
+    console.error("sendTxtLater", err);
     return Promise.resolve();
   }
 };

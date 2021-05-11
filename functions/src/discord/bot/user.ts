@@ -76,21 +76,21 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<f
     const userInfo = await getUserData(userId);
     const base: User = {
       userId,
-      avatar: '',
-      avatarUrl: '',
+      avatar: "",
+      avatarUrl: "",
       flammes: 0,
       incomes: 0,
       karma: 0,
       projets: 0,
       taches: 0,
-      username: '',
+      username: "",
       createdAt: dayjs().toISOString(),
       updatedAt: dayjs().toISOString(),
     };
     if (userInfo) {
       base.avatar = userInfo.avatar;
       base.avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${userInfo.avatar}.png`;
-      base.username = userInfo.username
+      base.username = userInfo.username;
     }
     const newUser: User = Object.assign(base, user as User);
     return firestore().collection("discord").doc(userId).set(newUser);
