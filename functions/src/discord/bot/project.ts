@@ -8,23 +8,23 @@ import {createProjectIncome, deleteProjectIncome, getAllProjectsIncomes, Income}
 
 export interface Project {
   id?: string,
+  lastTaskAt?:string,
   createdAt: string,
-  updatedAt?: string,
+  updatedAt: string,
   hashtag: string,
+  tasks: number,
+  streak: number,
   emoji: string,
   color: string,
   name: string,
   logo: string,
-  description?: string,
-  category?: string,
-  tasks: number,
-  streak: number,
-  lastTaskAt?:string,
-  website?: string,
+  description: string,
+  category: string,
+  website: string,
   stripeHook?: string,
 }
 // const projectPublicKey = ["hashtag", "name", "description", "logo", "emoji", "color", "taches", "flammes", "website"];
-const projectProtectedKey = ["taches", "streak", "createdAt", "updatedAt", "lastTaskAt"];
+const projectProtectedKey = ["id", "hashtag", "tasks", "streak", "createdAt", "updatedAt", "lastTaskAt"];
 
 const transformKey = (key: string): string => {
   switch (key) {
@@ -75,6 +75,9 @@ export const updateProject = async (userId: string, hashtag: string, project: Pa
     const newProject: Project = Object.assign({
       hashtag: "",
       name: "",
+      description: "",
+      category: "",
+      website: "",
       logo: "",
       emoji: "",
       color: "",
@@ -188,7 +191,7 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     (newProj as any)[transformKey(element.name)] = element.value;
   });
-  if (newProj["hashtag"]) {
+  if (newProj["hashtag"] && /^[a-zA-Z]+$/.test(newProj["hashtag"])) {
     console.log("add project", newProj);
     return Promise.all([
       sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus avec \`/im tache\` ou remplir sa description avec \`/im projet modifier description: \`  💪!`, [], interaction.application_id, interaction.token),
@@ -197,7 +200,7 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
       getAllProjects(userId).then((allProj) => updateUser(userId, {projects: allProj.length + 1})),
     ]).then(() => Promise.resolve());
   } else {
-    return sendTxtLater("hashtag manquant!", [], interaction.application_id, interaction.token);
+    return sendTxtLater("hashtag manquant ou incorect!", [], interaction.application_id, interaction.token);
   }
 };
 

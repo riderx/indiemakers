@@ -106,8 +106,8 @@ const taskValues = [
   optionGen("contenue", "Contenue de la tache", SlashCommandOptionType.STRING, true),
   optionGen("status", "Status de la tache", SlashCommandOptionType.STRING, false, [choiceGen("A faire", "todo"), choiceGen("Fait", "done")]),
 ];
-const taskId = optionGen("id", "identifiant unique de la tache", SlashCommandOptionType.STRING, true);
-const taskAdd = optionGen("ajouter", "ajouter une tache a un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, ...taskValues]);
+const taskId = optionGen("id", "Identifiant unique de la tache", SlashCommandOptionType.STRING, true);
+const taskAdd = optionGen("ajouter", "Ajouter une tache a un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, ...taskValues]);
 const taskEdit = optionGen("modifier", "Modifier une tache d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, taskId, ...taskValues]);
 const taskDelete = optionGen("supprimer", "Supprimer une tache d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, taskId]);
 const taskList = optionGen("liste", "Voir toute la liste des taches d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag]);
@@ -144,8 +144,9 @@ const makerIdOptional = optionGen("maker", "Le maker désiré", SlashCommandOpti
 const projetOptions = [
   projetHashtag,
   optionGen("nom", "Le nom de ton projet", SlashCommandOptionType.STRING),
-  optionGen("website", "le site de ton projet", SlashCommandOptionType.STRING),
-  optionGen("categorie", "la categorie de ton projet", SlashCommandOptionType.STRING, undefined, [
+  optionGen("website", "Le site de ton projet", SlashCommandOptionType.STRING),
+  optionGen("description", "La description ton projet", SlashCommandOptionType.STRING),
+  optionGen("categorie", "La categorie de ton projet", SlashCommandOptionType.STRING, undefined, [
     choiceGen("SaaS", "saas"),
     choiceGen("Application", "app"),
     choiceGen("Communauté", "community"),
@@ -155,21 +156,21 @@ const projetOptions = [
     choiceGen("Ecommerce", "ecommerce"),
     choiceGen("Autre", "autre"),
   ]),
-  optionGen("logo", "l'url vers le logo de ton projet", SlashCommandOptionType.STRING),
-  optionGen("emoji", "l'émoji qui correspond le plus a ton projet", SlashCommandOptionType.STRING),
-  optionGen("coouleur", "la couleur de ton projet", SlashCommandOptionType.STRING),
-  optionGen("stripe_hook", "l'url vers la webhook stripe pour get les charges en auto tous les lundi", SlashCommandOptionType.STRING),
+  optionGen("logo", "L'url vers le logo de ton projet", SlashCommandOptionType.STRING),
+  optionGen("emoji", "L'émoji qui correspond le plus a ton projet", SlashCommandOptionType.STRING),
+  optionGen("coouleur", "La couleur de ton projet", SlashCommandOptionType.STRING),
+  optionGen("stripe_hook", "L'url vers la webhook stripe pour get les charges en auto tous les lundi", SlashCommandOptionType.STRING),
 ];
 
 const makerOptions = [
   optionGen("nom", "Ton nom de Maker", SlashCommandOptionType.STRING),
   optionGen("bio", "Ta bio", SlashCommandOptionType.STRING),
   optionGen("website", "Ton site perso", SlashCommandOptionType.STRING),
-  optionGen("photo", "l'url vers ta photo", SlashCommandOptionType.STRING),
-  optionGen("emoji", "l'émoji qui te correspond le plus", SlashCommandOptionType.STRING),
-  optionGen("coouleur", "ta couleur préféré", SlashCommandOptionType.STRING),
-  optionGen("makerlog_hook", "la web hook de ton compte makerlog, pour que le bot poste tes taches", SlashCommandOptionType.STRING),
-  optionGen("wip_key", "la clé api de ton compte wip.co web hook, pour que le bot poste tes taches", SlashCommandOptionType.STRING),
+  optionGen("photo", "L'url vers ta photo", SlashCommandOptionType.STRING),
+  optionGen("emoji", "L'émoji qui te correspond le plus", SlashCommandOptionType.STRING),
+  optionGen("coouleur", "Ta couleur préféré", SlashCommandOptionType.STRING),
+  optionGen("makerlog_hook", "La web hook de ton compte makerlog, pour que le bot poste tes taches", SlashCommandOptionType.STRING),
+  optionGen("wip_key", "La clé api de ton compte wip.co web hook, pour que le bot poste tes taches", SlashCommandOptionType.STRING),
 ];
 
 const karma = optionGen("karma", "Echange du karma avec un autre membre du discord", SlashCommandOptionType.SUB_COMMAND_GROUP, undefined, undefined, [
