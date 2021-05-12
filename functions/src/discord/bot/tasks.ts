@@ -9,8 +9,8 @@ import {getAllProjects, getProjectById, Project, updateProject} from "./project"
 import {Interaction, ApplicationCommandInteractionDataOption} from "../create_command";
 
 enum TaskStatus {
-  TODO = "A faire",
-  DONE = "Fait",
+  TODO = "todo",
+  DONE = "done",
 }
 interface Task {
   id?: string,
@@ -27,8 +27,8 @@ const taskProtectedKey = ["id", "wipId", "makerlogHook", "createdAt", "updatedAt
 
 const createProjectTask = async (user: User, projectId: string, task: Partial<Task>): Promise<firestore.DocumentReference<firestore.DocumentData>> => {
   try {
-    const done = task.status === "A faire" ? false : true;
-    if (task.status === "Fait") {
+    const done = task.status === TaskStatus.TODO ? false : true;
+    if (task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString();
     }
     const taskWithProjectId = `${task.content} #${projectId}`;
@@ -51,8 +51,8 @@ const deleteProjectTask = async (userId: string, projectId: string, taskId:strin
 const updateProjectTask = async (userId: string, projectId: string, taskId:string, task: Partial<Task>): Promise<firestore.WriteResult> => {
   try {
     const user = await getUsersById(userId);
-    const done = task.status === "A faire" ? false : true;
-    if (task.status === "Fait") {
+    const done = task.status === TaskStatus.TODO ? false : true;
+    if (task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString();
     }
     const taskWithProjectId = `${task.content} #${projectId}`;
@@ -113,15 +113,15 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
     lastDay.set("hour", 0);
     lastDay.set("second", 0);
     return Promise.all([
-      sendTxtLater(`La tache:\n${task["content"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token),
+      sendTxtLater(`La tache:\n${task["content"]}\nA été ajouté au projet #${projectId}, 🎉!`, [], interaction.application_id, interaction.token),
       getProjectById(userId, projectId).then(async (curProject) => {
         const curTasks = await getAllProjectsTasks(userId, projectId);
         const updatedProject: Partial<Project> = {
-          taches: curTasks.total + 1,
+          tasks: curTasks.total + 1,
         };
         if (!curProject) return Promise.reject(Error("Projet introuvable"));
         if (curProject.lastTaskAt && dayjs(curProject.lastTaskAt).isBefore(lastDay) || !curProject.lastTaskAt) {
-          updatedProject.flammes = curUser.flammes ? curUser.flammes + 1 : 1;
+          updatedProject.streak = curUser.streak ? curUser.streak + 1 : 1;
           updatedProject.lastTaskAt = dayjs().toISOString();
         }
         return updateProject(userId, projectId, updatedProject);
@@ -129,17 +129,17 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
       createProjectTask(curUser, projectId, task),
       getTotalTaskByUser(userId).then((superTotal) => {
         const updatedUser: Partial<User> = {
-          taches: superTotal + 1,
+          tasks: superTotal + 1,
         };
         if (curUser.lastTaskAt && dayjs(curUser.lastTaskAt).isBefore(lastDay) || !curUser.lastTaskAt) {
-          updatedUser.flammes = curUser.flammes ? curUser.flammes + 1 : 1;
+          updatedUser.streak = curUser.streak ? curUser.streak + 1 : 1;
           updatedUser.lastTaskAt = dayjs().toISOString();
         }
         return updateUser(userId, updatedUser);
       }),
     ]).then(() => Promise.resolve());
   } else {
-    return sendTxtLater("Le Maker ou le projet est introuvable 🤫!", interaction.application_id, interaction.token);
+    return sendTxtLater("Le Maker ou le projet est introuvable 🤫!", [], interaction.application_id, interaction.token);
   }
 };
 
@@ -160,7 +160,7 @@ const taskEdit = async (interaction: Interaction, options:ApplicationCommandInte
     }
   });
   return Promise.all([
-    sendTxtLater(`La tache:\n${taskId}: ${task["content"]}\n ${taskId}\nA été mise a jours dans le projet #${projectId}, 🎉!`, interaction.application_id, interaction.token),
+    sendTxtLater(`La tache:\n${taskId}: ${task["content"]}\n ${taskId}\nA été mise a jours dans le projet #${projectId}, 🎉!`, [], interaction.application_id, interaction.token),
     updateProjectTask(userId, projectId, taskId, task),
   ]).then(() => Promise.resolve());
 };
@@ -173,15 +173,15 @@ const tasksView = async (interaction: Interaction, option:ApplicationCommandInte
     allTaks.tasks.forEach((element: Task) => {
       taskInfos += `${element.content} . Crée le ${dayjs(element.createdAt).format("DD/MM/YYYY")}\n`;
     });
-    return sendTxtLater(taskInfos, interaction.application_id, interaction.token);
+    return sendTxtLater(taskInfos, [], interaction.application_id, interaction.token);
   } else {
-    return sendTxtLater("Donne moi un projet !", interaction.application_id, interaction.token);
+    return sendTxtLater("Donne moi un projet !", [], interaction.application_id, interaction.token);
   }
 };
 
 const getTotalTaskByUser = async (userId: string): Promise<number> => {
   const projects = await getAllProjects(userId);
-  return projects.reduce((tt, project) => tt + project.taches, 0);
+  return projects.reduce((tt, project) => tt + project.tasks, 0);
 };
 
 const tasksDelete = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
@@ -197,14 +197,14 @@ const tasksDelete = async (interaction: Interaction, options:ApplicationCommandI
   return Promise.all([
     getTotalTaskByUser(userId).then((superTotal) => {
       const updatedUser: Partial<User> = {
-        taches: superTotal - 1,
+        tasks: superTotal - 1,
         lastTaskAt: dayjs().toISOString(),
       };
       return updateUser(userId, updatedUser);
     }),
-    getAllProjectsTasks(userId, projectId).then((curTasks) => updateUser(userId, {taches: curTasks.total - 1})),
+    getAllProjectsTasks(userId, projectId).then((curTasks) => updateUser(userId, {tasks: curTasks.total - 1})),
     deleteProjectTask(userId, projectId, taskId),
-    sendTxtLater(`Tu as supprimé la tache ${taskId} !`, interaction.application_id, interaction.token),
+    sendTxtLater(`Tu as supprimé la tache ${taskId} !`, [], interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };
 

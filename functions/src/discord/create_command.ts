@@ -175,7 +175,7 @@ const makerOptions = [
 const karma = optionGen("karma", "Echange du karma avec un autre membre du discord", SlashCommandOptionType.SUB_COMMAND_GROUP, undefined, undefined, [
   optionGen("donner", "Donner du karma", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerId]),
   optionGen("enlever", "Enlever du karma", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerId]),
-  optionGen("stats", "Voir le karma d'un maker", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerId]),
+  optionGen("voir", "Voir le karma d'un maker", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerId]),
   optionGen("classement", "Le classement des makers par karma", 1),
 ]);
 
@@ -202,7 +202,6 @@ const tache = optionGen("tache", "Gerer les tache d'un projet", SlashCommandOpti
 ]);
 
 const maker = optionGen("maker", "Gerer ton profil de maker", SlashCommandOptionType.SUB_COMMAND_GROUP, undefined, undefined, [
-  optionGen("creer", "Cree ton profil", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, makerOptions),
   optionGen("modifier", "Modifie ton profil", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, makerOptions),
   optionGen("liste", "Voir la liste des makers", 1),
   optionGen("flammes", "Voir la liste des makers avec des flammes", 1),

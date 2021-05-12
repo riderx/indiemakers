@@ -16,8 +16,8 @@ export interface Project {
   nom: string,
   logo: string,
   description?: string,
-  taches: number,
-  flammes: number,
+  tasks: number,
+  streak: number,
   lastTaskAt?:string,
   website?: string,
   stripeHook?: string,
@@ -75,8 +75,8 @@ export const updateProject = async (userId: string, hashtag: string, project: Pa
       logo: "",
       emoji: "",
       color: "",
-      taches: 0,
-      flammes: 0,
+      tasks: 0,
+      streak: 0,
       updatedAt: dayjs().toISOString(),
       createdAt: dayjs().toISOString(),
     }, project);
@@ -188,13 +188,13 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
   if (newProj["hashtag"]) {
     console.log("add project", newProj);
     return Promise.all([
-      sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus 💪!`, interaction.application_id, interaction.token),
+      sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus 💪!`, [], interaction.application_id, interaction.token),
       addStripe(userId, newProj["hashtag"], newProj["stripeHook"]),
       updateProject(userId, newProj["hashtag"], newProj),
-      getAllProjects(userId).then((allProj) => updateUser(userId, {projets: allProj.length + 1})),
+      getAllProjects(userId).then((allProj) => updateUser(userId, {projects: allProj.length + 1})),
     ]).then(() => Promise.resolve());
   } else {
-    return sendTxtLater("hashtag manquant!", interaction.application_id, interaction.token);
+    return sendTxtLater("hashtag manquant!", [], interaction.application_id, interaction.token);
   }
 };
 
@@ -210,12 +210,12 @@ const projectEdit = async (interaction: Interaction, options:ApplicationCommandI
   if (update["hashtag"]) {
     console.log("projectEdit", update);
     return Promise.all([
-      sendTxtLater(`Tu as mis a jours le projet:\n#${update["hashtag"]}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`, interaction.application_id, interaction.token),
+      sendTxtLater(`Tu as mis a jours le projet:\n#${update["hashtag"]}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`, [], interaction.application_id, interaction.token),
       updateStripe(userId, update["hashtag"], update["stripeHook"]),
       updateProject(userId, update["hashtag"], update),
     ]).then(() => Promise.resolve());
   } else {
-    return sendTxtLater("hashtag manquant!", interaction.application_id, interaction.token);
+    return sendTxtLater("hashtag manquant!", [], interaction.application_id, interaction.token);
   }
 };
 
@@ -223,11 +223,11 @@ const projectList = async (interaction: Interaction, userId:string, me= false): 
   let projsInfo = "";
   const projects = await getAllProjects(userId);
   projects.forEach((proj: Project) => {
-    projsInfo += `${proj.nom} #${proj.hashtag} taches:${proj.taches} flammes:${proj.flammes} Crée le ${dayjs(proj.createdAt).format("DD/MM/YYYY")}\n`;
+    projsInfo += `${proj.nom} #${proj.hashtag} taches:${proj.tasks} flammes:${proj.streak} Crée le ${dayjs(proj.createdAt).format("DD/MM/YYYY")}\n`;
   });
   console.log("project_list", projsInfo);
   const sentence = me ? "Voici la liste de tes projets !" : "Voici la liste des projets de <@${userId}> !";
-  return sendTxtLater(`${sentence}\n\n${projsInfo}`, interaction.application_id, interaction.token);
+  return sendTxtLater(`${sentence}\n\n${projsInfo}`, [], interaction.application_id, interaction.token);
 };
 
 const projectView = async (interaction: Interaction, projId:string, userId:string): Promise<void> => {
@@ -242,9 +242,9 @@ const projectView = async (interaction: Interaction, projId:string, userId:strin
       });
     }
     console.log("projectEdit", projInfo);
-    return sendTxtLater(`Voici les infos sur ton projet !\n${projInfo}`, interaction.application_id, interaction.token);
+    return sendTxtLater(`Voici les infos sur ton projet !\n${projInfo}`, [], interaction.application_id, interaction.token);
   } else {
-    return sendTxtLater("Donne moi un projet !", interaction.application_id, interaction.token);
+    return sendTxtLater("Donne moi un projet !", [], interaction.application_id, interaction.token);
   }
 };
 
@@ -255,10 +255,10 @@ const projectDelete = async (interaction: Interaction, option:ApplicationCommand
     return Promise.all([
       deleteProject(userId, projId),
       deleteAllProjectsTasks(userId, projId),
-      sendTxtLater(`Tu as supprimé ton projet ${projId} et ses taches !\nSavoir terminer un projet est une force!`, interaction.application_id, interaction.token),
+      sendTxtLater(`Tu as supprimé ton projet ${projId} et ses taches !\nSavoir terminer un projet est une force!`, [], interaction.application_id, interaction.token),
     ]).then(() => Promise.resolve());
   } else {
-    return sendTxtLater("Donne moi un projet !", interaction.application_id, interaction.token);
+    return sendTxtLater("Donne moi un projet !", [], interaction.application_id, interaction.token);
   }
 };
 
@@ -277,5 +277,5 @@ export const projectFn = async (interaction:Interaction, option:ApplicationComma
   } if (option.name === "supprimer" && option.options && option.options.length > 0) {
     return projectDelete(interaction, option.options[0], userId);
   }
-  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge`, interaction.application_id, interaction.token);
+  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge`, [], interaction.application_id, interaction.token);
 };

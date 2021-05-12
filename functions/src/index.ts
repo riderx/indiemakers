@@ -237,8 +237,8 @@ export const scheduledBotBIPMorning = pubsub.schedule("0 9 * * *")
     .timeZone("Europe/Paris")
     .onRun(async (context) => {
       console.log("This will be run every day at 9:00 AM Paris!");
-      const usersInfo = await usersViewStreak();
-      await sendToWebhook(config().discord.biphook, `Hey Makers, Encore une belle journée pour shipper !\n\n${usersInfo}\n\nContinuez comme ça !`);
+      const usersInfoCards = await usersViewStreak();
+      await sendToWebhook(config().discord.biphook, `Hey Makers, Encore une belle journée pour shipper !\n\nContinuez comme ça !`, usersInfoCards);
       if (dayjs().day() === 1) {
         await sendToWebhook(config().discord.genhook, "Hey Makers, Faites moi un petit récap de votre semaine 1 Bon point / 1 point relou, minimum 💪!");
         await updateRevenueAllProject();

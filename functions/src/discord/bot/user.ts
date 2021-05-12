@@ -1,8 +1,7 @@
-import {openDmChannel, sendDmChannel} from "./dm";
 import {ApplicationCommandInteractionDataOption, Interaction} from "../create_command";
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
-import {getUserData, sendTxtLater} from "./utils";
+import {Embed, embed, field, getUserData, image, openDmChannel, sendDmChannel, sendTxtLater} from "./utils";
 import {Project} from "./project";
 
 export interface User {
@@ -10,14 +9,14 @@ export interface User {
   avatar: string,
   username: string,
   avatarUrl: string,
-  flammes: number,
+  streak: number,
   karma: number,
   emoji: string,
   color: string,
-  projets: number,
+  projects: number,
   incomes: number,
-  taches: number,
-  nom?: string,
+  tasks: number,
+  name?: string,
   bio?: string,
   website?: string,
   lastTaskAt?: string,
@@ -27,7 +26,7 @@ export interface User {
   createdAt: string,
   updatedAt: string
 }
-const userPublicKey = ["username", "karma", "avatarUrl", "taches", "projets", "emoji", "color", "flammes", "createdAt"];
+const userPublicKey = ["username", "karma", "avatarUrl", "taches", "projets", "name", "bio", "emoji", "color", "flammes", "createdAt"];
 const userProtectedKey = ["userId", "username", "karma", "avatar", "taches", "projets", "flammes", "createdAt", "updatedAt", "lastTaskAt"];
 
 export const getAllUsers = async (): Promise<{users: User[], total: number}> => {
@@ -52,6 +51,8 @@ const transformKey = (key: string): string => {
   switch (key) {
     case "couleur":
       return "color";
+    case "nom":
+      return "name";
     case "makerlog_hook":
       return "makerlogHook";
     case "wip_key":
@@ -84,11 +85,11 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<f
       avatarUrl: "",
       emoji: "",
       color: "",
-      flammes: 0,
+      streak: 0,
       incomes: 0,
       karma: 0,
-      projets: 0,
-      taches: 0,
+      projects: 0,
+      tasks: 0,
       username: "",
       createdAt: dayjs().toISOString(),
       updatedAt: dayjs().toISOString(),
@@ -117,64 +118,92 @@ const userEdit = async (interaction: Interaction, options:ApplicationCommandInte
   console.log("userEdit", update);
   return Promise.all([
     updateUser(userId, update),
-    sendTxtLater("Tu as mis a jours ton profil !\n Cela aideras les autres makers a te connaitre !", interaction.application_id, interaction.token),
+    sendTxtLater("Tu as mis a jours ton profil !\n Cela aideras les autres makers a te connaitre !", [], interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };
 
-export const usersViewStreak = async (): Promise<string> => {
-  let usersInfo = "";
+export const usersViewStreak = async (): Promise<Embed[]> => {
+  let embeds: Embed[] = [];
   const res = await getAllUsers();
   const limitStreak = dayjs();
   limitStreak.subtract(1, "day");
   limitStreak.set("minute", 0);
   limitStreak.set("hour", 0);
   limitStreak.set("second", 0);
-  res.users = res.users.sort((firstEl: User, secondEl: User) => secondEl.flammes - firstEl.flammes);
+  res.users = res.users.sort((firstEl: User, secondEl: User) => secondEl.streak - firstEl.streak);
   res.users = res.users.filter((user: User) => user.lastTaskAt ? dayjs(user.lastTaskAt).isAfter(limitStreak) : false);
-  res.users.forEach((element: User) => {
-    usersInfo += `${element.username} a shipper ${element.flammes} jours d'affilés pour ${element.taches} taches faites depuis le debut sur ${element.projets} projets !`;
+  res.users.forEach((user: User) => {
+    const fields = [
+      field("🔥 Flammes", String(user.streak)),
+      field("🕉 Karma", String(user.karma)),
+      field("🌱 Projets", String(user.projects)),
+      field("🚿 Taches", String(user.tasks))
+    ];
+    const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`;
+    const thumb = image(user.avatarUrl);
+    const userCard = embed(name, "", user.color, fields, undefined, undefined, user.createdAt,thumb);
+    if (embeds.length < 10){
+      embeds.push(userCard);
+    }
   });
-  return usersInfo;
+  return embeds;
 };
 
 const userList = async (interaction: Interaction): Promise<void> => {
-  let usersInfo = "await usersViewStreak()";
+  let usersInfo = "";
   const res = await getAllUsers();
-  console.log("userList", usersInfo);
   res.users.forEach((element: User) => {
-    usersInfo += `${element.username} a shipper ${element.flammes} jours d'affilés pour ${element.taches} taches faites depuis le debut sur ${element.projets} projets !`;
+    usersInfo += `${element.username} a shipper ${element.streak} jours d'affilés pour ${element.tasks} taches faites depuis le debut sur ${element.projects} projets !`;
   });
-  return sendTxtLater(`Voici la liste des makers !\n\n${usersInfo}`, interaction.application_id, interaction.token);
+  console.log("userList", usersInfo);
+  return sendTxtLater(`Voici la liste des makers !\n\n${usersInfo}`, [], interaction.application_id, interaction.token);
 };
 
 const userListStreak = async (interaction: Interaction): Promise<void> => {
-  const usersInfo = await usersViewStreak();
-  console.log("userList", usersInfo);
-  return sendTxtLater(`Voici la liste des makers avec les flammes !\n\n${usersInfo}`, interaction.application_id, interaction.token);
+  const usersInfoCards = await usersViewStreak();
+  console.log("userList", usersInfoCards);
+  return sendTxtLater(`Voici la liste des 10 premiers makers avec les flammes !\n`, usersInfoCards, interaction.application_id, interaction.token);
 };
 
 const userView = async (interaction: Interaction, myId:string, userId:string|undefined): Promise<void> => {
-  let userInfo = "";
   const user = await getUsersById(userId || myId);
   if (user && userId && myId !== userId) {
-    Object.keys(user).forEach((element: string) => {
-      if (userPublicKey.includes(element)) {
-        userInfo += `${element} : ${(user as any)[element]}\n`;
-      }
-    });
-    console.log("userEdit", userInfo);
-    return sendTxtLater(`Voici les infos sur ce maker !\n${userInfo}`, interaction.application_id, interaction.token);
+    console.log("userEdit", userId);
+    const fields = [
+      field("🔥 Flammes", String(user.streak)),
+      field("🕉 Karma", String(user.karma)),
+      field("🌱 Projets", String(user.projects)),
+      field("🚿 Taches", String(user.tasks))
+    ];
+    const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`;
+    const bio = user.bio || 'Un jours je serais grand !';
+    const thumb = image(user.avatarUrl);
+    const userCard = embed(name, bio, user.color, fields, undefined, undefined, user.createdAt,thumb);
+    return sendTxtLater(`Voici les infos sur ce maker !\n`, [userCard], interaction.application_id, interaction.token);
   } else if (user) {
-    Object.keys(user).forEach((element: string) => {
-      userInfo += `${element} : ${(user as any)[element]}\n`;
-    });
-    console.log("userEdit", userInfo);
+    console.log("userEdit", userId);
+    const fields = [
+      field("🔥 Flammes", String(user.streak)),
+      field("🕉 Karma", String(user.karma)),
+      field("🌱 Projets", String(user.projects)),
+      field("🚿 Taches", String(user.tasks))
+    ];
+    if (user.makerlogHook) {
+      fields.push(field("Makerlog", String(user.makerlogHook), false))
+    }
+    if (user.wipApiKey) {
+      fields.push(field("WIP", String(user.wipApiKey), false))
+    }
+    const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`;
+    const bio = user.bio || 'Un jours je serais grand !';
+    const thumb = image(user.avatarUrl);
+    const userCard = embed(name, bio, user.color, fields, undefined, undefined, user.createdAt,thumb);
     return Promise.all([
-      sendTxtLater("Je t'ai envoyé tes info en privé 🤫", interaction.application_id, interaction.token),
-      openDmChannel(myId).then((channel) => sendDmChannel(channel.id, `Voici tes infos !\n${userInfo}`)),
+      sendTxtLater("Je t'ai envoyé tes info en privé 🤫", [], interaction.application_id, interaction.token),
+      openDmChannel(myId).then((channel) => sendDmChannel(channel.id, `Voici tes infos !\n`, [userCard])),
     ]).then(() => Promise.resolve());
   } else {
-    return sendTxtLater(`Je n'ai pas trouvé le maker : ${userId}`, interaction.application_id, interaction.token);
+    return sendTxtLater(`Je n'ai pas trouvé le maker : ${userId}`, [], interaction.application_id, interaction.token);
   }
 };
 
@@ -188,5 +217,5 @@ export const userFn = async (interaction: Interaction, option: ApplicationComman
   } if (option.name === "voir" && option.options && option.options.length > 0) {
     return userView(interaction, senderId, option.options[0].value);
   }
-  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge`, interaction.application_id, interaction.token);
+  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge`, [], interaction.application_id, interaction.token);
 };
