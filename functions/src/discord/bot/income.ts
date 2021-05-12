@@ -68,7 +68,7 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
     if (element.name === "hashtag") {
       projectId = element.value;
     } else if (element.name === "montant") {
-      newIncome["ammount"] = element.value;
+      newIncome["ammount"] = Number(element.value);
     } else if (element.name === "mois") {
       date.set("month", Number(element.value) - 1);
     } else if (element.name === "année") {
