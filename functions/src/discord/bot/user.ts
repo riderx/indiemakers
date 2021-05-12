@@ -137,7 +137,7 @@ export const usersViewStreak = async (): Promise<Embed[]> => {
       field("🔥 Flammes", String(user.streak)),
       field("🕉 Karma", String(user.karma)),
       field("🌱 Projets", String(user.projects)),
-      field("🚿 Taches", String(user.tasks))
+      field("💗 Taches", String(user.tasks))
     ];
     const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`;
     const thumb = image(user.avatarUrl);
@@ -173,7 +173,7 @@ const userView = async (interaction: Interaction, myId:string, userId:string|und
       field("🔥 Flammes", String(user.streak)),
       field("🕉 Karma", String(user.karma)),
       field("🌱 Projets", String(user.projects)),
-      field("🚿 Taches", String(user.tasks))
+      field("💗 Taches", String(user.tasks))
     ];
     const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`;
     const bio = user.bio || 'Un jours je serais grand !';
@@ -186,7 +186,7 @@ const userView = async (interaction: Interaction, myId:string, userId:string|und
       field("🔥 Flammes", String(user.streak)),
       field("🕉 Karma", String(user.karma)),
       field("🌱 Projets", String(user.projects)),
-      field("🚿 Taches", String(user.tasks))
+      field("💗 Taches", String(user.tasks))
     ];
     if (user.makerlogHook) {
       fields.push(field("Makerlog", String(user.makerlogHook), false))
@@ -216,6 +216,8 @@ export const userFn = async (interaction: Interaction, option: ApplicationComman
     return userListStreak(interaction);
   } if (option.name === "voir" && option.options && option.options.length > 0) {
     return userView(interaction, senderId, option.options[0].value);
+  } if (option.name === "voir") {
+    return userView(interaction, senderId, undefined);
   }
   return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge`, [], interaction.application_id, interaction.token);
 };

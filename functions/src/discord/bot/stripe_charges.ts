@@ -87,8 +87,8 @@ const getAllUsersAndProjects = async () => {
 };
 
 const mixIncomeCharges = async (userId:string, project: Project, startMonth: dayjs.Dayjs) => {
-  if (!project.stripeHook || !project.id) return undefined;
-  return {userId, projectId: project.id, charges: await getStripeCharges(project.stripeHook, startMonth), incomes: (await getAllProjectsIncomes(userId, project.id)).incomes};
+  if (!project.stripeKey || !project.id) return undefined;
+  return {userId, projectId: project.id, charges: await getStripeCharges(project.stripeKey, startMonth), incomes: (await getAllProjectsIncomes(userId, project.id)).incomes};
 };
 
 const foundIncome = (incomes: Income[], dateKey:string): Income | null => {
@@ -134,7 +134,7 @@ export const updateRevenueAllProject = async () => {
       const project = user.projectsData[index];
 
       if (!project.id) return project;
-      if (project.stripeHook) {
+      if (project.stripeKey) {
         all.push(mixIncomeCharges(userId, project, startMonth)
             .then(updateCurrentIcome));
       }

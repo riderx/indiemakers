@@ -32,6 +32,10 @@ const im = async (res:Response, interaction: Interaction, option:ApplicationComm
       await sendTxtLoading(res);
       return userFn(interaction, option.options[0], senderId);
     }
+    if (option.name === "doc") {
+      await sendTxt(res, `Voici la doc pou m'utiliser ! https://indiemakers.gitbook.io/bot/`);
+      return Promise.resolve();
+    }
     await sendTxt(res, `La Commande ${option.name} n'est pas pris en charge`);
     return Promise.resolve();
   } catch (err) {

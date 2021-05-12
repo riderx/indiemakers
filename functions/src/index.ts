@@ -7,11 +7,11 @@ import {
 import {sendUserToRevue} from "./newletter";
 import discordInteraction from "./discord/bot";
 import {Person} from "./types";
-import {sendToWebhook} from "./discord/bot/dm";
 import {updateRevenueAllProject} from "./discord/bot/stripe_charges";
 import dayjs from "dayjs";
 import {transformURLtoTracked} from "./tracker";
 import {usersViewStreak} from "./discord/bot/user";
+import { sendToWebhook } from './discord/bot/utils';
 
 // import DiscordService from './discord_login';
 // import { StatusCodes } from 'http-status-codes';

@@ -165,11 +165,20 @@ const taskEdit = async (interaction: Interaction, options:ApplicationCommandInte
   ]).then(() => Promise.resolve());
 };
 
-const tasksView = async (interaction: Interaction, option:ApplicationCommandInteractionDataOption, userId:string): Promise<void> => {
-  const projectId = option.value;
+const tasksView = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
+  let projectId = "";
+  let makerId = userId;
+  options.forEach((element: ApplicationCommandInteractionDataOption) => {
+    if (element.name === 'hashtag') {
+      projectId = element.value || "";
+    } else if (element.name === 'maker') {
+      makerId = element.value || "";
+    }
+  });
   if (projectId) {
-    const allTaks = await getAllProjectsTasks(userId, projectId);
-    let taskInfos = `Tu a fait un total de ${allTaks.total} sur ce projet, BRAVO 🎉!\n\nVoici La liste:\n`;
+    const allTaks = await getAllProjectsTasks(makerId, projectId);
+    const text = makerId === userId ? `Tu as fait un total de ${allTaks.total} sur ce projet, BRAVO 🎉!` : `<@${userId}> a fait un total de ${allTaks.total} sur ce projet, BRAVO 🎉!`
+    let taskInfos = `${text}!\n\nVoici La liste:\n`;
     allTaks.tasks.forEach((element: Task) => {
       taskInfos += `${element.content} . Crée le ${dayjs(element.createdAt).format("DD/MM/YYYY")}\n`;
     });
@@ -212,7 +221,7 @@ export const taskFn = async (interaction: Interaction, option: ApplicationComman
   if (option.name === "ajouter" && option.options && option.options.length > 0) {
     return taskAdd(interaction, option.options, userId);
   } if (option.name === "liste" && option.options && option.options.length > 0) {
-    return tasksView(interaction, option.options[0], userId);
+    return tasksView(interaction, option.options, userId);
   } if (option.name === "modifier" && option.options && option.options.length > 0) {
     return taskEdit(interaction, option.options, userId);
   } if (option.name === "supprimer" && option.options && option.options.length > 0) {

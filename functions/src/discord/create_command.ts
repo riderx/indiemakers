@@ -102,6 +102,10 @@ const optionGen = (name:string, description:string, type: number, required:boole
   return result;
 };
 const projetHashtag = optionGen("hashtag", "Le hashtag de ton projet (nom sans espaces)", SlashCommandOptionType.STRING, true);
+
+const makerId = optionGen("maker", "Le maker désiré", SlashCommandOptionType.USER, true);
+const makerIdOptional = optionGen("maker", "Le maker désiré", SlashCommandOptionType.USER);
+
 const taskValues = [
   optionGen("contenue", "Contenue de la tache", SlashCommandOptionType.STRING, true),
   optionGen("status", "Status de la tache", SlashCommandOptionType.STRING, false, [choiceGen("A faire", "todo"), choiceGen("Fait", "done")]),
@@ -110,7 +114,7 @@ const taskId = optionGen("id", "Identifiant unique de la tache", SlashCommandOpt
 const taskAdd = optionGen("ajouter", "Ajouter une tache a un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, ...taskValues]);
 const taskEdit = optionGen("modifier", "Modifier une tache d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, taskId, ...taskValues]);
 const taskDelete = optionGen("supprimer", "Supprimer une tache d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, taskId]);
-const taskList = optionGen("liste", "Voir toute la liste des taches d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag]);
+const taskList = optionGen("liste", "Voir toute la liste des taches d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, makerIdOptional]);
 
 const incomeValues = [
   optionGen("montant", "Montant du revenue", SlashCommandOptionType.STRING, true),
@@ -130,16 +134,14 @@ const incomeValues = [
     choiceGen("Decembre", "12"),
   ]),
   optionGen("année", "Année du revenue", SlashCommandOptionType.STRING, true),
-  optionGen("status", "Status du revenue", SlashCommandOptionType.STRING, true, [choiceGen("Cout", "expense"), choiceGen("Revenue", "income")]),
 ];
+
+
 const incomeId = optionGen("id", "identifiant unique du revenue", SlashCommandOptionType.STRING, true);
 const incomeAdd = optionGen("ajouter", "ajouter un revenue a un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, ...incomeValues]);
 const incomeEdit = optionGen("modifier", "Modifier un revenue d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, incomeId, ...incomeValues]);
 const incomeDelete = optionGen("supprimer", "Supprimer un revenue d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, incomeId]);
-const incomeList = optionGen("liste", "Voir toute la liste des revenues d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag]);
-
-const makerId = optionGen("maker", "Le maker désiré", SlashCommandOptionType.USER, true);
-const makerIdOptional = optionGen("maker", "Le maker désiré", SlashCommandOptionType.USER);
+const incomeList = optionGen("liste", "Voir toute la liste des revenues d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, makerIdOptional]);
 
 const projetOptions = [
   projetHashtag,
@@ -159,7 +161,7 @@ const projetOptions = [
   optionGen("logo", "L'url vers le logo de ton projet", SlashCommandOptionType.STRING),
   optionGen("emoji", "L'émoji qui correspond le plus a ton projet", SlashCommandOptionType.STRING),
   optionGen("coouleur", "La couleur de ton projet", SlashCommandOptionType.STRING),
-  optionGen("stripe_hook", "L'url vers la webhook stripe pour get les charges en auto tous les lundi", SlashCommandOptionType.STRING),
+  optionGen("stripe_key", "L'url vers la webhook stripe pour get les charges en auto tous les lundi", SlashCommandOptionType.STRING),
 ];
 
 const makerOptions = [
@@ -222,6 +224,7 @@ const jsonData = {
     tache,
     income,
     maker,
+    optionGen("doc", "Lire la doc du bot", 1),
   ],
 };
 

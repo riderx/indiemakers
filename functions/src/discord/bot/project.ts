@@ -21,19 +21,21 @@ export interface Project {
   description: string,
   category: string,
   website: string,
-  stripeHook?: string,
+  stripeKey?: string,
 }
 // const projectPublicKey = ["hashtag", "name", "description", "logo", "emoji", "color", "taches", "flammes", "website"];
-const projectProtectedKey = ["id", "hashtag", "tasks", "streak", "createdAt", "updatedAt", "lastTaskAt"];
+const projectProtectedKey = ["id", "tasks", "streak", "createdAt", "updatedAt", "lastTaskAt"];
 
 const transformKey = (key: string): string => {
   switch (key) {
+    case "nom":
+      return "name";
     case "couleur":
       return "color";
     case "categorie":
       return "category";
-    case "stripe_hook":
-      return "stripeHook";
+    case "stripe_key":
+      return "stripeKey";
     default:
       return key;
   }
@@ -195,7 +197,7 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
     console.log("add project", newProj);
     return Promise.all([
       sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus avec \`/im tache\` ou remplir sa description avec \`/im projet modifier description: \`  💪!`, [], interaction.application_id, interaction.token),
-      addStripe(userId, newProj["hashtag"], newProj["stripeHook"]),
+      addStripe(userId, newProj["hashtag"], newProj["stripeKey"]),
       updateProject(userId, newProj["hashtag"], newProj),
       getAllProjects(userId).then((allProj) => updateUser(userId, {projects: allProj.length + 1})),
     ]).then(() => Promise.resolve());
@@ -217,7 +219,7 @@ const projectEdit = async (interaction: Interaction, options:ApplicationCommandI
     console.log("projectEdit", update);
     return Promise.all([
       sendTxtLater(`Tu as mis a jours le projet:\n#${update["hashtag"]}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`, [], interaction.application_id, interaction.token),
-      updateStripe(userId, update["hashtag"], update["stripeHook"]),
+      updateStripe(userId, update["hashtag"], update["stripeKey"]),
       updateProject(userId, update["hashtag"], update),
     ]).then(() => Promise.resolve());
   } else {
@@ -237,21 +239,21 @@ const projectList = async (interaction: Interaction, userId:string, me= false): 
 };
 
 const projectView = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
-  let projId = "";
+  let projectId = "";
   let makerId = userId;
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (element.name === 'hashtag') {
-      projId = element.value || "";
+      projectId = element.value || "";
     } else if (element.name === 'maker') {
       makerId = element.value || "";
     }
   });
-  if (projId) {
-    const project = await getProjectById(makerId, projId);
+  if (projectId) {
+    const project = await getProjectById(makerId, projectId);
     if (project) {
       const fields = [
         field("🔥 Flammes", String(project.streak)),
-        field("🚿 Taches", String(project.tasks))
+        field("💗 Taches", String(project.tasks))
       ];
       if (project.website) {
         fields.push(field("Website", String(project.website), false))
@@ -260,12 +262,12 @@ const projectView = async (interaction: Interaction, options:ApplicationCommandI
       const bio = project.description || 'Je n\'ai pas encore de description, je suis jeune 👶!';
       const thumb = project.logo ? image(project.logo) : undefined;
       const projCard = embed(name, bio, project.color, fields, undefined, undefined, project.createdAt,thumb);
-      console.log("projectView", projId, makerId);
+      console.log("projectView", projectId, makerId);
       const text = makerId === userId ? 'Voici les infos sur ton projet !' : `Voici les infos sur le projet de <@${userId}> !`
       return sendTxtLater(`${text}\n`, [projCard], interaction.application_id, interaction.token);
     } else {
-      console.log("projectView", projId, makerId);
-      return sendTxtLater(`Je ne trouve pas le projet ${projId} pour <@${makerId}>...`, [], interaction.application_id, interaction.token);
+      console.log("projectView", projectId, makerId);
+      return sendTxtLater(`Je ne trouve pas le projet ${projectId} pour <@${makerId}>...`, [], interaction.application_id, interaction.token);
     }
   } else {
     return sendTxtLater("Donne moi un projet !", [], interaction.application_id, interaction.token);
@@ -273,13 +275,13 @@ const projectView = async (interaction: Interaction, options:ApplicationCommandI
 };
 
 const projectDelete = async (interaction: Interaction, option:ApplicationCommandInteractionDataOption, userId:string): Promise<void> => {
-  const projId = option.value;
-  if (projId) {
-    console.log("projectDelete", projId);
+  const projectId = option.value;
+  if (projectId) {
+    console.log("projectDelete", projectId);
     return Promise.all([
-      deleteProject(userId, projId),
-      deleteAllProjectsTasks(userId, projId),
-      sendTxtLater(`Tu as supprimé ton projet ${projId} et ses taches !\nSavoir terminer un projet est une force!`, [], interaction.application_id, interaction.token),
+      deleteProject(userId, projectId),
+      deleteAllProjectsTasks(userId, projectId),
+      sendTxtLater(`Tu as supprimé ton projet ${projectId} et ses taches !\nSavoir terminer un projet est une force!`, [], interaction.application_id, interaction.token),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater("Donne moi un projet !", [], interaction.application_id, interaction.token);

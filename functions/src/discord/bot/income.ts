@@ -12,6 +12,7 @@ export interface Income {
   createdAt?: string,
   updatedAt?: string,
 }
+
 export const createProjectIncome = async (userId: string, projectId: string, income: Partial<Income>) => {
   return firestore().collection(`discord/${userId}/projects/${projectId}/incomes`).add({...income, createdAt: dayjs().toISOString()});
 };
@@ -68,14 +69,16 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
       projectId = element.value;
     } else if (element.name === "montant") {
       newIncome["ammount"] = element.value;
-    } else if (element.name === "status") {
-      newIncome["status"] = element.value;
     } else if (element.name === "mois") {
       date.set("month", Number(element.value) - 1);
     } else if (element.name === "année") {
       date.set("year", Number(element.value));
     }
   });
+  if (newIncome["ammount"]) {
+    newIncome["status"] = newIncome["ammount"] < 0 ? 'expense' : 'income';
+    newIncome["ammount"] = Math.abs(newIncome["ammount"]);
+  }
   newIncome["date"] = date.toISOString();
   return Promise.all([
     getAllProjectsIncomes(senderId, projectId).then((curIncomes) => updateProjecttotalIncome(senderId, projectId, curIncomes.total + 1)),
