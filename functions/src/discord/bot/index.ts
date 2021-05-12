@@ -1,3 +1,4 @@
+import {loginFn} from "./login";
 import {userFn} from "./user";
 import {incomeFn} from "./income";
 import {projectFn} from "./project";
@@ -6,7 +7,7 @@ import {karmaFn} from "./karma";
 import {taskFn} from "./tasks";
 import {InteractionResponseType, InteractionType, verifyKey} from "discord-interactions";
 import {Request, Response} from "express";
-import {ApplicationCommandInteractionDataOption, Interaction} from "../create_command";
+import {ApplicationCommandInteractionDataOption, Interaction} from "../config";
 
 const CLIENT_PUBLIC_KEY = "76a1cf12caec747f872ee6ea064269d4acd2538b2f1e26f89853f93c32d045db";
 
@@ -32,15 +33,19 @@ const im = async (res:Response, interaction: Interaction, option:ApplicationComm
       await sendTxtLoading(res);
       return userFn(interaction, option.options[0], senderId);
     }
+    if (option.name === "login") {
+      await sendTxtLoading(res);
+      return loginFn(interaction, senderId);
+    }
     if (option.name === "doc") {
-      await sendTxt(res, `Voici la doc pou m'utiliser ! https://indiemakers.gitbook.io/bot/`);
+      await sendTxt(res, "Voici la doc pou m'utiliser ! https://indiemakers.gitbook.io/bot/");
       return Promise.resolve();
     }
     await sendTxt(res, `La Commande ${option.name} n'est pas pris en charge`);
     return Promise.resolve();
   } catch (err) {
     console.error("im", err);
-    return sendTxtLater(`La Commande ${option.name} a échoué`,[], interaction.application_id, interaction.token);
+    return sendTxtLater(`La Commande ${option.name} a échoué`, [], interaction.application_id, interaction.token);
   }
 };
 

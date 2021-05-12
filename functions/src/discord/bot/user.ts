@@ -1,8 +1,9 @@
-import {ApplicationCommandInteractionDataOption, Interaction} from "../create_command";
+import {ApplicationCommandInteractionDataOption, Interaction} from "../config";
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
-import {Embed, embed, field, getUserData, image, openDmChannel, sendDmChannel, sendTxtLater} from "./utils";
+import {Embed, embed, field, getUserData, image, openChannel, senChannel, sendTxtLater} from "./utils";
 import {Project} from "./project";
+const split = require("lodash.split");
 
 export interface User {
   userId: string,
@@ -64,6 +65,21 @@ const transformKey = (key: string): string => {
   }
 };
 
+const validValue = (key: string, value: any): boolean => {
+  switch (key) {
+    case "color":
+      return /^[a-zA-Z]+$/.test(value);
+    case "makerlogHook":
+      return String(value).startsWith("https://api.getmakerlog.com/apps/webhook/");
+    case "avatarUrl":
+      return String(value).startsWith("https://");
+    case "emoji":
+      return split(value, "").length === 1 && /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/.test(value);
+    default:
+      return true;
+  }
+};
+
 export const getUsersById = async (userId: string): Promise<User | null> => {
   try {
     const res = await firestore().collection("discord").doc(userId).get();
@@ -111,7 +127,7 @@ const userEdit = async (interaction: Interaction, options:ApplicationCommandInte
   };
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     const realKey = transformKey(element.name);
-    if (!userProtectedKey.includes(realKey)) {
+    if (!userProtectedKey.includes(realKey) && validValue(realKey, element.value)) {
       (update as any)[realKey] = element.value;
     }
   });
@@ -123,28 +139,29 @@ const userEdit = async (interaction: Interaction, options:ApplicationCommandInte
 };
 
 export const usersViewStreak = async (): Promise<Embed[]> => {
-  let embeds: Embed[] = [];
+  const embeds: Embed[] = [];
   const res = await getAllUsers();
   const limitStreak = dayjs();
   limitStreak.subtract(1, "day");
-  limitStreak.set("minute", 0);
-  limitStreak.set("hour", 0);
-  limitStreak.set("second", 0);
+  limitStreak.second(1);
+  limitStreak.minute(0);
+  limitStreak.hour(0);
   res.users = res.users.sort((firstEl: User, secondEl: User) => secondEl.streak - firstEl.streak);
-  res.users = res.users.filter((user: User) => user.lastTaskAt ? dayjs(user.lastTaskAt).isAfter(limitStreak) : false);
+  res.users = res.users.filter((user: User) => {
+    const lastTaskAt = dayjs(user.lastTaskAt);
+    return user.lastTaskAt && dayjs(limitStreak).isBefore(lastTaskAt);
+  });
   res.users.forEach((user: User) => {
     const fields = [
       field("🔥 Flammes", String(user.streak)),
       field("🕉 Karma", String(user.karma)),
       field("🌱 Projets", String(user.projects)),
-      field("💗 Taches", String(user.tasks))
+      field("💗 Taches", String(user.tasks)),
     ];
-    const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`;
+    const name = `${user.emoji || "👨‍🌾"} ${user.name || user.username}`;
     const thumb = image(user.avatarUrl);
-    const userCard = embed(name, "", user.color, fields, undefined, undefined, user.createdAt,thumb);
-    if (embeds.length < 10){
-      embeds.push(userCard);
-    }
+    const userCard = embed(name, "", user.color, fields, undefined, undefined, undefined, user.createdAt, thumb);
+    embeds.push(userCard);
   });
   return embeds;
 };
@@ -162,7 +179,18 @@ const userList = async (interaction: Interaction): Promise<void> => {
 const userListStreak = async (interaction: Interaction): Promise<void> => {
   const usersInfoCards = await usersViewStreak();
   console.log("userList", usersInfoCards);
-  return sendTxtLater(`Voici la liste des 10 premiers makers avec les flammes !\n`, usersInfoCards, interaction.application_id, interaction.token);
+  const res = await firestore().collection("discord").doc("config").get();
+  const data = res.data();
+  let limit = 10;
+  if (data) {
+    limit = data.ladderLimit;
+  }
+  await sendTxtLater(`Voici la liste des ${limit} premiers makers avec les flammes !\n`, [], interaction.application_id, interaction.token);
+  for (let index = 0; index < usersInfoCards.length && index < limit; index++) {
+    const card = usersInfoCards[index];
+    await senChannel(interaction.channel_id, "", card);
+  }
+  return Promise.resolve();
 };
 
 const userView = async (interaction: Interaction, myId:string, userId:string|undefined): Promise<void> => {
@@ -173,34 +201,39 @@ const userView = async (interaction: Interaction, myId:string, userId:string|und
       field("🔥 Flammes", String(user.streak)),
       field("🕉 Karma", String(user.karma)),
       field("🌱 Projets", String(user.projects)),
-      field("💗 Taches", String(user.tasks))
+      field("💗 Taches", String(user.tasks)),
     ];
-    const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`;
-    const bio = user.bio || 'Un jours je serais grand !';
+    const name = `${user.emoji || "👨‍🌾"} ${user.name || user.username}`;
+    const bio = user.bio || "Un jours je serais grand !";
+    console.log("userView", userId);
     const thumb = image(user.avatarUrl);
-    const userCard = embed(name, bio, user.color, fields, undefined, undefined, user.createdAt,thumb);
-    return sendTxtLater(`Voici les infos sur ce maker !\n`, [userCard], interaction.application_id, interaction.token);
+    const userCard = embed(name, bio, user.color, fields, undefined, undefined, undefined, user.createdAt, thumb);
+    return sendTxtLater("Voici les infos sur ce maker !\n", [userCard], interaction.application_id, interaction.token);
   } else if (user) {
-    console.log("userEdit", userId);
+    console.log("userView", myId);
     const fields = [
       field("🔥 Flammes", String(user.streak)),
       field("🕉 Karma", String(user.karma)),
       field("🌱 Projets", String(user.projects)),
-      field("💗 Taches", String(user.tasks))
+      field("💗 Taches", String(user.tasks)),
     ];
+    const fieldsAll = [];
     if (user.makerlogHook) {
-      fields.push(field("Makerlog", String(user.makerlogHook), false))
+      fieldsAll.push(field("Makerlog", String(user.makerlogHook), false));
     }
     if (user.wipApiKey) {
-      fields.push(field("WIP", String(user.wipApiKey), false))
+      fieldsAll.push(field("WIP", String(user.wipApiKey), false));
     }
-    const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`;
-    const bio = user.bio || 'Un jours je serais grand !';
+    const name = `${user.emoji || "👨‍🌾"} ${user.name || user.username}`;
+    const bio = user.bio || "Un jours je serais grand !";
     const thumb = image(user.avatarUrl);
-    const userCard = embed(name, bio, user.color, fields, undefined, undefined, user.createdAt,thumb);
+    const userCard = embed(name, bio, user.color, fields, undefined, undefined, undefined, user.createdAt, thumb);
+    const userCardAll = embed(name, "", user.color, fieldsAll, undefined, undefined, undefined, user.createdAt, thumb);
+    console.log("interaction.application_id", interaction.application_id);
     return Promise.all([
-      sendTxtLater("Je t'ai envoyé tes info en privé 🤫", [], interaction.application_id, interaction.token),
-      openDmChannel(myId).then((channel) => sendDmChannel(channel.id, `Voici tes infos !\n`, [userCard])),
+      sendTxtLater("Voici tes infos !\n", [userCard], interaction.application_id, interaction.token),
+      senChannel(interaction.channel_id, "Je t'ai envoyé plus d'info en privé 🤫"),
+      openChannel(myId).then((channel) => senChannel(channel.id, "Voici tes infos Privée !\n", userCardAll)),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater(`Je n'ai pas trouvé le maker : ${userId}`, [], interaction.application_id, interaction.token);

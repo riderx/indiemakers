@@ -160,7 +160,7 @@ const projetOptions = [
   ]),
   optionGen("logo", "L'url vers le logo de ton projet", SlashCommandOptionType.STRING),
   optionGen("emoji", "L'émoji qui correspond le plus a ton projet", SlashCommandOptionType.STRING),
-  optionGen("coouleur", "La couleur de ton projet", SlashCommandOptionType.STRING),
+  optionGen("couleur", "La couleur de ton projet", SlashCommandOptionType.STRING),
   optionGen("stripe_key", "L'url vers la webhook stripe pour get les charges en auto tous les lundi", SlashCommandOptionType.STRING),
 ];
 
@@ -170,7 +170,7 @@ const makerOptions = [
   optionGen("website", "Ton site perso", SlashCommandOptionType.STRING),
   optionGen("photo", "L'url vers ta photo", SlashCommandOptionType.STRING),
   optionGen("emoji", "L'émoji qui te correspond le plus", SlashCommandOptionType.STRING),
-  optionGen("coouleur", "Ta couleur préféré", SlashCommandOptionType.STRING),
+  optionGen("couleur", "Ta couleur préféré", SlashCommandOptionType.STRING),
   optionGen("makerlog_hook", "La web hook de ton compte makerlog, pour que le bot poste tes taches", SlashCommandOptionType.STRING),
   optionGen("wip_key", "La clé api de ton compte wip.co web hook, pour que le bot poste tes taches", SlashCommandOptionType.STRING),
 ];
@@ -210,10 +210,6 @@ const maker = optionGen("maker", "Gerer ton profil de maker", SlashCommandOption
   optionGen("flammes", "Voir la liste des makers avec des flammes", 1),
   optionGen("voir", "Voir un seul maker", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerIdOptional]),
 ]);
-if (makerOptions) {
-  console.log("yoyo");
-}
-
 
 const jsonData = {
   "name": "im",
@@ -225,6 +221,7 @@ const jsonData = {
     income,
     maker,
     optionGen("doc", "Lire la doc du bot", 1),
+    optionGen("login", "Login sur le site", 1),
   ],
 };
 

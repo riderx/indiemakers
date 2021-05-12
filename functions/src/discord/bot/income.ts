@@ -1,7 +1,7 @@
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
 import {sendTxtLater} from "./utils";
-import {Interaction, ApplicationCommandInteractionDataOption} from "../create_command";
+import {Interaction, ApplicationCommandInteractionDataOption} from "../config";
 
 export interface Income {
   id?: string,
@@ -60,9 +60,10 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
     createdAt: dayjs().toISOString(),
   };
   const date = dayjs();
-  date.set("minute", 0);
-  date.set("hour", 0);
-  date.set("second", 0);
+  date.second(1);
+  date.hour(0);
+  date.minute(0);
+  date.millisecond(0);
   date.date(1);
   options.forEach((element: any) => {
     if (element.name === "hashtag") {
@@ -70,13 +71,13 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
     } else if (element.name === "montant") {
       newIncome["ammount"] = Number(element.value);
     } else if (element.name === "mois") {
-      date.set("month", Number(element.value) - 1);
+      date.month(Number(element.value) - 1);
     } else if (element.name === "année") {
-      date.set("year", Number(element.value));
+      date.year(Number(element.value));
     }
   });
   if (newIncome["ammount"]) {
-    newIncome["status"] = newIncome["ammount"] < 0 ? 'expense' : 'income';
+    newIncome["status"] = newIncome["ammount"] < 0 ? "expense" : "income";
     newIncome["ammount"] = Math.abs(newIncome["ammount"]);
   }
   newIncome["date"] = date.toISOString();
@@ -94,9 +95,10 @@ const incomeEdit = async (interaction: Interaction, options: ApplicationCommandI
     updatedAt: dayjs().toISOString(),
   };
   const date = dayjs();
-  date.set("minute", 0);
-  date.set("hour", 0);
-  date.set("second", 0);
+  date.second(1);
+  date.hour(0);
+  date.minute(0);
+  date.millisecond(0);
   date.date(1);
   options.forEach((element: any) => {
     if (element.name === "hashtag") {
@@ -106,9 +108,9 @@ const incomeEdit = async (interaction: Interaction, options: ApplicationCommandI
     } else if (element.name === "status") {
       update["status"] = element.value;
     } else if (element.name === "mois") {
-      date.set("month", Number(element.value) - 1);
+      date.month(Number(element.value) -1);
     } else if (element.name === "année") {
-      date.set("year", Number(element.value));
+      date.year(Number(element.value));
     } else if (element.name === "id") {
       incomeId = element.value;
     }

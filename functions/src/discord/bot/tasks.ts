@@ -6,7 +6,7 @@ import {updateUser, User, getUsersById} from "./user";
 import {sendToWip, updateToWip} from "./wip";
 import {sendToMakerlog} from "./makerlog";
 import {getAllProjects, getProjectById, Project, updateProject} from "./project";
-import {Interaction, ApplicationCommandInteractionDataOption} from "../create_command";
+import {Interaction, ApplicationCommandInteractionDataOption} from "../config";
 
 enum TaskStatus {
   TODO = "todo",
@@ -109,9 +109,9 @@ const taskAdd = async (interaction: Interaction, options:ApplicationCommandInter
   const curUser = await getUsersById(userId);
   if (curUser) {
     const lastDay = dayjs();
-    lastDay.set("minute", 1);
-    lastDay.set("hour", 0);
-    lastDay.set("second", 0);
+    lastDay.second(1);
+    lastDay.minute(0);
+    lastDay.hour(0);
     return Promise.all([
       sendTxtLater(`La tache:\n${task["content"]}\nA été ajouté au projet #${projectId}, 🎉!`, [], interaction.application_id, interaction.token),
       getProjectById(userId, projectId).then(async (curProject) => {
@@ -169,15 +169,15 @@ const tasksView = async (interaction: Interaction, options:ApplicationCommandInt
   let projectId = "";
   let makerId = userId;
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    if (element.name === 'hashtag') {
+    if (element.name === "hashtag") {
       projectId = element.value || "";
-    } else if (element.name === 'maker') {
+    } else if (element.name === "maker") {
       makerId = element.value || "";
     }
   });
   if (projectId) {
     const allTaks = await getAllProjectsTasks(makerId, projectId);
-    const text = makerId === userId ? `Tu as fait un total de ${allTaks.total} sur ce projet, BRAVO 🎉!` : `<@${userId}> a fait un total de ${allTaks.total} sur ce projet, BRAVO 🎉!`
+    const text = makerId === userId ? `Tu as fait un total de ${allTaks.total} sur ce projet, BRAVO 🎉!` : `<@${userId}> a fait un total de ${allTaks.total} sur ce projet, BRAVO 🎉!`;
     let taskInfos = `${text}!\n\nVoici La liste:\n`;
     allTaks.tasks.forEach((element: Task) => {
       taskInfos += `${element.content} . Crée le ${dayjs(element.createdAt).format("DD/MM/YYYY")}\n`;

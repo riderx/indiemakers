@@ -3,8 +3,9 @@ import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
 import {embed, field, image, sendTxtLater} from "./utils";
 import {updateUser} from "./user";
-import {Interaction, ApplicationCommandInteractionDataOption} from "../create_command";
+import {Interaction, ApplicationCommandInteractionDataOption} from "../config";
 import {createProjectIncome, deleteProjectIncome, getAllProjectsIncomes, Income} from "./income";
+const split = require("lodash.split");
 
 export interface Project {
   id?: string,
@@ -38,6 +39,23 @@ const transformKey = (key: string): string => {
       return "stripeKey";
     default:
       return key;
+  }
+};
+
+const validValue = (key: string, value: any): boolean => {
+  switch (key) {
+    case "color":
+      return /^[a-zA-Z]+$/.test(value);
+    case "hashtag":
+      return /^[a-zA-Z]+$/.test(value);
+    case "stripeKey":
+      return String(value).startsWith("rk_live");
+    case "website":
+      return String(value).startsWith("https://");
+    case "emoji":
+      return split(value, "").length === 1 && /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/.test(value);
+    default:
+      return true;
   }
 };
 
@@ -193,7 +211,7 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     (newProj as any)[transformKey(element.name)] = element.value;
   });
-  if (newProj["hashtag"] && /^[a-zA-Z]+$/.test(newProj["hashtag"])) {
+  if (newProj["hashtag"] && validValue("hashtag", newProj["hashtag"])) {
     console.log("add project", newProj);
     return Promise.all([
       sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus avec \`/im tache\` ou remplir sa description avec \`/im projet modifier description: \`  💪!`, [], interaction.application_id, interaction.token),
@@ -211,8 +229,9 @@ const projectEdit = async (interaction: Interaction, options:ApplicationCommandI
     updatedAt: dayjs().toISOString(),
   };
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    if (!projectProtectedKey.includes(transformKey(element.name))) {
-      (update as any)[transformKey(element.name)] = element.value;
+    const realKey = transformKey(element.name);
+    if (!projectProtectedKey.includes(realKey) && validValue(realKey, element.value)) {
+      (update as any)[realKey] = element.value;
     }
   });
   if (update["hashtag"]) {
@@ -242,9 +261,9 @@ const projectView = async (interaction: Interaction, options:ApplicationCommandI
   let projectId = "";
   let makerId = userId;
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    if (element.name === 'hashtag') {
+    if (element.name === "hashtag") {
       projectId = element.value || "";
-    } else if (element.name === 'maker') {
+    } else if (element.name === "maker") {
       makerId = element.value || "";
     }
   });
@@ -253,17 +272,17 @@ const projectView = async (interaction: Interaction, options:ApplicationCommandI
     if (project) {
       const fields = [
         field("🔥 Flammes", String(project.streak)),
-        field("💗 Taches", String(project.tasks))
+        field("💗 Taches", String(project.tasks)),
       ];
       if (project.website) {
-        fields.push(field("Website", String(project.website), false))
+        fields.push(field("Website", String(project.website), false));
       }
-      const name = `${project.emoji || '🌱'} ${project.name || project.hashtag}`;
-      const bio = project.description || 'Je n\'ai pas encore de description, je suis jeune 👶!';
+      const name = `${project.emoji || "🌱"} ${project.name || project.hashtag}`;
+      const bio = project.description || "Je n'ai pas encore de description, je suis jeune 👶!";
       const thumb = project.logo ? image(project.logo) : undefined;
-      const projCard = embed(name, bio, project.color, fields, undefined, undefined, project.createdAt,thumb);
+      const projCard = embed(name, bio, project.color, fields, undefined, undefined, undefined, project.createdAt, thumb);
       console.log("projectView", projectId, makerId);
-      const text = makerId === userId ? 'Voici les infos sur ton projet !' : `Voici les infos sur le projet de <@${userId}> !`
+      const text = makerId === userId ? "Voici les infos sur ton projet !" : `Voici les infos sur le projet de <@${userId}> !`;
       return sendTxtLater(`${text}\n`, [projCard], interaction.application_id, interaction.token);
     } else {
       console.log("projectView", projectId, makerId);
