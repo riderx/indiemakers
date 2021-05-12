@@ -167,6 +167,7 @@ const projetOptions = [
 const makerOptions = [
   optionGen("nom", "Ton nom de Maker", SlashCommandOptionType.STRING),
   optionGen("bio", "Ta bio", SlashCommandOptionType.STRING),
+  optionGen("email", "Ton email", SlashCommandOptionType.STRING),
   optionGen("website", "Ton site perso", SlashCommandOptionType.STRING),
   optionGen("photo", "L'url vers ta photo", SlashCommandOptionType.STRING),
   optionGen("emoji", "L'émoji qui te correspond le plus", SlashCommandOptionType.STRING),

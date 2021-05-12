@@ -26,6 +26,9 @@ export const loginFn = async (interaction: Interaction, userId:string): Promise<
   if (user && user.avatarUrl) {
     loginImage = image(user.avatarUrl);
   }
+  if (!user?.email) {
+    return sendTxtLater("Tu dois d'abord ajouter ton email a ton profil", undefined, interaction.application_id, interaction.token);
+  }
   return Promise.all([
     sendTxtLater("Je t'ai envoyé ton lien de login en privé 🤫", undefined, interaction.application_id, interaction.token),
     login(userId)

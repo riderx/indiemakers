@@ -17,6 +17,7 @@ export interface User {
   projects: number,
   incomes: number,
   tasks: number,
+  email?: string,
   name?: string,
   bio?: string,
   website?: string,
