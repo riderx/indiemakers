@@ -14,5 +14,5 @@ fields.push(field("WIP", String("htjtjktjtjktjk"), false));
 const name = "👨‍🌾 Martin donadieu";
 const bio = "Un jours je serais grand !";
 const thumb = image("https://indiemakers.fr/_nuxt/img/cover-im@0.5x.da57ed6.png");
-const userCard = embed(name, bio, "#fff", fields, undefined, undefined, "user.createdAt", thumb);
+const userCard = embed(name, bio, "#fff", fields, undefined, undefined, "2011-10-05T14:48:00.000Z", undefined, thumb);
 openChannel("309008240274964480").then((channel:any) => senChannel(channel.id, "Voici tes infos !\n", userCard));
