@@ -54,17 +54,19 @@ footer: Footer| undefined = undefined,
 timestamp: string="",
 thumbnail: Image| undefined = undefined,
 image: Image| undefined = undefined
-): Embed => ({
-  title,
-  description,
-  color,
-  fields,
-  author,
-  footer,
-  timestamp,
-  thumbnail,
-  image
-});
+): Embed => {
+  const data: Embed = {title, author, footer, thumbnail, image, fields};
+  if (description && description !== "") {
+    data.description = description;
+  }
+  if (color && color !== "") {
+    data.color = color;
+  }
+  if (timestamp && timestamp !== "") {
+    data.timestamp = timestamp;
+  }
+  return data;
+};
 // [{
 //   "title": "🎙 INDIE MAKERS",
 //   "description": "Description de mon super project\n**yoyoyy**",
@@ -135,8 +137,11 @@ export const sendTxtLater = async (content:string, embeds: Embed[]= [], applicat
       content,
       embeds
     }
-    await axios.patch(url, body, {}).catch((err) => {
+    await axios.patch(url, body, {}).catch(async (err) => {
       console.error("sendTxtLater", err);
+      await axios.patch(url, {content: "🤖 Oups, previens mon créateur j\ai un bug!"}, {}).catch(async (errErr) => {
+        console.error("sendTxtLaterFallback", err, errErr);
+      });
       return err;
     });
     return Promise.resolve();

@@ -180,7 +180,7 @@ const karma = optionGen("karma", "Echange du karma avec un autre membre du disco
 ]);
 
 const projet = optionGen("projet", "Construit en public tes projets", SlashCommandOptionType.SUB_COMMAND_GROUP, undefined, undefined, [
-  optionGen("creer", "Cree ton projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, projetOptions),
+  optionGen("creer", "Cree ton projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag]),
   optionGen("modifier", "Modifie un de tes projets", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, projetOptions),
   optionGen("supprimer", "Supprime un de tes projets", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag]),
   optionGen("liste", "Voir la liste des projets d'un maker", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerIdOptional]),

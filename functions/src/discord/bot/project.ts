@@ -1,7 +1,7 @@
 import {getStripeCharges, Charge} from "./stripe_charges";
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
-import {sendTxtLater} from "./utils";
+import {embed, field, image, sendTxtLater} from "./utils";
 import {updateUser} from "./user";
 import {Interaction, ApplicationCommandInteractionDataOption} from "../create_command";
 import {createProjectIncome, deleteProjectIncome, getAllProjectsIncomes, Income} from "./income";
@@ -13,22 +13,25 @@ export interface Project {
   hashtag: string,
   emoji: string,
   color: string,
-  nom: string,
+  name: string,
   logo: string,
   description?: string,
+  category?: string,
   tasks: number,
   streak: number,
   lastTaskAt?:string,
   website?: string,
   stripeHook?: string,
 }
-const projectPublicKey = ["hashtag", "nom", "description", "logo", "emoji", "color", "taches", "flammes", "website"];
-const projectProtectedKey = ["taches", "flammes", "createdAt", "updatedAt", "lastTaskAt"];
+// const projectPublicKey = ["hashtag", "name", "description", "logo", "emoji", "color", "taches", "flammes", "website"];
+const projectProtectedKey = ["taches", "streak", "createdAt", "updatedAt", "lastTaskAt"];
 
 const transformKey = (key: string): string => {
   switch (key) {
     case "couleur":
       return "color";
+    case "categorie":
+      return "category";
     case "stripe_hook":
       return "stripeHook";
     default:
@@ -71,7 +74,7 @@ export const updateProject = async (userId: string, hashtag: string, project: Pa
   if (!userDoc.exists || !userDoc.data) {
     const newProject: Project = Object.assign({
       hashtag: "",
-      nom: "",
+      name: "",
       logo: "",
       emoji: "",
       color: "",
@@ -188,7 +191,7 @@ const projectAdd = async (interaction: Interaction, options:ApplicationCommandIn
   if (newProj["hashtag"]) {
     console.log("add project", newProj);
     return Promise.all([
-      sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus 💪!`, [], interaction.application_id, interaction.token),
+      sendTxtLater(`Tu as crée le projet:\n#${newProj["hashtag"]} 👏\nIl est temps de shiper ta premiere tache dessus avec \`/im tache\` ou remplir sa description avec \`/im projet modifier description: \`  💪!`, [], interaction.application_id, interaction.token),
       addStripe(userId, newProj["hashtag"], newProj["stripeHook"]),
       updateProject(userId, newProj["hashtag"], newProj),
       getAllProjects(userId).then((allProj) => updateUser(userId, {projects: allProj.length + 1})),
@@ -223,7 +226,7 @@ const projectList = async (interaction: Interaction, userId:string, me= false): 
   let projsInfo = "";
   const projects = await getAllProjects(userId);
   projects.forEach((proj: Project) => {
-    projsInfo += `${proj.nom} #${proj.hashtag} taches:${proj.tasks} flammes:${proj.streak} Crée le ${dayjs(proj.createdAt).format("DD/MM/YYYY")}\n`;
+    projsInfo += `${proj.name} #${proj.hashtag} taches:${proj.tasks} flammes:${proj.streak} Crée le ${dayjs(proj.createdAt).format("DD/MM/YYYY")}\n`;
   });
   console.log("project_list", projsInfo);
   const sentence = me ? "Voici la liste de tes projets !" : "Voici la liste des projets de <@${userId}> !";
@@ -231,7 +234,6 @@ const projectList = async (interaction: Interaction, userId:string, me= false): 
 };
 
 const projectView = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
-  let projInfo = "";
   let projId = "";
   let makerId = userId;
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
@@ -244,16 +246,20 @@ const projectView = async (interaction: Interaction, options:ApplicationCommandI
   if (projId) {
     const project = await getProjectById(makerId, projId);
     if (project) {
-      Object.keys(project).forEach((element: string) => {
-        if (projectPublicKey.includes(element)) {
-          if ((project as any)[element] && (project as any)[element] !== "") {
-            projInfo += `${element} : ${(project as any)[element]}\n`;
-          }
-        }
-      });
+      const fields = [
+        field("🔥 Flammes", String(project.streak)),
+        field("🚿 Taches", String(project.tasks))
+      ];
+      if (project.website) {
+        fields.push(field("Website", String(project.website), false))
+      }
+      const name = `${project.emoji || '🌱'} ${project.name || project.hashtag}`;
+      const bio = project.description || 'Je n\'ai pas encore de description, je suis jeune 👶!';
+      const thumb = project.logo ? image(project.logo) : undefined;
+      const projCard = embed(name, bio, project.color, fields, undefined, undefined, project.createdAt,thumb);
       console.log("projectView", projId, makerId);
       const text = makerId === userId ? 'Voici les infos sur ton projet !' : `Voici les infos sur le projet de <@${userId}> !`
-      return sendTxtLater(`${text}\n${projInfo}`, [], interaction.application_id, interaction.token);
+      return sendTxtLater(`${text}\n`, [projCard], interaction.application_id, interaction.token);
     } else {
       console.log("projectView", projId, makerId);
       return sendTxtLater(`Je ne trouve pas le projet ${projId} pour <@${makerId}>...`, [], interaction.application_id, interaction.token);
