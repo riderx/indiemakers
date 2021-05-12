@@ -36,7 +36,7 @@ const im = async (res:Response, interaction: Interaction, option:ApplicationComm
     return Promise.resolve();
   } catch (err) {
     console.error("im", err);
-    return sendTxtLater(`La Commande ${option.name} a échoué`, interaction.application_id, interaction.token);
+    return sendTxtLater(`La Commande ${option.name} a échoué`,[], interaction.application_id, interaction.token);
   }
 };
 

@@ -80,7 +80,7 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
   return Promise.all([
     getAllProjectsIncomes(senderId, projectId).then((curIncomes) => updateProjecttotalIncome(senderId, projectId, curIncomes.total + 1)),
     createProjectIncome(senderId, projectId, newIncome),
-    sendTxtLater(`Le revenue :\n${newIncome["status"]}: ${newIncome["ammount"]}\nA été ajouté au projet #${projectId}, 🎉!`, interaction.application_id, interaction.token),
+    sendTxtLater(`Le revenue :\n${newIncome["status"]}: ${newIncome["ammount"]}\nA été ajouté au projet #${projectId}, 🎉!`, [], interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };
 
@@ -113,7 +113,7 @@ const incomeEdit = async (interaction: Interaction, options: ApplicationCommandI
   update["date"] = date.toISOString();
   return Promise.all([
     updateProjectIncome(senderId, projectId, incomeId, update),
-    sendTxtLater(`Le revenue ${incomeId} a été mise a jours dans le projet #${projectId}, 🎉!`, interaction.application_id, interaction.token),
+    sendTxtLater(`Le revenue ${incomeId} a été mise a jours dans le projet #${projectId}, 🎉!`, [], interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };
 
@@ -125,9 +125,9 @@ const incomesView = async (interaction: Interaction, option: ApplicationCommandI
     allTaks.incomes.forEach((element: any) => {
       incomeInfos += `${element.text} . Crée le ${dayjs(element.createdAt).format("DD/MM/YYYY")}\n`;
     });
-    return sendTxtLater(incomeInfos, interaction.application_id, interaction.token);
+    return sendTxtLater(incomeInfos, [], interaction.application_id, interaction.token);
   } else {
-    return sendTxtLater(`Je ne trouve pas le projet ${projectId} 😅`, interaction.application_id, interaction.token);
+    return sendTxtLater(`Je ne trouve pas le projet ${projectId} 😅`, [], interaction.application_id, interaction.token);
   }
 };
 
@@ -145,7 +145,7 @@ const incomesDelete = async (interaction: Interaction, options: ApplicationComma
   return Promise.all([
     deleteProjectIncome(senderId, projectId, incomeId),
     updateProjecttotalIncome(senderId, projectId, curIncomes.total),
-    sendTxtLater(`Tu as supprimé le revenue ${incomeId} !`, interaction.application_id, interaction.token),
+    sendTxtLater(`Tu as supprimé le revenue ${incomeId} !`, [], interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve());
 };
 

@@ -184,7 +184,7 @@ const projet = optionGen("projet", "Construit en public tes projets", SlashComma
   optionGen("modifier", "Modifie un de tes projets", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, projetOptions),
   optionGen("supprimer", "Supprime un de tes projets", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag]),
   optionGen("liste", "Voir la liste des projets d'un maker", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerIdOptional]),
-  optionGen("voir", "Voir un seul projet et ses taches", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag]),
+  optionGen("voir", "Voir un seul projet et ses taches", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag, makerIdOptional]),
 ]);
 
 const income = optionGen("revenue", "Gerer les revenues d'un projet", SlashCommandOptionType.SUB_COMMAND_GROUP, undefined, undefined, [

@@ -230,19 +230,34 @@ const projectList = async (interaction: Interaction, userId:string, me= false): 
   return sendTxtLater(`${sentence}\n\n${projsInfo}`, [], interaction.application_id, interaction.token);
 };
 
-const projectView = async (interaction: Interaction, projId:string, userId:string): Promise<void> => {
+const projectView = async (interaction: Interaction, options:ApplicationCommandInteractionDataOption[], userId:string): Promise<void> => {
   let projInfo = "";
+  let projId = "";
+  let makerId = userId;
+  options.forEach((element: ApplicationCommandInteractionDataOption) => {
+    if (element.name === 'hashtag') {
+      projId = element.value || "";
+    } else if (element.name === 'maker') {
+      makerId = element.value || "";
+    }
+  });
   if (projId) {
-    const project = await getProjectById(userId, projId);
+    const project = await getProjectById(makerId, projId);
     if (project) {
       Object.keys(project).forEach((element: string) => {
         if (projectPublicKey.includes(element)) {
-          projInfo += `${element} : ${(project as any)[element]}\n`;
+          if ((project as any)[element] && (project as any)[element] !== "") {
+            projInfo += `${element} : ${(project as any)[element]}\n`;
+          }
         }
       });
+      console.log("projectView", projId, makerId);
+      const text = makerId === userId ? 'Voici les infos sur ton projet !' : `Voici les infos sur le projet de <@${userId}> !`
+      return sendTxtLater(`${text}\n${projInfo}`, [], interaction.application_id, interaction.token);
+    } else {
+      console.log("projectView", projId, makerId);
+      return sendTxtLater(`Je ne trouve pas le projet ${projId} pour <@${makerId}>...`, [], interaction.application_id, interaction.token);
     }
-    console.log("projectEdit", projInfo);
-    return sendTxtLater(`Voici les infos sur ton projet !\n${projInfo}`, [], interaction.application_id, interaction.token);
   } else {
     return sendTxtLater("Donne moi un projet !", [], interaction.application_id, interaction.token);
   }
@@ -273,7 +288,7 @@ export const projectFn = async (interaction:Interaction, option:ApplicationComma
   } if (option.name === "liste") {
     return projectList(interaction, userId, true);
   } if (option.name === "voir" && option.options && option.options.length > 0 && option.options[0].value) {
-    return projectView(interaction, option.options[0].value, userId);
+    return projectView(interaction, option.options, userId);
   } if (option.name === "supprimer" && option.options && option.options.length > 0) {
     return projectDelete(interaction, option.options[0], userId);
   }
