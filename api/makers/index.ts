@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
-import { Episode } from '../../services/feed'
+import { Episode, feed } from '../../services/feed'
+import { run } from '../../services/firebase_func'
 
 const findInEp = (name: string, episodes: Episode[]) => {
   let found = null
@@ -20,12 +21,10 @@ const findInEp = (name: string, episodes: Episode[]) => {
 }
 
 const loadData = async () => {
-  const util = require('../../plugins/feed')
-  const func = require('../../plugins/firebase_func')
   try {
-    const results = await func.run('getMakers')
+    const results = await run('getMakers')
     if (results) {
-      const episodes = await util.feed()
+      const episodes = await feed()
       return results.map((data: any) => {
         if (data.login) {
           data.guid = findInEp(data.login, episodes)
