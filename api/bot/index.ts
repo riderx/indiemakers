@@ -1,4 +1,3 @@
-import { VercelRequest, VercelResponse } from '@vercel/node'
 import { Request, Response } from 'express'
 
 import { verifyKey } from 'discord-interactions'
@@ -18,7 +17,7 @@ const CLIENT_PUBLIC_KEY =
     });
   }
 
-const bot = async (req: VercelRequest, res: VercelResponse) => {
+const bot = async (req: Request, res: Response) => {
   if (req.method !== 'POST') return res.status(404).end()
 
   try {
