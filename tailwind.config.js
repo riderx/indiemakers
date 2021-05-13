@@ -1,6 +1,7 @@
 const plugin = require('tailwindcss/plugin')
 
 module.exports = {
+  mode: 'jit',
   theme: {
     extend: {
       typography: theme => ({
