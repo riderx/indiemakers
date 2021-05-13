@@ -1,5 +1,8 @@
 {
   "version": 2,
+  "functions":[
+
+  ],
   "headers": [
     {
       "source": "/api.*",
