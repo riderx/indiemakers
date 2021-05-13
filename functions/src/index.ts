@@ -5,13 +5,13 @@ import {
   TwUser, twUserPromise,
 } from "./twitter";
 import {sendUserToRevue} from "./newletter";
-import discordInteraction from "./discord/bot";
+import discordInteraction from "../../services/discord/bot";
 import {Person} from "./types";
-import {updateRevenueAllProject} from "./discord/bot/stripe_charges";
+import {updateRevenueAllProject} from "../../services/discord/bot/stripe_charges";
 import dayjs from "dayjs";
 import {transformURLtoTracked} from "./tracker";
-import {usersViewStreak} from "./discord/bot/user";
-import {sendToWebhook} from "./discord/bot/utils";
+import {usersViewStreak} from "../../services/discord/bot/user";
+import {sendToWebhook} from "../../services/discord/bot/utils";
 import {verifyKey} from "discord-interactions";
 const CLIENT_PUBLIC_KEY = "76a1cf12caec747f872ee6ea064269d4acd2538b2f1e26f89853f93c32d045db";
 

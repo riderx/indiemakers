@@ -2,7 +2,7 @@ import { VercelRequest, VercelResponse } from '@vercel/node'
 import { Response } from 'express'
 
 import { verifyKey } from 'discord-interactions'
-import discordInteraction from '../../functions/src/discord/bot'
+import discordInteraction from '../../services/discord/bot'
 const CLIENT_PUBLIC_KEY =
   '76a1cf12caec747f872ee6ea064269d4acd2538b2f1e26f89853f93c32d045db'
 
