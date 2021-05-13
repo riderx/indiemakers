@@ -41,7 +41,6 @@
     "firebase-admin": "^9.8.0",
     "firebase-auth-lite": "^0.8.8",
     "firebase-firestore-lite": "^1.0.3",
-    "firebase-functions": "^3.14.0",
     "imagekit": "^3.1.2",
     "linkifyjs": "^3.0.0-beta.3",
     "nuxt": "^2.15.3",
