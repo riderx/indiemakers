@@ -11,7 +11,7 @@ import {updateRevenueAllProject} from "./discord/bot/stripe_charges";
 import dayjs from "dayjs";
 import {transformURLtoTracked} from "./tracker";
 import {usersViewStreak} from "./discord/bot/user";
-import { sendToWebhook } from './discord/bot/utils';
+import {sendToWebhook} from "./discord/bot/utils";
 import {verifyKey} from "discord-interactions";
 const CLIENT_PUBLIC_KEY = "76a1cf12caec747f872ee6ea064269d4acd2538b2f1e26f89853f93c32d045db";
 
@@ -234,7 +234,7 @@ export const discord_interaction = runWith(runtimeOpts).https.onRequest(async (r
     return res.status(401).end("Bad request signature");
   }
 
-  return discordInteraction(req.body, res)
+  return discordInteraction(req.body, res);
 });
 export const scheduledBotBIP = pubsub.schedule("0 18 * * *")
     .timeZone("Europe/Paris")
@@ -249,7 +249,7 @@ export const scheduledBotBIPMorning = pubsub.schedule("0 9 * * *")
     .onRun(async (context) => {
       console.log("This will be run every day at 9:00 AM Paris!");
       const usersInfoCards = await usersViewStreak();
-      await sendToWebhook(config().discord.biphook, `Hey Makers, Encore une belle journée pour shipper !\n\nContinuez comme ça !`, usersInfoCards);
+      await sendToWebhook(config().discord.biphook, "Hey Makers, Encore une belle journée pour shipper !\n\nContinuez comme ça !", usersInfoCards);
       if (dayjs().day() === 1) {
         await sendToWebhook(config().discord.genhook, "Hey Makers, Faites moi un petit récap de votre semaine 1 Bon point / 1 point relou, minimum 💪!");
         await updateRevenueAllProject();
