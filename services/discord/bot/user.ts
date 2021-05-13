@@ -1,4 +1,4 @@
-import {ApplicationCommandInteractionDataOption, Interaction} from "../create_command";
+import {ApplicationCommandInteractionDataOption, Interaction} from "../command";
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
 import {Embed, embed, field, getUserData, image, openDmChannel, sendDmChannel, sendTxtLater} from "./utils";

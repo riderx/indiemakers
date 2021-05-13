@@ -6,7 +6,7 @@ import {updateUser, User, getUsersById} from "./user";
 import {sendToWip, updateToWip} from "./wip";
 import {sendToMakerlog} from "./makerlog";
 import {getAllProjects, getProjectById, Project, updateProject} from "./project";
-import {Interaction, ApplicationCommandInteractionDataOption} from "../create_command";
+import {Interaction, ApplicationCommandInteractionDataOption} from "../command";
 
 enum TaskStatus {
   TODO = "todo",

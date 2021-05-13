@@ -226,10 +226,23 @@ const runtimeOpts: RuntimeOptions = {
   memory: "512MB",
 };
 
+function getRawBody(req: https.Request): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const bodyChunks: Buffer[] = [];
+    req.on("end", () => {
+      const rawBody = Buffer.concat(bodyChunks).toString("utf8");
+      resolve(rawBody);
+    });
+    req.on("data", (chunk) => bodyChunks.push(chunk));
+    return;
+  });
+}
+
 export const discord_interaction = runWith(runtimeOpts).https.onRequest(async (req, res) => {
   const signature = req.get("X-Signature-Ed25519") || "";
   const timestamp = req.get("X-Signature-Timestamp") || "";
-  const isValidRequest = await verifyKey(JSON.stringify(req.body), signature, timestamp, CLIENT_PUBLIC_KEY);
+  const rawBody = await getRawBody(res as any);
+  const isValidRequest = await verifyKey(rawBody, signature, timestamp, CLIENT_PUBLIC_KEY);
   if (!isValidRequest) {
     return res.status(401).end("Bad request signature");
   }
@@ -256,44 +269,3 @@ export const scheduledBotBIPMorning = pubsub.schedule("0 9 * * *")
       }
       return null;
     });
-
-// export const discord_login = functions.https.onRequest((req, res) => {
-//   const discordService = new DiscordService();
-
-//   const redirectUri = discordService.generateRedirectURI();
-
-//   return res.redirect(redirectUri);
-// });
-
-// export const discord_return = functions.https.onRequest(async(req, res) => {
-//   const discordService = new DiscordService();
-
-//   if (!req.query.code) {
-//     console.info('No code provided to discord oauth return');
-//     return res.status(StatusCodes.BAD_REQUEST).send('discord access token is missing.').end();
-//   }
-
-//   try {
-//     await discordService.getAccessToken(req.query.code as string);
-//     const user = await discordService.getProfile();
-//     const exists = await userExists(user.id);
-
-//     if (exists) {
-//       const authToken = await auth().createCustomToken(user.id);
-//       return res.redirect('/?' + qs.stringify({ token: authToken }));
-//     }
-
-//     const createdUser = await createUser({ uid: user.id }, user.avatar || undefined);
-
-//     const authToken = await auth().createCustomToken(createdUser.uid);
-//     return res.redirect('/?' + qs.stringify({ token: authToken }));
-//   } catch (e) {
-//     if (e instanceof InvalidCodeError) {
-//       console.warn('Provided with bad Discord Access token');
-//       return res.status(StatusCodes.BAD_REQUEST).send('Invalid OAuth Token.').end();
-//     } else {
-//       console.error(e);
-//       return res.status(500).send('Unknown Error Occurred').end();
-//     }
-//   }
-// });

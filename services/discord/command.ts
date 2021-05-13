@@ -1,8 +1,6 @@
 import axios from "axios";
 import * as dotenv from "dotenv";
 import {InteractionType} from "discord-interactions";
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
 
 dotenv.config();
 

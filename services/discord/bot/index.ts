@@ -6,7 +6,7 @@ import {karmaFn} from "./karma";
 import {taskFn} from "./tasks";
 import {InteractionResponseType, InteractionType} from "discord-interactions";
 import {Response} from "express";
-import {ApplicationCommandInteractionDataOption, Interaction} from "../create_command";
+import {ApplicationCommandInteractionDataOption, Interaction} from "../command";
 
 const im = async (res:Response, interaction: Interaction, option:ApplicationCommandInteractionDataOption, senderId:string): Promise<void> => {
   try {

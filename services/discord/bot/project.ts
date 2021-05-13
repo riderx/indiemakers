@@ -3,7 +3,7 @@ import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
 import {embed, field, image, sendTxtLater} from "./utils";
 import {updateUser} from "./user";
-import {Interaction, ApplicationCommandInteractionDataOption} from "../create_command";
+import {Interaction, ApplicationCommandInteractionDataOption} from "../command";
 import {createProjectIncome, deleteProjectIncome, getAllProjectsIncomes, Income} from "./income";
 
 export interface Project {
