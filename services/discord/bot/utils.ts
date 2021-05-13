@@ -1,7 +1,8 @@
 import {InteractionResponseType} from "discord-interactions";
 import {Response as Res} from "express";
 import axios from "axios";
-import admin from "firebase-admin";
+import {hexToDec} from "hex2dec";
+import {firestore} from "firebase-admin";
 
 interface DiscorUser {
   avatar: string,
@@ -26,7 +27,7 @@ interface Image {
   url: string,
 }
 export interface Embed {
-  title: string,
+  title?: string,
   description?: string,
   url?: string,
   color?: string,
@@ -45,62 +46,47 @@ interface DiscordMessage
 
 export const image = (url:string): Image => ({url});
 export const footer = (text: string, icon_url: string): Footer => ({text, icon_url});
-export const author = (name: string, url: string, icon_url: string): Author => ({name,  url,  icon_url});
+export const author = (name: string, url: string, icon_url: string): Author => ({name, url, icon_url});
 export const field = (name:string, value:string, inline=true): Field => ({name, value, inline});
-export const embed = (title:string, description:string="",
-color:string="", fields: Field[]=[],
-author:Author| undefined = undefined,
-footer: Footer| undefined = undefined,
-timestamp: string="",
-thumbnail: Image| undefined = undefined,
-image: Image| undefined = undefined
+export const embed = (title:string| undefined = undefined, description="",
+    color="", fields: Field[]=[],
+    author:Author| undefined = undefined,
+    footer: Footer| undefined = undefined,
+    timestamp="",
+    url="",
+    thumbnail: Image| undefined = undefined,
+    image: Image| undefined = undefined
 ): Embed => {
-  const data: Embed = {title, author, footer, thumbnail, image, fields};
+  const data: Embed = {fields};
+  if (title && title !== "") {
+    data.title = title;
+  }
+  if (url && url !== "") {
+    data.url = url;
+  }
   if (description && description !== "") {
     data.description = description;
   }
   if (color && color !== "") {
-    data.color = color;
+    data.color = hexToDec(`0x${color}`);
   }
   if (timestamp && timestamp !== "") {
     data.timestamp = timestamp;
   }
+  if (footer) {
+    data.footer = footer;
+  }
+  if (author) {
+    data.author = author;
+  }
+  if (thumbnail) {
+    data.thumbnail = thumbnail;
+  }
+  if (image) {
+    data.image = image;
+  }
   return data;
 };
-// [{
-//   "title": "🎙 INDIE MAKERS",
-//   "description": "Description de mon super project\n**yoyoyy**",
-//   "color": 4925339,
-//   "fields": [
-//     {
-//       "name": "Flammes",
-//       "value": "10",
-//       "inline": true
-//     },
-//     {
-//       "name": "Taches",
-//       "value": "34",
-//       "inline": true
-//     },
-//     {
-//       "name": "Site",
-//       "value": "https://indiemakers.fr"
-//     }
-//   ],
-//   "author": {
-//     "name": "Martin Donadieu",
-//     "url": "https://martin.com",
-//     "icon_url": "https://makerlog-storage.s3.amazonaws.com/media/uploads/avatars/2021/04/22/profil_martin.png?tr="
-//   },
-//   "footer": {
-//     "text": "Derniere tache"
-//   },
-//   "timestamp": "2021-05-03T23:00:00.000Z",
-//   "thumbnail": {
-//     "url": "https://indiemakers.fr/_nuxt/img/cover-im@0.5x.da57ed6.png"
-//   }
-// },]
-
 
 export const sendTxt = (res: Res, text:string): Res => res.send({
   type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -111,7 +97,7 @@ export const sendTxt = (res: Res, text:string): Res => res.send({
 
 export const getUserData = async (userId: string): Promise<DiscorUser| undefined> => {
   const url = `https://discord.com/api/v8/users/${userId}`;
-  const data = (await admin.firestore().collection("bot").doc("config").get()).data();
+  const data = (await firestore().collection("bot").doc("config").get()).data();
   if (!data) {
     return Promise.resolve(undefined);
   }
@@ -139,11 +125,11 @@ export const sendTxtLater = async (content:string, embeds: Embed[]= [], applicat
   try {
     const body: DiscordMessage = {
       content,
-      embeds
-    }
-    await axios.patch(url, body, {}).catch(async (err) => {
+      embeds,
+    };
+    await axios.patch(url, body).catch(async (err) => {
       console.error("sendTxtLater", err);
-      await axios.patch(url, {content: "🤖 Oups, previens mon créateur j\ai un bug!"}, {}).catch(async (errErr) => {
+      await axios.patch(url, {content: "🤖 Oups, previens mon créateur j'ai un bug!"}).catch(async (errErr) => {
         console.error("sendTxtLaterFallback", err, errErr);
       });
       return err;
@@ -155,52 +141,40 @@ export const sendTxtLater = async (content:string, embeds: Embed[]= [], applicat
   }
 };
 
-export const openDmChannel = async (userId: string): Promise<any> => {
+export const openChannel = async (userId: string): Promise<any> => {
   const url = "https://discord.com/api/v8/users/@me/channels";
-  const data = (await admin.firestore().collection("bot").doc("config").get()).data();
+  const data = (await firestore().collection("bot").doc("config").get()).data();
   if (!data) {
     return Promise.resolve(undefined);
   }
   const headers = {
-    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.bot_token}`,
+    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token}`,
   };
   const res = await axios.post(url, {recipient_id: userId}, {headers})
       .catch((err) => {
-        console.error("openDmChannel", err);
+        console.error("openChannel", err);
         return err;
       });
   return Promise.resolve(res.data as any);
 };
 // https://discord.com/api/webhooks/841492487125598218/b0Rvbv41Uy2w6UxUutctXYeKYd0QAXOKnjhgCOTOyfjSs9hgpYOPxjizWiu4vi-s17nX
 
-export const sendDmChannel = async (channelId: string, content: string, embed: Embed[]= []): Promise<any> => {
+export const senChannel = async (channelId: string, content: string, embed: Embed| undefined = undefined): Promise<any> => {
   const url = `https://discord.com/api/v8/channels/${channelId}/messages`;
-  const data = (await admin.firestore().collection("bot").doc("config").get()).data();
+  const data = (await firestore().collection("bot").doc("config").get()).data();
   if (!data) {
     return Promise.resolve(undefined);
   }
   const headers = {
-    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.bot_token}`,
+    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token}`,
   };
-  const res = await axios.post(url, {content, embed}, {headers})
-      .catch((err) => {
-        console.error("sendDmChannel", err);
-        return err;
-      });
-  return Promise.resolve(res.data as any);
-};
-
-export const sendToWebhook = async (webhook: string, content: string, embed: Embed[]= []): Promise<any> => {
-  const data = (await admin.firestore().collection("bot").doc("config").get()).data();
-  if (!data) {
-    return Promise.resolve(undefined);
+  const body: any = {content};
+  if (embed) {
+    body.embed = embed;
   }
-  const headers = {
-    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.bot_token}`,
-  };
-  const res = await axios.post(webhook, {content, embed}, {headers})
+  const res = await axios.post(url, body, {headers})
       .catch((err) => {
-        console.error("sendToWebhook", err);
+        console.error("senChannel", err);
         return err;
       });
   return Promise.resolve(res.data as any);

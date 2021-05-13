@@ -1,7 +1,7 @@
 import {ApplicationCommandInteractionDataOption, Interaction} from "../command";
 import {firestore} from "firebase-admin";
 import dayjs from "dayjs";
-import {Embed, embed, field, getUserData, image, openDmChannel, sendDmChannel, sendTxtLater} from "./utils";
+import {Embed, embed, field, getUserData, image, openChannel, sendChannel, sendTxtLater} from "./utils";
 import {Project} from "./project";
 
 export interface User {
@@ -141,7 +141,7 @@ export const usersViewStreak = async (): Promise<Embed[]> => {
     ];
     const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`;
     const thumb = image(user.avatarUrl);
-    const userCard = embed(name, "", user.color, fields, undefined, undefined, user.createdAt,thumb);
+    const userCard = embed(name, "", user.color, fields, undefined, undefined, undefined,  user.createdAt,thumb);
     if (embeds.length < 10){
       embeds.push(userCard);
     }
@@ -178,7 +178,7 @@ const userView = async (interaction: Interaction, myId:string, userId:string|und
     const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`;
     const bio = user.bio || 'Un jours je serais grand !';
     const thumb = image(user.avatarUrl);
-    const userCard = embed(name, bio, user.color, fields, undefined, undefined, user.createdAt,thumb);
+    const userCard = embed(name, bio, user.color, fields, undefined, undefined, undefined, user.createdAt,thumb);
     return sendTxtLater(`Voici les infos sur ce maker !\n`, [userCard], interaction.application_id, interaction.token);
   } else if (user) {
     console.log("userEdit", userId);
@@ -197,10 +197,10 @@ const userView = async (interaction: Interaction, myId:string, userId:string|und
     const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`;
     const bio = user.bio || 'Un jours je serais grand !';
     const thumb = image(user.avatarUrl);
-    const userCard = embed(name, bio, user.color, fields, undefined, undefined, user.createdAt,thumb);
+    const userCard = embed(name, bio, user.color, fields, undefined, undefined, undefined, user.createdAt,thumb);
     return Promise.all([
       sendTxtLater("Je t'ai envoyé tes info en privé 🤫", [], interaction.application_id, interaction.token),
-      openDmChannel(myId).then((channel) => sendDmChannel(channel.id, `Voici tes infos !\n`, [userCard])),
+      openChannel(myId).then((channel) => sendChannel(channel.id, `Voici tes infos !\n`, [userCard])),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater(`Je n'ai pas trouvé le maker : ${userId}`, [], interaction.application_id, interaction.token);
