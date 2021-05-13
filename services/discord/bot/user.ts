@@ -200,7 +200,7 @@ const userView = async (interaction: Interaction, myId:string, userId:string|und
     const userCard = embed(name, bio, user.color, fields, undefined, undefined, undefined, user.createdAt,thumb);
     return Promise.all([
       sendTxtLater("Je t'ai envoyé tes info en privé 🤫", [], interaction.application_id, interaction.token),
-      openChannel(myId).then((channel) => sendChannel(channel.id, `Voici tes infos !\n`, [userCard])),
+      openChannel(myId).then((channel) => sendChannel(channel.id, `Voici tes infos !\n`, userCard)),
     ]).then(() => Promise.resolve());
   } else {
     return sendTxtLater(`Je n'ai pas trouvé le maker : ${userId}`, [], interaction.application_id, interaction.token);

@@ -261,7 +261,7 @@ const projectView = async (interaction: Interaction, options:ApplicationCommandI
       const name = `${project.emoji || '🌱'} ${project.name || project.hashtag}`;
       const bio = project.description || 'Je n\'ai pas encore de description, je suis jeune 👶!';
       const thumb = project.logo ? image(project.logo) : undefined;
-      const projCard = embed(name, bio, project.color, fields, undefined, undefined, project.createdAt,thumb);
+      const projCard = embed(name, bio, project.color, fields, undefined, undefined, undefined, project.createdAt, thumb);
       console.log("projectView", projectId, makerId);
       const text = makerId === userId ? 'Voici les infos sur ton projet !' : `Voici les infos sur le projet de <@${userId}> !`
       return sendTxtLater(`${text}\n`, [projCard], interaction.application_id, interaction.token);

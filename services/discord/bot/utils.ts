@@ -159,7 +159,7 @@ export const openChannel = async (userId: string): Promise<any> => {
 };
 // https://discord.com/api/webhooks/841492487125598218/b0Rvbv41Uy2w6UxUutctXYeKYd0QAXOKnjhgCOTOyfjSs9hgpYOPxjizWiu4vi-s17nX
 
-export const senChannel = async (channelId: string, content: string, embed: Embed| undefined = undefined): Promise<any> => {
+export const sendChannel = async (channelId: string, content: string, embed: Embed| undefined = undefined): Promise<any> => {
   const url = `https://discord.com/api/v8/channels/${channelId}/messages`;
   const data = (await firestore().collection("bot").doc("config").get()).data();
   if (!data) {
@@ -174,7 +174,7 @@ export const senChannel = async (channelId: string, content: string, embed: Embe
   }
   const res = await axios.post(url, body, {headers})
       .catch((err) => {
-        console.error("senChannel", err);
+        console.error("sendChannel", err);
         return err;
       });
   return Promise.resolve(res.data as any);
