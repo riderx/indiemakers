@@ -11,7 +11,7 @@ import {updateRevenueAllProject} from "../../services/discord/bot/stripe_charges
 import dayjs from "dayjs";
 import {transformURLtoTracked} from "./tracker";
 import {usersViewStreak} from "../../services/discord/bot/user";
-import {sendToWebhook} from "../../services/discord/bot/utils";
+import {senChannel} from "../../services/discord/bot/utils";
 import {verifyKey} from "discord-interactions";
 const CLIENT_PUBLIC_KEY = "76a1cf12caec747f872ee6ea064269d4acd2538b2f1e26f89853f93c32d045db";
 
@@ -253,7 +253,11 @@ export const scheduledBotBIP = pubsub.schedule("0 18 * * *")
     .timeZone("Europe/Paris")
     .onRun(async (context) => {
       console.log("This will be run every day at 18:00 AM Paris!");
-      await sendToWebhook(config().discord.biphook, "Hey Makers, il est temps de noter vos taches dans vos projets et d'aller chill !");
+      const res = await admin.firestore().collection("bot").doc("config").get();
+      const data = res.data();
+      if (data) {
+        await senChannel(data.channel_bip, "Hey Makers, il est temps de noter vos taches dans vos projets et d'aller chill !");
+      }
       return null;
     });
 
@@ -261,11 +265,19 @@ export const scheduledBotBIPMorning = pubsub.schedule("0 9 * * *")
     .timeZone("Europe/Paris")
     .onRun(async (context) => {
       console.log("This will be run every day at 9:00 AM Paris!");
-      const usersInfoCards = await usersViewStreak();
-      await sendToWebhook(config().discord.biphook, "Hey Makers, Encore une belle journée pour shipper !\n\nContinuez comme ça !", usersInfoCards);
-      if (dayjs().day() === 1) {
-        await sendToWebhook(config().discord.genhook, "Hey Makers, Faites moi un petit récap de votre semaine 1 Bon point / 1 point relou, minimum 💪!");
-        await updateRevenueAllProject();
+      const res = await admin.firestore().collection("bot").doc("config").get();
+      const data = res.data();
+      if (data) {
+        const usersInfoCards = await usersViewStreak();
+        await senChannel(data.channel_bip, "Hey Makers, Encore une belle journée pour shipper !\n\nContinuez comme ça !");
+        for (let index = 0; index < usersInfoCards.length && index < data.ladderLimit; index++) {
+          const card = usersInfoCards[index];
+          await senChannel(data.channel_bip, "", card);
+        }
+        if (dayjs().day() === 1) {
+          await senChannel(data.channel_general, "Hey Makers, Faites moi un petit récap de votre semaine 1 Bon point / 1 point relou, minimum 💪!"),
+          await updateRevenueAllProject();
+        }
       }
       return null;
     });

@@ -1,7 +1,7 @@
 import {InteractionResponseType} from "discord-interactions";
-import {config} from "firebase-functions";
 import {Response as Res} from "express";
 import axios from "axios";
+import admin from "firebase-admin";
 
 interface DiscorUser {
   avatar: string,
@@ -111,8 +111,12 @@ export const sendTxt = (res: Res, text:string): Res => res.send({
 
 export const getUserData = async (userId: string): Promise<DiscorUser| undefined> => {
   const url = `https://discord.com/api/v8/users/${userId}`;
+  const data = (await admin.firestore().collection("bot").doc("config").get()).data();
+  if (!data) {
+    return Promise.resolve(undefined);
+  }
   const headers = {
-    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : config().discord.bot_token}`,
+    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.bot_token}`,
   };
   try {
     const res = await axios.get(url, {headers});
@@ -153,8 +157,12 @@ export const sendTxtLater = async (content:string, embeds: Embed[]= [], applicat
 
 export const openDmChannel = async (userId: string): Promise<any> => {
   const url = "https://discord.com/api/v8/users/@me/channels";
+  const data = (await admin.firestore().collection("bot").doc("config").get()).data();
+  if (!data) {
+    return Promise.resolve(undefined);
+  }
   const headers = {
-    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : config().discord.bot_token}`,
+    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.bot_token}`,
   };
   const res = await axios.post(url, {recipient_id: userId}, {headers})
       .catch((err) => {
@@ -167,8 +175,12 @@ export const openDmChannel = async (userId: string): Promise<any> => {
 
 export const sendDmChannel = async (channelId: string, content: string, embed: Embed[]= []): Promise<any> => {
   const url = `https://discord.com/api/v8/channels/${channelId}/messages`;
+  const data = (await admin.firestore().collection("bot").doc("config").get()).data();
+  if (!data) {
+    return Promise.resolve(undefined);
+  }
   const headers = {
-    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : config().discord.bot_token}`,
+    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.bot_token}`,
   };
   const res = await axios.post(url, {content, embed}, {headers})
       .catch((err) => {
@@ -179,8 +191,12 @@ export const sendDmChannel = async (channelId: string, content: string, embed: E
 };
 
 export const sendToWebhook = async (webhook: string, content: string, embed: Embed[]= []): Promise<any> => {
+  const data = (await admin.firestore().collection("bot").doc("config").get()).data();
+  if (!data) {
+    return Promise.resolve(undefined);
+  }
   const headers = {
-    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : config().discord.bot_token}`,
+    "Authorization": `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.bot_token}`,
   };
   const res = await axios.post(webhook, {content, embed}, {headers})
       .catch((err) => {
