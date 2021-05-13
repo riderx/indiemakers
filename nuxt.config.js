@@ -116,7 +116,6 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     'vue-warehouse/nuxt',
-    '@nuxtjs/component-cache',
     '@nuxtjs/sentry',
     [
       'nuxt-font-loader-strategy',
