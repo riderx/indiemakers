@@ -164,7 +164,7 @@ export default {
     // analyze: true,
   },
   purgeCSS: {
-    whitelistPatterns: [/vm--/, /icon--/, /label--/, /vue-dialog/, /vue-modal/]
+    whitelistPatterns: [/vm--/, /icon--/, /label--/, /vue-dialog/, /vue-modal/],
   },
   sentry: {
     dsn: 'https://1e9603c479b54389ab04a4be985e1768@o449238.ingest.sentry.io/5431873', // Enter your project's DSN here
