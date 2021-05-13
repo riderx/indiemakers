@@ -1,30 +1,28 @@
 {
   "version": 2,
-  "env": {
-      "ON_VERCEL": "true"
-  },
-  "builds": [
-      {
-        "src": "api/**/*.ts",
-        "use": "@vercel/node"
-      },
-      {
-        "src": "nuxt.config.js",
-        "use": "@nuxtjs/vercel-builder",
-        "config": {
-          "serverFiles": [
-            "server-middleware/**",
-            ".nuxt/content/**",
-            "content/**"
-          ]
+  "headers": [
+    {
+      "source": "/api.*",
+      "headers" : [
+        {
+          "key" : "Cache-Control",
+          "value" : "max-age=0, s-maxage=1, stale-while-revalidate"
         }
-      }
+      ]
+    },
+    {
+      "source": "/_nuxt/.+",
+      "headers" : [
+        {
+          "key" : "Cache-Control",
+          "value" : "max-age=14400, s-maxage=1, stale-while-revalidate"
+        }
+      ]
+    }
   ],
-  "routes": [
-    { "src": "/api.*", "headers": { "Cache-Control": "max-age=0, s-maxage=1, stale-while-revalidate" }, "continue": true },
-    { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=14400, s-maxage=1, stale-while-revalidate" }, "continue": true },
-    { "src": "/sitemap.xml", "dest": "/api/sitemap" },
-    { "src": "/rss.xml", "dest": "/api/rss" },
-    { "src": "^/(?!.*api)(.*)$", "dest": "$1" }
-  ]
+  "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" },
+    { "source": "/rss.xml", "destination": "/api/rss" },
+    { "source": "^/(?!.*api)(.*)$", "destination": "$1" }
+  ],
 }
