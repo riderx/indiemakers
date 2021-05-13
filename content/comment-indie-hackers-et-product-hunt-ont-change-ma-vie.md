@@ -8,14 +8,14 @@ description: J'ai aussi découvert des sites comme Product Hunt et Indie Hackers
   partageaient le travail incroyable que faisaient les makers et promouvaient l'image
   que tout le monde pouvait être un maker indé.
 type: Article
-headImage: "/images/joshua-aragon-eab4ml7c7fe-unsplash.jpg"
+headImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fjoshua-aragon-eab4ml7c7fe-unsplash.jpg?alt=media&token=ac9c900d-6c8a-48ee-8c1c-da02f5770c37"
 readTime: 15 min
 date: 30 avril 2021
 author: Martin donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
-<img class="w-full rounded-lg" src="/images/joshua-aragon-eab4ml7c7fe-unsplash.jpg" alt="illustration indie hacker" width="1310" height="873">
+<img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fjoshua-aragon-eab4ml7c7fe-unsplash.jpg?alt=media&token=ac9c900d-6c8a-48ee-8c1c-da02f5770c37" alt="illustration indie hacker" width="1310" height="873">
   
 
 <p class="text-xs">Photo by <a href="https://unsplash.com/@goshua13?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Joshua Aragon</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>

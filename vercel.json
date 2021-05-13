@@ -3,11 +3,6 @@
   "env": {
       "ON_VERCEL": "true"
   },
-  "functions": {
-    "api/**/*.ts": {
-      "includeFiles": "services/*.ts"
-    }
-  },
   "builds": [
       {
         "src": "api/**/*.ts",

@@ -36,6 +36,8 @@ build/Release
 
 # Dependency directories
 node_modules/
+node_modules_dev/
+node_modules_prod/
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -88,3 +90,5 @@ sw.*
 
 # Vim swap files
 *.swp
+
+.vercel
