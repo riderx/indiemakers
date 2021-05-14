@@ -66,7 +66,7 @@
             v-for="project in user.projectsData"
             :key="project.hashtag"
             class="flex-none my-4 ml-3 md:my-2 lg:my-4 md:ml-0"
-            @click="selectProject(project)"
+            @click="projectId = project.hashtag"
           >
             <div class="relative flex items-end">
               <img
@@ -98,7 +98,7 @@
           </div>
         </div>
       </div>
-      <div class="md:w-4/5 md:mx-2">
+      <div v-if="user.projectsData && loadedProject" class="md:w-4/5 md:mx-2">
         <div
           class="
             flex flex-col
@@ -143,37 +143,53 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { discordMakerId, discordProjectId } from '~/services/rss'
+import { Project } from '~/services/discord/bot/project'
+import { User } from '~/services/discord/bot/user'
+
 export default {
   components: {
     ListTasks: () => import('~/components/ListTasks.vue'),
   },
   async asyncData({ params, $config }) {
     const user = await discordMakerId($config, params.id)
-    return { user }
+    if (user && user.projectsData && user.projectsData.length > 0) {
+      return { user, projectId: user.projectsData[0].hashtag }
+    }
+    return { user, projectId: null }
   },
   data() {
     return {
-      projectId: null,
+      user: null as User,
+      projectData: null as Project,
+      projectId: '',
       loaded: false,
-      projectData: {},
+      loadedProject: false,
     }
   },
-  async mounted() {
-    if (this.user.projectData) {
-      await this.selectProject(this.user.projectData[0])
-    }
+  watch: {
+    // whenever question changes, this function will run
+    projectId(newId) {
+      console.log('watch', newId)
+      this.getProject(newId)
+    },
+  },
+  mounted() {
+    // this.projectId = this.user.projectsData[0].hashtag
+    console.log('this.projectId', this.projectId)
+    this.getProject(this.projectId)
     this.loaded = true
   },
   methods: {
-    getProject(id) {
-      return discordProjectId(this.$config, this.user.userId, id)
-    },
-    async selectProject(project) {
-      this.projectId = project.hashtag
-      this.projectData = await this.getProject(this.projectId)
-      console.log('project', this.projectData)
+    async getProject(id: string) {
+      this.loadedProject = false
+      this.projectData = await discordProjectId(
+        this.$config,
+        this.user.userId,
+        id
+      )
+      this.loadedProject = true
     },
     goHome() {
       this.$router.push('/')

@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { NuxtConfig } from '@nuxt/types'
+import { User } from './discord/bot/user'
+import { Project } from './discord/bot/project'
 export const domain = (VERCEL_URL: string, DOMAIN: string) => {
   return VERCEL_URL ? `https://${VERCEL_URL}` : DOMAIN
 }
@@ -23,7 +25,7 @@ export const discordProjectId = (
   $config: NuxtConfig,
   userId: string,
   id: string
-) => {
+): Promise<Project> => {
   const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
     $config.BASEAPI
   }/project?uid=${userId}&id=${id}`
@@ -38,7 +40,10 @@ export const discordProjectId = (
     })
 }
 
-export const discordMakerId = ($config: NuxtConfig, id: string) => {
+export const discordMakerId = (
+  $config: NuxtConfig,
+  id: string
+): Promise<User> => {
   const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
     $config.BASEAPI
   }/maker?id=${id}`

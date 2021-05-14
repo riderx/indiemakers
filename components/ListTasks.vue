@@ -6,33 +6,28 @@
       </button>
       <div class="flex mb-5 border-b-2 lg:mb-10 border-royalblue-700">
         <button
-          class="
-            px-2
-            mr-3
-            text-2xl
-            border-b-2
-            text-royalblue-700
-            border-royalblue-700
-            focus:outline-none
-          "
+          class="px-2 mr-3 text-2xl text-royalblue-700 focus:outline-none"
+          :class="{
+            'border-b-2 border-royalblue-700 ': status === 'done',
+            'opacity-50': status === 'todo',
+          }"
+          @click="status = 'done'"
         >
           Done
         </button>
         <button
-          class="
-            mr-3
-            text-2xl
-            opacity-50
-            text-royalblue-700
-            px2
-            focus:outline-none
-          "
+          class="mr-3 text-2xl text-royalblue-700 px2 focus:outline-none"
+          :class="{
+            'border-b-2': status === 'todo',
+            'opacity-50': status === 'done',
+          }"
+          @click="status = 'todo'"
         >
           To do
         </button>
       </div>
       <article
-        v-for="task in tasks"
+        v-for="task in filterTasks"
         :key="task.id"
         class="py-5 border-b-2 lg:mx-10 border-orchid-300"
       >
@@ -47,7 +42,8 @@
   </LazyHydrate>
 </template>
 
-<script>
+<script lang="ts">
+import { Task } from '~/services/discord/bot/tasks'
 export default {
   name: 'ListTasks',
   components: {
@@ -56,23 +52,24 @@ export default {
   props: {
     tasks: {
       type: Array,
-      default: () => [
-        {
-          id: 'biub',
-          content: 'super task',
-          status: 'todo',
-          doneAt: false,
-          createdAt: '12-05-2020',
-        },
-        {
-          id: 'biub2',
-          content: 'super task',
-          status: 'todo',
-          doneAt: false,
-          createdAt: '12-05-2020',
-        },
-      ],
+      default: () => [],
     },
+  },
+  data() {
+    return {
+      filterTasks: [],
+      status: 'done',
+    }
+  },
+  watch: {
+    // whenever question changes, this function will run
+    status(newStatus) {
+      this.filterTasks = this.tasks.filter((a: Task) => a.status === newStatus)
+    },
+  },
+  mounted() {
+    // this.projectId = this.user.projectsData[0].hashtag
+    this.filterTasks = this.tasks.filter((a: Task) => a.status === this.status)
   },
 }
 </script>
