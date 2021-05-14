@@ -309,7 +309,7 @@ const userView = async (
   }
 }
 
-export const userFn = async (
+export const userFn = (
   interaction: Interaction,
   option: ApplicationCommandInteractionDataOption,
   senderId: string
