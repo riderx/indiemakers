@@ -13,5 +13,6 @@ module.exports = {
   // add your custom rules here
   rules: {
     'no-unused-vars': ['error', { args: 'after-used' }],
+    'no-console': ['error', { allow: ['off', 'error'] }],
   },
 }
