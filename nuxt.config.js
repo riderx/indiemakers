@@ -7,7 +7,7 @@ export default {
   target: 'server',
   publicRuntimeConfig: {
     DOMAIN:
-      process.env.NODE_ENV && process.env.ON_VERCEL === 'production'
+      process.env.NODE_ENV && isServerlessEnvironment
         ? `https://${process.env.VERCEL_URL}`
         : 'http://localhost:3000',
     BASEAPI: 'api',
