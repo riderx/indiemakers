@@ -10,7 +10,7 @@ headImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com
 readTime: 8 min
 date: 01 mai 2021
 author: Martin Donadieu
-authorImage: "/images/profil_martin.png"
+authorImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fprofil_martin.png?alt=media&token=845cecb1-7445-409d-8169-cc233f149071"
 
 ---
 <img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fproduct-hunt-books.jpg?alt=media&token=a749f1c7-c34b-4735-bdd4-cbbe64f895fe" alt="product hunt book" width="1310" height="873">
