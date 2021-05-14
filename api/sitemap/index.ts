@@ -3,7 +3,7 @@ import { SitemapStream, streamToPromise } from 'sitemap'
 const util = require('../../services/feed')
 // const func = require('../../plugins/firebase_func')
 
-const sitemap = async (req: Request, res: Response) => {
+const sitemap = async (_req: Request, res: Response) => {
   try {
     const smStream = new SitemapStream({ hostname: 'https://indiemakers.fr' })
 

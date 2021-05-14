@@ -40,7 +40,7 @@ const loadData = async () => {
     return []
   }
 }
-const maker = async (req: Request, res: Response) => {
+const maker = async (_req: Request, res: Response) => {
   try {
     const data = await loadData()
     return res.json(data)

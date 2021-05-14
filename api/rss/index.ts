@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import RSS from 'rss'
 import { feed as sourceFeed, rawRss } from '../../services/feed'
 
-const rss = async (req: Request, res: Response) => {
+const rss = async (_req: Request, res: Response) => {
   try {
     const feedBase = await rawRss()
     const eps = await sourceFeed()

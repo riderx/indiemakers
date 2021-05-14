@@ -7,8 +7,8 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "api": "ts-node services/local.ts",
-    "discord:config": "ts-node services/discord/command",
+    "api": "node --loader ts-node/esm.mjs services/local.ts",
+    "discord:config": "node --loader ts-node/esm.mjs services/discord/command",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
     "lint": "npm run lint:js && npm run lint:style"
@@ -24,6 +24,7 @@
     }
   },
   "dependencies": {
+    "@cloudseat/micro-body": "^1.0.5",
     "@nuxt/content": "^1.14.0",
     "@skjnldsv/vue-plyr": "^7.0.1-alpha.0",
     "@tailwindcss/line-clamp": "^0.2.0",

@@ -2,7 +2,6 @@
 import axios from 'axios'
 import * as dotenv from 'dotenv'
 import { InteractionType } from 'discord-interactions'
-import admin from 'firebase-admin'
 
 dotenv.config()
 
@@ -496,12 +495,3 @@ axios
     console.error(JSON.stringify(err.response.data.errors.options))
     console.error(err.response.statusText)
   })
-
-try {
-  admin.auth().createUser({
-    email: process.env.VERCEL_ADMIN,
-    password: process.env.VERCEL_ADMIN_PWD,
-  })
-} catch (err) {
-  console.error('createUser fail', err)
-}
