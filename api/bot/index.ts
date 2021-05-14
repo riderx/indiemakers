@@ -5,19 +5,9 @@ import {
   InteractionType,
   verifyKey,
 } from 'discord-interactions'
+import getRawBody from 'raw-body'
 import discordInteraction from '../../services/discord/bot'
 import { sendTxtLoading } from '../../services/discord/bot/utils'
-
-function getRawBody(req: Request): Promise<string> {
-  return new Promise((resolve) => {
-    const bodyChunks: Buffer[] = []
-    req.on('end', () => {
-      const rawBody = Buffer.concat(bodyChunks).toString('utf8')
-      resolve(rawBody)
-    })
-    req.on('data', (chunk) => bodyChunks.push(chunk))
-  })
-}
 
 const bot = async (req: Request, res: Response) => {
   if (req.method !== 'POST') return res.status(404).end()
