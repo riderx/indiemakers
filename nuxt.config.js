@@ -1,4 +1,4 @@
-const isServerlessEnvironment = process.env.ON_VERCEL === 'true'
+const isServerlessEnvironment = !!process.env.VERCEL_URL
 const serverMiddleware = isServerlessEnvironment
   ? []
   : [{ path: '/api', handler: '~/services/local.ts' }]
