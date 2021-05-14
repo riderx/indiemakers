@@ -327,9 +327,11 @@ const projectList = async (
   let projsInfo = ''
   const projects = await getAllProjects(userId)
   projects.forEach((proj: Project) => {
-    projsInfo += `${proj.name} #${proj.hashtag} taches:${proj.tasks} flammes:${
-      proj.streak
-    } Crée le ${dayjs(proj.createdAt).format('DD/MM/YYYY')}\n`
+    projsInfo += `${proj.name} #${proj.hashtag}\n - taches:${
+      proj.tasks
+    }\n - flammes:${proj.streak}\n - Crée le ${dayjs(proj.createdAt).format(
+      'DD/MM/YYYY'
+    )}\n\n`
   })
   console.error('project_list', projsInfo)
   const sentence = me
