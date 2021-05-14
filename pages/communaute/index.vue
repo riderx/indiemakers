@@ -26,7 +26,7 @@
       </select>
     </div>
     <LadderMakers v-if="loaded" :users="users" />
-    <div class="w-1/4 px-10 py-5 mx-auto text-white">
+    <div class="flex w-1/4 px-10 py-5 mx-auto text-white">
       <button
         type="button"
         class="
