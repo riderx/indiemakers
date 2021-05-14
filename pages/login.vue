@@ -147,9 +147,6 @@ export default {
     this.email = this.$warehouse.get('emailForSignIn')
     this.$firebase.auth.listen((user) => {
       this.user = user
-      if (user) {
-        this.$sentry.setUser({ uid: user.uid })
-      }
       if (this.user && this.user.displayName === null) {
         this.$modal.show('confirmName')
       } else if (this.user) {

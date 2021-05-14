@@ -6,10 +6,26 @@
           <div class="w-full md:w-1/2 md:px-4">
             <div
               id="header-mk"
-              class="flex flex-wrap items-center justify-between w-full text-white border-8 border-white  md:pb-1 md:pt-2"
+              class="
+                flex flex-wrap
+                items-center
+                justify-between
+                w-full
+                text-white
+                border-8 border-white
+                md:pb-1
+                md:pt-2
+              "
             >
               <h1
-                class="w-4/5 my-2 text-3xl text-center  font-indie md:text-4xl md:my-0"
+                class="
+                  w-4/5
+                  my-2
+                  text-3xl text-center
+                  font-indie
+                  md:text-4xl
+                  md:my-0
+                "
               >
                 💃 Makers
               </h1>
@@ -22,12 +38,19 @@
               </button>
             </div>
             <div
-              class="overflow-hidden border-4 border-white  md:h-78 md:overflow-y-scroll md:custom-scroll"
+              class="
+                overflow-hidden
+                border-4 border-white
+                md:h-78
+                md:overflow-y-scroll
+                md:custom-scroll
+              "
             >
               <div
                 v-for="maker in makers"
                 :key="maker.id"
-                :class="'w-full flex flex-wrap text-white border-b align-items-top ' +
+                :class="
+                  'w-full flex flex-wrap text-white border-b align-items-top ' +
                   maker.id
                 "
               >
@@ -46,7 +69,18 @@
           </div>
           <div
             id="content"
-            class="order-1 hidden pt-0 pl-4 pr-4 text-white  md:w-1/2 px-md-5 order-md-2 xl:block"
+            class="
+              order-1
+              hidden
+              pt-0
+              pl-4
+              pr-4
+              text-white
+              md:w-1/2
+              px-md-5
+              order-md-2
+              xl:block
+            "
           >
             <div class="flex flex-wrap">
               <div class="text-center text-sm-left">
@@ -89,11 +123,24 @@
                   Partage sur Twitter ton vote, cela le motivera à venir !
                 </p>
                 <div
-                  class="flex justify-between w-10/12 text-lg text-white  font-indie"
+                  class="
+                    flex
+                    justify-between
+                    w-10/12
+                    text-lg text-white
+                    font-indie
+                  "
                 >
                   <button
                     type="button"
-                    class="px-5 py-2 border-4 border-white  font-indie hover:text-royalblue-700 hover:bg-white"
+                    class="
+                      px-5
+                      py-2
+                      border-4 border-white
+                      font-indie
+                      hover:text-royalblue-700
+                      hover:bg-white
+                    "
                     @click="joinUs()"
                   >
                     👉 Deviens un Maker
@@ -117,7 +164,7 @@ export default {
     ListItem: () => import('~/components/ListItem.vue'),
     LazyHydrate,
   },
-  async asyncData({ $config}) {
+  async asyncData({ $config }) {
     const mkrs = await makers($config)
     return { makers: mkrs }
   },
@@ -178,9 +225,6 @@ export default {
     this.$firebase.auth.listen((user) => {
       this.$modal.hide('loading')
       this.user = user
-      if (user) {
-        this.$sentry.setUser({ uid: user.uid })
-      }
       if (this.user && this.user.displayName === null) {
         this.$modal.show('confirmName')
       }

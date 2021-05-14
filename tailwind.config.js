@@ -4,26 +4,26 @@ module.exports = {
   mode: 'jit',
   theme: {
     extend: {
-      typography: theme => ({
+      typography: (theme) => ({
         DEFAULT: {
           css: {
             a: {
               color: theme('colors.orchid.300'),
               '&:hover': {
-                color: theme('colors.orchid.100')
+                color: theme('colors.orchid.100'),
               },
               strong: {
                 color: theme('colors.orchid.300'),
                 '&:hover': {
-                  color: theme('colors.orchid.100')
-                }
-              }
-            }
-          }
-        }
+                  color: theme('colors.orchid.100'),
+                },
+              },
+            },
+          },
+        },
       }),
       fontFamily: {
-        indie: 'Rex Bold'
+        indie: 'Rex Bold',
       },
       colors: {
         royalblue: {
@@ -36,7 +36,7 @@ module.exports = {
           600: '#5e49cc',
           700: '#4b279b',
           800: '#30257a',
-          900: '#1a174a'
+          900: '#1a174a',
         },
         orchid: {
           50: '#fbfbfa',
@@ -48,14 +48,14 @@ module.exports = {
           600: '#a63b89',
           700: '#802c67',
           800: '#5a1f44',
-          900: '#351426'
-        }
+          900: '#351426',
+        },
       },
       height: {
         78: '78vh',
-        60: '60vh'
-      }
-    }
+        60: '60vh',
+      },
+    },
   },
   variants: {},
   plugins: [
@@ -66,17 +66,17 @@ module.exports = {
         a: {
           color: theme('colors.orchid.300'),
           '&:hover': {
-            color: theme('colors.orchid.100')
+            color: theme('colors.orchid.100'),
           },
           strong: {
             color: theme('colors.orchid.300'),
             '&:hover': {
-              color: theme('colors.orchid.100')
-            }
-          }
-        }
+              color: theme('colors.orchid.100'),
+            },
+          },
+        },
       })
-    })
+    }),
   ],
   purge: {
     // enabled: process.env.NODE_ENV === 'production',
@@ -85,10 +85,10 @@ module.exports = {
       'layouts/**/*.vue',
       'pages/**/*.vue',
       'plugins/**/*.js',
-      'nuxt.config.js'
+      'nuxt.config.js',
       // TypeScript
       // 'plugins/**/*.ts',
       // 'nuxt.config.ts'
-    ]
-  }
+    ],
+  },
 }

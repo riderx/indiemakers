@@ -1525,9 +1525,6 @@ export default {
     require('~/plugins/modal')
     this.$firebase.auth.listen((user) => {
       this.user = user
-      if (user) {
-        this.$sentry.setUser({ uid: user.uid })
-      }
     })
   },
   methods: {

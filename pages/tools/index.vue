@@ -172,9 +172,6 @@ export default {
     // this.loggin = fb.auth().currentUser
     this.$firebase.auth.listen((user) => {
       this.loggin = user
-      if (user) {
-        this.$sentry.setUser({ uid: user.uid })
-      }
       if (this.loggin && this.loggin.displayName === null) {
         this.$modal.show('confirmName')
       }

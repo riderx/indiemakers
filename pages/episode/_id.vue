@@ -6,7 +6,14 @@
           <div class="w-full text-sm text-white lg:w-1/2 md:px-4">
             <div
               id="header-title"
-              class="flex flex-wrap justify-center pt-3 border-t-8 border-white md:pb-1 md:border-8"
+              class="
+                flex flex-wrap
+                justify-center
+                pt-3
+                border-t-8 border-white
+                md:pb-1
+                md:border-8
+              "
             >
               <p class="px-3 text-3xl text-center font-indie">
                 {{ title }}
@@ -18,12 +25,26 @@
                   width="100%"
                   height="100%"
                   :src="loadingImg"
-                  class="w-full h-auto max-w-full border-t-8 border-white md:border-8"
+                  class="
+                    w-full
+                    h-auto
+                    max-w-full
+                    border-t-8 border-white
+                    md:border-8
+                  "
                   :alt="title"
                 />
               </div>
               <div
-                class="block w-full px-0 text-white border-b-8 sm:hidden border-royalblue-700"
+                class="
+                  block
+                  w-full
+                  px-0
+                  text-white
+                  border-b-8
+                  sm:hidden
+                  border-royalblue-700
+                "
               >
                 <vue-plyr v-if="showAudio" ref="plyr">
                   <audio>
@@ -33,10 +54,25 @@
               </div>
             </div>
             <div
-              class="px-5 overflow-hidden border-4 border-white md:h-78 md:overflow-y-scroll md:custom-scroll"
+              class="
+                px-5
+                overflow-hidden
+                border-4 border-white
+                md:h-78
+                md:overflow-y-scroll
+                md:custom-scroll
+              "
             >
               <div
-                class="px-1 prose-sm prose prose-orchid sm:prose lg:prose-lg xl:prose-xl px-md-5 md:pt-3"
+                class="
+                  px-1
+                  prose-sm prose prose-orchid
+                  sm:prose
+                  lg:prose-lg
+                  xl:prose-xl
+                  px-md-5
+                  md:pt-3
+                "
                 v-html="content"
               />
             </div>
@@ -44,28 +80,96 @@
               <div class="px-1 text-center">
                 <button
                   type="button"
-                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 border-white rounded select-none bnt-block m-md-3"
+                  class="
+                    inline-block
+                    px-4
+                    py-2 py-3
+                    m-1
+                    text-base text-xl
+                    font-normal
+                    leading-tight leading-normal
+                    text-center text-white
+                    no-underline
+                    whitespace-no-wrap
+                    align-middle
+                    border border-4 border-white
+                    rounded
+                    select-none
+                    bnt-block
+                    m-md-3
+                  "
                   @click="listen()"
                 >
                   🎧 Ecouter
                 </button>
                 <button
                   type="button"
-                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 border-white rounded select-none bnt-block m-md-3"
+                  class="
+                    inline-block
+                    px-4
+                    py-2 py-3
+                    m-1
+                    text-base text-xl
+                    font-normal
+                    leading-tight leading-normal
+                    text-center text-white
+                    no-underline
+                    whitespace-no-wrap
+                    align-middle
+                    border border-4 border-white
+                    rounded
+                    select-none
+                    bnt-block
+                    m-md-3
+                  "
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 border-white rounded select-none bnt-block m-md-3"
+                  class="
+                    inline-block
+                    px-4
+                    py-2 py-3
+                    m-1
+                    text-base text-xl
+                    font-normal
+                    leading-tight leading-normal
+                    text-center text-white
+                    no-underline
+                    whitespace-no-wrap
+                    align-middle
+                    border border-4 border-white
+                    rounded
+                    select-none
+                    bnt-block
+                    m-md-3
+                  "
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 border-white rounded select-none bnt-block m-md-3"
+                  class="
+                    inline-block
+                    px-4
+                    py-2 py-3
+                    m-1
+                    text-base text-xl
+                    font-normal
+                    leading-tight leading-normal
+                    text-center text-white
+                    no-underline
+                    whitespace-no-wrap
+                    align-middle
+                    border border-4 border-white
+                    rounded
+                    select-none
+                    bnt-block
+                    m-md-3
+                  "
                   @click="joinUs()"
                 >
                   👉 Lance toi
@@ -82,7 +186,13 @@
                       v-lazy="image"
                       width="100%"
                       height="100%"
-                      class="w-full h-auto max-w-full border-8 border-white square_content"
+                      class="
+                        w-full
+                        h-auto
+                        max-w-full
+                        border-8 border-white
+                        square_content
+                      "
                       alt="Logo person"
                     />
                   </div>
@@ -94,11 +204,26 @@
                 </div>
               </div>
               <div
-                class="flex justify-between w-11/12 pt-4 text-lg text-white font-indie"
+                class="
+                  flex
+                  justify-between
+                  w-11/12
+                  pt-4
+                  text-lg text-white
+                  font-indie
+                "
               >
                 <button
                   type="button"
-                  class="px-3 pt-2 pb-1 border-4 border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
+                  class="
+                    px-3
+                    pt-2
+                    pb-1
+                    border-4 border-white
+                    hover:border-gray-200
+                    hover:text-royalblue-700
+                    hover:bg-gray-200
+                  "
                   @click="listen()"
                 >
                   🎧 Ecouter
@@ -106,21 +231,45 @@
                 <button
                   id="rtp-button"
                   type="button"
-                  class="px-3 pt-2 pb-1 border-4 border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
+                  class="
+                    px-3
+                    pt-2
+                    pb-1
+                    border-4 border-white
+                    hover:border-gray-200
+                    hover:text-royalblue-700
+                    hover:bg-gray-200
+                  "
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="px-3 pt-2 pb-1 border-4 border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
+                  class="
+                    px-3
+                    pt-2
+                    pb-1
+                    border-4 border-white
+                    hover:border-gray-200
+                    hover:text-royalblue-700
+                    hover:bg-gray-200
+                  "
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="px-3 pt-2 pb-1 border-4 border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
+                  class="
+                    px-3
+                    pt-2
+                    pb-1
+                    border-4 border-white
+                    hover:border-gray-200
+                    hover:text-royalblue-700
+                    hover:bg-gray-200
+                  "
                   @click="joinUs()"
                 >
                   👉 Lance toi
@@ -135,8 +284,9 @@
 </template>
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
+import Vue from 'vue'
 import { feed, domain, ep } from '~/services/rss'
-Vue.use(VuePlyr, {
+Vue.use(window.VuePlyr, {
   plyr: {
     fullscreen: { enabled: false },
   },
@@ -204,8 +354,6 @@ export default {
           rel: 'stylesheet',
           href: 'https://unpkg.com/vue-plyr/dist/vue-plyr.css',
         },
-      ],
-      link: [
         {
           type: 'text/javascript',
           href: 'https://unpkg.com/@skjnldsv/vue-plyr',

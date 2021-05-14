@@ -1,7 +1,7 @@
 const isServerlessEnvironment = process.env.ON_VERCEL === 'true'
 const serverMiddleware = isServerlessEnvironment
   ? []
-  : [{ path: '/api', handler: '~/api_index.ts' }]
+  : [{ path: '/api', handler: '~/services/local_api.ts' }]
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -87,7 +87,6 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/oldPath.ts' },
     { src: '~/plugins/modal.ts' },
     { src: '~/plugins/vue-plyr.client.ts' },
     { src: '~/plugins/global.client.ts' },
@@ -109,14 +108,9 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
-    // '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     'vue-warehouse/nuxt',
-    '@nuxtjs/sentry',
     [
       'nuxt-font-loader-strategy',
       {
@@ -141,21 +135,6 @@ export default {
     ],
   ],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
-
-  // PWA module configuration: https://go.nuxtjs.dev/pwa
-  pwa: {
-    meta: {
-      theme_color: '#4b279b',
-    },
-    manifest: {
-      name: 'INDIE MAKERS',
-      lang: 'fr',
-      short_name: 'IM',
-    },
-  },
-
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
 
@@ -165,9 +144,5 @@ export default {
   },
   purgeCSS: {
     whitelistPatterns: [/vm--/, /icon--/, /label--/, /vue-dialog/, /vue-modal/],
-  },
-  sentry: {
-    dsn: 'https://1e9603c479b54389ab04a4be985e1768@o449238.ingest.sentry.io/5431873', // Enter your project's DSN here
-    config: {}, // Additional config
   },
 }
