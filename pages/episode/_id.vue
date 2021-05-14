@@ -285,7 +285,7 @@
 <script>
 import LazyHydrate from 'vue-lazy-hydration'
 import Vue from 'vue'
-import { feed, domain, ep } from '~/services/rss'
+import { feed, ep } from '~/services/rss'
 Vue.use(window.VuePlyr, {
   plyr: {
     fullscreen: { enabled: false },
@@ -364,9 +364,7 @@ export default {
         {
           hid: 'og:url',
           property: 'og:url',
-          content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${
-            this.$route.fullPath
-          }`,
+          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
         },
         { hid: 'title', name: 'title', content: this.titleNoEmoji },
         {

@@ -183,8 +183,6 @@
 </template>
 
 <script>
-import { domain } from '~/services/rss'
-
 export default {
   async asyncData({ params, $content }) {
     const page = (
@@ -208,16 +206,12 @@ export default {
         {
           hid: 'publisher',
           name: 'publisher',
-          content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${
-            this.$route.fullPath
-          }`,
+          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
         },
         {
           hid: 'og:url',
           property: 'og:url',
-          content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${
-            this.$route.fullPath
-          }`,
+          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
         },
         {
           hid: 'description',
@@ -227,9 +221,7 @@ export default {
         {
           hid: 'twitter:site',
           name: 'twitter:site',
-          content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${
-            this.$route.fullPath
-          }`,
+          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
         },
         {
           hid: 'twitter:creator',
@@ -244,9 +236,7 @@ export default {
         {
           hid: 'twitter:image',
           name: 'twitter:image',
-          content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${
-            this.page.headImage
-          }`,
+          content: `${this.$config.DOMAIN}${this.page.headImage}`,
         },
         {
           hid: 'twitter:title',
@@ -279,9 +269,7 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${
-            this.page.headImage
-          }`,
+          content: `${this.$config.DOMAIN}${this.page.headImage}`,
         },
         { hid: 'og:image:width', property: 'og:image:width', content: 300 },
         { hid: 'og:image:height', property: 'og:image:height', content: 300 },

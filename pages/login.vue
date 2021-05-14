@@ -83,8 +83,6 @@
   </div>
 </template>
 <script>
-import { domain } from '~/services/rss'
-
 export default {
   components: {},
   data() {
@@ -104,9 +102,7 @@ export default {
         {
           hid: 'og:url',
           property: 'og:url',
-          content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${
-            this.$route.fullPath
-          }`,
+          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
         },
         { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
         {
@@ -133,10 +129,9 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: `${domain(
-            this.$config.VERCEL_URL,
+          content: `${
             this.$config.DOMAIN
-          )}${require('~/assets/images/cover-im@0.5x.png')}`,
+          }${require('~/assets/images/cover-im@0.5x.png')}`,
         },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 },

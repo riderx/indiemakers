@@ -1508,8 +1508,6 @@
 </template>
 
 <script>
-import { domain } from '~/services/rss'
-
 export default {
   name: 'Modals',
   data() {
@@ -1709,10 +1707,7 @@ export default {
       if (maker) {
         this.$warehouse.remove('tweetMaker')
       }
-      const linkPage = `${domain(
-        this.$config.VERCEL_URL,
-        this.$config.DOMAIN
-      )}/makers_hunt`
+      const linkPage = `${this.$config.DOMAIN}/makers_hunt`
       const tweet = `@${maker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${this.$config.handler} 🚀`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
@@ -1730,10 +1725,7 @@ export default {
       if (epGui) {
         this.$warehouse.remove('epGui')
       }
-      const linkEp = `${domain(
-        this.$config.VERCEL_URL,
-        this.$config.DOMAIN
-      )}/episode/${epGui}`
+      const linkEp = `${this.$config.DOMAIN}/episode/${epGui}`
       const tweet = `@${this.$config.handler} et @${maker} merci pour le podcast ${linkEp} <3`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet

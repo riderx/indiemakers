@@ -8,9 +8,8 @@ export default {
   publicRuntimeConfig: {
     DOMAIN:
       process.env.NODE_ENV && process.env.ON_VERCEL === 'production'
-        ? 'https://indiemakers.fr'
+        ? `https://${process.env.VERCEL_URL}`
         : 'http://localhost:3000',
-    VERCEL_URL: process.env.VERCEL_URL,
     BASEAPI: 'api',
     handler: 'indiemakersfr',
   },

@@ -2,14 +2,9 @@ import axios from 'axios'
 import { NuxtConfig } from '@nuxt/types'
 import { User } from './discord/bot/user'
 import { Project } from './discord/bot/project'
-export const domain = (VERCEL_URL: string, DOMAIN: string) => {
-  return VERCEL_URL ? `https://${VERCEL_URL}` : DOMAIN
-}
 
 export const discordMakers = ($config: NuxtConfig) => {
-  const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
-    $config.BASEAPI
-  }/community`
+  const url = `${$config.DOMAIN}/${$config.BASEAPI}/community`
   console.error('discordMakers', url)
   return axios
     .get(url)
@@ -27,9 +22,7 @@ export const discordProjectId = (
   userId: string,
   id: string
 ): Promise<Project> => {
-  const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
-    $config.BASEAPI
-  }/project?uid=${userId}&id=${id}`
+  const url = `${$config.DOMAIN}/${$config.BASEAPI}/project?uid=${userId}&id=${id}`
   return axios
     .get(url)
     .then((response) => {
@@ -45,9 +38,7 @@ export const discordMakerId = (
   $config: NuxtConfig,
   id: string
 ): Promise<User> => {
-  const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
-    $config.BASEAPI
-  }/maker?id=${id}`
+  const url = `${$config.DOMAIN}/${$config.BASEAPI}/maker?id=${id}`
   return axios
     .get(url)
     .then((response) => {
@@ -60,9 +51,7 @@ export const discordMakerId = (
 }
 
 export const makers = ($config: NuxtConfig) => {
-  const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
-    $config.BASEAPI
-  }/makershunt`
+  const url = `${$config.DOMAIN}/${$config.BASEAPI}/makershunt`
   return axios
     .get(url)
     .then((response) => {
@@ -75,9 +64,7 @@ export const makers = ($config: NuxtConfig) => {
 }
 
 export const feed = ($config: NuxtConfig) => {
-  const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
-    $config.BASEAPI
-  }/feed`
+  const url = `${$config.DOMAIN}/${$config.BASEAPI}/feed`
   return axios
     .get(url)
     .then((response) => {
@@ -90,9 +77,7 @@ export const feed = ($config: NuxtConfig) => {
 }
 
 export const ep = (guid: string, $config: NuxtConfig) => {
-  const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
-    $config.BASEAPI
-  }/ep?guid=${guid}`
+  const url = `${$config.DOMAIN}/${$config.BASEAPI}/ep?guid=${guid}`
   return axios
     .get(url)
     .then((response) => {

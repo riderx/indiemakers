@@ -107,7 +107,7 @@
 </template>
 <script>
 import Vue from 'vue'
-import { feed, domain } from '~/services/rss'
+import { feed } from '~/services/rss'
 import { crispLoader } from '~/services/crisp.client'
 
 export default Vue.extend({
@@ -150,9 +150,7 @@ export default Vue.extend({
         {
           hid: 'og:url',
           property: 'og:url',
-          content: `${domain(this.$config.VERCEL_URL, this.$config.DOMAIN)}${
-            this.$route.fullPath
-          }`,
+          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
         },
         { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
         {
@@ -179,18 +177,16 @@ export default Vue.extend({
         {
           hid: 'og:image',
           property: 'og:image',
-          content: `${domain(
-            this.$config.VERCEL_URL,
+          content: `${
             this.$config.DOMAIN
-          )}${require('~/assets/images/cover-im@0.5x.png')}`,
+          }${require('~/assets/images/cover-im@0.5x.png')}`,
         },
         {
           hid: 'og:image:secure_url',
           property: 'og:image:secure_url',
-          content: `${domain(
-            this.$config.VERCEL_URL,
+          content: `${
             this.$config.DOMAIN
-          )}${require('~/assets/images/cover-im@0.5x.png')}`,
+          }${require('~/assets/images/cover-im@0.5x.png')}`,
         },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 },
