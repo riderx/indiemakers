@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv'
 import {
   InteractionResponseType,
   InteractionType,
-  verifyKey,
+  verifyKeyMiddleware,
 } from 'discord-interactions'
 import feed from '../api/feed'
 import sitemap from '../api/sitemap'
@@ -16,23 +16,13 @@ import project from '../api/project'
 import community from '../api/community'
 import ep from '../api/ep'
 import discordInteraction from './discord/bot'
-import { sendTxtLoading } from './discord/bot/utils'
+import { sendTxtLater, sendTxtLoading } from './discord/bot/utils'
 
 dotenv.config()
 if (!admin.apps.length) {
   admin.initializeApp()
 } else {
   admin.app() // if already initialized, use that one
-}
-function getRawBody(req: Request): Promise<string> {
-  return new Promise((resolve) => {
-    const bodyChunks: Buffer[] = []
-    req.on('end', () => {
-      const rawBody = Buffer.concat(bodyChunks).toString('utf8')
-      resolve(rawBody)
-    })
-    req.on('data', (chunk) => bodyChunks.push(chunk))
-  })
 }
 const app = express()
 const appRouter = express.Router()
@@ -47,31 +37,33 @@ appRouter.get('/community', community)
 appRouter.get('/maker', maker)
 appRouter.get('/project', project)
 appRouter.get('/ep', ep)
-appRouter.all('/bot', async (req: Request, res: Response) => {
-  const signature = String(req.headers['X-Signature-Ed25519']) || ''
-  const timestamp = String(req.headers['X-Signature-Timestamp']) || ''
-  const rawBody = await getRawBody(res as any)
-  const isValidRequest = await verifyKey(
-    rawBody,
-    signature,
-    timestamp,
-    String(process.env.CLIENT_PUBLIC_KEY)
-  )
-  if (!isValidRequest) {
-    return res.status(401).end('Bad request signature')
+appRouter.all(
+  '/bot',
+  verifyKeyMiddleware(String(process.env.CLIENT_PUBLIC_KEY)),
+  async (req: Request, res: Response) => {
+    if (
+      req.body &&
+      req.body.type === InteractionType.APPLICATION_COMMAND &&
+      req.body.data
+    ) {
+      await sendTxtLoading(res)
+      try {
+        await discordInteraction(req.body)
+      } catch (err) {
+        await sendTxtLater(
+          `La Commande ${req.body.data.name} a echoué`,
+          [],
+          req.body.application_id,
+          req.body.token
+        )
+      }
+      return
+    }
+    return res.send({
+      type: InteractionResponseType.PONG,
+    })
   }
-  if (
-    req.body &&
-    req.body.type === InteractionType.APPLICATION_COMMAND &&
-    req.body.data
-  ) {
-    await sendTxtLoading(res)
-    return discordInteraction(req.body)
-  }
-  return res.send({
-    type: InteractionResponseType.PONG,
-  })
-})
+)
 app.use('/', appRouter)
 
 export default app

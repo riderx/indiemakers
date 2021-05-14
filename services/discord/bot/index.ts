@@ -5,7 +5,7 @@ import {
   Interaction,
 } from '../command'
 import { userFn } from './user'
-import { incomeFn } from './income'
+import { incomeFn } from './incomes'
 import { projectFn } from './project'
 import { sendTxtLater } from './utils'
 import { karmaFn } from './karma'

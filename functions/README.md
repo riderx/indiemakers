@@ -6,10 +6,10 @@
 - use ngrock `./ngrok http 4000` to connect your local env to discord intent url
 - set your app_id, guid_id, and bot_token in .env file (use .env.template as template)
 - deploy your discord command guild with `npm run discord_config`
-- connect your discord bot to the intent with url `http://UUID.ngrok.io/discord_interaction` in bot setting (`INTERACTIONS ENDPOINT URL`)
+- connect your discord bot to the intent with url `http://UUID.ngrok.io/api/bot` in bot setting (`INTERACTIONS ENDPOINT URL`)
 - run your server with `npm run discord_local`
 - test discord command /im
-- then deploy and use the prod url `https://us-central1-indiemakerfr.cloudfunctions.net/discord_interaction`
+- then deploy and use the prod url `https://us-central1-indiemakerfr.cloudfunctions.net/bot`
 
 # How it's working 
 

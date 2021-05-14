@@ -13,5 +13,4 @@
   "include": [
     "src"
   ],
-  "exclude": ["src/discord/bot/indiemakerfr-firebase-adminsdk-jvx27-86da276b76.json"]
 }

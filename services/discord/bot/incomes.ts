@@ -5,7 +5,8 @@ import {
   ApplicationCommandInteractionDataOption,
 } from '../command'
 import { sendTxtLater } from './utils'
-
+import { getAllProjects } from './project'
+import { updateUser, User } from './user'
 export interface Income {
   id?: string
   ammount: number
@@ -15,7 +16,10 @@ export interface Income {
   createdAt?: string
   updatedAt?: string
 }
-
+export interface IncomeAll {
+  incomes: Income[]
+  total: number
+}
 export const createProjectIncome = (
   userId: string,
   projectId: string,
@@ -52,7 +56,7 @@ export const updateProjectIncome = (
 const updateProjecttotalIncome = async (
   userId: string,
   projectId: string,
-  totalIncome: number
+  incomes: number
 ) => {
   const projDoc = await firestore()
     .collection(`discord/${userId}/projects/`)
@@ -60,16 +64,16 @@ const updateProjecttotalIncome = async (
     .get()
   if (!projDoc.exists || !projDoc.data) {
     console.error(
-      `Cannot add total to userId: ${userId}, projectId: ${projectId}, totalIncome: ${totalIncome}`
+      `Cannot add total to userId: ${userId}, projectId: ${projectId}, incomes: ${incomes}`
     )
   }
-  return projDoc.ref.update({ totalIncome, updatedAt: dayjs().toISOString() })
+  return projDoc.ref.update({ incomes, updatedAt: dayjs().toISOString() })
 }
 
 export const getAllProjectsIncomes = async (
   userId: string,
   projectId: string
-) => {
+): Promise<IncomeAll> => {
   try {
     const documents = await firestore()
       .collection(`discord/${userId}/projects/${projectId}/incomes`)
@@ -94,10 +98,15 @@ export const getAllProjectsIncomes = async (
   }
 }
 
+const getTotalIncomeByUser = async (userId: string): Promise<number> => {
+  const projects = await getAllProjects(userId)
+  return projects.reduce((tt, project) => tt + project.incomes, 0)
+}
+
 const incomeAdd = (
   interaction: Interaction,
   options: ApplicationCommandInteractionDataOption[],
-  senderId: string
+  userId: string
 ) => {
   let projectId = ''
   const newIncome: Partial<Income> = {
@@ -125,15 +134,22 @@ const incomeAdd = (
   }
   newIncome.date = date.toISOString()
   return Promise.all([
-    getAllProjectsIncomes(senderId, projectId).then((curIncomes) =>
-      updateProjecttotalIncome(senderId, projectId, curIncomes.total + 1)
-    ),
-    createProjectIncome(senderId, projectId, newIncome),
     sendTxtLater(
       `Le revenue :\n${newIncome.status}: ${newIncome.ammount}\nA été ajouté au projet #${projectId}, 🎉!`,
       [],
       interaction.application_id,
       interaction.token
+    ),
+    getAllProjectsIncomes(userId, projectId).then((curIncomes) =>
+      updateProjecttotalIncome(userId, projectId, curIncomes.total + 1)
+    ),
+    createProjectIncome(userId, projectId, newIncome).then(() =>
+      getTotalIncomeByUser(userId).then((superTotal) => {
+        const updatedUser: Partial<User> = {
+          incomes: superTotal + 1,
+        }
+        return updateUser(userId, updatedUser)
+      })
     ),
   ]).then(() => Promise.resolve())
 }
@@ -141,7 +157,7 @@ const incomeAdd = (
 const incomeEdit = (
   interaction: Interaction,
   options: ApplicationCommandInteractionDataOption[],
-  senderId: string
+  userId: string
 ) => {
   let projectId = ''
   let incomeId = ''
@@ -170,7 +186,7 @@ const incomeEdit = (
   })
   update.date = date.toISOString()
   return Promise.all([
-    updateProjectIncome(senderId, projectId, incomeId, update),
+    updateProjectIncome(userId, projectId, incomeId, update),
     sendTxtLater(
       `Le revenue ${incomeId} a été mise a jours dans le projet #${projectId}, 🎉!`,
       [],
@@ -183,16 +199,16 @@ const incomeEdit = (
 const incomesView = async (
   interaction: Interaction,
   option: ApplicationCommandInteractionDataOption,
-  senderId: string
+  userId: string
 ) => {
   const projectId = option.value
   if (projectId) {
-    const allTaks = await getAllProjectsIncomes(senderId, projectId)
+    const allTaks = await getAllProjectsIncomes(userId, projectId)
     let incomeInfos = `Tu a fait ${allTaks.total} € sur ce projet, BRAVO 🎉!\n\nVoici La liste des revenus:\n`
-    allTaks.incomes.forEach((element: any) => {
-      incomeInfos += `${element.text} . Crée le ${dayjs(
-        element.createdAt
-      ).format('DD/MM/YYYY')}\n`
+    allTaks.incomes.forEach((element: Income) => {
+      incomeInfos += `${element.ammount} ${
+        element.status === 'expense' ? 'dépense' : 'revenue'
+      } . Crée le ${dayjs(element.createdAt).format('DD/MM/YYYY')}\n`
     })
     return sendTxtLater(
       incomeInfos,
@@ -213,7 +229,7 @@ const incomesView = async (
 const incomesDelete = async (
   interaction: Interaction,
   options: ApplicationCommandInteractionDataOption[],
-  senderId: string
+  userId: string
 ) => {
   let projectId = ''
   let incomeId = ''
@@ -224,10 +240,10 @@ const incomesDelete = async (
       incomeId = element.value
     }
   })
-  const curIncomes = await getAllProjectsIncomes(senderId, projectId)
+  const curIncomes = await getAllProjectsIncomes(userId, projectId)
   return Promise.all([
-    deleteProjectIncome(senderId, projectId, incomeId),
-    updateProjecttotalIncome(senderId, projectId, curIncomes.total),
+    deleteProjectIncome(userId, projectId, incomeId),
+    updateProjecttotalIncome(userId, projectId, curIncomes.total),
     sendTxtLater(
       `Tu as supprimé le revenue ${incomeId} !`,
       [],
@@ -240,31 +256,31 @@ const incomesDelete = async (
 export const incomeFn = (
   interaction: any,
   option: ApplicationCommandInteractionDataOption,
-  senderId: string
+  userId: string
 ): Promise<void> => {
   if (
     option.name === 'ajouter' &&
     option.options &&
     option.options.length > 0
   ) {
-    return incomeAdd(interaction, option.options, senderId)
+    return incomeAdd(interaction, option.options, userId)
   }
   if (option.name === 'liste' && option.options && option.options.length > 0) {
-    return incomesView(interaction, option.options[0], senderId)
+    return incomesView(interaction, option.options[0], userId)
   }
   if (
     option.name === 'modifier' &&
     option.options &&
     option.options.length > 0
   ) {
-    return incomeEdit(interaction, option.options, senderId)
+    return incomeEdit(interaction, option.options, userId)
   }
   if (
     option.name === 'supprimer' &&
     option.options &&
     option.options.length > 0
   ) {
-    return incomesDelete(interaction, option.options, senderId)
+    return incomesDelete(interaction, option.options, userId)
   }
   return sendTxtLater(
     `La Commande ${option.name} n'est pas pris en charge`,

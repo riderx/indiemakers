@@ -27,12 +27,23 @@
       <h1 class="mt-20 text-3xl font-medium text-orchid-300 font-indie">
         {{ user.name || user.username }}
       </h1>
-      <p class="px-4 py-1 text-lg bg-white rounded-lg text-royalblue-700">
-        🕉 {{ user.karma }}
-      </p>
-      <p class="px-4 py-1 text-lg bg-white rounded-lg text-royalblue-700">
-        🔥 {{ user.streak }}
-      </p>
+      <div class="flex items-center justify-center">
+        <p
+          class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700"
+        >
+          🕉 {{ user.karma }}
+        </p>
+        <p
+          class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700"
+        >
+          🔥 {{ user.streak }}
+        </p>
+        <p
+          class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700"
+        >
+          💰 {{ user.incomes }}
+        </p>
+      </div>
     </div>
     <div class="flex flex-col m-5 md:flex-row md:m-10">
       <div
@@ -135,10 +146,16 @@
             }}</a>
           </div>
         </div>
-        <ListTasks
-          v-if="projectData.tasksData"
-          :tasks="projectData.tasksData.tasks"
-        />
+        <div class="flex w-full">
+          <ListTasks
+            v-if="projectData.tasksData"
+            :all="projectData.tasksData"
+          />
+          <ListIncomes
+            v-if="projectData.incomesData"
+            :all="projectData.incomesData"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -152,6 +169,7 @@ import { User } from '~/services/discord/bot/user'
 export default Vue.extend({
   components: {
     ListTasks: () => import('~/components/ListTasks.vue'),
+    ListIncomes: () => import('~/components/ListIncomes.vue'),
   },
   async asyncData({ params, $config }) {
     const user = await discordMakerId($config, params.id)
@@ -172,13 +190,10 @@ export default Vue.extend({
   watch: {
     // whenever question changes, this function will run
     projectId(newId) {
-      console.log('watch', newId)
       this.getProject(newId)
     },
   },
   mounted() {
-    // this.projectId = this.user.projectsData[0].hashtag
-    console.log('this.projectId', this.projectId)
     this.getProject(this.projectId)
     this.loaded = true
   },
@@ -190,7 +205,6 @@ export default Vue.extend({
         this.user.userId,
         id
       )
-      console.log('getProject', this.projectData)
       this.loadedProject = true
     },
     goHome() {

@@ -1,95 +1,72 @@
 <template>
-  <LazyHydrate when-visible>
-    <div class="w-full p-10 bg-white">
-      <button class="mb-5 text-3xl text-royalblue-700 lg:mb-10 font-indie">
-        Tasks
-      </button>
-      <div class="flex mb-5 border-b-2 lg:mb-10 border-royalblue-700">
-        <button
-          class="px-2 mr-3 text-2xl text-royalblue-700 focus:outline-none"
-          :class="{
-            'border-b-2 border-royalblue-700 ': status === 'done',
-            'opacity-50': status === 'todo',
-          }"
-          @click="status = 'done'"
-        >
-          Done
-        </button>
-        <button
-          class="mr-3 text-2xl text-royalblue-700 px2 focus:outline-none"
-          :class="{
-            'border-b-2': status === 'todo',
-            'opacity-50': status === 'done',
-          }"
-          @click="status = 'todo'"
-        >
-          To do
-        </button>
-      </div>
-      <article
-        v-for="task in filterTasks"
-        :key="task.id"
-        class="py-5 border-b-2 lg:mx-10 border-orchid-300"
+  <div class="w-1/2 p-10 bg-white">
+    <button class="mb-5 text-3xl text-royalblue-700 lg:mb-10 font-indie">
+      Taches {{ all.total }}
+    </button>
+    <div class="flex mb-5 border-b-2 lg:mb-10 border-royalblue-700">
+      <button
+        class="mr-3 text-2xl text-royalblue-700 focus:outline-none"
+        :class="{
+          'border-b-2 border-royalblue-700 px-2': status === 'done',
+          'opacity-50': status === 'todo',
+        }"
+        @click="status = 'done'"
       >
-        <h1 class="text-xl">
-          {{ task.content }}
-        </h1>
-        <time class="text-sm text-royalblue-700" :datetime="task.createdAt">{{
-          task.createdAt
-        }}</time>
-      </article>
+        Fait {{ done.total }}
+      </button>
+      <button
+        class="mr-3 text-2xl text-royalblue-700 focus:outline-none"
+        :class="{
+          'border-b-2 border-royalblue-700 px-2': status === 'todo',
+          'opacity-50': status === 'done',
+        }"
+        @click="status = 'todo'"
+      >
+        A faire {{ todo.total }}
+      </button>
     </div>
-  </LazyHydrate>
+    <article
+      v-for="task in filtered"
+      :key="task.id"
+      class="py-5 border-b-2 lg:mx-10 border-orchid-300"
+    >
+      <h1 class="text-xl">
+        {{ task.content }}
+      </h1>
+      <time class="text-sm text-royalblue-700" :datetime="task.createdAt">{{
+        task.createdAt
+      }}</time>
+    </article>
+  </div>
 </template>
 
 <script lang="ts">
 import Vue, { PropOptions } from 'vue'
-import { Task } from '~/services/discord/bot/tasks'
+import { Task, TaskAll } from '~/services/discord/bot/tasks'
 export default Vue.extend({
   name: 'ListTasks',
-  components: {
-    LazyHydrate: () => require('vue-lazy-hydration'),
-  },
   props: {
-    tasks: {
-      type: Array,
-      default: () => [],
-    } as PropOptions<Task[]>,
+    all: {
+      type: Object,
+      default: () => {},
+    } as PropOptions<TaskAll>,
   },
   data() {
     return {
-      filterTasks: [] as Task[],
+      todo: [] as Task[],
+      done: [] as Task[],
       status: 'done',
     }
   },
-  watch: {
-    // whenever question changes, this function will run
-    status(newStatus) {
-      this.filterTasks = this.tasks.filter((a: Task) => a.status === newStatus)
+  computed: {
+    filtered(): Task[] {
+      return this.status === 'todo' ? this.todo : this.done
     },
   },
   mounted() {
     // this.projectId = this.user.projectsData[0].hashtag
-    this.filterTasks = this.tasks.filter((a: Task) => a.status === this.status)
-    console.log('this.filterTasks', this.filterTasks)
+    this.todo = this.all.tasks.filter((a: Task) => a.status === 'todo')
+    this.done = this.all.tasks.filter((a: Task) => a.status === 'done')
   },
 })
 </script>
-
-<style scoped>
-.h-w-screen {
-  height: 100vw;
-}
-
-.square::after {
-  content: '';
-  display: block;
-  padding-bottom: 100%;
-}
-@media screen and (min-width: 768px) {
-  .tumb_up {
-    /* bottom: -10px; */
-    font-size: 20px;
-  }
-}
-</style>

@@ -2,7 +2,7 @@ import Stripe from 'stripe'
 import dayjs, { Dayjs } from 'dayjs'
 import { getAllUsers, User } from './user'
 import { getAllProjects, Project } from './project'
-import { getAllProjectsIncomes, Income, updateProjectIncome } from './income'
+import { getAllProjectsIncomes, Income, updateProjectIncome } from './incomes'
 
 // create restricted key here:https://dashboard.stripe.com/apikeys
 // with only charges read scope

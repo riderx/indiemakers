@@ -41,7 +41,8 @@ const bot = async (req: Request, res: Response) => {
       req.body.data
     ) {
       await sendTxtLoading(res)
-      return discordInteraction(req.body)
+      await discordInteraction(req.body)
+      return
     }
     return res.send({
       type: InteractionResponseType.PONG,

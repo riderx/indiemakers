@@ -33,6 +33,10 @@ export interface Task {
   createdAt: string
   updatedAt: string
 }
+export interface TaskAll {
+  tasks: Task[]
+  total: number
+}
 const taskPublicKey = ['id', 'content', 'status', 'doneAt', 'createdAt']
 const taskProtectedKey = [
   'id',
@@ -122,7 +126,7 @@ const updateProjectTask = async (
 export const getAllProjectsTasks = async (
   userId: string,
   projectId: string
-): Promise<{ tasks: Task[]; total: number }> => {
+): Promise<TaskAll> => {
   try {
     const documents = await firestore()
       .collection(`discord/${userId}/projects/${projectId}/tasks`)
@@ -195,20 +199,22 @@ const taskAdd = async (
         }
         return updateProject(userId, projectId, updatedProject)
       }),
-      createProjectTask(curUser, projectId, task),
-      getTotalTaskByUser(userId).then((superTotal) => {
-        const updatedUser: Partial<User> = {
-          tasks: superTotal + 1,
-        }
-        if (
-          (curUser.lastTaskAt && dayjs(curUser.lastTaskAt).isBefore(lastDay)) ||
-          !curUser.lastTaskAt
-        ) {
-          updatedUser.streak = curUser.streak ? curUser.streak + 1 : 1
-          updatedUser.lastTaskAt = dayjs().toISOString()
-        }
-        return updateUser(userId, updatedUser)
-      }),
+      createProjectTask(curUser, projectId, task).then(() =>
+        getTotalTaskByUser(userId).then((superTotal) => {
+          const updatedUser: Partial<User> = {
+            tasks: superTotal + 1,
+          }
+          if (
+            (curUser.lastTaskAt &&
+              dayjs(curUser.lastTaskAt).isBefore(lastDay)) ||
+            !curUser.lastTaskAt
+          ) {
+            updatedUser.streak = curUser.streak ? curUser.streak + 1 : 1
+            updatedUser.lastTaskAt = dayjs().toISOString()
+          }
+          return updateUser(userId, updatedUser)
+        })
+      ),
     ]).then(() => Promise.resolve())
   } else {
     return sendTxtLater(

@@ -12,23 +12,26 @@ import {
   deleteProjectIncome,
   getAllProjectsIncomes,
   Income,
-} from './income'
+} from './incomes'
 import { Task } from './tasks'
 
 export interface Project {
   id?: string
   lastTaskAt?: string
+  launchedAt?: string
   createdAt: string
   updatedAt: string
   hashtag: string
   tasks: number
+  incomes: number
   tasksData?: Task[]
-  IncomeData?: Income[]
+  incomesData?: Income[]
   streak: number
   emoji: string
   color: string
   name: string
   logo: string
+  cover: string
   description: string
   category: string
   website: string
@@ -115,10 +118,12 @@ export const updateProject = async (
         category: '',
         website: '',
         logo: '',
+        cover: '',
         emoji: '',
         color: '',
         tasks: 0,
         streak: 0,
+        incomes: 0,
         updatedAt: dayjs().toISOString(),
         createdAt: dayjs().toISOString(),
       },
