@@ -8,8 +8,8 @@ const maker = async (req: Request, res: Response) => {
     const projects = await getAllProjects(String(req.query.id))
     if (user) {
       user.projectsData = projects
-      user.makerlogHook = ''
-      user.wipApiKey = ''
+      ;(user as any).makerlogHook = !!user.makerlogHook
+      ;(user as any).wipApiKey = !!user.wipApiKey
     }
     res.json(user)
   } else {
