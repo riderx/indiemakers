@@ -18,12 +18,32 @@ export const discordMakers = ($config: NuxtConfig) => {
       return []
     })
 }
-export const discordMakersId = ($config: NuxtConfig, id: string) => {
+
+export const discordProjectId = (
+  $config: NuxtConfig,
+  userId: string,
+  id: string
+) => {
   const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
     $config.BASEAPI
-  }/makers`
+  }/project?uid=${userId}&id=${id}`
   return axios
-    .get(`${url}?guid=${id}`)
+    .get(url)
+    .then((response) => {
+      return response.data
+    })
+    .catch((err) => {
+      console.error('makers err', err)
+      return []
+    })
+}
+
+export const discordMakerId = ($config: NuxtConfig, id: string) => {
+  const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
+    $config.BASEAPI
+  }/maker?id=${id}`
+  return axios
+    .get(url)
     .then((response) => {
       return response.data
     })

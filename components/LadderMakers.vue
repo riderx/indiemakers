@@ -18,9 +18,9 @@
   >
     <div
       v-for="maker in users"
-      :key="maker.id"
+      :key="maker.username"
       class="flex py-3 border-b-2 border-orchid-300"
-      @click="openProfil(maker.id)"
+      @click="openProfil(maker.userId)"
     >
       <img
         class="object-cover w-12 h-12 border-2 rounded-full border-orchid-300"
@@ -48,8 +48,7 @@ export default {
   },
   methods: {
     openProfil(id) {
-      console.log('click', id)
-      this.$router.push(id)
+      this.$router.push(`/communaute/${id}`)
     },
   },
 }

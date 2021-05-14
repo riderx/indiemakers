@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="user && loaded">
     <div class="relative">
       <img
         class="object-cover w-full h-72"
@@ -19,16 +19,19 @@
           w-36
           border-orchid-300
         "
-        src="https://cdn.hovia.com/app/uploads/Red-Illustrated-Landscape-Sunset-Wallpaper-Mural-plain.jpg"
+        :src="user.avatarUrl"
         alt="cover profil"
       />
     </div>
     <div class="flex flex-col items-center justify-center">
       <h1 class="mt-20 text-3xl font-medium text-orchid-300 font-indie">
-        Name user
+        {{ user.name || user.username }}
       </h1>
       <p class="px-4 py-1 text-lg bg-white rounded-lg text-royalblue-700">
-        🕉 25
+        🕉 {{ user.karma }}
+      </p>
+      <p class="px-4 py-1 text-lg bg-white rounded-lg text-royalblue-700">
+        🔥 {{ user.streak }}
       </p>
     </div>
     <div class="flex flex-col m-5 md:flex-row md:m-10">
@@ -56,13 +59,14 @@
             font-indie
           "
         >
-          Projects
+          Projets {{ user.projects }}
         </h1>
         <div class="flex w-full overflow-x-scroll md:flex-col">
           <div
-            v-for="project in projects"
+            v-for="project in user.projectsData"
             :key="project.hashtag"
             class="flex-none my-4 ml-3 md:my-2 lg:my-4 md:ml-0"
+            @click="selectProject(project)"
           >
             <div class="relative flex items-end">
               <img
@@ -74,7 +78,7 @@
                   rounded-lg
                   border-royalblue-700
                 "
-                src="https://cdn.hovia.com/app/uploads/Red-Illustrated-Landscape-Sunset-Wallpaper-Mural-plain.jpg"
+                :src="project.logo"
               />
               <h2 class="mx-1 truncate">
                 {{ project.name }}
@@ -88,7 +92,7 @@
                   rounded-tr-lg rounded-bl-lg
                   bg-royalblue-700
                 "
-                >🔥{{ project.flamme }}</span
+                >🔥{{ project.streak }}</span
               >
             </div>
           </div>
@@ -118,52 +122,59 @@
               lg:mb-0
               lg:mr-3
             "
-            src="https://cdn.hovia.com/app/uploads/Red-Illustrated-Landscape-Sunset-Wallpaper-Mural-plain.jpg"
+            :src="projectData.logo"
           />
           <div class="text-center lg:text-left">
             <h1 class="text-3xl font-indie">
-              Project name <span class="text-base">🔥25</span>
+              {{ projectData.name }}
+              <span class="text-base">🔥{{ projectData.streak }}</span>
             </h1>
-            <p class="my-2 text-xl">Picth description du proect super genial</p>
-            <a class="text-lg">https://www.Website.com</a>
+            <p class="my-2 text-xl">{{ projectData.description }}</p>
+            <a :href="projectData.website" target="_blank" class="text-lg">{{
+              projectData.website
+            }}</a>
           </div>
         </div>
-        <ListTasks />
+        <ListTasks
+          v-if="loaded && projectData.tasksData"
+          :tasks="projectData.tasksData.tasks"
+        />
       </div>
     </div>
   </div>
 </template>
 <script>
-import { discordMakerId } from '~/services/rss'
+import { discordMakerId, discordProjectId } from '~/services/rss'
 export default {
   components: {
     ListTasks: () => import('~/components/ListTasks.vue'),
   },
-  async asyncData({ $config }) {
-    const data = await discordMakerId($config)
-    return await data
+  async asyncData({ params, $config }) {
+    const user = await discordMakerId($config, params.id)
+    return { user }
   },
   data() {
     return {
-      projects: [
-        {
-          hashtag: 'uhhoo',
-          description: 'blablbalbalblbablab',
-          name: 'name project1',
-          flamme: 5,
-          website: 'https://shannone.controu.com',
-        },
-        {
-          hashtag: 'uhsdhoo',
-          description: 'blablbalbalblbablab',
-          name: 'name project2',
-          flamme: 25,
-          website: 'https://shannone.controu.com',
-        },
-      ],
+      projectId: null,
+      loaded: false,
+      projectData: {},
     }
   },
+  async mounted() {
+    if (this.user.projectData) {
+      await this.selectProject(this.user.projectData[0])
+    }
+    this.loaded = true
+  },
   methods: {
+    getProject(id) {
+      return discordProjectId(this.$config, this.user.userId, id)
+    },
+    async selectProject(project) {
+      this.projectId = project.hashtag
+      this.projectData = await this.getProject(this.projectId)
+      console.log('project', this.projectData)
+    },
     goHome() {
       this.$router.push('/')
     },

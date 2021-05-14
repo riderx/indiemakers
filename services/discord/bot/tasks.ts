@@ -23,7 +23,7 @@ enum TaskStatus {
   // eslint-disable-next-line no-unused-vars
   DONE = 'done',
 }
-interface Task {
+export interface Task {
   id?: string
   content: string
   status: TaskStatus
@@ -119,7 +119,7 @@ const updateProjectTask = async (
     .update({ ...task, updatesAt: dayjs().toISOString() })
 }
 
-const getAllProjectsTasks = async (
+export const getAllProjectsTasks = async (
   userId: string,
   projectId: string
 ): Promise<{ tasks: Task[]; total: number }> => {

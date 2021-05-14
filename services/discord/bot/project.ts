@@ -13,6 +13,7 @@ import {
   getAllProjectsIncomes,
   Income,
 } from './income'
+import { Task } from './tasks'
 
 export interface Project {
   id?: string
@@ -21,6 +22,8 @@ export interface Project {
   updatedAt: string
   hashtag: string
   tasks: number
+  tasksData?: Task[]
+  IncomeData?: Income[]
   streak: number
   emoji: string
   color: string
@@ -63,12 +66,13 @@ export const getAllProjects = async (userId: string): Promise<Project[]> => {
       .get()
 
     const projects: Project[] = []
-    documents.docs.forEach((doc) => {
-      const data = doc.data() as Project
+    for (let index = 0; index < documents.docs.length; index++) {
+      const doc = documents.docs[index]
+      const data = (await doc.data()) as Project
       if (data !== undefined) {
         projects.push({ id: doc.id, ...(data as Project) })
       }
-    })
+    }
     return projects
   } catch (err) {
     console.error('getAllProjects', err)

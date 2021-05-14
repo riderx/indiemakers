@@ -12,6 +12,7 @@ import rss from '../api/rss'
 import healthcheck from '../api'
 import makershunt from '../api/makershunt'
 import maker from '../api/maker'
+import project from '../api/project'
 import community from '../api/community'
 import ep from '../api/ep'
 import discordInteraction from './discord/bot'
@@ -44,6 +45,7 @@ appRouter.get('/', healthcheck)
 appRouter.get('/makershunt', makershunt)
 appRouter.get('/community', community)
 appRouter.get('/maker', maker)
+appRouter.get('/project', project)
 appRouter.get('/ep', ep)
 appRouter.all('/bot', async (req: Request, res: Response) => {
   const signature = String(req.headers['X-Signature-Ed25519']) || ''

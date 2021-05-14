@@ -1,16 +1,18 @@
 <template>
   <LazyHydrate when-visible>
-    <div class="w-full bg-white p-10">
-      <button class="text-3xl text-royalblue-700 mb-5 lg:mb-10 font-indie">
+    <div class="w-full p-10 bg-white">
+      <button class="mb-5 text-3xl text-royalblue-700 lg:mb-10 font-indie">
         Tasks
       </button>
-      <div class="flex mb-5 lg:mb-10 border-b-2 border-royalblue-700">
+      <div class="flex mb-5 border-b-2 lg:mb-10 border-royalblue-700">
         <button
           class="
-            text-2xl text-royalblue-700
-            mr-3
             px-2
-            border-b-2 border-royalblue-700
+            mr-3
+            text-2xl
+            border-b-2
+            text-royalblue-700
+            border-royalblue-700
             focus:outline-none
           "
         >
@@ -18,9 +20,10 @@
         </button>
         <button
           class="
-            text-2xl text-royalblue-700
-            opacity-50
             mr-3
+            text-2xl
+            opacity-50
+            text-royalblue-700
             px2
             focus:outline-none
           "
@@ -31,7 +34,7 @@
       <article
         v-for="task in tasks"
         :key="task.id"
-        class="py-5 lg:mx-10 border-b-2 border-orchid-300"
+        class="py-5 border-b-2 lg:mx-10 border-orchid-300"
       >
         <h1 class="text-xl">
           {{ task.content }}
@@ -62,7 +65,7 @@ export default {
           createdAt: '12-05-2020',
         },
         {
-          id: 'biub',
+          id: 'biub2',
           content: 'super task',
           status: 'todo',
           doneAt: false,
@@ -71,9 +74,6 @@ export default {
       ],
     },
   },
-  data() {},
-  computed: {},
-  methods: {},
 }
 </script>
 
