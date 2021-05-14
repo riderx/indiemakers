@@ -205,18 +205,40 @@ export const usersViewStreak = async (): Promise<Embed[]> => {
 }
 
 const userList = async (interaction: Interaction): Promise<void> => {
-  let usersInfo = ''
+  const cards: Promise<any>[] = []
   const res = await getAllUsers()
-  res.users.forEach((element: User) => {
-    usersInfo += `${element.username}\n - ${element.streak} jours d'affilés\n - ${element.tasks} taches faites depuis le debut\n - ${element.projects} projets !\n`
+  res.users.forEach((user: User) => {
+    const fields = [
+      field('🔥 Flammes', String(user.streak)),
+      field('🕉 Karma', String(user.karma)),
+      field('🌱 Projets', String(user.projects)),
+      field('💗 Taches', String(user.tasks)),
+    ]
+    const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
+    const thumb = image(user.avatarUrl)
+    const userCard = embed(
+      name,
+      '',
+      user.color,
+      fields,
+      undefined,
+      undefined,
+      user.createdAt,
+      undefined,
+      thumb
+    )
+    cards.push(sendChannel(interaction.channel_id, '', userCard))
   })
-  console.log('userList', usersInfo)
-  return sendTxtLater(
-    `Voici la liste des makers !\n\n${usersInfo}`,
-    [],
-    interaction.application_id,
-    interaction.token
-  )
+  console.log('userList')
+  return Promise.all([
+    sendTxtLater(
+      'Voici la liste des makers:',
+      [],
+      interaction.application_id,
+      interaction.token
+    ),
+    ...cards,
+  ]).then(() => Promise.resolve())
 }
 
 const userListStreak = async (interaction: Interaction): Promise<void> => {
@@ -254,8 +276,8 @@ const userView = async (
       fields,
       undefined,
       undefined,
-      undefined,
       user.createdAt,
+      undefined,
       thumb
     )
     return sendTxtLater(
@@ -288,8 +310,8 @@ const userView = async (
       fields,
       undefined,
       undefined,
-      undefined,
       user.createdAt,
+      undefined,
       thumb
     )
     return Promise.all([

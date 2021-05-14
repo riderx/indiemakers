@@ -5,7 +5,7 @@ import {
   ApplicationCommandInteractionDataOption,
 } from '../command'
 import { getStripeCharges, Charge } from './stripe'
-import { embed, field, image, sendTxtLater } from './utils'
+import { embed, field, image, sendChannel, sendTxtLater } from './utils'
 import { updateUser } from './user'
 import {
   createProjectIncome,
@@ -324,25 +324,47 @@ const projectList = async (
   userId: string,
   me = false
 ): Promise<void> => {
-  let projsInfo = ''
+  const cards: Promise<any>[] = []
   const projects = await getAllProjects(userId)
-  projects.forEach((proj: Project) => {
-    projsInfo += `${proj.name} #${proj.hashtag}\n - taches:${
-      proj.tasks
-    }\n - flammes:${proj.streak}\n - Crée le ${dayjs(proj.createdAt).format(
-      'DD/MM/YYYY'
-    )}\n\n`
+  projects.forEach((project: Project) => {
+    const fields = [
+      field('🔥 Flammes', String(project.streak)),
+      field('💗 Taches', String(project.tasks)),
+    ]
+    if (project.website) {
+      fields.push(field('Website', String(project.website), false))
+    }
+    const name = `${project.emoji || '🌱'} ${project.name || project.hashtag}`
+    const description =
+      project.description ||
+      "Je n'ai pas encore de description, je suis jeune 👶!"
+    const thumb = project.logo ? image(project.logo) : undefined
+    const projCard = embed(
+      name,
+      description,
+      project.color,
+      fields,
+      undefined,
+      undefined,
+      project.createdAt,
+      undefined,
+      thumb
+    )
+    cards.push(sendChannel(interaction.channel_id, '', projCard))
   })
-  console.error('project_list', projsInfo)
+  console.error('project_list')
   const sentence = me
     ? 'Voici la liste de tes projets !'
     : `Voici la liste des projets de <@${userId}> !`
-  return sendTxtLater(
-    `${sentence}\n\n${projsInfo}`,
-    [],
-    interaction.application_id,
-    interaction.token
-  )
+  return Promise.all([
+    sendTxtLater(
+      `${sentence}\n\n`,
+      [],
+      interaction.application_id,
+      interaction.token
+    ),
+    ...cards,
+  ]).then(() => Promise.resolve())
 }
 
 const projectView = async (
@@ -370,19 +392,19 @@ const projectView = async (
         fields.push(field('Website', String(project.website), false))
       }
       const name = `${project.emoji || '🌱'} ${project.name || project.hashtag}`
-      const bio =
+      const description =
         project.description ||
         "Je n'ai pas encore de description, je suis jeune 👶!"
       const thumb = project.logo ? image(project.logo) : undefined
       const projCard = embed(
         name,
-        bio,
+        description,
         project.color,
         fields,
         undefined,
         undefined,
-        undefined,
         project.createdAt,
+        undefined,
         thumb
       )
       console.log('projectView', projectId, makerId)
