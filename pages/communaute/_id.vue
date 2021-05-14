@@ -41,7 +41,7 @@
         <p
           class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700"
         >
-          💰 {{ user.incomes }}
+          💰 {{ user.incomes }} €
         </p>
       </div>
     </div>

@@ -10,13 +10,14 @@ export const discordMakers = ($config: NuxtConfig) => {
   const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
     $config.BASEAPI
   }/community`
+  console.error('discordMakers', url)
   return axios
     .get(url)
     .then((response) => {
       return response.data
     })
     .catch((err) => {
-      console.error('makers err', err)
+      console.error('discordMakers err', err)
       return []
     })
 }
@@ -35,7 +36,7 @@ export const discordProjectId = (
       return response.data
     })
     .catch((err) => {
-      console.error('makers err', err)
+      console.error('discordProjectId err', err)
       return []
     })
 }
@@ -53,7 +54,7 @@ export const discordMakerId = (
       return response.data
     })
     .catch((err) => {
-      console.error('makers err', err)
+      console.error('discordMakerId err', err)
       return []
     })
 }

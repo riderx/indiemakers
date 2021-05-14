@@ -4,10 +4,10 @@ const serverMiddleware = isServerlessEnvironment
   : [{ path: '/api', handler: '~/services/local.ts' }]
 export default {
   // Target: https://go.nuxtjs.dev/config-target
-  target: 'static',
+  target: 'server',
   publicRuntimeConfig: {
     DOMAIN:
-      process.env.NODE_ENV === 'production'
+      process.env.NODE_ENV && process.env.ON_VERCEL === 'production'
         ? 'https://indiemakers.fr'
         : 'http://localhost:3000',
     VERCEL_URL: process.env.VERCEL_URL,
