@@ -6,7 +6,7 @@ subtitle: une app après l'autre
 published: true
 description: Les grandes entreprises nous ont dit que les logiciels ne pouvaient pas être réalisés par une seule personne ou de petites équipes sans capital, nous leur prouvons chaque jour qu'ils ont tort.
 type: Article
-headImage: "/images/nghia-le-v3dokm1nqcs-unsplash.jpg"
+headImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fnghia-le-v3dokm1nqcs-unsplash.jpg?alt=media&token=7effe83f-bd97-4c18-9a98-09cd0b548015"
 readTime: 3 min
 order: 1
 date: 02 mai 2020
@@ -14,7 +14,7 @@ author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
-<img class="w-full rounded-lg" src="/images/nghia-le-v3dokm1nqcs-unsplash.jpg" alt="a la conquete du web" width="1310" height="873">
+<img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fnghia-le-v3dokm1nqcs-unsplash.jpg?alt=media&token=7effe83f-bd97-4c18-9a98-09cd0b548015" alt="a la conquete du web" width="1310" height="873">
 
 <p class="text-xs">Photo by <a href="https://unsplash.com/@lephunghia?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Nghia Le</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
 

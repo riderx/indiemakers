@@ -8,7 +8,7 @@ description: Si tu cherches un moyen de créer ta propre entreprise, je t'invite
   lire cet article de blog, je partage 10 conseils d'entrepreneurs qui ont lancé leur
   projet comme toi.
 type: Article
-headImage: "/images/victoria-heath-magaxayq_ne-unsplash.jpg"
+headImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fvictoria-heath-magaxayq_ne-unsplash.jpg?alt=media&token=124c04f0-3e12-4452-9569-3ce6dc4f983e"
 readTime: 3 min
 order: 2
 date: 27 avril 2020
@@ -16,7 +16,7 @@ author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
-<img class="w-full rounded-lg" src="/images/victoria-heath-magaxayq_ne-unsplash.jpg" alt="10 conseils" width="1310" height="873">
+<img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fvictoria-heath-magaxayq_ne-unsplash.jpg?alt=media&token=124c04f0-3e12-4452-9569-3ce6dc4f983e" alt="10 conseils" width="1310" height="873">
 
 <p class="text-xs">Photo by <a href="https://unsplash.com/@vheath?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Victoria Heath</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
 

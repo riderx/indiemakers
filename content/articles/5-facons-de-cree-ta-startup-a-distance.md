@@ -8,7 +8,7 @@ description: La création et la gestion d'une startup en ligne sont devenues bea
   plus accessibles grâce à l'émergence de quelques entreprises qui ont pour objectif
   commun de faciliter la vie des entrepreneurs et des nomades numériques.
 type: Article
-headImage: "/images/robbie-noble-4vtwo3a0xsq-unsplash.jpg"
+headImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Frobbie-noble-4vtwo3a0xsq-unsplash.jpg?alt=media&token=7eacec08-1915-4615-8d64-bd2ade83a253"
 readTime: 20 min
 order: 1
 date: 28 Avril 2021
@@ -16,7 +16,7 @@ author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
-<img class="w-full rounded-lg" src="/images/robbie-noble-4vtwo3a0xsq-unsplash.jpg" alt="cree ta boite" width="1310" height="873">
+<img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Frobbie-noble-4vtwo3a0xsq-unsplash.jpg?alt=media&token=7eacec08-1915-4615-8d64-bd2ade83a253" alt="cree ta boite" width="1310" height="873">
 
 <p class="text-xs">Photo by <a href="https://unsplash.com/@rbbnbl?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Robbie Noble</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
   

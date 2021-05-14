@@ -6,14 +6,14 @@ subtitle: ''
 description: Tout le monde rêve d'arriver à la première page de Product Hunt. C'est
   l'occasion de montrer ta création à des milliers de passionnés de technologie.
 type: Article
-headImage: "/images/product-hunt-books.jpg"
+headImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fproduct-hunt-books.jpg?alt=media&token=a749f1c7-c34b-4735-bdd4-cbbe64f895fe"
 readTime: 8 min
 date: 01 mai 2021
 author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
-<img class="w-full rounded-lg" src="/images/product-hunt-books.jpg" alt="product hunt book" width="1310" height="873">
+<img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fproduct-hunt-books.jpg?alt=media&token=a749f1c7-c34b-4735-bdd4-cbbe64f895fe" alt="product hunt book" width="1310" height="873">
 
 
 Tout le monde rêve d'arriver à la première page de Product Hunt. C'est l'occasion de montrer ta création à des milliers de passionnés de technologie.

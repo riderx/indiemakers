@@ -6,14 +6,14 @@ published: false
 subtitle: ''
 description: ''
 type: Article
-headImage: "/images/pawel-janiak-foa_hz1bxii-unsplash.jpg"
+headImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fpawel-janiak-foa_hz1bxii-unsplash.jpg?alt=media&token=7d112536-312a-4392-a31d-b066104c8b09"
 readTime: ''
 date: 2 mai 2021
 author: Martin Donadieu
 authorImage: "/images/profil_martin.png"
 
 ---
-<img class="w-full rounded-lg" src="/images/pawel-janiak-foa_hz1bxii-unsplash.jpg" alt="top 5 ou vivre" width="1310" height="873">
+<img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fpawel-janiak-foa_hz1bxii-unsplash.jpg?alt=media&token=7d112536-312a-4392-a31d-b066104c8b09" alt="top 5 ou vivre" width="1310" height="873">
 
 <p class="text-xs">Photo by <a href="https://unsplash.com/@pawelj?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Pawel Janiak</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
 
