@@ -16,8 +16,11 @@ import {
   updateProject,
 } from './project'
 
+// eslint-disable-next-line no-unused-vars
 enum TaskStatus {
+  // eslint-disable-next-line no-unused-vars
   TODO = 'todo',
+  // eslint-disable-next-line no-unused-vars
   DONE = 'done',
 }
 interface Task {

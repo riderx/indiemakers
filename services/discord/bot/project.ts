@@ -4,7 +4,7 @@ import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
-import { getStripeCharges, Charge } from './stripe_charges'
+import { getStripeCharges, Charge } from './stripe'
 import { embed, field, image, sendTxtLater } from './utils'
 import { updateUser } from './user'
 import {

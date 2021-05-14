@@ -1,4 +1,4 @@
-import { firestore } from 'firebase-admin'
+import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import {
   ApplicationCommandInteractionDataOption,
@@ -57,7 +57,7 @@ export const getAllUsers = async (): Promise<{
   total: number
 }> => {
   try {
-    const documents = await firestore().collection('discord').get()
+    const documents = await admin.firestore().collection('discord').get()
     const users: User[] = []
     documents.docs.forEach((doc) => {
       const data = doc.data() as User
@@ -91,7 +91,7 @@ const transformKey = (key: string): string => {
 
 export const getUsersById = async (userId: string): Promise<User | null> => {
   try {
-    const res = await firestore().collection('discord').doc(userId).get()
+    const res = await admin.firestore().collection('discord').doc(userId).get()
     const data = res.data()
     return data !== undefined ? (data as User) : null
   } catch (err) {
@@ -103,8 +103,12 @@ export const getUsersById = async (userId: string): Promise<User | null> => {
 export const updateUser = async (
   userId: string,
   user: Partial<User>
-): Promise<firestore.WriteResult> => {
-  const userDoc = await firestore().collection('discord').doc(userId).get()
+): Promise<admin.firestore.WriteResult> => {
+  const userDoc = await admin
+    .firestore()
+    .collection('discord')
+    .doc(userId)
+    .get()
   if (!userDoc.exists || !userDoc.data) {
     const userInfo = await getUserData(userId)
     const base: User = {
@@ -128,7 +132,7 @@ export const updateUser = async (
       base.username = userInfo.username
     }
     const newUser: User = Object.assign(base, user as User)
-    return firestore().collection('discord').doc(userId).set(newUser)
+    return admin.firestore().collection('discord').doc(userId).set(newUser)
   }
   return userDoc.ref.update({ ...user, updatedAt: dayjs().toISOString() })
 }

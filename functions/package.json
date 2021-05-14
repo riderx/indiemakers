@@ -3,9 +3,9 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
     "build": "tsc",
-    "discord:deploy": "firebase deploy --only \"functions:discord_interaction\"",
-    "discord:config": "ts-node src/discord/create_command.ts",
-    "discord:local": "ts-node src/discord/local.ts",
+    "discord:deploy": "firebase deploy --only \"functions:discordBot\"",
+    "discord:config": "ts-node services/discord/command.ts",
+    "discord:local": "ts-node services/discord/local.ts",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",

@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express'
+import admin from 'firebase-admin'
 import * as dotenv from 'dotenv'
 import { verifyKey } from 'discord-interactions'
 import feed from '../api/feed'
@@ -12,7 +13,11 @@ import ep from '../api/ep'
 import discordInteraction from './discord/bot'
 
 dotenv.config()
-
+if (!admin.apps.length) {
+  admin.initializeApp(JSON.parse(String(process.env.GOOGLE_SERVICE_ACCOUNT)))
+} else {
+  admin.app() // if already initialized, use that one
+}
 function getRawBody(req: Request): Promise<string> {
   return new Promise((resolve) => {
     const bodyChunks: Buffer[] = []
