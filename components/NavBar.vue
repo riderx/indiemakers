@@ -188,7 +188,7 @@
         </nav>
         <div class="flex items-center md:ml-12">
           <a
-            href="/discord"
+            href="/communaute"
             class="
               inline-flex
               items-center

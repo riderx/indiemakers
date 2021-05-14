@@ -26,6 +26,24 @@
       </select>
     </div>
     <LadderMakers v-if="loaded" :users="users" />
+    <div class="w-1/4 px-10 py-5 mx-auto text-white">
+      <button
+        type="button"
+        class="
+          px-5
+          py-2
+          mx-auto
+          text-white
+          border-4 border-white
+          font-indie
+          hover:text-royalblue-700
+          hover:bg-white
+        "
+        @click="joinUs()"
+      >
+        👉 Rejoin nous
+      </button>
+    </div>
   </div>
 </template>
 <script>
@@ -54,6 +72,11 @@ export default {
   mounted() {
     this.users.sort((a, b) => b[this.sort] - a[this.sort])
     this.loaded = true
+  },
+  methods: {
+    joinUs() {
+      this.$router.push('/discord')
+    },
   },
 }
 </script>
