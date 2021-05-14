@@ -79,6 +79,8 @@ const transformKey = (key: string): string => {
       return 'color'
     case 'nom':
       return 'name'
+    case 'couverture':
+      return 'cover'
     case 'makerlog_hook':
       return 'makerlogHook'
     case 'wip_key':

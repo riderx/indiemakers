@@ -307,6 +307,7 @@ const projetOptions = [
 const makerOptions = [
   optionGen('nom', 'Ton nom de Maker', SlashCommandOptionType.STRING),
   optionGen('bio', 'Ta bio', SlashCommandOptionType.STRING),
+  // optionGen('email', 'Ton email', SlashCommandOptionType.STRING),
   optionGen('website', 'Ton site perso', SlashCommandOptionType.STRING),
   optionGen('photo', "L'url vers ta photo", SlashCommandOptionType.STRING),
   optionGen(
@@ -315,7 +316,11 @@ const makerOptions = [
     SlashCommandOptionType.STRING
   ),
   optionGen('couleur', 'Ta couleur préféré', SlashCommandOptionType.STRING),
-  optionGen('cover', "L'url vers ta photo", SlashCommandOptionType.STRING),
+  optionGen(
+    'couverture',
+    "L'url vers ta photo de couverture",
+    SlashCommandOptionType.STRING
+  ),
   optionGen(
     'makerlog_hook',
     'La web hook de ton compte makerlog, pour que le bot poste tes taches',
@@ -472,6 +477,7 @@ const jsonData = {
     income,
     maker,
     optionGen('doc', 'Lire la doc du bot', 1),
+    // optionGen('login', 'se connecter sur le site', 1),
   ],
 }
 
