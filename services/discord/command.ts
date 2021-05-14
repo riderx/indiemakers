@@ -293,7 +293,7 @@ const projetOptions = [
     SlashCommandOptionType.STRING
   ),
   optionGen(
-    'coouleur',
+    'couleur',
     'La couleur de ton projet',
     SlashCommandOptionType.STRING
   ),
@@ -314,7 +314,8 @@ const makerOptions = [
     "L'émoji qui te correspond le plus",
     SlashCommandOptionType.STRING
   ),
-  optionGen('coouleur', 'Ta couleur préféré', SlashCommandOptionType.STRING),
+  optionGen('couleur', 'Ta couleur préféré', SlashCommandOptionType.STRING),
+  optionGen('cover', "L'url vers ta photo", SlashCommandOptionType.STRING),
   optionGen(
     'makerlog_hook',
     'La web hook de ton compte makerlog, pour que le bot poste tes taches',

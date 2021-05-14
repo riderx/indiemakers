@@ -43,21 +43,22 @@
 </template>
 
 <script lang="ts">
+import Vue, { PropOptions } from 'vue'
 import { Task } from '~/services/discord/bot/tasks'
-export default {
+export default Vue.extend({
   name: 'ListTasks',
   components: {
-    LazyHydrate: () => import('vue-lazy-hydration'),
+    LazyHydrate: () => require('vue-lazy-hydration'),
   },
   props: {
     tasks: {
       type: Array,
       default: () => [],
-    },
+    } as PropOptions<Task[]>,
   },
   data() {
     return {
-      filterTasks: [],
+      filterTasks: [] as Task[],
       status: 'done',
     }
   },
@@ -70,8 +71,9 @@ export default {
   mounted() {
     // this.projectId = this.user.projectsData[0].hashtag
     this.filterTasks = this.tasks.filter((a: Task) => a.status === this.status)
+    console.log('this.filterTasks', this.filterTasks)
   },
-}
+})
 </script>
 
 <style scoped>

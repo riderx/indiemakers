@@ -30,6 +30,7 @@ export interface User {
   tasks: number
   name?: string
   bio?: string
+  cover?: string
   website?: string
   lastTaskAt?: string
   makerlogHook?: string

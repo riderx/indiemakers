@@ -98,7 +98,7 @@
           </div>
         </div>
       </div>
-      <div v-if="user.projectsData && loadedProject" class="md:w-4/5 md:mx-2">
+      <div v-if="projectData && loadedProject" class="md:w-4/5 md:mx-2">
         <div
           class="
             flex flex-col
@@ -136,7 +136,7 @@
           </div>
         </div>
         <ListTasks
-          v-if="loaded && projectData.tasksData"
+          v-if="projectData.tasksData"
           :tasks="projectData.tasksData.tasks"
         />
       </div>
@@ -144,11 +144,12 @@
   </div>
 </template>
 <script lang="ts">
+import Vue from 'vue'
 import { discordMakerId, discordProjectId } from '~/services/rss'
 import { Project } from '~/services/discord/bot/project'
 import { User } from '~/services/discord/bot/user'
 
-export default {
+export default Vue.extend({
   components: {
     ListTasks: () => import('~/components/ListTasks.vue'),
   },
@@ -161,8 +162,8 @@ export default {
   },
   data() {
     return {
-      user: null as User,
-      projectData: null as Project,
+      user: null as unknown as User,
+      projectData: null as unknown as Project,
       projectId: '',
       loaded: false,
       loadedProject: false,
@@ -189,11 +190,12 @@ export default {
         this.user.userId,
         id
       )
+      console.log('getProject', this.projectData)
       this.loadedProject = true
     },
     goHome() {
       this.$router.push('/')
     },
   },
-}
+})
 </script>
