@@ -1,7 +1,12 @@
 import { Request, Response } from 'express'
 
-import { verifyKey } from 'discord-interactions'
+import {
+  InteractionResponseType,
+  InteractionType,
+  verifyKey,
+} from 'discord-interactions'
 import discordInteraction from '../../services/discord/bot'
+import { sendTxtLoading } from '../../services/discord/bot/utils'
 
 function getRawBody(req: Request): Promise<string> {
   return new Promise((resolve) => {
@@ -30,8 +35,17 @@ const bot = async (req: Request, res: Response) => {
     if (!isValidRequest) {
       return res.status(401).end('Bad request signature')
     }
-
-    return discordInteraction(req.body, res as any as Response)
+    if (
+      req.body &&
+      req.body.type === InteractionType.APPLICATION_COMMAND &&
+      req.body.data
+    ) {
+      await sendTxtLoading(res)
+      return discordInteraction(req.body)
+    }
+    return res.send({
+      type: InteractionResponseType.PONG,
+    })
   } catch (error) {
     console.error(error.message)
   }

@@ -1,7 +1,11 @@
 import express, { Request, Response } from 'express'
 import admin from 'firebase-admin'
 import * as dotenv from 'dotenv'
-import { verifyKey } from 'discord-interactions'
+import {
+  InteractionResponseType,
+  InteractionType,
+  verifyKey,
+} from 'discord-interactions'
 import feed from '../api/feed'
 import sitemap from '../api/sitemap'
 import rss from '../api/rss'
@@ -11,6 +15,7 @@ import ladder from '../api/ladder'
 import community from '../api/community'
 import ep from '../api/ep'
 import discordInteraction from './discord/bot'
+import { sendTxtLoading } from './discord/bot/utils'
 
 dotenv.config()
 if (!admin.apps.length) {
@@ -53,7 +58,17 @@ appRouter.post('/bot', async (req: Request, res: Response) => {
   if (!isValidRequest) {
     return res.status(401).end('Bad request signature')
   }
-  return discordInteraction(req.body, res)
+  if (
+    req.body &&
+    req.body.type === InteractionType.APPLICATION_COMMAND &&
+    req.body.data
+  ) {
+    await sendTxtLoading(res)
+    return discordInteraction(req.body)
+  }
+  return res.send({
+    type: InteractionResponseType.PONG,
+  })
 })
 app.use('/', appRouter)
 

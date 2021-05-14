@@ -1,5 +1,5 @@
-import { InteractionResponseType, InteractionType } from 'discord-interactions'
-import { Response } from 'express'
+import { InteractionType } from 'discord-interactions'
+
 import {
   ApplicationCommandInteractionDataOption,
   Interaction,
@@ -7,12 +7,11 @@ import {
 import { userFn } from './user'
 import { incomeFn } from './income'
 import { projectFn } from './project'
-import { sendTxt, sendTxtLater, sendTxtLoading } from './utils'
+import { sendTxtLater } from './utils'
 import { karmaFn } from './karma'
 import { taskFn } from './tasks'
 
 const im = async (
-  res: Response,
   interaction: Interaction,
   option: ApplicationCommandInteractionDataOption,
   senderId: string
@@ -23,7 +22,6 @@ const im = async (
       option.options &&
       option.options.length > 0
     ) {
-      await sendTxtLoading(res)
       return karmaFn(interaction, option.options[0], senderId)
     }
     if (
@@ -31,7 +29,6 @@ const im = async (
       option.options &&
       option.options.length > 0
     ) {
-      await sendTxtLoading(res)
       return projectFn(interaction, option.options[0], senderId)
     }
     if (
@@ -39,7 +36,6 @@ const im = async (
       option.options &&
       option.options.length > 0
     ) {
-      await sendTxtLoading(res)
       return taskFn(interaction, option.options[0], senderId)
     }
     if (
@@ -47,7 +43,6 @@ const im = async (
       option.options &&
       option.options.length > 0
     ) {
-      await sendTxtLoading(res)
       return incomeFn(interaction, option.options[0], senderId)
     }
     if (
@@ -55,17 +50,23 @@ const im = async (
       option.options &&
       option.options.length > 0
     ) {
-      await sendTxtLoading(res)
       return userFn(interaction, option.options[0], senderId)
     }
     if (option.name === 'doc') {
-      await sendTxt(
-        res,
-        `Voici la doc pou m'utiliser ! https://indiemakers.gitbook.io/bot/`
+      await sendTxtLater(
+        `Voici la doc pou m'utiliser ! https://indiemakers.gitbook.io/bot/`,
+        [],
+        interaction.application_id,
+        interaction.token
       )
       return Promise.resolve()
     }
-    await sendTxt(res, `La Commande ${option.name} n'est pas pris en charge`)
+    await sendTxtLater(
+      `La Commande ${option.name} n'est pas pris en charge`,
+      [],
+      interaction.application_id,
+      interaction.token
+    )
     return Promise.resolve()
   } catch (err) {
     console.error('im', err)
@@ -78,10 +79,7 @@ const im = async (
   }
 }
 
-const discordInteraction = async (
-  interaction: Interaction,
-  res: Response
-): Promise<void> => {
+const discordInteraction = async (interaction: Interaction): Promise<void> => {
   if (
     interaction &&
     interaction.type === InteractionType.APPLICATION_COMMAND &&
@@ -94,21 +92,19 @@ const discordInteraction = async (
       interaction.member.user
     ) {
       return im(
-        res,
         interaction,
         interaction.data.options[0],
         interaction.member.user.id
       )
     }
-    await sendTxt(
-      res,
-      `La Commande ${interaction.data.name} n'est pas pris en charge`
+    await sendTxtLater(
+      `La Commande ${interaction.data.name} n'est pas pris en charge`,
+      [],
+      interaction.application_id,
+      interaction.token
     )
     return Promise.resolve()
   }
-  await res.send({
-    type: InteractionResponseType.PONG,
-  })
   return Promise.resolve()
 }
 

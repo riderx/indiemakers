@@ -15,7 +15,7 @@
   "engines": {
     "node": "12"
   },
-  "main": "lib/index.js",
+  "main": "lib/functions/src/index.js",
   "dependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/twitter": "^1.7.0",
@@ -29,6 +29,7 @@
     "firebase-functions": "^3.13.2",
     "get-urls": "^10.0.0",
     "graphql": "^15.5.0",
+    "hex2dec": "^1.1.2",
     "http-status-codes": "^2.1.4",
     "mentions": "^1.0.2",
     "stripe": "^8.148.0",

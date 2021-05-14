@@ -1,4 +1,4 @@
-import {config, https, pubsub, firestore, runWith, RuntimeOptions} from "firebase-functions";
+import {config, https, pubsub, firestore} from "firebase-functions";
 import admin, {initializeApp} from "firebase-admin";
 import {getPerson, getPersonById, voteIfNotDone} from "./users";
 import {
@@ -11,10 +11,14 @@ import {updateRevenueAllProject} from "../../services/discord/bot/stripe";
 import dayjs from "dayjs";
 import {transformURLtoTracked} from "./tracker";
 import {usersViewStreak} from "../../services/discord/bot/user";
-import {sendChannel} from "../../services/discord/bot/utils";
-import {verifyKey} from "discord-interactions";
+import {sendChannel, sendTxtLoading} from "../../services/discord/bot/utils";
+import {InteractionResponseType, InteractionType, verifyKey} from "discord-interactions";
+import {Interaction} from "../../services/discord/command";
 
 initializeApp();
+
+process.env["CLIENT_PUBLIC_KEY"] = config().discord.bot_public_key;
+process.env["BOT_TOKEN"] = config().discord.bot_token;
 
 export const getMakers = https.onRequest(async (req, res) => {
   if (req.get("x-verceladmin-apikey") !== config().verceladmin.apikey) {
@@ -156,7 +160,7 @@ export const calcVotesByPerson = firestore
       return snapshot;
     });
 
-export const onCreatUser = firestore
+export const onCreateUser = firestore
     .document("/users/{uid}")
     .onCreate(async (snapshot) => {
       const user = snapshot.data();
@@ -214,10 +218,6 @@ export const onUpdatePeople = firestore
       return snapshot;
     });
 
-const runtimeOpts: RuntimeOptions = {
-  memory: "512MB",
-};
-
 function getRawBody(req: https.Request): Promise<string> {
   return new Promise((resolve) => {
     const bodyChunks: Buffer[] = [];
@@ -230,7 +230,18 @@ function getRawBody(req: https.Request): Promise<string> {
   });
 }
 
-export const discordBot = runWith(runtimeOpts).https.onRequest(async (req, res) => {
+export const OnInteraction = firestore
+    .document("/interaction/{interactionId}")
+    .onCreate(async (snapshot, context) => {
+      const interaction: Interaction = snapshot.data() as Interaction;
+      if (interaction) {
+        await discordInteraction(interaction);
+        const {interactionId} = context.params;
+        await admin.firestore().collection("interaction").doc(interactionId).delete();
+      }
+    });
+
+export const discordBot = https.onRequest(async (req, res) => {
   const signature = req.get("X-Signature-Ed25519") || "";
   const timestamp = req.get("X-Signature-Timestamp") || "";
   const rawBody = await getRawBody(res as any);
@@ -243,7 +254,19 @@ export const discordBot = runWith(runtimeOpts).https.onRequest(async (req, res) 
   if (!isValidRequest) {
     return res.status(401).end("Bad request signature");
   }
-  return discordInteraction(req.body, res);
+  if (
+    req.body &&
+    req.body.type === InteractionType.APPLICATION_COMMAND &&
+    req.body.data
+  ) {
+    await sendTxtLoading(res);
+    admin.firestore().collection("interaction").add(req.body);
+    return;
+    // return discordInteraction(req.body);
+  }
+  await res.send({
+    type: InteractionResponseType.PONG,
+  });
 });
 
 export const scheduledBotBIP = pubsub.schedule("0 18 * * *")
