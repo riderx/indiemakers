@@ -7,7 +7,7 @@ import {
 import {sendUserToRevue} from "./newletter";
 import discordInteraction from "../../services/discord/bot";
 import {Person} from "./types";
-import {updateRevenueAllProject} from "../../services/discord/bot/stripe_charges";
+import {updateRevenueAllProject} from "../../services/discord/bot/stripe";
 import dayjs from "dayjs";
 import {transformURLtoTracked} from "./tracker";
 import {usersViewStreak} from "../../services/discord/bot/user";
