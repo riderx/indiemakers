@@ -20,15 +20,16 @@
       v-for="maker in users"
       :key="maker.id"
       class="flex py-3 border-b-2 border-orchid-300"
+      @click="openProfil(maker.id)"
     >
       <img
         class="object-cover w-12 h-12 border-2 rounded-full border-orchid-300"
-        src="https://cdn.hovia.com/app/uploads/Red-Illustrated-Landscape-Sunset-Wallpaper-Mural-plain.jpg"
+        :src="maker.avatarUrl"
         alt="cover profil"
       />
       <div class="flex flex-col mx-3">
         <h1 class="text-lg font-medium">
-          {{ maker.name }}
+          {{ maker.name || maker.username }}
         </h1>
         <div class="flex text-sm">
           <p class="mr-2">🔥{{ maker.streak }}</p>
@@ -40,34 +41,16 @@
 </template>
 
 <script>
-import { domain } from '~/services/rss'
-
 export default {
   name: 'LaderMakers',
-  async asyncData({ $http, $config }) {
-    // const data = await discordMakers($config)
-    const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
-      $config.BASEAPI
-    }/ladder`
-    return await $http
-      .$get(url)
-      .then((response) => {
-        console.error('makers', response.data)
-        return response.data
-      })
-      .catch((err) => {
-        console.error('makers err', err)
-        return { users: [], total: 0 }
-      })
+  props: {
+    users: { type: Array, default: () => [] },
   },
-  data() {
-    return {
-      users: [],
-      total: 0,
-    }
-  },
-  mounted() {
-    console.error(this.users)
+  methods: {
+    openProfil(id) {
+      console.log('click', id)
+      this.$router.push(id)
+    },
   },
 }
 </script>

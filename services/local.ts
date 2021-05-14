@@ -10,8 +10,8 @@ import feed from '../api/feed'
 import sitemap from '../api/sitemap'
 import rss from '../api/rss'
 import healthcheck from '../api'
-import makers from '../api/makers'
-import ladder from '../api/ladder'
+import makershunt from '../api/makershunt'
+import maker from '../api/maker'
 import community from '../api/community'
 import ep from '../api/ep'
 import discordInteraction from './discord/bot'
@@ -19,7 +19,7 @@ import { sendTxtLoading } from './discord/bot/utils'
 
 dotenv.config()
 if (!admin.apps.length) {
-  admin.initializeApp(JSON.parse(String(process.env.GOOGLE_SERVICE_ACCOUNT)))
+  admin.initializeApp()
 } else {
   admin.app() // if already initialized, use that one
 }
@@ -41,11 +41,11 @@ appRouter.get('/feed', feed)
 appRouter.get('/sitemap.xml', sitemap)
 appRouter.get('/rss.xml', rss)
 appRouter.get('/', healthcheck)
-appRouter.get('/makers', makers)
+appRouter.get('/makershunt', makershunt)
 appRouter.get('/community', community)
-appRouter.get('/ladder', ladder)
+appRouter.get('/maker', maker)
 appRouter.get('/ep', ep)
-appRouter.post('/bot', async (req: Request, res: Response) => {
+appRouter.all('/bot', async (req: Request, res: Response) => {
   const signature = String(req.headers['X-Signature-Ed25519']) || ''
   const timestamp = String(req.headers['X-Signature-Timestamp']) || ''
   const rawBody = await getRawBody(res as any)

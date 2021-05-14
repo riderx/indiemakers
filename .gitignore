@@ -92,3 +92,5 @@ sw.*
 *.swp
 
 .vercel
+google-service.json
+ngrok

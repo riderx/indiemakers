@@ -57,7 +57,7 @@ export const getAllUsers = async (): Promise<{
   total: number
 }> => {
   try {
-    const documents = await admin.firestore().collection('discord').get()
+    const documents = await admin.firestore().collection('/discord').get()
     const users: User[] = []
     documents.docs.forEach((doc) => {
       const data: User = doc.data() as User
@@ -91,7 +91,7 @@ const transformKey = (key: string): string => {
 
 export const getUsersById = async (userId: string): Promise<User | null> => {
   try {
-    const res = await admin.firestore().collection('discord').doc(userId).get()
+    const res = await admin.firestore().collection('/discord').doc(userId).get()
     const data = res.data()
     return data !== undefined ? (data as User) : null
   } catch (err) {
@@ -106,7 +106,7 @@ export const updateUser = async (
 ): Promise<admin.firestore.WriteResult> => {
   const userDoc = await admin
     .firestore()
-    .collection('discord')
+    .collection('/discord')
     .doc(userId)
     .get()
   if (!userDoc.exists || !userDoc.data) {

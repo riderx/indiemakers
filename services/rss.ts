@@ -7,9 +7,23 @@ export const domain = (VERCEL_URL: string, DOMAIN: string) => {
 export const discordMakers = ($config: NuxtConfig) => {
   const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
     $config.BASEAPI
-  }/discord_makers`
+  }/community`
   return axios
     .get(url)
+    .then((response) => {
+      return response.data
+    })
+    .catch((err) => {
+      console.error('makers err', err)
+      return []
+    })
+}
+export const discordMakersId = ($config: NuxtConfig, id: string) => {
+  const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
+    $config.BASEAPI
+  }/makers`
+  return axios
+    .get(`${url}?guid=${id}`)
     .then((response) => {
       return response.data
     })
@@ -22,7 +36,7 @@ export const discordMakers = ($config: NuxtConfig) => {
 export const makers = ($config: NuxtConfig) => {
   const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
     $config.BASEAPI
-  }/makers`
+  }/makershunt`
   return axios
     .get(url)
     .then((response) => {

@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import { Episode } from '~/services/feed'
+import { Episode } from '../../services/feed'
 
 const postEp = async (element: Episode) => {
-  const func = require('../../plugins/firebase_func')
+  const func = require('../../services/firebase_func')
   const ep: Partial<Episode> = {
     udi: element.guidFix,
     title: element.titleNoEmoji,
@@ -24,7 +24,7 @@ const postEp = async (element: Episode) => {
 }
 
 const ep = async (req: Request, res: Response) => {
-  const util = require('../../plugins/feed')
+  const util = require('../../services/feed')
   const items = await util.feed()
   let elem = null
   if (req.query.guid === 'latest') {
