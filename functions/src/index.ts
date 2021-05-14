@@ -218,18 +218,6 @@ export const onUpdatePeople = firestore
       return snapshot;
     });
 
-function getRawBody(req: https.Request): Promise<string> {
-  return new Promise((resolve) => {
-    const bodyChunks: Buffer[] = [];
-    req.on("end", () => {
-      const rawBody = Buffer.concat(bodyChunks).toString("utf8");
-      resolve(rawBody);
-    });
-    req.on("data", (chunk) => bodyChunks.push(chunk));
-    return;
-  });
-}
-
 export const OnInteraction = firestore
     .document("/interaction/{interactionId}")
     .onCreate(async (snapshot, context) => {
@@ -241,16 +229,10 @@ export const OnInteraction = firestore
       }
     });
 
-export const discordBot = https.onRequest(async (req, res) => {
+export const bot = https.onRequest(async (req, res) => {
   const signature = req.get("X-Signature-Ed25519") || "";
   const timestamp = req.get("X-Signature-Timestamp") || "";
-  const rawBody = await getRawBody(res as any);
-  const resConfig = await admin.firestore().collection("bot").doc("config").get();
-  const data = resConfig.data();
-  if (!data || !data.CLIENT_PUBLIC_KEY) {
-    return res.status(401).end("Bad request");
-  }
-  const isValidRequest = await verifyKey(rawBody, signature, timestamp, data.CLIENT_PUBLIC_KEY);
+  const isValidRequest = await verifyKey(req.rawBody, signature, timestamp, config().discord.bot_public_key);
   if (!isValidRequest) {
     return res.status(401).end("Bad request signature");
   }
@@ -260,7 +242,7 @@ export const discordBot = https.onRequest(async (req, res) => {
     req.body.data
   ) {
     await sendTxtLoading(res);
-    admin.firestore().collection("interaction").add(req.body);
+    await admin.firestore().collection("interaction").add(req.body);
     return;
     // return discordInteraction(req.body);
   }

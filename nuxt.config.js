@@ -1,7 +1,7 @@
 const isServerlessEnvironment = process.env.ON_VERCEL === 'true'
 const serverMiddleware = isServerlessEnvironment
   ? []
-  : [{ path: '/api', handler: '~/services/local_api.ts' }]
+  : [{ path: '/api', handler: '~/services/local.ts' }]
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',

@@ -60,7 +60,7 @@ export const getAllUsers = async (): Promise<{
     const documents = await admin.firestore().collection('discord').get()
     const users: User[] = []
     documents.docs.forEach((doc) => {
-      const data = doc.data() as User
+      const data: User = doc.data() as User
       if (data !== undefined) {
         users.push(data)
       }
@@ -208,7 +208,7 @@ const userList = async (interaction: Interaction): Promise<void> => {
   let usersInfo = ''
   const res = await getAllUsers()
   res.users.forEach((element: User) => {
-    usersInfo += `${element.username} a shipper ${element.streak} jours d'affilés pour ${element.tasks} taches faites depuis le debut sur ${element.projects} projets !`
+    usersInfo += `${element.username}\n - ${element.streak} jours d'affilés\n - ${element.tasks} taches faites depuis le debut\n - ${element.projects} projets !\n`
   })
   console.log('userList', usersInfo)
   return sendTxtLater(
