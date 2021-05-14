@@ -6,11 +6,10 @@ import sitemap from '../api/sitemap'
 import rss from '../api/rss'
 import healthcheck from '../api'
 import makers from '../api/makers'
-import discordMakers from '../api/discord_makers'
+import ladder from '../api/ladder'
+import community from '../api/community'
 import ep from '../api/ep'
 import discordInteraction from './discord/bot'
-const CLIENT_PUBLIC_KEY =
-  '76a1cf12caec747f872ee6ea064269d4acd2538b2f1e26f89853f93c32d045db'
 
 dotenv.config()
 
@@ -33,7 +32,8 @@ appRouter.get('/sitemap.xml', sitemap)
 appRouter.get('/rss.xml', rss)
 appRouter.get('/', healthcheck)
 appRouter.get('/makers', makers)
-appRouter.get('/discord_makers', discordMakers)
+appRouter.get('/community', community)
+appRouter.get('/ladder', ladder)
 appRouter.get('/ep', ep)
 appRouter.post('/bot', async (req: Request, res: Response) => {
   const signature = String(req.headers['X-Signature-Ed25519']) || ''
@@ -43,7 +43,7 @@ appRouter.post('/bot', async (req: Request, res: Response) => {
     rawBody,
     signature,
     timestamp,
-    CLIENT_PUBLIC_KEY
+    String(process.env.CLIENT_PUBLIC_KEY)
   )
   if (!isValidRequest) {
     return res.status(401).end('Bad request signature')

@@ -20,13 +20,13 @@
         <option value="karma">🕉</option>
       </select>
     </div>
-    <LaderMakers />
+    <LadderMakers />
   </div>
 </template>
 <script>
 export default {
   components: {
-    LaderMakers: () => import('~/components/LaderMakers.vue'),
+    LadderMakers: () => import('~/components/LadderMakers.vue'),
     // LazyHydrate
   },
 }

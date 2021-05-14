@@ -2,20 +2,17 @@ import { Request, Response } from 'express'
 
 import { verifyKey } from 'discord-interactions'
 import discordInteraction from '../../services/discord/bot'
-const CLIENT_PUBLIC_KEY =
-  '76a1cf12caec747f872ee6ea064269d4acd2538b2f1e26f89853f93c32d045db';
 
-  function getRawBody(req: Request): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const bodyChunks: Buffer[] = [];
-      req.on("end", () => {
-        const rawBody = Buffer.concat(bodyChunks).toString("utf8");
-        resolve(rawBody);
-      });
-      req.on("data", (chunk) => bodyChunks.push(chunk));
-      return;
-    });
-  }
+function getRawBody(req: Request): Promise<string> {
+  return new Promise((resolve) => {
+    const bodyChunks: Buffer[] = []
+    req.on('end', () => {
+      const rawBody = Buffer.concat(bodyChunks).toString('utf8')
+      resolve(rawBody)
+    })
+    req.on('data', (chunk) => bodyChunks.push(chunk))
+  })
+}
 
 const bot = async (req: Request, res: Response) => {
   if (req.method !== 'POST') return res.status(404).end()
@@ -28,7 +25,7 @@ const bot = async (req: Request, res: Response) => {
       rawBody as any,
       signature,
       timestamp,
-      CLIENT_PUBLIC_KEY
+      String(process.env.CLIENT_PUBLIC_KEY)
     )
     if (!isValidRequest) {
       return res.status(401).end('Bad request signature')

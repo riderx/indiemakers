@@ -48,7 +48,7 @@ export default {
     // const data = await discordMakers($config)
     const url = `${domain($config.VERCEL_URL, $config.DOMAIN)}/${
       $config.BASEAPI
-    }/discord_makers`
+    }/ladder`
     return await $http
       .$get(url)
       .then((response) => {
