@@ -2,10 +2,12 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'server',
   publicRuntimeConfig: {
-    DOMAIN: process.env.ON_VERCEL
+    DOMAIN: process.env.VERCEL
       ? `https://${process.env.VERCEL_URL}`
       : 'http://localhost:3000',
-    BASEAPI: process.env.ON_VERCEL ? '/api' : 'http://localhost:3000/api',
+    BASEAPI: process.env.VERCEL
+      ? `https://${process.env.VERCEL_URL}/api`
+      : 'http://localhost:3000/api',
     handler: 'indiemakersfr',
   },
 

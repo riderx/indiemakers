@@ -24,6 +24,7 @@ const bot = async (req: Request, res: Response) => {
     console.error(
       'vals',
       rawBody,
+      req.headers,
       signature,
       timestamp,
       process.env.CLIENT_PUBLIC_KEY
