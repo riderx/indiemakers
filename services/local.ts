@@ -1,3 +1,4 @@
+import { IncomingMessage, ServerResponse } from 'http'
 import express from 'express'
 import admin from 'firebase-admin'
 import * as dotenv from 'dotenv'
@@ -30,7 +31,7 @@ appRouter.get('/community', community)
 appRouter.get('/maker', maker)
 appRouter.get('/project', project)
 appRouter.get('/ep', ep)
-appRouter.get('/bot', bot)
+appRouter.post('/bot', bot)
 appRouter.get('/', healthcheck)
 
 app.use('/', appRouter)

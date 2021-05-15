@@ -3,9 +3,9 @@ export default {
   target: 'server',
   publicRuntimeConfig: {
     DOMAIN: process.env.ON_VERCEL
-      ? `https://${process.env.NUXT_ENV_VERCEL_URL}`
+      ? `https://${process.env.VERCEL_URL}`
       : 'http://localhost:3000',
-    BASEAPI: 'api',
+    BASEAPI: process.env.ON_VERCEL ? '/api' : 'http://localhost:3000/api',
     handler: 'indiemakersfr',
   },
 

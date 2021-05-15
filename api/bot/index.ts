@@ -7,27 +7,16 @@ import {
 } from 'discord-interactions'
 import discordInteraction from '../../services/discord/bot'
 import { sendTxtLoading } from '../../services/discord/bot/utils'
-function getRawBody(req: Request): Promise<string> {
-  return new Promise((resolve) => {
-    const bodyChunks: Buffer[] = []
-    req.on('end', () => {
-      const rawBody = Buffer.concat(bodyChunks).toString('utf8')
-      resolve(rawBody)
-    })
-    req.on('data', (chunk) => bodyChunks.push(chunk))
-  })
-}
 
 const bot = async (req: Request, res: Response) => {
   try {
-    const rawBody = await getRawBody(req as any)
     // req.body
     console.error('req.body', req.body)
-    console.error('rawBody', rawBody)
-    const signature = String(req.headers['X-Signature-Ed25519']) || ''
-    const timestamp = String(req.headers['X-Signature-Timestamp']) || ''
+    const signature = String(req.get('X-Signature-Ed25519'))
+    const timestamp = String(req.get('X-Signature-Timestamp'))
+    console.error('vals', signature, timestamp, process.env.CLIENT_PUBLIC_KEY)
     const isValidRequest = await verifyKey(
-      rawBody,
+      JSON.stringify(req.body),
       signature,
       timestamp,
       String(process.env.CLIENT_PUBLIC_KEY)
