@@ -10,13 +10,26 @@ import { sendTxtLoading } from '../../services/discord/bot/utils'
 
 const bot = async (req: Request, res: Response) => {
   try {
-    // req.body
-    console.error('req.body', req.body)
-    const signature = String(req.get('X-Signature-Ed25519'))
-    const timestamp = String(req.get('X-Signature-Timestamp'))
-    console.error('vals', signature, timestamp, process.env.CLIENT_PUBLIC_KEY)
+    const rawBody = JSON.stringify(req.body)
+    const signature = String(
+      req.headers
+        ? req.headers['X-Signature-Ed25519']
+        : req.get('X-Signature-Ed25519')
+    )
+    const timestamp = String(
+      req.headers
+        ? req.headers['X-Signature-Timestamp']
+        : req.get('X-Signature-Timestamp')
+    )
+    console.error(
+      'vals',
+      rawBody,
+      signature,
+      timestamp,
+      process.env.CLIENT_PUBLIC_KEY
+    )
     const isValidRequest = await verifyKey(
-      JSON.stringify(req.body),
+      rawBody,
       signature,
       timestamp,
       String(process.env.CLIENT_PUBLIC_KEY)
