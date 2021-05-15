@@ -2,7 +2,7 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'server',
   publicRuntimeConfig: {
-    DOMAIN: process.env.VERCEL
+    DOMAIN: process.env.ON_VERCEL
       ? `https://${process.env.VERCEL_URL}`
       : 'http://localhost:3000',
     BASEAPI: 'api',
@@ -72,7 +72,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
   },
-  serverMiddleware: process.env.VERCEL
+  serverMiddleware: process.env.ON_VERCEL
     ? []
     : [{ path: '/api', handler: '~/services/local.ts' }],
   // Global CSS: https://go.nuxtjs.dev/config-css

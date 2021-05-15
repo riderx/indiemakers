@@ -24,12 +24,12 @@ const bot = async (req: Request, res: Response) => {
   try {
     const rawBody = await getRawBody(req as any)
     // req.body
-    console.error('req.body', req.body)
+    console.error('req.body', JSON.stringify(req.body))
     console.error('rawBody', rawBody)
     const signature = String(req.headers['X-Signature-Ed25519']) || ''
     const timestamp = String(req.headers['X-Signature-Timestamp']) || ''
     const isValidRequest = await verifyKey(
-      rawBody as any,
+      JSON.stringify(req.body),
       signature,
       timestamp,
       String(process.env.CLIENT_PUBLIC_KEY)
