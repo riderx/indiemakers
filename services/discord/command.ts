@@ -320,6 +320,7 @@ const makerOptions = [
     "L'url vers ta photo de couverture",
     SlashCommandOptionType.STRING
   ),
+  optionGen('twitter', 'Ton nom twitter', SlashCommandOptionType.STRING),
   optionGen(
     'makerlog_hook',
     'La web hook de ton compte makerlog, pour que le bot poste tes taches',
@@ -462,9 +463,6 @@ const maker = optionGen(
     ),
   ]
 )
-if (makerOptions) {
-  console.log('yoyo')
-}
 
 const jsonData = {
   name: 'im',
@@ -488,7 +486,7 @@ const headers = {
 axios
   .post(url, jsonData, { headers })
   .then((data) => {
-    console.log('result', data.statusText)
+    console.error('result', data.statusText)
   })
   .catch((err) => {
     console.error(err.response)

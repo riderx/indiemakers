@@ -30,6 +30,7 @@ export interface User {
   tasks: number
   name?: string
   bio?: string
+  twitter?: string
   cover?: string
   website?: string
   lastTaskAt?: string
@@ -154,7 +155,7 @@ const userEdit = (
       ;(update as any)[realKey] = element.value
     }
   })
-  console.log('userEdit', update)
+  console.error('userEdit', update)
   return Promise.all([
     updateUser(userId, update),
     sendTxtLater(
@@ -232,7 +233,7 @@ const userList = async (interaction: Interaction): Promise<void> => {
     )
     cards.push(sendChannel(interaction.channel_id, '', userCard))
   })
-  console.log('userList')
+  console.error('userList')
   return Promise.all([
     sendTxtLater(
       'Voici la liste des makers:',
@@ -246,7 +247,7 @@ const userList = async (interaction: Interaction): Promise<void> => {
 
 const userListStreak = async (interaction: Interaction): Promise<void> => {
   const usersInfoCards = await usersViewStreak()
-  console.log('userList', usersInfoCards)
+  console.error('userList', usersInfoCards)
   return sendTxtLater(
     `Voici la liste des 10 premiers makers avec les flammes !\n`,
     usersInfoCards,
@@ -262,7 +263,7 @@ const userView = async (
 ): Promise<void> => {
   const user = await getUsersById(userId || myId)
   if (user && userId && myId !== userId) {
-    console.log('userEdit', userId)
+    console.error('userView', userId)
     const fields = [
       field('🔥 Flammes', String(user.streak)),
       field('🕉 Karma', String(user.karma)),
@@ -290,7 +291,7 @@ const userView = async (
       interaction.token
     )
   } else if (user) {
-    console.log('userEdit', userId)
+    console.error('userView', userId)
     const fields = [
       field('🔥 Flammes', String(user.streak)),
       field('🕉 Karma', String(user.karma)),

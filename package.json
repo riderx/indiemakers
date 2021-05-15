@@ -2,14 +2,18 @@
   "name": "indiemakers",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "analyze": "nuxt build --analyze",
-    "api": "node --loader ts-node/esm.mjs services/local.ts",
-    "discord:config": "node --loader ts-node/esm.mjs services/discord/command",
+    "api": "ts-node services/local",
+    "fix": "ts-node services/discord/fix_shorter",
+    "discord:config": "ts-node  services/discord/command.ts",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
     "lint": "npm run lint:js && npm run lint:style"
@@ -26,6 +30,7 @@
   },
   "dependencies": {
     "@nuxt/content": "^1.14.0",
+    "@nuxt/image": "^0.4.9",
     "@tailwindcss/line-clamp": "^0.2.0",
     "@tailwindcss/typography": "^0.4.0",
     "axios": "^0.21.1",
