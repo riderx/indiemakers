@@ -13,12 +13,12 @@ const bot = async (req: Request, res: Response) => {
     const rawBody = JSON.stringify(req.body)
     const signature = String(
       req.headers
-        ? req.headers['X-Signature-Ed25519']
+        ? req.headers['x-signature-ed25519']
         : req.get('X-Signature-Ed25519')
     )
     const timestamp = String(
       req.headers
-        ? req.headers['X-Signature-Timestamp']
+        ? req.headers['x-signature-timestamp']
         : req.get('X-Signature-Timestamp')
     )
     console.error(
