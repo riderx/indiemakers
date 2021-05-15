@@ -1,168 +1,164 @@
 <template>
-  <LazyHydrate when-idle>
-    <div id="makers">
-      <div class="container w-full px-0 mx-auto">
-        <div class="flex flex-wrap">
-          <div class="w-full md:w-1/2 md:px-4">
-            <div
-              id="header-mk"
-              class="
-                flex flex-wrap
-                items-center
-                justify-between
-                w-full
-                text-white
-                border-8 border-white
-                md:pb-1
-                md:pt-2
-              "
-            >
-              <h1
-                class="
-                  w-4/5
-                  my-2
-                  text-3xl text-center
-                  font-indie
-                  md:text-4xl
-                  md:my-0
-                "
-              >
-                💃 Makers
-              </h1>
-              <button
-                type="button"
-                class="w-1/5 p-0 px-4 -mt-4 text-6xl border-0 md:pb-3"
-                @click="showAddForm()"
-              >
-                +
-              </button>
-            </div>
-            <div
-              class="
-                overflow-hidden
-                border-4 border-white
-                md:h-78
-                md:overflow-y-scroll
-                md:custom-scroll
-              "
-            >
-              <div
-                v-for="maker in makers"
-                :key="maker.id"
-                :class="
-                  'w-full flex flex-wrap text-white border-b align-items-top ' +
-                  maker.id
-                "
-              >
-                <ListItem
-                  :title="maker.name"
-                  :votes="maker.votes"
-                  :name="maker.login"
-                  :image="maker.img"
-                  :preview="getTextLink(maker.bio)"
-                  @voted="vote(maker)"
-                  @name="open(linkTw(maker.login))"
-                  @image="openImage(maker.guid, maker.login)"
-                />
-              </div>
-            </div>
-          </div>
+  <div id="makers">
+    <div class="container w-full px-0 mx-auto">
+      <div class="flex flex-wrap">
+        <div class="w-full md:w-1/2 md:px-4">
           <div
-            id="content"
+            id="header-mk"
             class="
-              order-1
-              hidden
-              pt-0
-              pl-4
-              pr-4
+              flex flex-wrap
+              items-center
+              justify-between
+              w-full
               text-white
-              md:w-1/2
-              px-md-5
-              order-md-2
-              xl:block
+              border-8 border-white
+              md:pb-1
+              md:pt-2
             "
           >
-            <div class="flex flex-wrap">
-              <div class="text-center text-sm-left">
-                <h1 class="pb-2 text-3xl font-indie">
-                  {{ title }}
-                </h1>
-              </div>
-              <div class="text-sm text-left pt-md-5">
-                <p class="pl-2">
-                  Les Makers sont encore méconnue en France !<br /><br />
-                  Parfois ils ne font pas de personal branding...<br />
-                  Parfois ils ne postent qu'en anglais...<br />
-                  Et parfois on découvre seulement 10 ans plus tard qui était
-                  aux commandes !<br /><br />
-                  L'écosysteme est le facteur numéro 1 de succès !<br />
-                  Ensemble allons plus loin, cassons les barrières vers le
-                  succès !<br />
-                  C'est pour cela que cette liste existe !<br /><br />
-                  Comme Producthunt,<br />
-                  Vote et ajoute pour tes MAKERS favoris,<br />
-                  en bonus tu gagnes une chance de les voir dans le podcast !
-                </p>
-                <p class="pt-5 h5 font-indie">
-                  Tu aimerais qu'un d'eux vienne dans le podcast ?
-                </p>
-                <p class="pl-2">
-                  Vote pour lui en cliquant sur "👍" sur sa photo
-                </p>
-                <p class="pl-2">
-                  Partage sur Twitter ton vote pour montrer ton soutiens au
-                  maker,<br />
-                  s'il n'est pas encore venue dans le podcast cela le motivera à
-                  venir !
-                </p>
-                <p class="pt-5 h5 font-indie">
-                  Ton maker préféré n'est pas dans la liste ?
-                </p>
-                <p class="pl-2">Clique sur le bonton "+" pour l'ajouter !</p>
-                <p class="pb-4 pl-2">
-                  Partage sur Twitter ton vote, cela le motivera à venir !
-                </p>
-                <div
+            <h1
+              class="
+                w-4/5
+                my-2
+                text-3xl text-center
+                font-indie
+                md:text-4xl
+                md:my-0
+              "
+            >
+              💃 Makers
+            </h1>
+            <button
+              type="button"
+              class="w-1/5 p-0 px-4 -mt-4 text-6xl border-0 md:pb-3"
+              @click="showAddForm()"
+            >
+              +
+            </button>
+          </div>
+          <div
+            class="
+              overflow-hidden
+              border-4 border-white
+              md:h-78
+              md:overflow-y-scroll
+              md:custom-scroll
+            "
+          >
+            <div
+              v-for="maker in makers"
+              :key="maker.id"
+              :class="
+                'w-full flex flex-wrap text-white border-b align-items-top ' +
+                maker.id
+              "
+            >
+              <ListItem
+                :title="maker.name"
+                :votes="maker.votes"
+                :name="maker.login"
+                :image="maker.img"
+                :preview="getTextLink(maker.bio)"
+                @voted="vote(maker)"
+                @name="open(linkTw(maker.login))"
+                @image="openImage(maker.guid, maker.login)"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          id="content"
+          class="
+            order-1
+            hidden
+            pt-0
+            pl-4
+            pr-4
+            text-white
+            md:w-1/2
+            px-md-5
+            order-md-2
+            xl:block
+          "
+        >
+          <div class="flex flex-wrap">
+            <div class="text-center text-sm-left">
+              <h1 class="pb-2 text-3xl font-indie">
+                {{ title }}
+              </h1>
+            </div>
+            <div class="text-sm text-left pt-md-5">
+              <p class="pl-2">
+                Les Makers sont encore méconnue en France !<br /><br />
+                Parfois ils ne font pas de personal branding...<br />
+                Parfois ils ne postent qu'en anglais...<br />
+                Et parfois on découvre seulement 10 ans plus tard qui était aux
+                commandes !<br /><br />
+                L'écosysteme est le facteur numéro 1 de succès !<br />
+                Ensemble allons plus loin, cassons les barrières vers le succès
+                !<br />
+                C'est pour cela que cette liste existe !<br /><br />
+                Comme Producthunt,<br />
+                Vote et ajoute pour tes MAKERS favoris,<br />
+                en bonus tu gagnes une chance de les voir dans le podcast !
+              </p>
+              <p class="pt-5 h5 font-indie">
+                Tu aimerais qu'un d'eux vienne dans le podcast ?
+              </p>
+              <p class="pl-2">
+                Vote pour lui en cliquant sur "👍" sur sa photo
+              </p>
+              <p class="pl-2">
+                Partage sur Twitter ton vote pour montrer ton soutiens au
+                maker,<br />
+                s'il n'est pas encore venue dans le podcast cela le motivera à
+                venir !
+              </p>
+              <p class="pt-5 h5 font-indie">
+                Ton maker préféré n'est pas dans la liste ?
+              </p>
+              <p class="pl-2">Clique sur le bonton "+" pour l'ajouter !</p>
+              <p class="pb-4 pl-2">
+                Partage sur Twitter ton vote, cela le motivera à venir !
+              </p>
+              <div
+                class="
+                  flex
+                  justify-between
+                  w-10/12
+                  text-lg text-white
+                  font-indie
+                "
+              >
+                <button
+                  type="button"
                   class="
-                    flex
-                    justify-between
-                    w-10/12
-                    text-lg text-white
+                    px-5
+                    py-2
+                    border-4 border-white
                     font-indie
+                    hover:text-royalblue-700
+                    hover:bg-white
                   "
+                  @click="joinUs()"
                 >
-                  <button
-                    type="button"
-                    class="
-                      px-5
-                      py-2
-                      border-4 border-white
-                      font-indie
-                      hover:text-royalblue-700
-                      hover:bg-white
-                    "
-                    @click="joinUs()"
-                  >
-                    👉 Deviens un Maker
-                  </button>
-                </div>
+                  👉 Deviens un Maker
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </LazyHydrate>
+  </div>
 </template>
 <script>
 import linkifyHtml from 'linkifyjs/html'
-import LazyHydrate from 'vue-lazy-hydration'
 import { makers } from '~/services/rss'
 
 export default {
   components: {
     ListItem: () => import('~/components/ListItem.vue'),
-    LazyHydrate,
   },
   async asyncData({ $config }) {
     const mkrs = await makers($config)

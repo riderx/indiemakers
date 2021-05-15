@@ -16,7 +16,7 @@ author: Martin Donadieu
 authorImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fprofil_martin.png?alt=media&token=845cecb1-7445-409d-8169-cc233f149071"
 
 ---
-<nuxt-img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Frobbie-noble-4vtwo3a0xsq-unsplash.jpg?alt=media&token=7eacec08-1915-4615-8d64-bd2ade83a253" alt="cree ta boite" width="1310" height="873">
+<img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Frobbie-noble-4vtwo3a0xsq-unsplash.jpg?alt=media&token=7eacec08-1915-4615-8d64-bd2ade83a253" alt="cree ta boite" width="1310" height="873">
 
 <p class="text-xs">Photo by <a href="https://unsplash.com/@rbbnbl?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Robbie Noble</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
   

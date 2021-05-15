@@ -89,7 +89,6 @@ export default {
     return {
       title: 'Login to indie makers',
       message: 'To allow you vote for makers',
-      image: require('~/assets/images/cover-im@0.5x.png'),
       isFalse: false,
       user: null,
       email: null,

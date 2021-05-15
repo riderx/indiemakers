@@ -1,12 +1,12 @@
 <template>
   <div v-if="user && loaded">
     <div class="relative">
-      <nuxt-img
+      <img
         class="object-cover w-full h-72"
         :src="user.cover || noCover"
         :alt="'cover profil ' + user.username"
       />
-      <nuxt-img
+      <img
         class="
           absolute
           inset-x-0
@@ -98,7 +98,7 @@
             @click="projectId = project.hashtag"
           >
             <div class="relative flex items-end">
-              <nuxt-img
+              <img
                 class="
                   object-cover
                   w-10
@@ -139,7 +139,7 @@
             lg:flex-row
           "
         >
-          <nuxt-img
+          <img
             class="
               object-cover
               w-32

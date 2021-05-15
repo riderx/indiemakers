@@ -88,7 +88,6 @@ export default {
   plugins: [
     { src: '~/plugins/modal.ts' },
     { src: '~/plugins/vue-plyr.client.ts' },
-    { src: '~/plugins/global.client.ts' },
     { src: '~/plugins/firebase.client.ts' },
   ],
 
@@ -112,28 +111,6 @@ export default {
     '@nuxt/content',
     'vue-warehouse/nuxt',
     'nuxt-speedkit',
-    // [
-    //   'nuxt-font-loader-strategy',
-    //   {
-    //     ignoreLighthouse: true,
-    //     ignoredEffectiveTypes: ['2g', 'slow-2g'],
-    //     fonts: [
-    //       {
-    //         fileExtensions: ['woff2', 'woff'],
-    //         fontFamily: 'Rex Bold',
-    //         fontFaces: [
-    //           {
-    //             preload: true,
-    //             localSrc: ['Rex Bold', 'Rex-Bold'],
-    //             src: '@/assets/fonts/Rex-Bold',
-    //             fontWeight: 400,
-    //             fontStyle: 'normal',
-    //           },
-    //         ],
-    //       },
-    //     ],
-    //   },
-    // ],
   ],
   speedkit: {
     detection: {
@@ -178,6 +155,12 @@ export default {
     lazyOffset: {
       component: '0%',
       asset: '0%',
+    },
+  },
+  image: {
+    cloudinary: {
+      // baseURL: 'https://ik.imagekit.io/gyc0uxoln1/im/',
+      baseURL: 'https://res.cloudinary.com/forgr/image/upload/',
     },
   },
   // Content module configuration: https://go.nuxtjs.dev/config-content

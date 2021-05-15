@@ -52,7 +52,6 @@ import { discordMakers } from '~/services/rss'
 export default {
   components: {
     LadderMakers: () => import('~/components/LadderMakers.vue'),
-    // LazyHydrate
   },
   async asyncData({ $config }) {
     const data = await discordMakers($config)

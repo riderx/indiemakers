@@ -16,7 +16,7 @@
       <div>
         <a href="/" class="flex">
           <span class="sr-only">Logo Site</span>
-          <nuxt-img
+          <img
             :id="logo.title"
             width="100%"
             height="100%"
@@ -249,11 +249,11 @@
         <div class="px-5 pt-5 pb-6">
           <div class="flex items-center justify-between">
             <div>
-              <nuxt-img
+              <img
                 :id="logo.title"
                 width="100%"
                 height="100%"
-                :src="logo.sourceMobile"
+                :src="logo.source"
                 class="w-auto h-8"
                 :alt="logo.title"
                 :aria-label="logo.title"
@@ -450,7 +450,6 @@ export default {
       menuMobile: false,
       logo: {
         title: 'INDIE MAKERS LOGO',
-        sourceMobile: require('~/assets/images/isolated-monochrome-indigo.svg'),
         source: require('~/assets/images/isolated-monochrome-white.svg'),
         link: '/',
       },

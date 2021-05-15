@@ -1,19 +1,14 @@
 <template>
   <div>
-    <LazyHydrate when-idle>
-      <NavBar />
-    </LazyHydrate>
+    <NavBar />
     <Modals />
     <Nuxt keep-alive :keep-alive-props="{ max: 10 }" />
   </div>
 </template>
 
 <script>
-import LazyHydrate from 'vue-lazy-hydration'
-
 export default {
   components: {
-    LazyHydrate,
     Modals: () => import('~/components/Modals.vue'),
     NavBar: () => import('~/components/NavBar.vue'),
   },

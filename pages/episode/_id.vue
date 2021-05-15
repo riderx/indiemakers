@@ -21,10 +21,9 @@
 
               <div class="block w-full px-0 h-w-screen sm:hidden">
                 <img
-                  v-lazy="image"
                   width="100%"
                   height="100%"
-                  :src="loadingImg"
+                  :src="image.src"
                   class="
                     w-full
                     h-auto
@@ -183,7 +182,7 @@
                 <div>
                   <div class="relative square">
                     <img
-                      v-lazy="image"
+                      :src="image.src"
                       width="100%"
                       height="100%"
                       class="
@@ -392,7 +391,8 @@ export default {
       return {
         src: this.imageBig,
         error:
-          this.imageFallback || require('~/assets/images/cover-im_user.png'),
+          this.imageFallback ||
+          'v1621079734/indiemakers/cover-im_no_gjzhog.jpg',
         loading: this.imageLoading,
       }
     },

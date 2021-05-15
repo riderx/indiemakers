@@ -23,7 +23,7 @@
             class="flex flex-col overflow-hidden rounded-lg shadow-lg"
           >
             <div class="flex-shrink-0 h-48 bg-gray-600">
-              <nuxt-img
+              <img
                 class="object-cover w-full h-48"
                 width="100%"
                 height="100%"
@@ -51,7 +51,7 @@
                 <div class="flex-shrink-0">
                   <a href="#">
                     <span class="sr-only">{{ article.author }}</span>
-                    <nuxt-img
+                    <img
                       class="w-10 h-10 rounded-full"
                       :src="article.authorImage"
                       alt=""

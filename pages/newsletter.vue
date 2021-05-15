@@ -1,111 +1,105 @@
 <template>
-  <LazyHydrate when-idle>
-    <div class="container mx-auto">
-      <div class="flex flex-wrap py-2">
-        <div class="w-full mx-auto border-8 border-white md:w-1/2">
-          <nuxt-img
-            :id="logo.title"
-            class="w-1/4 pb-5 mx-auto pb-md-3"
-            width="100%"
-            height="100%"
-            :src="logo.source"
-            :alt="logo.title"
-            :aria-label="logo.title"
-          />
-          <h1 class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie">
-            {{ title }}
-          </h1>
-          <p class="px-5 text-white">
-            {{ desc }}
-          </p>
-          <p class="px-5 text-white">
-            Tu seras également informé de la sortie des épisodes !
-          </p>
-          <div class="pt-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
-            <div class="mb-0 mb-4">
-              <input
-                ref="name"
-                v-model="email"
-                type="text"
-                class="
-                  block
-                  w-full
-                  px-2
-                  py-1
-                  pb-0
-                  mb-1
-                  text-base
-                  leading-normal
-                  bg-white
-                  border
-                  rounded
-                  appearance-none
-                  text-grey-darker
-                  border-grey
-                "
-                aria-describedby="TweetnameHelp"
-                placeholder="Elon@tesla.com"
-              />
-            </div>
-          </div>
-          <div class="pt-3 pl-4 pr-4 mx-auto text-center md:w-1/2">
-            <div class="mb-4">
-              <input
-                ref="name"
-                v-model="name"
-                type="text"
-                class="
-                  block
-                  w-full
-                  px-2
-                  py-1
-                  pb-0
-                  mb-1
-                  text-base
-                  leading-normal
-                  bg-white
-                  border
-                  rounded
-                  appearance-none
-                  text-grey-darker
-                  border-grey
-                "
-                aria-describedby="TweetnameHelp"
-                placeholder="Elon Musk"
-              />
-            </div>
-          </div>
-          <div class="pt-3 pb-3 pl-4 pr-4 mx-auto text-center md:w-1/2">
-            <button
-              type="button"
+  <div class="container mx-auto">
+    <div class="flex flex-wrap py-2">
+      <div class="w-full mx-auto border-8 border-white md:w-1/2">
+        <img
+          :id="logo.title"
+          class="w-1/4 pb-5 mx-auto pb-md-3"
+          width="100%"
+          height="100%"
+          :src="logo.source"
+          :alt="logo.title"
+          :aria-label="logo.title"
+        />
+        <h1 class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie">
+          {{ title }}
+        </h1>
+        <p class="px-5 text-white">
+          {{ desc }}
+        </p>
+        <p class="px-5 text-white">
+          Tu seras également informé de la sortie des épisodes !
+        </p>
+        <div class="pt-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
+          <div class="mb-0 mb-4">
+            <input
+              ref="name"
+              v-model="email"
+              type="text"
               class="
-                px-4
+                block
+                w-full
+                px-2
                 py-1
-                text-white
-                border-4 border-white
-                rounded-none
-                hover:border-gray-200
-                hover:text-royalblue-700
-                hover:bg-gray-200
-                text-light
-                h1
+                pb-0
+                mb-1
+                text-base
+                leading-normal
+                bg-white
+                border
+                rounded
+                appearance-none
+                text-grey-darker
+                border-grey
               "
-              @click="addEMailSub()"
-            >
-              Commencer
-            </button>
+              aria-describedby="TweetnameHelp"
+              placeholder="Elon@tesla.com"
+            />
           </div>
+        </div>
+        <div class="pt-3 pl-4 pr-4 mx-auto text-center md:w-1/2">
+          <div class="mb-4">
+            <input
+              ref="name"
+              v-model="name"
+              type="text"
+              class="
+                block
+                w-full
+                px-2
+                py-1
+                pb-0
+                mb-1
+                text-base
+                leading-normal
+                bg-white
+                border
+                rounded
+                appearance-none
+                text-grey-darker
+                border-grey
+              "
+              aria-describedby="TweetnameHelp"
+              placeholder="Elon Musk"
+            />
+          </div>
+        </div>
+        <div class="pt-3 pb-3 pl-4 pr-4 mx-auto text-center md:w-1/2">
+          <button
+            type="button"
+            class="
+              px-4
+              py-1
+              text-white
+              border-4 border-white
+              rounded-none
+              hover:border-gray-200
+              hover:text-royalblue-700
+              hover:bg-gray-200
+              text-light
+              h1
+            "
+            @click="addEMailSub()"
+          >
+            Commencer
+          </button>
         </div>
       </div>
     </div>
-  </LazyHydrate>
+  </div>
 </template>
 <script>
-import LazyHydrate from 'vue-lazy-hydration'
 export default {
-  components: {
-    LazyHydrate,
-  },
   data() {
     return {
       email: '',
