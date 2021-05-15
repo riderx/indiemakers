@@ -24,9 +24,7 @@
     }
   },
   "dependencies": {
-    "@cloudseat/micro-body": "^1.0.5",
     "@nuxt/content": "^1.14.0",
-    "@nuxt/image": "^0.4.9",
     "@skjnldsv/vue-plyr": "^7.0.1-alpha.0",
     "@tailwindcss/line-clamp": "^0.2.0",
     "@tailwindcss/typography": "^0.4.0",
@@ -34,7 +32,6 @@
     "core-js": "^3.9.1",
     "dayjs": "^1.10.4",
     "discord-interactions": "^2.0.2",
-    "express": "^4.17.1",
     "firebase-admin": "^9.8.0",
     "firebase-auth-lite": "^0.8.8",
     "firebase-firestore-lite": "^1.0.3",
@@ -72,6 +69,7 @@
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.7.0",
+    "express": "^4.17.1",
     "husky": "^4.3.8",
     "lint-staged": "^10.5.4",
     "postcss": "^8.2.8",
