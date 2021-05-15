@@ -1,7 +1,4 @@
 {
-  "env": {
-    "ON_VERCEL": "true"
-  },
   "version": 2,
   "builds": [
       {

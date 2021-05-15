@@ -74,7 +74,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
   },
-  serverMiddleware: process.env.ON_VERCEL
+  serverMiddleware: process.env.VERCEL
     ? []
     : [{ path: '/api', handler: '~/services/local.ts' }],
   // Global CSS: https://go.nuxtjs.dev/config-css
