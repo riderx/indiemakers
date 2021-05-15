@@ -210,7 +210,7 @@ export const onUpdatePeople = firestore
       const twUser: TwUser | null = await twUserPromise(person.login)
       const { name } = twUser
       const bio = await transformURLtoTracked(
-        person.bio,
+        twUser.description || person.bio,
         twUser ? twUser.entities : null
       )
       const pic = twUser
