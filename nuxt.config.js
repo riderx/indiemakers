@@ -1,17 +1,12 @@
-const isVercel = !!process.env.VERCEL_URL
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'server',
   publicRuntimeConfig: {
-    DOMAIN:
-      process.env.NODE_ENV && isVercel
-        ? `https://${process.env.VERCEL_URL}`
-        : 'http://localhost:3000',
+    DOMAIN: process.env.VERCEL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'http://localhost:3000',
     BASEAPI: 'api',
     handler: 'indiemakersfr',
-  },
-  env: {
-    dev: process.env.NODE_ENV !== 'production',
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -77,7 +72,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
   },
-  serverMiddleware: isVercel
+  serverMiddleware: process.env.VERCEL
     ? []
     : [{ path: '/api', handler: '~/services/local.ts' }],
   // Global CSS: https://go.nuxtjs.dev/config-css
