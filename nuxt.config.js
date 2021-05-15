@@ -1,13 +1,10 @@
-const isServerlessEnvironment = !!process.env.VERCEL_URL
-const serverMiddleware = !isServerlessEnvironment
-  ? []
-  : [{ path: '/api', handler: '~/services/local.ts' }]
+const isVercel = !!process.env.VERCEL_URL
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'server',
   publicRuntimeConfig: {
     DOMAIN:
-      process.env.NODE_ENV && isServerlessEnvironment
+      process.env.NODE_ENV && isVercel
         ? `https://${process.env.VERCEL_URL}`
         : 'http://localhost:3000',
     BASEAPI: 'api',
@@ -80,7 +77,9 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
   },
-  serverMiddleware,
+  serverMiddleware: isVercel
+    ? []
+    : [{ path: '/api', handler: '~/services/local.ts' }],
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
