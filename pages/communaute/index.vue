@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="my-10 text-3xl text-center font-indie text-orchid-300">
+    <div class="my-10 text-3xl text-center text-white font-indie">
       Les makers de la communauté :
     </div>
     <div
@@ -23,6 +23,7 @@
       >
         <option value="streak">🔥</option>
         <option value="karma">🕉</option>
+        <option value="incomes">💰</option>
       </select>
     </div>
     <LadderMakers v-if="loaded" :users="users" />

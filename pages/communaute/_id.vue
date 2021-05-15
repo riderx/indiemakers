@@ -3,8 +3,8 @@
     <div class="relative">
       <nuxt-img
         class="object-cover w-full h-72"
-        src="https://cdn.hovia.com/app/uploads/Red-Illustrated-Landscape-Sunset-Wallpaper-Mural-plain.jpg"
-        alt="cover profil"
+        :src="user.cover || noCover"
+        :alt="'cover profil ' + user.username"
       />
       <nuxt-img
         class="
@@ -20,7 +20,7 @@
           border-orchid-300
         "
         :src="user.avatarUrl"
-        alt="cover profil"
+        :alt="'image profil ' + user.username"
       />
     </div>
     <div class="flex flex-col items-center justify-center">
@@ -45,7 +45,25 @@
         </p>
       </div>
     </div>
-    <div class="flex flex-col m-5 md:flex-row md:m-10">
+    <div v-if="!projectId" class="flex w-1/4 px-10 py-5 mx-auto text-white">
+      <button
+        type="button"
+        class="
+          px-5
+          py-2
+          mx-auto
+          text-white
+          border-4 border-white
+          font-indie
+          hover:text-royalblue-700
+          hover:bg-white
+        "
+        @click="goHome()"
+      >
+        Ce maker n'as pas encore de projets
+      </button>
+    </div>
+    <div v-if="projectId" class="flex flex-col m-5 md:flex-row md:m-10">
       <div
         class="
           p-5
@@ -89,10 +107,10 @@
                   rounded-lg
                   border-royalblue-700
                 "
-                :src="project.logo"
+                :src="project.logo || noImge"
               />
               <h2 class="mx-1 truncate">
-                {{ project.name }}
+                {{ project.name || project.hashtag }}
               </h2>
               <span
                 class="
@@ -133,11 +151,11 @@
               lg:mb-0
               lg:mr-3
             "
-            :src="projectData.logo"
+            :src="projectData.logo || noImge"
           />
           <div class="text-center lg:text-left">
             <h1 class="text-3xl font-indie">
-              {{ projectData.name }}
+              {{ projectData.name || projectData.hashtag }}
               <span class="text-base">🔥{{ projectData.streak }}</span>
             </h1>
             <p class="my-2 text-xl">{{ projectData.description }}</p>
@@ -180,6 +198,8 @@ export default Vue.extend({
   },
   data() {
     return {
+      noCover: require('~/assets/images/cover_no.png'),
+      noImge: require('~/assets/images/cover-im_empty.png'),
       user: null as unknown as User,
       projectData: null as unknown as Project,
       projectId: '',
@@ -208,7 +228,7 @@ export default Vue.extend({
       this.loadedProject = true
     },
     goHome() {
-      this.$router.push('/')
+      this.$router.push('/communaute')
     },
   },
 })

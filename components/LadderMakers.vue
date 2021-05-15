@@ -34,6 +34,7 @@
         <div class="flex text-sm">
           <p class="mr-2">🔥{{ maker.streak }}</p>
           <p>🕉 {{ maker.karma }}</p>
+          <p>💰 {{ maker.incomes }} €</p>
         </div>
       </div>
     </div>
