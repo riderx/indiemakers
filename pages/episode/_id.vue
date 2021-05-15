@@ -23,7 +23,7 @@
                 <img
                   width="100%"
                   height="100%"
-                  :src="image.src"
+                  :src="image"
                   class="
                     w-full
                     h-auto
@@ -182,7 +182,7 @@
                 <div>
                   <div class="relative square">
                     <img
-                      :src="image.src"
+                      :src="image"
                       width="100%"
                       height="100%"
                       class="
@@ -282,6 +282,7 @@
   </client-only>
 </template>
 <script>
+import Vue from 'vue'
 import { feed, ep } from '~/services/rss'
 
 export default {
@@ -300,10 +301,7 @@ export default {
       contentNoEmoji: element.content_no_emoji,
       previewNoEmoji: element.preview_no_emoji,
       content: element.content,
-      imageBig: element.image_big,
-      imageFallback: element.itunes.image,
-      imageOptimized: element.image_optimized,
-      imageLoading: element.image_loading,
+      image: element.itunes.image,
       twitter: element.twitter,
       instagram: element.instagram,
       linkedin: element.linkedin,
@@ -314,13 +312,10 @@ export default {
   data() {
     return {
       loadingImg: require('~/assets/images/cover-im_empty.png'),
-      imageOptimized: null,
-      imageFallback: null,
-      imageLoading: null,
+      image: null,
       titleNoEmoji: null,
       contentNoEmoji: null,
       previewNoEmoji: null,
-      imageBig: null,
       playerSet: false,
       showAudio: false,
       timeoutPlayer: null,
@@ -343,6 +338,14 @@ export default {
         {
           rel: 'stylesheet',
           href: 'https://unpkg.com/vue-plyr/dist/vue-plyr.css',
+        },
+      ],
+      script: [
+        {
+          type: 'text/javascript',
+          src: 'https://unpkg.com/@skjnldsv/vue-plyr',
+          async: true,
+          defer: true,
         },
       ],
       title: this.titleNoEmoji,
@@ -374,7 +377,7 @@ export default {
           property: 'og:image:type',
           content: 'image/jpg',
         },
-        { hid: 'og:image', property: 'og:image', content: this.imageOptimized },
+        { hid: 'og:image', property: 'og:image', content: this.image },
         { hid: 'og:image:width', property: 'og:image:width', content: 300 },
         { hid: 'og:image:height', property: 'og:image:height', content: 300 },
         { hid: 'og:audio', property: 'og:audio', content: this.audio },
@@ -387,15 +390,6 @@ export default {
     }
   },
   computed: {
-    image() {
-      return {
-        src: this.imageBig,
-        error:
-          this.imageFallback ||
-          'v1621079734/indiemakers/cover-im_no_gjzhog.jpg',
-        loading: this.imageLoading,
-      }
-    },
     player() {
       return this.$refs.plyr ? this.$refs.plyr.player : null
     },
@@ -414,6 +408,11 @@ export default {
   mounted() {
     this.setSizeHead()
     this.timeoutPlayer = setTimeout(() => {
+      Vue.use(window.VuePlyr, {
+        plyr: {
+          fullscreen: { enabled: false },
+        },
+      })
       this.showAudio = true
       setTimeout(() => {
         if (this.player) {
