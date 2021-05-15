@@ -103,6 +103,7 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxt/image',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -110,30 +111,75 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     'vue-warehouse/nuxt',
-    [
-      'nuxt-font-loader-strategy',
+    'nuxt-speedkit',
+    // [
+    //   'nuxt-font-loader-strategy',
+    //   {
+    //     ignoreLighthouse: true,
+    //     ignoredEffectiveTypes: ['2g', 'slow-2g'],
+    //     fonts: [
+    //       {
+    //         fileExtensions: ['woff2', 'woff'],
+    //         fontFamily: 'Rex Bold',
+    //         fontFaces: [
+    //           {
+    //             preload: true,
+    //             localSrc: ['Rex Bold', 'Rex-Bold'],
+    //             src: '@/assets/fonts/Rex-Bold',
+    //             fontWeight: 400,
+    //             fontStyle: 'normal',
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    // ],
+  ],
+  speedkit: {
+    detection: {
+      performance: true,
+      browserSupport: true,
+    },
+    performance: {
+      device: {
+        hardwareConcurrency: { min: 2, max: 48 },
+        deviceMemory: { min: 2 },
+      },
+      timing: {
+        fcp: 800,
+        dcl: 1200,
+      },
+      lighthouseDetectionByUserAgent: false,
+    },
+    fonts: [
       {
-        ignoreLighthouse: true,
-        ignoredEffectiveTypes: ['2g', 'slow-2g'],
-        fonts: [
+        family: 'Rex Bold',
+        locals: ['Rex Bold'],
+        fallback: ['Arial', 'sans-serif'],
+        variances: [
           {
-            fileExtensions: ['woff2', 'woff'],
-            fontFamily: 'Rex Bold',
-            fontFaces: [
-              {
-                preload: true,
-                localSrc: ['Rex Bold', 'Rex-Bold'],
-                src: '@/assets/fonts/Rex-Bold',
-                fontWeight: 400,
-                fontStyle: 'normal',
-              },
+            style: 'normal',
+            weight: 400,
+            sources: [
+              { src: '@/assets/fonts/Rex-Bold.woff', type: 'woff' },
+              { src: '@/assets/fonts/Rex-Bold.woff2', type: 'woff2' },
             ],
           },
         ],
       },
     ],
-  ],
 
+    componentAutoImport: false,
+    componentPrefix: undefined,
+
+    /**
+     * IntersectionObserver rootMargin for Compoennts and Assets
+     */
+    lazyOffset: {
+      component: '0%',
+      asset: '0%',
+    },
+  },
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
 

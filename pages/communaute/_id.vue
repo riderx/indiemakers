@@ -1,12 +1,12 @@
 <template>
   <div v-if="user && loaded">
     <div class="relative">
-      <img
+      <nuxt-img
         class="object-cover w-full h-72"
         src="https://cdn.hovia.com/app/uploads/Red-Illustrated-Landscape-Sunset-Wallpaper-Mural-plain.jpg"
         alt="cover profil"
       />
-      <img
+      <nuxt-img
         class="
           absolute
           inset-x-0
@@ -80,7 +80,7 @@
             @click="projectId = project.hashtag"
           >
             <div class="relative flex items-end">
-              <img
+              <nuxt-img
                 class="
                   object-cover
                   w-10
@@ -121,7 +121,7 @@
             lg:flex-row
           "
         >
-          <img
+          <nuxt-img
             class="
               object-cover
               w-32

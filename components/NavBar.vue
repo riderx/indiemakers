@@ -16,7 +16,7 @@
       <div>
         <a href="/" class="flex">
           <span class="sr-only">Logo Site</span>
-          <img
+          <nuxt-img
             :id="logo.title"
             width="100%"
             height="100%"
@@ -249,7 +249,7 @@
         <div class="px-5 pt-5 pb-6">
           <div class="flex items-center justify-between">
             <div>
-              <img
+              <nuxt-img
                 :id="logo.title"
                 width="100%"
                 height="100%"

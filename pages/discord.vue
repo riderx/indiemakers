@@ -3,7 +3,7 @@
     <div class="container mx-auto">
       <div class="flex flex-wrap py-2">
         <div class="w-full mx-auto border-8 border-white md:w-1/2">
-          <img
+          <nuxt-img
             :id="logo.title"
             class="w-1/2 pb-5 mx-auto pb-md-3"
             width="100%"

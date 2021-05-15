@@ -14,7 +14,7 @@ author: Martin Donadieu
 authorImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fprofil_martin.png?alt=media&token=845cecb1-7445-409d-8169-cc233f149071"
 
 ---
-<img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fnghia-le-v3dokm1nqcs-unsplash.jpg?alt=media&token=7effe83f-bd97-4c18-9a98-09cd0b548015" alt="a la conquete du web" width="1310" height="873">
+<nuxt-img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fnghia-le-v3dokm1nqcs-unsplash.jpg?alt=media&token=7effe83f-bd97-4c18-9a98-09cd0b548015" alt="a la conquete du web" width="1310" height="873">
 
 <p class="text-xs">Photo by <a href="https://unsplash.com/@lephunghia?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Nghia Le</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
 

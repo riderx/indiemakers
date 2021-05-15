@@ -40,7 +40,7 @@ const ep = async (req: Request, res: Response) => {
   }
   res.json(elem)
   if (elem) {
-    await util.sendImageToCache(elem.itunes.image, elem.guid_fix)
+    await util.sendImageToCache(elem.itunes.image, elem.guid)
     await postEp(elem)
   }
 }

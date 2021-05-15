@@ -64,7 +64,7 @@ export const sendImageToCache = async (url: string, guid: string) => {
         useUniqueFileName: false,
       })
     } catch (error) {
-      console.error('sendImageToCache', error)
+      console.error('sendImageToCache', error, url, guid)
     }
   }
 }
@@ -143,9 +143,9 @@ export const feed = async () => {
         const seoName = element.social.name
           ? element.social.name.replace('.', '-')
           : element.guidFix
-        element.imageOptimized = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=h-300,w-300`
-        element.imageBig = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=h-600,w-600`
-        element.imageLoading = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid_fix}/${seoName}?tr=q-5,bl-5,h-300,w-300`
+        element.imageOptimized = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid}/${seoName}?tr=h-300,w-300`
+        element.imageBig = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid}/${seoName}?tr=h-600,w-600`
+        element.imageLoading = `https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/${element.guid}/${seoName}?tr=q-5,bl-5,h-300,w-300`
         items.push(element)
       })
     }

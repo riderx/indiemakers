@@ -13,7 +13,7 @@ author: Martin Donadieu
 authorImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fprofil_martin.png?alt=media&token=845cecb1-7445-409d-8169-cc233f149071"
 
 ---
-<img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fproduct-hunt-books.jpg?alt=media&token=a749f1c7-c34b-4735-bdd4-cbbe64f895fe" alt="product hunt book" width="1310" height="873">
+<nuxt-img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fproduct-hunt-books.jpg?alt=media&token=a749f1c7-c34b-4735-bdd4-cbbe64f895fe" alt="product hunt book" width="1310" height="873">
 
 
 Tout le monde rêve d'arriver à la première page de Product Hunt. C'est l'occasion de montrer ta création à des milliers de passionnés de technologie.

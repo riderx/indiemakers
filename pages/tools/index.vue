@@ -38,7 +38,7 @@
             >
               <div class="flex-shrink-0 h-48 bg-gray-600">
                 <client-only>
-                  <img
+                  <nuxt-img
                     class="object-cover w-full h-48"
                     width="100%"
                     height="100%"

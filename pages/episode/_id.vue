@@ -1,5 +1,5 @@
 <template>
-  <LazyHydrate when-idle>
+  <client-only>
     <div id="emission">
       <div class="container w-full px-0 mx-auto">
         <div class="flex flex-wrap">
@@ -280,21 +280,12 @@
         </div>
       </div>
     </div>
-  </LazyHydrate>
+  </client-only>
 </template>
 <script>
-import LazyHydrate from 'vue-lazy-hydration'
-import Vue from 'vue'
 import { feed, ep } from '~/services/rss'
-Vue.use(window.VuePlyr, {
-  plyr: {
-    fullscreen: { enabled: false },
-  },
-})
+
 export default {
-  components: {
-    LazyHydrate,
-  },
   async asyncData({ params, redirect, $config }) {
     const [items, element] = await Promise.all([
       feed($config),
@@ -304,7 +295,7 @@ export default {
       return redirect(`/episode/${element.id}`)
     }
     return {
-      guid: element.guid_fix,
+      guid: element.guid,
       title: element.title,
       titleNoEmoji: element.title_no_emoji,
       contentNoEmoji: element.content_no_emoji,
@@ -353,10 +344,6 @@ export default {
         {
           rel: 'stylesheet',
           href: 'https://unpkg.com/vue-plyr/dist/vue-plyr.css',
-        },
-        {
-          type: 'text/javascript',
-          href: 'https://unpkg.com/@skjnldsv/vue-plyr',
         },
       ],
       title: this.titleNoEmoji,
@@ -425,7 +412,6 @@ export default {
     }
   },
   mounted() {
-    window.RTP_CONFIG = { link: 'imf', mode: 'button' }
     this.setSizeHead()
     this.timeoutPlayer = setTimeout(() => {
       this.showAudio = true
@@ -450,28 +436,15 @@ export default {
       return Math.floor(Math.random() * length) + 0
     },
     checkNext() {
-      let epIndex = 0
+      const epIndex = this.id - 1
       const totalLength = this.episodes.length
       let randomEp = this.randomEp(totalLength)
-      for (let index = 0; index < this.episodes.length; index++) {
-        const ep = this.episodes[index]
-        if (ep.guid_fix === this.guid) {
-          epIndex = index
-          if (epIndex === 0) {
-            while (randomEp === epIndex) {
-              randomEp = this.randomEp(totalLength)
-            }
-            const nextGuid = this.episodes[randomEp].guid_fix
-            this.$warehouse.set('nextGuid', nextGuid)
-            this.$modal.show('random-ep')
-          } else {
-            const nextGuid = this.episodes[epIndex - 1].guid_fix
-            this.$warehouse.set('nextGuid', nextGuid)
-            this.$modal.show('next-ep')
-          }
-          break
-        }
+      while (randomEp === epIndex) {
+        randomEp = this.randomEp(totalLength)
       }
+      const nextId = this.episodes[randomEp].id
+      this.$warehouse.set('nextGuid', nextId)
+      this.$modal.show('random-ep')
     },
     playerListener(player) {
       const currentTime = localStorage.getItem(
