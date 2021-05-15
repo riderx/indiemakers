@@ -85,7 +85,7 @@ export const updateTwiterUser = pubsub.schedule('0 0 * * *').onRun(async () => {
       .firestore()
       .collection('/people')
       .doc(user.id)
-      .update({ updateDate: admin.firestore.Timestamp.now() })
+      .update({ updateDate: admin.firestore.Timestamp.now(), toUpdate: true })
       .then(() => {
         console.error('updateDate updated')
       })
@@ -108,7 +108,7 @@ export const addTwiterUser = https.onCall(async (data, context) => {
           addedBy: uid,
           updateDate: admin.firestore.Timestamp.now(),
           addDate: admin.firestore.Timestamp.now(),
-          emailSend: true,
+          toUpdate: true,
           id_str: twUser.id_str,
           name: twUser.name,
           login: twUser.screen_name,
@@ -206,7 +206,7 @@ export const onUpdatePeople = firestore
   .onUpdate(async (snapshot, context) => {
     const person: Person | undefined = <Person>snapshot.after.data()
     const { personId } = context.params
-    if (person && person.bio) {
+    if (person && person.bio && person.toUpdate === true) {
       const twUser: TwUser | null = await twUserPromise(person.login)
       const { name } = twUser
       const bio = await transformURLtoTracked(
@@ -221,7 +221,7 @@ export const onUpdatePeople = firestore
           .firestore()
           .collection('/people')
           .doc(personId)
-          .update({ bio, pic, name })
+          .update({ bio, pic, name, toUpdate: false })
           .then(() => {
             console.error('bio updated', personId)
           })
@@ -229,20 +229,6 @@ export const onUpdatePeople = firestore
             console.error('Error update person', error)
           })
       }
-    }
-    if (!person.number) {
-      const update = { emailSend: true, number: Number.MAX_SAFE_INTEGER }
-      await admin
-        .firestore()
-        .collection('/people')
-        .doc(personId)
-        .update(update)
-        .then(() => {
-          console.error('emailSend updated')
-        })
-        .catch((error) => {
-          console.error('Error update emailSend', error)
-        })
     }
     return snapshot
   })

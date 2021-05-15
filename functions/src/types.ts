@@ -49,7 +49,7 @@ export interface Person {
   addedBy: string
   addDate: firestore.Timestamp
   updateDate: firestore.Timestamp
-  emailSend: boolean | firestore.Timestamp
+  toUpdate: boolean | firestore.Timestamp
   id_str: string
   name: string
   login: string

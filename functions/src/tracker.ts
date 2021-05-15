@@ -31,7 +31,7 @@ const config = {
   },
 }
 
-export const shortURLPixel = (url: string): Promise<string> =>
+const shortURLPixel = (url: string): Promise<string> =>
   new Promise((resolve) => {
     const key = bestKey(url)
     axios
@@ -40,8 +40,7 @@ export const shortURLPixel = (url: string): Promise<string> =>
         {
           destination: url,
           domain: { fullName: 'imf.to' },
-          // , slashtag: "A_NEW_SLASHTAG"
-          // , title: "Rebrandly YouTube channel"
+          slashtag: key,
         },
         config
       )
@@ -55,10 +54,7 @@ export const shortURLPixel = (url: string): Promise<string> =>
         }
       })
       .catch((error) => {
-        if (
-          error.response.data.error_message ===
-          'Key already taken for this domain'
-        ) {
+        if (error.response.data.errors[0].code === 'AlreadyExists') {
           resolve(`https://imf.to/${key}`)
         } else {
           console.error('shorten error', error.response.data, error)
