@@ -205,10 +205,29 @@ export const openChannel = async (userId: string): Promise<any> => {
       process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token
     }`,
   }
+  if (data.discordResetAfter && data.discordResetAfter > 0) {
+    console.error('Sleep a bit', data.discordResetAfter)
+    await sleep(data.discordResetAfter)
+  }
   const res = await axios
     .post(url, { recipient_id: userId }, { headers })
-    .catch((err) => {
-      console.error('openChannel', err.response)
+    .then(async (res) => {
+      if (
+        res?.headers['x-ratelimit-reset-after'] &&
+        !res?.headers['x-ratelimit-remaining']
+      ) {
+        await saveRateLimit(res.headers['x-ratelimit-reset-after'])
+      } else if (data.discordResetAfter && data.discordResetAfter > 0) {
+        await saveRateLimit(0)
+      }
+      return res
+    })
+    .catch(async (err) => {
+      if (err.response) {
+        if (err.response.headers['x-ratelimit-reset-after']) {
+          await saveRateLimit(err.response.headers['x-ratelimit-reset-after'])
+        }
+      }
       return admin
         .firestore()
         .collection('errors')

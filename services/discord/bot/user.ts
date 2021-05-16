@@ -290,7 +290,10 @@ const userView = async (
       interaction.application_id,
       interaction.token
     )
-    await sendChannel(interaction.channel_id, `Voici tes infos !\n`, card)
+    await sendChannel(
+      interaction.channel_id,
+      `Je t'ai envoyé plus info en privé 🤫\n`
+    )
     await openChannel(myId).then((channel) =>
       sendChannel(channel.id, `Voici tes completes infos !\n`, card)
     )
