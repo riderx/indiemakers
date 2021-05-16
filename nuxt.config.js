@@ -1,3 +1,14 @@
+const serverMiddleware = () => {
+  if (process.env.DEPLOY_API_ONLY) {
+    return [{ path: '/', handler: '~/services/local.ts' }]
+  }
+  if (process.env.VERCEL) {
+    return []
+  }
+  if (process.env.DEPLOY_API) {
+    return [{ path: '/api', handler: '~/services/local.ts' }]
+  }
+}
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'server',
@@ -74,9 +85,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
   },
-  serverMiddleware: process.env.VERCEL
-    ? []
-    : [{ path: '/api', handler: '~/services/local.ts' }],
+  serverMiddleware: serverMiddleware(),
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 

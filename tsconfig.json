@@ -17,6 +17,7 @@
   },
   "exclude": [
     "node_modules",
+    "functions",
     ".nuxt",
     "dist",
     "node_modules_dev",
