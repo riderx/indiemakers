@@ -186,7 +186,7 @@ export const sendTxtLater = async (
     return admin
       .firestore()
       .collection('errors')
-      .add({ function: 'sendTxtLater', url, err })
+      .add({ function: 'sendTxtLater', url, error: JSON.stringify(err) })
       .then(() => err)
   }
 }
@@ -211,7 +211,13 @@ export const openChannel = async (userId: string): Promise<any> => {
       return admin
         .firestore()
         .collection('errors')
-        .add({ function: 'openChannel', userId, url, err })
+        .add({
+          function: 'openChannel',
+          headers,
+          userId,
+          url,
+          error: JSON.stringify(err),
+        })
         .then(() => err)
     })
   return Promise.resolve(res.data as any)
@@ -256,7 +262,13 @@ export const sendChannel = async (
     return admin
       .firestore()
       .collection('errors')
-      .add({ function: 'sendChannel', body, url, err })
+      .add({
+        function: 'sendChannel',
+        headers,
+        body,
+        url,
+        error: JSON.stringify(err),
+      })
       .then(() => err)
   })
   return Promise.resolve(res.data as any)
