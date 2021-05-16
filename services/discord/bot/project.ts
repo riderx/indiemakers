@@ -1,4 +1,4 @@
-import { firestore } from 'firebase-admin'
+import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import {
   Interaction,
@@ -14,7 +14,11 @@ import {
   Income,
 } from './incomes'
 import { Task } from './tasks'
-
+if (!admin.apps.length) {
+  admin.initializeApp()
+} else {
+  admin.app() // if already initialized, use that one
+}
 export interface Project {
   id?: string
   lastTaskAt?: string
@@ -64,7 +68,8 @@ const transformKey = (key: string): string => {
 
 export const getAllProjects = async (userId: string): Promise<Project[]> => {
   try {
-    const documents = await firestore()
+    const documents = await admin
+      .firestore()
       .collection(`discord/${userId}/projects`)
       .get()
 
@@ -88,7 +93,8 @@ export const getProjectById = async (
   projectId: string
 ): Promise<Project | null> => {
   try {
-    const res = await firestore()
+    const res = await admin
+      .firestore()
       .collection(`discord/${userId}/projects`)
       .doc(projectId)
       .get()
@@ -104,8 +110,9 @@ export const updateProject = async (
   userId: string,
   hashtag: string,
   project: Partial<Project>
-): Promise<firestore.WriteResult> => {
-  const userDoc = await firestore()
+): Promise<admin.firestore.WriteResult> => {
+  const userDoc = await admin
+    .firestore()
     .collection(`discord/${userId}/projects`)
     .doc(hashtag)
     .get()
@@ -129,7 +136,8 @@ export const updateProject = async (
       },
       project
     )
-    return firestore()
+    return admin
+      .firestore()
       .collection(`discord/${userId}/projects`)
       .doc(hashtag)
       .set(newProject)
@@ -140,8 +148,9 @@ export const updateProject = async (
 const deleteProject = (
   userId: string,
   projectId: string
-): Promise<firestore.WriteResult> => {
-  return firestore()
+): Promise<admin.firestore.WriteResult> => {
+  return admin
+    .firestore()
     .collection(`discord/${userId}/projects`)
     .doc(projectId)
     .delete()
@@ -152,10 +161,11 @@ export const deleteAllProjectsTasks = async (
   projectId: string
 ): Promise<void> => {
   try {
-    const documents = await firestore()
+    const documents = await admin
+      .firestore()
       .collection(`discord/${userId}/projects/${projectId}/tasks`)
       .get()
-    const listDel: Promise<firestore.WriteResult>[] = []
+    const listDel: Promise<admin.firestore.WriteResult>[] = []
     documents.docs.forEach((doc) => {
       listDel.push(doc.ref.delete())
     })
@@ -269,7 +279,7 @@ const projectAdd = (
     ;(newProj as any)[transformKey(element.name)] = element.value
   })
   if (newProj.hashtag && /^[a-zA-Z]+$/.test(newProj.hashtag)) {
-    console.log('add project', newProj)
+    console.error('add project', newProj)
     return Promise.all([
       sendTxtLater(
         `Tu as crée le projet:\n#${newProj.hashtag} 👏\nIl est temps de shiper ta premiere tache dessus avec \`/im tache\` ou remplir sa description avec \`/im projet modifier description: \`  💪!`,
@@ -307,7 +317,7 @@ const projectEdit = (
     }
   })
   if (update.hashtag) {
-    console.log('projectEdit', update)
+    console.error('projectEdit', update)
     return Promise.all([
       sendTxtLater(
         `Tu as mis a jours le projet:\n#${update.hashtag}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`,
@@ -416,7 +426,7 @@ const projectView = async (
         undefined,
         thumb
       )
-      console.log('projectView', projectId, makerId)
+      console.error('projectView', projectId, makerId)
       const text =
         makerId === userId
           ? 'Voici les infos sur ton projet !'
@@ -428,7 +438,7 @@ const projectView = async (
         interaction.token
       )
     } else {
-      console.log('projectView', projectId, makerId)
+      console.error('projectView', projectId, makerId)
       return sendTxtLater(
         `Je ne trouve pas le projet ${projectId} pour <@${makerId}>...`,
         [],
@@ -453,7 +463,7 @@ const projectDelete = (
 ): Promise<void> => {
   const projectId = option.value
   if (projectId) {
-    console.log('projectDelete', projectId)
+    console.error('projectDelete', projectId)
     return Promise.all([
       deleteProject(userId, projectId),
       deleteAllProjectsTasks(userId, projectId),

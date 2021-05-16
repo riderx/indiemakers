@@ -1,4 +1,4 @@
-import { firestore } from 'firebase-admin'
+import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import {
   Interaction,
@@ -15,7 +15,11 @@ import {
   Project,
   updateProject,
 } from './project'
-
+if (!admin.apps.length) {
+  admin.initializeApp()
+} else {
+  admin.app() // if already initialized, use that one
+}
 // eslint-disable-next-line no-unused-vars
 enum TaskStatus {
   // eslint-disable-next-line no-unused-vars
@@ -50,7 +54,7 @@ const createProjectTask = async (
   user: User,
   projectId: string,
   task: Partial<Task>
-): Promise<firestore.DocumentReference<firestore.DocumentData>> => {
+): Promise<admin.firestore.DocumentReference<admin.firestore.DocumentData>> => {
   try {
     const done = task.status !== TaskStatus.TODO
     if (task.status === TaskStatus.DONE) {
@@ -70,7 +74,8 @@ const createProjectTask = async (
   } catch (err) {
     console.error('createProjectTask', err)
   }
-  return firestore()
+  return admin
+    .firestore()
     .collection(`discord/${user.userId}/projects/${projectId}/tasks`)
     .add({ ...task, createdAt: dayjs().toISOString() })
 }
@@ -79,8 +84,9 @@ const deleteProjectTask = (
   userId: string,
   projectId: string,
   taskId: string
-): Promise<firestore.WriteResult> => {
-  return firestore()
+): Promise<admin.firestore.WriteResult> => {
+  return admin
+    .firestore()
     .collection(`discord/${userId}/projects/${projectId}/tasks`)
     .doc(taskId)
     .delete()
@@ -91,7 +97,7 @@ const updateProjectTask = async (
   projectId: string,
   taskId: string,
   task: Partial<Task>
-): Promise<firestore.WriteResult> => {
+): Promise<admin.firestore.WriteResult> => {
   try {
     const user = await getUsersById(userId)
     const done = task.status !== TaskStatus.TODO
@@ -117,7 +123,8 @@ const updateProjectTask = async (
   } catch (err) {
     console.error('updateProjectTask', err)
   }
-  return firestore()
+  return admin
+    .firestore()
     .collection(`discord/${userId}/projects/${projectId}/tasks`)
     .doc(taskId)
     .update({ ...task, updatesAt: dayjs().toISOString() })
@@ -128,7 +135,8 @@ export const getAllProjectsTasks = async (
   projectId: string
 ): Promise<TaskAll> => {
   try {
-    const documents = await firestore()
+    const documents = await admin
+      .firestore()
       .collection(`discord/${userId}/projects/${projectId}/tasks`)
       .get()
     const tasks: Task[] = []

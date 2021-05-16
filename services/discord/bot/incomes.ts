@@ -1,4 +1,4 @@
-import { firestore } from 'firebase-admin'
+import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import {
   Interaction,
@@ -7,6 +7,11 @@ import {
 import { sendTxtLater } from './utils'
 import { getAllProjects } from './project'
 import { updateUser, User } from './user'
+if (!admin.apps.length) {
+  admin.initializeApp()
+} else {
+  admin.app() // if already initialized, use that one
+}
 export interface Income {
   id?: string
   ammount: number
@@ -25,7 +30,8 @@ export const createProjectIncome = (
   projectId: string,
   income: Partial<Income>
 ) => {
-  return firestore()
+  return admin
+    .firestore()
     .collection(`discord/${userId}/projects/${projectId}/incomes`)
     .add({ ...income, createdAt: dayjs().toISOString() })
 }
@@ -35,7 +41,8 @@ export const deleteProjectIncome = (
   projectId: string,
   incomeId: string
 ) => {
-  return firestore()
+  return admin
+    .firestore()
     .collection(`discord/${userId}/projects/${projectId}/incomes`)
     .doc(incomeId)
     .delete()
@@ -47,7 +54,8 @@ export const updateProjectIncome = (
   incomeId: string,
   income: Partial<Income>
 ) => {
-  return firestore()
+  return admin
+    .firestore()
     .collection(`discord/${userId}/projects/${projectId}/incomes`)
     .doc(incomeId)
     .update({ ...income, updatesAt: dayjs().toISOString() })
@@ -58,7 +66,8 @@ const updateProjecttotalIncome = async (
   projectId: string,
   incomes: number
 ) => {
-  const projDoc = await firestore()
+  const projDoc = await admin
+    .firestore()
     .collection(`discord/${userId}/projects/`)
     .doc(projectId)
     .get()
@@ -75,7 +84,8 @@ export const getAllProjectsIncomes = async (
   projectId: string
 ): Promise<IncomeAll> => {
   try {
-    const documents = await firestore()
+    const documents = await admin
+      .firestore()
       .collection(`discord/${userId}/projects/${projectId}/incomes`)
       .get()
     const incomes: Income[] = []

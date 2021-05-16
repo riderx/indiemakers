@@ -1,4 +1,4 @@
-import { firestore } from 'firebase-admin'
+import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import {
   Interaction,
@@ -6,7 +6,11 @@ import {
 } from '../command'
 import { sendTxtLater } from './utils'
 import { updateUser, getAllUsers, User } from './user'
-
+if (!admin.apps.length) {
+  admin.initializeApp()
+} else {
+  admin.app() // if already initialized, use that one
+}
 interface Karma {
   id?: string
   userId: string
@@ -17,7 +21,10 @@ const getKarmaById = async (
   id: string
 ): Promise<{ karmas: Karma[]; total: number }> => {
   try {
-    const documents = await firestore().collection(`discord/${id}/karma`).get()
+    const documents = await admin
+      .firestore()
+      .collection(`discord/${id}/karma`)
+      .get()
     const karmas: Karma[] = []
     documents.docs.forEach((doc) => {
       const data = doc.data() as Karma
@@ -34,7 +41,8 @@ const getKarmaById = async (
 }
 
 const addKarmaVotesById = (userId: string, senderId: string, value: number) =>
-  firestore()
+  admin
+    .firestore()
     .collection(`discord/${userId}/karma`)
     .add({ userId: senderId, value, createdAt: dayjs().toISOString() })
 
@@ -45,7 +53,7 @@ const karmaAdd = async (
 ): Promise<void> => {
   const userId = option.value
   if (userId) {
-    console.log('add karma userId', userId)
+    console.error('add karma userId', userId)
     if (senderId === userId) {
       return sendTxtLater(
         "Tu ne peux pas t'ajouter du karma toi même !",
@@ -92,7 +100,7 @@ const karmaRm = async (
       interaction.token
     )
   }
-  console.log('remove karma userId', userId)
+  console.error('remove karma userId', userId)
   if (senderId === userId) {
     return sendTxtLater(
       'Tu ne peux pas te prendre du karma toi même !',
@@ -143,7 +151,7 @@ const karmaStats = async (
 ): Promise<void> => {
   const userId = option.value
   if (userId) {
-    console.log('stats karma userId', userId)
+    console.error('stats karma userId', userId)
     const curKarma = await getKarmaById(userId)
     return sendTxtLater(
       `<@${userId}> as ${curKarma.total} karma !`,
@@ -162,7 +170,7 @@ const karmaStats = async (
 }
 
 const karmaLadder = async (interaction: Interaction): Promise<void> => {
-  console.log('stats karma global')
+  console.error('stats karma global')
   return sendTxtLater(
     `Voici le classement karma de tous les makers:\n\n${await generateKarmaStats()}`,
     [],

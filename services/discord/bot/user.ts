@@ -17,7 +17,11 @@ import {
 } from './utils'
 import { Project } from './project'
 import { lastDay } from './tasks'
-
+if (!admin.apps.length) {
+  admin.initializeApp()
+} else {
+  admin.app() // if already initialized, use that one
+}
 export interface User {
   userId: string
   avatar: string

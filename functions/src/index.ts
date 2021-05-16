@@ -1,5 +1,5 @@
 import { config, https, pubsub, firestore } from 'firebase-functions'
-import admin, { initializeApp } from 'firebase-admin'
+import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import {
   InteractionResponseType,
@@ -18,7 +18,11 @@ import { sendUserToRevue } from './newletter'
 import { Person } from './types'
 import { transformURLtoTracked } from './tracker'
 
-initializeApp()
+if (!admin.apps.length) {
+  admin.initializeApp()
+} else {
+  admin.app() // if already initialized, use that one
+}
 
 process.env.CLIENT_PUBLIC_KEY = config().discord.bot_public_key
 process.env.BOT_TOKEN = config().discord.bot_token
