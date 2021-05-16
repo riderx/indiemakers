@@ -2,8 +2,10 @@ import { Request, Response } from 'express'
 import { getProjectById } from '../../services/discord/bot/project'
 import { getAllProjectsIncomes } from '../../services/discord/bot/incomes'
 import { getAllProjectsTasks } from '../../services/discord/bot/tasks'
+import fFnit from '../../services/firebase_init'
 
 const project = async (req: Request, res: Response) => {
+  fFnit()
   if (req?.query?.id) {
     const proj = await getProjectById(
       String(req.query.uid),
