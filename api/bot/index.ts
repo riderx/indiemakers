@@ -4,10 +4,12 @@ import {
   InteractionType,
   verifyKey,
 } from 'discord-interactions'
+import fFnit from '../../services/firebase_init'
 import discordInteraction from '../../services/discord/bot'
 import { sendTxtLoading } from '../../services/discord/bot/utils'
 
 const bot = async (req: Request, res: Response) => {
+  fFnit()
   try {
     const rawBody = JSON.stringify(req.body)
     const signature = String(

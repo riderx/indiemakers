@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import admin from 'firebase-admin'
-import fFnit from '../../firebase_init'
 import {
   ApplicationCommandInteractionDataOption,
   Interaction,
@@ -18,7 +17,7 @@ import {
 } from './utils'
 import { Project } from './project'
 import { lastDay } from './tasks'
-fFnit()
+
 export interface User {
   userId: string
   avatar: string

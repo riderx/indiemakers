@@ -4,11 +4,9 @@ import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
-import fFnit from '../../firebase_init'
 import { sendTxtLater } from './utils'
 import { getAllProjects } from './project'
 import { updateUser, User } from './user'
-fFnit()
 
 export interface Income {
   id?: string

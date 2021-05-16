@@ -4,10 +4,8 @@ import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
-import fFnit from '../../firebase_init'
 import { sendTxtLater } from './utils'
 import { updateUser, getAllUsers, User } from './user'
-fFnit()
 
 interface Karma {
   id?: string

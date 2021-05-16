@@ -408,7 +408,7 @@ const resources = [
   },
   {
     name: 'Outils Makers',
-    description: 'Découvre les meilleurs outils pour faire ses projets',
+    description: 'Découvre les meilleurs outils pour faire tes projets',
     href: '/tools',
   },
   {
@@ -422,6 +422,18 @@ const resources = [
     description: 'Lancer sa startup en indépendant, publié aux éditions Broché',
     href: 'https://amzn.to/3lXjALg',
     target: '_blank',
+  },
+  {
+    name: 'La Newletter',
+    description:
+      "Suis l'evoluion de mes projets, podcast, app, hackathon tout y passe",
+    href: '/nesletter',
+  },
+  {
+    name: 'Hackathon makers | 4 jours pour gagner tes premiers euros',
+    description:
+      'Envie de te lancer dans le grand bain, démarre ton projet dans un hackathon!',
+    href: 'https://hackathon-makers.com',
   },
   {
     name: 'Captime | Crossfit timer',

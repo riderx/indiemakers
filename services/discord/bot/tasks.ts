@@ -4,7 +4,6 @@ import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
-import fFnit from '../../firebase_init'
 import { sendTxtLater } from './utils'
 import { updateUser, User, getUsersById } from './user'
 
@@ -16,7 +15,6 @@ import {
   Project,
   updateProject,
 } from './project'
-fFnit()
 
 // eslint-disable-next-line no-unused-vars
 enum TaskStatus {
