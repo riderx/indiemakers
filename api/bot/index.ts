@@ -37,7 +37,6 @@ const bot = async (req: Request, res: Response) => {
       req.body.data
     ) {
       await sendTxtLoading(res)
-      console.error(req.body)
       await discordInteraction(req.body)
       return
     }
