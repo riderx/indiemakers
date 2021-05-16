@@ -152,23 +152,20 @@ export const sendTxtLater = async (
   interactionToken: string
 ): Promise<void> => {
   const url = `https://discord.com/api/v8/webhooks/${applicationId}/${interactionToken}/messages/@original`
+  const body: DiscordMessage = {
+    content,
+    embeds,
+  }
   try {
-    const body: DiscordMessage = {
-      content,
-      embeds,
-    }
-    await axios.patch(url, body).catch(async (err) => {
-      console.error('sendTxtLater', err)
-      await axios
-        .patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
-        .catch((errErr) => {
-          console.error('sendTxtLaterFallback', err, errErr)
-        })
-      return err
-    })
+    await axios.patch(url, body)
     return Promise.resolve()
   } catch (err) {
-    console.error('sendTxtLater', err)
+    console.error('sendTxtLater', body, err.response)
+    await axios
+      .patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
+      .catch((errErr) => {
+        console.error('sendTxtLaterFallback', err.response, errErr.response)
+      })
     return Promise.resolve()
   }
 }
@@ -189,7 +186,7 @@ export const openChannel = async (userId: string): Promise<any> => {
   const res = await axios
     .post(url, { recipient_id: userId }, { headers })
     .catch((err) => {
-      console.error('openChannel', err)
+      console.error('openChannel', err.response)
       return err
     })
   return Promise.resolve(res.data as any)
@@ -218,8 +215,8 @@ export const sendChannel = async (
     body.embed = embed
   }
   const res = await axios.post(url, body, { headers }).catch((err) => {
-    console.error('sendChannel content', JSON.stringify(content))
-    console.error('sendChannel err', err)
+    console.error('sendChannel content', url, JSON.stringify(content))
+    console.error('sendChannel err', err.response)
     return err
   })
   return Promise.resolve(res.data as any)
