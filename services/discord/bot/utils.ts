@@ -160,18 +160,18 @@ export const sendTxtLater = async (
     await axios.patch(url, body)
     return Promise.resolve()
   } catch (err) {
-    // if (err.response) {
-    //   // Request made and server responded
-    //   console.error('sendTxtLater response', err.response.data)
-    //   console.error('sendTxtLater response status', err.response.status)
-    //   // console.error(err.response.headers)
-    // } else if (err.request) {
-    //   // The request was made but no response was received
-    //   console.error('sendTxtLater request', err.request)
-    // } else {
-    //   // Something happened in setting up the request that triggered an Error
-    //   console.error('sendTxtLater Error', err.message)
-    // }
+    if (err.response) {
+      // Request made and server responded
+      console.error('sendTxtLater response', err.response.data)
+      console.error('sendTxtLater response status', err.response.status)
+      // console.error(err.response.headers)
+    } else if (err.request) {
+      // The request was made but no response was received
+      console.error('sendTxtLater request', err.request)
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error('sendTxtLater Error', err.message)
+    }
     // console.error('sendTxtLater content', url, JSON.stringify(content))
     await axios
       .patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
@@ -246,18 +246,18 @@ export const sendChannel = async (
     body.embed = embed
   }
   const res = await axios.post(url, body, { headers }).catch((err) => {
-    // if (err.response) {
-    //   // Request made and server responded
-    //   console.error('sendChannel response', err.response.data)
-    //   console.error('sendChannel response status', err.response.status)
-    //   // console.error(err.response.headers)
-    // } else if (err.request) {
-    //   // The request was made but no response was received
-    //   console.error('sendChannel request', err.request)
-    // } else {
-    //   // Something happened in setting up the request that triggered an Error
-    //   console.error('sendChannel Error', err.message)
-    // }
+    if (err.response) {
+      // Request made and server responded
+      console.error('sendChannel response', err.response.data)
+      console.error('sendChannel response status', err.response.status)
+      // console.error(err.response.headers)
+    } else if (err.request) {
+      // The request was made but no response was received
+      console.error('sendChannel request', err.request)
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error('sendChannel Error', err.message)
+    }
     // console.error('sendChannel content', url, JSON.stringify(content))
     return admin
       .firestore()
