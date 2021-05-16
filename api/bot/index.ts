@@ -48,5 +48,5 @@ const bot = async (req: Request, res: Response) => {
     return res.status(500).end('Error bot', error.message)
   }
 }
-export const config = { api: { bodyParser: false } }
+// export const config = { api: { bodyParser: false } }
 export default bot
