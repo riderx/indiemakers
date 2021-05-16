@@ -1,9 +1,10 @@
 import dayjs from 'dayjs'
+import admin from 'firebase-admin'
 import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
-import admin from '../../firebase'
+import fFnit from '../../firebase_init'
 import { getStripeCharges, Charge } from './stripe'
 import { embed, field, image, sendChannel, sendTxtLater } from './utils'
 import { updateUser } from './user'
@@ -14,6 +15,7 @@ import {
   Income,
 } from './incomes'
 import { Task } from './tasks'
+fFnit()
 
 export interface Project {
   id?: string

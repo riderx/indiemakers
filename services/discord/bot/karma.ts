@@ -1,11 +1,13 @@
 import dayjs from 'dayjs'
+import admin from 'firebase-admin'
 import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
-import admin from '../../firebase'
+import fFnit from '../../firebase_init'
 import { sendTxtLater } from './utils'
 import { updateUser, getAllUsers, User } from './user'
+fFnit()
 
 interface Karma {
   id?: string
