@@ -204,11 +204,11 @@ const incomesView = async (
   const projectId = option.value
   if (projectId) {
     const allTaks = await getAllProjectsIncomes(userId, projectId)
-    let incomeInfos = `Tu a fait ${allTaks.total} € sur ce projet, BRAVO 🎉!\n\nVoici La liste des revenus:\n`
+    let incomeInfos = `Tu a fait ${allTaks.total} € sur ce projet, BRAVO 🎉!\n\nVoici La liste des revenus:\n\n`
     allTaks.incomes.forEach((element: Income) => {
-      incomeInfos += `${element.ammount} ${
-        element.status === 'expense' ? 'dépense' : 'revenue'
-      } . Crée le ${dayjs(element.createdAt).format('DD/MM/YYYY')}\n`
+      incomeInfos += `${dayjs(element.createdAt).format('DD-MM-YYYY')}    ${
+        element.status === 'expense' ? '-' : ''
+      }${element.ammount} €\n`
     })
     return sendTxtLater(
       incomeInfos,

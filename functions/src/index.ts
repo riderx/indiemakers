@@ -8,9 +8,10 @@ import {
 } from 'discord-interactions'
 import discordInteraction from '../../services/discord/bot'
 import { updateRevenueAllProject } from '../../services/discord/bot/stripe'
-import { usersViewStreak } from '../../services/discord/bot/user'
+import { getAllUsers, usersViewStreak } from '../../services/discord/bot/user'
 import { sendChannel, sendTxtLoading } from '../../services/discord/bot/utils'
 import { Interaction } from '../../services/discord/command'
+import { updateUserTaskAndStreak } from '../../services/discord/bot/tasks'
 import { getPerson, voteIfNotDone } from './users'
 import { TwUser, twUserPromise } from './twitter'
 import { sendUserToRevue } from './newletter'
@@ -191,16 +192,6 @@ export const onCreateUser = firestore
     }
   })
 
-// export const onCreatEpisode = functions.firestore
-//   .document('/episodes/{uid}')
-//   .onCreate(async (snapshot) => {
-//     const ep = <Episode>snapshot.data()
-//     if (ep && ep.title && ep.title !== '') {
-//       initEmail(configSecret.sendgrid.apikey)
-//       await sendEmailEp(ep)
-//     }
-//   })
-
 export const onUpdatePeople = firestore
   .document('/people/{personId}')
   .onUpdate(async (snapshot, context) => {
@@ -299,19 +290,22 @@ export const scheduledBotBIPMorning = pubsub
     const res = await admin.firestore().collection('bot').doc('config').get()
     const data = res.data()
     if (data) {
-      const usersInfoCards = await usersViewStreak()
+      const usrTt = await getAllUsers()
+      const usersInfoCards = usersViewStreak(usrTt)
+      await Promise.all(
+        usrTt.users.map((usr) => {
+          return updateUserTaskAndStreak(usr)
+        })
+      )
       await sendChannel(
         data.channel_bip,
         'Hey Makers, Encore une belle journée pour shipper !\n\nContinuez comme ça !'
       )
-      for (
-        let index = 0;
-        index < usersInfoCards.length && index < data.ladderLimit;
-        index++
-      ) {
-        const card = usersInfoCards[index]
-        await sendChannel(data.channel_bip, '', card)
-      }
+      await Promise.all(
+        usersInfoCards.map((card) => {
+          return sendChannel(data.channel_bip, '', card)
+        })
+      )
       if (dayjs().day() === 1) {
         await sendChannel(
           data.channel_general,

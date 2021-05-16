@@ -7,6 +7,7 @@ import {
 import {
   Embed,
   embed,
+  Field,
   field,
   getUserData,
   image,
@@ -15,6 +16,7 @@ import {
   sendTxtLater,
 } from './utils'
 import { Project } from './project'
+import { lastDay } from './tasks'
 
 export interface User {
   userId: string
@@ -23,11 +25,11 @@ export interface User {
   avatarUrl: string
   streak: number
   karma: number
-  emoji: string
-  color: string
   projects: number
   incomes: number
   tasks: number
+  emoji?: string
+  color?: string
   name?: string
   bio?: string
   twitter?: string
@@ -40,7 +42,7 @@ export interface User {
   createdAt: string
   updatedAt: string
 }
-// const userPublicKey = ["username", "karma", "avatarUrl", "taches", "projets", "name", "bio", "emoji", "color", "flammes", "createdAt"];
+const userPublicFlieds = ['karma', 'tasks', 'projects', 'streak']
 const userProtectedKey = [
   'userId',
   'username',
@@ -53,11 +55,11 @@ const userProtectedKey = [
   'updatedAt',
   'lastTaskAt',
 ]
-
-export const getAllUsers = async (): Promise<{
+interface UserTt {
   users: User[]
   total: number
-}> => {
+}
+export const getAllUsers = async (): Promise<UserTt> => {
   try {
     const documents = await admin.firestore().collection('/discord').get()
     const users: User[] = []
@@ -74,23 +76,25 @@ export const getAllUsers = async (): Promise<{
   }
 }
 
-const transformKey = (key: string): string => {
-  switch (key) {
-    case 'couleur':
-      return 'color'
-    case 'nom':
-      return 'name'
-    case 'couverture':
-      return 'cover'
-    case 'makerlog_hook':
-      return 'makerlogHook'
-    case 'wip_key':
-      return 'wipApiKey'
-    case 'photo':
-      return 'avatarUrl'
-    default:
-      return key
-  }
+const translations = {
+  couleur: 'color',
+  nom: 'name',
+  couverture: 'cover',
+  makerlog_hook: 'makerlogHook',
+  wip_key: 'wipApiKey',
+  photo: 'avatarUrl',
+  '🔥 Flammes': 'streak',
+  '🕉 karma': 'karma',
+  '🌱 Projets': 'projects',
+  '💗 Taches': 'tasks',
+}
+
+const transformKey = (key: string, left: boolean = false): string => {
+  return (
+    Object.keys(translations).find((val: string) =>
+      left ? (translations as any)[val] === key : val === key
+    ) || ''
+  )
 }
 
 export const getUsersById = async (userId: string): Promise<User | null> => {
@@ -119,8 +123,6 @@ export const updateUser = async (
       userId,
       avatar: '',
       avatarUrl: '',
-      emoji: '',
-      color: '',
       streak: 0,
       incomes: 0,
       karma: 0,
@@ -167,42 +169,48 @@ const userEdit = (
   ]).then(() => Promise.resolve())
 }
 
-export const usersViewStreak = async (): Promise<Embed[]> => {
+const userFields = (user: User) => {
+  const fields: Field[] = []
+  userPublicFlieds.forEach((key) => {
+    if ((user as any)[key]) {
+      fields.push(
+        field(transformKey(key, true), String((user as any)[key] || 0))
+      )
+    }
+  })
+  return fields
+}
+
+const userCard = (user: User) => {
+  const fields = userFields(user)
+  const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
+  const bio = user.bio || 'Un jours je serais grand !'
+  const thumb = image(user.avatarUrl)
+  return embed(
+    name,
+    bio,
+    user.color,
+    fields,
+    undefined,
+    undefined,
+    user.createdAt,
+    undefined,
+    thumb
+  )
+}
+
+export const usersViewStreak = (res: UserTt): Embed[] => {
   const embeds: Embed[] = []
-  const res = await getAllUsers()
-  const limitStreak = dayjs()
-  limitStreak.subtract(1, 'day')
-  limitStreak.set('minute', 0)
-  limitStreak.set('hour', 0)
-  limitStreak.set('second', 0)
-  res.users = res.users.sort(
+  const limitStreak = lastDay()
+  let users = res.users.sort(
     (firstEl: User, secondEl: User) => secondEl.streak - firstEl.streak
   )
-  res.users = res.users.filter((user: User) =>
+  users = users.filter((user: User) =>
     user.lastTaskAt ? dayjs(user.lastTaskAt).isAfter(limitStreak) : false
   )
-  res.users.forEach((user: User) => {
-    const fields = [
-      field('🔥 Flammes', String(user.streak)),
-      field('🕉 Karma', String(user.karma)),
-      field('🌱 Projets', String(user.projects)),
-      field('💗 Taches', String(user.tasks)),
-    ]
-    const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
-    const thumb = image(user.avatarUrl)
-    const userCard = embed(
-      name,
-      '',
-      user.color,
-      fields,
-      undefined,
-      undefined,
-      undefined,
-      user.createdAt,
-      thumb
-    )
+  users.forEach((user: User) => {
     if (embeds.length < 10) {
-      embeds.push(userCard)
+      embeds.push(userCard(user))
     }
   })
   return embeds
@@ -212,26 +220,9 @@ const userList = async (interaction: Interaction): Promise<void> => {
   const cards: Promise<any>[] = []
   const res = await getAllUsers()
   res.users.forEach((user: User) => {
-    const fields = [
-      field('🔥 Flammes', String(user.streak)),
-      field('🕉 Karma', String(user.karma)),
-      field('🌱 Projets', String(user.projects)),
-      field('💗 Taches', String(user.tasks)),
-    ]
-    const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
-    const thumb = image(user.avatarUrl)
-    const userCard = embed(
-      name,
-      '',
-      user.color,
-      fields,
-      undefined,
-      undefined,
-      user.createdAt,
-      undefined,
-      thumb
-    )
-    cards.push(sendChannel(interaction.channel_id, '', userCard))
+    const card = userCard(user)
+    console.error('card', card)
+    cards.push(sendChannel(interaction.channel_id, '', card))
   })
   console.error('userList')
   return Promise.all([
@@ -246,14 +237,30 @@ const userList = async (interaction: Interaction): Promise<void> => {
 }
 
 const userListStreak = async (interaction: Interaction): Promise<void> => {
-  const usersInfoCards = await usersViewStreak()
+  const users = await getAllUsers()
+  const usersInfoCards = usersViewStreak(users)
   console.error('userList', usersInfoCards)
-  return sendTxtLater(
-    `Voici la liste des 10 premiers makers avec les flammes !\n`,
-    usersInfoCards,
-    interaction.application_id,
-    interaction.token
-  )
+  if (usersInfoCards.length > 0) {
+    return Promise.all([
+      sendTxtLater(
+        `Voici la liste des 10 premiers makers avec les flammes !\n`,
+        [],
+        interaction.application_id,
+        interaction.token
+      ),
+      ...usersInfoCards.map((card) => {
+        console.error('card', card)
+        return sendChannel(interaction.channel_id, '', card)
+      }),
+    ]).then(() => Promise.resolve())
+  } else {
+    return sendTxtLater(
+      `Les makers n'ont plus de flamme 😢!`,
+      [],
+      interaction.application_id,
+      interaction.token
+    )
+  }
 }
 
 const userView = async (
@@ -264,60 +271,21 @@ const userView = async (
   const user = await getUsersById(userId || myId)
   if (user && userId && myId !== userId) {
     console.error('userView', userId)
-    const fields = [
-      field('🔥 Flammes', String(user.streak)),
-      field('🕉 Karma', String(user.karma)),
-      field('🌱 Projets', String(user.projects)),
-      field('💗 Taches', String(user.tasks)),
-    ]
-    const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
-    const bio = user.bio || 'Un jours je serais grand !'
-    const thumb = image(user.avatarUrl)
-    const userCard = embed(
-      name,
-      bio,
-      user.color,
-      fields,
-      undefined,
-      undefined,
-      user.createdAt,
-      undefined,
-      thumb
-    )
     return sendTxtLater(
       `Voici les infos sur ce maker !\n`,
-      [userCard],
+      [userCard(user)],
       interaction.application_id,
       interaction.token
     )
   } else if (user) {
     console.error('userView', userId)
-    const fields = [
-      field('🔥 Flammes', String(user.streak)),
-      field('🕉 Karma', String(user.karma)),
-      field('🌱 Projets', String(user.projects)),
-      field('💗 Taches', String(user.tasks)),
-    ]
-    if (user.makerlogHook) {
-      fields.push(field('Makerlog', String(user.makerlogHook), false))
+    const card = userCard(user)
+    if (user.makerlogHook && card.fields) {
+      card.fields.push(field('Makerlog', String(user.makerlogHook), false))
     }
-    if (user.wipApiKey) {
-      fields.push(field('WIP', String(user.wipApiKey), false))
+    if (user.wipApiKey && card.fields) {
+      card.fields.push(field('WIP', String(user.wipApiKey), false))
     }
-    const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
-    const bio = user.bio || 'Un jours je serais grand !'
-    const thumb = image(user.avatarUrl)
-    const userCard = embed(
-      name,
-      bio,
-      user.color,
-      fields,
-      undefined,
-      undefined,
-      user.createdAt,
-      undefined,
-      thumb
-    )
     return Promise.all([
       sendTxtLater(
         "Je t'ai envoyé tes info en privé 🤫",
@@ -326,7 +294,7 @@ const userView = async (
         interaction.token
       ),
       openChannel(myId).then((channel) =>
-        sendChannel(channel.id, `Voici tes infos !\n`, userCard)
+        sendChannel(channel.id, `Voici tes infos !\n`, card)
       ),
     ]).then(() => Promise.resolve())
   } else {

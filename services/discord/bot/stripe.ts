@@ -86,23 +86,9 @@ const getAllUsersAndProjects = async () => {
   const allUsers: { [key: string]: User } = {}
   for (let index = 0; index < res.users.length; index++) {
     const user = res.users[index]
-    if (allUsers[user.userId]) {
-      allUsers[user.userId] = {
-        ...user,
-      }
-      const projects = allUsers[user.userId].projectsData
-      if (projects) {
-        allUsers[user.userId].projectsData = projects.concat(
-          await getAllProjects(user.userId)
-        )
-      } else {
-        allUsers[user.userId].projectsData = await getAllProjects(user.userId)
-      }
-    } else {
-      allUsers[user.userId] = {
-        ...user,
-        projectsData: await getAllProjects(user.userId),
-      }
+    allUsers[user.userId] = {
+      ...user,
+      projectsData: await getAllProjects(user.userId),
     }
   }
   return allUsers

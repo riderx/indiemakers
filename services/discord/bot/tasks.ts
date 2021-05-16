@@ -154,6 +154,50 @@ const transformKey = (key: string): string => {
   }
 }
 
+export const lastDay = () => {
+  let day = dayjs()
+  day = day.set('hour', 0)
+  day = day.set('minute', 0)
+  day = day.set('second', 1)
+  day = day.subtract(1, 'day')
+  return day
+}
+
+const updateProjectTaskAndStreak = async (
+  userId: string,
+  proj: Project | null
+) => {
+  if (!proj) return Promise.reject(Error('Projet introuvable'))
+  const curTasks = await getAllProjectsTasks(userId, proj.hashtag)
+  const updatedProject: Partial<Project> = {
+    tasks: curTasks.total + 1,
+    lastTaskAt: dayjs().toISOString(),
+  }
+  const lastTaskAt = dayjs(proj.lastTaskAt)
+  if (proj.lastTaskAt && lastDay().isBefore(lastTaskAt)) {
+    updatedProject.streak = proj.streak + 1
+  } else {
+    updatedProject.streak = 1
+  }
+  return updateProject(userId, proj.hashtag, updatedProject)
+}
+
+export const updateUserTaskAndStreak = (usr: User) => {
+  getTotalTaskAndStreakByUser(usr.userId).then((superTotal) => {
+    const updatedUser: Partial<User> = {
+      tasks: superTotal.tasks + 1,
+      lastTaskAt: dayjs().toISOString(),
+    }
+    const lastTaskAt = dayjs(usr.lastTaskAt)
+    if (usr.lastTaskAt && lastDay().isBefore(lastTaskAt)) {
+      updatedUser.streak = superTotal.streak + 1
+    } else {
+      updatedUser.streak = 1
+    }
+    return updateUser(usr.userId, updatedUser)
+  })
+}
+
 const taskAdd = async (
   interaction: Interaction,
   options: ApplicationCommandInteractionDataOption[],
@@ -172,10 +216,6 @@ const taskAdd = async (
   })
   const curUser = await getUsersById(userId)
   if (curUser) {
-    const lastDay = dayjs()
-    lastDay.set('minute', 1)
-    lastDay.set('hour', 0)
-    lastDay.set('second', 0)
     return Promise.all([
       sendTxtLater(
         `La tache:\n${task.content}\nA été ajouté au projet #${projectId}, 🎉!`,
@@ -183,37 +223,10 @@ const taskAdd = async (
         interaction.application_id,
         interaction.token
       ),
-      getProjectById(userId, projectId).then(async (curProject) => {
-        const curTasks = await getAllProjectsTasks(userId, projectId)
-        const updatedProject: Partial<Project> = {
-          tasks: curTasks.total + 1,
-        }
-        if (!curProject) return Promise.reject(Error('Projet introuvable'))
-        if (
-          (curProject.lastTaskAt &&
-            dayjs(curProject.lastTaskAt).isBefore(lastDay)) ||
-          !curProject.lastTaskAt
-        ) {
-          updatedProject.streak = curUser.streak ? curUser.streak + 1 : 1
-          updatedProject.lastTaskAt = dayjs().toISOString()
-        }
-        return updateProject(userId, projectId, updatedProject)
-      }),
       createProjectTask(curUser, projectId, task).then(() =>
-        getTotalTaskByUser(userId).then((superTotal) => {
-          const updatedUser: Partial<User> = {
-            tasks: superTotal + 1,
-          }
-          if (
-            (curUser.lastTaskAt &&
-              dayjs(curUser.lastTaskAt).isBefore(lastDay)) ||
-            !curUser.lastTaskAt
-          ) {
-            updatedUser.streak = curUser.streak ? curUser.streak + 1 : 1
-            updatedUser.lastTaskAt = dayjs().toISOString()
-          }
-          return updateUser(userId, updatedUser)
-        })
+        getProjectById(userId, projectId)
+          .then((curProject) => updateProjectTaskAndStreak(userId, curProject))
+          .then(() => updateUserTaskAndStreak(curUser))
       ),
     ]).then(() => Promise.resolve())
   } else {
@@ -302,9 +315,14 @@ const tasksView = async (
   }
 }
 
-const getTotalTaskByUser = async (userId: string): Promise<number> => {
+const getTotalTaskAndStreakByUser = async (
+  userId: string
+): Promise<{ tasks: number; streak: number }> => {
   const projects = await getAllProjects(userId)
-  return projects.reduce((tt, project) => tt + project.tasks, 0)
+  return projects.reduce(
+    (tt, c) => ({ tasks: tt.tasks + c.tasks, streak: tt.tasks + c.streak }),
+    { tasks: 0, streak: 0 }
+  )
 }
 
 const tasksDelete = (
@@ -322,9 +340,9 @@ const tasksDelete = (
     }
   })
   return Promise.all([
-    getTotalTaskByUser(userId).then((superTotal) => {
+    getTotalTaskAndStreakByUser(userId).then((superTotal) => {
       const updatedUser: Partial<User> = {
-        tasks: superTotal - 1,
+        tasks: superTotal.tasks - 1,
         lastTaskAt: dayjs().toISOString(),
       }
       return updateUser(userId, updatedUser)

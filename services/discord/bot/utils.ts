@@ -8,7 +8,7 @@ interface DiscorUser {
   avatar: string
   username: string
 }
-interface Field {
+export interface Field {
   name: string
   value: string
   inline: boolean
@@ -64,13 +64,13 @@ export const field = (name: string, value: string, inline = true): Field => ({
 })
 export const embed = (
   title: string | undefined = undefined,
-  description = '',
-  color = '',
+  description: string | undefined = undefined,
+  color: string | undefined = undefined,
   fields: Field[] = [],
   author: Author | undefined = undefined,
   footer: Footer | undefined = undefined,
-  timestamp = '',
-  url = '',
+  timestamp: string | undefined = undefined,
+  url: string | undefined = undefined,
   thumbnail: Image | undefined = undefined,
   image: Image | undefined = undefined
 ): Embed => {
@@ -212,7 +212,8 @@ export const sendChannel = async (
     body.embed = embed
   }
   const res = await axios.post(url, body, { headers }).catch((err) => {
-    console.error('sendChannel', err)
+    console.error('sendChannel content', JSON.stringify(content))
+    console.error('sendChannel err', err)
     return err
   })
   return Promise.resolve(res.data as any)
