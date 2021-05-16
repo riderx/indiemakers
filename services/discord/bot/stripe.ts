@@ -81,7 +81,7 @@ export const getStripeCharges = async (
   return allCharges
 }
 
-const getAllUsersAndProjects = async () => {
+export const getAllUsersAndProjects = async () => {
   const res = await getAllUsers()
   const allUsers: { [key: string]: User } = {}
   for (let index = 0; index < res.users.length; index++) {

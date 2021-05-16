@@ -29,6 +29,7 @@ const project = async (req: Request, res: Response) => {
     }
   } else {
     res.json({ error: 'not found' })
+    // res.json(await getAllUsersAndProjects())
   }
 }
 export default project
