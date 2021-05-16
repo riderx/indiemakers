@@ -295,13 +295,13 @@ const tasksView = async (
     const allTaks = await getAllProjectsTasks(makerId, projectId)
     const text =
       makerId === userId
-        ? `Tu as fait un total de ${allTaks.total} sur ce projet, BRAVO 🎉!`
-        : `<@${userId}> a fait un total de ${allTaks.total} sur ce projet, BRAVO 🎉!`
-    let taskInfos = `${text}!\n\nVoici La liste:\n`
+        ? `Tu as fait ${allTaks.total} taches sur ce projet, BRAVO 🎉!`
+        : `<@${userId}> a fait ${allTaks.total} taches sur ce projet, BRAVO 🎉!`
+    let taskInfos = `${text}!\n\nVoici La liste:\n\n`
     allTaks.tasks.forEach((element: Task) => {
-      taskInfos += `${element.content} . Crée le ${dayjs(
-        element.createdAt
-      ).format('DD/MM/YYYY')}\n`
+      taskInfos += `${dayjs(element.createdAt).format('DD/MM/YYYY')}  - ${
+        element.content
+      }\n`
     })
     return sendTxtLater(
       taskInfos,
