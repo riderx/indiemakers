@@ -164,7 +164,7 @@ export const sendTxtLater = async (
       // Request made and server responded
       console.error(err.response.data)
       console.error(err.response.status)
-      console.error(err.response.headers)
+      // console.error(err.response.headers)
     } else if (err.request) {
       // The request was made but no response was received
       console.error(err.request)
@@ -231,7 +231,7 @@ export const sendChannel = async (
       // Request made and server responded
       console.error(err.response.data)
       console.error(err.response.status)
-      console.error(err.response.headers)
+      // console.error(err.response.headers)
     } else if (err.request) {
       // The request was made but no response was received
       console.error(err.request)
