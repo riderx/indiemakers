@@ -54,7 +54,7 @@
                     h-auto
                     mx-auto
                     my-10
-                    border-8 border-white
+                    border-white
                     md:m-0
                     md:w-4/5
                   "
@@ -115,7 +115,8 @@ export default Vue.extend({
       show_loader: false,
       sizeHead: '100vh',
       // https://ik.imagekit.io/gyc0uxoln1/indiemakers/cover-im_0.5x_5ozFHlEvg.png
-      image: require('~/assets/images/cover-im@0.5x.png'),
+      image:
+        'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg',
       // image: 'v1621019061/indiemakers/cover-im_0.5x_5ozFHlEvg.png',
       episodes: [],
       title: '🚀Le podcast des entrepreneurs indépendant',
@@ -161,16 +162,12 @@ export default Vue.extend({
         {
           hid: 'og:image',
           property: 'og:image',
-          content: `${
-            this.$config.DOMAIN
-          }${require('~/assets/images/cover-im@0.5x.png')}`,
+          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
         },
         {
           hid: 'og:image:secure_url',
           property: 'og:image:secure_url',
-          content: `${
-            this.$config.DOMAIN
-          }${require('~/assets/images/cover-im@0.5x.png')}`,
+          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
         },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 },

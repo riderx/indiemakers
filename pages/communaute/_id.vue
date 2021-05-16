@@ -2,7 +2,7 @@
   <div v-if="user && loaded">
     <div class="relative">
       <img
-        class="object-cover w-full h-72"
+        class="object-cover object-top w-full h-72"
         :src="user.cover || noCover"
         :alt="'cover profil ' + user.username"
       />
@@ -12,7 +12,7 @@
           inset-x-0
           object-cover
           mx-auto
-          border-2
+          border-4
           rounded-full
           -bottom-1/4
           h-36
@@ -100,7 +100,7 @@
             <div class="relative flex items-end">
               <img
                 class="
-                  object-cover
+                  object-cover object-top
                   w-10
                   h-10
                   border
@@ -198,8 +198,10 @@ export default Vue.extend({
   },
   data() {
     return {
-      noCover: require('~/assets/images/cover_no.png'),
-      noImge: require('~/assets/images/cover-im_empty.png'),
+      noCover:
+        'https://res.cloudinary.com/forgr/image/upload/v1621191060/indiemakers/new_cover_fu6fcs.png',
+      noImge:
+        'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/cover-im_empty_wt2gi0.png',
       user: null as unknown as User,
       projectData: null as unknown as Project,
       projectId: '',

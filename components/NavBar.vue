@@ -462,7 +462,8 @@ export default {
       menuMobile: false,
       logo: {
         title: 'INDIE MAKERS LOGO',
-        source: require('~/assets/images/isolated-monochrome-white.svg'),
+        source:
+          'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/isolated-monochrome-white_lzhdfh.svg',
         link: '/',
       },
       icones: [

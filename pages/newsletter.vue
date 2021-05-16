@@ -106,7 +106,8 @@ export default {
       name: '',
       logo: {
         title: 'Newletter LOGO',
-        source: require('~/assets/images/newsletter.svg'),
+        source:
+          'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/newsletter_hlctgq.svg',
       },
       title: 'Mes Emails Hebdo',
       desc: 'Chaque semaine reçoit mes conseils actionables pour lancer ton projet, et generer un revenue !',
@@ -138,16 +139,12 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: `${
-            this.$config.DOMAIN
-          }${require('~/assets/images/cover-im@0.5x.png')}`,
+          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
         },
         {
           hid: 'og:image:secure_url',
           property: 'og:image:secure_url',
-          content: `${
-            this.$config.DOMAIN
-          }${require('~/assets/images/cover-im@0.5x.png')}`,
+          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
         },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 },

@@ -311,7 +311,6 @@ export default {
   },
   data() {
     return {
-      loadingImg: require('~/assets/images/cover-im_empty.png'),
       image: null,
       titleNoEmoji: null,
       contentNoEmoji: null,

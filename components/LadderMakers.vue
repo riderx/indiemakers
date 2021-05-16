@@ -7,7 +7,7 @@
       mx-auto
       overflow-y-auto
       text-white
-      border-2
+      border-4
       bg-royalblue-700
       border-orchid-300
       md:w-1/2

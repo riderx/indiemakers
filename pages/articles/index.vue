@@ -97,7 +97,8 @@ export default {
   },
   data() {
     return {
-      blogImage: require('~/assets/images/blog.svg'),
+      blogImage:
+        'https://res.cloudinary.com/forgr/image/upload/v1621019063/indiemakers/blog_li7d4i.svg',
       title: 'Les articles indie !',
       description:
         "Chaque semaine un maker du discord est désigné pour ecrire un article sur son projet, partager ses avancée, ou enrichir l'univer indie !",

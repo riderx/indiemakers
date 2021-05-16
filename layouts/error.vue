@@ -57,7 +57,8 @@ export default {
     return {
       logo: {
         title: '404 LOGO',
-        source: require('~/assets/images/404.svg'),
+        source:
+          'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/404_xivjox.svg',
       },
     }
   },

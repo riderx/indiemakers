@@ -107,7 +107,8 @@ export default {
       name: '',
       logo: {
         title: 'Communauté LOGO',
-        source: require('~/assets/images/undraw_connection_b38q.svg'),
+        source:
+          'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/undraw_connection_b38q_czvwhb.svg',
       },
       title: 'Rejoint le Discord',
       desc: '300 Makers là pour échanger et disponible pour répondre à tes questions !',
@@ -139,16 +140,12 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: `${
-            this.$config.DOMAIN
-          }${require('~/assets/images/cover-im@0.5x.png')}`,
+          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
         },
         {
           hid: 'og:image:secure_url',
           property: 'og:image:secure_url',
-          content: `${
-            this.$config.DOMAIN
-          }${require('~/assets/images/cover-im@0.5x.png')}`,
+          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
         },
         { hid: 'og:image:width', property: 'og:image:width', content: 400 },
         { hid: 'og:image:height', property: 'og:image:height', content: 400 },
