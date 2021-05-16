@@ -37,6 +37,7 @@ const bot = async (req: Request, res: Response) => {
       req.body.data
     ) {
       await sendTxtLoading(res)
+      console.error(req.body)
       await discordInteraction(req.body)
       return
     }
@@ -48,5 +49,4 @@ const bot = async (req: Request, res: Response) => {
     return res.status(500).end('Error bot', error.message)
   }
 }
-// export const config = { api: { bodyParser: false } }
 export default bot
