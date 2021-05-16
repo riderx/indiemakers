@@ -42,7 +42,8 @@
 </template>
 
 <script lang="ts">
-export default {
+import Vue from 'vue'
+export default Vue.extend({
   name: 'LaderMakers',
   props: {
     users: { type: Array, default: () => [] },
@@ -52,5 +53,5 @@ export default {
       this.$router.push(`/communaute/${id}`)
     },
   },
-}
+})
 </script>
