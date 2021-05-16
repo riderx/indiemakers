@@ -14,7 +14,6 @@ import {
   openChannel,
   sendChannel,
   sendTxtLater,
-  sleep,
 } from './utils'
 import { Project } from './project'
 import { lastDay } from './tasks'
@@ -228,14 +227,8 @@ const userList = async (interaction: Interaction): Promise<void> => {
   for (let index = 0; index < res.users.length; index++) {
     const user = res.users[index]
     const card = userCard(user)
-    console.error('card', card)
-    const result = await sendChannel(interaction.channel_id, '', card)
-    if (result?.response?.headers['x-ratelimit-reset-after']) {
-      const lenSize =
-        Number(result.response.headers['x-ratelimit-reset-after']) * 1000
-      console.error('Sleep a bit', lenSize)
-      await sleep(lenSize)
-    }
+    // console.error('card', card)
+    await sendChannel(interaction.channel_id, '', card)
   }
   console.error('userList')
   return Promise.resolve()
@@ -254,14 +247,8 @@ const userListStreak = async (interaction: Interaction): Promise<void> => {
     )
     for (let index = 0; index < usersInfoCards.length; index++) {
       const card = usersInfoCards[index]
-      console.error('card', card)
-      const result = await sendChannel(interaction.channel_id, '', card)
-      if (result?.response?.headers['x-ratelimit-reset-after']) {
-        const lenSize =
-          Number(result.response.headers['x-ratelimit-reset-after']) * 1000
-        console.error('Sleep a bit', lenSize)
-        await sleep(lenSize)
-      }
+      // console.error('card', card)
+      await sendChannel(interaction.channel_id, '', card)
     }
     return Promise.resolve()
   } else {
@@ -297,17 +284,17 @@ const userView = async (
     if (user.wipApiKey && card.fields) {
       card.fields.push(field('WIP', String(user.wipApiKey), false))
     }
-    return Promise.all([
-      sendTxtLater(
-        "Je t'ai envoyé tes info en privé 🤫",
-        [],
-        interaction.application_id,
-        interaction.token
-      ),
-      openChannel(myId).then((channel) =>
-        sendChannel(channel.id, `Voici tes infos !\n`, card)
-      ),
-    ]).then(() => Promise.resolve())
+    await sendTxtLater(
+      "Je t'ai envoyé plus info en privé 🤫",
+      [userCard(user)],
+      interaction.application_id,
+      interaction.token
+    )
+    await sendChannel(interaction.channel_id, `Voici tes infos !\n`, card)
+    await openChannel(myId).then((channel) =>
+      sendChannel(channel.id, `Voici tes completes infos !\n`, card)
+    )
+    return Promise.resolve()
   } else {
     return sendTxtLater(
       `Je n'ai pas trouvé le maker : ${userId}`,

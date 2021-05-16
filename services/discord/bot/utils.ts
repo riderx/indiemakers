@@ -230,6 +230,17 @@ export const sleep = (ms: number) => {
   })
 }
 
+const saveRateLimit = (limit: string | number) => {
+  console.error('sendChannel x-ratelimit-reset-after', limit)
+  return admin
+    .firestore()
+    .collection('bot')
+    .doc('config')
+    .set({
+      discordResetAfter: Number(limit) * 1000,
+    })
+}
+
 export const sendChannel = async (
   channelId: string,
   content: string,
@@ -242,6 +253,7 @@ export const sendChannel = async (
   if (!data) {
     return Promise.resolve(undefined)
   }
+
   const headers = {
     Authorization: `Bot ${
       process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token
@@ -251,37 +263,40 @@ export const sendChannel = async (
   if (embed) {
     body.embed = embed
   }
-  const res = await axios.post(url, body, { headers }).catch((err) => {
-    if (err.response) {
-      // Request made and server responded
-      console.error('sendChannel response', err.response.data)
-      console.error('sendChannel response headers', err.response.headers)
-      console.error(
-        'sendChannel x-ratelimit-reset-after',
-        err.response.headers['x-ratelimit-reset-after']
-      )
-
-      console.error('sendChannel response status', err.response.status)
-      // console.error(err.response.headers)
-    } else if (err.request) {
-      // The request was made but no response was received
-      console.error('sendChannel request', err.request)
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.error('sendChannel Error', err.message)
-    }
-    // console.error('sendChannel content', url, JSON.stringify(content))
-    return admin
-      .firestore()
-      .collection('errors')
-      .add({
-        function: 'sendChannel',
-        headers,
-        body,
-        url,
-        error: JSON.stringify(err),
-      })
-      .then(() => err)
-  })
+  if (data.discordResetAfter && data.discordResetAfter > 0) {
+    console.error('Sleep a bit', data.discordResetAfter)
+    await sleep(data.discordResetAfter)
+  }
+  const res = await axios
+    .post(url, body, { headers })
+    .then(async (res) => {
+      if (
+        res?.headers['x-ratelimit-reset-after'] &&
+        !res?.headers['x-ratelimit-remaining']
+      ) {
+        await saveRateLimit(res.headers['x-ratelimit-reset-after'])
+      } else if (data.discordResetAfter && data.discordResetAfter > 0) {
+        await saveRateLimit(0)
+      }
+      return res
+    })
+    .catch(async (err) => {
+      if (err.response) {
+        if (err.response.headers['x-ratelimit-reset-after']) {
+          await saveRateLimit(err.response.headers['x-ratelimit-reset-after'])
+        }
+      }
+      return admin
+        .firestore()
+        .collection('errors')
+        .add({
+          function: 'sendChannel',
+          headers,
+          body,
+          url,
+          error: JSON.stringify(err),
+        })
+        .then(() => err)
+    })
   return res
 }
