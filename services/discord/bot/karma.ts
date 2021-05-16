@@ -36,7 +36,7 @@ const getKarmaById = async (
   }
 }
 
-const addKarmaVotesById = (userId: string, senderId: string, value: number) =>
+const addKarmaById = (userId: string, senderId: string, value: number) =>
   admin
     .firestore()
     .collection(`discord/${userId}/karma`)
@@ -64,7 +64,7 @@ const karmaAdd = async (
     } karma!`
     return Promise.all([
       updateUser(userId, { karma: curKarma.total + 1 }),
-      addKarmaVotesById(userId, senderId, 1),
+      addKarmaById(userId, senderId, 1),
       sendTxtLater(
         botString,
         [],
@@ -112,7 +112,7 @@ const karmaRm = async (
     } karma`
     return Promise.all([
       updateUser(userId, { karma: curKarma.total - 1 }),
-      addKarmaVotesById(userId, senderId, -1),
+      addKarmaById(userId, senderId, -1),
       sendTxtLater(
         botString,
         [],

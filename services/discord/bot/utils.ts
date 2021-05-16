@@ -2,7 +2,7 @@ import { InteractionResponseType } from 'discord-interactions'
 import { Response as Res } from 'express'
 import axios from 'axios'
 import { hexToDec } from 'hex2dec'
-import { firestore } from 'firebase-admin'
+import admin from 'firebase-admin'
 
 interface DiscorUser {
   avatar: string
@@ -117,7 +117,9 @@ export const getUserData = async (
   userId: string
 ): Promise<DiscorUser | undefined> => {
   const url = `https://discord.com/api/v8/users/${userId}`
-  const data = (await firestore().collection('bot').doc('config').get()).data()
+  const data = (
+    await admin.firestore().collection('bot').doc('config').get()
+  ).data()
   if (!data) {
     return Promise.resolve(undefined)
   }
@@ -173,7 +175,9 @@ export const sendTxtLater = async (
 
 export const openChannel = async (userId: string): Promise<any> => {
   const url = 'https://discord.com/api/v8/users/@me/channels'
-  const data = (await firestore().collection('bot').doc('config').get()).data()
+  const data = (
+    await admin.firestore().collection('bot').doc('config').get()
+  ).data()
   if (!data) {
     return Promise.resolve(undefined)
   }
@@ -198,7 +202,9 @@ export const sendChannel = async (
   embed: Embed | undefined = undefined
 ): Promise<any> => {
   const url = `https://discord.com/api/v8/channels/${channelId}/messages`
-  const data = (await firestore().collection('bot').doc('config').get()).data()
+  const data = (
+    await admin.firestore().collection('bot').doc('config').get()
+  ).data()
   if (!data) {
     return Promise.resolve(undefined)
   }
