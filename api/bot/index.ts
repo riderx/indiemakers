@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-
 import {
   InteractionResponseType,
   InteractionType,
@@ -20,14 +19,6 @@ const bot = async (req: Request, res: Response) => {
       req.headers
         ? req.headers['x-signature-timestamp']
         : req.get('X-Signature-Timestamp')
-    )
-    console.error(
-      'vals',
-      rawBody,
-      req.headers,
-      signature,
-      timestamp,
-      process.env.CLIENT_PUBLIC_KEY
     )
     const isValidRequest = await verifyKey(
       rawBody,

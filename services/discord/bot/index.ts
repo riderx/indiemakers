@@ -1,5 +1,5 @@
 import { InteractionType } from 'discord-interactions'
-
+import admin from 'firebase-admin'
 import {
   ApplicationCommandInteractionDataOption,
   Interaction,
@@ -10,7 +10,11 @@ import { projectFn } from './project'
 import { sendTxtLater } from './utils'
 import { karmaFn } from './karma'
 import { taskFn } from './tasks'
-
+if (!admin.apps.length) {
+  admin.initializeApp()
+} else {
+  admin.app() // if already initialized, use that one
+}
 const im = async (
   interaction: Interaction,
   option: ApplicationCommandInteractionDataOption,

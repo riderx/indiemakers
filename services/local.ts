@@ -1,6 +1,4 @@
-import { IncomingMessage, ServerResponse } from 'http'
 import express from 'express'
-import admin from 'firebase-admin'
 import * as dotenv from 'dotenv'
 import feed from '../api/feed'
 import bot from '../api/bot'
@@ -14,11 +12,6 @@ import community from '../api/community'
 import ep from '../api/ep'
 
 dotenv.config()
-if (!admin.apps.length) {
-  admin.initializeApp()
-} else {
-  admin.app() // if already initialized, use that one
-}
 const app = express()
 const appRouter = express.Router()
 
