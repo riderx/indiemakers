@@ -1,16 +1,12 @@
-import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
+import admin from '../../firebase'
 import { sendTxtLater } from './utils'
 import { updateUser, getAllUsers, User } from './user'
-if (!admin.apps.length) {
-  admin.initializeApp()
-} else {
-  admin.app() // if already initialized, use that one
-}
+
 interface Karma {
   id?: string
   userId: string

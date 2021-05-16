@@ -1,9 +1,9 @@
-import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
+import admin from '../../firebase'
 import { sendTxtLater } from './utils'
 import { updateUser, User, getUsersById } from './user'
 
@@ -15,11 +15,7 @@ import {
   Project,
   updateProject,
 } from './project'
-if (!admin.apps.length) {
-  admin.initializeApp()
-} else {
-  admin.app() // if already initialized, use that one
-}
+
 // eslint-disable-next-line no-unused-vars
 enum TaskStatus {
   // eslint-disable-next-line no-unused-vars
@@ -54,7 +50,7 @@ const createProjectTask = async (
   user: User,
   projectId: string,
   task: Partial<Task>
-): Promise<admin.firestore.DocumentReference<admin.firestore.DocumentData>> => {
+): Promise<any> => {
   try {
     const done = task.status !== TaskStatus.TODO
     if (task.status === TaskStatus.DONE) {
@@ -84,7 +80,7 @@ const deleteProjectTask = (
   userId: string,
   projectId: string,
   taskId: string
-): Promise<admin.firestore.WriteResult> => {
+): Promise<any> => {
   return admin
     .firestore()
     .collection(`discord/${userId}/projects/${projectId}/tasks`)
@@ -97,7 +93,7 @@ const updateProjectTask = async (
   projectId: string,
   taskId: string,
   task: Partial<Task>
-): Promise<admin.firestore.WriteResult> => {
+): Promise<any> => {
   try {
     const user = await getUsersById(userId)
     const done = task.status !== TaskStatus.TODO

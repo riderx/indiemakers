@@ -1,5 +1,5 @@
-import admin from 'firebase-admin'
 import dayjs from 'dayjs'
+import admin from '../../firebase'
 import {
   ApplicationCommandInteractionDataOption,
   Interaction,
@@ -17,11 +17,6 @@ import {
 } from './utils'
 import { Project } from './project'
 import { lastDay } from './tasks'
-if (!admin.apps.length) {
-  admin.initializeApp()
-} else {
-  admin.app() // if already initialized, use that one
-}
 export interface User {
   userId: string
   avatar: string
@@ -115,7 +110,7 @@ export const getUsersById = async (userId: string): Promise<User | null> => {
 export const updateUser = async (
   userId: string,
   user: Partial<User>
-): Promise<admin.firestore.WriteResult> => {
+): Promise<any> => {
   const userDoc = await admin
     .firestore()
     .collection('/discord')

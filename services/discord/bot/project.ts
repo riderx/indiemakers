@@ -1,9 +1,9 @@
-import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
+import admin from '../../firebase'
 import { getStripeCharges, Charge } from './stripe'
 import { embed, field, image, sendChannel, sendTxtLater } from './utils'
 import { updateUser } from './user'
@@ -14,11 +14,7 @@ import {
   Income,
 } from './incomes'
 import { Task } from './tasks'
-if (!admin.apps.length) {
-  admin.initializeApp()
-} else {
-  admin.app() // if already initialized, use that one
-}
+
 export interface Project {
   id?: string
   lastTaskAt?: string
@@ -110,7 +106,7 @@ export const updateProject = async (
   userId: string,
   hashtag: string,
   project: Partial<Project>
-): Promise<admin.firestore.WriteResult> => {
+): Promise<any> => {
   const userDoc = await admin
     .firestore()
     .collection(`discord/${userId}/projects`)
@@ -145,10 +141,7 @@ export const updateProject = async (
   return userDoc.ref.update({ ...project, updatedAt: dayjs().toISOString() })
 }
 
-const deleteProject = (
-  userId: string,
-  projectId: string
-): Promise<admin.firestore.WriteResult> => {
+const deleteProject = (userId: string, projectId: string): Promise<any> => {
   return admin
     .firestore()
     .collection(`discord/${userId}/projects`)
@@ -165,7 +158,7 @@ export const deleteAllProjectsTasks = async (
       .firestore()
       .collection(`discord/${userId}/projects/${projectId}/tasks`)
       .get()
-    const listDel: Promise<admin.firestore.WriteResult>[] = []
+    const listDel: any[] = []
     documents.docs.forEach((doc) => {
       listDel.push(doc.ref.delete())
     })

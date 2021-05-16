@@ -1,17 +1,12 @@
-import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
+import admin from '../../firebase'
 import { sendTxtLater } from './utils'
 import { getAllProjects } from './project'
 import { updateUser, User } from './user'
-if (!admin.apps.length) {
-  admin.initializeApp()
-} else {
-  admin.app() // if already initialized, use that one
-}
 export interface Income {
   id?: string
   ammount: number
@@ -122,10 +117,10 @@ const incomeAdd = (
   const newIncome: Partial<Income> = {
     createdAt: dayjs().toISOString(),
   }
-  const date = dayjs()
-  date.set('minute', 0)
-  date.set('hour', 0)
-  date.set('second', 0)
+  let date = dayjs()
+  date = date.set('minute', 0)
+  date = date.set('hour', 0)
+  date = date.set('second', 0)
   date.date(1)
   options.forEach((element: any) => {
     if (element.name === 'hashtag') {
@@ -174,10 +169,10 @@ const incomeEdit = (
   const update: Partial<Income> = {
     updatedAt: dayjs().toISOString(),
   }
-  const date = dayjs()
-  date.set('minute', 0)
-  date.set('hour', 0)
-  date.set('second', 0)
+  let date = dayjs()
+  date = date.set('minute', 0)
+  date = date.set('hour', 0)
+  date = date.set('second', 0)
   date.date(1)
   options.forEach((element: any) => {
     if (element.name === 'hashtag') {
