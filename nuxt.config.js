@@ -24,7 +24,7 @@ export default {
   target: 'server',
   publicRuntimeConfig: {
     DOMAIN: baseUrl(),
-    BASEAPI: `https://${baseUrl()}/api`,
+    BASEAPI: `${baseUrl()}/api`,
     handler: 'indiemakersfr',
   },
 
