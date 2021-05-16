@@ -299,9 +299,9 @@ const tasksView = async (
         : `<@${userId}> a fait ${allTaks.total} taches sur ce projet, BRAVO 🎉!`
     let taskInfos = `${text}!\n\nVoici La liste:\n\n`
     allTaks.tasks.forEach((element: Task) => {
-      taskInfos += `${dayjs(element.createdAt).format('DD/MM/YYYY')}  - ${
-        element.content
-      }\n`
+      taskInfos += `${element.id} - ${dayjs(element.createdAt).format(
+        'DD/MM/YYYY'
+      )}  - ${element.content}\n`
     })
     return sendTxtLater(
       taskInfos,

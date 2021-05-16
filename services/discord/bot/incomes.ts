@@ -212,9 +212,9 @@ const incomesView = async (
     const allTaks = await getAllProjectsIncomes(userId, projectId)
     let incomeInfos = `Tu a fait ${allTaks.total} € sur ce projet, BRAVO 🎉!\n\nVoici La liste des revenus:\n\n`
     allTaks.incomes.forEach((element: Income) => {
-      incomeInfos += `${dayjs(element.createdAt).format('DD-MM-YYYY')}    ${
-        element.status === 'expense' ? '-' : ''
-      }${element.ammount} €\n`
+      incomeInfos += `${element.id} - ${dayjs(element.createdAt).format(
+        'DD-MM-YYYY'
+      )}    ${element.status === 'expense' ? '-' : ''}${element.ammount} €\n`
     })
     return sendTxtLater(
       incomeInfos,

@@ -173,7 +173,7 @@ export const sendTxtLater = async (
       console.error('sendTxtLater Error', err.message)
     }
     // console.error('sendTxtLater content', url, JSON.stringify(content))
-    await axios
+    const res = await axios
       .patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
       .catch((errErr) => {
         console.error('sendTxtLaterFallback', err.response, errErr.response)
@@ -183,11 +183,12 @@ export const sendTxtLater = async (
           .add(err)
           .then(() => err)
       })
-    return admin
+    await admin
       .firestore()
       .collection('errors')
       .add({ function: 'sendTxtLater', url, error: JSON.stringify(err) })
       .then(() => err)
+    return res
   }
 }
 
@@ -220,9 +221,14 @@ export const openChannel = async (userId: string): Promise<any> => {
         })
         .then(() => err)
     })
-  return Promise.resolve(res.data as any)
+  return res
 }
 // https://discord.com/api/webhooks/841492487125598218/b0Rvbv41Uy2w6UxUutctXYeKYd0QAXOKnjhgCOTOyfjSs9hgpYOPxjizWiu4vi-s17nX
+export const sleep = (ms: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}
 
 export const sendChannel = async (
   channelId: string,
@@ -249,6 +255,12 @@ export const sendChannel = async (
     if (err.response) {
       // Request made and server responded
       console.error('sendChannel response', err.response.data)
+      console.error('sendChannel response headers', err.response.headers)
+      console.error(
+        'sendChannel x-ratelimit-reset-after',
+        err.response.headers['x-ratelimit-reset-after']
+      )
+
       console.error('sendChannel response status', err.response.status)
       // console.error(err.response.headers)
     } else if (err.request) {
@@ -271,5 +283,5 @@ export const sendChannel = async (
       })
       .then(() => err)
   })
-  return Promise.resolve(res.data as any)
+  return res
 }

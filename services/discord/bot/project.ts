@@ -5,7 +5,15 @@ import {
   ApplicationCommandInteractionDataOption,
 } from '../command'
 import { getStripeCharges, Charge } from './stripe'
-import { embed, field, image, sendChannel, sendTxtLater } from './utils'
+import {
+  Embed,
+  embed,
+  field,
+  image,
+  sendChannel,
+  sendTxtLater,
+  sleep,
+} from './utils'
 import { updateUser } from './user'
 import {
   createProjectIncome,
@@ -336,7 +344,7 @@ const projectList = async (
   userId: string,
   me = false
 ): Promise<void> => {
-  const cards: Promise<any>[] = []
+  const cards: Embed[] = []
   const projects = await getAllProjects(userId)
   projects.forEach((project: Project) => {
     const fields = [
@@ -362,21 +370,42 @@ const projectList = async (
       undefined,
       thumb
     )
-    cards.push(sendChannel(interaction.channel_id, '', projCard))
+    cards.push(projCard)
   })
   console.error('project_list')
-  const sentence = me
-    ? 'Voici la liste de tes projets !'
-    : `Voici la liste des projets de <@${userId}> !`
-  return Promise.all([
-    sendTxtLater(
+  if (cards.length > 0) {
+    const sentence = me
+      ? 'Voici la liste de tes projets !'
+      : `Voici la liste des projets de <@${userId}> !`
+    await sendTxtLater(
       `${sentence}\n\n`,
       [],
       interaction.application_id,
       interaction.token
-    ),
-    ...cards,
-  ]).then(() => Promise.resolve())
+    )
+    for (let index = 0; index < cards.length; index++) {
+      const card = cards[index]
+      console.error('card', card)
+      const result = await sendChannel(interaction.channel_id, '', card)
+      if (result?.response?.headers['x-ratelimit-reset-after']) {
+        const lenSize =
+          Number(result.response.headers['x-ratelimit-reset-after']) * 1000
+        console.error('Sleep a bit', lenSize)
+        await sleep(lenSize)
+      }
+    }
+    return Promise.resolve()
+  } else {
+    const sentence = me
+      ? 'Tu n\'as pas encore de projet, ajoute en avec la commande "/im projet ajouter" !'
+      : `<@${userId}> n'as pas encore de projet !`
+    return sendTxtLater(
+      sentence,
+      [],
+      interaction.application_id,
+      interaction.token
+    )
+  }
 }
 
 const projectView = async (

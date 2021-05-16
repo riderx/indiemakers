@@ -14,6 +14,7 @@ import {
   openChannel,
   sendChannel,
   sendTxtLater,
+  sleep,
 } from './utils'
 import { Project } from './project'
 import { lastDay } from './tasks'
@@ -217,23 +218,27 @@ export const usersViewStreak = (res: UserTt): Embed[] => {
 }
 
 const userList = async (interaction: Interaction): Promise<void> => {
-  const cards: Promise<any>[] = []
   const res = await getAllUsers()
-  res.users.forEach((user: User) => {
+  await sendTxtLater(
+    'Voici la liste des makers:',
+    [],
+    interaction.application_id,
+    interaction.token
+  )
+  for (let index = 0; index < res.users.length; index++) {
+    const user = res.users[index]
     const card = userCard(user)
     console.error('card', card)
-    cards.push(sendChannel(interaction.channel_id, '', card))
-  })
+    const result = await sendChannel(interaction.channel_id, '', card)
+    if (result?.response?.headers['x-ratelimit-reset-after']) {
+      const lenSize =
+        Number(result.response.headers['x-ratelimit-reset-after']) * 1000
+      console.error('Sleep a bit', lenSize)
+      await sleep(lenSize)
+    }
+  }
   console.error('userList')
-  return Promise.all([
-    sendTxtLater(
-      'Voici la liste des makers:',
-      [],
-      interaction.application_id,
-      interaction.token
-    ),
-    ...cards,
-  ]).then(() => Promise.resolve())
+  return Promise.resolve()
 }
 
 const userListStreak = async (interaction: Interaction): Promise<void> => {
@@ -241,18 +246,24 @@ const userListStreak = async (interaction: Interaction): Promise<void> => {
   const usersInfoCards = usersViewStreak(users)
   console.error('userList', usersInfoCards)
   if (usersInfoCards.length > 0) {
-    return Promise.all([
-      sendTxtLater(
-        `Voici la liste des 10 premiers makers avec les flammes !\n`,
-        [],
-        interaction.application_id,
-        interaction.token
-      ),
-      ...usersInfoCards.map((card) => {
-        console.error('card', card)
-        return sendChannel(interaction.channel_id, '', card)
-      }),
-    ]).then(() => Promise.resolve())
+    await sendTxtLater(
+      `Voici la liste des 10 premiers makers avec les flammes !\n`,
+      [],
+      interaction.application_id,
+      interaction.token
+    )
+    for (let index = 0; index < usersInfoCards.length; index++) {
+      const card = usersInfoCards[index]
+      console.error('card', card)
+      const result = await sendChannel(interaction.channel_id, '', card)
+      if (result?.response?.headers['x-ratelimit-reset-after']) {
+        const lenSize =
+          Number(result.response.headers['x-ratelimit-reset-after']) * 1000
+        console.error('Sleep a bit', lenSize)
+        await sleep(lenSize)
+      }
+    }
+    return Promise.resolve()
   } else {
     return sendTxtLater(
       `Les makers n'ont plus de flamme 😢!`,
