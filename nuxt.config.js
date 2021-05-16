@@ -10,16 +10,21 @@ const serverMiddleware = () => {
   }
   return []
 }
+const baseUrl = () => {
+  if (process.env.VERCEL && process.env.VERCEL_ENV === 'production') {
+    return 'https://indimakers.fr'
+  }
+  if (process.env.VERCEL) {
+    return `https://${process.env.VERCEL_URL}`
+  }
+  return 'http://localhost:3000'
+}
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'server',
   publicRuntimeConfig: {
-    DOMAIN: process.env.VERCEL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'http://localhost:3000',
-    BASEAPI: process.env.VERCEL
-      ? `https://${process.env.VERCEL_URL}/api`
-      : 'http://localhost:3000/api',
+    DOMAIN: baseUrl(),
+    BASEAPI: `https://${baseUrl()}/api`,
     handler: 'indiemakersfr',
   },
 
