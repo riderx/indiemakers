@@ -19,7 +19,7 @@
     <div
       v-for="maker in users"
       :key="maker.username"
-      class="flex py-3 border-b-2 border-orchid-300"
+      class="flex py-3 border-b-2 cursor-pointer border-orchid-300"
       @click="openProfil(maker.userId)"
     >
       <img
