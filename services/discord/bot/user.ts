@@ -93,7 +93,7 @@ const transformKey = (key: string, left: boolean = false): string => {
   return (
     Object.keys(translations).find((val: string) =>
       left ? (translations as any)[val] === key : val === key
-    ) || ''
+    ) || key
   )
 }
 
