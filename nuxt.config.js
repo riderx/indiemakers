@@ -12,7 +12,7 @@ const serverMiddleware = () => {
 }
 const baseUrl = () => {
   if (process.env.VERCEL && process.env.VERCEL_ENV === 'production') {
-    return 'https://indimakers.fr'
+    return 'https://indiemakers.fr'
   }
   if (process.env.VERCEL) {
     return `https://${process.env.VERCEL_URL}`
