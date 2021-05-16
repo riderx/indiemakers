@@ -8,7 +8,7 @@ export const run = async (name: string, data = { status: 'ok' }) => {
   const options = {
     headers: {
       'Content-Type': 'application/json',
-      'x-verceladmin-apikey': 'dBk8RSx6cLeTKstmymQXEdrE6M7n',
+      'x-verceladmin-apikey': process.env.FIREBASE_ADMIN_KEY,
     },
   }
   const response = await axios.post(url + name, data, options)

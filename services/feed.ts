@@ -22,7 +22,7 @@ const linkLinkedinRe =
 const parser = new Parser()
 const imagekit = new ImageKit({
   publicKey: 'public_9vWOr643awJiLr6HqhpNNF1ZVkQ=',
-  privateKey: String(process.env.imagekitKey),
+  privateKey: String(process.env.IMAGEKIT_KEY),
   urlEndpoint: 'https://ik.imagekit.io/gyc0uxoln1/',
 })
 
