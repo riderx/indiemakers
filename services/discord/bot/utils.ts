@@ -160,7 +160,19 @@ export const sendTxtLater = async (
     await axios.patch(url, body)
     return Promise.resolve()
   } catch (err) {
-    console.error('sendTxtLater', body, err.response)
+    if (err.response) {
+      // Request made and server responded
+      console.error(err.response.data)
+      console.error(err.response.status)
+      console.error(err.response.headers)
+    } else if (err.request) {
+      // The request was made but no response was received
+      console.error(err.request)
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error('Error', err.message)
+    }
+    console.error('sendTxtLater', body)
     await axios
       .patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
       .catch((errErr) => {
@@ -215,6 +227,18 @@ export const sendChannel = async (
     body.embed = embed
   }
   const res = await axios.post(url, body, { headers }).catch((err) => {
+    if (err.response) {
+      // Request made and server responded
+      console.error(err.response.data)
+      console.error(err.response.status)
+      console.error(err.response.headers)
+    } else if (err.request) {
+      // The request was made but no response was received
+      console.error(err.request)
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error('Error', err.message)
+    }
     console.error('sendChannel content', url, JSON.stringify(content))
     console.error('sendChannel err', err.response)
     return err
