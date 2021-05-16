@@ -59,7 +59,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'ListItem',
   props: {
@@ -75,15 +75,6 @@ export default {
 </script>
 
 <style scoped>
-.h-w-screen {
-  height: 100vw;
-}
-
-.square::after {
-  content: '';
-  display: block;
-  padding-bottom: 100%;
-}
 @media screen and (min-width: 768px) {
   .tumb_up {
     /* bottom: -10px; */

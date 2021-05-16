@@ -535,20 +535,6 @@ export default {
 }
 </style>
 <style scoped>
-.h-w-screen {
-  height: 100vw;
-}
-
-.square_content {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-.square::after {
-  content: '';
-  display: block;
-  padding-bottom: 100%;
-}
 .prose {
   color: white;
 }

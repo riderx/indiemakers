@@ -41,14 +41,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'LaderMakers',
   props: {
     users: { type: Array, default: () => [] },
   },
   methods: {
-    openProfil(id) {
+    openProfil(id: string) {
       this.$router.push(`/communaute/${id}`)
     },
   },
