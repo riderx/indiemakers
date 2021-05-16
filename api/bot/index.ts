@@ -9,6 +9,7 @@ import discordInteraction from '../../services/discord/bot'
 import { sendTxtLoading } from '../../services/discord/bot/utils'
 
 const bot = async (req: Request, res: Response) => {
+  console.error('bot')
   fFnit()
   try {
     const rawBody = JSON.stringify(req.body)

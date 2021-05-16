@@ -157,8 +157,8 @@ export const sendTxtLater = async (
     embeds,
   }
   try {
-    await axios.patch(url, body)
-    return Promise.resolve()
+    const res = await axios.patch(url, body)
+    return res.data
   } catch (err) {
     if (err.response) {
       // Request made and server responded
@@ -220,7 +220,7 @@ export const openChannel = async (userId: string): Promise<any> => {
       } else if (data.discordResetAfter && data.discordResetAfter > 0) {
         await saveRateLimit(0)
       }
-      return res
+      return res.data
     })
     .catch(async (err) => {
       if (err.response) {
@@ -297,7 +297,7 @@ export const sendChannel = async (
       } else if (data.discordResetAfter && data.discordResetAfter > 0) {
         await saveRateLimit(0)
       }
-      return res
+      return res.data
     })
     .catch(async (err) => {
       if (err.response) {

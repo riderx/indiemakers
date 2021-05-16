@@ -8,6 +8,7 @@ const serverMiddleware = () => {
   if (process.env.DEPLOY_API) {
     return [{ path: '/api', handler: '~/services/local.ts' }]
   }
+  return []
 }
 export default {
   // Target: https://go.nuxtjs.dev/config-target

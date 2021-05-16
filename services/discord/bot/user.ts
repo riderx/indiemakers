@@ -285,7 +285,7 @@ const userView = async (
       card.fields.push(field('WIP', String(user.wipApiKey), false))
     }
     await sendTxtLater(
-      "Je t'ai envoyé plus info en privé 🤫",
+      'Voici tes infos',
       [userCard(user)],
       interaction.application_id,
       interaction.token
@@ -294,18 +294,18 @@ const userView = async (
       interaction.channel_id,
       `Je t'ai envoyé plus info en privé 🤫\n`
     )
-    await openChannel(myId).then((channel) =>
+    await openChannel(myId).then((channel) => {
+      console.error('channel', channel)
       sendChannel(channel.id, `Voici tes completes infos !\n`, card)
-    )
+    })
     return Promise.resolve()
-  } else {
-    return sendTxtLater(
-      `Je n'ai pas trouvé le maker : ${userId}`,
-      [],
-      interaction.application_id,
-      interaction.token
-    )
   }
+  return sendTxtLater(
+    `Je ne trouve pas <@${userId}>`,
+    [],
+    interaction.application_id,
+    interaction.token
+  )
 }
 
 export const userFn = (
