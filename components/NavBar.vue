@@ -426,8 +426,8 @@ const resources = [
   {
     name: 'La Newletter',
     description:
-      "Suis l'evoluion de mes projets, podcast, app, hackathon tout y passe",
-    href: '/nesletter',
+      "Suis l'evolution de mes projets, podcast, app, hackathon tout y passe",
+    href: '/newsletter',
   },
   {
     name: 'Hackathon makers | 4 jours pour gagner tes premiers euros',
