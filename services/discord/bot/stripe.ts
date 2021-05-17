@@ -99,11 +99,11 @@ const mixIncomeCharges = async (
   project: Project,
   startMonth: dayjs.Dayjs
 ) => {
-  if (!project.stripeKey || !project.id) return undefined
+  if (!project.stripeApiKey || !project.id) return undefined
   return {
     userId,
     projectId: project.id,
-    charges: await getStripeCharges(project.stripeKey, startMonth),
+    charges: await getStripeCharges(project.stripeApiKey, startMonth),
     incomes: (await getAllProjectsIncomes(userId, project.id)).incomes,
   }
 }
@@ -159,7 +159,7 @@ export const updateRevenueAllProject = async () => {
     for (let index = 0; index < user.projectsData.length; index++) {
       const project = user.projectsData[index]
       if (!project.id) break
-      if (project.stripeKey) {
+      if (project.stripeApiKey) {
         all.push(
           mixIncomeCharges(userId, project, startMonth).then(updateCurrentIcome)
         )

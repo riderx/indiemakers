@@ -22,7 +22,7 @@ const project = async (req: Request, res: Response) => {
     if (proj) {
       ;(proj as any).tasksData = tasks
       ;(proj as any).incomesData = incomes
-      ;(proj as any).stripeKey = !!proj.stripeKey
+      ;(proj as any).stripeApiKey = !!proj.stripeApiKey
       res.json(proj)
     } else {
       res.json({ error: 'not found' })

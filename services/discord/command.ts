@@ -297,9 +297,22 @@ const projetOptions = [
     SlashCommandOptionType.STRING
   ),
   optionGen(
-    'stripe_key',
+    'couverture',
+    "L'url vers la photo de couverture du projet",
+    SlashCommandOptionType.STRING
+  ),
+  optionGen(
+    'stripe',
     "L'url vers la webhook stripe pour get les charges en auto tous les lundi",
     SlashCommandOptionType.STRING
+  ),
+  optionGen('github', "L'url vers le github", SlashCommandOptionType.STRING),
+  optionGen(
+    'open_source',
+    'Le projet est il open source ?',
+    SlashCommandOptionType.STRING,
+    undefined,
+    [choiceGen('Oui', 'true'), choiceGen('non', 'false')]
   ),
 ]
 
@@ -322,13 +335,13 @@ const makerOptions = [
   ),
   optionGen('twitter', 'Ton nom twitter', SlashCommandOptionType.STRING),
   optionGen(
-    'makerlog_hook',
+    'makerlog',
     'La web hook de ton compte makerlog, pour que le bot poste tes taches',
     SlashCommandOptionType.STRING
   ),
   optionGen(
-    'wip_key',
-    'La clé api de ton compte wip.co web hook, pour que le bot poste tes taches',
+    'wip',
+    'La clé api de ton compte wip.co, pour que le bot poste tes taches',
     SlashCommandOptionType.STRING
   ),
 ]

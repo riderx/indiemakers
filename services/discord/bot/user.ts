@@ -7,13 +7,14 @@ import {
 import {
   Embed,
   embed,
-  Field,
   field,
+  getFields,
   getUserData,
   image,
   openChannel,
   sendChannel,
   sendTxtLater,
+  transformKey,
 } from './utils'
 import { Project } from './project'
 import { lastDay } from './tasks'
@@ -37,8 +38,8 @@ export interface User {
   website?: string
   lastTaskAt?: string
   makerlogHook?: string
-  projectsData?: Project[]
   wipApiKey?: string
+  projectsData?: Project[]
   createdAt: string
   updatedAt: string
 }
@@ -80,21 +81,13 @@ const translations = {
   couleur: 'color',
   nom: 'name',
   couverture: 'cover',
-  makerlog_hook: 'makerlogHook',
-  wip_key: 'wipApiKey',
+  makerlog: 'makerlogHook',
+  wip: 'wipApiKey',
   photo: 'avatarUrl',
   '🔥 Flammes': 'streak',
   '🕉 karma': 'karma',
   '🌱 Projets': 'projects',
   '💗 Taches': 'tasks',
-}
-
-const transformKey = (key: string, left: boolean = false): string => {
-  return (
-    Object.keys(translations).find((val: string) =>
-      left ? (translations as any)[val] === key : val === key
-    ) || key
-  )
 }
 
 export const getUsersById = async (userId: string): Promise<User | null> => {
@@ -152,7 +145,7 @@ const userEdit = (
     updatedAt: dayjs().toISOString(),
   }
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    const realKey = transformKey(element.name)
+    const realKey = transformKey(translations, element.name)
     if (!userProtectedKey.includes(realKey)) {
       ;(update as any)[realKey] = element.value
     }
@@ -169,20 +162,8 @@ const userEdit = (
   ]).then(() => Promise.resolve())
 }
 
-const userFields = (user: User) => {
-  const fields: Field[] = []
-  userPublicFlieds.forEach((key) => {
-    if ((user as any)[key]) {
-      fields.push(
-        field(transformKey(key, true), String((user as any)[key] || 0))
-      )
-    }
-  })
-  return fields
-}
-
 const userCard = (user: User) => {
-  const fields = userFields(user)
+  const fields = getFields(user, userPublicFlieds, translations)
   const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
   const bio = user.bio || 'Un jours je serais grand !'
   const thumb = image(user.avatarUrl)

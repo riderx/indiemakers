@@ -3,6 +3,7 @@ import { Response as Res } from 'express'
 import axios from 'axios'
 import { hexToDec } from 'hex2dec'
 import admin from 'firebase-admin'
+import { User } from './user'
 
 interface DiscorUser {
   avatar: string
@@ -144,6 +145,41 @@ export const sendTxtLoading = (res: Res): Res =>
       content: 'Le bot réflechis..',
     },
   })
+interface Translations {
+  [key: string]: string
+}
+export const transformKey = (
+  translations: Translations,
+  key: string,
+  left: boolean = false
+): string => {
+  const found = Object.keys(translations).find((val: string) =>
+    left ? (translations as any)[val] === key : val === key
+  )
+  if (found) {
+    return left ? found : (translations as any)[found]
+  }
+  return key
+}
+
+export const getFields = (
+  obj: object,
+  publicFields: string[],
+  translations: Translations
+) => {
+  const fields: Field[] = []
+  publicFields.forEach((key) => {
+    if ((obj as any)[key]) {
+      fields.push(
+        field(
+          transformKey(translations, key, true),
+          String((obj as any)[key] || 0)
+        )
+      )
+    }
+  })
+  return fields
+}
 
 export const sendTxtLater = async (
   content: string,

@@ -9,10 +9,12 @@ import {
   Embed,
   embed,
   field,
+  getFields,
   image,
   sendChannel,
   sendTxtLater,
   sleep,
+  transformKey,
 } from './utils'
 import { updateUser } from './user'
 import {
@@ -34,6 +36,8 @@ export interface Project {
   incomes: number
   tasksData?: Task[]
   incomesData?: Income[]
+  openSource?: boolean
+  github?: string
   streak: number
   emoji: string
   color: string
@@ -43,9 +47,21 @@ export interface Project {
   description: string
   category: string
   website: string
-  stripeKey?: string
+  stripeApiKey?: string
 }
-// const projectPublicKey = ["hashtag", "name", "description", "logo", "emoji", "color", "taches", "flammes", "website"];
+const projectPublicKey = [
+  'hashtag',
+  'name',
+  'description',
+  'category',
+  'emoji',
+  'color',
+  'cover',
+  'github',
+  'openSource',
+  'tasks',
+  'streak',
+]
 const projectProtectedKey = [
   'id',
   'tasks',
@@ -55,19 +71,13 @@ const projectProtectedKey = [
   'lastTaskAt',
 ]
 
-const transformKey = (key: string): string => {
-  switch (key) {
-    case 'nom':
-      return 'name'
-    case 'couleur':
-      return 'color'
-    case 'categorie':
-      return 'category'
-    case 'stripe_key':
-      return 'stripeKey'
-    default:
-      return key
-  }
+const translations = {
+  couleur: 'color',
+  nom: 'name',
+  couverture: 'cover',
+  categorie: 'category',
+  stripe: 'stripeApiKey',
+  open_source: 'openSource',
 }
 
 export const getAllProjects = async (userId: string): Promise<Project[]> => {
@@ -240,17 +250,6 @@ const cleanPastStripe = async (
   Promise.all(all).then(() => Promise.resolve())
 }
 
-const addStripe = (
-  userId: string,
-  projectId: string | undefined,
-  stripeHook: string | undefined
-) => {
-  if (!stripeHook) {
-    return Promise.resolve()
-  }
-  return getPastCharges(userId, projectId)
-}
-
 const updateStripe = (
   userId: string,
   projectId: string | undefined,
@@ -277,7 +276,7 @@ const projectAdd = (
   }
 
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    ;(newProj as any)[transformKey(element.name)] = element.value
+    ;(newProj as any)[transformKey(translations, element.name)] = element.value
   })
   if (newProj.hashtag && /^[a-zA-Z]+$/.test(newProj.hashtag)) {
     console.error('add project', newProj)
@@ -288,7 +287,6 @@ const projectAdd = (
         interaction.application_id,
         interaction.token
       ),
-      addStripe(userId, newProj.hashtag, newProj.stripeKey),
       updateProject(userId, newProj.hashtag, newProj),
       getAllProjects(userId).then((allProj) =>
         updateUser(userId, { projects: allProj.length + 1 })
@@ -313,20 +311,21 @@ const projectEdit = (
     updatedAt: dayjs().toISOString(),
   }
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    if (!projectProtectedKey.includes(transformKey(element.name))) {
-      ;(update as any)[transformKey(element.name)] = element.value
+    const key = transformKey(translations, element.name)
+    if (!projectProtectedKey.includes(key)) {
+      ;(update as any)[key] = element.value
     }
   })
   if (update.hashtag) {
     console.error('projectEdit', update)
     return Promise.all([
       sendTxtLater(
-        `Tu as mis a jours le projet:\n#${update.hashtag}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`,
+        `Tu as mis a jours:\n#${update.hashtag}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`,
         [],
         interaction.application_id,
         interaction.token
       ),
-      updateStripe(userId, update.hashtag, update.stripeKey),
+      updateStripe(userId, update.hashtag, update.stripeApiKey),
       updateProject(userId, update.hashtag, update),
     ]).then(() => Promise.resolve())
   } else {
@@ -339,6 +338,29 @@ const projectEdit = (
   }
 }
 
+const projectCard = (project: Project) => {
+  const fields = getFields(project, projectPublicKey, translations)
+  const name = `${project.emoji || '🪴'} ${project.name || project.hashtag}`
+  const description = project.description || 'Un jours je serais grand 👶!'
+  const thumb = project.logo ? image(project.logo) : undefined
+  if (project.website) {
+    fields.push(
+      field(transformKey(translations, 'website', true), project.website, false)
+    )
+  }
+  return embed(
+    name,
+    description,
+    project.color,
+    fields,
+    undefined,
+    undefined,
+    project.createdAt,
+    undefined,
+    thumb
+  )
+}
+
 const projectList = async (
   interaction: Interaction,
   userId: string,
@@ -347,30 +369,7 @@ const projectList = async (
   const cards: Embed[] = []
   const projects = await getAllProjects(userId)
   projects.forEach((project: Project) => {
-    const fields = [
-      field('🔥 Flammes', String(project.streak)),
-      field('💗 Taches', String(project.tasks)),
-    ]
-    if (project.website) {
-      fields.push(field('Website', String(project.website), false))
-    }
-    const name = `${project.emoji || '🌱'} ${project.name || project.hashtag}`
-    const description =
-      project.description ||
-      "Je n'ai pas encore de description, je suis jeune 👶!"
-    const thumb = project.logo ? image(project.logo) : undefined
-    const projCard = embed(
-      name,
-      description,
-      project.color,
-      fields,
-      undefined,
-      undefined,
-      project.createdAt,
-      undefined,
-      thumb
-    )
-    cards.push(projCard)
+    cards.push(projectCard(project))
   })
   console.error('project_list')
   if (cards.length > 0) {
@@ -425,29 +424,6 @@ const projectView = async (
   if (projectId) {
     const project = await getProjectById(makerId, projectId)
     if (project) {
-      const fields = [
-        field('🔥 Flammes', String(project.streak)),
-        field('💗 Taches', String(project.tasks)),
-      ]
-      if (project.website) {
-        fields.push(field('Website', String(project.website), false))
-      }
-      const name = `${project.emoji || '🌱'} ${project.name || project.hashtag}`
-      const description =
-        project.description ||
-        "Je n'ai pas encore de description, je suis jeune 👶!"
-      const thumb = project.logo ? image(project.logo) : undefined
-      const projCard = embed(
-        name,
-        description,
-        project.color,
-        fields,
-        undefined,
-        undefined,
-        project.createdAt,
-        undefined,
-        thumb
-      )
       console.error('projectView', projectId, makerId)
       const text =
         makerId === userId
@@ -455,7 +431,7 @@ const projectView = async (
           : `Voici les infos sur le projet de <@${userId}> !`
       return sendTxtLater(
         `${text}\n`,
-        [projCard],
+        [projectCard(project)],
         interaction.application_id,
         interaction.token
       )
