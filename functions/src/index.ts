@@ -1,17 +1,6 @@
 import { config, https, pubsub, firestore } from 'firebase-functions'
 import admin from 'firebase-admin'
-import dayjs from 'dayjs'
-import {
-  InteractionResponseType,
-  InteractionType,
-  verifyKey,
-} from 'discord-interactions'
-import discordInteraction from '../../services/discord/bot'
-import { updateRevenueAllProject } from '../../services/discord/bot/stripe'
-import { getAllUsers, usersViewStreak } from '../../services/discord/bot/user'
-import { sendChannel, sendTxtLoading } from '../../services/discord/bot/utils'
-import { Interaction } from '../../services/discord/command'
-import { updateUserTaskAndStreak } from '../../services/discord/bot/tasks'
+import { LateBot, morningBot } from '../../services/discord/bot/utils'
 import { getPerson, voteIfNotDone } from './users'
 import { TwUser, twUserPromise } from './twitter'
 import { sendUserToRevue } from './newletter'
@@ -228,61 +217,54 @@ export const onUpdatePeople = firestore
     return snapshot
   })
 
-export const OnInteraction = firestore
-  .document('/interaction/{interactionId}')
-  .onCreate(async (snapshot, context) => {
-    const interaction: Interaction = snapshot.data() as Interaction
-    if (interaction) {
-      await discordInteraction(interaction)
-      const { interactionId } = context.params
-      await admin
-        .firestore()
-        .collection('interaction')
-        .doc(interactionId)
-        .delete()
-    }
-  })
+// export const OnInteraction = firestore
+//   .document('/interaction/{interactionId}')
+//   .onCreate(async (snapshot, context) => {
+//     const interaction: Interaction = snapshot.data() as Interaction
+//     if (interaction) {
+//       await discordInteraction(interaction)
+//       const { interactionId } = context.params
+//       await admin
+//         .firestore()
+//         .collection('interaction')
+//         .doc(interactionId)
+//         .delete()
+//     }
+//   })
 
-export const bot = https.onRequest(async (req, res) => {
-  const signature = req.get('X-Signature-Ed25519') || ''
-  const timestamp = req.get('X-Signature-Timestamp') || ''
-  const isValidRequest = await verifyKey(
-    req.rawBody,
-    signature,
-    timestamp,
-    config().discord.bot_public_key
-  )
-  if (!isValidRequest) {
-    return res.status(401).end('Bad request signature')
-  }
-  if (
-    req.body &&
-    req.body.type === InteractionType.APPLICATION_COMMAND &&
-    req.body.data
-  ) {
-    await sendTxtLoading(res)
-    await admin.firestore().collection('interaction').add(req.body)
-    return
-    // return discordInteraction(req.body);
-  }
-  await res.send({
-    type: InteractionResponseType.PONG,
-  })
-})
+// export const bot = https.onRequest(async (req, res) => {
+//   const signature = req.get('X-Signature-Ed25519') || ''
+//   const timestamp = req.get('X-Signature-Timestamp') || ''
+//   const isValidRequest = await verifyKey(
+//     req.rawBody,
+//     signature,
+//     timestamp,
+//     config().discord.bot_public_key
+//   )
+//   if (!isValidRequest) {
+//     return res.status(401).end('Bad request signature')
+//   }
+//   if (
+//     req.body &&
+//     req.body.type === InteractionType.APPLICATION_COMMAND &&
+//     req.body.data
+//   ) {
+//     await sendTxtLoading(res)
+//     await admin.firestore().collection('interaction').add(req.body)
+//     return
+//     // return discordInteraction(req.body);
+//   }
+//   await res.send({
+//     type: InteractionResponseType.PONG,
+//   })
+// })
 
 export const scheduledBotBIP = pubsub
   .schedule('0 18 * * *')
   .timeZone('Europe/Paris')
   .onRun(async () => {
     console.error('This will be run every day at 18:00 AM Paris!')
-    const res = await admin.firestore().collection('bot').doc('config').get()
-    const data = res.data()
-    if (data) {
-      await sendChannel(
-        data.channel_bip,
-        "Hey Makers, il est temps de noter vos taches dans vos projets et d'aller chill !"
-      )
-    }
+    await LateBot()
     return null
   })
 
@@ -291,32 +273,6 @@ export const scheduledBotBIPMorning = pubsub
   .timeZone('Europe/Paris')
   .onRun(async () => {
     console.error('This will be run every day at 9:00 AM Paris!')
-    const res = await admin.firestore().collection('bot').doc('config').get()
-    const data = res.data()
-    if (data) {
-      const usrTt = await getAllUsers()
-      const usersInfoCards = usersViewStreak(usrTt)
-      await Promise.all(
-        usrTt.users.map((usr) => {
-          return updateUserTaskAndStreak(usr)
-        })
-      )
-      await sendChannel(
-        data.channel_bip,
-        'Hey Makers, Encore une belle journée pour shipper !\n\nContinuez comme ça !'
-      )
-      await Promise.all(
-        usersInfoCards.map((card) => {
-          return sendChannel(data.channel_bip, '', card)
-        })
-      )
-      if (dayjs().day() === 1) {
-        await sendChannel(
-          data.channel_general,
-          'Hey Makers, Faites moi un petit récap de votre semaine 1 Bon point / 1 point relou, minimum 💪!'
-        )
-        await updateRevenueAllProject()
-      }
-    }
+    await morningBot()
     return null
   })

@@ -3,7 +3,10 @@ import { Response as Res } from 'express'
 import axios from 'axios'
 import { hexToDec } from 'hex2dec'
 import admin from 'firebase-admin'
-import { User } from './user'
+import dayjs from 'dayjs'
+import { getAllUsers, usersViewStreak } from './user'
+import { updateUserTaskAndStreak } from './tasks'
+import { updateRevenueAllProject } from './stripe'
 
 interface DiscorUser {
   avatar: string
@@ -291,9 +294,50 @@ const saveRateLimit = (limit: string | number) => {
     .firestore()
     .collection('bot')
     .doc('config')
-    .set({
+    .update({
       discordResetAfter: Number(limit) * 1000,
     })
+}
+
+export const LateBot = async () => {
+  const res = await admin.firestore().collection('bot').doc('config').get()
+  const data = res.data()
+  if (data) {
+    await sendChannel(
+      data.channel_bip,
+      "Hey Makers, il est temps de noter vos taches dans vos projets et d'aller chill !"
+    )
+  }
+}
+
+export const morningBot = async () => {
+  const res = await admin.firestore().collection('bot').doc('config').get()
+  const data = res.data()
+  if (data) {
+    const usrTt = await getAllUsers()
+    const usersInfoCards = usersViewStreak(usrTt)
+    await Promise.all(
+      usrTt.users.map((usr) => {
+        return updateUserTaskAndStreak(usr)
+      })
+    )
+    await sendChannel(
+      data.channel_bip,
+      'Hey Makers, Encore une belle journée pour shipper !\n\nContinuez comme ça !'
+    )
+    await Promise.all(
+      usersInfoCards.map((card) => {
+        return sendChannel(data.channel_bip, '', card)
+      })
+    )
+    if (dayjs().day() === 1) {
+      await sendChannel(
+        data.channel_general,
+        'Hey Makers, Faites moi un petit récap de votre semaine 1 Bon point / 1 point relou, minimum 💪!'
+      )
+      await updateRevenueAllProject()
+    }
+  }
 }
 
 export const sendChannel = async (

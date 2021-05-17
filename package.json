@@ -12,7 +12,6 @@
     "generate": "nuxt generate",
     "analyze": "nuxt build --analyze",
     "api": "ts-node services/local",
-    "fix": "ts-node services/discord/fix_shorter",
     "discord:config": "ts-node  services/discord/command.ts",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
