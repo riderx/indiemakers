@@ -120,7 +120,8 @@ const karmaRm = async (
     ]).then(() => Promise.resolve())
   }
   return sendTxtLater(
-    `<@${userId}> n'as plus de karma...\n Laisse le tranquile 😢!`,
+    `<@${userId}> n'as plus de karma...
+    Laisse le tranquile 😢!`,
     [],
     interaction.application_id,
     interaction.token

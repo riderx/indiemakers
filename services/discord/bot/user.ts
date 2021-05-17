@@ -154,7 +154,8 @@ const userEdit = (
   return Promise.all([
     updateUser(userId, update),
     sendTxtLater(
-      'Tu as mis a jours ton profil !\n Cela aideras les autres makers a te connaitre !',
+      `Tu as mis a jour ton profil !
+      Cela aideras les autres makers 👨‍🌾 a te connaitre !`,
       [],
       interaction.application_id,
       interaction.token
@@ -221,7 +222,7 @@ const userListStreak = async (interaction: Interaction): Promise<void> => {
   console.error('userList', usersInfoCards)
   if (usersInfoCards.length > 0) {
     await sendTxtLater(
-      `Voici la liste des 10 premiers makers avec les flammes !\n`,
+      `Voici la liste des 10 premiers makers avec les flammes 🔥 :`,
       [],
       interaction.application_id,
       interaction.token
@@ -251,7 +252,7 @@ const userView = async (
   if (user && userId && myId !== userId) {
     console.error('userView', userId)
     return sendTxtLater(
-      `Voici les infos sur ce maker !\n`,
+      `Voici les infos sur ce maker :`,
       [userCard(user)],
       interaction.application_id,
       interaction.token
@@ -273,11 +274,11 @@ const userView = async (
     )
     await sendChannel(
       interaction.channel_id,
-      `Je t'ai envoyé plus info en privé 🤫\n`
+      `Je t'ai envoyé plus info en privé 🤫`
     )
     await openChannel(myId).then((channel) => {
       console.error('channel', channel)
-      sendChannel(channel.id, `Voici tes infos complètes !\n`, card)
+      sendChannel(channel.id, `Voici tes infos complètes !`, card)
     })
     return Promise.resolve()
   }

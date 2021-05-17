@@ -473,7 +473,8 @@ const projectDelete = (
       deleteProject(userId, projectId),
       deleteAllProjectsTasks(userId, projectId),
       sendTxtLater(
-        `Tu as supprimé ton projet ${projectId} et ses taches !\nSavoir terminer un projet est une force!`,
+        `Tu as supprimé ton projet ${projectId} et ses taches 🚮!
+        Savoir terminer un projet est une force!`,
         [],
         interaction.application_id,
         interaction.token
