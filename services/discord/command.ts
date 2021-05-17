@@ -140,14 +140,14 @@ const makerIdOptional = optionGen(
 
 const taskValues = [
   optionGen(
-    'contenue',
-    'Contenue de la tache',
+    'contenu',
+    'Contenu de la tâche',
     SlashCommandOptionType.STRING,
     true
   ),
   optionGen(
     'status',
-    'Status de la tache',
+    'Status de la tâche',
     SlashCommandOptionType.STRING,
     false,
     [choiceGen('A faire', 'todo'), choiceGen('Fait', 'done')]
@@ -155,13 +155,13 @@ const taskValues = [
 ]
 const taskId = optionGen(
   'id',
-  'Identifiant unique de la tache',
+  'Identifiant unique de la tâche',
   SlashCommandOptionType.STRING,
   true
 )
 const taskAdd = optionGen(
   'ajouter',
-  'Ajouter une tache a un projet',
+  'Ajouter une tâche à un projet',
   SlashCommandOptionType.SUB_COMMAND,
   undefined,
   undefined,
@@ -169,7 +169,7 @@ const taskAdd = optionGen(
 )
 const taskEdit = optionGen(
   'modifier',
-  "Modifier une tache d'un projet",
+  "Modifier une tâche d'un projet",
   SlashCommandOptionType.SUB_COMMAND,
   undefined,
   undefined,
@@ -177,7 +177,7 @@ const taskEdit = optionGen(
 )
 const taskDelete = optionGen(
   'supprimer',
-  "Supprimer une tache d'un projet",
+  "Supprimer une tâche d'un projet",
   SlashCommandOptionType.SUB_COMMAND,
   undefined,
   undefined,
@@ -185,7 +185,7 @@ const taskDelete = optionGen(
 )
 const taskList = optionGen(
   'liste',
-  "Voir toute la liste des taches d'un projet",
+  "Voir toute la liste des tâches d'un projet",
   SlashCommandOptionType.SUB_COMMAND,
   undefined,
   undefined,
@@ -195,13 +195,13 @@ const taskList = optionGen(
 const incomeValues = [
   optionGen(
     'montant',
-    'Montant du revenue',
+    'Montant du revenu',
     SlashCommandOptionType.STRING,
     true
   ),
-  optionGen('mois', 'mois du revenue', SlashCommandOptionType.STRING, true, [
+  optionGen('mois', 'mois du revenu', SlashCommandOptionType.STRING, true, [
     choiceGen('Janvier', '01'),
-    choiceGen('Fevrier', '02'),
+    choiceGen('Février', '02'),
     choiceGen('Mars', '03'),
     choiceGen('Avril', '04'),
     choiceGen('Mai', '05'),
@@ -212,20 +212,20 @@ const incomeValues = [
     choiceGen('Septembre', '09'),
     choiceGen('Octobre', '10'),
     choiceGen('Novembre', '11'),
-    choiceGen('Decembre', '12'),
+    choiceGen('Décembre', '12'),
   ]),
-  optionGen('année', 'Année du revenue', SlashCommandOptionType.STRING, true),
+  optionGen('année', 'Année du revenu', SlashCommandOptionType.STRING, true),
 ]
 
 const incomeId = optionGen(
   'id',
-  'identifiant unique du revenue',
+  'identifiant unique du revenu',
   SlashCommandOptionType.STRING,
   true
 )
 const incomeAdd = optionGen(
   'ajouter',
-  'ajouter un revenue a un projet',
+  'ajouter un revenu à un projet',
   SlashCommandOptionType.SUB_COMMAND,
   undefined,
   undefined,
@@ -233,7 +233,7 @@ const incomeAdd = optionGen(
 )
 const incomeEdit = optionGen(
   'modifier',
-  "Modifier un revenue d'un projet",
+  "Modifier un revenu d'un projet",
   SlashCommandOptionType.SUB_COMMAND,
   undefined,
   undefined,
@@ -241,7 +241,7 @@ const incomeEdit = optionGen(
 )
 const incomeDelete = optionGen(
   'supprimer',
-  "Supprimer un revenue d'un projet",
+  "Supprimer un revenu d'un projet",
   SlashCommandOptionType.SUB_COMMAND,
   undefined,
   undefined,
@@ -249,7 +249,7 @@ const incomeDelete = optionGen(
 )
 const incomeList = optionGen(
   'liste',
-  "Voir toute la liste des revenues d'un projet",
+  "Voir toute la liste des revenus d'un projet",
   SlashCommandOptionType.SUB_COMMAND,
   undefined,
   undefined,
@@ -432,8 +432,8 @@ const projet = optionGen(
 )
 
 const income = optionGen(
-  'revenue',
-  "Gerer les revenues d'un projet",
+  'revenu',
+  "Gerer les revenus d'un projet",
   SlashCommandOptionType.SUB_COMMAND_GROUP,
   undefined,
   undefined,
@@ -442,7 +442,7 @@ const income = optionGen(
 
 const tache = optionGen(
   'tache',
-  "Gerer les tache d'un projet",
+  "Gérer les tâches d'un projet",
   SlashCommandOptionType.SUB_COMMAND_GROUP,
   undefined,
   undefined,
@@ -451,7 +451,7 @@ const tache = optionGen(
 
 const maker = optionGen(
   'maker',
-  'Gerer ton profil de maker',
+  'Gérer ton profil de maker',
   SlashCommandOptionType.SUB_COMMAND_GROUP,
   undefined,
   undefined,
@@ -479,7 +479,7 @@ const maker = optionGen(
 
 const jsonData = {
   name: 'im',
-  description: 'Le bot qui nous pousse an faire mieux dans nos projets!',
+  description: 'Le bot qui nous pousse en faire mieux dans nos projets !',
   options: [
     karma,
     projet,
