@@ -90,7 +90,6 @@ export const embed = (
   }
   if (color && color !== '') {
     data.color = hexToDec(`0x${color}`)
-    console.log('color', data.color, color)
   }
   if (timestamp && timestamp !== '') {
     data.timestamp = timestamp
