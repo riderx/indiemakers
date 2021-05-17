@@ -120,7 +120,7 @@ const karmaRm = async (
     ]).then(() => Promise.resolve())
   }
   return sendTxtLater(
-    `<@${userId}> n'as plus de karma...
+    `<@${userId}> n'as plus de karma 🕉...
     Laisse le tranquile 😢!`,
     [],
     interaction.application_id,
@@ -149,7 +149,7 @@ const karmaStats = async (
     console.error('stats karma userId', userId)
     const curKarma = await getKarmaById(userId)
     return sendTxtLater(
-      `<@${userId}> as ${curKarma.total} karma !`,
+      `<@${userId}> as ${curKarma.total} karma 🕉!`,
       [],
       interaction.application_id,
       interaction.token
@@ -167,7 +167,7 @@ const karmaStats = async (
 const karmaLadder = async (interaction: Interaction): Promise<void> => {
   console.error('stats karma global')
   return sendTxtLater(
-    `Voici le classement karma de tous les makers:
+    `Voici le classement karma 🕉 de tous les makers:
 
     ${await generateKarmaStats()}`,
     [],
