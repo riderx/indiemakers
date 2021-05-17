@@ -90,6 +90,7 @@ export const embed = (
   }
   if (color && color !== '') {
     data.color = hexToDec(`0x${color}`)
+    console.log('color', data.color, color)
   }
   if (timestamp && timestamp !== '') {
     data.timestamp = timestamp
@@ -299,7 +300,7 @@ const saveRateLimit = (limit: string | number) => {
     })
 }
 
-export const LateBot = async () => {
+export const lateBot = async () => {
   const res = await admin.firestore().collection('bot').doc('config').get()
   const data = res.data()
   if (data) {
