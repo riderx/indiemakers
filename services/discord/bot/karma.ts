@@ -135,7 +135,7 @@ const generateKarmaStats = async (): Promise<string> => {
     (firstEl: User, secondEl: User) => secondEl.karma - firstEl.karma
   )
   allUsers.users.forEach((element) => {
-    result += `<@${element.userId}> = ${element.karma}\n`
+    result += `<@${element.userId}> = ${element.karma} 🕉\n`
   })
   return result
 }
@@ -167,7 +167,7 @@ const karmaStats = async (
 const karmaLadder = async (interaction: Interaction): Promise<void> => {
   console.error('stats karma global')
   return sendTxtLater(
-    `Voici le classement karma 🕉 de tous les makers:
+    `Voici le classement karma de tous les makers:
 
     ${await generateKarmaStats()}`,
     [],
