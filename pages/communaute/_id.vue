@@ -1,63 +1,49 @@
 <template>
-  <div v-if="user && loaded">
+  <div v-if="maker && loaded">
     <div class="relative">
       <img
         class="object-cover object-top w-full h-72"
-        :src="user.cover || noCover"
-        :alt="'cover profil ' + user.username"
+        :src="maker.cover || noCover"
+        :alt="'cover profil ' + maker.username"
       />
       <img
-        class="
-          absolute
-          inset-x-0
-          object-cover
-          mx-auto
-          border-4
-          rounded-full
-          -bottom-1/4
-          h-36
-          w-36
-          border-orchid-300
-        "
-        :src="user.avatarUrl"
-        :alt="'image profil ' + user.username"
+        class="absolute inset-x-0 object-cover mx-auto border-8 rounded-full  -bottom-1/4 h-36 w-36 border-orchid-300"
+        :src="maker.avatarUrl"
+        :alt="'image profil ' + maker.username"
       />
     </div>
     <div class="flex flex-col items-center justify-center">
-      <h1 class="mt-20 text-3xl font-medium text-orchid-300 font-indie">
-        {{ user.name || user.username }}
+      <h1
+        class="mt-20 text-3xl font-medium text-white font-indie"
+        :style="getTextColor(maker.color)"
+      >
+        {{ maker.emoji || '' }} {{ maker.name || maker.username }}
       </h1>
+      <h3 v-if="maker.bio" class="mb-3 text-2xl text-orchid-300">
+        {{ maker.bio }}
+      </h3>
       <div class="flex items-center justify-center">
         <p
           class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700"
         >
-          🕉 {{ user.karma }}
+          🕉 {{ maker.karma }}
         </p>
         <p
           class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700"
         >
-          🔥 {{ user.streak }}
+          🔥 {{ maker.streak }}
         </p>
         <p
           class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700"
         >
-          💰 {{ user.incomes }} €
+          💰 {{ maker.incomes }} €
         </p>
       </div>
     </div>
     <div v-if="!projectId" class="flex w-1/4 px-10 py-5 mx-auto text-white">
       <button
         type="button"
-        class="
-          px-5
-          py-2
-          mx-auto
-          text-white
-          border-4 border-white
-          font-indie
-          hover:text-royalblue-700
-          hover:bg-white
-        "
+        class="px-5 py-2 mx-auto text-white border-4 border-white  font-indie hover:text-royalblue-700 hover:bg-white"
         @click="goHome()"
       >
         Ce maker n'as pas encore de projets
@@ -65,62 +51,33 @@
     </div>
     <div v-if="projectId" class="flex flex-col m-5 md:flex-row md:m-10">
       <div
-        class="
-          p-5
-          mb-2
-          text-lg
-          bg-white
-          text-royalblue-700
-          md:p-10
-          md:mb-0
-          md:w-2/5
-          lg:w-1/5
-        "
+        class="p-5 mb-2 text-lg bg-white  text-royalblue-700 md:p-10 md:mb-0 md:w-2/5 lg:w-1/5"
       >
         <h1
-          class="
-            hidden
-            mb-5
-            text-3xl
-            md:block
-            text-royalblue-700
-            lg:mb-10
-            font-indie
-          "
+          class="hidden mb-5 text-3xl  md:block text-royalblue-700 lg:mb-10 font-indie"
         >
-          Projets {{ user.projects }}
+          Projets {{ maker.projects }}
         </h1>
         <div class="flex w-full overflow-x-scroll md:flex-col">
           <div
-            v-for="project in user.projectsData"
+            v-for="project in maker.projectsData"
             :key="project.hashtag"
-            class="flex-none my-4 ml-3 md:my-2 lg:my-4 md:ml-0"
+            class="flex-none my-4 ml-3 cursor-pointer md:my-2 lg:my-4 md:ml-0"
             @click="projectId = project.hashtag"
           >
             <div class="relative flex items-end">
               <img
-                class="
-                  object-cover object-top
-                  w-10
-                  h-10
-                  border
-                  rounded-lg
-                  border-royalblue-700
-                "
+                class="object-cover object-top w-16 h-16 border-2 rounded-lg  border-royalblue-700"
                 :src="project.logo || noImge"
               />
-              <h2 class="mx-1 truncate">
-                {{ project.name || project.hashtag }}
+              <h2
+                class="mx-1 text-2xl truncate font-indie"
+                :style="getTextColor(project.color)"
+              >
+                {{ project.emoji || '' }} {{ project.name || project.hashtag }}
               </h2>
               <span
-                class="
-                  absolute
-                  bottom-0
-                  text-sm text-white
-                  bg-opacity-75
-                  rounded-tr-lg rounded-bl-lg
-                  bg-royalblue-700
-                "
+                class="absolute bottom-0 text-sm text-white bg-opacity-75 rounded-tr-lg rounded-bl-lg  bg-royalblue-700"
                 >🔥{{ project.streak }}</span
               >
             </div>
@@ -129,32 +86,18 @@
       </div>
       <div v-if="projectData && loadedProject" class="md:w-4/5 md:mx-2">
         <div
-          class="
-            flex flex-col
-            items-center
-            p-10
-            mb-2
-            bg-white
-            text-royalblue-700
-            lg:flex-row
-          "
+          class="flex flex-col items-center p-10 mb-2 bg-white  text-royalblue-700 lg:flex-row"
         >
           <img
-            class="
-              object-cover
-              w-32
-              h-32
-              mb-5
-              border
-              rounded-lg
-              border-royalblue-700
-              lg:mb-0
-              lg:mr-3
-            "
+            class="object-cover w-32 h-32 mb-5 border-2 rounded-lg  border-royalblue-700 lg:mb-0 lg:mr-3"
             :src="projectData.logo || noImge"
           />
           <div class="text-center lg:text-left">
-            <h1 class="text-3xl font-indie">
+            <h1
+              class="text-3xl font-indie"
+              :style="getTextColor(projectData.color)"
+            >
+              {{ projectData.emoji || '' }}
               {{ projectData.name || projectData.hashtag }}
               <span class="text-base">🔥{{ projectData.streak }}</span>
             </h1>
@@ -190,11 +133,11 @@ export default Vue.extend({
     ListIncomes: () => import('~/components/ListIncomes.vue'),
   },
   async asyncData({ params, $config }) {
-    const user = await discordMakerId($config, params.id)
-    if (user && user.projectsData && user.projectsData.length > 0) {
-      return { user, projectId: user.projectsData[0].hashtag }
+    const maker = await discordMakerId($config, params.id)
+    if (maker && maker.projectsData && maker.projectsData.length > 0) {
+      return { maker, projectId: maker.projectsData[0].hashtag }
     }
-    return { user, projectId: null }
+    return { maker, projectId: null }
   },
   data() {
     return {
@@ -202,7 +145,7 @@ export default Vue.extend({
         'https://res.cloudinary.com/forgr/image/upload/v1621191060/indiemakers/new_cover_fu6fcs.png',
       noImge:
         'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/cover-im_empty_wt2gi0.png',
-      user: null as unknown as User,
+      maker: null as unknown as User,
       projectData: null as unknown as Project,
       projectId: '',
       loaded: false,
@@ -220,11 +163,23 @@ export default Vue.extend({
     this.loaded = true
   },
   methods: {
+    getBorderColor(color: string | undefined) {
+      if (color) {
+        return { 'border-color': `#${color}` }
+      }
+      return {}
+    },
+    getTextColor(color: string | undefined) {
+      if (color) {
+        return { color: `#${color}` }
+      }
+      return {}
+    },
     async getProject(id: string) {
       this.loadedProject = false
       this.projectData = await discordProjectId(
         this.$config,
-        this.user.userId,
+        this.maker.userId,
         id
       )
       this.loadedProject = true

@@ -29,7 +29,7 @@
       />
       <div class="flex flex-col mx-3">
         <h1 class="text-lg font-medium">
-          {{ maker.name || maker.username }}
+          {{ maker.emoji || '' }} {{ maker.name || maker.username }}
         </h1>
         <div class="flex text-sm">
           <p class="mr-2">🔥{{ maker.streak }}</p>
