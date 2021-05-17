@@ -222,7 +222,9 @@ const taskAdd = async (
   if (curUser) {
     return Promise.all([
       sendTxtLater(
-        `La tache:\n${task.content}\nA été ajouté au projet #${projectId}, 🎉!`,
+        `La tache 💗:
+        ${task.content}
+        A été ajouté au projet #${projectId}, 🎉!`,
         [],
         interaction.application_id,
         interaction.token
@@ -268,7 +270,9 @@ const taskEdit = (
   })
   return Promise.all([
     sendTxtLater(
-      `La tache:\n${taskId}: ${task.content}\n ${taskId}\nA été mise a jours dans le projet #${projectId}, 🎉!`,
+      `La tache 💗:
+      ${taskId}: ${task.content}
+      A été mise a jours dans le projet #${projectId}, 🎉!`,
       [],
       interaction.application_id,
       interaction.token
@@ -297,9 +301,11 @@ const tasksView = async (
       makerId === userId
         ? `Tu as fait ${allTaks.total} taches sur ce projet, BRAVO 🎉!`
         : `<@${userId}> a fait ${allTaks.total} taches sur ce projet, BRAVO 🎉!`
-    let taskInfos = `${text}!\n\nVoici La liste:\n\n`
+    let taskInfos = `${text}!
+
+    Voici La liste:\n\n`
     allTaks.tasks.forEach((element: Task) => {
-      taskInfos += `${element.id} - ${dayjs(element.createdAt).format(
+      taskInfos += `💗 ${element.id} - ${dayjs(element.createdAt).format(
         'DD/MM/YYYY'
       )}  - ${element.content}\n`
     })
@@ -394,7 +400,7 @@ export const taskFn = (
     return tasksDelete(interaction, option.options, userId)
   }
   return sendTxtLater(
-    `La Commande ${option.name} n'est pas pris en charge`,
+    `La Commande ${option.name} n'est pas pris en charge 🤫`,
     [],
     interaction.application_id,
     interaction.token

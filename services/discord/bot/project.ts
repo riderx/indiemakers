@@ -282,7 +282,13 @@ const projectAdd = (
     console.error('add project', newProj)
     return Promise.all([
       sendTxtLater(
-        `Tu as crée le projet:\n#${newProj.hashtag} 👏\nIl est temps de shiper ta premiere tache dessus avec \`/im tache\` ou remplir sa description avec \`/im projet modifier description: \`  💪!`,
+        `Tu as crée le projet: #${newProj.hashtag} 👏
+
+        Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache hashtag: ${newProj.hashtag} contenue: Ma super tache\` 💗
+        ou
+        remplir sa description avec \`/im projet hashtag: ${newProj.hashtag} modifier description: mon super projet\` 🪴
+        ou
+        enregistrer un premier revenue avec \`/im revenue ajouter hashtag: ${newProj.hashtag} revenue 42 mois: Février 2021 \`💰!`,
         [],
         interaction.application_id,
         interaction.token
@@ -320,7 +326,8 @@ const projectEdit = (
     console.error('projectEdit', update)
     return Promise.all([
       sendTxtLater(
-        `Tu as mis a jours:\n#${update.hashtag}\nBravo 💪, une marche après l'autre tu fais grandir ce projet!`,
+        `Tu as mis a jours:\n#${update.hashtag}
+        Bravo 💪, une marche après l'autre tu fais grandir ce projet!`,
         [],
         interaction.application_id,
         interaction.token
@@ -524,7 +531,7 @@ export const projectFn = (
     return projectDelete(interaction, option.options[0], userId)
   }
   return sendTxtLater(
-    `La Commande ${option.name} n'est pas pris en charge`,
+    `La Commande ${option.name} n'est pas pris en charge 🤫`,
     [],
     interaction.application_id,
     interaction.token

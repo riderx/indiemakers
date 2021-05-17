@@ -314,7 +314,7 @@ export const userFn = (
     return userView(interaction, senderId, undefined)
   }
   return sendTxtLater(
-    `La Commande ${option.name} n'est pas pris en charge`,
+    `La Commande ${option.name} n'est pas pris en charge 🤫`,
     [],
     interaction.application_id,
     interaction.token

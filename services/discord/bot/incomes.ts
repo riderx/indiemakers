@@ -141,7 +141,9 @@ const incomeAdd = (
   newIncome.date = date.toISOString()
   return Promise.all([
     sendTxtLater(
-      `Le revenue :\n${newIncome.status}: ${newIncome.ammount}\nA été ajouté au projet #${projectId}, 🎉!`,
+      `Le revenue 💰:
+      ${newIncome.status}: ${newIncome.ammount}
+      A été ajouté au projet #${projectId}, 🎉!`,
       [],
       interaction.application_id,
       interaction.token
@@ -194,7 +196,7 @@ const incomeEdit = (
   return Promise.all([
     updateProjectIncome(userId, projectId, incomeId, update),
     sendTxtLater(
-      `Le revenue ${incomeId} a été mise a jours dans le projet #${projectId}, 🎉!`,
+      `Le revenue 💰 ${incomeId} a été mise a jours dans le projet #${projectId}, 🎉!`,
       [],
       interaction.application_id,
       interaction.token
@@ -210,9 +212,13 @@ const incomesView = async (
   const projectId = option.value
   if (projectId) {
     const allTaks = await getAllProjectsIncomes(userId, projectId)
-    let incomeInfos = `Tu a fait ${allTaks.total} € sur ce projet, BRAVO 🎉!\n\nVoici La liste des revenus:\n\n`
+    let incomeInfos = `Tu a fait ${allTaks.total} € sur ce projet, BRAVO 🎉!
+
+    Voici La liste des revenus:
+
+    `
     allTaks.incomes.forEach((element: Income) => {
-      incomeInfos += `${element.id} - ${dayjs(element.createdAt).format(
+      incomeInfos += `💰 ${element.id} - ${dayjs(element.createdAt).format(
         'DD-MM-YYYY'
       )}    ${element.status === 'expense' ? '-' : ''}${element.ammount} €\n`
     })
@@ -251,7 +257,7 @@ const incomesDelete = async (
     deleteProjectIncome(userId, projectId, incomeId),
     updateProjecttotalIncome(userId, projectId, curIncomes.total),
     sendTxtLater(
-      `Tu as supprimé le revenue ${incomeId} !`,
+      `Tu as supprimé le revenue ${incomeId} 💸!`,
       [],
       interaction.application_id,
       interaction.token
@@ -289,7 +295,7 @@ export const incomeFn = (
     return incomesDelete(interaction, option.options, userId)
   }
   return sendTxtLater(
-    `La Commande ${option.name} n'est pas pris en charge`,
+    `La Commande ${option.name} n'est pas pris en charge 🤫`,
     [],
     interaction.application_id,
     interaction.token

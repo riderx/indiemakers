@@ -61,7 +61,7 @@ const im = async (
       return Promise.resolve()
     }
     await sendTxtLater(
-      `La Commande ${option.name} n'est pas pris en charge`,
+      `La Commande ${option.name} n'est pas pris en charge 🤫`,
       [],
       interaction.application_id,
       interaction.token
@@ -97,7 +97,7 @@ const discordInteraction = async (interaction: Interaction): Promise<void> => {
       )
     }
     await sendTxtLater(
-      `La Commande ${interaction.data.name} n'est pas pris en charge`,
+      `La Commande ${interaction.data.name} n'est pas pris en charge 🤫`,
       [],
       interaction.application_id,
       interaction.token

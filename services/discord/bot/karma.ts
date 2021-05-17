@@ -59,9 +59,8 @@ const karmaAdd = async (
       )
     }
     const curKarma = await getKarmaById(userId)
-    const botString = `Tu as donné du karma a <@${userId}>\nIl a maintenant: ${
-      curKarma.total + 1
-    } karma!`
+    const botString = `Tu as donné du karma a <@${userId}> 😎
+    Total 🕉: ${curKarma.total + 1} karma!`
     return Promise.all([
       updateUser(userId, { karma: curKarma.total + 1 }),
       addKarmaById(userId, senderId, 1),
@@ -74,7 +73,7 @@ const karmaAdd = async (
     ]).then(() => Promise.resolve())
   } else {
     return sendTxtLater(
-      'Donne moi un Maker !',
+      'Donne moi un Maker 👨‍🌾 !',
       [],
       interaction.application_id,
       interaction.token
@@ -90,7 +89,7 @@ const karmaRm = async (
   const userId = option.value
   if (!userId) {
     return sendTxtLater(
-      'Donne moi un Maker !',
+      'Donne moi un Maker 👨‍🌾 !',
       [],
       interaction.application_id,
       interaction.token
@@ -107,9 +106,8 @@ const karmaRm = async (
   }
   const curKarma = await getKarmaById(userId)
   if (curKarma.total > 0) {
-    const botString = `Tu as enlevé du karma a <@${userId}>\nIl lui reste: ${
-      curKarma.total - 1
-    } karma`
+    const botString = `Tu as enlevé du karma a <@${userId}>
+    Total 🕉: ${curKarma.total - 1} karma 😢`
     return Promise.all([
       updateUser(userId, { karma: curKarma.total - 1 }),
       addKarmaById(userId, senderId, -1),
@@ -122,7 +120,7 @@ const karmaRm = async (
     ]).then(() => Promise.resolve())
   }
   return sendTxtLater(
-    `<@${userId}> n'as plus de karma...\n Laisse le tranquile!`,
+    `<@${userId}> n'as plus de karma...\n Laisse le tranquile 😢!`,
     [],
     interaction.application_id,
     interaction.token
@@ -157,7 +155,7 @@ const karmaStats = async (
     )
   } else {
     return sendTxtLater(
-      'Donne moi un Maker !',
+      'Donne moi un Maker 👨‍🌾 !',
       [],
       interaction.application_id,
       interaction.token
@@ -168,7 +166,9 @@ const karmaStats = async (
 const karmaLadder = async (interaction: Interaction): Promise<void> => {
   console.error('stats karma global')
   return sendTxtLater(
-    `Voici le classement karma de tous les makers:\n\n${await generateKarmaStats()}`,
+    `Voici le classement karma de tous les makers:
+
+    ${await generateKarmaStats()}`,
     [],
     interaction.application_id,
     interaction.token
@@ -197,7 +197,7 @@ export const karmaFn = (
     return karmaLadder(interaction)
   }
   return sendTxtLater(
-    `La Commande ${option.name} n'est pas pris en charge`,
+    `La Commande ${option.name} n'est pas pris en charge 🤫`,
     [],
     interaction.application_id,
     interaction.token
