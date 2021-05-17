@@ -428,7 +428,7 @@ const projectView = async (
       const text =
         makerId === userId
           ? 'Voici les infos sur ton projet !'
-          : `Voici les infos sur le projet de <@${userId}> !`
+          : `Voici les infos sur le projet de <@${makerId}> !`
       return sendTxtLater(
         `${text}\n`,
         [projectCard(project)],
