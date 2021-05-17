@@ -165,7 +165,7 @@ const userEdit = (
 const userCard = (user: User) => {
   const fields = getFields(user, userPublicFlieds, translations)
   const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
-  const bio = user.bio || 'Un jours je serais grand !'
+  const bio = user.bio || 'Un jour je serai grand !'
   const thumb = image(user.avatarUrl)
   return embed(
     name,
@@ -277,7 +277,7 @@ const userView = async (
     )
     await openChannel(myId).then((channel) => {
       console.error('channel', channel)
-      sendChannel(channel.id, `Voici tes completes infos !\n`, card)
+      sendChannel(channel.id, `Voici tes infos complètes !\n`, card)
     })
     return Promise.resolve()
   }
