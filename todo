@@ -13,3 +13,11 @@ create api for all project
 fix color update with wrong key
 order task by date in project
 order income by date in project
+auto welcome message on general
+auto add first karma for welcome
+auto add karma on presentation
+auto add karma on first project
+auto add karma on first profil edit
+auto add karma on first task by project
+auto add karma on first revenue by project
+
