@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     joinUs() {
-      this.$router.push('/discord')
+      window.open('https://discord.gg/GctKEcDpxk', '_blank')
     },
   },
 }

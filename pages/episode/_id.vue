@@ -171,7 +171,7 @@
                   "
                   @click="joinUs()"
                 >
-                  👉 Lance toi
+                  👉 Rejoin la communauté
                 </button>
               </div>
             </div>
@@ -271,7 +271,7 @@
                   "
                   @click="joinUs()"
                 >
-                  👉 Lance toi
+                  👉 Rejoin la communauté
                 </button>
               </div>
             </div>
@@ -498,7 +498,8 @@ export default {
       this.$modal.show('share')
     },
     joinUs() {
-      this.$modal.show('join')
+      // this.$modal.show('join')
+      window.open('https://discord.gg/GctKEcDpxk', '_blank')
     },
     setSizeHead() {
       if (

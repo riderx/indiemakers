@@ -7,7 +7,18 @@
         :alt="'cover profil ' + maker.username"
       />
       <img
-        class="absolute inset-x-0 object-cover mx-auto border-8 rounded-full  -bottom-1/4 h-36 w-36 border-orchid-300"
+        class="
+          absolute
+          inset-x-0
+          object-cover
+          mx-auto
+          border-8
+          rounded-full
+          -bottom-1/4
+          h-36
+          w-36
+          border-orchid-300
+        "
         :src="maker.avatarUrl"
         :alt="'image profil ' + maker.username"
       />
@@ -43,7 +54,16 @@
     <div v-if="!projectId" class="flex w-1/4 px-10 py-5 mx-auto text-white">
       <button
         type="button"
-        class="px-5 py-2 mx-auto text-white border-4 border-white  font-indie hover:text-royalblue-700 hover:bg-white"
+        class="
+          px-5
+          py-2
+          mx-auto
+          text-white
+          border-4 border-white
+          font-indie
+          hover:text-royalblue-700
+          hover:bg-white
+        "
         @click="goHome()"
       >
         Ce maker n'as pas encore de projets
@@ -51,10 +71,28 @@
     </div>
     <div v-if="projectId" class="flex flex-col m-5 md:flex-row md:m-10">
       <div
-        class="p-5 mb-2 text-lg bg-white  text-royalblue-700 md:p-10 md:mb-0 md:w-2/5 lg:w-1/5"
+        class="
+          p-5
+          mb-2
+          text-lg
+          bg-white
+          text-royalblue-700
+          md:p-10
+          md:mb-0
+          md:w-2/5
+          lg:w-1/5
+        "
       >
         <h1
-          class="hidden mb-5 text-3xl  md:block text-royalblue-700 lg:mb-10 font-indie"
+          class="
+            hidden
+            mb-5
+            text-3xl
+            md:block
+            text-royalblue-700
+            lg:mb-10
+            font-indie
+          "
         >
           Projets {{ maker.projects }}
         </h1>
@@ -67,7 +105,14 @@
           >
             <div class="relative flex items-end">
               <img
-                class="object-cover object-top w-16 h-16 border-2 rounded-lg  border-royalblue-700"
+                class="
+                  object-cover object-top
+                  w-16
+                  h-16
+                  border-2
+                  rounded-lg
+                  border-royalblue-700
+                "
                 :src="project.logo || noImge"
               />
               <h2
@@ -77,7 +122,14 @@
                 {{ project.emoji || '' }} {{ project.name || project.hashtag }}
               </h2>
               <span
-                class="absolute bottom-0 text-sm text-white bg-opacity-75 rounded-tr-lg rounded-bl-lg  bg-royalblue-700"
+                class="
+                  absolute
+                  bottom-0
+                  text-sm text-white
+                  bg-opacity-75
+                  rounded-tr-lg rounded-bl-lg
+                  bg-royalblue-700
+                "
                 >🔥{{ project.streak }}</span
               >
             </div>
@@ -86,10 +138,28 @@
       </div>
       <div v-if="projectData && loadedProject" class="md:w-4/5 md:mx-2">
         <div
-          class="flex flex-col items-center p-10 mb-2 bg-white  text-royalblue-700 lg:flex-row"
+          class="
+            flex flex-col
+            items-center
+            p-10
+            mb-2
+            bg-white
+            text-royalblue-700
+            lg:flex-row
+          "
         >
           <img
-            class="object-cover w-32 h-32 mb-5 border-2 rounded-lg  border-royalblue-700 lg:mb-0 lg:mr-3"
+            class="
+              object-cover
+              w-32
+              h-32
+              mb-5
+              border-2
+              rounded-lg
+              border-royalblue-700
+              lg:mb-0
+              lg:mr-3
+            "
             :src="projectData.logo || noImge"
           />
           <div class="text-center lg:text-left">
