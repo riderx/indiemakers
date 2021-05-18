@@ -284,11 +284,11 @@ const projectAdd = (
       sendTxtLater(
         `Tu as crée le projet: #${newProj.hashtag} 👏
 
-        Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache hashtag: ${newProj.hashtag} contenue: Ma super tache\` 💗
-        ou
-        remplir sa description avec \`/im projet hashtag: ${newProj.hashtag} modifier description: mon super projet\` 🪴
-        ou
-        enregistrer un premier revenue avec \`/im revenue ajouter hashtag: ${newProj.hashtag} revenue 42 mois: Février 2021 \`💰!`,
+Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache hashtag: ${newProj.hashtag} contenue: Ma super tache\` 💗
+ou
+remplir sa description avec \`/im projet hashtag: ${newProj.hashtag} modifier description: mon super projet\` 🪴
+ou
+enregistrer un premier revenue avec \`/im revenue ajouter hashtag: ${newProj.hashtag} revenue 42 mois: Février 2021 \`💰!`,
         [],
         interaction.application_id,
         interaction.token
@@ -327,7 +327,7 @@ const projectEdit = (
     return Promise.all([
       sendTxtLater(
         `Tu as mis a jour:\n#${update.hashtag}
-        Bravo 💪, une marche après l'autre tu fais grandir ce projet!`,
+Bravo 💪, une marche après l'autre tu fais grandir ce projet!`,
         [],
         interaction.application_id,
         interaction.token
@@ -474,7 +474,7 @@ const projectDelete = (
       deleteAllProjectsTasks(userId, projectId),
       sendTxtLater(
         `Tu as supprimé ton projet ${projectId} et ses taches 🚮!
-        Savoir terminer un projet est une force!`,
+Savoir terminer un projet est une force!`,
         [],
         interaction.application_id,
         interaction.token

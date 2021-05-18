@@ -142,8 +142,8 @@ const incomeAdd = (
   return Promise.all([
     sendTxtLater(
       `Le revenue 💰:
-      ${newIncome.status}: ${newIncome.ammount}
-      A été ajouté au projet #${projectId}, 🎉!`,
+${newIncome.status}: ${newIncome.ammount}
+A été ajouté au projet #${projectId}, 🎉!`,
       [],
       interaction.application_id,
       interaction.token
@@ -214,9 +214,9 @@ const incomesView = async (
     const allTaks = await getAllProjectsIncomes(userId, projectId)
     let incomeInfos = `Tu a fait ${allTaks.total} € sur ce projet, BRAVO 🎉!
 
-    Voici La liste des revenus:
+Voici La liste des revenus:
 
-    `
+`
     allTaks.incomes.forEach((element: Income) => {
       incomeInfos += `💰 ${element.id} - ${dayjs(element.createdAt).format(
         'DD-MM-YYYY'

@@ -223,8 +223,8 @@ const taskAdd = async (
     return Promise.all([
       sendTxtLater(
         `La tache 💗:
-        ${task.content}
-        A été ajouté au projet #${projectId}, 🎉!`,
+${task.content}
+A été ajouté au projet #${projectId}, 🎉!`,
         [],
         interaction.application_id,
         interaction.token
@@ -271,8 +271,8 @@ const taskEdit = (
   return Promise.all([
     sendTxtLater(
       `La tache 💗:
-      ${taskId}: ${task.content}
-      A été mise a jour dans le projet #${projectId}, 🎉!`,
+${taskId}: ${task.content}
+A été mise a jour dans le projet #${projectId}, 🎉!`,
       [],
       interaction.application_id,
       interaction.token

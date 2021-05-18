@@ -155,7 +155,7 @@ const userEdit = (
     updateUser(userId, update),
     sendTxtLater(
       `Tu as mis a jour ton profil !
-      Cela aideras les autres makers 👨‍🌾 a te connaitre !`,
+Cela aideras les autres makers 👨‍🌾 a te connaitre !`,
       [],
       interaction.application_id,
       interaction.token
@@ -278,7 +278,7 @@ const userView = async (
     )
     await openChannel(myId).then((channel) => {
       console.error('channel', channel)
-      sendChannel(channel.id, `Voici tes infos complètes !`, card)
+      sendChannel(channel.id, `Voici tes infos complètes :`, card)
     })
     return Promise.resolve()
   }

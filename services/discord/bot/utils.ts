@@ -325,7 +325,7 @@ export const morningBot = async () => {
       data.channel_bip,
       `Hey Makers, Encore une belle journée pour shipper 🚤 !
 
-      Continuez comme ça :`
+Continuez comme ça :`
     )
     await Promise.all(
       usersInfoCards.map((card) => {
@@ -336,9 +336,9 @@ export const morningBot = async () => {
       await sendChannel(
         data.channel_general,
         `Hey Makers, Faites moi un petit récap de votre semaine:
-        - 1 Bon point
-        - 1 point compliqué
-        MINIMUM 💪!`
+  - 1 Bon point
+  - 1 point compliqué
+MINIMUM 💪!`
       )
       await updateRevenueAllProject()
     }

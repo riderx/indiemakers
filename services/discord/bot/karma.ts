@@ -121,7 +121,7 @@ Total 🕉: ${curKarma.total - 1} karma 😢`
   }
   return sendTxtLater(
     `<@${userId}> n'as plus de karma 🕉...
-    Laisse le tranquile 😢!`,
+Laisse le tranquile 😢!`,
     [],
     interaction.application_id,
     interaction.token
@@ -169,7 +169,7 @@ const karmaLadder = async (interaction: Interaction): Promise<void> => {
   return sendTxtLater(
     `Voici le classement karma de tous les makers:
 
-    ${await generateKarmaStats()}`,
+${await generateKarmaStats()}`,
     [],
     interaction.application_id,
     interaction.token
