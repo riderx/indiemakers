@@ -272,7 +272,7 @@ const taskEdit = (
     sendTxtLater(
       `La tache 💗:
       ${taskId}: ${task.content}
-      A été mise a jours dans le projet #${projectId}, 🎉!`,
+      A été mise a jour dans le projet #${projectId}, 🎉!`,
       [],
       interaction.application_id,
       interaction.token

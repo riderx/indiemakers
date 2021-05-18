@@ -326,7 +326,7 @@ const projectEdit = (
     console.error('projectEdit', update)
     return Promise.all([
       sendTxtLater(
-        `Tu as mis a jours:\n#${update.hashtag}
+        `Tu as mis a jour:\n#${update.hashtag}
         Bravo 💪, une marche après l'autre tu fais grandir ce projet!`,
         [],
         interaction.application_id,
@@ -348,7 +348,7 @@ const projectEdit = (
 const projectCard = (project: Project) => {
   const fields = getFields(project, projectPublicKey, translations)
   const name = `${project.emoji || '🪴'} ${project.name || project.hashtag}`
-  const description = project.description || 'Un jours je serais grand 👶!'
+  const description = project.description || 'Un jour je serais grand 👶!'
   const thumb = project.logo ? image(project.logo) : undefined
   if (project.website) {
     fields.push(
