@@ -60,7 +60,7 @@ const karmaAdd = async (
     }
     const curKarma = await getKarmaById(userId)
     const botString = `Tu as donné du karma a <@${userId}> 😎
-    Total 🕉: ${curKarma.total + 1} karma!`
+Total 🕉: ${curKarma.total + 1} karma!`
     return Promise.all([
       updateUser(userId, { karma: curKarma.total + 1 }),
       addKarmaById(userId, senderId, 1),
@@ -107,7 +107,7 @@ const karmaRm = async (
   const curKarma = await getKarmaById(userId)
   if (curKarma.total > 0) {
     const botString = `Tu as enlevé du karma a <@${userId}>
-    Total 🕉: ${curKarma.total - 1} karma 😢`
+Total 🕉: ${curKarma.total - 1} karma 😢`
     return Promise.all([
       updateUser(userId, { karma: curKarma.total - 1 }),
       addKarmaById(userId, senderId, -1),
