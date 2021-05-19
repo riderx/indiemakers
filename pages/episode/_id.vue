@@ -297,9 +297,9 @@ export default {
     return {
       guid: element.guid,
       title: element.title,
-      titleNoEmoji: element.title_no_emoji,
-      contentNoEmoji: element.content_no_emoji,
-      previewNoEmoji: element.preview_no_emoji,
+      titleNoEmoji: element.titleNoEmoji,
+      contentNoEmoji: element.contentNoEmoji,
+      previewNoEmoji: element.previewNoEmoji,
       content: element.content,
       image: element.itunes.image,
       twitter: element.twitter,
