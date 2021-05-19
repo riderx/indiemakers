@@ -94,7 +94,7 @@
             font-indie
           "
         >
-          Projets {{ maker.projects }}
+          🪴 {{ maker.projects }} Projets
         </h1>
         <div class="flex w-full overflow-x-scroll md:flex-col">
           <div
