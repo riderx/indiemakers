@@ -24,6 +24,7 @@
         <option value="streak">🔥</option>
         <option value="karma">🕉</option>
         <option value="incomes">💰</option>
+        <option value="projects">🪴</option>
       </select>
     </div>
     <LadderMakers v-if="loaded" :users="users" />
