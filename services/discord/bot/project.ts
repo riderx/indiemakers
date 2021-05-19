@@ -288,7 +288,9 @@ Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache hashtag: $
 ou
 remplir sa description avec \`/im projet hashtag: ${newProj.hashtag} modifier description: mon super projet\` 🪴
 ou
-enregistrer un premier revenue avec \`/im revenue ajouter hashtag: ${newProj.hashtag} revenue 42 mois: Février 2021 \`💰!`,
+enregistrer un premier revenue avec \`/im revenue ajouter hashtag: ${newProj.hashtag} revenue 42 mois: Février 2021 \`💰!
+Tu peux voir toute les infos que tu rentre sur ta page : https://indiemakers.fr/communaute/${userId}
+`,
         [],
         interaction.application_id,
         interaction.token

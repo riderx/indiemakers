@@ -176,7 +176,7 @@ const userCard = (user: User) => {
     undefined,
     undefined,
     user.createdAt,
-    undefined,
+    `https://indiemakers.fr/communaute/${user.userId}`,
     thumb
   )
 }
