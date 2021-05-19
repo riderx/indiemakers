@@ -126,8 +126,13 @@ export const updateUser = async (
       updatedAt: dayjs().toISOString(),
     }
     if (userInfo) {
-      base.avatar = userInfo.avatar
-      base.avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${userInfo.avatar}.png`
+      if (userInfo.avatar) {
+        base.avatar = userInfo.avatar
+        base.avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${userInfo.avatar}.png`
+      } else {
+        base.avatarUrl =
+          'https://res.cloudinary.com/forgr/image/upload/v1621079734/indiemakers/cover-im_no_gjzhog.jpg'
+      }
       base.username = userInfo.username
     }
     const newUser: User = Object.assign(base, user as User)

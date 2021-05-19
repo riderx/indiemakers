@@ -273,6 +273,7 @@ const projectAdd = (
 ): Promise<void> => {
   const newProj: Partial<Project> = {
     createdAt: dayjs().toISOString(),
+    logo: 'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg',
   }
 
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
