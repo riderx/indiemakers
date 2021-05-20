@@ -82,44 +82,48 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  components: {},
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   data() {
     return {
-      title: 'Login to indie makers',
-      message: 'To allow you vote for makers',
-      isFalse: false,
-      user: null,
-      email: null,
+      title: 'Connecte toi a indie makers' as string,
+      message: 'Pour voter pour tes makers favorie' as string,
+      isFalse: false as boolean,
+      user: {} as any,
+      // email: '' as string,
     }
   },
   head() {
     return {
-      title: this.title,
+      title: (this as any).title,
       meta: [
         {
           hid: 'og:url',
           property: 'og:url',
           content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
         },
-        { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
+        { hid: 'title', name: 'title', content: (this as any).title },
         {
           hid: 'description',
           name: 'description',
-          content: this.removeEmoji(this.message),
+          content: (this as any).message,
         },
         {
           hid: 'og:title',
           property: 'og:title',
-          content: this.removeEmoji(this.title),
+          content: (this as any).title,
         },
         {
           hid: 'og:description',
           property: 'og:description',
-          content: this.removeEmoji(this.message),
+          content: (this as any).message,
         },
-        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
+        {
+          hid: 'og:image:alt',
+          property: 'og:image:alt',
+          content: (this as any).title,
+        },
         {
           hid: 'og:image:type',
           property: 'og:image:type',
@@ -130,14 +134,14 @@ export default {
           property: 'og:image',
           content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
         },
-        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
-        { hid: 'og:image:height', property: 'og:image:height', content: 400 },
+        { hid: 'og:image:width', property: 'og:image:width', content: '400' },
+        { hid: 'og:image:height', property: 'og:image:height', content: '400' },
       ],
     }
   },
   mounted() {
-    this.email = this.$warehouse.get('emailForSignIn')
-    this.$firebase.auth.listen((user) => {
+    ;(this as any).email = this.$warehouse.get('emailForSignIn')
+    this.$firebase.auth.listen((user: any) => {
       this.user = user
       if (this.user && this.user.displayName === null) {
         this.$modal.show('confirmName')
@@ -153,30 +157,24 @@ export default {
         this.$router.push(next || '/makers')
       }
     })
-    if (this.email) {
+    if ((this as any).email) {
       this.sendConfirm()
     }
   },
   methods: {
-    removeEmoji(str) {
-      return str.replace(
-        /([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g,
-        ''
-      )
-    },
     sendConfirm() {
-      if (this.email) {
+      if ((this as any).email) {
         this.$modal.show('loading')
         this.$firebase.auth
           .handleSignInRedirect({
-            email: this.email,
+            email: (this as any).email,
           })
           .then(() => {
             this.$warehouse.remove('emailForSignIn')
-            this.email = null
+            ;(this as any).email = ''
             this.$modal.hide('loading')
           })
-          .catch((error) => {
+          .catch((error: any) => {
             console.error(error)
             this.$modal.hide('loading')
             this.$router.push('/')
@@ -184,5 +182,5 @@ export default {
       }
     },
   },
-}
+})
 </script>

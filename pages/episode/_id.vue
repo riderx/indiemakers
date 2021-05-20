@@ -281,11 +281,12 @@
     </div>
   </client-only>
 </template>
-<script>
+<script lang="ts">
 import Vue from 'vue'
+import { Episode } from '~/services/feed'
 import { feed, ep } from '~/services/rss'
 
-export default {
+export default Vue.extend({
   async asyncData({ params, redirect, $config }) {
     const [items, element] = await Promise.all([
       feed($config),
@@ -295,30 +296,32 @@ export default {
       return redirect(`/episode/${element.id}`)
     }
     return {
+      id: element.id,
       guid: element.guid,
       title: element.title,
       titleNoEmoji: element.titleNoEmoji,
       contentNoEmoji: element.contentNoEmoji,
       previewNoEmoji: element.previewNoEmoji,
       content: element.content,
-      image: element.itunes.image,
+      image: element.imageOptimized,
       twitter: element.twitter,
       instagram: element.instagram,
       linkedin: element.linkedin,
-      audio: element.enclosure.url,
+      audio: element.audio,
       episodes: items,
     }
   },
   data() {
     return {
-      image: null,
-      titleNoEmoji: null,
-      contentNoEmoji: null,
-      previewNoEmoji: null,
+      id: 0,
+      image: '',
+      titleNoEmoji: '',
+      contentNoEmoji: '',
+      previewNoEmoji: '',
       playerSet: false,
       showAudio: false,
-      timeoutPlayer: null,
-      timeoutModal: null,
+      timeoutPlayer: 0,
+      timeoutModal: 0,
       guid: null,
       title: '',
       twitter: { name: null, link: null },
@@ -328,7 +331,7 @@ export default {
       sizeHead: '100vh',
       content: '',
       audio: '',
-      episodes: [],
+      episodes: [] as Episode[],
     }
   },
   head() {
@@ -347,39 +350,43 @@ export default {
           defer: true,
         },
       ],
-      title: this.titleNoEmoji,
+      title: (this as any).titleNoEmoji,
       meta: [
         {
           hid: 'og:url',
           property: 'og:url',
           content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
         },
-        { hid: 'title', name: 'title', content: this.titleNoEmoji },
+        { hid: 'title', name: 'title', content: (this as any).titleNoEmoji },
         {
           hid: 'description',
           name: 'description',
-          content: this.previewNoEmoji,
+          content: (this as any).previewNoEmoji,
         },
-        { hid: 'og:title', property: 'og:title', content: this.titleNoEmoji },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: (this as any).titleNoEmoji,
+        },
         {
           hid: 'og:description',
           property: 'og:description',
-          content: this.previewNoEmoji,
+          content: (this as any).previewNoEmoji,
         },
         {
           hid: 'og:image:alt',
           property: 'og:image:alt',
-          content: this.titleNoEmoji,
+          content: (this as any).titleNoEmoji,
         },
         {
           hid: 'og:image:type',
           property: 'og:image:type',
           content: 'image/jpg',
         },
-        { hid: 'og:image', property: 'og:image', content: this.image },
-        { hid: 'og:image:width', property: 'og:image:width', content: 300 },
-        { hid: 'og:image:height', property: 'og:image:height', content: 300 },
-        { hid: 'og:audio', property: 'og:audio', content: this.audio },
+        { hid: 'og:image', property: 'og:image', content: (this as any).image },
+        { hid: 'og:image:width', property: 'og:image:width', content: '300' },
+        { hid: 'og:image:height', property: 'og:image:height', content: '300' },
+        { hid: 'og:audio', property: 'og:audio', content: (this as any).audio },
         {
           hid: 'og:audio:type',
           property: 'og:audio:type',
@@ -390,10 +397,10 @@ export default {
   },
   computed: {
     player() {
-      return this.$refs.plyr ? this.$refs.plyr.player : null
+      return this.$refs.plyr ? (this.$refs.plyr as any).player : null
     },
     player2() {
-      return this.$refs.plyr2 ? this.$refs.plyr2.player : null
+      return this.$refs.plyr2 ? (this.$refs.plyr2 as any).player : null
     },
   },
   destroyed() {
@@ -407,7 +414,7 @@ export default {
   mounted() {
     this.setSizeHead()
     this.timeoutPlayer = setTimeout(() => {
-      Vue.use(window.VuePlyr, {
+      Vue.use((window as any).VuePlyr, {
         plyr: {
           fullscreen: { enabled: false },
         },
@@ -421,16 +428,16 @@ export default {
           this.playerListener(this.player2)
         }
       }, 150)
-    }, 2000)
+    }, 2000) as any
     this.timeoutModal = setTimeout(() => {
       if (!this.$warehouse.get(`randomModal:${this.guid}`)) {
         this.showRandomModal()
         this.$warehouse.set(`randomModal:${this.guid}`, 'done')
       }
-    }, 15000)
+    }, 15000) as any
   },
   methods: {
-    randomEp(length) {
+    randomEp(length: number): number {
       return Math.floor(Math.random() * length) + 0
     },
     checkNext() {
@@ -444,13 +451,13 @@ export default {
       this.$warehouse.set('nextGuid', nextId)
       this.$modal.show('random-ep')
     },
-    playerListener(player) {
+    playerListener(player: any) {
       const currentTime = localStorage.getItem(
         `${this.$route.params.id}:currentTime`
       )
       player.on('play', () => {
         if (!this.playerSet) {
-          player.currentTime = parseFloat(currentTime || 0)
+          player.currentTime = parseFloat(currentTime || '0')
           this.playerSet = true
         }
       })
@@ -489,7 +496,7 @@ export default {
       }
       this.$modal.show(modalName)
     },
-    getRandomInt(max) {
+    getRandomInt(max: number): number {
       return Math.floor(Math.random() * Math.floor(max))
     },
     tweetIt() {
@@ -502,18 +509,15 @@ export default {
       window.open('https://discord.gg/GctKEcDpxk', '_blank')
     },
     setSizeHead() {
+      const headerTitle = document.getElementById('header-title')
+      const header = document.getElementById('header')
       if (
         process.client &&
-        document.getElementById('header-title') &&
-        document.getElementById('header') &&
-        document.getElementById('header-title').offsetWidth !==
-          window.innerWidth
+        headerTitle &&
+        header &&
+        headerTitle.offsetWidth !== window.innerWidth
       ) {
-        const size = `${
-          document.getElementById('header-title').offsetHeight +
-          document.getElementById('header').offsetHeight +
-          5
-        }px`
+        const size = `${headerTitle.offsetHeight + header.offsetHeight + 5}px`
         this.sizeHead = `calc(100vh - ${size})`
       } else {
         this.sizeHead = 'auto'
@@ -526,7 +530,7 @@ export default {
       this.$modal.show('listen')
     },
   },
-}
+})
 </script>
 <style>
 :root {

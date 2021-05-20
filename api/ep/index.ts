@@ -10,8 +10,8 @@ const postEp = async (element: Episode) => {
     image: element.imageOptimized,
     content: element.content,
   }
-  if (element.insta) {
-    ep.insta = element.insta
+  if (element.instagram) {
+    ep.instagram = element.instagram
   }
   if (element.twitter) {
     ep.twitter = element.twitter

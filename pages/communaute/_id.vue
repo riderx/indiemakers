@@ -222,6 +222,55 @@ export default Vue.extend({
       loadedProject: false,
     }
   },
+  head() {
+    return {
+      title: (this as any).maker.name || (this as any).maker.username,
+      meta: [
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
+        },
+        {
+          hid: 'title',
+          name: 'title',
+          content: (this as any).maker.name || (this as any).maker.username,
+        },
+        {
+          hid: 'description',
+          name: 'description',
+          content: (this as any).maker.bio || 'Indie Maker en devenir !',
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: (this as any).maker.name || (this as any).maker.username,
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: (this as any).maker.bio || 'Indie Maker en devenir !',
+        },
+        {
+          hid: 'og:image:alt',
+          property: 'og:image:alt',
+          content: (this as any).maker.name || (this as any).maker.username,
+        },
+        {
+          hid: 'og:image:type',
+          property: 'og:image:type',
+          content: 'image/jpg',
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: (this as any).maker.avatarUrl,
+        },
+        { hid: 'og:image:width', property: 'og:image:width', content: '300' },
+        { hid: 'og:image:height', property: 'og:image:height', content: '300' },
+      ],
+    }
+  },
   watch: {
     // whenever question changes, this function will run
     projectId(newId) {
@@ -245,7 +294,7 @@ export default Vue.extend({
       }
       return {}
     },
-    async getProject(id: string) {
+    async getProject(id: string): Promise<void> {
       this.loadedProject = false
       this.projectData = await discordProjectId(
         this.$config,

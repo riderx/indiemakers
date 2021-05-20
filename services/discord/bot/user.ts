@@ -171,7 +171,7 @@ Cela aideras les autres makers 👨‍🌾 a te connaitre !`,
 const userCard = (user: User) => {
   const fields = getFields(user, userPublicFlieds, translations)
   const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
-  const bio = user.bio || 'Un jour je serai grand !'
+  const bio = user.bio || 'Indie Maker en devenir !'
   const thumb = image(user.avatarUrl)
   return embed(
     name,

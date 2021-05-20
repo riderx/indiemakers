@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { NuxtConfig } from '@nuxt/types'
+import { Episode } from './feed'
 import { User } from './discord/bot/user'
 import { Project } from './discord/bot/project'
+import { Person } from './types'
 
-export const discordMakers = ($config: NuxtConfig) => {
+export const discordMakers = ($config: NuxtConfig): Promise<User[]> => {
   const url = `${$config.BASEAPI}/community`
   console.error('discordMakers', url)
   return axios
@@ -50,7 +52,7 @@ export const discordMakerId = (
     })
 }
 
-export const makers = ($config: NuxtConfig) => {
+export const makers = ($config: NuxtConfig): Promise<Person[]> => {
   const url = `${$config.BASEAPI}/makershunt`
   return axios
     .get(url)
@@ -63,7 +65,7 @@ export const makers = ($config: NuxtConfig) => {
     })
 }
 
-export const feed = ($config: NuxtConfig) => {
+export const feed = ($config: NuxtConfig): Promise<Episode[]> => {
   const url = `${$config.BASEAPI}/feed`
   return axios
     .get(url)
@@ -76,7 +78,7 @@ export const feed = ($config: NuxtConfig) => {
     })
 }
 
-export const ep = (guid: string, $config: NuxtConfig) => {
+export const ep = (guid: string, $config: NuxtConfig): Promise<Episode> => {
   const url = `${$config.BASEAPI}/ep?guid=${guid}`
   return axios
     .get(url)

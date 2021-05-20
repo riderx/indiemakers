@@ -1,4 +1,5 @@
 declare const window: any
+
 export const crispLoader = () => {
   if (!window.$crisp) {
     // console.log('Load Crips')

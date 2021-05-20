@@ -1507,8 +1507,10 @@
   </client-only>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   name: 'Modals',
   data() {
     return {
@@ -1521,7 +1523,7 @@ export default {
   },
   mounted() {
     require('~/plugins/modal')
-    this.$firebase.auth.listen((user) => {
+    this.$firebase.auth.listen((user: any) => {
       this.user = user
     })
   },
@@ -1545,7 +1547,7 @@ export default {
         '_blank'
       )
     },
-    copyTextToClipboard(text) {
+    copyTextToClipboard(text: string) {
       if (!navigator.clipboard) {
         this.fallbackCopyTextToClipboard(text)
         return
@@ -1561,7 +1563,7 @@ export default {
         }
       )
     },
-    fallbackCopyTextToClipboard(text) {
+    fallbackCopyTextToClipboard(text: string) {
       const textArea = document.createElement('textarea')
       textArea.value = text
       textArea.style.position = 'fixed' // avoid scrolling to bottom
@@ -1607,31 +1609,35 @@ export default {
     addName() {
       this.$modal.hide('confirmName')
       this.$modal.show('loading')
-      this.user
-        .updateProfile({
-          displayName: this.newName,
-        })
-        .then(async () => {
-          try {
-            await this.$firebase.db.ref(`users/${this.user.email}`).set({
-              first_name: this.newName,
-              email: this.user.email,
-            })
-          } catch (err) {
-            console.error('exist already', err)
-          }
-          this.$modal.hide('loading')
-          const next = this.$warehouse.get('nextAfterSign')
-          if (next) {
-            this.$warehouse.remove('nextAfterSign')
-          }
-          this.$router.push(next || '/makers')
-        })
-        .catch(() => {
-          this.$modal.hide('loading')
-        })
+      if (this.user && this.user !== null) {
+        ;(this as any).user
+          .updateProfile({
+            displayName: this.newName,
+          })
+          .then(async () => {
+            try {
+              await this.$firebase.db
+                .ref(`users/${(this as any).user.email}`)
+                .set({
+                  first_name: this.newName,
+                  email: (this as any).user.email,
+                })
+            } catch (err) {
+              console.error('exist already', err)
+            }
+            this.$modal.hide('loading')
+            const next = this.$warehouse.get('nextAfterSign')
+            if (next) {
+              this.$warehouse.remove('nextAfterSign')
+            }
+            this.$router.push(next || '/makers')
+          })
+          .catch(() => {
+            this.$modal.hide('loading')
+          })
+      }
     },
-    listenExternal(url) {
+    listenExternal(url: string) {
       window.open(url, '_blank')
     },
     openEp() {
@@ -1687,7 +1693,7 @@ export default {
             this.$modal.hide('loading')
             this.$modal.show('checkEmail')
           })
-          .catch((error) => {
+          .catch((error: any) => {
             this.$modal.hide('loading')
             console.error(error)
           })
@@ -1735,7 +1741,7 @@ export default {
       this.$modal.hide('voted')
     },
   },
-}
+})
 </script>
 
 <style scoped lang="postcss">
