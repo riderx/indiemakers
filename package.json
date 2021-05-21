@@ -30,7 +30,7 @@
     "core-js": "^3.9.1",
     "dayjs": "^1.10.4",
     "discord-interactions": "^2.0.2",
-    "firebase": "9.0.0-beta.1",
+    "firebase": "9.0.0-beta.2",
     "firebase-admin": "^9.8.0",
     "firebase-auth-lite": "^0.8.8",
     "firebase-firestore-lite": "^1.0.3",
