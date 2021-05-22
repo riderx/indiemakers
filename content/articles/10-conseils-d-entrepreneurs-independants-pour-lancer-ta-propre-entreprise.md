@@ -25,7 +25,7 @@ Si tu veux créer ta propre entreprise en tant qu'entrepreneur ou si tu le fais 
  1. Interroge ta future cible, quand t'est indépendant tu n'as pas d'autre choix que d'aller au contact de tes futurs clients, cela t'appendra énormément de choses sur leur réel besoin.
  2. Crée ton projet avant même de penser au côté légal ! Parfois tu te rendras compte que ton projet est impossible techniquement. Avoir une entreprise sur le dos sans projet ce n’est pas optimal !
  3. Parle publiquement de chaque avancée, cela t'aidera le jour du lancement !
- 4. Rejoin une communauté comme la nôtre, tu obtiendras plein de conseils et de réponses a tes questions qui te feront gagner un temps précieux !
+ 4. Rejoins une communauté comme la nôtre, tu obtiendras plein de conseils et de réponses a tes questions qui te feront gagner un temps précieux !
  5. Utilise Google Analytics pour mesurer les performances de ton site Web, c'est le meilleur moyen de savoir si ton produit aura du succès
  6. Il est important d'avoir un plan de secours, surtout quand tu n'es pas sûr de ton idée
  7. Continue comme ça ! Même si les choses ne marchent pas, cela ne t'empêchera pas d'avoir une autre chance plus tard !

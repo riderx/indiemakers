@@ -4,15 +4,7 @@
       Les makers de la communauté :
     </div>
     <div
-      class="
-        w-11/12
-        mx-auto
-        mb-3
-        text-right text-white
-        md:w-1/2
-        lg:w-1/3
-        xl:w-1/4
-      "
+      class="w-11/12 mx-auto mb-3 text-right text-white  md:w-1/2 lg:w-1/3 xl:w-1/4"
     >
       <label for="sort-select">Top maker par:</label>
       <select
@@ -31,19 +23,10 @@
     <div class="flex w-1/4 px-10 py-5 mx-auto text-white">
       <button
         type="button"
-        class="
-          px-5
-          py-2
-          mx-auto
-          text-white
-          border-4 border-white
-          font-indie
-          hover:text-royalblue-700
-          hover:bg-white
-        "
+        class="px-5 py-2 mx-auto text-white border-4 border-white  font-indie hover:text-royalblue-700 hover:bg-white"
         @click="joinUs()"
       >
-        👉 Rejoin nous
+        👉 Rejoinsnous
       </button>
     </div>
   </div>
