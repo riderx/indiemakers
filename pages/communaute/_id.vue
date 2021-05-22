@@ -214,7 +214,7 @@ export default Vue.extend({
       noCover:
         'https://res.cloudinary.com/forgr/image/upload/v1621191060/indiemakers/new_cover_fu6fcs.png',
       noImge:
-        'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/cover-im_empty_wt2gi0.png',
+        'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg',
       maker: null as unknown as User,
       projectData: null as unknown as Project,
       projectId: '',

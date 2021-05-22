@@ -327,11 +327,11 @@ export const morningBot = async () => {
 
 Continuez comme ça :`
     )
-    await Promise.all(
-      usersInfoCards.map((card) => {
-        return sendChannel(data.channel_bip, '', card)
-      })
-    )
+    for (let index = 0; index < usersInfoCards.length; index++) {
+      const card = usersInfoCards[index]
+      // console.error('card', card)
+      await sendChannel(data.channel_bip, '', card)
+    }
     if (dayjs().day() === 1) {
       await sendChannel(
         data.channel_general,

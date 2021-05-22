@@ -99,6 +99,7 @@ const choiceGen = (
   name: string,
   value: string
 ): applicationCommandOptionChoice => ({ name, value })
+
 const optionGen = (
   name: string,
   description: string,
@@ -119,6 +120,7 @@ const optionGen = (
   }
   return result
 }
+
 const projetHashtag = optionGen(
   'hashtag',
   'Le hashtag de ton projet (nom sans espaces)',
@@ -132,6 +134,7 @@ const makerId = optionGen(
   SlashCommandOptionType.USER,
   true
 )
+
 const makerIdOptional = optionGen(
   'maker',
   'Le maker désiré',
@@ -153,12 +156,14 @@ const taskValues = [
     [choiceGen('A faire', 'todo'), choiceGen('Fait', 'done')]
   ),
 ]
+
 const taskId = optionGen(
   'id',
   'Identifiant unique de la tache',
   SlashCommandOptionType.STRING,
   true
 )
+
 const taskAdd = optionGen(
   'ajouter',
   'Ajouter une tache a un projet',
@@ -167,6 +172,7 @@ const taskAdd = optionGen(
   undefined,
   [projetHashtag, ...taskValues]
 )
+
 const taskEdit = optionGen(
   'modifier',
   "Modifier une tache d'un projet",
@@ -175,6 +181,7 @@ const taskEdit = optionGen(
   undefined,
   [projetHashtag, taskId, ...taskValues]
 )
+
 const taskDelete = optionGen(
   'supprimer',
   "Supprimer une tache d'un projet",
@@ -183,6 +190,7 @@ const taskDelete = optionGen(
   undefined,
   [projetHashtag, taskId]
 )
+
 const taskList = optionGen(
   'liste',
   "Voir toute la liste des taches d'un projet",
@@ -192,14 +200,11 @@ const taskList = optionGen(
   [projetHashtag, makerIdOptional]
 )
 
-const incomeValues = [
-  optionGen(
-    'montant',
-    'Montant du revenue',
-    SlashCommandOptionType.STRING,
-    true
-  ),
-  optionGen('mois', 'mois du revenue', SlashCommandOptionType.STRING, true, [
+const year = (name: string, required = true) =>
+  optionGen('année', `Année ${name}`, SlashCommandOptionType.STRING, required)
+
+const month = (name: string, required = true) =>
+  optionGen('mois', `mois ${name}`, SlashCommandOptionType.STRING, required, [
     choiceGen('Janvier', '01'),
     choiceGen('Fevrier', '02'),
     choiceGen('Mars', '03'),
@@ -213,8 +218,17 @@ const incomeValues = [
     choiceGen('Octobre', '10'),
     choiceGen('Novembre', '11'),
     choiceGen('Decembre', '12'),
-  ]),
-  optionGen('année', 'Année du revenue', SlashCommandOptionType.STRING, true),
+  ])
+
+const incomeValues = [
+  optionGen(
+    'montant',
+    'Montant du revenue',
+    SlashCommandOptionType.STRING,
+    true
+  ),
+  month('du revenue'),
+  year('du revenue'),
 ]
 
 const incomeId = optionGen(
@@ -223,6 +237,7 @@ const incomeId = optionGen(
   SlashCommandOptionType.STRING,
   true
 )
+
 const incomeAdd = optionGen(
   'ajouter',
   'ajouter un revenue a un projet',
@@ -231,6 +246,7 @@ const incomeAdd = optionGen(
   undefined,
   [projetHashtag, ...incomeValues]
 )
+
 const incomeEdit = optionGen(
   'modifier',
   "Modifier un revenue d'un projet",
@@ -239,6 +255,7 @@ const incomeEdit = optionGen(
   undefined,
   [projetHashtag, incomeId, ...incomeValues]
 )
+
 const incomeDelete = optionGen(
   'supprimer',
   "Supprimer un revenue d'un projet",
@@ -247,6 +264,7 @@ const incomeDelete = optionGen(
   undefined,
   [projetHashtag, incomeId]
 )
+
 const incomeList = optionGen(
   'liste',
   "Voir toute la liste des revenues d'un projet",
@@ -281,6 +299,8 @@ const projetOptions = [
       choiceGen('Autre', 'autre'),
     ]
   ),
+  month('de création', false),
+  year('de création', false),
   optionGen(
     'logo',
     "L'url vers le logo de ton projet",

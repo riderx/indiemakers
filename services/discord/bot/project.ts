@@ -75,6 +75,8 @@ const translations = {
   couleur: 'color',
   nom: 'name',
   couverture: 'cover',
+  année: 'year',
+  mois: 'month',
   categorie: 'category',
   stripe: 'stripeApiKey',
   open_source: 'openSource',
