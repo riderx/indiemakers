@@ -333,14 +333,18 @@ const makerOptions = [
     "L'url vers ta photo de couverture",
     SlashCommandOptionType.STRING
   ),
-  optionGen('twitter', 'Ton nom twitter', SlashCommandOptionType.STRING),
+  optionGen('github', 'Ton github', SlashCommandOptionType.STRING),
+  optionGen('makerlog', 'Ton makerlog', SlashCommandOptionType.STRING),
+  optionGen('wip', 'Ton wip', SlashCommandOptionType.STRING),
+  optionGen('twitter', 'Ton twitter', SlashCommandOptionType.STRING),
+  optionGen('nomadlist', 'Ton nomadlist', SlashCommandOptionType.STRING),
   optionGen(
-    'makerlog',
+    'makerlog_hook',
     'La web hook de ton compte makerlog, pour que le bot poste tes taches',
     SlashCommandOptionType.STRING
   ),
   optionGen(
-    'wip',
+    'wip_key',
     'La clé api de ton compte wip.co, pour que le bot poste tes taches',
     SlashCommandOptionType.STRING
   ),
