@@ -2,7 +2,16 @@
   <!-- This example requires Tailwind CSS v2.0+ -->
   <div class="relative">
     <div
-      class="flex items-center justify-between px-4 py-6  sm:px-6 md:justify-start md:space-x-10"
+      class="
+        flex
+        items-center
+        justify-between
+        px-4
+        py-6
+        sm:px-6
+        md:justify-start
+        md:space-x-10
+      "
     >
       <div>
         <a href="/" class="flex">
@@ -21,7 +30,19 @@
       <div class="-my-2 -mr-2 md:hidden">
         <button
           type="button"
-          class="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md  hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          class="
+            inline-flex
+            items-center
+            justify-center
+            p-2
+            text-gray-400
+            bg-white
+            rounded-md
+            hover:text-gray-500
+            hover:bg-gray-100
+            focus:outline-none
+            focus:ring-2 focus:ring-inset focus:ring-indigo-500
+          "
           aria-expanded="false"
           @click="menuMobile = true"
         >
@@ -50,7 +71,13 @@
             v-for="item in solutions"
             :key="item.name"
             :href="item.href"
-            class="p-1 text-base font-medium  text-orchid-200 hover:text-gray-900"
+            class="
+              p-1
+              text-base
+              font-medium
+              text-orchid-200
+              hover:text-gray-900
+            "
           >
             {{ item.name }}
           </a>
@@ -58,7 +85,20 @@
             <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" -->
             <button
               type="button"
-              class="inline-flex items-center p-1 text-base font-medium text-gray-500 bg-white rounded-md  group hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              class="
+                inline-flex
+                items-center
+                p-1
+                text-base
+                font-medium
+                text-gray-500
+                bg-white
+                rounded-md
+                group
+                hover:text-gray-900
+                focus:outline-none
+                focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+              "
               aria-expanded="false"
               @click="menu = !menu"
             >
@@ -98,10 +138,26 @@
           -->
             <div
               v-if="menu"
-              class="absolute z-10 w-screen max-w-xs px-2 mt-3 transform -translate-x-1/2  left-1/2 sm:px-0"
+              class="
+                absolute
+                z-10
+                w-screen
+                max-w-xs
+                px-2
+                mt-3
+                transform
+                -translate-x-1/2
+                left-1/2
+                sm:px-0
+              "
             >
               <div
-                class="overflow-hidden rounded-lg shadow-lg  ring-1 ring-black ring-opacity-5"
+                class="
+                  overflow-hidden
+                  rounded-lg
+                  shadow-lg
+                  ring-1 ring-black ring-opacity-5
+                "
               >
                 <div
                   class="relative grid gap-6 px-5 py-6 bg-white sm:gap-8 sm:p-8"
@@ -133,7 +189,22 @@
         <div class="flex items-center md:ml-12">
           <a
             href="/communaute"
-            class="inline-flex items-center justify-center px-4 py-2 ml-8 text-base font-medium text-white border border-transparent rounded-md shadow-sm  bg-orchid-300 hover:bg-orchid-600"
+            class="
+              inline-flex
+              items-center
+              justify-center
+              px-4
+              py-2
+              ml-8
+              text-base
+              font-medium
+              text-white
+              border border-transparent
+              rounded-md
+              shadow-sm
+              bg-orchid-300
+              hover:bg-orchid-600
+            "
           >
             Communauté
           </a>
@@ -153,10 +224,27 @@
   -->
     <div
       v-if="menuMobile"
-      class="absolute inset-x-0 top-0 z-10 p-2 transition origin-top-right transform  md:hidden"
+      class="
+        absolute
+        inset-x-0
+        top-0
+        z-10
+        p-2
+        transition
+        origin-top-right
+        transform
+        md:hidden
+      "
     >
       <div
-        class="bg-white divide-y-2 rounded-lg shadow-lg  ring-1 ring-black ring-opacity-5 divide-gray-50"
+        class="
+          bg-white
+          divide-y-2
+          rounded-lg
+          shadow-lg
+          ring-1 ring-black ring-opacity-5
+          divide-gray-50
+        "
       >
         <div class="px-5 pt-5 pb-6">
           <div class="flex items-center justify-between">
@@ -174,7 +262,19 @@
             <div class="-mr-2">
               <button
                 type="button"
-                class="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md  hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                class="
+                  inline-flex
+                  items-center
+                  justify-center
+                  p-2
+                  text-gray-400
+                  bg-white
+                  rounded-md
+                  hover:text-gray-500
+                  hover:bg-gray-100
+                  focus:outline-none
+                  focus:ring-2 focus:ring-inset focus:ring-indigo-500
+                "
                 @click="menuMobile = false"
               >
                 <span class="sr-only">Close menu</span>
@@ -205,7 +305,17 @@
                 class="flex items-center p-3 -m-3 rounded-lg hover:bg-gray-50"
               >
                 <div
-                  class="flex items-center justify-center flex-shrink-0 w-10 h-10 text-white bg-indigo-500 rounded-md "
+                  class="
+                    flex
+                    items-center
+                    justify-center
+                    flex-shrink-0
+                    w-10
+                    h-10
+                    text-white
+                    bg-indigo-500
+                    rounded-md
+                  "
                 >
                   <div class="w-6 h-6" aria-hidden="true" v-html="item.icon" />
                 </div>
@@ -231,7 +341,22 @@
           <div class="mt-6">
             <a
               href="/discord"
-              class="flex items-center justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm  bg-orchid-300 hover:bg-orchid-600"
+              class="
+                flex
+                items-center
+                justify-center
+                w-full
+                px-4
+                py-2
+                text-base
+                font-medium
+                text-white
+                border border-transparent
+                rounded-md
+                shadow-sm
+                bg-orchid-300
+                hover:bg-orchid-600
+              "
             >
               Communauté
             </a>
