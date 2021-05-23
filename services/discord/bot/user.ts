@@ -43,7 +43,7 @@ export interface User {
   createdAt: string
   updatedAt: string
 }
-const userPublicFlieds = ['karma', 'tasks', 'projects', 'streak']
+const userPublicFlieds = ['karma', 'streak', 'tasks', 'projects']
 const userProtectedKey = [
   'userId',
   'username',
