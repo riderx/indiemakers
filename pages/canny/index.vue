@@ -35,7 +35,7 @@ export default {
     // eslint-disable-next-line no-undef
     Canny('render', {
       boardToken: BoardToken,
-      basePath: null, // See step 2
+      basePath: '/canny', // See step 2
       ssoToken: null, // See step 3
     })
   },
