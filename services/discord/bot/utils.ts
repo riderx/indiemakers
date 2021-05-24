@@ -364,10 +364,9 @@ export const morningBot = async () => {
     if (dayjs().day() === 1) {
       await sendChannel(
         data.channel_general,
-        `Hey Makers, Faites moi un petit récap de votre semaine:
-  - 1 Bon point
-  - 1 point compliqué
-MINIMUM 💪!`
+        `Hey Makers, Faites moi un petit récap de votre semaine passé MINIMUM :
+  - **1 point 👍**
+  - **1 point 👎**`
       )
       await updateIncomeAllProject()
     }
