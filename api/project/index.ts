@@ -11,18 +11,18 @@ import { getAllUsers, User } from '../../services/discord/bot/user'
 
 const project = async (req: Request, res: Response) => {
   fFnit()
-  if (req?.query?.id) {
+  if (req?.query?.hashtag) {
     const proj = await getProjectById(
       String(req.query.uid),
-      String(req.query.id)
+      String(req.query.hashtag)
     )
     const tasks = await getAllProjectsTasks(
       String(req.query.uid),
-      String(req.query.id)
+      String(req.query.hashtag)
     )
     const incomes = await getAllProjectsIncomes(
       String(req.query.uid),
-      String(req.query.id)
+      String(req.query.hashtag)
     )
     if (proj) {
       ;(proj as any).tasksData = tasks
