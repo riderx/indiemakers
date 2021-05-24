@@ -27,6 +27,8 @@ import { Task } from './tasks'
 
 export interface Project {
   id?: string
+  userId?: string
+  userName?: string
   lastTaskAt?: string
   launchedAt?: string
   createdAt: string
@@ -94,7 +96,7 @@ export const getAllProjects = async (userId: string): Promise<Project[]> => {
       const doc = documents.docs[index]
       const data = (await doc.data()) as Project
       if (data !== undefined) {
-        projects.push({ id: doc.id, ...(data as Project) })
+        projects.push({ userId, id: doc.id, ...(data as Project) })
       }
     }
     return projects

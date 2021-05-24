@@ -19,6 +19,20 @@ export const discordMakers = ($config: NuxtConfig): Promise<User[]> => {
     })
 }
 
+export const discordProjects = ($config: NuxtConfig): Promise<Project[]> => {
+  const url = `${$config.BASEAPI}/project`
+  console.error('discordProjects', url)
+  return axios
+    .get(url)
+    .then((response) => {
+      return response.data
+    })
+    .catch((err) => {
+      console.error('discordProjects err', err)
+      return []
+    })
+}
+
 export const discordProjectId = (
   $config: NuxtConfig,
   userId: string,

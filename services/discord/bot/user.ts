@@ -101,6 +101,26 @@ export const getUsersById = async (userId: string): Promise<User | null> => {
   }
 }
 
+export const getUsersByUsername = async (
+  username: string
+): Promise<User | null> => {
+  try {
+    const snapshot = await admin
+      .firestore()
+      .collection('/discord')
+      .where('username', '==', username)
+      .get()
+    let data
+    snapshot.forEach((doc) => {
+      data = doc.data()
+    })
+    return data !== undefined ? (data as User) : null
+  } catch (err) {
+    console.error('getUsersById', err)
+    return null
+  }
+}
+
 export const updateUser = async (
   userId: string,
   user: Partial<User>
