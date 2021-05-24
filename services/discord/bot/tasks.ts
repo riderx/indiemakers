@@ -299,10 +299,20 @@ const tasksView = async (
   })
   if (hashtag) {
     const allTaks = await getAllProjectsTasks(makerId, hashtag)
-    const text =
-      makerId === userId
-        ? `Tu as fait ${allTaks.total} taches sur ce projet, BRAVO 🎉!`
-        : `<@${userId}> a fait ${allTaks.total} taches sur ce projet, BRAVO 🎉!`
+    let target
+    if (allTaks.tasks.length === 0) {
+      return sendTxtLater(
+        'Pas encore de taches sur ce projet, ça viendra !',
+        [],
+        interaction.application_id,
+        interaction.token
+      )
+    } else if (makerId !== userId) {
+      target = `<@${makerId}> a fait`
+    } else {
+      target = `Tu as fait`
+    }
+    const text = `${target} ${allTaks.total} taches sur ce projet, BRAVO 🎉!`
     let taskInfos = `${text}!
 
     Voici La liste:\n\n`

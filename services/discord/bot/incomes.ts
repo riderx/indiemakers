@@ -207,18 +207,39 @@ const incomeEdit = (
 
 const incomesView = async (
   interaction: Interaction,
-  option: ApplicationCommandInteractionDataOption,
+  options: ApplicationCommandInteractionDataOption[],
   userId: string
 ) => {
-  const hashtag = option.value
+  let hashtag = ''
+  let makerId = userId
+  options.forEach((element: ApplicationCommandInteractionDataOption) => {
+    if (element.name === 'hashtag') {
+      hashtag = element.value || ''
+    } else if (element.name === 'maker') {
+      makerId = element.value || ''
+    }
+  })
   if (hashtag) {
-    const allTaks = await getAllProjectsIncomes(userId, hashtag)
-    let incomeInfos = `Tu a fait ${allTaks.total} € sur ce projet, BRAVO 🎉!
+    const allIncomes = await getAllProjectsIncomes(userId, hashtag)
+    let target
+    if (allIncomes.incomes.length === 0) {
+      return sendTxtLater(
+        'Pas encore de revenue sur ce projet, ça viendra !',
+        [],
+        interaction.application_id,
+        interaction.token
+      )
+    } else if (makerId !== userId) {
+      target = `<@${makerId}> a fait`
+    } else {
+      target = `Tu as fait`
+    }
+    let incomeInfos = `${target} ${allIncomes.total} € sur ce projet, BRAVO 🎉!
 
 Voici La liste des revenus:
 
 `
-    allTaks.incomes.forEach((element: Income) => {
+    allIncomes.incomes.forEach((element: Income) => {
       incomeInfos += `💰 ${element.id} - ${dayjs(element.createdAt).format(
         'DD-MM-YYYY'
       )}    ${element.status === 'expense' ? '-' : ''}${element.ammount} €\n`
@@ -231,7 +252,7 @@ Voici La liste des revenus:
     )
   } else {
     return sendTxtLater(
-      `Je ne trouve pas le projet ${hashtag} 😅`,
+      `Je ne trouve pas le projet #${hashtag} pour <@${makerId}> 😅`,
       [],
       interaction.application_id,
       interaction.token
@@ -279,7 +300,7 @@ export const incomeFn = (
     return incomeAdd(interaction, option.options, userId)
   }
   if (option.name === 'liste' && option.options && option.options.length > 0) {
-    return incomesView(interaction, option.options[0], userId)
+    return incomesView(interaction, option.options, userId)
   }
   if (
     option.name === 'modifier' &&
