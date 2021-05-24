@@ -15,7 +15,8 @@
     "discord:config": "ts-node  services/discord/command.ts",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
-    "lint": "npm run lint:js && npm run lint:style"
+    "lint": "npm run lint:js && npm run lint:style",
+    "postinstall": "npx husky install"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint",
@@ -58,6 +59,7 @@
     "@nuxtjs/tailwindcss": "^4.0.1",
     "@types/hex2dec": "^1.1.0",
     "@types/imagekit": "^3.1.1",
+    "@types/linkifyjs": "^2.1.3",
     "@types/rss": "0.0.28",
     "babel-eslint": "^10.1.0",
     "dotenv": "^9.0.2",

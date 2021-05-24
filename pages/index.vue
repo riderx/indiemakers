@@ -97,7 +97,7 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import Vue from 'vue'
 import { feed } from '~/services/rss'
 import { crispLoader } from '~/services/crisp.client'
@@ -114,15 +114,13 @@ export default Vue.extend({
     return {
       show_loader: false,
       sizeHead: '100vh',
-      // https://ik.imagekit.io/gyc0uxoln1/indiemakers/cover-im_0.5x_5ozFHlEvg.png
       image:
         'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg',
-      // image: 'v1621019061/indiemakers/cover-im_0.5x_5ozFHlEvg.png',
       episodes: [],
-      title: '🚀Le podcast des entrepreneurs indépendant',
+      title: '🚀 Le podcast des entrepreneurs indépendant',
       messages: [
         "J'échange avec ceux qui ont su transformer leurs idées en business florissant.",
-        'Au-delà des belles histoires, nous décryptons leur passé, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables en indépendant.',
+        'Au-delà des belles histoires, je décrypte leur passé, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables en indépendant.',
         'J’interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur projet profitable.',
         'Un épisode tous les 15 jours',
       ],
@@ -130,30 +128,38 @@ export default Vue.extend({
   },
   head() {
     return {
-      title: this.removeEmoji(this.title),
+      title: (this as any).removeEmoji((this as any).title),
       meta: [
         {
           hid: 'og:url',
           property: 'og:url',
           content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
         },
-        { hid: 'title', name: 'title', content: this.removeEmoji(this.title) },
+        {
+          hid: 'title',
+          name: 'title',
+          content: (this as any).removeEmoji((this as any).title),
+        },
         {
           hid: 'description',
           name: 'description',
-          content: this.removeEmoji(this.messages[0]),
+          content: (this as any).removeEmoji((this as any).messages[0]),
         },
         {
           hid: 'og:title',
           property: 'og:title',
-          content: this.removeEmoji(this.title),
+          content: (this as any).removeEmoji((this as any).title),
         },
         {
           hid: 'og:description',
           property: 'og:description',
-          content: this.removeEmoji(this.messages[0]),
+          content: (this as any).removeEmoji((this as any).messages[0]),
         },
-        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
+        {
+          hid: 'og:image:alt',
+          property: 'og:image:alt',
+          content: (this as any).title,
+        },
         {
           hid: 'og:image:type',
           property: 'og:image:type',
@@ -169,8 +175,8 @@ export default Vue.extend({
           property: 'og:image:secure_url',
           content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
         },
-        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
-        { hid: 'og:image:height', property: 'og:image:height', content: 400 },
+        { hid: 'og:image:width', property: 'og:image:width', content: '400' },
+        { hid: 'og:image:height', property: 'og:image:height', content: '400' },
       ],
     }
   },
@@ -183,47 +189,28 @@ export default Vue.extend({
       { capture: true, once: true, passive: true }
     )
   },
-  mounted() {
-    // this.setSizeHead()
-  },
   methods: {
     joinUs() {
       this.$modal.show('join')
     },
-    removeEmoji(str) {
+    removeEmoji(str: string): string {
       return str.replace(
         /([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g,
         ''
       )
     },
-    removeAccent(str) {
+    removeAccent(str: string): string {
       return str.normalize('NFD').replace(/[\u0300-\u036F]/g, '')
     },
-    nextEpisode() {
+    nextEpisode(): string {
       const oneDay = 24 * 60 * 60 * 1000 // hours*minutes*seconds*milliseconds
       const firstDate = new Date(2019, 10, 19)
       const now = new Date()
-      const diffDays = Math.round(Math.abs((firstDate - now) / oneDay))
+      const diffDays = Math.round(
+        Math.abs((firstDate.getTime() - now.getTime()) / oneDay)
+      )
       const nextEp = 14 - (diffDays % 14)
       return nextEp !== 14 ? `${nextEp} jours` : 'DEMAIN 10 heures'
-    },
-    setSizeHead() {
-      if (
-        process.client &&
-        document.getElementById('header-eps') &&
-        document.getElementById('header') &&
-        document.getElementById('content') &&
-        document.getElementById('content')?.offsetWidth !== window.innerWidth
-      ) {
-        const headerEpsSize =
-          document.getElementById('header-eps')?.offsetHeight || 0
-        const headerSize =
-          document.getElementById('header-eps')?.offsetHeight || 0
-        const size = `${headerEpsSize + headerSize + 5}px`
-        this.sizeHead = `calc(100vh - ${size})`
-      } else {
-        this.sizeHead = 'auto'
-      }
     },
   },
 })

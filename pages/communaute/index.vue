@@ -1,32 +1,13 @@
 <template>
   <div>
-    <div class="my-10 text-3xl text-center text-white font-indie">
-      Les makers de la communauté :
+    <div class="mt-5 text-3xl text-center text-white font-indie">
+      La communauté :
     </div>
-    <div
-      class="
-        w-11/12
-        mx-auto
-        mb-3
-        text-right text-white
-        md:w-1/2
-        lg:w-1/3
-        xl:w-1/4
-      "
-    >
-      <label for="sort-select">Top maker par:</label>
-      <select
-        id="sort-select"
-        v-model="sort"
-        name="sort"
-        class="bg-royalblue-700"
-      >
-        <option value="streak">🔥</option>
-        <option value="karma">🕉</option>
-        <option value="incomes">💰</option>
-      </select>
+    <div class="flex flex-col w-full md:flex-row">
+      <LadderMakers v-if="loaded" :users="users" />
+      <LadderProject v-if="loaded" :projects="projects" />
     </div>
-    <LadderMakers v-if="loaded" :users="users" />
+
     <div class="flex w-1/4 px-10 py-5 mx-auto text-white">
       <button
         type="button"
@@ -42,40 +23,34 @@
         "
         @click="joinUs()"
       >
-        👉 Rejoin nous
+        👉 Rejoins nous
       </button>
     </div>
   </div>
 </template>
 <script>
-import { discordMakers } from '~/services/rss'
+import { discordMakers, discordProjects } from '~/services/rss'
 export default {
   components: {
     LadderMakers: () => import('~/components/LadderMakers.vue'),
+    LadderProject: () => import('~/components/LadderProject.vue'),
   },
   async asyncData({ $config }) {
-    const data = await discordMakers($config)
-    return await data
+    const dataUser = await discordMakers($config)
+    const dataProj = await discordProjects($config)
+    return await { ...dataUser, ...dataProj }
   },
   data() {
     return {
-      sort: 'streak',
       loaded: false,
     }
   },
-  watch: {
-    // whenever question changes, this function will run
-    sort(newSort) {
-      this.users.sort((a, b) => b[newSort] - a[newSort])
-    },
-  },
   mounted() {
-    this.users.sort((a, b) => b[this.sort] - a[this.sort])
     this.loaded = true
   },
   methods: {
     joinUs() {
-      this.$router.push('/discord')
+      window.open('https://discord.gg/GctKEcDpxk', '_blank')
     },
   },
 }

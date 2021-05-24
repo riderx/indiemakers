@@ -1,0 +1,185 @@
+https://codesandbox.io/s/github/stripe-samples/firebase-subscription-payments/tree/codelabs?file=/public/index.html
+5. Use the extension in your web app
+Read product and pricing data and render it to the page
+Navigate back to your CodeSandbox project and let's update the app so that it fetches the product and pricing data and renders it to the page.
+
+In CodeSandbox, open the public/javascript/app.js file.
+Add the following code below the "Data listeners" comment.
+
+/**
+ * Data listeners
+ */
+function startDataListeners() {
+  // Get all our products and render them to the page
+  const products = document.querySelector(".products");
+  const template = document.querySelector("#product");
+  db.collection("products")
+    .where("active", "==", true)
+    .get()
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(async function (doc) {
+        const priceSnap = await doc.ref
+          .collection("prices")
+          .orderBy("unit_amount")
+          .get();
+        if (!"content" in document.createElement("template")) {
+          console.error("Your browser doesn't support HTML template elements.");
+          return;
+        }
+
+        const product = doc.data();
+        const container = template.content.cloneNode(true);
+
+        container.querySelector("h2").innerText = product.name.toUpperCase();
+        container.querySelector(".description").innerText =
+          product.description.toUpperCase() || "";
+        // Prices dropdown
+        priceSnap.docs.forEach((doc) => {
+          const priceId = doc.id;
+          const priceData = doc.data();
+          const content = document.createTextNode(
+            `${new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: priceData.currency
+            }).format((priceData.unit_amount / 100).toFixed(2))} per ${
+              priceData.interval
+            }`
+          );
+          const option = document.createElement("option");
+          option.value = priceId;
+          option.appendChild(content);
+          container.querySelector("#price").appendChild(option);
+        });
+
+        if (product.images.length) {
+          const img = container.querySelector("img");
+          img.src = product.images[0];
+          img.alt = product.name;
+        }
+
+        const form = container.querySelector("form");
+        form.addEventListener("submit", subscribe);
+
+        products.appendChild(container);
+      });
+    });
+}
+Create a subscription for your customer
+To create a subscription for your customer, you first need to create a Checkout Session, which is the programmatic representation of what your customer sees when they're redirected to the payment form. The extension listens to documents being created in the checkout_session sub-collection and then creates the checkout session for you.
+
+In your app.js below the "Event listeners" comment block add the following code.
+
+
+/**
+ * Event listeners
+ */
+
+// Signout button
+document
+  .getElementById("signout")
+  .addEventListener("click", () => firebase.auth().signOut());
+
+// Checkout handler
+async function subscribe(event) {
+  event.preventDefault();
+  document.querySelectorAll('button').forEach((b) => (b.disabled = true));
+  const formData = new FormData(event.target);
+
+  const docRef = await db
+    .collection("customers")
+    .doc(currentUser)
+    .collection("checkout_sessions")
+    .add({
+      price: formData.get("price"),
+      allow_promotion_codes: true,
+      success_url: window.location.origin,
+      cancel_url: window.location.origin
+    });
+
+  // Wait for the CheckoutSession to get attached by the extension
+  docRef.onSnapshot((snap) => {
+    const { sessionId } = snap.data();
+    if (sessionId) {
+      // We have a session, let's redirect to Checkout
+      const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+      stripe.redirectToCheckout({ sessionId });
+    }
+  });
+}
+Show the active subscription once created
+When the customer has successfully signed up for the subscription we want to show them which pricing plan they are subscribed to.
+
+In your app.js extend your startDataListeners function with the following:
+
+
+/**
+ * Data listeners
+ */
+function startDataListeners() {
+  // Get all our products and render them to the page
+  const products = document.querySelector(".products");
+  const template = document.querySelector("#product");
+// [...] add below your existing code
+  // Get all active or trialing subscriptions for the customer
+  db.collection("customers")
+    .doc(currentUser)
+    .collection("subscriptions")
+    .where("status", "in", ["trialing", "active"])
+    .onSnapshot(async (snapshot) => {
+      if (snapshot.empty) {
+        // Show products
+        document.querySelector("#subscribe").style.display = "block";
+        return;
+      }
+      document.querySelector("#subscribe").style.display = "none";
+      document.querySelector("#my-subscription").style.display = "block";
+      // In this implementation we only expect one Subscription to exist
+      const subscription = snapshot.docs[0].data();
+      const priceData = (await subscription.price.get()).data();
+      document.querySelector(
+        "#my-subscription p"
+      ).textContent = `You are paying ${new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: priceData.currency
+      }).format((priceData.unit_amount / 100).toFixed(2))} per ${
+        priceData.interval
+      }`;
+    });
+}
+Test it out
+In order for the redirect to Checkout to work you will need to open the preview pane in a new window: d841eb724fc5a07a.png
+
+In the new window/tab select your product & pricing and click the subscribe button.
+Wait for the redirect to Stripe Checkout (Note: this can take a couple of seconds for the first execution as Firebase needs to spin up your Cloud Functions).
+On the Stripe Checkout page, pay with the test card number 4242424242424242, any future data, and any three digits for the CVC. Or select the Google Pay option. c39f0aff311ed0a2.png
+Wait for the redirect back to your web app and see your active subscription in the "My Subscription" section: 2abaf5b7823ad034.png
+What is happening behind the scenes?
+When your customer completes the checkout form with their payment details and therefore starts an active subscription or trial, Stripe sends a webhook event to one of your Cloud Functions that the extension set up.
+
+The extension automatically processes the webhook event to retrieve the new subscription status and updates it in your Cloud Firestore. Additionally, if you set a firebaseRole in your product metadata in Stripe, the extension will set the corresponding stripeRole as a custom claim to your user which you can use to control access to restricted content for example.
+
+Thanks to the webhook channel via Cloud Functions, Stripe can always update your application about changes. For example if a customer's card gets canceled and Stripe can't create a successful payment, the change is synced with your Cloud Firestore and the custom claim role will be removed from the user.
+
+Access the Stripe customer portal
+In order for your customers to manage their subscriptions and payment methods send them to the Stripe customer portal.
+
+Learn more about the Stripe customer portal here.
+
+In your app.js below your "Checkout handler" add the following code. Make sure to change the functionLocation variable to the location to the region you selected when installing the extension.
+
+
+// Billing portal handler
+const functionLocation = "TODO"; // us-central1, for example
+document
+  .querySelector("#billing-portal-button")
+  .addEventListener("click", async (event) => {
+    document.querySelectorAll('button').forEach((b) => (b.disabled = true));
+
+    // Call billing portal function
+    const functionRef = firebase
+      .app()
+      .functions(functionLocation)
+      .httpsCallable("ext-firestore-stripe-subscriptions-createPortalLink");
+    const { data } = await functionRef({ returnUrl: window.location.origin });
+    window.location.assign(data.url);
+  });

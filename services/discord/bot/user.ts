@@ -43,7 +43,7 @@ export interface User {
   createdAt: string
   updatedAt: string
 }
-const userPublicFlieds = ['karma', 'tasks', 'projects', 'streak']
+const userPublicFlieds = ['karma', 'streak', 'tasks', 'projects']
 const userProtectedKey = [
   'userId',
   'username',
@@ -81,8 +81,8 @@ const translations = {
   couleur: 'color',
   nom: 'name',
   couverture: 'cover',
-  makerlog: 'makerlogHook',
-  wip: 'wipApiKey',
+  makerlog_hook: 'makerlogHook',
+  wip_key: 'wipApiKey',
   photo: 'avatarUrl',
   '🔥 Flammes': 'streak',
   '🕉 karma': 'karma',
@@ -94,6 +94,26 @@ export const getUsersById = async (userId: string): Promise<User | null> => {
   try {
     const res = await admin.firestore().collection('/discord').doc(userId).get()
     const data = res.data()
+    return data !== undefined ? (data as User) : null
+  } catch (err) {
+    console.error('getUsersById', err)
+    return null
+  }
+}
+
+export const getUsersByUsername = async (
+  username: string
+): Promise<User | null> => {
+  try {
+    const snapshot = await admin
+      .firestore()
+      .collection('/discord')
+      .where('username', '==', username)
+      .get()
+    let data
+    snapshot.forEach((doc) => {
+      data = doc.data()
+    })
     return data !== undefined ? (data as User) : null
   } catch (err) {
     console.error('getUsersById', err)
@@ -126,8 +146,13 @@ export const updateUser = async (
       updatedAt: dayjs().toISOString(),
     }
     if (userInfo) {
-      base.avatar = userInfo.avatar
-      base.avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${userInfo.avatar}.png`
+      if (userInfo.avatar) {
+        base.avatar = userInfo.avatar
+        base.avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${userInfo.avatar}.png`
+      } else {
+        base.avatarUrl =
+          'https://res.cloudinary.com/forgr/image/upload/v1621079734/indiemakers/cover-im_no_gjzhog.jpg'
+      }
       base.username = userInfo.username
     }
     const newUser: User = Object.assign(base, user as User)
@@ -155,7 +180,7 @@ const userEdit = (
     updateUser(userId, update),
     sendTxtLater(
       `Tu as mis a jour ton profil !
-      Cela aideras les autres makers 👨‍🌾 a te connaitre !`,
+Cela aideras les autres makers 👨‍🌾 a te connaitre !`,
       [],
       interaction.application_id,
       interaction.token
@@ -166,7 +191,7 @@ const userEdit = (
 const userCard = (user: User) => {
   const fields = getFields(user, userPublicFlieds, translations)
   const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
-  const bio = user.bio || 'Un jour je serai grand !'
+  const bio = user.bio || 'Indie Maker en devenir !'
   const thumb = image(user.avatarUrl)
   return embed(
     name,
@@ -176,7 +201,7 @@ const userCard = (user: User) => {
     undefined,
     undefined,
     user.createdAt,
-    undefined,
+    `https://indiemakers.fr/communaute/${user.userId}`,
     thumb
   )
 }
@@ -278,7 +303,7 @@ const userView = async (
     )
     await openChannel(myId).then((channel) => {
       console.error('channel', channel)
-      sendChannel(channel.id, `Voici tes infos complètes !`, card)
+      sendChannel(channel.id, `Voici tes infos complètes :`, card)
     })
     return Promise.resolve()
   }

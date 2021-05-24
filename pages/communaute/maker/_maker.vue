@@ -97,9 +97,10 @@
           🪴 {{ maker.projects }} Projets
         </h1>
         <div class="flex w-full overflow-x-scroll md:flex-col">
-          <div
+          <NuxtLink
             v-for="project in maker.projectsData"
             :key="project.hashtag"
+            :to="`/communaute/maker/${maker.userId}/projet/${project.hashtag}`"
             class="flex-none my-4 ml-3 cursor-pointer md:my-2 lg:my-4 md:ml-0"
             @click="projectId = project.hashtag"
           >
@@ -133,33 +134,16 @@
                 >🔥{{ project.streak }}</span
               >
             </div>
-          </div>
+          </NuxtLink>
         </div>
       </div>
-      <div v-if="projectData && loadedProject" class="md:w-4/5 md:mx-2">
+      <NuxtChild />
+      <!-- <div v-if="projectData && loadedProject" class="md:w-4/5 md:mx-2">
         <div
-          class="
-            flex flex-col
-            items-center
-            p-10
-            mb-2
-            bg-white
-            text-royalblue-700
-            lg:flex-row
-          "
+          class="flex flex-col items-center p-10 mb-2 bg-white text-royalblue-700 lg:flex-row"
         >
           <img
-            class="
-              object-cover
-              w-32
-              h-32
-              mb-5
-              border-2
-              rounded-lg
-              border-royalblue-700
-              lg:mb-0
-              lg:mr-3
-            "
+            class="object-cover w-32 h-32 mb-5 border-2 rounded-lg border-royalblue-700 lg:mb-0 lg:mr-3"
             :src="projectData.logo || noImge"
           />
           <div class="text-center lg:text-left">
@@ -187,7 +171,7 @@
             :all="projectData.incomesData"
           />
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -198,12 +182,12 @@ import { Project } from '~/services/discord/bot/project'
 import { User } from '~/services/discord/bot/user'
 
 export default Vue.extend({
-  components: {
-    ListTasks: () => import('~/components/ListTasks.vue'),
-    ListIncomes: () => import('~/components/ListIncomes.vue'),
-  },
+  // components: {
+  //   ListTasks: () => import('~/components/ListTasks.vue'),
+  //   ListIncomes: () => import('~/components/ListIncomes.vue'),
+  // },
   async asyncData({ params, $config }) {
-    const maker = await discordMakerId($config, params.id)
+    const maker = await discordMakerId($config, params.maker)
     if (maker && maker.projectsData && maker.projectsData.length > 0) {
       return { maker, projectId: maker.projectsData[0].hashtag }
     }
@@ -271,14 +255,17 @@ export default Vue.extend({
       ],
     }
   },
-  watch: {
-    // whenever question changes, this function will run
-    projectId(newId) {
-      this.getProject(newId)
-    },
-  },
+  // watch: {
+  //   // whenever question changes, this function will run
+  //   projectId(newId) {
+  //     this.getProject(newId)
+  //   },
+  // },
   mounted() {
-    this.getProject(this.projectId)
+    // this.getProject(this.projectId)
+    // this.$router.push(
+    //   `/communaute/maker/${this.maker.userId}/projet/${this.projectId}`
+    // )
     this.loaded = true
   },
   methods: {

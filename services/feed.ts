@@ -103,7 +103,7 @@ export interface Episode {
   date: dayjs.Dayjs
   twitter: Social
   name: Social
-  insta: Social
+  instagram: Social
   linkedin: Social
   titleNoEmoji: string
   contentNoEmoji: string
@@ -112,6 +112,7 @@ export interface Episode {
   imageOptimized: string
   imageBig: string
   imageLoading: string
+  audio: string
 }
 export const feed = async () => {
   const items: Episode[] = []
@@ -127,14 +128,15 @@ export const feed = async () => {
         element.date = dayjs(element.isoDate).fromNow()
         element.twitter = findRegx(linkTwitterRe, element.content)
         element.name = findRegx(nameRe, element.content)
-        element.insta = findRegx(linkInstagramRe, element.content)
+        element.instagram = findRegx(linkInstagramRe, element.content)
         element.linkedin = findRegx(linkLinkedinRe, element.content)
         element.titleNoEmoji = removeEmoji(element.title)
         element.contentNoEmoji = removeEmoji(element.content)
+        element.audio = element.enclosure.url
         if (element.twitter && element.twitter.name) {
           element.social = element.twitter
-        } else if (element.insta && element.insta.name) {
-          element.social = element.insta
+        } else if (element.instagram && element.instagram.name) {
+          element.social = element.instagram
         } else if (element.linkedin && element.linkedin.name) {
           element.social = element.linkedin
         } else {

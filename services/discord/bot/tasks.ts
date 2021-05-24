@@ -179,9 +179,9 @@ const updateProjectTaskAndStreak = async (
   }
   const lastTaskAt = dayjs(proj.lastTaskAt)
   if (proj.lastTaskAt && lastDay().isBefore(lastTaskAt)) {
-    updatedProject.streak = proj.streak + 1
+    updatedProject.streak = (proj.streak || 0) + 1
   } else {
-    updatedProject.streak = 1
+    updatedProject.streak = 0
   }
   return updateProject(userId, proj.hashtag, updatedProject)
 }
@@ -194,9 +194,9 @@ export const updateUserTaskAndStreak = (usr: User) => {
     }
     const lastTaskAt = dayjs(usr.lastTaskAt)
     if (usr.lastTaskAt && lastDay().isBefore(lastTaskAt)) {
-      updatedUser.streak = superTotal.streak + 1
+      updatedUser.streak = (superTotal.streak || 0) + 1
     } else {
-      updatedUser.streak = 1
+      updatedUser.streak = 0
     }
     return updateUser(usr.userId, updatedUser)
   })
@@ -223,8 +223,8 @@ const taskAdd = async (
     return Promise.all([
       sendTxtLater(
         `La tache 💗:
-        ${task.content}
-        A été ajouté au projet #${projectId}, 🎉!`,
+${task.content}
+A été ajouté au projet #${projectId}, 🎉!`,
         [],
         interaction.application_id,
         interaction.token
@@ -271,8 +271,8 @@ const taskEdit = (
   return Promise.all([
     sendTxtLater(
       `La tache 💗:
-      ${taskId}: ${task.content}
-      A été mise a jours dans le projet #${projectId}, 🎉!`,
+${taskId}: ${task.content}
+A été mise a jour dans le projet #${projectId}, 🎉!`,
       [],
       interaction.application_id,
       interaction.token

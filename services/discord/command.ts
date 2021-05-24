@@ -99,6 +99,7 @@ const choiceGen = (
   name: string,
   value: string
 ): applicationCommandOptionChoice => ({ name, value })
+
 const optionGen = (
   name: string,
   description: string,
@@ -119,6 +120,7 @@ const optionGen = (
   }
   return result
 }
+
 const projetHashtag = optionGen(
   'hashtag',
   'Le hashtag de ton projet (nom sans espaces)',
@@ -132,6 +134,7 @@ const makerId = optionGen(
   SlashCommandOptionType.USER,
   true
 )
+
 const makerIdOptional = optionGen(
   'maker',
   'Le maker désiré',
@@ -153,12 +156,14 @@ const taskValues = [
     [choiceGen('A faire', 'todo'), choiceGen('Fait', 'done')]
   ),
 ]
+
 const taskId = optionGen(
   'id',
   'Identifiant unique de la tâche',
   SlashCommandOptionType.STRING,
   true
 )
+
 const taskAdd = optionGen(
   'ajouter',
   'Ajouter une tâche à un projet',
@@ -167,6 +172,7 @@ const taskAdd = optionGen(
   undefined,
   [projetHashtag, ...taskValues]
 )
+
 const taskEdit = optionGen(
   'modifier',
   "Modifier une tâche d'un projet",
@@ -175,6 +181,7 @@ const taskEdit = optionGen(
   undefined,
   [projetHashtag, taskId, ...taskValues]
 )
+
 const taskDelete = optionGen(
   'supprimer',
   "Supprimer une tâche d'un projet",
@@ -183,6 +190,7 @@ const taskDelete = optionGen(
   undefined,
   [projetHashtag, taskId]
 )
+
 const taskList = optionGen(
   'liste',
   "Voir toute la liste des tâches d'un projet",
@@ -192,14 +200,11 @@ const taskList = optionGen(
   [projetHashtag, makerIdOptional]
 )
 
-const incomeValues = [
-  optionGen(
-    'montant',
-    'Montant du revenu',
-    SlashCommandOptionType.STRING,
-    true
-  ),
-  optionGen('mois', 'mois du revenu', SlashCommandOptionType.STRING, true, [
+const year = (name: string, required = true) =>
+  optionGen('année', `Année ${name}`, SlashCommandOptionType.STRING, required)
+
+const month = (name: string, required = true) =>
+  optionGen('mois', `mois ${name}`, SlashCommandOptionType.STRING, required, [
     choiceGen('Janvier', '01'),
     choiceGen('Février', '02'),
     choiceGen('Mars', '03'),
@@ -212,9 +217,18 @@ const incomeValues = [
     choiceGen('Septembre', '09'),
     choiceGen('Octobre', '10'),
     choiceGen('Novembre', '11'),
-    choiceGen('Décembre', '12'),
-  ]),
-  optionGen('année', 'Année du revenu', SlashCommandOptionType.STRING, true),
+    choiceGen('Decembre', '12'),
+  ])
+
+const incomeValues = [
+  optionGen(
+    'montant',
+    'Montant du revenu',
+    SlashCommandOptionType.STRING,
+    true
+  ),
+  month('du revenu'),
+  year('du revenu'),
 ]
 
 const incomeId = optionGen(
@@ -223,6 +237,7 @@ const incomeId = optionGen(
   SlashCommandOptionType.STRING,
   true
 )
+
 const incomeAdd = optionGen(
   'ajouter',
   'ajouter un revenu à un projet',
@@ -231,6 +246,7 @@ const incomeAdd = optionGen(
   undefined,
   [projetHashtag, ...incomeValues]
 )
+
 const incomeEdit = optionGen(
   'modifier',
   "Modifier un revenu d'un projet",
@@ -239,6 +255,7 @@ const incomeEdit = optionGen(
   undefined,
   [projetHashtag, incomeId, ...incomeValues]
 )
+
 const incomeDelete = optionGen(
   'supprimer',
   "Supprimer un revenu d'un projet",
@@ -247,6 +264,7 @@ const incomeDelete = optionGen(
   undefined,
   [projetHashtag, incomeId]
 )
+
 const incomeList = optionGen(
   'liste',
   "Voir toute la liste des revenus d'un projet",
@@ -281,6 +299,8 @@ const projetOptions = [
       choiceGen('Autre', 'autre'),
     ]
   ),
+  month('de création', false),
+  year('de création', false),
   optionGen(
     'logo',
     "L'url vers le logo de ton projet",
@@ -333,14 +353,18 @@ const makerOptions = [
     "L'url vers ta photo de couverture",
     SlashCommandOptionType.STRING
   ),
-  optionGen('twitter', 'Ton nom twitter', SlashCommandOptionType.STRING),
+  optionGen('github', 'Ton github', SlashCommandOptionType.STRING),
+  optionGen('makerlog', 'Ton makerlog', SlashCommandOptionType.STRING),
+  optionGen('wip', 'Ton wip', SlashCommandOptionType.STRING),
+  optionGen('twitter', 'Ton twitter', SlashCommandOptionType.STRING),
+  optionGen('nomadlist', 'Ton nomadlist', SlashCommandOptionType.STRING),
   optionGen(
-    'makerlog',
+    'makerlog_hook',
     'La web hook de ton compte makerlog, pour que le bot poste tes taches',
     SlashCommandOptionType.STRING
   ),
   optionGen(
-    'wip',
+    'wip_key',
     'La clé api de ton compte wip.co, pour que le bot poste tes taches',
     SlashCommandOptionType.STRING
   ),

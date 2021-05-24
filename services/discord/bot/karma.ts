@@ -60,7 +60,7 @@ const karmaAdd = async (
     }
     const curKarma = await getKarmaById(userId)
     const botString = `Tu as donné du karma a <@${userId}> 😎
-    Total 🕉: ${curKarma.total + 1} karma!`
+Total 🕉: ${curKarma.total + 1} karma!`
     return Promise.all([
       updateUser(userId, { karma: curKarma.total + 1 }),
       addKarmaById(userId, senderId, 1),
@@ -107,7 +107,7 @@ const karmaRm = async (
   const curKarma = await getKarmaById(userId)
   if (curKarma.total > 0) {
     const botString = `Tu as enlevé du karma a <@${userId}>
-    Total 🕉: ${curKarma.total - 1} karma 😢`
+Total 🕉: ${curKarma.total - 1} karma 😢`
     return Promise.all([
       updateUser(userId, { karma: curKarma.total - 1 }),
       addKarmaById(userId, senderId, -1),
@@ -121,7 +121,7 @@ const karmaRm = async (
   }
   return sendTxtLater(
     `<@${userId}> n'as plus de karma 🕉...
-    Laisse le tranquile 😢!`,
+Laisse le tranquile 😢!`,
     [],
     interaction.application_id,
     interaction.token
@@ -169,7 +169,7 @@ const karmaLadder = async (interaction: Interaction): Promise<void> => {
   return sendTxtLater(
     `Voici le classement karma de tous les makers:
 
-    ${await generateKarmaStats()}`,
+${await generateKarmaStats()}`,
     [],
     interaction.application_id,
     interaction.token

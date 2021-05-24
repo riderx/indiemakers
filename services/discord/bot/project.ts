@@ -27,6 +27,8 @@ import { Task } from './tasks'
 
 export interface Project {
   id?: string
+  userId?: string
+  userName?: string
   lastTaskAt?: string
   launchedAt?: string
   createdAt: string
@@ -75,6 +77,8 @@ const translations = {
   couleur: 'color',
   nom: 'name',
   couverture: 'cover',
+  année: 'year',
+  mois: 'month',
   categorie: 'category',
   stripe: 'stripeApiKey',
   open_source: 'openSource',
@@ -92,7 +96,7 @@ export const getAllProjects = async (userId: string): Promise<Project[]> => {
       const doc = documents.docs[index]
       const data = (await doc.data()) as Project
       if (data !== undefined) {
-        projects.push({ id: doc.id, ...(data as Project) })
+        projects.push({ userId, id: doc.id, ...(data as Project) })
       }
     }
     return projects
@@ -273,6 +277,7 @@ const projectAdd = (
 ): Promise<void> => {
   const newProj: Partial<Project> = {
     createdAt: dayjs().toISOString(),
+    logo: 'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg',
   }
 
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
@@ -284,11 +289,13 @@ const projectAdd = (
       sendTxtLater(
         `Tu as crée le projet: #${newProj.hashtag} 👏
 
-        Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache hashtag: ${newProj.hashtag} contenue: Ma super tache\` 💗
-        ou
-        remplir sa description avec \`/im projet hashtag: ${newProj.hashtag} modifier description: mon super projet\` 🪴
-        ou
-        enregistrer un premier revenue avec \`/im revenue ajouter hashtag: ${newProj.hashtag} revenue 42 mois: Février 2021 \`💰!`,
+Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache hashtag: ${newProj.hashtag} contenue: Ma super tache\` 💗
+ou
+remplir sa description avec \`/im projet hashtag: ${newProj.hashtag} modifier description: mon super projet\` 🪴
+ou
+enregistrer un premier revenue avec \`/im revenue ajouter hashtag: ${newProj.hashtag} revenue 42 mois: Février 2021 \`💰!
+Tu peux voir toute les infos que tu rentre sur ta page : https://indiemakers.fr/communaute/${userId}
+`,
         [],
         interaction.application_id,
         interaction.token
@@ -326,8 +333,8 @@ const projectEdit = (
     console.error('projectEdit', update)
     return Promise.all([
       sendTxtLater(
-        `Tu as mis a jours:\n#${update.hashtag}
-        Bravo 💪, une marche après l'autre tu fais grandir ce projet!`,
+        `Tu as mis a jour:\n#${update.hashtag}
+Bravo 💪, une marche après l'autre tu fais grandir ce projet!`,
         [],
         interaction.application_id,
         interaction.token
@@ -348,7 +355,7 @@ const projectEdit = (
 const projectCard = (project: Project) => {
   const fields = getFields(project, projectPublicKey, translations)
   const name = `${project.emoji || '🪴'} ${project.name || project.hashtag}`
-  const description = project.description || 'Un jours je serais grand 👶!'
+  const description = project.description || 'Un jour je serais grand 👶!'
   const thumb = project.logo ? image(project.logo) : undefined
   if (project.website) {
     fields.push(
@@ -474,7 +481,7 @@ const projectDelete = (
       deleteAllProjectsTasks(userId, projectId),
       sendTxtLater(
         `Tu as supprimé ton projet ${projectId} et ses taches 🚮!
-        Savoir terminer un projet est une force!`,
+Savoir terminer un projet est une force!`,
         [],
         interaction.application_id,
         interaction.token

@@ -89,15 +89,17 @@
     </div>
   </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   data() {
     return {
       email: '',
       name: '',
-      loggin: false,
+      loggin: null as any,
       loading: true,
-      tools: [],
+      tools: [] as any[],
       title: 'Mes outils quotidiens',
       description:
         "Voici les meilleurs outils que j'ai trouvé pour concretiser mes projets !",
@@ -107,22 +109,30 @@ export default {
   },
   head() {
     return {
-      title: this.title,
+      title: (this as any).title,
       meta: [
         {
           hid: 'og:url',
           property: 'og:url',
           content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
         },
-        { hid: 'title', name: 'title', content: this.title },
-        { hid: 'description', name: 'description', content: this.desc },
-        { hid: 'og:title', property: 'og:title', content: this.title },
+        { hid: 'title', name: 'title', content: (this as any).title },
+        {
+          hid: 'description',
+          name: 'description',
+          content: (this as any).desc,
+        },
+        { hid: 'og:title', property: 'og:title', content: (this as any).title },
         {
           hid: 'og:description',
           property: 'og:description',
-          content: this.desc,
+          content: (this as any).desc,
         },
-        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
+        {
+          hid: 'og:image:alt',
+          property: 'og:image:alt',
+          content: (this as any).title,
+        },
         {
           hid: 'og:image:type',
           property: 'og:image:type',
@@ -146,7 +156,7 @@ export default {
   mounted() {
     this.email = this.$warehouse.get('emailForSignIn')
     // this.loggin = fb.auth().currentUser
-    this.$firebase.auth.listen((user) => {
+    this.$firebase.auth.listen((user: any) => {
       this.loggin = user
       if (this.loggin && this.loggin.displayName === null) {
         this.$modal.show('confirmName')
@@ -158,17 +168,17 @@ export default {
       .orderBy('votes', 'desc')
       .orderBy('addDate', 'asc')
       .run()
-      .then((results) => {
+      .then((results: any[]) => {
         this.tools = results
         this.loading = false
       })
   },
   methods: {
-    openBlank(link) {
+    openBlank(link: string) {
       window.open(link, '_blank')
     },
   },
-}
+})
 </script>
 <style scoped>
 .form-size {

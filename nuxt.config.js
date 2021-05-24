@@ -94,6 +94,15 @@ export default {
   serverMiddleware: serverMiddleware(),
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'canny_all',
+        path: '/canny/*',
+        component: resolve(__dirname, 'pages/canny/index.vue'),
+      })
+    },
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [

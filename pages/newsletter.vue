@@ -98,8 +98,9 @@
     </div>
   </div>
 </template>
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   data() {
     return {
       email: '',
@@ -115,22 +116,30 @@ export default {
   },
   head() {
     return {
-      title: this.title,
+      title: (this as any).title,
       meta: [
         {
           hid: 'og:url',
           property: 'og:url',
           content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
         },
-        { hid: 'title', name: 'title', content: this.title },
-        { hid: 'description', name: 'description', content: this.desc },
-        { hid: 'og:title', property: 'og:title', content: this.title },
+        { hid: 'title', name: 'title', content: (this as any).title },
+        {
+          hid: 'description',
+          name: 'description',
+          content: (this as any).desc,
+        },
+        { hid: 'og:title', property: 'og:title', content: (this as any).title },
         {
           hid: 'og:description',
           property: 'og:description',
-          content: this.desc,
+          content: (this as any).desc,
         },
-        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
+        {
+          hid: 'og:image:alt',
+          property: 'og:image:alt',
+          content: (this as any).title,
+        },
         {
           hid: 'og:image:type',
           property: 'og:image:type',
@@ -146,8 +155,8 @@ export default {
           property: 'og:image:secure_url',
           content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
         },
-        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
-        { hid: 'og:image:height', property: 'og:image:height', content: 400 },
+        { hid: 'og:image:width', property: 'og:image:width', content: '400' },
+        { hid: 'og:image:height', property: 'og:image:height', content: '400' },
       ],
     }
   },
@@ -174,7 +183,7 @@ export default {
         })
     },
   },
-}
+})
 </script>
 <style scoped>
 .form-size {

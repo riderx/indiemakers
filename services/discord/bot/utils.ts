@@ -315,30 +315,37 @@ export const morningBot = async () => {
   const data = res.data()
   if (data) {
     const usrTt = await getAllUsers()
-    const usersInfoCards = usersViewStreak(usrTt)
     await Promise.all(
       usrTt.users.map((usr) => {
         return updateUserTaskAndStreak(usr)
       })
     )
-    await sendChannel(
-      data.channel_bip,
-      `Hey Makers, Encore une belle journée pour shipper 🚤 !
+    const usersInfoCards = usersViewStreak(await getAllUsers())
+    if (usersInfoCards.length > 0) {
+      await sendChannel(
+        data.channel_bip,
+        `Hey Makers, Encore une belle journée pour shipper 🚤 !
 
-      Continuez comme ça :`
-    )
-    await Promise.all(
-      usersInfoCards.map((card) => {
-        return sendChannel(data.channel_bip, '', card)
-      })
-    )
+  Continuez comme ça :`
+      )
+      for (let index = 0; index < usersInfoCards.length; index++) {
+        const card = usersInfoCards[index]
+        // console.error('card', card)
+        await sendChannel(data.channel_bip, '', card)
+      }
+    } else {
+      await sendChannel(
+        data.channel_bip,
+        `Hey Makers, Personne n'as shipper 🚤 cette semaine 😢 !`
+      )
+    }
     if (dayjs().day() === 1) {
       await sendChannel(
         data.channel_general,
         `Hey Makers, Faites moi un petit récap de votre semaine:
-        - 1 Bon point
-        - 1 point compliqué
-        MINIMUM 💪!`
+  - 1 Bon point
+  - 1 point compliqué
+MINIMUM 💪!`
       )
       await updateRevenueAllProject()
     }

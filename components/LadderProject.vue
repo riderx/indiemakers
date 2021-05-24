@@ -1,7 +1,7 @@
 <template>
   <div class="w-full pt-5">
     <div class="w-11/12 mx-auto mb-3 text-right text-white md:w-full lg:w-1/2">
-      <label for="sort-select">Top maker par:</label>
+      <label for="sort-select">Top Projets par:</label>
       <select
         id="sort-select"
         v-model="sort"
@@ -9,9 +9,8 @@
         class="bg-royalblue-700"
       >
         <option value="streak">🔥</option>
-        <option value="karma">🕉</option>
+        <option value="tasks">💗</option>
         <option value="incomes">💰</option>
-        <option value="projects">🪴</option>
       </select>
     </div>
     <div
@@ -31,35 +30,32 @@
       "
     >
       <div
-        v-for="maker in sorted"
-        :key="maker.username"
-        class="flex py-3 border-b-2 cursor-pointer border-orchid-300"
-        @click="openProfil(maker.username)"
+        v-for="project in sorted"
+        :key="project.hashtag"
+        class="flex py-3 border-b-2 border-orchid-300"
+        @click="openProject(project.userId, project.hashtag)"
       >
         <img
           class="object-cover w-12 h-12 border-2 rounded-full border-orchid-300"
-          :src="maker.avatarUrl"
+          :src="project.logo || noImge"
           alt="cover profil"
         />
         <div class="flex flex-col mx-3">
-          <h1 class="text-lg font-medium" :style="getTextColor(maker.color)">
+          <h1 class="text-lg font-medium" :style="getTextColor(project.color)">
             <div class="inline bg-white rounded-full">
-              {{ maker.emoji || '' }}
+              {{ project.emoji || '' }}
             </div>
-            {{ maker.name || maker.username }}
+            {{ project.hashtag || project.name }}
           </h1>
           <div class="flex text-sm">
             <p class="px-2 mx-2 bg-white rounded text-royalblue-700">
-              🔥{{ maker.streak }}
+              🔥{{ project.streak }}
             </p>
             <p class="px-2 mx-2 bg-white rounded text-royalblue-700">
-              🕉 {{ maker.karma }}
+              💗 {{ project.tasks }}
             </p>
             <p class="px-2 mx-2 bg-white rounded text-royalblue-700">
-              🪴 {{ maker.projects }}
-            </p>
-            <p class="px-2 mx-2 bg-white rounded text-royalblue-700">
-              💰 {{ maker.incomes }} €
+              💰 {{ project.incomes }} €
             </p>
           </div>
         </div>
@@ -70,16 +66,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { User } from '~/services/types'
+import { Project } from '~/services/discord/bot/project'
 export default Vue.extend({
-  name: 'LaderMakers',
+  name: 'LaderProject',
   props: {
-    users: { type: Array, default: () => [] },
+    projects: { type: Array, default: () => [] },
   },
   data() {
     return {
       sort: 'streak',
-      sorted: [] as User[],
+      sorted: [] as Project[],
       noImge:
         'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg',
     }
@@ -90,7 +86,7 @@ export default Vue.extend({
     },
   },
   mounted() {
-    this.sorted = [...(this.users as User[])]
+    this.sorted = [...(this.projects as Project[])]
     this.sortAll(this.sort)
   },
   methods: {
@@ -103,8 +99,9 @@ export default Vue.extend({
       }
       return {}
     },
-    openProfil(id: string) {
-      this.$router.push(`/communaute/${id}`)
+    openProject(id: string, projectId: string) {
+      console.error(id, projectId)
+      // this.$router.push(`/communaute/maker/${id}/projet/${projectId}`)
     },
   },
 })

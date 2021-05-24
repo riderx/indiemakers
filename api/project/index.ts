@@ -1,8 +1,13 @@
 import { Request, Response } from 'express'
-import { getProjectById } from '../../services/discord/bot/project'
+import {
+  getAllProjects,
+  getProjectById,
+  Project,
+} from '../../services/discord/bot/project'
 import { getAllProjectsIncomes } from '../../services/discord/bot/incomes'
 import { getAllProjectsTasks } from '../../services/discord/bot/tasks'
 import fFnit from '../../services/firebase_init'
+import { getAllUsers, User } from '../../services/discord/bot/user'
 
 const project = async (req: Request, res: Response) => {
   fFnit()
@@ -28,8 +33,18 @@ const project = async (req: Request, res: Response) => {
       res.json({ error: 'not found' })
     }
   } else {
-    res.json({ error: 'not found' })
-    // res.json(await getAllUsersAndProjects())
+    try {
+      const usrTt = await getAllUsers()
+      const arrays: Project[][] = await Promise.all(
+        usrTt.users.map((usr: User) => {
+          return getAllProjects(String(usr?.userId))
+        })
+      )
+      const projects: Project[] = arrays.reduce((a, b) => a.concat(b), [])
+      res.json({ projects })
+    } catch (err) {
+      res.json({ error: String(err) })
+    }
   }
 }
 export default project
