@@ -359,6 +359,11 @@ const makerOptions = [
   optionGen('twitter', 'Ton twitter', SlashCommandOptionType.STRING),
   optionGen('nomadlist', 'Ton nomadlist', SlashCommandOptionType.STRING),
   optionGen(
+    'talents',
+    'Tes talents ( tes competences phares)',
+    SlashCommandOptionType.STRING
+  ),
+  optionGen(
     'rappel_tache',
     'Rappel de tache ',
     SlashCommandOptionType.STRING,

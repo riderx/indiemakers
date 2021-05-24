@@ -31,10 +31,15 @@ export interface User {
   incomes: number
   tasks: number
   emoji?: string
+  skills?: string
   color?: string
   name?: string
   bio?: string
   twitter?: string
+  github?: string
+  makerlog?: string
+  wip?: string
+  nomadlist?: string
   cover?: string
   website?: string
   lastTaskAt?: string
@@ -86,6 +91,7 @@ const translations = {
   makerlog_hook: 'makerlogHook',
   wip_key: 'wipApiKey',
   photo: 'avatarUrl',
+  talents: 'skills',
   '🔥 Flammes': 'streak',
   '🕉 karma': 'karma',
   '🌱 Projets': 'projects',
@@ -196,6 +202,51 @@ const userCard = (user: User) => {
   const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
   const bio = user.bio || 'Indie Maker en devenir !'
   const thumb = image(user.avatarUrl)
+  if (user.website) {
+    fields.push(
+      field(transformKey(translations, 'website', true), user.website, false)
+    )
+  }
+  if (user.skills) {
+    fields.push(
+      field(transformKey(translations, 'skills', true), user.skills, false)
+    )
+  }
+  if (user.twitter) {
+    fields.push(
+      field(transformKey(translations, 'twitter', true), user.twitter, false)
+    )
+  }
+  if (user.wip) {
+    fields.push(field(transformKey(translations, 'wip', true), user.wip, false))
+  }
+  if (user.nomadlist) {
+    fields.push(
+      field(
+        transformKey(translations, 'nomadlist', true),
+        user.nomadlist,
+        false
+      )
+    )
+  }
+  if (user.cover) {
+    fields.push(
+      field(
+        transformKey(translations, 'cover', true),
+        user.cover ? 'Configuré' : 'Pas configuré',
+        false
+      )
+    )
+  }
+  if (user.taskReminder) {
+    fields.push(
+      field(
+        transformKey(translations, 'taskReminder', true),
+        user.taskReminder && user.taskReminder === 'true' ? 'Oui' : 'Non',
+        false
+      )
+    )
+  }
   return embed(
     name,
     bio,
