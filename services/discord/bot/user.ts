@@ -24,6 +24,7 @@ export interface User {
   avatar: string
   username: string
   avatarUrl: string
+  taskReminder: string
   streak: number
   karma: number
   projects: number
@@ -81,6 +82,7 @@ const translations = {
   couleur: 'color',
   nom: 'name',
   couverture: 'cover',
+  rappel_tache: 'taskReminder',
   makerlog_hook: 'makerlogHook',
   wip_key: 'wipApiKey',
   photo: 'avatarUrl',
@@ -137,6 +139,7 @@ export const updateUser = async (
       avatar: '',
       avatarUrl: '',
       streak: 0,
+      taskReminder: 'true',
       incomes: 0,
       karma: 0,
       projects: 0,

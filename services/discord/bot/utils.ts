@@ -299,6 +299,27 @@ const saveRateLimit = (limit: string | number) => {
     })
 }
 
+const personalReminder = async () => {
+  const usrTt = await getAllUsers()
+  await Promise.all(
+    usrTt.users.map((usr) => {
+      if (usr.taskReminder && usr.taskReminder === 'true' && usr.streak > 0) {
+        return openChannel(usr.userId).then((channel) => {
+          console.error('personalReminder', usr.userId)
+          return sendChannel(
+            channel.id,
+            `Tu as actuellement ${usr.streak} 🔥 !
+Si tu veux les conserver, fait une tache aujourd'hui sur tes projet même 5 min, ça compte !
+5*365/60 = 30 heures sur ton projet a la fin de l'année ❤️`
+          )
+        })
+      } else {
+        return Promise.resolve()
+      }
+    })
+  )
+}
+
 export const lateBot = async () => {
   const res = await admin.firestore().collection('bot').doc('config').get()
   const data = res.data()
@@ -307,6 +328,7 @@ export const lateBot = async () => {
       data.channel_bip,
       "Hey Makers, il est temps de noter vos taches dans vos projets et d'aller chill !"
     )
+    await personalReminder()
   }
 }
 

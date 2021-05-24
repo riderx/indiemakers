@@ -359,6 +359,13 @@ const makerOptions = [
   optionGen('twitter', 'Ton twitter', SlashCommandOptionType.STRING),
   optionGen('nomadlist', 'Ton nomadlist', SlashCommandOptionType.STRING),
   optionGen(
+    'rappel_tache',
+    'Rappel de tache ',
+    SlashCommandOptionType.STRING,
+    false,
+    [choiceGen('Oui', 'true'), choiceGen('Non', 'false')]
+  ),
+  optionGen(
     'makerlog_hook',
     'La web hook de ton compte makerlog, pour que le bot poste tes taches',
     SlashCommandOptionType.STRING
