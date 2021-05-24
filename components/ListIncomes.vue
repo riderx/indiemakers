@@ -1,7 +1,7 @@
 <template>
   <div class="w-1/2 p-10 bg-white">
     <button class="mb-5 text-3xl text-royalblue-700 lg:mb-10 font-indie">
-      {{ all.total }} € Revenues
+      {{ all.total }} € revenus
     </button>
     <div class="flex mb-5 border-b-2 lg:mb-10 border-royalblue-700">
       <button
@@ -12,7 +12,7 @@
         }"
         @click="status = 'income'"
       >
-        Revenue {{ incomesTotal }} € 💰
+        revenu {{ incomesTotal }} € 💰
       </button>
       <button
         class="mr-3 text-2xl text-royalblue-700 focus:outline-none"

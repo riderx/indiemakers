@@ -141,7 +141,7 @@ const incomeAdd = (
   newIncome.date = date.toISOString()
   return Promise.all([
     sendTxtLater(
-      `${newIncome.status === 'expense' ? 'La dépense' : 'Le revenue'} 💰: ${
+      `${newIncome.status === 'expense' ? 'La dépense' : 'Le revenu'} 💰: ${
         newIncome.ammount
       } ${dayjs(newIncome.date).format('MM/YYYY')}
 A été ajouté au projet #${projectId}, 🎉!`,
@@ -197,7 +197,7 @@ const incomeEdit = (
   return Promise.all([
     updateProjectIncome(userId, projectId, incomeId, update),
     sendTxtLater(
-      `Le revenue 💰 ${incomeId} a été mise a jours dans le projet #${projectId}, 🎉!`,
+      `Le revenu 💰 ${incomeId} a été mise a jours dans le projet #${projectId}, 🎉!`,
       [],
       interaction.application_id,
       interaction.token
@@ -258,7 +258,7 @@ const incomesDelete = async (
     deleteProjectIncome(userId, projectId, incomeId),
     updateProjecttotalIncome(userId, projectId, curIncomes.total),
     sendTxtLater(
-      `Tu as supprimé le revenue ${incomeId} 💸!`,
+      `Tu as supprimé le revenu ${incomeId} 💸!`,
       [],
       interaction.application_id,
       interaction.token

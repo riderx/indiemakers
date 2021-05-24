@@ -289,11 +289,11 @@ const projectAdd = (
       sendTxtLater(
         `Tu as crée le projet: #${newProj.hashtag} 👏
 
-Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache hashtag: ${newProj.hashtag} contenue: Ma super tache\` 💗
+Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache hashtag: ${newProj.hashtag} contenu: Ma super tache\` 💗
 ou
 remplir sa description avec \`/im projet hashtag: ${newProj.hashtag} modifier description: mon super projet\` 🪴
 ou
-enregistrer un premier revenue avec \`/im revenue ajouter hashtag: ${newProj.hashtag} revenue 42 mois: Février 2021 \`💰!
+enregistrer un premier revenu avec \`/im revenu ajouter hashtag: ${newProj.hashtag} revenu 42 mois: Février 2021 \`💰!
 Tu peux voir toute les infos que tu rentre sur ta page : https://indiemakers.fr/communaute/${userId}
 `,
         [],

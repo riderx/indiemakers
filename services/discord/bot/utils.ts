@@ -6,7 +6,7 @@ import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import { getAllUsers, usersViewStreak } from './user'
 import { updateUserTaskAndStreak } from './tasks'
-import { updateRevenueAllProject } from './stripe'
+import { updateIncomeAllProject } from './stripe'
 
 interface DiscorUser {
   avatar: string
@@ -369,7 +369,7 @@ export const morningBot = async () => {
   - 1 point compliqué
 MINIMUM 💪!`
       )
-      await updateRevenueAllProject()
+      await updateIncomeAllProject()
     }
   }
 }

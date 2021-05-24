@@ -38,7 +38,7 @@ const im = async (
       return taskFn(interaction, option.options[0], senderId)
     }
     if (
-      option.name === 'revenue' &&
+      option.name === 'revenu' &&
       option.options &&
       option.options.length > 0
     ) {

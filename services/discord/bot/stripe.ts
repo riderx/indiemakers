@@ -148,7 +148,7 @@ const updateCurrentIcome = (
   return null
 }
 
-export const updateRevenueAllProject = async () => {
+export const updateIncomeAllProject = async () => {
   const allUsers = await getAllUsersAndProjects()
   const all: Promise<any>[] = []
   const startMonth = dayjs()

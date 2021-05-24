@@ -111,7 +111,7 @@ export default Vue.extend({
           'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/newsletter_hlctgq.svg',
       },
       title: 'Mes Emails Hebdo',
-      desc: 'Chaque semaine reçoit mes conseils actionables pour lancer ton projet, et generer un revenue !',
+      desc: 'Chaque semaine reçoit mes conseils actionables pour lancer ton projet, et generer un revenu !',
     }
   },
   head() {

@@ -151,7 +151,7 @@ export const getAllProjectsTasks = async (
 }
 const transformKey = (key: string): string => {
   switch (key) {
-    case 'contenue':
+    case 'contenu':
       return 'content'
     default:
       return key
