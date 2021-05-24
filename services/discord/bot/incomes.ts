@@ -142,7 +142,9 @@ const incomeAdd = (
   return Promise.all([
     sendTxtLater(
       `Le revenue 💰:
-${newIncome.status}: ${newIncome.ammount}
+${newIncome.status}: ${newIncome.ammount} ${dayjs(newIncome.date).format(
+        'MM/YYYY'
+      )}
 A été ajouté au projet #${projectId}, 🎉!`,
       [],
       interaction.application_id,
