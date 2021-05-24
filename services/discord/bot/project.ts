@@ -54,7 +54,6 @@ export interface Project {
 const projectPublicKey = [
   'hashtag',
   'name',
-  'description',
   'category',
   'emoji',
   'color',
