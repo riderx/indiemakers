@@ -194,7 +194,7 @@ export const updateUserTaskAndStreak = (usr: User) => {
     }
     const lastTaskAt = dayjs(usr.lastTaskAt)
     if (usr.lastTaskAt && lastDay().isBefore(lastTaskAt)) {
-      updatedUser.streak = (superTotal.streak || 0) + 1
+      updatedUser.streak = (usr.streak || 0) + 1
     } else {
       updatedUser.streak = 0
     }
@@ -330,7 +330,7 @@ const getTotalTaskAndStreakByUser = async (
 ): Promise<{ tasks: number; streak: number }> => {
   const projects = await getAllProjects(userId)
   return projects.reduce(
-    (tt, c) => ({ tasks: tt.tasks + c.tasks, streak: tt.tasks + c.streak }),
+    (tt, c) => ({ tasks: tt.tasks + c.tasks, streak: tt.streak + c.streak }),
     { tasks: 0, streak: 0 }
   )
 }
