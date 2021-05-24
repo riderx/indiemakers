@@ -108,13 +108,13 @@ export const getAllProjects = async (userId: string): Promise<Project[]> => {
 
 export const getProjectById = async (
   userId: string,
-  projectId: string
+  hashtag: string
 ): Promise<Project | null> => {
   try {
     const res = await admin
       .firestore()
       .collection(`discord/${userId}/projects`)
-      .doc(projectId)
+      .doc(hashtag.toLowerCase())
       .get()
     const data = res.data()
     return data !== undefined ? (data as Project) : null
@@ -132,7 +132,7 @@ export const updateProject = async (
   const userDoc = await admin
     .firestore()
     .collection(`discord/${userId}/projects`)
-    .doc(hashtag)
+    .doc(hashtag.toLowerCase())
     .get()
   if (!userDoc.exists || !userDoc.data) {
     const newProject: Project = Object.assign(
@@ -157,28 +157,28 @@ export const updateProject = async (
     return admin
       .firestore()
       .collection(`discord/${userId}/projects`)
-      .doc(hashtag)
+      .doc(hashtag.toLowerCase())
       .set(newProject)
   }
   return userDoc.ref.update({ ...project, updatedAt: dayjs().toISOString() })
 }
 
-const deleteProject = (userId: string, projectId: string): Promise<any> => {
+const deleteProject = (userId: string, hashtag: string): Promise<any> => {
   return admin
     .firestore()
     .collection(`discord/${userId}/projects`)
-    .doc(projectId)
+    .doc(hashtag.toLowerCase())
     .delete()
 }
 
 export const deleteAllProjectsTasks = async (
   userId: string,
-  projectId: string
+  hashtag: string
 ): Promise<void> => {
   try {
     const documents = await admin
       .firestore()
-      .collection(`discord/${userId}/projects/${projectId}/tasks`)
+      .collection(`discord/${userId}/projects/${hashtag}/tasks`)
       .get()
     const listDel: any[] = []
     documents.docs.forEach((doc) => {
@@ -192,12 +192,9 @@ export const deleteAllProjectsTasks = async (
   }
 }
 
-const getPastCharges = async (
-  userId: string,
-  projectId: string | undefined
-) => {
-  if (!projectId) return Promise.resolve()
-  const charges: Charge[] = await getStripeCharges(projectId)
+const getPastCharges = async (userId: string, hashtag: string | undefined) => {
+  if (!hashtag) return Promise.resolve()
+  const charges: Charge[] = await getStripeCharges(hashtag)
   const incomes: { [key: string]: Income } = {}
   const all: Promise<any>[] = []
   charges.forEach((charge) => {
@@ -234,21 +231,18 @@ const getPastCharges = async (
     }
   })
   Object.keys(incomes).forEach((InKey: string) => {
-    all.push(createProjectIncome(userId, projectId, incomes[InKey]))
+    all.push(createProjectIncome(userId, hashtag, incomes[InKey]))
   })
   Promise.all(all).then(() => Promise.resolve())
 }
 
-const cleanPastStripe = async (
-  userId: string,
-  projectId: string | undefined
-) => {
-  if (!projectId) return Promise.resolve()
-  const res = await getAllProjectsIncomes(userId, projectId)
+const cleanPastStripe = async (userId: string, hashtag: string | undefined) => {
+  if (!hashtag) return Promise.resolve()
+  const res = await getAllProjectsIncomes(userId, hashtag)
   const all: Promise<any>[] = []
   res.incomes.forEach((income) => {
     if (income.id && income.stripeCharges) {
-      all.push(deleteProjectIncome(userId, projectId, income.id))
+      all.push(deleteProjectIncome(userId, hashtag, income.id))
     }
   })
   Promise.all(all).then(() => Promise.resolve())
@@ -256,17 +250,17 @@ const cleanPastStripe = async (
 
 const updateStripe = (
   userId: string,
-  projectId: string | undefined,
+  hashtag: string | undefined,
   stripeHook: string | undefined
 ) => {
   if (!stripeHook) {
     return Promise.resolve()
   }
   if (stripeHook && !stripeHook.startsWith('rk_live')) {
-    return cleanPastStripe(userId, projectId)
+    return cleanPastStripe(userId, hashtag)
   }
-  return cleanPastStripe(userId, projectId).then(() =>
-    getPastCharges(userId, projectId)
+  return cleanPastStripe(userId, hashtag).then(() =>
+    getPastCharges(userId, hashtag)
   )
 }
 
@@ -426,19 +420,19 @@ const projectView = async (
   options: ApplicationCommandInteractionDataOption[],
   userId: string
 ): Promise<void> => {
-  let projectId = ''
+  let hashtag = ''
   let makerId = userId
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (element.name === 'hashtag') {
-      projectId = element.value || ''
+      hashtag = element.value || ''
     } else if (element.name === 'maker') {
       makerId = element.value || ''
     }
   })
-  if (projectId) {
-    const project = await getProjectById(makerId, projectId)
+  if (hashtag) {
+    const project = await getProjectById(makerId, hashtag)
     if (project) {
-      console.error('projectView', projectId, makerId)
+      console.error('projectView', hashtag, makerId)
       const text =
         makerId === userId
           ? 'Voici les infos sur ton projet !'
@@ -450,9 +444,9 @@ const projectView = async (
         interaction.token
       )
     } else {
-      console.error('projectView', projectId, makerId)
+      console.error('projectView', hashtag, makerId)
       return sendTxtLater(
-        `Je ne trouve pas le projet ${projectId} pour <@${makerId}>...`,
+        `Je ne trouve pas le projet ${hashtag} pour <@${makerId}>...`,
         [],
         interaction.application_id,
         interaction.token
@@ -473,14 +467,14 @@ const projectDelete = (
   option: ApplicationCommandInteractionDataOption,
   userId: string
 ): Promise<void> => {
-  const projectId = option.value
-  if (projectId) {
-    console.error('projectDelete', projectId)
+  const hashtag = option.value
+  if (hashtag) {
+    console.error('projectDelete', hashtag)
     return Promise.all([
-      deleteProject(userId, projectId),
-      deleteAllProjectsTasks(userId, projectId),
+      deleteProject(userId, hashtag),
+      deleteAllProjectsTasks(userId, hashtag),
       sendTxtLater(
-        `Tu as supprimé ton projet ${projectId} et ses taches 🚮!
+        `Tu as supprimé ton projet ${hashtag} et ses taches 🚮!
 Savoir terminer un projet est une force!`,
         [],
         interaction.application_id,

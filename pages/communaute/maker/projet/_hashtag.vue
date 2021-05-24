@@ -89,7 +89,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { discordProjectId } from '~/services/rss'
+import { discordHashtag } from '~/services/rss'
 import { Project } from '~/services/discord/bot/project'
 
 export default Vue.extend({
@@ -98,10 +98,10 @@ export default Vue.extend({
     ListIncomes: () => import('~/components/ListIncomes.vue'),
   },
   async asyncData({ params, $config }) {
-    const projectData = await discordProjectId(
+    const projectData = await discordHashtag(
       $config,
       params.maker,
-      params.project
+      params.hashtag
     )
     return { projectData }
   },

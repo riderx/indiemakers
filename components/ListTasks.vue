@@ -64,7 +64,6 @@ export default Vue.extend({
     },
   },
   mounted() {
-    // this.projectId = this.user.projectsData[0].hashtag
     this.todo = this.all.tasks.filter((a: Task) => a.status === 'todo')
     this.done = this.all.tasks.filter((a: Task) => a.status === 'done')
   },

@@ -33,19 +33,19 @@ export const discordProjects = ($config: NuxtConfig): Promise<Project[]> => {
     })
 }
 
-export const discordProjectId = (
+export const discordHashtag = (
   $config: NuxtConfig,
   userId: string,
-  id: string
+  hashtag: string
 ): Promise<Project> => {
-  const url = `${$config.BASEAPI}/project?uid=${userId}&id=${id}`
+  const url = `${$config.BASEAPI}/project?uid=${userId}&hashtag=${hashtag}`
   return axios
     .get(url)
     .then((response) => {
       return response.data
     })
     .catch((err) => {
-      console.error('discordProjectId err', err)
+      console.error('discordHashtag err', err)
       return []
     })
 }

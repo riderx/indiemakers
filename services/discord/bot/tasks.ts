@@ -48,7 +48,7 @@ const taskProtectedKey = [
 
 const createProjectTask = async (
   user: User,
-  projectId: string,
+  hashtag: string,
   task: Partial<Task>
 ): Promise<any> => {
   try {
@@ -56,41 +56,43 @@ const createProjectTask = async (
     if (task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString()
     }
-    const taskWithProjectId = `${task.content} #${projectId}`
+    const taskWithHashtag = `${task.content} #${hashtag.toLowerCase()}`
     if (user?.makerlogHook && task?.content) {
       task.makerlogHook = await sendToMakerlog(
         user.makerlogHook,
-        taskWithProjectId,
+        taskWithHashtag,
         done
       )
     }
     if (user?.wipApiKey && task?.content) {
-      task.wipId = await sendToWip(user.wipApiKey, taskWithProjectId, done)
+      task.wipId = await sendToWip(user.wipApiKey, taskWithHashtag, done)
     }
   } catch (err) {
     console.error('createProjectTask', err)
   }
   return admin
     .firestore()
-    .collection(`discord/${user.userId}/projects/${projectId}/tasks`)
+    .collection(
+      `discord/${user.userId}/projects/${hashtag.toLowerCase()}/tasks`
+    )
     .add({ ...task, createdAt: dayjs().toISOString() })
 }
 
 const deleteProjectTask = (
   userId: string,
-  projectId: string,
+  hashtag: string,
   taskId: string
 ): Promise<any> => {
   return admin
     .firestore()
-    .collection(`discord/${userId}/projects/${projectId}/tasks`)
+    .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
     .doc(taskId)
     .delete()
 }
 
 const updateProjectTask = async (
   userId: string,
-  projectId: string,
+  hashtag: string,
   taskId: string,
   task: Partial<Task>
 ): Promise<any> => {
@@ -100,11 +102,11 @@ const updateProjectTask = async (
     if (task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString()
     }
-    const taskWithProjectId = `${task.content} #${projectId}`
+    const taskWithHashtag = `${task.content} #${hashtag.toLowerCase()}`
     if (task?.makerlogHook && task?.content) {
       task.makerlogHook = await sendToMakerlog(
         task.makerlogHook,
-        taskWithProjectId,
+        taskWithHashtag,
         done
       )
     }
@@ -112,7 +114,7 @@ const updateProjectTask = async (
       task.wipId = await updateToWip(
         user.wipApiKey,
         task.wipId,
-        taskWithProjectId,
+        taskWithHashtag,
         done
       )
     }
@@ -121,19 +123,19 @@ const updateProjectTask = async (
   }
   return admin
     .firestore()
-    .collection(`discord/${userId}/projects/${projectId}/tasks`)
+    .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
     .doc(taskId)
     .update({ ...task, updatesAt: dayjs().toISOString() })
 }
 
 export const getAllProjectsTasks = async (
   userId: string,
-  projectId: string
+  hashtag: string
 ): Promise<TaskAll> => {
   try {
     const documents = await admin
       .firestore()
-      .collection(`discord/${userId}/projects/${projectId}/tasks`)
+      .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
       .get()
     const tasks: Task[] = []
     documents.docs.map((doc) => {
@@ -207,13 +209,13 @@ const taskAdd = async (
   options: ApplicationCommandInteractionDataOption[],
   userId: string
 ): Promise<void> => {
-  let projectId = ''
+  let hashtag = ''
   const task: Partial<Task> = {
     status: TaskStatus.DONE,
   }
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (element.name === 'hashtag' && element.value) {
-      projectId = element.value
+      hashtag = element.value
     } else if (taskPublicKey.includes(transformKey(element.name))) {
       ;(task as any)[transformKey(element.name)] = element.value
     }
@@ -224,13 +226,13 @@ const taskAdd = async (
       sendTxtLater(
         `La tache 💗:
 ${task.content}
-A été ajouté au projet #${projectId}, 🎉!`,
+A été ajouté au projet #${hashtag}, 🎉!`,
         [],
         interaction.application_id,
         interaction.token
       ),
-      createProjectTask(curUser, projectId, task).then(() =>
-        getProjectById(userId, projectId)
+      createProjectTask(curUser, hashtag, task).then(() =>
+        getProjectById(userId, hashtag)
           .then((curProject) => updateProjectTaskAndStreak(userId, curProject))
           .then(() => updateUserTaskAndStreak(curUser))
       ),
@@ -250,7 +252,7 @@ const taskEdit = (
   options: ApplicationCommandInteractionDataOption[],
   userId: string
 ): Promise<void> => {
-  let projectId = ''
+  let hashtag = ''
   const task: Partial<Task> = {
     status: TaskStatus.DONE,
     updatedAt: dayjs().toISOString(),
@@ -258,7 +260,7 @@ const taskEdit = (
   let taskId = ''
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (element.name === 'hashtag' && element.value) {
-      projectId = element.value
+      hashtag = element.value
     } else if (element.name === 'id' && element.value) {
       taskId = element.value
     } else if (
@@ -272,12 +274,12 @@ const taskEdit = (
     sendTxtLater(
       `La tache 💗:
 ${taskId}: ${task.content}
-A été mise a jour dans le projet #${projectId}, 🎉!`,
+A été mise a jour dans le projet #${hashtag.toLowerCase()}, 🎉!`,
       [],
       interaction.application_id,
       interaction.token
     ),
-    updateProjectTask(userId, projectId, taskId, task),
+    updateProjectTask(userId, hashtag, taskId, task),
   ]).then(() => Promise.resolve())
 }
 
@@ -286,17 +288,17 @@ const tasksView = async (
   options: ApplicationCommandInteractionDataOption[],
   userId: string
 ): Promise<void> => {
-  let projectId = ''
+  let hashtag = ''
   let makerId = userId
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (element.name === 'hashtag') {
-      projectId = element.value || ''
+      hashtag = element.value || ''
     } else if (element.name === 'maker') {
       makerId = element.value || ''
     }
   })
-  if (projectId) {
-    const allTaks = await getAllProjectsTasks(makerId, projectId)
+  if (hashtag) {
+    const allTaks = await getAllProjectsTasks(makerId, hashtag)
     const text =
       makerId === userId
         ? `Tu as fait ${allTaks.total} taches sur ce projet, BRAVO 🎉!`
@@ -340,11 +342,11 @@ const tasksDelete = (
   options: ApplicationCommandInteractionDataOption[],
   userId: string
 ): Promise<void> => {
-  let projectId = ''
+  let hashtag = ''
   let taskId = ''
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     if (element.name === 'hashtag' && element.value) {
-      projectId = element.value
+      hashtag = element.value
     } else if (element.name === 'id' && element.value) {
       taskId = element.value
     }
@@ -357,10 +359,10 @@ const tasksDelete = (
       }
       return updateUser(userId, updatedUser)
     }),
-    getAllProjectsTasks(userId, projectId).then((curTasks) =>
+    getAllProjectsTasks(userId, hashtag).then((curTasks) =>
       updateUser(userId, { tasks: curTasks.total - 1 })
     ),
-    deleteProjectTask(userId, projectId, taskId),
+    deleteProjectTask(userId, hashtag, taskId),
     sendTxtLater(
       `Tu as supprimé la tache ${taskId} !`,
       [],

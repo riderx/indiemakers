@@ -51,7 +51,7 @@
         </p>
       </div>
     </div>
-    <div v-if="!projectId" class="flex w-1/4 px-10 py-5 mx-auto text-white">
+    <div v-if="!hashtag" class="flex w-1/4 px-10 py-5 mx-auto text-white">
       <button
         type="button"
         class="
@@ -69,7 +69,7 @@
         Ce maker n'as pas encore de projets
       </button>
     </div>
-    <div v-if="projectId" class="flex flex-col m-5 md:flex-row md:m-10">
+    <div v-if="hashtag" class="flex flex-col m-5 md:flex-row md:m-10">
       <div
         class="
           p-5
@@ -102,7 +102,7 @@
             :key="project.hashtag"
             :to="`/communaute/maker/${maker.userId}/projet/${project.hashtag}`"
             class="flex-none my-4 ml-3 cursor-pointer md:my-2 lg:my-4 md:ml-0"
-            @click="projectId = project.hashtag"
+            @click="hashtag = project.hashtag"
           >
             <div class="relative flex items-end">
               <img
@@ -177,7 +177,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { discordMakerId, discordProjectId } from '~/services/rss'
+import { discordMakerId, discordHashtag } from '~/services/rss'
 import { Project } from '~/services/discord/bot/project'
 import { User } from '~/services/discord/bot/user'
 
@@ -189,9 +189,9 @@ export default Vue.extend({
   async asyncData({ params, $config }) {
     const maker = await discordMakerId($config, params.maker)
     if (maker && maker.projectsData && maker.projectsData.length > 0) {
-      return { maker, projectId: maker.projectsData[0].hashtag }
+      return { maker, hashtag: maker.projectsData[0].hashtag }
     }
-    return { maker, projectId: null }
+    return { maker, hashtag: null }
   },
   data() {
     return {
@@ -201,7 +201,7 @@ export default Vue.extend({
         'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg',
       maker: null as unknown as User,
       projectData: null as unknown as Project,
-      projectId: '',
+      hashtag: '',
       loaded: false,
       loadedProject: false,
     }
@@ -257,14 +257,14 @@ export default Vue.extend({
   },
   // watch: {
   //   // whenever question changes, this function will run
-  //   projectId(newId) {
-  //     this.getProject(newId)
+  //   hashtag(newHastag) {
+  //     this.getProject(newHastag)
   //   },
   // },
   mounted() {
-    // this.getProject(this.projectId)
+    // this.getProject(this.hashtag)
     // this.$router.push(
-    //   `/communaute/maker/${this.maker.userId}/projet/${this.projectId}`
+    //   `/communaute/maker/${this.maker.userId}/projet/${this.hashtag}`
     // )
     this.loaded = true
   },
@@ -281,12 +281,12 @@ export default Vue.extend({
       }
       return {}
     },
-    async getProject(id: string): Promise<void> {
+    async getProject(hashtag: string): Promise<void> {
       this.loadedProject = false
-      this.projectData = await discordProjectId(
+      this.projectData = await discordHashtag(
         this.$config,
         this.maker.userId,
-        id
+        hashtag
       )
       this.loadedProject = true
     },

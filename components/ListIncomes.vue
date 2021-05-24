@@ -64,7 +64,6 @@ export default Vue.extend({
     },
   },
   mounted() {
-    // this.projectId = this.user.projectsData[0].hashtag
     this.incomes = this.all.incomes.filter((a: Income) => a.status === 'income')
     this.expenses = this.all.incomes.filter(
       (a: Income) => a.status === 'expense'

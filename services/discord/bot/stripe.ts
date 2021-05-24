@@ -12,6 +12,13 @@ export interface Charge {
   status: 'expense' | 'income'
   ammount: number
 }
+
+interface StripeResume {
+  userId: string
+  hashtag: string
+  charges: Charge[]
+  incomes: Income[]
+}
 interface QueryStripe {
   // eslint-disable-next-line camelcase
   starting_after?: string
@@ -98,14 +105,14 @@ const mixIncomeCharges = async (
   userId: string,
   project: Project,
   startMonth: dayjs.Dayjs
-) => {
-  if (!project.stripeApiKey || !project.id) return undefined
-  return {
+): Promise<StripeResume | null> => {
+  if (!project.stripeApiKey || !project.id) return null
+  return Promise.resolve({
     userId,
-    projectId: project.id,
+    hashtag: project.id.toLowerCase(),
     charges: await getStripeCharges(project.stripeApiKey, startMonth),
     incomes: (await getAllProjectsIncomes(userId, project.id)).incomes,
-  }
+  })
 }
 
 const foundIncome = (incomes: Income[], dateKey: string): Income | null => {
@@ -118,17 +125,10 @@ const foundIncome = (incomes: Income[], dateKey: string): Income | null => {
   return null
 }
 
-const updateCurrentIcome = (
-  data:
-    | {
-        userId: string
-        projectId: string
-        charges: Charge[]
-        incomes: Income[]
-      }
-    | undefined
-) => {
-  if (!data) return null
+const updateCurrentIcome = async (
+  data: StripeResume | null
+): Promise<StripeResume | null> => {
+  if (!data) return Promise.resolve(null)
   const dateKey = dayjs(data.charges[0].date).format('MM_YYYY')
   const income = foundIncome(data.incomes, dateKey)
   if (income && income.id) {
@@ -143,14 +143,15 @@ const updateCurrentIcome = (
         income.ammount -= charge.ammount
       }
     }
-    return updateProjectIncome(data.userId, data.projectId, income.id, income)
+    await updateProjectIncome(data.userId, data.hashtag, income.id, income)
+    return Promise.resolve(data)
   }
-  return null
+  return Promise.resolve(null)
 }
 
 export const updateIncomeAllProject = async () => {
   const allUsers = await getAllUsersAndProjects()
-  const all: Promise<any>[] = []
+  const all: Promise<StripeResume | null>[] = []
   const startMonth = dayjs()
   startMonth.date(1)
   Object.keys(allUsers).forEach((userId: string) => {
