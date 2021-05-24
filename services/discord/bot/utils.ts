@@ -89,7 +89,7 @@ export const embed = (
     data.description = description
   }
   if (color && color !== '') {
-    data.color = hexToDec(`0x${color}`)
+    data.color = hexToDec(`0x${color}`) || undefined
   }
   if (timestamp && timestamp !== '') {
     data.timestamp = timestamp
