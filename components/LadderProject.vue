@@ -42,10 +42,7 @@
         />
         <div class="flex flex-col mx-3">
           <h1 class="text-lg font-medium" :style="getTextColor(project.color)">
-            <div class="inline bg-white rounded-full">
-              {{ project.emoji || '' }}
-            </div>
-            {{ project.hashtag || project.name }}
+            {{ project.emoji || '' }} {{ project.name || project.hashtag }}
           </h1>
           <div class="flex text-sm">
             <p class="px-2 mx-2 bg-white rounded text-royalblue-700">

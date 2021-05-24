@@ -43,10 +43,7 @@
         />
         <div class="flex flex-col mx-3">
           <h1 class="text-lg font-medium" :style="getTextColor(maker.color)">
-            <div class="inline bg-white rounded-full">
-              {{ maker.emoji || '' }}
-            </div>
-            {{ maker.name || maker.username }}
+            {{ maker.emoji || '' }} {{ maker.name || maker.username }}
           </h1>
           <div class="flex text-sm">
             <p class="px-2 mx-2 bg-white rounded text-royalblue-700">
