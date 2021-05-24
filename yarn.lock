@@ -1474,10 +1474,10 @@
     node-html-parser "^3.2.0"
     ufo "^0.7.4"
 
-"@nuxt/image@^0.4.9":
-  version "0.4.9"
-  resolved "https://registry.npmjs.org/@nuxt/image/-/image-0.4.9.tgz"
-  integrity sha512-RDNuTH1HfD8Mz06u4FL4Yul4YA+zgyUvZOhINlWDFTRbFD/vxAS3Y5icAOLYP3VfuSL4oz6P9GCTy9MzW/qxeA==
+"@nuxt/image@^0.4.10":
+  version "0.4.10"
+  resolved "https://registry.yarnpkg.com/@nuxt/image/-/image-0.4.10.tgz#ae4ccf4c5bc44401f4560b65313b7f917ec4dbae"
+  integrity sha512-5bUjNrmjszdwhHVNw6HjySrZQkx4VoPfNc2J653JXd4KXGOTz6OasmrqHwwrI+aVGv3KT3xoJflRxe/8hqKRug==
   dependencies:
     consola "^2.15.3"
     defu "^5.0.0"
@@ -2039,10 +2039,10 @@
   dependencies:
     "@types/unist" "*"
 
-"@types/hex2dec@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/@types/hex2dec/-/hex2dec-1.1.0.tgz"
-  integrity sha512-WQd+RvCixNRZSpQLyV7/ZVEfhFyBOQzPDMxJIg6A9G6bjz4IOniH4ppNGVF8cGBy4RdiJe3smEpSp8qnpj9QEg==
+"@types/hex2dec@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@types/hex2dec/-/hex2dec-1.1.1.tgz#07305197015e2f8b8cf79bcfd489dcc4f3934d59"
+  integrity sha512-ErgrzyHUrUQrntnck45LHkoXKKNpqLRoy9NyiNlc4NVh93s5sJTTFJLqCd5tvr+TgImfC9XyJeWasdRrpDQQeA==
 
 "@types/html-minifier-terser@^5.0.0":
   version "5.1.1"
@@ -4734,10 +4734,10 @@ defined@^1.0.0:
   resolved "https://registry.npmjs.org/defined/-/defined-1.0.0.tgz"
   integrity sha1-yY2bzvdWdBiOEQlpFRGZ45sfppM=
 
-defu@4.0.1, defu@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/defu/-/defu-4.0.1.tgz"
-  integrity sha512-lC+G0KvvWRbisQa50+iFelm3/eMmwo4IlBmfASOVlw9MZpHHyQeVsZxc5j23+TQy5ydgEoTVSrWl7ptou1kzJQ==
+defu@5.0.0, defu@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/defu/-/defu-5.0.0.tgz"
+  integrity sha512-VHg73EDeRXlu7oYWRmmrNp/nl7QkdXUxkQQKig0Zk8daNmm84AbGoC8Be6/VVLJEKxn12hR0UBmz8O+xQiAPKQ==
 
 defu@^2.0.4:
   version "2.0.4"
@@ -4749,10 +4749,10 @@ defu@^3.2.2:
   resolved "https://registry.npmjs.org/defu/-/defu-3.2.2.tgz"
   integrity sha512-8UWj5lNv7HD+kB0e9w77Z7TdQlbUYDVWqITLHNqFIn6khrNHv5WQo38Dcm1f6HeNyZf0U7UbPf6WeZDSdCzGDQ==
 
-defu@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.npmjs.org/defu/-/defu-5.0.0.tgz"
-  integrity sha512-VHg73EDeRXlu7oYWRmmrNp/nl7QkdXUxkQQKig0Zk8daNmm84AbGoC8Be6/VVLJEKxn12hR0UBmz8O+xQiAPKQ==
+defu@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/defu/-/defu-4.0.1.tgz"
+  integrity sha512-lC+G0KvvWRbisQa50+iFelm3/eMmwo4IlBmfASOVlw9MZpHHyQeVsZxc5j23+TQy5ydgEoTVSrWl7ptou1kzJQ==
 
 delayed-stream@~1.0.0:
   version "1.0.0"
@@ -4971,6 +4971,11 @@ dot-prop@^5.1.0, dot-prop@^5.2.0:
   integrity sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==
   dependencies:
     is-obj "^2.0.0"
+
+dotenv@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
+  integrity sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
 
 dotenv@^8.2.0:
   version "8.6.0"
@@ -5861,10 +5866,10 @@ firebase-admin@^9.8.0:
     "@google-cloud/firestore" "^4.5.0"
     "@google-cloud/storage" "^5.3.0"
 
-firebase-auth-lite@^0.8.8:
-  version "0.8.8"
-  resolved "https://registry.npmjs.org/firebase-auth-lite/-/firebase-auth-lite-0.8.8.tgz"
-  integrity sha512-KXSA1FSpZhR6VcgYxGxjMLIn1Il1Pqs2Clalb07/PeU8DBW6sm8j/uO1xaKqvahN2GGk4jC7m6HRMDmbfK46Iw==
+firebase-auth-lite@^0.8.9:
+  version "0.8.9"
+  resolved "https://registry.yarnpkg.com/firebase-auth-lite/-/firebase-auth-lite-0.8.9.tgz#7c2451373cff979b31436b3e16173222ebec04f1"
+  integrity sha512-dvO1X9jju4Kw3jZoh5TypYByJYcYOyZFtCSElE8rOFCBuzQADNvEXRaWanwQZOJOHRxm6zGHONWVQvEqg2MI6Q==
 
 firebase-firestore-lite@^1.0.3:
   version "1.0.3"
@@ -5980,17 +5985,7 @@ fs-constants@^1.0.0:
   resolved "https://registry.npmjs.org/fs-constants/-/fs-constants-1.0.0.tgz"
   integrity sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==
 
-fs-extra@9.1.0, fs-extra@^9.0.0, fs-extra@^9.0.1, fs-extra@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz"
-  integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
-  dependencies:
-    at-least-node "^1.0.0"
-    graceful-fs "^4.2.0"
-    jsonfile "^6.0.1"
-    universalify "^2.0.0"
-
-fs-extra@^10.0.0:
+fs-extra@10.0.0, fs-extra@^10.0.0:
   version "10.0.0"
   resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-10.0.0.tgz"
   integrity sha512-C5owb14u9eJwizKGdchcDUQeFtlSHHthBk8pbX9Vc1PFZrLombudjDnNns88aYslCyF6IY5SUw3Roz6xShcEIQ==
@@ -6007,6 +6002,16 @@ fs-extra@^8.1.0:
     graceful-fs "^4.2.0"
     jsonfile "^4.0.0"
     universalify "^0.1.0"
+
+fs-extra@^9.0.0, fs-extra@^9.0.1, fs-extra@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-9.1.0.tgz"
+  integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
+  dependencies:
+    at-least-node "^1.0.0"
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
 
 fs-memo@^1.2.0:
   version "1.2.0"
@@ -9123,17 +9128,17 @@ nuxt-purgecss@^1.0.0:
     purgecss "^2.0.5"
     purgecss-webpack-plugin "^2.0.5"
 
-nuxt-speedkit@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.npmjs.org/nuxt-speedkit/-/nuxt-speedkit-1.2.4.tgz"
-  integrity sha512-Dcwz69G2pRm2Ls9V0/GR3UT3npYOAhrVboOJ41lFyL4cj8ZbyWNPJZC364gj28dgqehHIlrGn9M9Lf9qbz8lgw==
+nuxt-speedkit@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/nuxt-speedkit/-/nuxt-speedkit-1.2.5.tgz#54e4ca8075abd240a67ac32dde64a0edfadbb005"
+  integrity sha512-+c4YlzIpnB9BVRFddvgG98ClUHSjyipB86ewJGEBb211HJvxl7SsojVWN88Tzye7gu1kUnYEf+ZEEFPdxuX8pw==
   dependencies:
     "@nuxt/image" "npm:@modified/image@0.0.4-beta4"
     bowser "2.11.0"
     browserslist-useragent-regexp "3.0.0"
-    defu "4.0.1"
+    defu "5.0.0"
     dynamic-class-list "1.1.0"
-    fs-extra "9.1.0"
+    fs-extra "10.0.0"
     serialize-to-js "3.1.1"
     vue-lazy-hydration "2.0.0-beta.4"
     youtube-player "5.5.2"
@@ -10550,14 +10555,14 @@ postcss@^6.0.9:
     source-map "^0.6.1"
     supports-color "^5.4.0"
 
-postcss@^8.1.10, postcss@^8.1.6, postcss@^8.2.1, postcss@^8.2.10, postcss@^8.2.13, postcss@^8.2.8:
-  version "8.2.15"
-  resolved "https://registry.npmjs.org/postcss/-/postcss-8.2.15.tgz"
-  integrity sha512-2zO3b26eJD/8rb106Qu2o7Qgg52ND5HPjcyQiK2B98O388h43A448LCslC0dI2P97wCAQRJsFvwTRcXxTKds+Q==
+postcss@^8.1.10, postcss@^8.1.6, postcss@^8.2.1, postcss@^8.2.10, postcss@^8.2.13, postcss@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.3.0.tgz#b1a713f6172ca427e3f05ef1303de8b65683325f"
+  integrity sha512-+ogXpdAjWGa+fdYY5BQ96V/6tAo+TdSSIMP5huJBIygdWwKtVoB5JWZ7yUd4xZ8r+8Kvvx4nyg/PQ071H4UtcQ==
   dependencies:
     colorette "^1.2.2"
     nanoid "^3.1.23"
-    source-map "^0.6.1"
+    source-map-js "^0.6.2"
 
 prebuild-install@^6.0.1:
   version "6.1.2"
@@ -11895,6 +11900,11 @@ source-list-map@^2.0.0:
   resolved "https://registry.npmjs.org/source-list-map/-/source-list-map-2.0.1.tgz"
   integrity sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==
 
+source-map-js@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-0.6.2.tgz#0bb5de631b41cfbda6cfba8bd05a80efdfd2385e"
+  integrity sha512-/3GptzWzu0+0MBQFrDKzw/DvvMTUORvgY6k6jd/VS6iCR4RDTKWH6v6WPwQoUO8667uQEf9Oe38DxAYWY5F/Ug==
+
 source-map-resolve@^0.5.0:
   version "0.5.3"
   resolved "https://registry.npmjs.org/source-map-resolve/-/source-map-resolve-0.5.3.tgz"
@@ -12280,10 +12290,10 @@ strip-json-comments@~2.0.1:
   resolved "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-2.0.1.tgz"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-stripe@^8.148.0:
-  version "8.148.0"
-  resolved "https://registry.npmjs.org/stripe/-/stripe-8.148.0.tgz"
-  integrity sha512-xBpYJxMVGaZFrF3r2cHytiZOTwQC/i/7bx5ttVdb4KsK/9xYuXclQZkOwMZVxTGhKWnpoLc1gOFWa0CZE1D8uA==
+stripe@^8.149.0:
+  version "8.149.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.149.0.tgz#fc26309829a0cada50c437ca2e7180484f5ccdc3"
+  integrity sha512-lsIeVV9zBFb1Gb3t8UMJxD27x2VYjovOVi2Fc1V18lwZtWFa2ZdunNADVGfH14tb8QKmLjPON0WK+xc5iLK0kg==
   dependencies:
     "@types/node" ">=8.1.0"
     qs "^6.6.0"
