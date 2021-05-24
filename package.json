@@ -32,7 +32,7 @@
     "dayjs": "^1.10.4",
     "discord-interactions": "^2.0.2",
     "firebase-admin": "^9.8.0",
-    "firebase-auth-lite": "^0.8.8",
+    "firebase-auth-lite": "^0.8.9",
     "firebase-firestore-lite": "^1.0.3",
     "hex2dec": "^1.1.2",
     "imagekit": "^3.1.2",
