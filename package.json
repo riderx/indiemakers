@@ -16,7 +16,7 @@
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
     "lint": "npm run lint:js && npm run lint:style",
-    "postinstall": "husky install"
+    "postinstall": "npx husky install"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint",
