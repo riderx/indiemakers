@@ -502,7 +502,11 @@ export const projectFn = (
   option: ApplicationCommandInteractionDataOption,
   userId: string
 ): Promise<void> => {
-  if (option.name === 'creer' && option.options && option.options.length > 0) {
+  if (
+    option.name === 'ajouter' &&
+    option.options &&
+    option.options.length > 0
+  ) {
     return projectAdd(interaction, option.options, userId)
   }
   if (

@@ -413,8 +413,8 @@ const projet = optionGen(
   undefined,
   [
     optionGen(
-      'creer',
-      'Cree ton projet',
+      'ajouter',
+      'Ajouter ton projet',
       SlashCommandOptionType.SUB_COMMAND,
       undefined,
       undefined,
