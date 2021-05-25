@@ -26,7 +26,7 @@
     "@nuxt/content": "^1.14.0",
     "@nuxt/image": "^0.4.10",
     "@tailwindcss/line-clamp": "^0.2.0",
-    "@tailwindcss/typography": "^0.4.0",
+    "@tailwindcss/typography": "^0.4.1",
     "axios": "^0.21.1",
     "core-js": "^3.9.1",
     "dayjs": "^1.10.4",
