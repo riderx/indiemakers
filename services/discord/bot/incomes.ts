@@ -220,7 +220,7 @@ const incomesView = async (
     }
   })
   if (hashtag) {
-    const allIncomes = await getAllProjectsIncomes(userId, hashtag)
+    const allIncomes = await getAllProjectsIncomes(makerId, hashtag)
     let target
     if (allIncomes.incomes.length === 0) {
       return sendTxtLater(
