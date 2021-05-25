@@ -464,6 +464,7 @@ const projet = optionGen(
       undefined,
       [projetHashtag, makerIdOptional]
     ),
+    optionGen('aide', "Plus d'explication pour les projets", 1),
   ]
 )
 

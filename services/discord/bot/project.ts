@@ -16,7 +16,7 @@ import {
   sleep,
   transformKey,
 } from './utils'
-import { updateUser } from './user'
+import { getUsersById, updateUser } from './user'
 import {
   createProjectIncome,
   deleteProjectIncome,
@@ -24,7 +24,23 @@ import {
   Income,
 } from './incomes'
 import { Task } from './tasks'
-
+// eslint-disable-next-line no-unused-vars
+enum Category {
+  // eslint-disable-next-line no-unused-vars
+  SAAS = 'saas',
+  // eslint-disable-next-line no-unused-vars
+  COMMUNITY = 'community',
+  // eslint-disable-next-line no-unused-vars
+  NEWSLETTER = 'newsletter',
+  // eslint-disable-next-line no-unused-vars
+  FORMATION = 'formation',
+  // eslint-disable-next-line no-unused-vars
+  TEMPLATE = 'template',
+  // eslint-disable-next-line no-unused-vars
+  ECOMMERCE = 'ecommerce',
+  // eslint-disable-next-line no-unused-vars
+  OTHER = 'other',
+}
 export interface Project {
   id?: string
   userId?: string
@@ -47,7 +63,7 @@ export interface Project {
   logo: string
   cover: string
   description: string
-  category: string
+  category: Category
   website: string
   stripeApiKey?: string
 }
@@ -263,7 +279,7 @@ const updateStripe = (
   )
 }
 
-const projectAdd = (
+const projectAdd = async (
   interaction: Interaction,
   options: ApplicationCommandInteractionDataOption[],
   userId: string
@@ -278,16 +294,18 @@ const projectAdd = (
   })
   if (newProj.hashtag && /^[a-zA-Z]+$/.test(newProj.hashtag)) {
     console.error('add project', newProj)
+    const user = await getUsersById(userId)
     return Promise.all([
       sendTxtLater(
         `Tu as crée le projet: #${newProj.hashtag} 👏
 
-Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache hashtag: ${newProj.hashtag} contenu: Ma super tache\` 💗
+Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache ajouter hashtag: ${newProj.hashtag} contenu: Ma super tache\` 💗
 ou
 remplir sa description avec \`/im projet hashtag: ${newProj.hashtag} modifier description: mon super projet\` 🪴
+Fait la commande \`/im projet aide \` voir avoir de l'aide sur les champs disponibles
 ou
 enregistrer un premier revenu avec \`/im revenu ajouter hashtag: ${newProj.hashtag} revenu 42 mois: Février 2021 \`💰!
-Tu peux voir toute les infos que tu rentre sur ta page : https://indiemakers.fr/communaute/${userId}
+Tu peux voir toute les infos que tu rentre sur ta page : https://indiemakers.fr/communaute/${user?.username}
 `,
         [],
         interaction.application_id,
@@ -534,6 +552,46 @@ export const projectFn = (
     option.options.length > 0
   ) {
     return projectDelete(interaction, option.options[0], userId)
+  }
+  if (option.name === 'aide' && option.options && option.options.length > 0) {
+    return sendTxtLater(
+      `Voici ce que tu peut faire avec la commande projet:
+  - ajouter
+    - hashtag: obligatoire (pas d'espace sans majuscules)
+  - modifier
+    - hashtag: obligatoire
+    - open_source: optionel
+      - Oui
+      - Non
+    - github: optionel (url complete necessaire)
+    - emoji: optionel (un seul caractere)
+    - couleur: optionel en hexadecimal sans \`#\` au debut
+    - nom: optionel (Nom avec espace possible)
+    - logo: optionel (url complete necessaire)
+    - cover: optionel (url complete necessaire)
+    - website: optionel (url complete necessaire)
+    - description: optionel (texte cours)
+    - category: optionel
+      - saas
+      - community
+      - newsletter
+      - formation
+      - template
+      - ecommerce
+      - autre
+    - stripe: optionel permet de récupérer les revenue en automatique (voir la doc pour comprendre comment l'obtenir)
+  - supprimer (supprimer un de tes projets)
+    - hashtag: obligatoire
+  - voir (voir un projet d'un maker ou toi par default)
+      - hashtag: obligatoire
+      - maker: optionnel
+  - liste (lister les projet d'un maker ou toi par default)
+    - hashtag: obligatoire
+  `,
+      [],
+      interaction.application_id,
+      interaction.token
+    )
   }
   return sendTxtLater(
     `La Commande ${option.name} n'est pas pris en charge 🤫`,
