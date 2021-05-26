@@ -301,7 +301,7 @@ const projectAdd = async (
 
 Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache ajouter hashtag: ${newProj.hashtag} contenu: Ma super tache\` 💗
 ou
-remplir sa description avec \`/im projet hashtag: ${newProj.hashtag} modifier description: mon super projet\` 🪴
+remplir sa description avec \`/im projet modifier hashtag: ${newProj.hashtag} description: mon super projet\` 🪴
 Fait la commande \`/im projet aide \` voir avoir de l'aide sur les champs disponibles
 ou
 enregistrer un premier revenu avec \`/im revenu ajouter hashtag: ${newProj.hashtag} revenu 42 mois: Février 2021 \`💰!
