@@ -149,7 +149,7 @@ Conformément aux réglementations du gouvernement américain et des partenaires
 
 **_Banque Pro ⭐️⭐️⭐️⭐️_**
 
-Stripe Atlas t'aide à ouvrir à distance un compte [banque américaine](https://stripe.com/docs/atlas/account-progress#bank-account) par l'intermédiaire d'Azlo pour les SARL et de SVB pour les C Corporation. Pour les entrepreneurs indiens, il n'est pas possible d'obtenir des cartes de débit auprès de ces banques en raison des restrictions de la Reserve Bank of India.
+Stripe Atlas t'aide à ouvrir à distance un compte [banque américaine](https://stripe.com/docs/atlas/next#bank-account) par l'intermédiaire d'Azlo pour les SARL et de SVB pour les C Corporation. Pour les entrepreneurs indiens, il n'est pas possible d'obtenir des cartes de débit auprès de ces banques en raison des restrictions de la Reserve Bank of India.
 
 **_Passerelles de paiement⭐️⭐️⭐️⭐️⭐️_**
 
