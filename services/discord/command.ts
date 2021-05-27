@@ -511,6 +511,7 @@ const maker = optionGen(
       undefined,
       [makerIdOptional]
     ),
+    optionGen('aide', "Plus d'explication pour les makers", 1),
   ]
 )
 
