@@ -579,7 +579,7 @@ export const projectFn = (
       - Non
     - github: optionnel (url complète nécessaire)
     - emoji: optionnel (un seul caractère)
-    - couleur: optionnel en hexadecimal sans \`#\ au début
+    - couleur: optionnel en hexadecimal sans \`#\` au début
     - nom: optionnel (Nom avec espace possible)
     - logo: optionnel (url complete necessaire)
     - cover: optionnel (url complete necessaire)
