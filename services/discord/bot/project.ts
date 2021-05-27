@@ -183,7 +183,7 @@ export const updateProject = async (
       console.error('channel', channel)
       return sendChannel(
         channel.id,
-        `Il est temps de shiper 🚤 ta premiere tache sur #${lowHash} avec \`/im tache ajouter hashtag: ${lowHash} contenu: Ajout du projet sur INDIE MAKERS\` 💗
+        `Il est temps d'envoyer 💌 ta première tâche au projet #${lowHash} avec \`/im tache ajouter hashtag: ${lowHash} contenu: Ajout du projet sur INDIE MAKERS\` 💗
   Fait le sur le salon #01_construire_en_public, il est fait pour ça, il est en silencieux pour tout le monde !`
       )
     })
@@ -321,7 +321,7 @@ Tu peux voir tes projets sur ta page : https://indiemakers.fr/communaute/${user?
         console.error('channel', channel)
         return sendChannel(
           channel.id,
-          `Tu peux Remplir maintenant les info de #${newProj.hashtag} avec \`/im projet modifier hashtag: ${newProj.hashtag} nom: Mon super projet\` 🪴
+          `Tu peu maintenant remplir les informations de #${newProj.hashtag} avec \`/im projet modifier hashtag: ${newProj.hashtag} nom: Mon super projet\` 🪴
           (Fait \`/im projet aide \` pour voir les champs disponibles)`
         )
       }),
@@ -358,8 +358,8 @@ const projectEdit = (
     console.error('projectEdit', update)
     return Promise.all([
       sendTxtLater(
-        `Tu as mis a jour:\n#${update.hashtag}
-Bravo 💪, une marche après l'autre tu fais grandir ce projet!`,
+        `Tu a mis à jour #${update.hashtag}
+Bravo 💪, une marche après l'autre tu fais grandir ce projet !`,
         [],
         interaction.application_id,
         interaction.token
@@ -436,7 +436,7 @@ const projectList = async (
   } else {
     const sentence = me
       ? 'Tu n\'as pas encore de projet, ajoute en avec la commande "/im projet ajouter" !'
-      : `<@${userId}> n'as pas encore de projet !`
+      : `<@${userId}> n'a pas encore de projet !`
     return sendTxtLater(
       sentence,
       [],
@@ -569,7 +569,7 @@ export const projectFn = (
   }
   if (option.name === 'aide' && option.options && option.options.length > 0) {
     return sendTxtLater(
-      `Voici ce que tu peut faire avec la commande projet:
+      `Voici ce que tu peux faire avec la commande projet:
   - ajouter
     - hashtag: obligatoire (pas d'espace sans majuscules)
   - modifier
@@ -577,30 +577,30 @@ export const projectFn = (
     - open_source: optionel
       - Oui
       - Non
-    - github: optionel (url complete necessaire)
-    - emoji: optionel (un seul caractere)
-    - couleur: optionel en hexadecimal sans \`#\` au debut
-    - nom: optionel (Nom avec espace possible)
-    - logo: optionel (url complete necessaire)
-    - cover: optionel (url complete necessaire)
-    - website: optionel (url complete necessaire)
-    - description: optionel (texte cours)
-    - category: optionel
+    - github: optionnel (url complète nécessaire)
+    - emoji: optionnel (un seul caractère)
+    - couleur: optionnel en hexadecimal sans \`#\ au début
+    - nom: optionnel (Nom avec espace possible)
+    - logo: optionnel (url complete necessaire)
+    - cover: optionnel (url complete necessaire)
+    - website: optionnel (url complete necessaire)
+    - description: optionnel (texte cours)
+    - category: optionnel
       - saas
       - community
       - newsletter
       - formation
       - template
       - ecommerce
-      - autre
-    - stripe: optionel permet de récupérer les revenue en automatique (voir la doc pour comprendre comment l'obtenir)
+      - Autre
+    - stripe: optionnel permet de récupérer les revenues en automatique (voir la doc pour comprendre comment l'obtenir)
   - supprimer (supprimer un de tes projets)
     - hashtag: obligatoire
-  - voir (voir un projet d'un maker ou toi par default)
+  - voir (voir un projet d'un Maker ou toi par défaut)
       - hashtag: obligatoire
       - maker: optionnel
-  - liste (lister les projet d'un maker ou toi par default)
-    - hashtag: obligatoire
+  - liste (lister les projets d'un Maker ou toi par défaut)
+    - Hashtag: obligatoire
   `,
       [],
       interaction.application_id,
