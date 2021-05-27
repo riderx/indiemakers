@@ -144,7 +144,7 @@ const incomeAdd = (
       `${newIncome.status === 'expense' ? 'La dépense' : 'Le revenu'} 💰: ${
         newIncome.ammount
       } ${dayjs(newIncome.date).format('MM/YYYY')}
-A été ajouté au projet #${hashtag}, 🎉!`,
+À été ajouté au projet #${hashtag}, 🎉!`,
       [],
       interaction.application_id,
       interaction.token
@@ -197,7 +197,7 @@ const incomeEdit = (
   return Promise.all([
     updateProjectIncome(userId, hashtag, incomeId, update),
     sendTxtLater(
-      `Le revenu 💰 ${incomeId} a été mise a jours dans le projet #${hashtag}, 🎉!`,
+      `Le revenu 💰 ${incomeId} a été mise à jour dans le projet #${hashtag}, 🎉!`,
       [],
       interaction.application_id,
       interaction.token
@@ -236,7 +236,7 @@ const incomesView = async (
     }
     let incomeInfos = `${target} ${allIncomes.total} € sur ce projet, BRAVO 🎉!
 
-Voici La liste des revenus:
+Voici La liste des revenus :
 
 `
     allIncomes.incomes.forEach((element: Income) => {
