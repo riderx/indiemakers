@@ -192,7 +192,7 @@ const updateProjectTaskAndStreak = async (
     lastTaskAt: dayjs().toISOString(),
   }
   const lastTaskAt = dayjs(proj.lastTaskAt)
-  if (proj.lastTaskAt && lastDay().isBefore(lastTaskAt)) {
+  if (proj.lastTaskAt && lastTaskAt.isAfter(lastDay())) {
     updatedProject.streak = (proj.streak || 0) + 1
   } else {
     updatedProject.streak = 0
@@ -207,7 +207,7 @@ export const updateUserTaskAndStreak = (usr: User) => {
       lastTaskAt: dayjs().toISOString(),
     }
     const lastTaskAt = dayjs(usr.lastTaskAt)
-    if (usr.lastTaskAt && lastDay().isBefore(lastTaskAt)) {
+    if (usr.lastTaskAt && lastTaskAt.isAfter(lastDay())) {
       updatedUser.streak = (usr.streak || 0) + 1
     } else {
       updatedUser.streak = 0
