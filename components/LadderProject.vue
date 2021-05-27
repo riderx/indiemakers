@@ -6,7 +6,7 @@
         id="sort-select"
         v-model="sort"
         name="sort"
-        class="bg-royalblue-700"
+        class="border rounded bg-royalblue-700 border-orchid-300"
       >
         <option value="streak">🔥</option>
         <option value="tasks">💗</option>
@@ -103,3 +103,16 @@ export default Vue.extend({
   },
 })
 </script>
+<style scoped>
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23df99d8'><polygon points='0,0 100,0 50,50'/></svg>")
+    no-repeat;
+  background-size: 12px;
+  background-position: calc(100% - 10px) center;
+  background-repeat: no-repeat;
+  width: 50px;
+}
+</style>
