@@ -67,7 +67,7 @@ const updateProjecttotalIncome = async (
     .collection(`discord/${userId}/projects/`)
     .doc(hashtag.toLowerCase())
     .get()
-  if (!projDoc.exists || !projDoc.data) {
+  if (!projDoc.exists) {
     console.error(
       `Cannot add total to userId: ${userId}, hashtag: ${hashtag.toLowerCase()}, incomes: ${incomes}`
     )

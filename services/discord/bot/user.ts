@@ -138,7 +138,7 @@ export const updateUser = async (
     .collection('/discord')
     .doc(userId)
     .get()
-  if (!userDoc.exists || !userDoc.data) {
+  if (!userDoc.exists) {
     const userInfo = await getUserData(userId)
     const base: User = {
       userId,
@@ -164,6 +164,50 @@ export const updateUser = async (
       }
       base.username = userInfo.username
     }
+    await openChannel(base.userId).then(async (channel) => {
+      console.error('channel', channel)
+      await sendChannel(
+        channel.id,
+        `Bienvenue dans la communautée INDIE MAKERS ❤️`
+      )
+      await sendChannel(
+        channel.id,
+        `Ton profil est maintenant visible ici: https://indiemakers.fr/communaute/${base?.username}`
+      )
+      await sendChannel(
+        channel.id,
+        `Prend 5 minutes pour te présenté sur le salon #00_presentation
+Tu peu utiliser ce modèle :`
+      )
+      await sendChannel(
+        channel.id,
+        `
+  Salut Les INDIE MAKERS! 🕉
+  Moi c'est XXX, j'ai XX ans et je viens de XX.
+  Dans la vie je suis XXX depuis XXX ans.
+  J'ai aussi plusieurs projets a côté, comme:
+  - XXX une app de XXX qui fait XXX revenu
+  - XXX un site pour les XXX, pas de revenu
+  - XXX que j'ai abandonné car XXX
+  Je fait des projet dans le but de XXX.
+  Je vous ai rejoint dans le but de XXX.
+  Ravis d'etre parmis vous !`
+      )
+      await sendChannel(
+        channel.id,
+        `
+En suite Tu peux enrichir ton profil depuis la communauté avec la commande \`/im maker modifier nom: TON NOM\`
+  Si tu souhaite voir la liste, des champs possible \`/im maker aide\`
+    `
+      )
+      await sendChannel(
+        channel.id,
+        `
+Penser a donner du karma aux makers qui prennent le temps t'aider !
+Tu peu le faire avec la commande \`/im karma donner maker:@martin \`
+    `
+      )
+    })
     const newUser: User = Object.assign(base, user as User)
     return admin.firestore().collection('discord').doc(userId).set(newUser)
   }
@@ -330,11 +374,15 @@ const userView = async (
   const user = await getUsersById(userId || myId)
   if (user && userId && myId !== userId) {
     console.error('userView', userId)
-    return sendTxtLater(
+    await sendTxtLater(
       `Voici les infos sur ce maker :`,
       [userCard(user)],
       interaction.application_id,
       interaction.token
+    )
+    return sendChannel(
+      interaction.channel_id,
+      `Tu peux aussi voir toute les infos sur la page publique : https://indiemakers.fr/communaute/${user?.username}`
     )
   } else if (user) {
     console.error('userView', userId)
@@ -355,9 +403,13 @@ const userView = async (
       interaction.channel_id,
       `Je t'ai envoyé plus info en privé 🤫`
     )
+    await sendChannel(
+      interaction.channel_id,
+      `Tu peux aussi voir toute les infos sur la page publique : https://indiemakers.fr/communaute/${user?.username}`
+    )
     await openChannel(myId).then((channel) => {
       console.error('channel', channel)
-      sendChannel(channel.id, `Voici tes infos complètes :`, card)
+      return sendChannel(channel.id, `Voici tes infos complètes :`, card)
     })
     return Promise.resolve()
   }
@@ -392,6 +444,36 @@ export const userFn = (
   }
   if (option.name === 'voir') {
     return userView(interaction, senderId, undefined)
+  }
+  if (option.name === 'aide' && option.options && option.options.length > 0) {
+    return sendTxtLater(
+      `Voici ce que tu peut faire avec la commande maker:
+  - modifier ( ton compte )
+    - photo: L'url vers ta photo (avec https://)
+    - emoji: Un emoji qui te représente
+    - twitter: Ton nom twitter
+    - couverture: L'url vers ta photo de couverture
+    - couleur: Une couleur en Hexa qui te ressemble
+    - nom: Ton nom de scène !
+    - bio: Ta bio, qui te décrit
+    - website: L'url de ton site perso (avec https://)
+    - github: L'url de ton github perso (avec https://)
+    - makerlog: L'url de ton compte getmakerlog.com perso (avec https://)
+    - wip: L'url de ton compte wip.co perso (avec https://)
+    - twitter: L'url de ton compte twitter.com perso (avec https://)
+    - nomadlist: L'url de ton compte nomadlist.com perso (avec https://)
+    - makerlog_hook: L'url de ton webhook makerlog
+    - wip_key: Ton api key pour connecter ton compte wip.co
+  - supprimer ( ton compte )
+    - hashtag: obligatoire
+  - voir (voir un maker ou toi par default)
+      - maker: optionnel
+  - liste (lister les makers)
+  `,
+      [],
+      interaction.application_id,
+      interaction.token
+    )
   }
   return sendTxtLater(
     `La Commande ${option.name} n'est pas pris en charge 🤫`,

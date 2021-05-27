@@ -11,6 +11,7 @@ import {
   field,
   getFields,
   image,
+  openChannel,
   sendChannel,
   sendTxtLater,
   sleep,
@@ -144,12 +145,13 @@ export const updateProject = async (
   hashtag: string,
   project: Partial<Project>
 ): Promise<any> => {
-  const userDoc = await admin
+  const lowHash = hashtag.toLowerCase()
+  const projDoc = await admin
     .firestore()
     .collection(`discord/${userId}/projects`)
-    .doc(hashtag.toLowerCase())
+    .doc(lowHash)
     .get()
-  if (!userDoc.exists || !userDoc.data) {
+  if (!projDoc.exists) {
     const newProject: Project = Object.assign(
       {
         hashtag: '',
@@ -172,10 +174,21 @@ export const updateProject = async (
     return admin
       .firestore()
       .collection(`discord/${userId}/projects`)
-      .doc(hashtag.toLowerCase())
+      .doc(lowHash)
       .set(newProject)
   }
-  return userDoc.ref.update({ ...project, updatedAt: dayjs().toISOString() })
+  const data: Project = projDoc.data() as Project
+  if (!data.name && project.name) {
+    await openChannel(userId).then((channel) => {
+      console.error('channel', channel)
+      return sendChannel(
+        channel.id,
+        `Il est temps de shiper 🚤 ta premiere tache sur #${lowHash} avec \`/im tache ajouter hashtag: ${lowHash} contenu: Ajout du projet sur INDIE MAKERS\` 💗
+  Fait le sur le salon #01_construire_en_public, il est fait pour ça, il est en silencieux pour tout le monde !`
+      )
+    })
+  }
+  return projDoc.ref.update({ ...project, updatedAt: dayjs().toISOString() })
 }
 
 const deleteProject = (userId: string, hashtag: string): Promise<any> => {
@@ -292,25 +305,26 @@ const projectAdd = async (
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     ;(newProj as any)[transformKey(translations, element.name)] = element.value
   })
-  if (newProj.hashtag && /^[a-zA-Z]+$/.test(newProj.hashtag)) {
+  if (newProj.hashtag && /^[a-z]+$/.test(newProj.hashtag)) {
     console.error('add project', newProj)
     const user = await getUsersById(userId)
     return Promise.all([
       sendTxtLater(
         `Tu as crée le projet: #${newProj.hashtag} 👏
-
-Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache ajouter hashtag: ${newProj.hashtag} contenu: Ma super tache\` 💗
-ou
-remplir sa description avec \`/im projet modifier hashtag: ${newProj.hashtag} description: mon super projet\` 🪴
-Fait la commande \`/im projet aide \` voir avoir de l'aide sur les champs disponibles
-ou
-enregistrer un premier revenu avec \`/im revenu ajouter hashtag: ${newProj.hashtag} revenu 42 mois: Février 2021 \`💰!
-Tu peux voir toute les infos que tu rentre sur ta page : https://indiemakers.fr/communaute/${user?.username}
+Tu peux voir tes projets sur ta page : https://indiemakers.fr/communaute/${user?.username}
 `,
         [],
         interaction.application_id,
         interaction.token
       ),
+      openChannel(userId).then((channel) => {
+        console.error('channel', channel)
+        return sendChannel(
+          channel.id,
+          `Tu peux Remplir maintenant les info de #${newProj.hashtag} avec \`/im projet modifier hashtag: ${newProj.hashtag} nom: Mon super projet\` 🪴
+          (Fait \`/im projet aide \` pour voir les champs disponibles)`
+        )
+      }),
       updateProject(userId, newProj.hashtag, newProj),
       getAllProjects(userId).then((allProj) =>
         updateUser(userId, { projects: allProj.length + 1 })

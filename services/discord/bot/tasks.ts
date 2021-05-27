@@ -4,7 +4,7 @@ import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
-import { sendTxtLater } from './utils'
+import { openChannel, sendChannel, sendTxtLater } from './utils'
 import { updateUser, User, getUsersById } from './user'
 
 import { sendToWip, updateToWip } from './wip'
@@ -174,7 +174,19 @@ const updateProjectTaskAndStreak = async (
   proj: Project | null
 ) => {
   if (!proj) return Promise.reject(Error('Projet introuvable'))
-  const curTasks = await getAllProjectsTasks(userId, proj.hashtag)
+  const lowHash = proj.hashtag.toLowerCase()
+  const curTasks = await getAllProjectsTasks(userId, lowHash)
+  // enregistrer un premier revenu avec \`/im revenu ajouter hashtag: ${newProj.hashtag} revenu 42 mois: Février 2021 \`💰!
+  if (curTasks.total === 0) {
+    await openChannel(userId).then((channel) => {
+      console.error('channel', channel)
+      return sendChannel(
+        channel.id,
+        `Il est temps d'enregistrer un premier revenu 💰 ou dépense 💸 sur #${lowHash} avec \`/im revenu ajouter hashtag:${lowHash} montant:-300 mois:Janvier année:2021 \` 💗
+  Fait le sur le salon #01_construire_en_public.`
+      )
+    })
+  }
   const updatedProject: Partial<Project> = {
     tasks: curTasks.total + 1,
     lastTaskAt: dayjs().toISOString(),
