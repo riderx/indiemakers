@@ -211,6 +211,11 @@ Penser a donner du karma aux makers qui prennent le temps t'aider !
 Tu peu le faire avec la commande \`/im karma donner maker:@martin \`
     `
       )
+      await sendChannel(
+        channel.id,
+        `Pour apprendre a utiliser le bot il y a une petite doc juste ici:
+https://indiemakers.gitbook.io/bot`
+      )
     })
     const newUser: User = Object.assign(base, user as User)
     await admin.firestore().collection('discord').doc(userId).set(newUser)
