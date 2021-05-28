@@ -185,7 +185,8 @@ export const updateProject = async (
       console.error('channel', channel)
       return sendChannel(
         channel.id,
-        `Il est temps d'envoyer 💌 ta première tâche au projet #${lowHash} avec \`/im tache ajouter hashtag: ${lowHash} contenu: Ajout du projet sur INDIE MAKERS\` 💗
+        `💗 Il est temps d'envoyer 💌 ta première tâche au projet #${lowHash} avec:
+\`/im tache ajouter hashtag:${lowHash} contenu:Ajout du projet sur INDIE MAKERS\`
   Fait le sur le salon #01_construire_en_public, il est fait pour ça, il est en silencieux pour tout le monde !`
       )
     })
@@ -212,7 +213,7 @@ export const addProject = async (
           channel.id,
           `Ton premiers projet 🪴 !
 Tu peu maintenant remplir les informations de #${newProj.hashtag} avec:
-  \`/im projet modifier hashtag: ${newProj.hashtag} nom: Mon super projet\`
+  \`/im projet modifier hashtag:${newProj.hashtag} nom:Mon super projet\`
 , fait:
   \`/im projet aide\`
 pour voir les champs disponibles.
@@ -237,7 +238,7 @@ Fait le sur le salon #01_construire_en_public .`
         return sendChannel(
           channel.id,
           `Rempli les informations de #${newProj.hashtag} 🪴 avec:
-  \`/im projet modifier hashtag: ${newProj.hashtag} nom: Mon super projet\`
+  \`/im projet modifier hashtag:${newProj.hashtag} nom:Mon super projet\`
 , fait:
   \`/im projet aide \`
 pour voir les champs disponibles.

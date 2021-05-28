@@ -198,9 +198,11 @@ Tu peu utiliser ce modèle :`
       await sendChannel(
         channel.id,
         `
-En suite Tu peux enrichir ton profil depuis la communauté avec la commande \`/im maker modifier nom: TON NOM\`
-  Si tu souhaite voir la liste, des champs possible \`/im maker aide\`
-    `
+En suite Tu peux enrichir ton profil depuis la communauté avec la commande:
+  \`/im maker modifier nom:TON NOM\`
+Si tu souhaite voir la liste, des champs possible:
+  \`/im maker aide\`
+N'oublie pas, pour ajouter un champ a une commande, utilise la touche TAB`
       )
       await sendChannel(
         channel.id,
