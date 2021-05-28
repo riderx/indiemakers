@@ -100,7 +100,9 @@
           <NuxtLink
             v-for="project in maker.projectsData"
             :key="project.hashtag"
-            :to="`/communaute/maker/${maker.userId}/projet/${project.hashtag}`"
+            :to="`/communaute/maker/${encodeURI(maker.username)}/projet/${
+              project.hashtag
+            }`"
             class="flex-none my-4 ml-3 cursor-pointer md:my-2 lg:my-4 md:ml-0"
             @click="hashtag = project.hashtag"
           >
@@ -264,7 +266,7 @@ export default Vue.extend({
   mounted() {
     // this.getProject(this.hashtag)
     // this.$router.push(
-    //   `/communaute/maker/${this.maker.userId}/projet/${this.hashtag}`
+    //   `/communaute/maker/${encodeURI(this.maker..username)}/projet/${this.hashtag}`
     // )
     this.loaded = true
   },

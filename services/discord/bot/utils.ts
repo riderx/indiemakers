@@ -320,9 +320,14 @@ Si tu veux les conserver, fait une tache aujourd'hui sur tes projet même 5 min,
   )
 }
 
-export const lateBot = async () => {
+export const getConfig = async () => {
   const res = await admin.firestore().collection('bot').doc('config').get()
   const data = res.data()
+  return data
+}
+
+export const lateBot = async () => {
+  const data = await getConfig()
   if (data) {
     await sendChannel(
       data.channel_bip,
@@ -333,8 +338,7 @@ export const lateBot = async () => {
 }
 
 export const morningBot = async () => {
-  const res = await admin.firestore().collection('bot').doc('config').get()
-  const data = res.data()
+  const data = await getConfig()
   if (data) {
     const usrTt = await getAllUsers()
     await Promise.all(

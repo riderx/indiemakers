@@ -101,7 +101,7 @@ export default Vue.extend({
       return {}
     },
     openProfil(id: string) {
-      this.$router.push(`/communaute/${id}`)
+      this.$router.push(`/communaute/${encodeURI(id)}`)
     },
   },
 })

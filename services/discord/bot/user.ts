@@ -128,11 +128,13 @@ export const getUsersByUsername = async (
     return null
   }
 }
+export const getUserUrl = (user: User) =>
+  `https://indiemakers.fr/communaute/${encodeURI(user?.username)}`
 
 export const updateUser = async (
   userId: string,
   user: Partial<User>
-): Promise<any> => {
+): Promise<User> => {
   const userDoc = await admin
     .firestore()
     .collection('/discord')
@@ -172,7 +174,7 @@ export const updateUser = async (
       )
       await sendChannel(
         channel.id,
-        `Ton profil est maintenant visible ici: https://indiemakers.fr/communaute/${base?.username}`
+        `Ton profil est maintenant visible ici: ${getUserUrl(base)}`
       )
       await sendChannel(
         channel.id,
@@ -209,9 +211,11 @@ Tu peu le faire avec la commande \`/im karma donner maker:@martin \`
       )
     })
     const newUser: User = Object.assign(base, user as User)
-    return admin.firestore().collection('discord').doc(userId).set(newUser)
+    await admin.firestore().collection('discord').doc(userId).set(newUser)
+    return newUser
   }
-  return userDoc.ref.update({ ...user, updatedAt: dayjs().toISOString() })
+  await userDoc.ref.update({ ...user, updatedAt: dayjs().toISOString() })
+  return userDoc.data() as User
 }
 
 const userEdit = (
@@ -299,7 +303,7 @@ const userCard = (user: User) => {
     undefined,
     undefined,
     user.createdAt,
-    `https://indiemakers.fr/communaute/${user.userId}`,
+    getUserUrl(user),
     thumb
   )
 }
@@ -382,7 +386,9 @@ const userView = async (
     )
     return sendChannel(
       interaction.channel_id,
-      `Tu peux aussi voir toute les infos sur la page publique : https://indiemakers.fr/communaute/${user?.username}`
+      `Tu peux aussi voir toute les infos sur la page publique : ${getUserUrl(
+        user
+      )}`
     )
   } else if (user) {
     console.error('userView', userId)
@@ -405,7 +411,9 @@ const userView = async (
     )
     await sendChannel(
       interaction.channel_id,
-      `Tu peux aussi voir toute les infos sur la page publique : https://indiemakers.fr/communaute/${user?.username}`
+      `Tu peux aussi voir toute les infos sur la page publique : ${getUserUrl(
+        user
+      )}`
     )
     await openChannel(myId).then((channel) => {
       console.error('channel', channel)

@@ -4,7 +4,7 @@ import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
-import { sendTxtLater } from './utils'
+import { getConfig, sendChannel, sendTxtLater } from './utils'
 import { getAllProjects } from './project'
 import { updateUser, User } from './user'
 
@@ -21,27 +21,44 @@ export interface IncomeAll {
   incomes: Income[]
   total: number
 }
-export const createProjectIncome = (
+export const createProjectIncome = async (
   userId: string,
   hashtag: string,
   income: Partial<Income>
 ) => {
-  return admin
+  await admin
     .firestore()
     .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`)
     .add({ ...income, createdAt: dayjs().toISOString() })
+  const all = await updateProjecttotalIncome(userId, hashtag)
+  const superTotal = await getTotalIncomeByUser(userId)
+  if (superTotal === all.total) {
+    const data = await getConfig()
+    if (data) {
+      await sendChannel(
+        data.channel_general,
+        `Hey Makers, Donnez de la force 💪🏋️‍♂️ a <@${userId}>
+  il viens d'ajouter son premier revenu sur #${hashtag}!`
+      )
+    }
+  }
+  const updatedUser: Partial<User> = {
+    incomes: superTotal,
+  }
+  return updateUser(userId, updatedUser)
 }
 
-export const deleteProjectIncome = (
+export const deleteProjectIncome = async (
   userId: string,
   hashtag: string,
   incomeId: string
 ) => {
-  return admin
+  await admin
     .firestore()
     .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`)
     .doc(incomeId)
     .delete()
+  await updateProjecttotalIncome(userId, hashtag)
 }
 
 export const updateProjectIncome = (
@@ -59,20 +76,26 @@ export const updateProjectIncome = (
 
 const updateProjecttotalIncome = async (
   userId: string,
-  hashtag: string,
-  incomes: number
-) => {
+  hashtag: string
+): Promise<IncomeAll> => {
   const projDoc = await admin
     .firestore()
     .collection(`discord/${userId}/projects/`)
     .doc(hashtag.toLowerCase())
     .get()
+  const curIncomes = await getAllProjectsIncomes(userId, hashtag)
   if (!projDoc.exists) {
     console.error(
-      `Cannot add total to userId: ${userId}, hashtag: ${hashtag.toLowerCase()}, incomes: ${incomes}`
+      `Cannot add total to userId: ${userId}, hashtag: ${hashtag.toLowerCase()}, incomes: ${
+        curIncomes.total
+      }`
     )
   }
-  return projDoc.ref.update({ incomes, updatedAt: dayjs().toISOString() })
+  await projDoc.ref.update({
+    incomes: curIncomes.total,
+    updatedAt: dayjs().toISOString(),
+  })
+  return curIncomes
 }
 
 export const getAllProjectsIncomes = async (
@@ -149,17 +172,7 @@ const incomeAdd = (
       interaction.application_id,
       interaction.token
     ),
-    getAllProjectsIncomes(userId, hashtag).then((curIncomes) =>
-      updateProjecttotalIncome(userId, hashtag, curIncomes.total + 1)
-    ),
-    createProjectIncome(userId, hashtag, newIncome).then(() =>
-      getTotalIncomeByUser(userId).then((superTotal) => {
-        const updatedUser: Partial<User> = {
-          incomes: superTotal + 1,
-        }
-        return updateUser(userId, updatedUser)
-      })
-    ),
+    createProjectIncome(userId, hashtag, newIncome),
   ]).then(() => Promise.resolve())
 }
 
@@ -260,7 +273,7 @@ Voici La liste des revenus :
   }
 }
 
-const incomesDelete = async (
+const incomesDelete = (
   interaction: Interaction,
   options: ApplicationCommandInteractionDataOption[],
   userId: string
@@ -274,10 +287,8 @@ const incomesDelete = async (
       incomeId = element.value
     }
   })
-  const curIncomes = await getAllProjectsIncomes(userId, hashtag)
   return Promise.all([
     deleteProjectIncome(userId, hashtag, incomeId),
-    updateProjecttotalIncome(userId, hashtag, curIncomes.total),
     sendTxtLater(
       `Tu as supprimé le revenu ${incomeId} 💸!`,
       [],

@@ -4,7 +4,7 @@ import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
-import { sendTxtLater } from './utils'
+import { openChannel, sendChannel, sendTxtLater } from './utils'
 import { updateUser, getAllUsers, User } from './user'
 
 interface Karma {
@@ -36,11 +36,32 @@ const getKarmaById = async (
   }
 }
 
-const addKarmaById = (userId: string, senderId: string, value: number) =>
-  admin
+const addKarmaById = async (
+  userId: string,
+  senderId: string,
+  value: number
+): Promise<string> => {
+  await admin
     .firestore()
     .collection(`discord/${userId}/karma`)
     .add({ userId: senderId, value, createdAt: dayjs().toISOString() })
+  const curKarma = await getKarmaById(userId)
+  const botString = `Tu as ${
+    value > 0 ? 'donné' : 'enlevé'
+  } du karma a <@${userId}> 😎
+  Total 🕉: ${curKarma.total} karma!`
+  if (curKarma.total < 0) {
+    await openChannel(userId).then((channel) => {
+      console.error('channel', channel)
+      return sendChannel(
+        channel.id,
+        `Ton karma est négatif ... un admin vas te contacter.`
+      )
+    })
+  }
+  await updateUser(userId, { karma: curKarma.total })
+  return botString
+}
 
 const karmaAdd = async (
   interaction: Interaction,
@@ -58,19 +79,13 @@ const karmaAdd = async (
         interaction.token
       )
     }
-    const curKarma = await getKarmaById(userId)
-    const botString = `Tu as donné du karma a <@${userId}> 😎
-Total 🕉: ${curKarma.total + 1} karma!`
-    return Promise.all([
-      updateUser(userId, { karma: curKarma.total + 1 }),
-      addKarmaById(userId, senderId, 1),
-      sendTxtLater(
-        botString,
-        [],
-        interaction.application_id,
-        interaction.token
-      ),
-    ]).then(() => Promise.resolve())
+    const botString = await addKarmaById(userId, senderId, 1)
+    return sendTxtLater(
+      botString,
+      [],
+      interaction.application_id,
+      interaction.token
+    )
   } else {
     return sendTxtLater(
       'Donne moi un Maker 👨‍🌾 !',
@@ -104,24 +119,9 @@ const karmaRm = async (
       interaction.token
     )
   }
-  const curKarma = await getKarmaById(userId)
-  if (curKarma.total > 0) {
-    const botString = `Tu as enlevé du karma a <@${userId}>
-Total 🕉: ${curKarma.total - 1} karma 😢`
-    return Promise.all([
-      updateUser(userId, { karma: curKarma.total - 1 }),
-      addKarmaById(userId, senderId, -1),
-      sendTxtLater(
-        botString,
-        [],
-        interaction.application_id,
-        interaction.token
-      ),
-    ]).then(() => Promise.resolve())
-  }
+  const botString = await addKarmaById(userId, senderId, -1)
   return sendTxtLater(
-    `<@${userId}> n'as plus de karma 🕉...
-Laisse le tranquile 😢!`,
+    botString,
     [],
     interaction.application_id,
     interaction.token

@@ -70,12 +70,15 @@ const createProjectTask = async (
   } catch (err) {
     console.error('createProjectTask', err)
   }
-  return admin
+  await admin
     .firestore()
     .collection(
       `discord/${user.userId}/projects/${hashtag.toLowerCase()}/tasks`
     )
     .add({ ...task, createdAt: dayjs().toISOString() })
+  const curProject = await getProjectById(user.userId, hashtag)
+  await updateProjectTaskAndStreak(user.userId, curProject)
+  await updateUserTaskAndStreak(user)
 }
 
 const deleteProjectTask = (
@@ -177,18 +180,19 @@ const updateProjectTaskAndStreak = async (
   const lowHash = proj.hashtag.toLowerCase()
   const curTasks = await getAllProjectsTasks(userId, lowHash)
   // enregistrer un premier revenu avec \`/im revenu ajouter hashtag: ${newProj.hashtag} revenu 42 mois: Février 2021 \`💰!
-  if (curTasks.total === 0) {
+  if (curTasks.total === 1) {
     await openChannel(userId).then((channel) => {
       console.error('channel', channel)
       return sendChannel(
         channel.id,
-        `Il est temps d'enregistrer un premier revenu 💰 ou dépense 💸 sur #${lowHash} avec \`/im revenu ajouter hashtag:${lowHash} montant:-300 mois:Janvier année:2021 \` 💗
-  Fait le sur le salon #01_construire_en_public.`
+        `Il est temps d'enregistrer un premier revenu 💰 ou dépense 💸 sur #${lowHash} avec:
+  \`/im revenu ajouter hashtag:${lowHash} montant:-300 mois:Janvier année:2021 \`
+💪 Fait le sur le salon #01_construire_en_public .`
       )
     })
   }
   const updatedProject: Partial<Project> = {
-    tasks: curTasks.total + 1,
+    tasks: curTasks.total,
     lastTaskAt: dayjs().toISOString(),
   }
   const lastTaskAt = dayjs(proj.lastTaskAt)
@@ -200,20 +204,19 @@ const updateProjectTaskAndStreak = async (
   return updateProject(userId, proj.hashtag, updatedProject)
 }
 
-export const updateUserTaskAndStreak = (usr: User) => {
-  getTotalTaskAndStreakByUser(usr.userId).then((superTotal) => {
-    const updatedUser: Partial<User> = {
-      tasks: superTotal.tasks + 1,
-      lastTaskAt: dayjs().toISOString(),
-    }
-    const lastTaskAt = dayjs(usr.lastTaskAt)
-    if (usr.lastTaskAt && lastTaskAt.isAfter(lastDay())) {
-      updatedUser.streak = (usr.streak || 0) + 1
-    } else {
-      updatedUser.streak = 0
-    }
-    return updateUser(usr.userId, updatedUser)
-  })
+export const updateUserTaskAndStreak = async (usr: User) => {
+  const superTotal = await getTotalTaskAndStreakByUser(usr.userId)
+  const updatedUser: Partial<User> = {
+    tasks: superTotal.tasks,
+    lastTaskAt: dayjs().toISOString(),
+  }
+  const lastTaskAt = dayjs(usr.lastTaskAt)
+  if (usr.lastTaskAt && lastTaskAt.isAfter(lastDay())) {
+    updatedUser.streak = (usr.streak || 0) + 1
+  } else {
+    updatedUser.streak = 0
+  }
+  return updateUser(usr.userId, updatedUser)
 }
 
 const taskAdd = async (
@@ -243,11 +246,7 @@ A été ajouté au projet #${hashtag}, 🎉!`,
         interaction.application_id,
         interaction.token
       ),
-      createProjectTask(curUser, hashtag, task).then(() =>
-        getProjectById(userId, hashtag)
-          .then((curProject) => updateProjectTaskAndStreak(userId, curProject))
-          .then(() => updateUserTaskAndStreak(curUser))
-      ),
+      createProjectTask(curUser, hashtag, task),
     ]).then(() => Promise.resolve())
   } else {
     return sendTxtLater(

@@ -98,7 +98,7 @@ export default Vue.extend({
     },
     openProject(id: string, hashtag: string) {
       console.error(id, hashtag)
-      // this.$router.push(`/communaute/maker/${id}/projet/${hashtag}`)
+      // this.$router.push(`/communaute/maker/${encodeURI(id)}/projet/${hashtag}`)
     },
   },
 })
