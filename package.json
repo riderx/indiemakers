@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@nuxt/content": "^1.14.0",
-    "@nuxt/image": "^0.4.10",
+    "@nuxt/image": "^0.4.12",
     "@tailwindcss/line-clamp": "^0.2.0",
     "@tailwindcss/typography": "^0.4.1",
     "axios": "^0.21.1",
