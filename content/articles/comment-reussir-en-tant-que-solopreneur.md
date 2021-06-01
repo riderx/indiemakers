@@ -11,7 +11,7 @@ description: Le fait d'être un entrepreneur solo ou "solopreneur" peut être un
 type: Article
 headImage: https://res.cloudinary.com/forgr/image/upload/v1621181830/indiemakers/humphrey-muleba-vvLBPW3uS4Q-unsplash_ymwur4.jpg
 readTime: 10 min
-date: 16 mai 2021
+date: 01 juin 2021
 author: Les indiemakers
 authorImage: https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg
 
