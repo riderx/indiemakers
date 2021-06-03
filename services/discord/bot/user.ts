@@ -216,6 +216,11 @@ Tu peu le faire avec la commande \`/im karma donner maker:@martin \`
         `Pour apprendre a utiliser le bot il y a une petite doc juste ici:
 https://indiemakers.gitbook.io/bot`
       )
+      await sendChannel(
+        channel.id,
+        `voici un petit tuto video pour te montrer :
+        https://www.youtube.com/watch?v=qrXN3Mai1Gw`
+      )
     })
     const newUser: User = Object.assign(base, user as User)
     await admin.firestore().collection('discord').doc(userId).set(newUser)
