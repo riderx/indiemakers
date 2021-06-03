@@ -466,7 +466,6 @@ export const userFn = (
   - modifier ( ton compte )
     - photo: L'url vers ta photo (avec https://)
     - emoji: Un emoji qui te représente
-    - twitter: Ton nom twitter
     - couverture: L'url vers ta photo de couverture
     - couleur: Une couleur en Hexa qui te ressemble
     - nom: Ton nom de scène !

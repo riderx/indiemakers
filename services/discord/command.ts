@@ -123,7 +123,7 @@ const optionGen = (
 
 const projetHashtag = optionGen(
   'hashtag',
-  'Le hashtag de ton projet (nom sans espaces)',
+  'Le hashtag de ton projet (nom sans espaces, ni majuscule)',
   SlashCommandOptionType.STRING,
   true
 )
