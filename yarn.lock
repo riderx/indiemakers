@@ -4861,10 +4861,10 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-discord-interactions@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/discord-interactions/-/discord-interactions-2.0.2.tgz"
-  integrity sha512-zKQB63xWLYbOZMyU+EcLrXnUCMuWkU8/SoH7jFvc99Y1amHqli3oPEkgoLWUmYckL+HCPuA7LXpNyXaFvoqIww==
+discord-interactions@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/discord-interactions/-/discord-interactions-2.1.0.tgz#518e197d43b240f3176183cf6a8c827c64eec0e1"
+  integrity sha512-cs9BHou0CnQfXJkkuKa0VEMIOATMxwGdWBKeMRyEDL4Z8DBev+DdEQpD0ecQt77neb8OUnCnmgTZD0fiMXzQ9Q==
   dependencies:
     tweetnacl "^1.0.3"
 
