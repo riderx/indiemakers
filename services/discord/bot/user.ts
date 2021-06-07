@@ -169,7 +169,7 @@ export const updateUser = async (
       console.error('channel', channel)
       await sendChannel(
         channel.id,
-        `Bienvenue dans la communautée INDIE MAKERS ❤️`
+        `Bienvenue dans la communauté INDIE MAKERS ❤️`
       )
       await sendChannel(
         channel.id,
@@ -177,7 +177,7 @@ export const updateUser = async (
       )
       await sendChannel(
         channel.id,
-        `Prend 5 minutes pour te présenté sur le salon #00_presentation
+        `Prends 5 minutes pour te présenter sur le salon #00_presentation
 Tu peu utiliser ce modèle :`
       )
       await sendChannel(
@@ -186,38 +186,38 @@ Tu peu utiliser ce modèle :`
   Salut Les INDIE MAKERS! 🕉
   Moi c'est XXX, j'ai XX ans et je viens de XX.
   Dans la vie je suis XXX depuis XXX ans.
-  J'ai aussi plusieurs projets a côté, comme:
-  - XXX une app de XXX qui fait XXX revenu
+  J'ai aussi plusieurs projets à côté, comme:
+  - XXX une app de XXX qui fait XXX de revenu
   - XXX un site pour les XXX, pas de revenu
   - XXX que j'ai abandonné car XXX
-  Je fait des projet dans le but de XXX.
-  Je vous ai rejoint dans le but de XXX.
-  Ravis d'etre parmis vous !`
+  Je fais des projets dans le but de XXX.
+  Je vous ai rejoints dans le but de XXX.
+  Ravi d'etre parmi vous !`
       )
       await sendChannel(
         channel.id,
         `
 En suite Tu peux enrichir ton profil depuis la communauté avec la commande:
   \`/im maker modifier nom:TON NOM\`
-Si tu souhaite voir la liste, des champs possible:
+Si tu souhaite voir la liste, des champs possibles:
   \`/im maker aide\`
-N'oublie pas, pour ajouter un champ a une commande, utilise la touche TAB`
+N'oublie pas, pour ajouter un champ à une commande, utilise la touche TAB`
       )
       await sendChannel(
         channel.id,
         `
-Penser a donner du karma aux makers qui prennent le temps t'aider !
-Tu peu le faire avec la commande \`/im karma donner maker:@martin \`
+Pense à donner du karma aux makers qui prennent le temps de t'aider !
+Tu peux le faire avec la commande \`/im karma donner maker:@martin \`
     `
       )
       await sendChannel(
         channel.id,
-        `Pour apprendre a utiliser le bot il y a une petite doc juste ici:
+        `Pour apprendre à utiliser le bot il y a une petite doc juste ici:
 https://indiemakers.gitbook.io/bot`
       )
       await sendChannel(
         channel.id,
-        `voici un petit tuto video pour te montrer :
+        `voici un petit tuto vidéo pour te montrer :
         https://www.youtube.com/watch?v=qrXN3Mai1Gw`
       )
     })
@@ -248,7 +248,7 @@ const userEdit = (
     updateUser(userId, update),
     sendTxtLater(
       `Tu as mis a jour ton profil !
-Cela aideras les autres makers 👨‍🌾 a te connaitre !`,
+Cela aidera les autres makers 👨‍🌾 à te connaitre !`,
       [],
       interaction.application_id,
       interaction.token
