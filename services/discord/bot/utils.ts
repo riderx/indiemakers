@@ -144,7 +144,7 @@ export const getUserData = async (
 
 export const sendTxtLoading = (res: Res): Res =>
   res.send({
-    type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+    type: InteractionResponseType.ACKNOWLEDGE_WITH_SOURCE,
     data: {
       content: 'Le bot réflechis..',
     },
