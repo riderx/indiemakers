@@ -24,7 +24,7 @@ enum TaskStatus {
   DONE = 'done',
 }
 export interface Task {
-  id?: string
+  id: string
   content: string
   status: TaskStatus
   doneAt?: string
@@ -46,6 +46,19 @@ const taskProtectedKey = [
   'updatedAt',
 ]
 
+const getLastTask = async (userId: string, hashtag: string) => {
+  const taskList = await admin
+    .firestore()
+    .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
+    .orderBy('createdAt', 'desc')
+    .limit(1)
+    .get()
+    .then((querySnapshot) =>
+      querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    )
+  return taskList[0]
+}
+
 const createProjectTask = async (
   user: User,
   hashtag: string,
@@ -53,6 +66,10 @@ const createProjectTask = async (
 ): Promise<any> => {
   try {
     const done = task.status !== TaskStatus.TODO
+    const lastTask = await getLastTask(user.userId, hashtag)
+    if (lastTask) {
+      task.id = lastTask.id + 1
+    }
     if (task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString()
     }
@@ -70,7 +87,7 @@ const createProjectTask = async (
   } catch (err) {
     console.error('createProjectTask', err)
   }
-  await admin
+  const newTask = await admin
     .firestore()
     .collection(
       `discord/${user.userId}/projects/${hashtag.toLowerCase()}/tasks`
@@ -79,6 +96,7 @@ const createProjectTask = async (
   const curProject = await getProjectById(user.userId, hashtag)
   await updateProjectTaskAndStreak(user.userId, curProject)
   await updateUserTaskAndStreak(user)
+  return newTask.get()
 }
 
 const deleteProjectTask = (
@@ -124,11 +142,17 @@ const updateProjectTask = async (
   } catch (err) {
     console.error('updateProjectTask', err)
   }
-  return admin
+  const snapshot = await admin
     .firestore()
     .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
-    .doc(taskId)
-    .update({ ...task, updatesAt: dayjs().toISOString() })
+    .where('id', '==', taskId)
+    .get()
+  let curTask
+  snapshot.forEach((doc) => {
+    curTask = doc.data()
+    doc.ref.update({ ...task, updatesAt: dayjs().toISOString() })
+  })
+  return curTask
 }
 
 export const getAllProjectsTasks = async (
@@ -144,7 +168,7 @@ export const getAllProjectsTasks = async (
     documents.docs.map((doc) => {
       const data = doc.data() as Task
       if (data !== undefined) {
-        tasks.push({ id: doc.id, ...data })
+        tasks.push({ ...data })
       }
       return data
     })
@@ -220,7 +244,7 @@ const updateProjectTaskAndStreak = async (
   if (proj.lastTaskAt && lastTaskAt.isAfter(lastDay())) {
     updatedProject.streak = (proj.streak || 0) + 1
   } else {
-    updatedProject.streak = 0
+    updatedProject.streak = 1
   }
   return updateProject(userId, proj.hashtag, updatedProject)
 }
@@ -253,7 +277,7 @@ export const updateUserTaskAndStreak = async (usr: User) => {
   if (usr.lastTaskAt && lastTaskAt.isAfter(lastDay())) {
     updatedUser.streak = (usr.streak || 0) + 1
   } else {
-    updatedUser.streak = 0
+    updatedUser.streak = 1
   }
   return updateUser(usr.userId, updatedUser)
 }
@@ -278,9 +302,9 @@ const taskAdd = async (
   if (curUser) {
     return Promise.all([
       sendTxtLater(
-        `La tache 💗:
+        `La tache 💗 ():
 ${task.content}
-A été ajouté au projet #${hashtag}, 🎉!`,
+A été ajouté au projet #${hashtag} 🎉!`,
         [],
         interaction.application_id,
         interaction.token
