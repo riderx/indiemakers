@@ -81,7 +81,7 @@ const im = async (
 const discordInteraction = async (interaction: Interaction): Promise<void> => {
   if (
     interaction &&
-    interaction.type === InteractionType.APPLICATION_COMMAND &&
+    interaction.type === InteractionType.COMMAND &&
     interaction.data
   ) {
     if (
