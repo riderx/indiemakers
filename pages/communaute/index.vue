@@ -36,9 +36,9 @@ export default {
     LadderProject: () => import('~/components/LadderProject.vue'),
   },
   async asyncData({ $config }) {
-    const dataUser = await discordMakers($config)
+    const users = await discordMakers($config)
     const dataProj = await discordProjects($config)
-    return await { ...dataUser, ...dataProj }
+    return await { users, ...dataProj }
   },
   data() {
     return {
