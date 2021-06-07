@@ -29,7 +29,7 @@
     "@tailwindcss/typography": "^0.4.1",
     "axios": "^0.21.1",
     "core-js": "^3.9.1",
-    "dayjs": "^1.10.4",
+    "dayjs": "^1.10.5",
     "firebase-admin": "^9.9.0",
     "discord-interactions": "^2.1.0",
     "firebase-auth-lite": "^0.8.9",
