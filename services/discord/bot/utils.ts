@@ -5,8 +5,9 @@ import { hexToDec } from 'hex2dec'
 import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import { getAllUsers, usersViewStreak } from './user'
-import { resetUserStreak } from './tasks'
+import { resetProjectStreak, resetUserStreak } from './tasks'
 import { updateIncomeAllProject } from './stripe'
+import { getAllAllProject } from './project'
 
 interface DiscorUser {
   avatar: string
@@ -341,9 +342,15 @@ export const morningBot = async () => {
   const data = await getConfig()
   if (data) {
     const users = await getAllUsers()
+    const projects = await getAllAllProject(users)
     const updatedUsers = await Promise.all(
       users.map((usr) => {
         return resetUserStreak(usr)
+      })
+    )
+    await Promise.all(
+      projects.map((proj) => {
+        return resetProjectStreak(proj.userId, proj)
       })
     )
     const usersInfoCards = usersViewStreak(updatedUsers)

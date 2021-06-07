@@ -6,6 +6,7 @@ import {
 import { getAllProjectsIncomes } from '../../services/discord/bot/incomes'
 import { getAllProjectsTasks } from '../../services/discord/bot/tasks'
 import fFnit from '../../services/firebase_init'
+import { getAllUsers } from '~/services/discord/bot/user'
 
 const project = async (req: Request, res: Response) => {
   fFnit()
@@ -32,7 +33,8 @@ const project = async (req: Request, res: Response) => {
     }
   } else {
     try {
-      const projects = await getAllAllProject()
+      const users = await getAllUsers()
+      const projects = await getAllAllProject(users)
       res.json({ projects })
     } catch (err) {
       res.json({ error: String(err) })

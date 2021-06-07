@@ -26,6 +26,7 @@ export interface User {
   avatarUrl: string
   taskReminder: string
   streak: number
+  bestStreak: number
   karma: number
   projects: number
   incomes: number
@@ -58,6 +59,7 @@ const userProtectedKey = [
   'tasks',
   'projects',
   'streak',
+  'bestStreak',
   'createdAt',
   'updatedAt',
   'lastTaskAt',
@@ -143,6 +145,7 @@ export const updateUser = async (
       avatar: '',
       avatarUrl: '',
       streak: 0,
+      bestStreak: 0,
       taskReminder: 'true',
       incomes: 0,
       karma: 0,

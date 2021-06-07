@@ -172,11 +172,18 @@ export const lastDay = () => {
   return day
 }
 
-export const resetProjectStreak = (userId: string, proj: Project) => {
+export const resetProjectStreak = (
+  userId: string | undefined,
+  proj: Project
+) => {
   const lastTaskAt = dayjs(proj.lastTaskAt)
-  if (!proj.lastTaskAt || !lastTaskAt.isAfter(lastDay())) {
+  if (userId && (!proj.lastTaskAt || lastTaskAt.isBefore(lastDay()))) {
     try {
-      return updateProject(userId, proj.hashtag, { streak: 0 })
+      const bestStreak =
+        proj.bestStreak && proj.bestStreak > proj.streak
+          ? proj.bestStreak
+          : proj.streak
+      return updateProject(userId, proj.hashtag, { streak: 0, bestStreak })
     } catch (err) {
       console.error(err)
     }
@@ -220,9 +227,13 @@ const updateProjectTaskAndStreak = async (
 
 export const resetUserStreak = (usr: User) => {
   const lastTaskAt = dayjs(usr.lastTaskAt)
-  if (!usr.lastTaskAt || !lastTaskAt.isAfter(lastDay())) {
+  if (!usr.lastTaskAt || lastTaskAt.isBefore(lastDay())) {
     try {
-      return updateUser(usr.userId, { streak: 0 })
+      const bestStreak =
+        usr.bestStreak && usr.bestStreak > usr.streak
+          ? usr.bestStreak
+          : usr.streak
+      return updateUser(usr.userId, { streak: 0, bestStreak })
     } catch (err) {
       console.error(err)
     }

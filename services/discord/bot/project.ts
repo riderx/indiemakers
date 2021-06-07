@@ -18,7 +18,7 @@ import {
   sleep,
   transformKey,
 } from './utils'
-import { getAllUsers, getUserUrl, updateUser, User } from './user'
+import { getUserUrl, updateUser, User } from './user'
 import {
   createProjectIncome,
   deleteProjectIncome,
@@ -59,6 +59,7 @@ export interface Project {
   openSource?: boolean
   github?: string
   streak: number
+  bestStreak: number
   emoji: string
   color: string
   name: string
@@ -85,6 +86,7 @@ const projectProtectedKey = [
   'id',
   'tasks',
   'streak',
+  'bestStreak',
   'createdAt',
   'updatedAt',
   'lastTaskAt',
@@ -123,8 +125,7 @@ export const getAllProjects = async (userId: string): Promise<Project[]> => {
   }
 }
 
-export const getAllAllProject = async (): Promise<Project[]> => {
-  const users = await getAllUsers()
+export const getAllAllProject = async (users: User[]): Promise<Project[]> => {
   const arrays: Project[][] = await Promise.all(
     users.map((usr: User) => {
       return getAllProjects(String(usr?.userId))
@@ -177,6 +178,7 @@ export const updateProject = async (
         color: '',
         tasks: 0,
         streak: 0,
+        bestStreak: 0,
         incomes: 0,
         updatedAt: dayjs().toISOString(),
         createdAt: dayjs().toISOString(),
