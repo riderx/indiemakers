@@ -18,7 +18,7 @@ import {
   sleep,
   transformKey,
 } from './utils'
-import { getUserUrl, updateUser } from './user'
+import { getAllUsers, getUserUrl, updateUser, User } from './user'
 import {
   createProjectIncome,
   deleteProjectIncome,
@@ -121,6 +121,17 @@ export const getAllProjects = async (userId: string): Promise<Project[]> => {
     console.error('getAllProjects', err)
     return []
   }
+}
+
+export const getAllAllProject = async (): Promise<Project[]> => {
+  const users = await getAllUsers()
+  const arrays: Project[][] = await Promise.all(
+    users.map((usr: User) => {
+      return getAllProjects(String(usr?.userId))
+    })
+  )
+  const projects: Project[] = arrays.reduce((a, b) => a.concat(b), [])
+  return projects
 }
 
 export const getProjectById = async (

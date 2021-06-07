@@ -5,7 +5,7 @@ import { hexToDec } from 'hex2dec'
 import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import { getAllUsers, usersViewStreak } from './user'
-import { updateUserTaskAndStreak } from './tasks'
+import { resetUserStreak } from './tasks'
 import { updateIncomeAllProject } from './stripe'
 
 interface DiscorUser {
@@ -300,9 +300,9 @@ const saveRateLimit = (limit: string | number) => {
 }
 
 const personalReminder = async () => {
-  const usrTt = await getAllUsers()
+  const users = await getAllUsers()
   await Promise.all(
-    usrTt.users.map((usr) => {
+    users.map((usr) => {
       if (usr.taskReminder && usr.taskReminder === 'true' && usr.streak > 0) {
         return openChannel(usr.userId).then((channel) => {
           console.error('personalReminder', usr.userId)
@@ -340,13 +340,13 @@ export const lateBot = async () => {
 export const morningBot = async () => {
   const data = await getConfig()
   if (data) {
-    const usrTt = await getAllUsers()
-    await Promise.all(
-      usrTt.users.map((usr) => {
-        return updateUserTaskAndStreak(usr)
+    const users = await getAllUsers()
+    const updatedUsers = await Promise.all(
+      users.map((usr) => {
+        return resetUserStreak(usr)
       })
     )
-    const usersInfoCards = usersViewStreak(await getAllUsers())
+    const usersInfoCards = usersViewStreak(updatedUsers)
     if (usersInfoCards.length > 0) {
       await sendChannel(
         data.channel_bip,

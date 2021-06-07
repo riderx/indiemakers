@@ -62,11 +62,7 @@ const userProtectedKey = [
   'updatedAt',
   'lastTaskAt',
 ]
-interface UserTt {
-  users: User[]
-  total: number
-}
-export const getAllUsers = async (): Promise<UserTt> => {
+export const getAllUsers = async (): Promise<User[]> => {
   try {
     const documents = await admin.firestore().collection('/discord').get()
     const users: User[] = []
@@ -76,10 +72,10 @@ export const getAllUsers = async (): Promise<UserTt> => {
         users.push(data)
       }
     })
-    return { users, total: users.length }
+    return users
   } catch (err) {
     console.error('getAllUsers', err)
-    return { users: [], total: 0 }
+    return []
   }
 }
 
@@ -320,10 +316,10 @@ const userCard = (user: User) => {
   )
 }
 
-export const usersViewStreak = (res: UserTt): Embed[] => {
+export const usersViewStreak = (usrs: User[]): Embed[] => {
   const embeds: Embed[] = []
   const limitStreak = lastDay()
-  let users = res.users.sort(
+  let users = usrs.sort(
     (firstEl: User, secondEl: User) => secondEl.streak - firstEl.streak
   )
   users = users.filter((user: User) =>
@@ -338,15 +334,15 @@ export const usersViewStreak = (res: UserTt): Embed[] => {
 }
 
 const userList = async (interaction: Interaction): Promise<void> => {
-  const res = await getAllUsers()
+  const users = await getAllUsers()
   await sendTxtLater(
     'Voici la liste des makers:',
     [],
     interaction.application_id,
     interaction.token
   )
-  for (let index = 0; index < res.users.length; index++) {
-    const user = res.users[index]
+  for (let index = 0; index < users.length; index++) {
+    const user = users[index]
     const card = userCard(user)
     // console.error('card', card)
     await sendChannel(interaction.channel_id, '', card)

@@ -130,11 +130,11 @@ const karmaRm = async (
 
 const generateKarmaStats = async (): Promise<string> => {
   let result = ''
-  const allUsers = await getAllUsers()
-  allUsers.users = allUsers.users.sort(
+  let users = await getAllUsers()
+  users = users.sort(
     (firstEl: User, secondEl: User) => secondEl.karma - firstEl.karma
   )
-  allUsers.users.forEach((element) => {
+  users.forEach((element) => {
     result += `<@${element.userId}> = ${element.karma} 🕉\n`
   })
   return result

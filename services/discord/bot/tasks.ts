@@ -172,6 +172,20 @@ export const lastDay = () => {
   return day
 }
 
+export const resetProjectStreak = (userId: string, proj: Project) => {
+  const lastTaskAt = dayjs(proj.lastTaskAt)
+  if (!proj.lastTaskAt || !lastTaskAt.isAfter(lastDay())) {
+    try {
+      return updateProject(userId, proj.hashtag, { streak: 0 })
+    } catch (err) {
+      console.error(err)
+    }
+    return proj
+  } else {
+    return proj
+  }
+}
+
 const updateProjectTaskAndStreak = async (
   userId: string,
   proj: Project | null
@@ -202,6 +216,20 @@ const updateProjectTaskAndStreak = async (
     updatedProject.streak = 0
   }
   return updateProject(userId, proj.hashtag, updatedProject)
+}
+
+export const resetUserStreak = (usr: User) => {
+  const lastTaskAt = dayjs(usr.lastTaskAt)
+  if (!usr.lastTaskAt || !lastTaskAt.isAfter(lastDay())) {
+    try {
+      return updateUser(usr.userId, { streak: 0 })
+    } catch (err) {
+      console.error(err)
+    }
+    return usr
+  } else {
+    return usr
+  }
 }
 
 export const updateUserTaskAndStreak = async (usr: User) => {

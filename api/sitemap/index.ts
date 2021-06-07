@@ -27,8 +27,8 @@ const sitemap = async (_req: Request, res: Response) => {
       })
       prio = prio / 2
     })
-    const data = await getAllUsers()
-    data.users.forEach((user) => {
+    const users = await getAllUsers()
+    users.forEach((user) => {
       smStream.write({
         url: `/communaute/${encodeURI(user.username)}`,
         changefreq: 'daily',
