@@ -1,10 +1,10 @@
 import { config, https, pubsub, firestore } from 'firebase-functions'
 import admin from 'firebase-admin'
-import { LateBot, morningBot } from '../../services/discord/bot/utils'
+import { lateBot, morningBot } from '../../services/discord/bot/utils'
+import { Person } from '../../services/types'
 import { getPerson, voteIfNotDone } from './users'
 import { TwUser, twUserPromise } from './twitter'
 import { sendUserToRevue } from './newletter'
-import { Person } from './types'
 import { transformURLtoTracked } from './tracker'
 
 if (!admin.apps.length) {
@@ -264,7 +264,7 @@ export const scheduledBotBIP = pubsub
   .timeZone('Europe/Paris')
   .onRun(async () => {
     console.error('This will be run every day at 18:00 AM Paris!')
-    await LateBot()
+    await lateBot()
     return null
   })
 

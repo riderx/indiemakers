@@ -340,7 +340,7 @@
           </div>
           <div class="mt-6">
             <a
-              href="/discord"
+              href="/communaute"
               class="
                 flex
                 items-center

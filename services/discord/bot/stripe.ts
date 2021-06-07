@@ -89,10 +89,10 @@ export const getStripeCharges = async (
 }
 
 export const getAllUsersAndProjects = async () => {
-  const res = await getAllUsers()
+  const users = await getAllUsers()
   const allUsers: { [key: string]: User } = {}
-  for (let index = 0; index < res.users.length; index++) {
-    const user = res.users[index]
+  for (let index = 0; index < users.length; index++) {
+    const user = users[index]
     allUsers[user.userId] = {
       ...user,
       projectsData: await getAllProjects(user.userId),

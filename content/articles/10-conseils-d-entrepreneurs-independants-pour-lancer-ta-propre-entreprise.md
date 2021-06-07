@@ -18,7 +18,7 @@ authorImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.c
 ---
 <img class="w-full rounded-lg" src="https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fvictoria-heath-magaxayq_ne-unsplash.jpg?alt=media&token=124c04f0-3e12-4452-9569-3ce6dc4f983e" alt="10 conseils" width="1310" height="873">
 
-<p class="text-xs">Photo by <a href="https://unsplash.com/@vheath?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Victoria Heath</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
+<p class="text-xs">Photo par <a href="https://unsplash.com/@vheath?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Victoria Heath</a> sur <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
 
 Si tu veux créer ta propre entreprise en tant qu'entrepreneur ou si tu le fais déjà et que tu veux de nouvelles idées, ces conseils t'aideront !
 

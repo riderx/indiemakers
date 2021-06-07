@@ -4,7 +4,7 @@ import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
-import { sendTxtLater } from './utils'
+import { openChannel, sendChannel, sendTxtLater } from './utils'
 import { updateUser, User, getUsersById } from './user'
 
 import { sendToWip, updateToWip } from './wip'
@@ -24,7 +24,7 @@ enum TaskStatus {
   DONE = 'done',
 }
 export interface Task {
-  id?: string
+  id: number
   content: string
   status: TaskStatus
   doneAt?: string
@@ -46,13 +46,30 @@ const taskProtectedKey = [
   'updatedAt',
 ]
 
+const getLastTask = async (userId: string, hashtag: string) => {
+  const taskList = await admin
+    .firestore()
+    .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
+    .orderBy('createdAt', 'desc')
+    .limit(1)
+    .get()
+    .then((querySnapshot) => querySnapshot.docs.map((doc) => doc.data()))
+  return taskList[0]
+}
+
 const createProjectTask = async (
+  applicationId: string,
+  token: string,
   user: User,
   hashtag: string,
   task: Partial<Task>
 ): Promise<any> => {
   try {
     const done = task.status !== TaskStatus.TODO
+    const lastTask = await getLastTask(user.userId, hashtag)
+    if (lastTask) {
+      task.id = Number(lastTask.id) + 1
+    }
     if (task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString()
     }
@@ -70,12 +87,25 @@ const createProjectTask = async (
   } catch (err) {
     console.error('createProjectTask', err)
   }
-  return admin
+  await sendTxtLater(
+    `La tache 💗 ${task.id}:
+${task.content}
+A été ajouté au projet #${hashtag} 🎉!`,
+    [],
+    applicationId,
+    token
+  )
+  const newTask = await admin
     .firestore()
     .collection(
       `discord/${user.userId}/projects/${hashtag.toLowerCase()}/tasks`
     )
     .add({ ...task, createdAt: dayjs().toISOString() })
+  const curProject = await getProjectById(user.userId, hashtag)
+  await updateProjectTaskAndStreak(user.userId, curProject)
+  await updateUserTaskAndStreak(user)
+
+  return newTask.get()
 }
 
 const deleteProjectTask = (
@@ -121,11 +151,17 @@ const updateProjectTask = async (
   } catch (err) {
     console.error('updateProjectTask', err)
   }
-  return admin
+  const snapshot = await admin
     .firestore()
     .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
-    .doc(taskId)
-    .update({ ...task, updatesAt: dayjs().toISOString() })
+    .where('id', '==', taskId)
+    .get()
+  let curTask
+  snapshot.forEach((doc) => {
+    curTask = doc.data()
+    doc.ref.update({ ...task, updatesAt: dayjs().toISOString() })
+  })
+  return curTask
 }
 
 export const getAllProjectsTasks = async (
@@ -136,12 +172,13 @@ export const getAllProjectsTasks = async (
     const documents = await admin
       .firestore()
       .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
+      .orderBy('id', 'desc')
       .get()
     const tasks: Task[] = []
     documents.docs.map((doc) => {
       const data = doc.data() as Task
       if (data !== undefined) {
-        tasks.push({ id: doc.id, ...data })
+        tasks.push({ ...data })
       }
       return data
     })
@@ -169,39 +206,90 @@ export const lastDay = () => {
   return day
 }
 
+export const resetProjectStreak = (
+  userId: string | undefined,
+  proj: Project
+) => {
+  const lastTaskAt = dayjs(proj.lastTaskAt)
+  if (userId && (!proj.lastTaskAt || lastTaskAt.isBefore(lastDay()))) {
+    try {
+      const bestStreak =
+        proj.bestStreak && proj.bestStreak > proj.streak
+          ? proj.bestStreak
+          : proj.streak
+      return updateProject(userId, proj.hashtag, { streak: 0, bestStreak })
+    } catch (err) {
+      console.error(err)
+    }
+    return proj
+  } else {
+    return proj
+  }
+}
+
 const updateProjectTaskAndStreak = async (
   userId: string,
   proj: Project | null
 ) => {
   if (!proj) return Promise.reject(Error('Projet introuvable'))
-  const curTasks = await getAllProjectsTasks(userId, proj.hashtag)
+  const lowHash = proj.hashtag.toLowerCase()
+  const curTasks = await getAllProjectsTasks(userId, lowHash)
+  // enregistrer un premier revenu avec \`/im revenu ajouter hashtag: ${newProj.hashtag} revenu 42 mois: Février 2021 \`💰!
+  if (curTasks.total === 1) {
+    await openChannel(userId).then((channel) => {
+      console.error('channel', channel)
+      return sendChannel(
+        channel.id,
+        `Il est temps d'enregistrer un premier revenu 💰 ou dépense 💸 sur #${lowHash} avec:
+  \`/im revenu ajouter hashtag:${lowHash} montant:-300 mois:Janvier année:2021 \`
+💪 Fait le sur le salon #01_construire_en_public .`
+      )
+    })
+  }
   const updatedProject: Partial<Project> = {
-    tasks: curTasks.total + 1,
+    tasks: curTasks.total,
     lastTaskAt: dayjs().toISOString(),
   }
   const lastTaskAt = dayjs(proj.lastTaskAt)
-  if (proj.lastTaskAt && lastDay().isBefore(lastTaskAt)) {
+  if (proj.lastTaskAt && lastTaskAt.isAfter(lastDay())) {
     updatedProject.streak = (proj.streak || 0) + 1
   } else {
-    updatedProject.streak = 0
+    updatedProject.streak = 1
   }
   return updateProject(userId, proj.hashtag, updatedProject)
 }
 
-export const updateUserTaskAndStreak = (usr: User) => {
-  getTotalTaskAndStreakByUser(usr.userId).then((superTotal) => {
-    const updatedUser: Partial<User> = {
-      tasks: superTotal.tasks + 1,
-      lastTaskAt: dayjs().toISOString(),
+export const resetUserStreak = (usr: User) => {
+  const lastTaskAt = dayjs(usr.lastTaskAt)
+  if (!usr.lastTaskAt || lastTaskAt.isBefore(lastDay())) {
+    try {
+      const bestStreak =
+        usr.bestStreak && usr.bestStreak > usr.streak
+          ? usr.bestStreak
+          : usr.streak
+      return updateUser(usr.userId, { streak: 0, bestStreak })
+    } catch (err) {
+      console.error(err)
     }
-    const lastTaskAt = dayjs(usr.lastTaskAt)
-    if (usr.lastTaskAt && lastDay().isBefore(lastTaskAt)) {
-      updatedUser.streak = (usr.streak || 0) + 1
-    } else {
-      updatedUser.streak = 0
-    }
-    return updateUser(usr.userId, updatedUser)
-  })
+    return usr
+  } else {
+    return usr
+  }
+}
+
+export const updateUserTaskAndStreak = async (usr: User) => {
+  const superTotal = await getTotalTaskAndStreakByUser(usr.userId)
+  const updatedUser: Partial<User> = {
+    tasks: superTotal.tasks,
+    lastTaskAt: dayjs().toISOString(),
+  }
+  const lastTaskAt = dayjs(usr.lastTaskAt)
+  if (usr.lastTaskAt && lastTaskAt.isAfter(lastDay())) {
+    updatedUser.streak = (usr.streak || 0) + 1
+  } else {
+    updatedUser.streak = 1
+  }
+  return updateUser(usr.userId, updatedUser)
 }
 
 const taskAdd = async (
@@ -222,21 +310,13 @@ const taskAdd = async (
   })
   const curUser = await getUsersById(userId)
   if (curUser) {
-    return Promise.all([
-      sendTxtLater(
-        `La tache 💗:
-${task.content}
-A été ajouté au projet #${hashtag}, 🎉!`,
-        [],
-        interaction.application_id,
-        interaction.token
-      ),
-      createProjectTask(curUser, hashtag, task).then(() =>
-        getProjectById(userId, hashtag)
-          .then((curProject) => updateProjectTaskAndStreak(userId, curProject))
-          .then(() => updateUserTaskAndStreak(curUser))
-      ),
-    ]).then(() => Promise.resolve())
+    return createProjectTask(
+      interaction.application_id,
+      interaction.token,
+      curUser,
+      hashtag,
+      task
+    ).then(() => Promise.resolve())
   } else {
     return sendTxtLater(
       'Le Maker ou le projet est introuvable 🤫!',
