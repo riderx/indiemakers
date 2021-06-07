@@ -58,6 +58,8 @@ const getLastTask = async (userId: string, hashtag: string) => {
 }
 
 const createProjectTask = async (
+  applicationId: string,
+  token: string,
   user: User,
   hashtag: string,
   task: Partial<Task>
@@ -85,6 +87,14 @@ const createProjectTask = async (
   } catch (err) {
     console.error('createProjectTask', err)
   }
+  await sendTxtLater(
+    `La tache 💗 ${task.id}:
+${task.content}
+A été ajouté au projet #${hashtag} 🎉!`,
+    [],
+    applicationId,
+    token
+  )
   const newTask = await admin
     .firestore()
     .collection(
@@ -94,6 +104,7 @@ const createProjectTask = async (
   const curProject = await getProjectById(user.userId, hashtag)
   await updateProjectTaskAndStreak(user.userId, curProject)
   await updateUserTaskAndStreak(user)
+
   return newTask.get()
 }
 
@@ -161,6 +172,7 @@ export const getAllProjectsTasks = async (
     const documents = await admin
       .firestore()
       .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
+      .orderBy('id', 'desc')
       .get()
     const tasks: Task[] = []
     documents.docs.map((doc) => {
@@ -298,17 +310,13 @@ const taskAdd = async (
   })
   const curUser = await getUsersById(userId)
   if (curUser) {
-    return Promise.all([
-      sendTxtLater(
-        `La tache 💗 ():
-${task.content}
-A été ajouté au projet #${hashtag} 🎉!`,
-        [],
-        interaction.application_id,
-        interaction.token
-      ),
-      createProjectTask(curUser, hashtag, task),
-    ]).then(() => Promise.resolve())
+    return createProjectTask(
+      interaction.application_id,
+      interaction.token,
+      curUser,
+      hashtag,
+      task
+    ).then(() => Promise.resolve())
   } else {
     return sendTxtLater(
       'Le Maker ou le projet est introuvable 🤫!',
