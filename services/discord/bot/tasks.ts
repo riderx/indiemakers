@@ -24,7 +24,7 @@ enum TaskStatus {
   DONE = 'done',
 }
 export interface Task {
-  id: string
+  id: number
   content: string
   status: TaskStatus
   doneAt?: string
@@ -53,9 +53,7 @@ const getLastTask = async (userId: string, hashtag: string) => {
     .orderBy('createdAt', 'desc')
     .limit(1)
     .get()
-    .then((querySnapshot) =>
-      querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    )
+    .then((querySnapshot) => querySnapshot.docs.map((doc) => doc.data()))
   return taskList[0]
 }
 
@@ -68,7 +66,7 @@ const createProjectTask = async (
     const done = task.status !== TaskStatus.TODO
     const lastTask = await getLastTask(user.userId, hashtag)
     if (lastTask) {
-      task.id = lastTask.id + 1
+      task.id = Number(lastTask.id) + 1
     }
     if (task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString()
