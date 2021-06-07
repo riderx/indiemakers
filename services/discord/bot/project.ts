@@ -9,14 +9,16 @@ import {
   Embed,
   embed,
   field,
+  getConfig,
   getFields,
   image,
+  openChannel,
   sendChannel,
   sendTxtLater,
   sleep,
   transformKey,
 } from './utils'
-import { getUsersById, updateUser } from './user'
+import { getUserUrl, updateUser, User } from './user'
 import {
   createProjectIncome,
   deleteProjectIncome,
@@ -57,6 +59,7 @@ export interface Project {
   openSource?: boolean
   github?: string
   streak: number
+  bestStreak: number
   emoji: string
   color: string
   name: string
@@ -83,6 +86,7 @@ const projectProtectedKey = [
   'id',
   'tasks',
   'streak',
+  'bestStreak',
   'createdAt',
   'updatedAt',
   'lastTaskAt',
@@ -121,6 +125,16 @@ export const getAllProjects = async (userId: string): Promise<Project[]> => {
   }
 }
 
+export const getAllAllProject = async (users: User[]): Promise<Project[]> => {
+  const arrays: Project[][] = await Promise.all(
+    users.map((usr: User) => {
+      return getAllProjects(String(usr?.userId))
+    })
+  )
+  const projects: Project[] = arrays.reduce((a, b) => a.concat(b), [])
+  return projects
+}
+
 export const getProjectById = async (
   userId: string,
   hashtag: string
@@ -143,13 +157,14 @@ export const updateProject = async (
   userId: string,
   hashtag: string,
   project: Partial<Project>
-): Promise<any> => {
-  const userDoc = await admin
+): Promise<Project> => {
+  const lowHash = hashtag.toLowerCase()
+  const projDoc = await admin
     .firestore()
     .collection(`discord/${userId}/projects`)
-    .doc(hashtag.toLowerCase())
+    .doc(lowHash)
     .get()
-  if (!userDoc.exists || !userDoc.data) {
+  if (!projDoc.exists) {
     const newProject: Project = Object.assign(
       {
         hashtag: '',
@@ -163,19 +178,98 @@ export const updateProject = async (
         color: '',
         tasks: 0,
         streak: 0,
+        bestStreak: 0,
         incomes: 0,
         updatedAt: dayjs().toISOString(),
         createdAt: dayjs().toISOString(),
       },
       project
     )
-    return admin
+    await admin
       .firestore()
       .collection(`discord/${userId}/projects`)
-      .doc(hashtag.toLowerCase())
+      .doc(lowHash)
       .set(newProject)
+    return newProject
   }
-  return userDoc.ref.update({ ...project, updatedAt: dayjs().toISOString() })
+  const data: Project = projDoc.data() as Project
+  if (!data.name && project.name) {
+    await openChannel(userId).then((channel) => {
+      console.error('channel', channel)
+      return sendChannel(
+        channel.id,
+        `💗 Il est temps d'envoyer 💌 ta première tâche au projet #${lowHash} avec:
+\`/im tache ajouter hashtag:${lowHash} contenu:Ajout du projet sur INDIE MAKERS\`
+  Fait le sur le salon #01_construire_en_public, il est fait pour ça, il est en silencieux pour tout le monde !`
+      )
+    })
+  }
+  await projDoc.ref.update({ ...project, updatedAt: dayjs().toISOString() })
+  return projDoc.data() as Project
+}
+
+export const addProject = async (
+  interaction: Interaction,
+  userId: string,
+  newProj: Project
+): Promise<any> => {
+  const all: Promise<any>[] = []
+
+  await updateProject(userId, newProj.hashtag, newProj)
+  const allProj = await getAllProjects(userId)
+  const user = await updateUser(userId, { projects: allProj.length })
+  if (allProj.length === 1) {
+    all.push(
+      openChannel(userId).then((channel) => {
+        console.error('channel', channel)
+        return sendChannel(
+          channel.id,
+          `Ton premiers projet 🪴 !
+Tu peu maintenant remplir les informations de #${newProj.hashtag} avec:
+  \`/im projet modifier hashtag:${newProj.hashtag} nom:Mon super projet\`
+, fait:
+  \`/im projet aide\`
+pour voir les champs disponibles.
+Fait le sur le salon #01_construire_en_public .`
+        )
+      })
+    )
+    const data = await getConfig()
+    if (data) {
+      all.push(
+        sendChannel(
+          data.channel_general,
+          `Hey Makers, Donnez de la force 💪🏋️‍♂️ a <@${userId}>
+  il viens de crée son premier projet !`
+        )
+      )
+    }
+  } else {
+    all.push(
+      openChannel(userId).then((channel) => {
+        console.error('channel', channel)
+        return sendChannel(
+          channel.id,
+          `Rempli les informations de #${newProj.hashtag} 🪴 avec:
+  \`/im projet modifier hashtag:${newProj.hashtag} nom:Mon super projet\`
+, fait:
+  \`/im projet aide \`
+pour voir les champs disponibles.
+Fait le sur le salon #01_construire_en_public .`
+        )
+      })
+    )
+  }
+  all.push(
+    sendTxtLater(
+      `Tu as crée le projet: #${newProj.hashtag} 👏
+Tu peux voir tes projets sur ta page : ${getUserUrl(user)}`,
+      [],
+      interaction.application_id,
+      interaction.token
+    )
+  )
+  return Promise.all(all)
 }
 
 const deleteProject = (userId: string, hashtag: string): Promise<any> => {
@@ -279,7 +373,7 @@ const updateStripe = (
   )
 }
 
-const projectAdd = async (
+const projectAdd = (
   interaction: Interaction,
   options: ApplicationCommandInteractionDataOption[],
   userId: string
@@ -292,28 +386,28 @@ const projectAdd = async (
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
     ;(newProj as any)[transformKey(translations, element.name)] = element.value
   })
-  if (newProj.hashtag && /^[a-zA-Z]+$/.test(newProj.hashtag)) {
+  if (newProj.hashtag && /^[a-z]+$/.test(newProj.hashtag)) {
     console.error('add project', newProj)
-    const user = await getUsersById(userId)
     return Promise.all([
-      sendTxtLater(
-        `Tu as crée le projet: #${newProj.hashtag} 👏
-
-Il est temps de shiper 🚤 ta premiere tache dessus avec \`/im tache ajouter hashtag: ${newProj.hashtag} contenu: Ma super tache\` 💗
-ou
-remplir sa description avec \`/im projet modifier hashtag: ${newProj.hashtag} description: mon super projet\` 🪴
-Fait la commande \`/im projet aide \` voir avoir de l'aide sur les champs disponibles
-ou
-enregistrer un premier revenu avec \`/im revenu ajouter hashtag: ${newProj.hashtag} revenu 42 mois: Février 2021 \`💰!
-Tu peux voir toute les infos que tu rentre sur ta page : https://indiemakers.fr/communaute/${user?.username}
-`,
-        [],
-        interaction.application_id,
-        interaction.token
-      ),
+      openChannel(userId).then((channel) => {
+        console.error('channel', channel)
+        return sendChannel(
+          channel.id,
+          `Tu peu maintenant remplir les informations de #${newProj.hashtag} avec \`/im projet modifier hashtag: ${newProj.hashtag} nom: Mon super projet\` 🪴
+          (Fait \`/im projet aide \` pour voir les champs disponibles)`
+        )
+      }),
       updateProject(userId, newProj.hashtag, newProj),
       getAllProjects(userId).then((allProj) =>
-        updateUser(userId, { projects: allProj.length + 1 })
+        updateUser(userId, { projects: allProj.length + 1 }).then((user) => {
+          return sendTxtLater(
+            `Tu as crée le projet: #${newProj.hashtag} 👏
+    Tu peux voir tes projets sur ta page : ${getUserUrl(user)}`,
+            [],
+            interaction.application_id,
+            interaction.token
+          )
+        })
       ),
     ]).then(() => Promise.resolve())
   } else {
@@ -344,8 +438,8 @@ const projectEdit = (
     console.error('projectEdit', update)
     return Promise.all([
       sendTxtLater(
-        `Tu as mis a jour:\n#${update.hashtag}
-Bravo 💪, une marche après l'autre tu fais grandir ce projet!`,
+        `Tu a mis à jour #${update.hashtag}
+Bravo 💪, une marche après l'autre tu fais grandir ce projet !`,
         [],
         interaction.application_id,
         interaction.token
@@ -422,7 +516,7 @@ const projectList = async (
   } else {
     const sentence = me
       ? 'Tu n\'as pas encore de projet, ajoute en avec la commande "/im projet ajouter" !'
-      : `<@${userId}> n'as pas encore de projet !`
+      : `<@${userId}> n'a pas encore de projet !`
     return sendTxtLater(
       sentence,
       [],
@@ -555,7 +649,7 @@ export const projectFn = (
   }
   if (option.name === 'aide' && option.options && option.options.length > 0) {
     return sendTxtLater(
-      `Voici ce que tu peut faire avec la commande projet:
+      `Voici ce que tu peux faire avec la commande projet:
   - ajouter
     - hashtag: obligatoire (pas d'espace sans majuscules)
   - modifier
@@ -563,30 +657,30 @@ export const projectFn = (
     - open_source: optionel
       - Oui
       - Non
-    - github: optionel (url complete necessaire)
-    - emoji: optionel (un seul caractere)
-    - couleur: optionel en hexadecimal sans \`#\` au debut
-    - nom: optionel (Nom avec espace possible)
-    - logo: optionel (url complete necessaire)
-    - cover: optionel (url complete necessaire)
-    - website: optionel (url complete necessaire)
-    - description: optionel (texte cours)
-    - category: optionel
+    - github: optionnel (url complète nécessaire)
+    - emoji: optionnel (un seul caractère)
+    - couleur: optionnel en hexadecimal sans \`#\` au début
+    - nom: optionnel (Nom avec espace possible)
+    - logo: optionnel (url complete necessaire)
+    - cover: optionnel (url complete necessaire)
+    - website: optionnel (url complete necessaire)
+    - description: optionnel (texte cours)
+    - category: optionnel
       - saas
       - community
       - newsletter
       - formation
       - template
       - ecommerce
-      - autre
-    - stripe: optionel permet de récupérer les revenue en automatique (voir la doc pour comprendre comment l'obtenir)
+      - Autre
+    - stripe: optionnel permet de récupérer les revenues en automatique (voir la doc pour comprendre comment l'obtenir)
   - supprimer (supprimer un de tes projets)
     - hashtag: obligatoire
-  - voir (voir un projet d'un maker ou toi par default)
+  - voir (voir un projet d'un Maker ou toi par défaut)
       - hashtag: obligatoire
       - maker: optionnel
-  - liste (lister les projet d'un maker ou toi par default)
-    - hashtag: obligatoire
+  - liste (lister les projets d'un Maker ou toi par défaut)
+    - Hashtag: obligatoire
   `,
       [],
       interaction.application_id,

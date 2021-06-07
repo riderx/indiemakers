@@ -3,12 +3,12 @@
     <div class="mt-5 text-3xl text-center text-white font-indie">
       La communauté :
     </div>
-    <div class="flex flex-col w-full md:flex-row">
+    <div class="flex flex-col justify-center w-full md:flex-row">
       <LadderMakers v-if="loaded" :users="users" />
       <LadderProject v-if="loaded" :projects="projects" />
     </div>
 
-    <div class="flex w-1/4 px-10 py-5 mx-auto text-white">
+    <div class="flex w-full px-10 py-5 mx-auto text-white md:w-1/4">
       <button
         type="button"
         class="
@@ -36,13 +36,52 @@ export default {
     LadderProject: () => import('~/components/LadderProject.vue'),
   },
   async asyncData({ $config }) {
-    const dataUser = await discordMakers($config)
+    const users = await discordMakers($config)
     const dataProj = await discordProjects($config)
-    return await { ...dataUser, ...dataProj }
+    return await { users, ...dataProj }
   },
   data() {
     return {
       loaded: false,
+    }
+  },
+  head() {
+    return {
+      title: 'La communauté INDIE MAKERS',
+      meta: [
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
+        },
+        {
+          hid: 'title',
+          name: 'title',
+          content: 'La communauté INDIE MAKERS',
+        },
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !",
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: 'La communauté INDIE MAKERS',
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content:
+            "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !",
+        },
+        {
+          hid: 'og:image:alt',
+          property: 'og:image:alt',
+          content: 'La communauté INDIE MAKERS',
+        },
+      ],
     }
   },
   mounted() {

@@ -123,7 +123,7 @@ const optionGen = (
 
 const projetHashtag = optionGen(
   'hashtag',
-  'Le hashtag de ton projet (nom sans espaces)',
+  'Le hashtag de ton projet (nom sans espaces, ni majuscule)',
   SlashCommandOptionType.STRING,
   true
 )
@@ -141,21 +141,22 @@ const makerIdOptional = optionGen(
   SlashCommandOptionType.USER
 )
 
-const taskValues = [
+const taskContent = (required = true) =>
   optionGen(
     'contenu',
     'Contenu de la tâche',
     SlashCommandOptionType.STRING,
-    true
-  ),
+    required
+  )
+
+const taskStatus = (required = false) =>
   optionGen(
     'status',
     'Status de la tâche',
     SlashCommandOptionType.STRING,
-    false,
+    required,
     [choiceGen('A faire', 'todo'), choiceGen('Fait', 'done')]
-  ),
-]
+  )
 
 const taskId = optionGen(
   'id',
@@ -170,7 +171,7 @@ const taskAdd = optionGen(
   SlashCommandOptionType.SUB_COMMAND,
   undefined,
   undefined,
-  [projetHashtag, ...taskValues]
+  [projetHashtag, taskContent(), taskStatus()]
 )
 
 const taskEdit = optionGen(
@@ -179,7 +180,7 @@ const taskEdit = optionGen(
   SlashCommandOptionType.SUB_COMMAND,
   undefined,
   undefined,
-  [projetHashtag, taskId, ...taskValues]
+  [projetHashtag, taskId, taskContent(false), taskStatus(false)]
 )
 
 const taskDelete = optionGen(
@@ -511,6 +512,7 @@ const maker = optionGen(
       undefined,
       [makerIdOptional]
     ),
+    optionGen('aide', "Plus d'explication pour les makers", 1),
   ]
 )
 

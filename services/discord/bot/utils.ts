@@ -5,8 +5,9 @@ import { hexToDec } from 'hex2dec'
 import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import { getAllUsers, usersViewStreak } from './user'
-import { updateUserTaskAndStreak } from './tasks'
+import { resetProjectStreak, resetUserStreak } from './tasks'
 import { updateIncomeAllProject } from './stripe'
+import { getAllAllProject } from './project'
 
 interface DiscorUser {
   avatar: string
@@ -300,9 +301,9 @@ const saveRateLimit = (limit: string | number) => {
 }
 
 const personalReminder = async () => {
-  const usrTt = await getAllUsers()
+  const users = await getAllUsers()
   await Promise.all(
-    usrTt.users.map((usr) => {
+    users.map((usr) => {
       if (usr.taskReminder && usr.taskReminder === 'true' && usr.streak > 0) {
         return openChannel(usr.userId).then((channel) => {
           console.error('personalReminder', usr.userId)
@@ -320,9 +321,14 @@ Si tu veux les conserver, fait une tache aujourd'hui sur tes projet même 5 min,
   )
 }
 
-export const lateBot = async () => {
+export const getConfig = async () => {
   const res = await admin.firestore().collection('bot').doc('config').get()
   const data = res.data()
+  return data
+}
+
+export const lateBot = async () => {
+  const data = await getConfig()
   if (data) {
     await sendChannel(
       data.channel_bip,
@@ -333,16 +339,21 @@ export const lateBot = async () => {
 }
 
 export const morningBot = async () => {
-  const res = await admin.firestore().collection('bot').doc('config').get()
-  const data = res.data()
+  const data = await getConfig()
   if (data) {
-    const usrTt = await getAllUsers()
-    await Promise.all(
-      usrTt.users.map((usr) => {
-        return updateUserTaskAndStreak(usr)
+    const users = await getAllUsers()
+    const projects = await getAllAllProject(users)
+    const updatedUsers = await Promise.all(
+      users.map((usr) => {
+        return resetUserStreak(usr)
       })
     )
-    const usersInfoCards = usersViewStreak(await getAllUsers())
+    await Promise.all(
+      projects.map((proj) => {
+        return resetProjectStreak(proj.userId, proj)
+      })
+    )
+    const usersInfoCards = usersViewStreak(updatedUsers)
     if (usersInfoCards.length > 0) {
       await sendChannel(
         data.channel_bip,

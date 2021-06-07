@@ -5,12 +5,12 @@ import { getAllUsers } from '../../services/discord/bot/user'
 
 const list = async (_req: Request, res: Response) => {
   fFnit()
-  const data = await getAllUsers()
-  data.users.forEach((user) => {
+  const users = await getAllUsers()
+  users.forEach((user) => {
     user.makerlogHook = ''
     user.wipApiKey = ''
   })
-  return res.json(data)
+  return res.json(users)
 }
 
 export default list

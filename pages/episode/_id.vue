@@ -56,6 +56,7 @@
               class="
                 px-5
                 overflow-hidden
+                bg-white
                 border-4 border-white
                 md:h-78
                 md:overflow-y-scroll
@@ -537,10 +538,5 @@ export default Vue.extend({
   --plyr-color-main: rgba(75, 39, 155, 1);
   --plyr-badge-border-radius: 0;
   --plyr-control-icon-size: 18px;
-}
-</style>
-<style scoped>
-.prose {
-  color: white;
 }
 </style>
