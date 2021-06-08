@@ -141,9 +141,7 @@
                   text-white
                   border-4 border-white
                   rounded-none
-                  hover:border-gray-200
-                  hover:text-indiepurple
-                  hover:bg-gray-200
+                  hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
                   h1
                 "
                 @click="$modal.hide('copied')"
@@ -1471,8 +1469,7 @@
                         border border-gray-400
                         rounded
                         outline-none
-                        focus:outline-none
-                        focus:shadow-outline
+                        focus:outline-none focus:shadow-outline
                       "
                       placeholder="you@example.com"
                       @keyup.enter="sendLogin()"

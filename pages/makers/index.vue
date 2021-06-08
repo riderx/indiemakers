@@ -12,22 +12,20 @@
               w-full
               text-white
               border-8 border-white
-              md:pb-1
-              md:pt-2
+              md:pb-1 md:pt-2
             "
           >
-            <h1
+            <div
               class="
                 w-4/5
                 my-2
                 text-3xl text-center
                 font-indie
-                md:text-4xl
-                md:my-0
+                md:text-4xl md:my-0
               "
             >
               💃 Makers
-            </h1>
+            </div>
             <button
               type="button"
               class="w-1/5 p-0 px-4 -mt-4 text-6xl border-0 md:pb-3"
@@ -40,9 +38,7 @@
             class="
               overflow-hidden
               border-4 border-white
-              md:h-78
-              md:overflow-y-scroll
-              md:custom-scroll
+              md:h-78 md:overflow-y-scroll md:custom-scroll
             "
           >
             <div
@@ -137,8 +133,7 @@
                     py-2
                     border-4 border-white
                     font-indie
-                    hover:text-royalblue-700
-                    hover:bg-white
+                    hover:text-royalblue-700 hover:bg-white
                   "
                   @click="joinUs()"
                 >

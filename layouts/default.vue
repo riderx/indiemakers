@@ -29,8 +29,26 @@ export default {
           property: 'og:site_name',
           content: 'indiemakers.fr',
         },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
+        },
         { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
-        // { hid: 'og:article:author', property: 'og:article:author', content: 'Martin DONADIEU' },
+      ],
+      link: [
+        {
+          rel: 'alternate',
+          hreflang: 'x-default',
+          title: 'INDIE MAKERS',
+          href: `${this.$config.DOMAIN}${this.$route.fullPath}`,
+        },
+        {
+          rel: 'alternate',
+          hreflang: 'fr',
+          title: 'INDIE MAKERS',
+          href: `${this.$config.DOMAIN}${this.$route.fullPath}`,
+        },
       ],
     }
   },

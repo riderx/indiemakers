@@ -9,8 +9,7 @@
         px-4
         py-6
         sm:px-6
-        md:justify-start
-        md:space-x-10
+        md:justify-start md:space-x-10
       "
     >
       <div>
@@ -38,10 +37,11 @@
             text-gray-400
             bg-white
             rounded-md
-            hover:text-gray-500
-            hover:bg-gray-100
+            hover:text-gray-500 hover:bg-gray-100
             focus:outline-none
-            focus:ring-2 focus:ring-inset focus:ring-indigo-500
+            focus:ring-2
+            focus:ring-inset
+            focus:ring-indigo-500
           "
           aria-expanded="false"
           @click="menuMobile = true"
@@ -97,7 +97,9 @@
                 group
                 hover:text-gray-900
                 focus:outline-none
-                focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                focus:ring-2
+                focus:ring-offset-2
+                focus:ring-indigo-500
               "
               aria-expanded="false"
               @click="menu = !menu"
@@ -270,10 +272,11 @@
                   text-gray-400
                   bg-white
                   rounded-md
-                  hover:text-gray-500
-                  hover:bg-gray-100
+                  hover:text-gray-500 hover:bg-gray-100
                   focus:outline-none
-                  focus:ring-2 focus:ring-inset focus:ring-indigo-500
+                  focus:ring-2
+                  focus:ring-inset
+                  focus:ring-indigo-500
                 "
                 @click="menuMobile = false"
               >

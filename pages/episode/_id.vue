@@ -11,8 +11,7 @@
                 justify-center
                 pt-3
                 border-t-8 border-white
-                md:pb-1
-                md:border-8
+                md:pb-1 md:border-8
               "
             >
               <p class="px-3 text-3xl text-center font-indie">
@@ -58,9 +57,7 @@
                 overflow-hidden
                 bg-white
                 border-4 border-white
-                md:h-78
-                md:overflow-y-scroll
-                md:custom-scroll
+                md:h-78 md:overflow-y-scroll md:custom-scroll
               "
             >
               <div
@@ -362,7 +359,7 @@ export default Vue.extend({
         {
           hid: 'description',
           name: 'description',
-          content: (this as any).previewNoEmoji,
+          content: (this as any).previewMeta,
         },
         {
           hid: 'og:title',
@@ -372,7 +369,7 @@ export default Vue.extend({
         {
           hid: 'og:description',
           property: 'og:description',
-          content: (this as any).previewNoEmoji,
+          content: (this as any).previewMeta,
         },
         {
           hid: 'og:image:alt',

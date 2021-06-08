@@ -74,6 +74,12 @@ const previewText = (text: string) => {
   return textSplited.join(' ').replace('.', '.<br/>')
 }
 
+const previewTextMeta = (text: string) => {
+  const textSplited = text.split(' ')
+  textSplited.length = 153
+  return `${textSplited.join(' ').replace('.', '.<br/>')} ...`
+}
+
 const previewEmail = (text: string) => {
   const textSplited = text.split(' ')
   textSplited.length = 20
@@ -123,6 +129,9 @@ export const feed = async () => {
         element.id = String(parsed.items.length - index)
         element.guidFix = guidConvert(element.guid)
         element.preview = previewText(element.contentSnippet)
+        element.previewMeta = previewTextMeta(
+          removeEmoji(element.contentSnippet)
+        )
         element.previewEmail = previewEmail(element.contentSnippet)
         element.previewNoEmoji = removeEmoji(element.preview)
         element.date = dayjs(element.isoDate).fromNow()

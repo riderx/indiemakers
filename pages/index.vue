@@ -19,9 +19,7 @@
                 w-full
                 overflow-hidden
                 border-4 border-white
-                md:h-78
-                md:overflow-y-scroll
-                md:custom-scroll
+                md:h-78 md:overflow-y-scroll md:custom-scroll
               "
             >
               <NuxtLink
@@ -55,8 +53,7 @@
                     mx-auto
                     my-10
                     border-white
-                    md:m-0
-                    md:w-4/5
+                    md:m-0 md:w-4/5
                   "
                   alt="IM COVER"
                   :src="image"

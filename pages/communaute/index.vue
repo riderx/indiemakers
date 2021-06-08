@@ -18,8 +18,7 @@
           text-white
           border-4 border-white
           font-indie
-          hover:text-royalblue-700
-          hover:bg-white
+          hover:text-royalblue-700 hover:bg-white
         "
         @click="joinUs()"
       >

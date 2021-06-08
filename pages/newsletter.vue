@@ -83,9 +83,7 @@
               text-white
               border-4 border-white
               rounded-none
-              hover:border-gray-200
-              hover:text-royalblue-700
-              hover:bg-gray-200
+              hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
               text-light
               h1
             "

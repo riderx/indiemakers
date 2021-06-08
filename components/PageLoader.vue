@@ -17,8 +17,7 @@
           pt-4
           pb-20
           text-center
-          sm:block
-          sm:p-0
+          sm:block sm:p-0
         "
       >
         <div
@@ -44,11 +43,7 @@
             rounded-lg
             shadow-xl
             bg-royalblue-700
-            sm:my-8
-            sm:align-middle
-            sm:max-w-sm
-            sm:w-full
-            sm:p-6
+            sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6
           "
         >
           <div class="inline-flex justify-center w-full">

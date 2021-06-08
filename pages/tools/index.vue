@@ -74,8 +74,7 @@
                     border border-4
                     rounded
                     select-none
-                    hover:text-orchid-600
-                    hover:border-orchid-600
+                    hover:text-orchid-600 hover:border-orchid-600
                     border-orchid-300
                   "
                   >J'en profite</a

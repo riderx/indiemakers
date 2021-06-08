@@ -74,6 +74,11 @@ export default {
         content: 'Martin DONADIEU',
       },
       {
+        hid: 'twitter:card',
+        property: 'twitter:card',
+        content: 'summary',
+      },
+      {
         hid: 'og:description',
         property: 'og:description',
         content:
@@ -84,6 +89,13 @@ export default {
       {
         rel: 'alternate',
         hreflang: 'fr',
+        title: 'RSS INDIE MAKERS',
+        type: 'application/rss+xml',
+        href: 'https://indiemakers/rss.xml',
+      },
+      {
+        rel: 'alternate',
+        hreflang: 'x-default',
         title: 'RSS INDIE MAKERS',
         type: 'application/rss+xml',
         href: 'https://indiemakers/rss.xml',

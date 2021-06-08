@@ -61,8 +61,7 @@
           text-white
           border-4 border-white
           font-indie
-          hover:text-royalblue-700
-          hover:bg-white
+          hover:text-royalblue-700 hover:bg-white
         "
         @click="goHome()"
       >
@@ -77,9 +76,7 @@
           text-lg
           bg-white
           text-royalblue-700
-          md:p-10
-          md:mb-0
-          md:w-2/5
+          md:p-10 md:mb-0 md:w-2/5
           lg:w-1/5
         "
       >
