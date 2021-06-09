@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import admin from 'firebase-admin'
+import { Mutex } from 'await-semaphore'
 import {
   Interaction,
   ApplicationCommandInteractionDataOption,
@@ -23,6 +24,7 @@ enum TaskStatus {
   // eslint-disable-next-line no-unused-vars
   DONE = 'done',
 }
+const projectSem: { [key: string]: Mutex } = {}
 export interface Task {
   id: number
   content: string
@@ -64,6 +66,10 @@ const createProjectTask = async (
   hashtag: string,
   task: Partial<Task>
 ): Promise<any> => {
+  if (!projectSem[`$[user.userId}_${hashtag}`]) {
+    projectSem[`$[user.userId}_${hashtag}`] = new Mutex()
+  }
+  const release = await projectSem[`$[user.userId}_${hashtag}`].acquire()
   try {
     const done = task.status !== TaskStatus.TODO
     const lastTask = await getLastTask(user.userId, hashtag)
@@ -84,28 +90,30 @@ const createProjectTask = async (
     if (user?.wipApiKey && task?.content) {
       task.wipId = await sendToWip(user.wipApiKey, taskWithHashtag, done)
     }
-  } catch (err) {
-    console.error('createProjectTask', err)
-  }
-  await sendTxtLater(
-    `La tache 💗 ${task.id}:
+    await sendTxtLater(
+      `La tache 💗 ${task.id}:
 ${task.content}
 A été ajouté au projet #${hashtag} 🎉!`,
-    [],
-    applicationId,
-    token
-  )
-  const newTask = await admin
-    .firestore()
-    .collection(
-      `discord/${user.userId}/projects/${hashtag.toLowerCase()}/tasks`
+      [],
+      applicationId,
+      token
     )
-    .add({ ...task, createdAt: dayjs().toISOString() })
-  const curProject = await getProjectById(user.userId, hashtag)
-  await updateProjectTaskAndStreak(user.userId, curProject)
-  await updateUserTaskAndStreak(user)
-
-  return newTask.get()
+    const newTask = await admin
+      .firestore()
+      .collection(
+        `discord/${user.userId}/projects/${hashtag.toLowerCase()}/tasks`
+      )
+      .add({ ...task, createdAt: dayjs().toISOString() })
+    release()
+    const curProject = await getProjectById(user.userId, hashtag)
+    await updateProjectTaskAndStreak(user.userId, curProject)
+    await updateUserTaskAndStreak(user)
+    return newTask.get()
+  } catch (err) {
+    console.error('createProjectTask', err)
+    release()
+    return Promise.reject(err)
+  }
 }
 
 const deleteProjectTask = (
