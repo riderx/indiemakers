@@ -647,7 +647,7 @@ export const projectFn = (
   ) {
     return projectDelete(interaction, option.options[0], userId)
   }
-  if (option.name === 'aide' && option.options && option.options.length > 0) {
+  if (option.name === 'aide') {
     return sendTxtLater(
       `Voici ce que tu peux faire avec la commande projet:
   - ajouter

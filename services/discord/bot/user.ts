@@ -464,7 +464,7 @@ export const userFn = (
   if (option.name === 'voir') {
     return userView(interaction, senderId, undefined)
   }
-  if (option.name === 'aide' && option.options && option.options.length > 0) {
+  if (option.name === 'aide') {
     return sendTxtLater(
       `Voici ce que tu peut faire avec la commande maker:
   - modifier ( ton compte )
