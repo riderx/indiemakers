@@ -47,6 +47,9 @@ const taskProtectedKey = [
   'createdAt',
   'updatedAt',
 ]
+const statusToText = (status: TaskStatus) => {
+  return status === TaskStatus.DONE ? 'Fait' : 'A faire'
+}
 
 const getLastTask = async (userId: string, hashtag: string) => {
   const taskList = await admin
@@ -414,9 +417,11 @@ const tasksView = async (
     const tasks = allTaks.tasks.sort((a, b) => a.id - b.id)
     for (let index = 0; index < tasks.length; index++) {
       const element = tasks[index]
-      const taskInfos = `💗 ${element.id} - ${dayjs(element.createdAt).format(
-        'DD/MM/YYYY'
-      )}  - ${element.content}\n`
+      const taskInfos = `💗 ${element.id} - ${statusToText(
+        element.status
+      )}  - ${dayjs(element.createdAt).format('DD/MM/YYYY')}  - ${
+        element.content
+      }\n`
       await sendChannel(interaction.channel_id, taskInfos)
     }
     return Promise.resolve()
