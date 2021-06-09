@@ -204,6 +204,10 @@ export const sendTxtLater = async (
       // Request made and server responded
       console.error('sendTxtLater response', err.response.data)
       console.error('sendTxtLater response status', err.response.status)
+      console.error(
+        'sendTxtLater response errors',
+        err.response.data.errors.content
+      )
       // console.error(err.response.headers)
     } else if (err.request) {
       // The request was made but no response was received

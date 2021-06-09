@@ -393,20 +393,25 @@ const tasksView = async (
       target = `Tu as fait`
     }
     const text = `${target} ${allTaks.total} taches sur ce projet, BRAVO 🎉!`
-    let taskInfos = `${text}!
+    const taskInfos = `${text}!
 
     Voici La liste:\n\n`
-    allTaks.tasks.forEach((element: Task) => {
-      taskInfos += `💗 ${element.id} - ${dayjs(element.createdAt).format(
-        'DD/MM/YYYY'
-      )}  - ${element.content}\n`
-    })
-    return sendTxtLater(
+
+    await sendTxtLater(
       taskInfos,
       [],
       interaction.application_id,
       interaction.token
     )
+    const tasks = allTaks.tasks.sort((a, b) => a.id - b.id)
+    for (let index = 0; index < tasks.length; index++) {
+      const element = tasks[index]
+      const taskInfos = `💗 ${element.id} - ${dayjs(element.createdAt).format(
+        'DD/MM/YYYY'
+      )}  - ${element.content}\n`
+      await sendChannel(interaction.channel_id, taskInfos)
+    }
+    return Promise.resolve()
   } else {
     return sendTxtLater(
       'Donne moi un projet !',
