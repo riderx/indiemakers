@@ -20,7 +20,7 @@
         <p class="px-5 text-white">
           Tu seras également informé de la sortie des épisodes !
         </p>
-        <div class="pt-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
+        <div class="pt-3 pl-4 pr-4 mx-auto text-center md:w-1/2">
           <div class="mb-0 mb-4">
             <input
               ref="name"
