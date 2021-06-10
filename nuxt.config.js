@@ -6,7 +6,7 @@ const serverMiddleware = () => {
   if (process.env.DEPLOY_API_ONLY) {
     slist.push({ path: '/', handler: '~/services/redirect.ts' })
   }
-  if (process.env.DEPLOY_API) {
+  if (process.env.DEPLOY_API || process.env.DEPLOY_API_ONLY) {
     slist.push({ path: '/api', handler: '~/services/local.ts' })
   }
   return slist
