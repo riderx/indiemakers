@@ -71,7 +71,7 @@ export const updateProjectIncome = (
     .firestore()
     .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`)
     .doc(incomeId)
-    .update({ ...income, updatesAt: dayjs().toISOString() })
+    .update({ ...income, updatedAt: dayjs().toISOString() })
 }
 
 const updateProjecttotalIncome = async (
@@ -183,9 +183,7 @@ const incomeEdit = (
 ) => {
   let hashtag = ''
   let incomeId = ''
-  const update: Partial<Income> = {
-    updatedAt: dayjs().toISOString(),
-  }
+  const update: Partial<Income> = {}
   let date = dayjs()
   date = date.set('minute', 0)
   date = date.set('hour', 0)

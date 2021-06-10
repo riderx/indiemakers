@@ -10,7 +10,7 @@ import maker from '../api/maker'
 import project from '../api/project'
 import community from '../api/community'
 import ep from '../api/ep'
-import { morningBot, lateBot } from './discord/bot/utils'
+import { lateBot, morningBot } from './discord/bot/schedule'
 
 dotenv.config()
 const app = express()

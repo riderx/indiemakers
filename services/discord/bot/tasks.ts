@@ -149,7 +149,7 @@ const updateProjectTask = async (
 ): Promise<any> => {
   try {
     const user = await getUsersById(userId)
-    const done = task.status !== TaskStatus.TODO
+    const done = task.status ? task.status !== TaskStatus.TODO : true
     if (task.status && task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString()
     }
@@ -175,12 +175,14 @@ const updateProjectTask = async (
   const snapshot = await admin
     .firestore()
     .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
-    .where('id', '==', taskId)
+    .where('id', '==', parseInt(taskId))
     .get()
   let curTask
   snapshot.forEach((doc) => {
+    // eslint-disable-next-line no-console
+    console.log('doc', doc.id)
     curTask = doc.data()
-    doc.ref.update({ ...task, updatesAt: dayjs().toISOString() })
+    doc.ref.update({ ...task, updatedAt: dayjs().toISOString() })
   })
   return curTask
 }
@@ -360,10 +362,7 @@ const taskEdit = async (
   userId: string
 ): Promise<void> => {
   let hashtag = ''
-  const task: Partial<Task> = {
-    status: TaskStatus.DONE,
-    updatedAt: dayjs().toISOString(),
-  }
+  const task: Partial<Task> = {}
   let taskId = ''
 
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
@@ -387,10 +386,12 @@ const taskEdit = async (
       )
     }
   })
+  // eslint-disable-next-line no-console
+  console.log('updated task', task)
   await updateProjectTask(userId, hashtag, taskId, task)
   return sendTxtLater(
-    `La tache 💗:
-${taskId} A été mise a jour dans le projet #${hashtag.toLowerCase()}, 🎉!`,
+    `La tache 💗: ${taskId}
+A été mise a jour dans le projet #${hashtag.toLowerCase()}, 🎉!`,
     [],
     interaction.application_id,
     interaction.token

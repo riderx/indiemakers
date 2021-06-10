@@ -1,14 +1,15 @@
 const serverMiddleware = () => {
-  if (process.env.DEPLOY_API_ONLY) {
-    return [{ path: '/', handler: '~/services/local.ts' }]
-  }
+  const slist = []
   if (process.env.VERCEL) {
     return []
   }
-  if (process.env.DEPLOY_API) {
-    return [{ path: '/api', handler: '~/services/local.ts' }]
+  if (process.env.DEPLOY_API_ONLY) {
+    slist.push({ path: '/', handler: '~/services/redirect.ts' })
   }
-  return []
+  if (process.env.DEPLOY_API) {
+    slist.push({ path: '/api', handler: '~/services/local.ts' })
+  }
+  return slist
 }
 const baseUrl = () => {
   if (process.env.VERCEL && process.env.VERCEL_ENV === 'production') {
