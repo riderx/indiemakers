@@ -1,7 +1,7 @@
 import { config, https, pubsub, firestore } from 'firebase-functions'
 import admin from 'firebase-admin'
-import { lateBot, morningBot } from '../../services/discord/bot/utils'
 import { Person } from '../../services/types'
+import { lateBot, morningBot } from './../../services/discord/bot/schedule'
 import { getPerson, voteIfNotDone } from './users'
 import { TwUser, twUserPromise } from './twitter'
 import { sendUserToRevue } from './newletter'
