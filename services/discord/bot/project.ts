@@ -17,6 +17,10 @@ import {
   sendTxtLater,
   sleep,
   transformKey,
+  transformVal,
+  t9r,
+  LName,
+  Langs,
 } from './utils'
 import { getUserUrl, updateUser, User } from './user'
 import {
@@ -58,6 +62,7 @@ export interface Project {
   incomesData?: Income[]
   openSource?: boolean
   github?: string
+  twitter?: string
   streak: number
   bestStreak: number
   emoji: string
@@ -92,16 +97,20 @@ const projectProtectedKey = [
   'lastTaskAt',
 ]
 
-const translations = {
-  couleur: 'color',
-  nom: 'name',
-  couverture: 'cover',
-  année: 'year',
-  mois: 'month',
-  categorie: 'category',
-  stripe: 'stripeApiKey',
-  open_source: 'openSource',
-}
+const transforms: Langs[] = [
+  t9r('color', 'couleur', 'Couleur'),
+  t9r('name', 'nom', 'Nom'),
+  t9r('cover', 'couverture', 'Couverture'),
+  t9r('year', 'année', 'Année'),
+  t9r('month', 'mois', 'Mois'),
+  t9r('category', 'categorie', 'Categorie'),
+  t9r('openSource', 'open_source', 'Open source'),
+  t9r('website', 'website', 'Site web'),
+  t9r('github', 'github', 'Github'),
+  t9r('twitter', 'twitter', 'Twitter'),
+  t9r('emoji', 'emoji', 'Emoji'),
+  t9r('hashtag', 'hashtag', '#️⃣'),
+]
 
 export const getAllProjects = async (userId: string): Promise<Project[]> => {
   try {
@@ -384,7 +393,19 @@ const projectAdd = (
   }
 
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    ;(newProj as any)[transformKey(translations, element.name)] = element.value
+    const key = transformKey(
+      transforms,
+      element.name,
+      LName.discord,
+      LName.database
+    )
+    ;(newProj as any)[key] = transformVal(
+      transforms,
+      element.name,
+      element.value,
+      LName.discord,
+      LName.database
+    )
   })
   if (newProj.hashtag && /^[a-z]+$/.test(newProj.hashtag)) {
     console.error('add project', newProj)
@@ -429,9 +450,20 @@ const projectEdit = (
     updatedAt: dayjs().toISOString(),
   }
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    const key = transformKey(translations, element.name)
+    const key = transformKey(
+      transforms,
+      element.name,
+      LName.discord,
+      LName.database
+    )
     if (!projectProtectedKey.includes(key)) {
-      ;(update as any)[key] = element.value
+      ;(update as any)[key] = transformVal(
+        transforms,
+        element.name,
+        element.value,
+        LName.discord,
+        LName.database
+      )
     }
   })
   if (update.hashtag) {
@@ -458,14 +490,12 @@ Bravo 💪, une marche après l'autre tu fais grandir ce projet !`,
 }
 
 const projectCard = (project: Project) => {
-  const fields = getFields(project, projectPublicKey, translations)
+  const fields = getFields(project, projectPublicKey, transforms)
   const name = `${project.emoji || '🪴'} ${project.name || project.hashtag}`
   const description = project.description || 'Un jour je serais grand 👶!'
   const thumb = project.logo ? image(project.logo) : undefined
   if (project.website) {
-    fields.push(
-      field(transformKey(translations, 'website', true), project.website, false)
-    )
+    fields.push(field('website', project.website, false))
   }
   return embed(
     name,

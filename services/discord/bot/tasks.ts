@@ -5,7 +5,16 @@ import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
-import { openChannel, sendChannel, sendTxtLater } from './utils'
+import {
+  Langs,
+  LName,
+  openChannel,
+  sendChannel,
+  sendTxtLater,
+  t9r,
+  transformKey,
+  transformVal,
+} from './utils'
 import { updateUser, User, getUsersById } from './user'
 
 import { sendToWip, updateToWip } from './wip'
@@ -45,6 +54,7 @@ const taskProtectedKey = [
   'wipId',
   'makerlogHook',
   'createdAt',
+  'doneAt',
   'updatedAt',
 ]
 const statusToText = (status: TaskStatus) => {
@@ -140,7 +150,7 @@ const updateProjectTask = async (
   try {
     const user = await getUsersById(userId)
     const done = task.status !== TaskStatus.TODO
-    if (task.status === TaskStatus.DONE) {
+    if (task.status && task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString()
     }
     const taskWithHashtag = `${task.content} #${hashtag.toLowerCase()}`
@@ -199,14 +209,8 @@ export const getAllProjectsTasks = async (
     return { tasks: [], total: 0 }
   }
 }
-const transformKey = (key: string): string => {
-  switch (key) {
-    case 'contenu':
-      return 'content'
-    default:
-      return key
-  }
-}
+
+const transforms: Langs[] = [t9r('content', 'contenu', 'Contenu')]
 
 export const lastDay = () => {
   let day = dayjs()
@@ -313,10 +317,22 @@ const taskAdd = async (
     status: TaskStatus.DONE,
   }
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
+    const key = transformKey(
+      transforms,
+      element.name,
+      LName.discord,
+      LName.database
+    )
     if (element.name === 'hashtag' && element.value) {
       hashtag = element.value
-    } else if (taskPublicKey.includes(transformKey(element.name))) {
-      ;(task as any)[transformKey(element.name)] = element.value
+    } else if (taskPublicKey.includes(key)) {
+      ;(task as any)[key] = transformVal(
+        transforms,
+        element.name,
+        element.value,
+        LName.discord,
+        LName.database
+      )
     }
   })
   const curUser = await getUsersById(userId)
@@ -338,7 +354,7 @@ const taskAdd = async (
   }
 }
 
-const taskEdit = (
+const taskEdit = async (
   interaction: Interaction,
   options: ApplicationCommandInteractionDataOption[],
   userId: string
@@ -349,29 +365,36 @@ const taskEdit = (
     updatedAt: dayjs().toISOString(),
   }
   let taskId = ''
+
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
+    const key = transformKey(
+      transforms,
+      element.name,
+      LName.discord,
+      LName.database
+    )
     if (element.name === 'hashtag' && element.value) {
       hashtag = element.value
     } else if (element.name === 'id' && element.value) {
       taskId = element.value
-    } else if (
-      taskProtectedKey.includes(transformKey(element.name)) &&
-      element.value
-    ) {
-      ;(task as any)[transformKey(element.name)] = element.value
+    } else if (!taskProtectedKey.includes(key) && element.value) {
+      ;(task as any)[key] = transformVal(
+        transforms,
+        element.name,
+        element.value,
+        LName.discord,
+        LName.database
+      )
     }
   })
-  return Promise.all([
-    sendTxtLater(
-      `La tache 💗:
-${taskId}: ${task.content}
-A été mise a jour dans le projet #${hashtag.toLowerCase()}, 🎉!`,
-      [],
-      interaction.application_id,
-      interaction.token
-    ),
-    updateProjectTask(userId, hashtag, taskId, task),
-  ]).then(() => Promise.resolve())
+  await updateProjectTask(userId, hashtag, taskId, task)
+  return sendTxtLater(
+    `La tache 💗:
+${taskId} A été mise a jour dans le projet #${hashtag.toLowerCase()}, 🎉!`,
+    [],
+    interaction.application_id,
+    interaction.token
+  )
 }
 
 const tasksView = async (

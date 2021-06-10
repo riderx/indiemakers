@@ -149,35 +149,112 @@ export const sendTxtLoading = (res: Res): Res =>
       content: 'Le bot réflechis..',
     },
   })
-interface Translations {
-  [key: string]: string
+
+// eslint-disable-next-line no-unused-vars
+export enum LName {
+  // eslint-disable-next-line no-unused-vars
+  fr = 'fr',
+  // eslint-disable-next-line no-unused-vars
+  en = 'en',
+  // eslint-disable-next-line no-unused-vars
+  database = 'db',
+  // eslint-disable-next-line no-unused-vars
+  discord = 'dc',
 }
-export const transformKey = (
-  translations: Translations,
-  key: string,
-  left: boolean = false
-): string => {
-  const found = Object.keys(translations).find((val: string) =>
-    left ? (translations as any)[val] === key : val === key
-  )
-  if (found) {
-    return left ? found : (translations as any)[found]
+
+// eslint-disable-next-line no-unused-vars
+type Tfunc = (val: string) => string
+interface Lang {
+  key: string
+  value: Tfunc
+}
+type LLangs = {
+  // eslint-disable-next-line no-unused-vars
+  [key in LName]: Lang
+}
+export interface Langs extends LLangs {
+  inline: boolean
+}
+
+const noneTFunc = (val: string): string => val
+
+export const l3s = (key: string, value: Tfunc = noneTFunc): Lang => {
+  return { key, value }
+}
+
+const stringOrLang = (key: string | Lang): Lang => {
+  if (typeof key === 'string') {
+    return l3s(key)
   }
   return key
+}
+
+export const t9r = (
+  db: string | Lang,
+  dc: string | Lang,
+  fr: string | Lang | undefined = undefined,
+  en: string | Lang | undefined = undefined,
+  inline: boolean = true
+): Langs => ({
+  inline,
+  db: stringOrLang(db),
+  dc: stringOrLang(dc),
+  fr: fr ? stringOrLang(fr) : stringOrLang(db),
+  en: en ? stringOrLang(en) : stringOrLang(db),
+})
+
+export const transformKey = (
+  transformers: Langs[],
+  key: string,
+  lang: LName,
+  langRes: LName
+): string => {
+  const found = transformers.find((val: Langs) => val[lang].key === key)
+  if (found) {
+    return found[langRes].key
+  }
+  return key
+}
+
+export const transformInline = (
+  transformers: Langs[],
+  key: string,
+  lang: LName
+): boolean => {
+  const found = transformers.find((val: Langs) => val[lang].key === key)
+  if (found) {
+    return found?.inline
+  }
+  return false
+}
+
+export const transformVal = (
+  transformers: Langs[],
+  key: string,
+  value: string | undefined,
+  lang: LName = LName.en,
+  langRes: LName = LName.en
+): string => {
+  const found = transformers.find((val: Langs) => val[lang].key === key)
+  if (found && value) {
+    return found[langRes].value(value)
+  }
+  return value || ''
 }
 
 export const getFields = (
   obj: object,
   publicFields: string[],
-  translations: Translations
+  transformers: Langs[]
 ) => {
   const fields: Field[] = []
   publicFields.forEach((key) => {
     if ((obj as any)[key]) {
       fields.push(
         field(
-          transformKey(translations, key, true),
-          String((obj as any)[key] || 0)
+          transformKey(transformers, key, LName.database, LName.fr),
+          transformVal(transformers, key, (obj as any)[key]),
+          transformInline(transformers, key, LName.database)
         )
       )
     }

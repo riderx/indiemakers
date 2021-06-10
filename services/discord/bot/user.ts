@@ -11,10 +11,14 @@ import {
   getFields,
   getUserData,
   image,
+  Langs,
+  LName,
   openChannel,
   sendChannel,
   sendTxtLater,
+  t9r,
   transformKey,
+  transformVal,
 } from './utils'
 import { Project } from './project'
 import { lastDay } from './tasks'
@@ -50,7 +54,7 @@ export interface User {
   createdAt: string
   updatedAt: string
 }
-const userPublicFlieds = ['karma', 'streak', 'tasks', 'projects']
+const userPublicFlieds = ['karma', 'streak', 'tasks', 'projects', 'website']
 const userProtectedKey = [
   'userId',
   'username',
@@ -81,20 +85,23 @@ export const getAllUsers = async (): Promise<User[]> => {
   }
 }
 
-const translations = {
-  couleur: 'color',
-  nom: 'name',
-  couverture: 'cover',
-  rappel_tache: 'taskReminder',
-  makerlog_hook: 'makerlogHook',
-  wip_key: 'wipApiKey',
-  photo: 'avatarUrl',
-  talents: 'skills',
-  '🔥 Flammes': 'streak',
-  '🕉 karma': 'karma',
-  '🌱 Projets': 'projects',
-  '💗 Taches': 'tasks',
-}
+const transforms: Langs[] = [
+  t9r('color', 'couleur', 'Couleur'),
+  t9r('name', 'nom', 'Nom'),
+  t9r('cover', 'couverture', 'Couverture'),
+  t9r('taskReminder', 'rappel_tache', 'Rappel journalier de tache'),
+  t9r('makerlogHook', 'makerlog_hook', 'Makerlog webhook', undefined, false),
+  t9r('wipApiKey', 'wip_key', 'WIP clé API', undefined, false),
+  t9r('avatarUrl', 'photo', 'Photo', undefined, false),
+  t9r('website', 'website', 'Site web', undefined, false),
+  t9r('github', 'github', 'Github', undefined, false),
+  t9r('twitter', 'twitter', 'Twitter', undefined, false),
+  t9r('skills', 'talents', 'Talents'),
+  t9r('streak', 'flammes', '🔥 Flammes'),
+  t9r('karma', 'karma', '🕉 Karma'),
+  t9r('projects', 'projets', '🌱 Projets'),
+  t9r('tasks', 'taches', '💗 Taches'),
+]
 
 export const getUsersById = async (userId: string): Promise<User | null> => {
   try {
@@ -238,9 +245,20 @@ const userEdit = (
     updatedAt: dayjs().toISOString(),
   }
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    const realKey = transformKey(translations, element.name)
-    if (!userProtectedKey.includes(realKey)) {
-      ;(update as any)[realKey] = element.value
+    const key = transformKey(
+      transforms,
+      element.name,
+      LName.discord,
+      LName.database
+    )
+    if (!userProtectedKey.includes(key)) {
+      ;(update as any)[key] = transformVal(
+        transforms,
+        element.name,
+        element.value,
+        LName.discord,
+        LName.database
+      )
     }
   })
   console.error('userEdit', update)
@@ -257,50 +275,34 @@ Cela aidera les autres makers 👨‍🌾 à te connaitre !`,
 }
 
 const userCard = (user: User) => {
-  const fields = getFields(user, userPublicFlieds, translations)
+  const fields = getFields(user, userPublicFlieds, transforms)
   const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
   const bio = user.bio || 'Indie Maker en devenir !'
   const thumb = image(user.avatarUrl)
   if (user.website) {
-    fields.push(
-      field(transformKey(translations, 'website', true), user.website, false)
-    )
+    fields.push(field('website', user.website, false))
   }
   if (user.skills) {
-    fields.push(
-      field(transformKey(translations, 'skills', true), user.skills, false)
-    )
+    fields.push(field('skills', user.skills, false))
   }
   if (user.twitter) {
-    fields.push(
-      field(transformKey(translations, 'twitter', true), user.twitter, false)
-    )
+    fields.push(field('twitter', user.twitter, false))
   }
   if (user.wip) {
-    fields.push(field(transformKey(translations, 'wip', true), user.wip, false))
+    fields.push(field('wip', user.wip, false))
   }
   if (user.nomadlist) {
-    fields.push(
-      field(
-        transformKey(translations, 'nomadlist', true),
-        user.nomadlist,
-        false
-      )
-    )
+    fields.push(field('nomadlist', user.nomadlist, false))
   }
   if (user.cover) {
     fields.push(
-      field(
-        transformKey(translations, 'cover', true),
-        user.cover ? 'Configuré' : 'Pas configuré',
-        false
-      )
+      field('cover', user.cover ? 'Configuré' : 'Pas configuré', false)
     )
   }
   if (user.taskReminder) {
     fields.push(
       field(
-        transformKey(translations, 'taskReminder', true),
+        'taskReminder',
         user.taskReminder && user.taskReminder === 'true' ? 'Oui' : 'Non',
         false
       )
