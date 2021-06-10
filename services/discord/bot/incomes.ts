@@ -132,7 +132,7 @@ const getTotalIncomeByUser = async (userId: string): Promise<number> => {
   return projects.reduce((tt, project) => tt + project.incomes, 0)
 }
 
-const incomeAdd = (
+const incomeAdd = async (
   interaction: Interaction,
   options: ApplicationCommandInteractionDataOption[],
   userId: string
@@ -157,23 +157,34 @@ const incomeAdd = (
       date.set('year', Number(element.value))
     }
   })
+  const projDoc = await admin
+    .firestore()
+    .collection(`discord/${userId}/projects`)
+    .doc(hashtag.toLowerCase())
+    .get()
+  if (!projDoc.exists) {
+    return sendTxtLater(
+      `Le projet #${hashtag.toLowerCase()}, n'existe pas. tu peux le crée avec \`/im projet creer\` 😇`,
+      [],
+      interaction.application_id,
+      interaction.token
+    )
+  }
   if (newIncome.ammount) {
     newIncome.status = newIncome.ammount < 0 ? 'expense' : 'income'
     newIncome.ammount = Math.abs(newIncome.ammount)
   }
   newIncome.date = date.toISOString()
-  return Promise.all([
-    sendTxtLater(
-      `${newIncome.status === 'expense' ? 'La dépense' : 'Le revenu'} 💰: ${
-        newIncome.ammount
-      } ${dayjs(newIncome.date).format('MM/YYYY')}
+  await createProjectIncome(userId, hashtag, newIncome)
+  return sendTxtLater(
+    `${newIncome.status === 'expense' ? 'La dépense' : 'Le revenu'} 💰: ${
+      newIncome.ammount
+    } ${dayjs(newIncome.date).format('MM/YYYY')}
 À été ajouté au projet #${hashtag}, 🎉!`,
-      [],
-      interaction.application_id,
-      interaction.token
-    ),
-    createProjectIncome(userId, hashtag, newIncome),
-  ]).then(() => Promise.resolve())
+    [],
+    interaction.application_id,
+    interaction.token
+  )
 }
 
 const incomeEdit = (

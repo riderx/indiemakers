@@ -79,11 +79,26 @@ const createProjectTask = async (
   hashtag: string,
   task: Partial<Task>
 ): Promise<any> => {
-  if (!projectSem[`$[user.userId}_${hashtag}`]) {
-    projectSem[`$[user.userId}_${hashtag}`] = new Mutex()
+  if (!projectSem[`$[user.userId}_${hashtag.toLowerCase()}`]) {
+    projectSem[`$[user.userId}_${hashtag.toLowerCase()}`] = new Mutex()
   }
-  const release = await projectSem[`$[user.userId}_${hashtag}`].acquire()
+  const release = await projectSem[
+    `$[user.userId}_${hashtag.toLowerCase()}`
+  ].acquire()
   try {
+    const projDoc = await admin
+      .firestore()
+      .collection(`discord/${user.userId}/projects`)
+      .doc(hashtag.toLowerCase())
+      .get()
+    if (!projDoc.exists) {
+      return sendTxtLater(
+        `Le projet #${hashtag.toLowerCase()}, n'existe pas. tu peux le crée avec \`/im projet creer\` 😇`,
+        [],
+        applicationId,
+        token
+      )
+    }
     const done = task.status !== TaskStatus.TODO
     const lastTask = await getLastTask(user.userId, hashtag)
     if (lastTask) {

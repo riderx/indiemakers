@@ -8,7 +8,6 @@ import { getStripeCharges, Charge } from './stripe'
 import {
   Embed,
   embed,
-  field,
   getConfig,
   getFields,
   image,
