@@ -84,6 +84,7 @@ const projectPublicKey = [
   'cover',
   'github',
   'openSource',
+  'website',
   'tasks',
   'streak',
 ]
@@ -105,9 +106,9 @@ const transforms: Langs[] = [
   t9r('month', 'mois', 'Mois'),
   t9r('category', 'categorie', 'Categorie'),
   t9r('openSource', 'open_source', 'Open source'),
-  t9r('website', 'website', 'Site web'),
-  t9r('github', 'github', 'Github'),
-  t9r('twitter', 'twitter', 'Twitter'),
+  t9r('website', 'website', 'Site web', undefined, false),
+  t9r('github', 'github', 'Github', undefined, false),
+  t9r('twitter', 'twitter', 'Twitter', undefined, false),
   t9r('emoji', 'emoji', 'Emoji'),
   t9r('hashtag', 'hashtag', '#️⃣'),
 ]
@@ -494,9 +495,6 @@ const projectCard = (project: Project) => {
   const name = `${project.emoji || '🪴'} ${project.name || project.hashtag}`
   const description = project.description || 'Un jour je serais grand 👶!'
   const thumb = project.logo ? image(project.logo) : undefined
-  if (project.website) {
-    fields.push(field('website', project.website, false))
-  }
   return embed(
     name,
     description,
