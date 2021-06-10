@@ -427,7 +427,7 @@ const tasksView = async (
     } else {
       target = `Tu as fait`
     }
-    const text = `${target} ${allTaks.total} taches sur ce projet, BRAVO 🎉!`
+    const text = `${target} ${allTaks.total} taches sur #${hashtag}, BRAVO 🎉!`
     const taskInfos = `${text}!
 
     Voici La liste:\n\n`

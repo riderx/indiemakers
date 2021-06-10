@@ -471,7 +471,7 @@ const projectEdit = (
     console.error('projectEdit', update)
     return Promise.all([
       sendTxtLater(
-        `Tu a mis à jour #${update.hashtag}
+        `Tu as mis à jour #${update.hashtag}
 Bravo 💪, une marche après l'autre tu fais grandir ce projet !`,
         [],
         interaction.application_id,

@@ -188,12 +188,14 @@ export default {
       asset: '0%',
     },
   },
-  image: {
-    cloudinary: {
-      // baseURL: 'https://ik.imagekit.io/gyc0uxoln1/im/',
-      baseURL: 'https://res.cloudinary.com/forgr/image/upload/',
-    },
-  },
+  // image: {
+  //   imagekit: {
+  //     baseURL: 'https://ik.imagekit.io/gyc0uxoln1',
+  //   },
+  //   cloudinary: {
+  //     baseURL: 'https://res.cloudinary.com/forgr/image/upload/',
+  //   },
+  // },
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
 
