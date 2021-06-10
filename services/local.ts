@@ -40,6 +40,12 @@ appRouter.get('/morning', morning)
 appRouter.get('/late', late)
 appRouter.get('/', healthcheck)
 
-app.use('/', appRouter)
-
+if (process.env.DEPLOY_API_ONLY) {
+  app.use('/api', appRouter)
+  app.use('/', (_req, res) => {
+    res.redirect('/api')
+  })
+} else {
+  app.use('/', appRouter)
+}
 export default app
