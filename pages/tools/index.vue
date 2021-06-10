@@ -21,10 +21,11 @@
         <div
           class="grid max-w-lg gap-5 mx-auto mt-12 lg:grid-cols-3 lg:max-w-none"
         >
-          <NuxtLink
+          <a
             v-for="tool in tools"
             :key="tool.name"
-            :to="`/articles/${tool.slug}`"
+            target="_blank"
+            :href="tool.link"
             class="flex flex-col overflow-hidden rounded-lg shadow-lg"
           >
             <div class="flex-shrink-0 h-48 bg-gray-600">
@@ -81,7 +82,7 @@
                 >
               </div>
             </div>
-          </NuxtLink>
+          </a>
         </div>
       </div>
       <PageLoader :show="loading" />
