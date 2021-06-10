@@ -1,4 +1,5 @@
 {
+  "typeRoots": ["./node_modules/@types"],
   "compilerOptions": {
     "module": "commonjs",
     "noImplicitReturns": true,
