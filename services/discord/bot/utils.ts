@@ -3,6 +3,7 @@ import { Response as Res } from 'express'
 import axios from 'axios'
 import { hexToDec } from 'hex2dec'
 import admin from 'firebase-admin'
+import dayjs from 'dayjs'
 
 interface DiscorUser {
   avatar: string
@@ -235,6 +236,15 @@ export const transformVal = (
     return found[langRes].value(value)
   }
   return value || ''
+}
+
+export const lastDay = () => {
+  let day = dayjs()
+  day = day.set('hour', 0)
+  day = day.set('minute', 0)
+  day = day.set('second', 1)
+  day = day.subtract(1, 'day')
+  return day
 }
 
 export const getFields = (

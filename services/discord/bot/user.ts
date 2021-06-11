@@ -12,6 +12,7 @@ import {
   getUserData,
   image,
   Langs,
+  lastDay,
   LName,
   openChannel,
   sendChannel,
@@ -21,7 +22,6 @@ import {
   transformVal,
 } from './utils'
 import { Project } from './project'
-import { lastDay } from './tasks'
 
 export interface User {
   userId: string

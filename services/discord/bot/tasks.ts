@@ -7,6 +7,7 @@ import {
 } from '../command'
 import {
   Langs,
+  lastDay,
   LName,
   openChannel,
   sendChannel,
@@ -16,7 +17,6 @@ import {
   transformVal,
 } from './utils'
 import { updateUser, User, getUsersById } from './user'
-
 import { sendToWip, updateToWip } from './wip'
 import { sendToMakerlog } from './makerlog'
 import {
@@ -228,15 +228,6 @@ export const getAllProjectsTasks = async (
 }
 
 const transforms: Langs[] = [t9r('content', 'contenu', 'Contenu')]
-
-export const lastDay = () => {
-  let day = dayjs()
-  day = day.set('hour', 0)
-  day = day.set('minute', 0)
-  day = day.set('second', 1)
-  day = day.subtract(1, 'day')
-  return day
-}
 
 export const resetProjectStreak = (
   userId: string | undefined,
