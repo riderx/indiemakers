@@ -677,9 +677,9 @@ export const projectFn = (
   if (option.name === 'aide') {
     return sendTxtLater(
       `Voici ce que tu peux faire avec la commande projet:
-  - ajouter
+  - **ajouter**
     - hashtag: obligatoire (pas d'espace sans majuscules)
-  - modifier
+  - **modifier**
     - hashtag: obligatoire
     - open_source: optionel
       - Oui
@@ -701,12 +701,12 @@ export const projectFn = (
       - ecommerce
       - Autre
     - stripe: optionnel permet de récupérer les revenues en automatique (voir la doc pour comprendre comment l'obtenir)
-  - supprimer (supprimer un de tes projets)
+  - **supprimer** (supprimer un de tes projets)
     - hashtag: obligatoire
-  - voir (voir un projet d'un Maker ou toi par défaut)
+  - **voir** (voir un projet d'un Maker ou toi par défaut)
       - hashtag: obligatoire
       - maker: optionnel
-  - liste (lister les projets d'un Maker ou toi par défaut)
+  - **liste** (lister les projets d'un Maker ou toi par défaut)
     - Hashtag: obligatoire
   `,
       [],

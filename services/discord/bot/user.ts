@@ -469,7 +469,7 @@ export const userFn = (
   if (option.name === 'aide') {
     return sendTxtLater(
       `Voici ce que tu peut faire avec la commande maker:
-  - modifier ( ton compte )
+  - **modifier** ( ton compte )
     - photo: L'url vers ta photo (avec https://)
     - emoji: Un emoji qui te représente
     - couverture: L'url vers ta photo de couverture
@@ -484,11 +484,11 @@ export const userFn = (
     - nomadlist: L'url de ton compte nomadlist.com perso (avec https://)
     - makerlog_hook: L'url de ton webhook makerlog
     - wip_key: Ton api key pour connecter ton compte wip.co
-  - supprimer ( ton compte )
+  - **supprimer** ( ton compte )
     - hashtag: obligatoire
-  - voir (voir un maker ou toi par default)
+  - **voir** (voir un maker ou toi par default)
       - maker: optionnel
-  - liste (lister les makers)
+  - **liste** (lister les makers)
   `,
       [],
       interaction.application_id,
