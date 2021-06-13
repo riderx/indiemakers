@@ -34,7 +34,7 @@ export default {
       'Le 1er podcast francais qui aide les independants a vivre de leur business.',
     script: [
       {
-        src: 'https://pls.indiemakers.fr/js/index.js',
+        src: 'https://indiemakers-pls.digitalshift-ee.workers.dev/js/script.js',
         'data-domain': 'indiemakers.fr',
         async: true,
         defer: true,

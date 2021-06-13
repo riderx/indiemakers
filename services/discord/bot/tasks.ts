@@ -103,6 +103,8 @@ const createProjectTask = async (
     const lastTask = await getLastTask(user.userId, hashtag)
     if (lastTask) {
       task.id = Number(lastTask.id) + 1
+    } else {
+      task.id = 0
     }
     if (task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString()
