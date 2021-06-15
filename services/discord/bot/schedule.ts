@@ -15,8 +15,8 @@ const personalReminder = async () => {
           return sendChannel(
             channel.id,
             `Tu as actuellement ${usr.streak} 🔥 !
-Si tu veux les conserver, fait une tache aujourd'hui sur tes projet même 5 min, ça compte !
-5*365/60 = 30 heures sur ton projet a la fin de l'année ❤️`
+Si tu veux les conserver, fait une tache aujourd'hui sur tes projet même 10 min, ça compte !
+10 min * 365 jours = 60 heures sur ton projet a la fin de l'année ❤️`
           )
         })
       } else {
