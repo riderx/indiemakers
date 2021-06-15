@@ -29,6 +29,8 @@ export interface User {
   username: string
   avatarUrl: string
   taskReminder: string
+  mondayReminder: string
+  voiceReminder: string
   streak: number
   bestStreak: number
   karma: number
@@ -154,6 +156,8 @@ export const updateUser = async (
       streak: 0,
       bestStreak: 0,
       taskReminder: 'true',
+      mondayReminder: 'false',
+      voiceReminder: 'false',
       incomes: 0,
       karma: 0,
       projects: 0,
@@ -219,13 +223,17 @@ Tu peux le faire avec la commande \`/im karma donner maker:@martin \`
       )
       await sendChannel(
         channel.id,
-        `Pour apprendre à utiliser le bot il y a une petite doc juste ici:
+        `Pour apprendre à m'utiliser (le bot) il y a une petite doc juste ici:
 https://indiemakers.gitbook.io/bot`
       )
       await sendChannel(
         channel.id,
         `voici un petit tuto vidéo pour te montrer :
         https://www.youtube.com/watch?v=qrXN3Mai1Gw`
+      )
+      await sendChannel(
+        channel.id,
+        `Ps: n'attend pas de réponse je ne sais pas encore lire tes messages ici !`
       )
     })
     const newUser: User = Object.assign(base, user as User)
