@@ -43,12 +43,6 @@ export default {
           title: 'INDIE MAKERS',
           href: `${this.$config.DOMAIN}${this.$route.fullPath}`,
         },
-        {
-          rel: 'alternate',
-          hreflang: 'fr',
-          title: 'INDIE MAKERS',
-          href: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
       ],
     }
   },
