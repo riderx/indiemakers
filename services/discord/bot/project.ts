@@ -123,7 +123,7 @@ export const getAllProjects = async (userId: string): Promise<Project[]> => {
     for (let index = 0; index < documents.docs.length; index++) {
       const doc = documents.docs[index]
       const data = (await doc.data()) as Project
-      if (data !== undefined) {
+      if (data !== undefined && data.hashtag && data.hashtag !== '') {
         projects.push({ userId, id: doc.id, ...(data as Project) })
       }
     }
