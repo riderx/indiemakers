@@ -92,6 +92,7 @@ const transforms: Langs[] = [
   t9r('name', 'nom', 'Nom'),
   t9r('cover', 'couverture', 'Couverture'),
   t9r('taskReminder', 'rappel_tache', 'Rappel journalier de tache'),
+  t9r('mondayReminder', 'rappel_lundi', 'Rappel du résumé du lundi'),
   t9r('makerlogHook', 'makerlog_hook', 'Makerlog webhook', undefined, false),
   t9r('wipApiKey', 'wip_key', 'WIP clé API', undefined, false),
   t9r('avatarUrl', 'photo', 'Photo', undefined, false),
