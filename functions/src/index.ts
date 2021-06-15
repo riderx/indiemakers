@@ -1,6 +1,7 @@
 import { config, https, pubsub, firestore } from 'firebase-functions'
 import admin from 'firebase-admin'
 import { Person } from '../../services/types'
+import { onboardingMessage } from '../../services/discord/bot/utils'
 import { lateBot, morningBot } from './../../services/discord/bot/schedule'
 import { getPerson, voteIfNotDone } from './users'
 import { TwUser, twUserPromise } from './twitter'
@@ -182,6 +183,35 @@ export const onCreateUser = firestore
     const user = snapshot.data()
     if (user && user.email && user.email !== '') {
       await sendUserToRevue(user.email, user.first_name)
+    }
+  })
+
+export const onCreateDiscord = firestore
+  .document('/discord/{uid}')
+  .onCreate(async (snapshot, context) => {
+    const { uid } = context.params
+    const user = snapshot.data()
+    if (user) {
+      await onboardingMessage(user as any)
+      await admin.firestore().collection('discord').doc(uid).set({
+        onboardingSend: true,
+      })
+    }
+  })
+
+export const onUpdateDiscord = firestore
+  .document('/discord/{uid}')
+  .onUpdate(async (snapshot, context) => {
+    const { uid } = context.params
+    const onboardingSend = snapshot.before.data().onboardingSend
+    if (!onboardingSend) {
+      const user = snapshot.after.data()
+      if (user && !user.onboardingSend) {
+        await onboardingMessage(user as any)
+        await admin.firestore().collection('discord').doc(uid).set({
+          onboardingSend: true,
+        })
+      }
     }
   })
 

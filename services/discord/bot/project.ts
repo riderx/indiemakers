@@ -20,8 +20,9 @@ import {
   t9r,
   LName,
   Langs,
+  getUserUrl,
 } from './utils'
-import { getUserUrl, updateUser, User } from './user'
+import { updateUser, User } from './user'
 import {
   createProjectIncome,
   deleteProjectIncome,

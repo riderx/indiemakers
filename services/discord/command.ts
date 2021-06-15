@@ -379,6 +379,13 @@ const makerOptions = [
     [choiceGen('Oui', 'true'), choiceGen('Non', 'false')]
   ),
   optionGen(
+    'rappel_vocal',
+    "Rappel par message privée pour faire rejoindre l'appel vocal mensuel",
+    SlashCommandOptionType.STRING,
+    false,
+    [choiceGen('Oui', 'true'), choiceGen('Non', 'false')]
+  ),
+  optionGen(
     'makerlog_hook',
     'La web hook de ton compte makerlog, pour que le bot poste tes taches',
     SlashCommandOptionType.STRING

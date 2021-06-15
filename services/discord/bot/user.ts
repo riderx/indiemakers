@@ -10,6 +10,7 @@ import {
   field,
   getFields,
   getUserData,
+  getUserUrl,
   image,
   Langs,
   lastDay,
@@ -28,6 +29,7 @@ export interface User {
   avatar: string
   username: string
   avatarUrl: string
+  onboardingSend: boolean
   taskReminder: string
   mondayReminder: string
   voiceReminder: string
@@ -60,6 +62,7 @@ const userPublicFlieds = ['karma', 'streak', 'tasks', 'projects', 'website']
 const userProtectedKey = [
   'userId',
   'username',
+  'onboardingSend',
   'karma',
   'avatar',
   'tasks',
@@ -93,6 +96,7 @@ const transforms: Langs[] = [
   t9r('cover', 'couverture', 'Couverture'),
   t9r('taskReminder', 'rappel_tache', 'Rappel journalier de tache'),
   t9r('mondayReminder', 'rappel_lundi', 'Rappel du résumé du lundi'),
+  t9r('voiceReminder', 'rappel_vocal', 'Rappel du vocal mensuel'),
   t9r('makerlogHook', 'makerlog_hook', 'Makerlog webhook', undefined, false),
   t9r('wipApiKey', 'wip_key', 'WIP clé API', undefined, false),
   t9r('avatarUrl', 'photo', 'Photo', undefined, false),
@@ -136,8 +140,6 @@ export const getUsersByUsername = async (
     return null
   }
 }
-export const getUserUrl = (user: User) =>
-  `https://indiemakers.fr/communaute/${encodeURI(user?.username)}`
 
 export const updateUser = async (
   userId: string,
@@ -157,6 +159,7 @@ export const updateUser = async (
       streak: 0,
       bestStreak: 0,
       taskReminder: 'true',
+      onboardingSend: false,
       mondayReminder: 'false',
       voiceReminder: 'false',
       incomes: 0,
@@ -177,66 +180,6 @@ export const updateUser = async (
       }
       base.username = userInfo.username
     }
-    await openChannel(base.userId).then(async (channel) => {
-      console.error('channel', channel)
-      await sendChannel(
-        channel.id,
-        `Bienvenue dans la communauté INDIE MAKERS ❤️`
-      )
-      await sendChannel(
-        channel.id,
-        `Ton profil est maintenant visible ici: ${getUserUrl(base)}`
-      )
-      await sendChannel(
-        channel.id,
-        `Prends 5 minutes pour te présenter sur le salon #00_presentation
-Tu peu utiliser ce modèle :`
-      )
-      await sendChannel(
-        channel.id,
-        `
-  Salut Les INDIE MAKERS! 🕉
-  Moi c'est XXX, j'ai XX ans et je viens de XX.
-  Dans la vie je suis XXX depuis XXX ans.
-  J'ai aussi plusieurs projets à côté, comme:
-  - XXX une app de XXX qui fait XXX de revenu
-  - XXX un site pour les XXX, pas de revenu
-  - XXX que j'ai abandonné car XXX
-  Je fais des projets dans le but de XXX.
-  Je vous ai rejoints dans le but de XXX.
-  Ravi d'etre parmi vous !`
-      )
-      await sendChannel(
-        channel.id,
-        `
-En suite Tu peux enrichir ton profil depuis la communauté avec la commande:
-  \`/im maker modifier nom:TON NOM\`
-Si tu souhaite voir la liste, des champs possibles:
-  \`/im maker aide\`
-N'oublie pas, pour ajouter un champ à une commande, utilise la touche TAB`
-      )
-      await sendChannel(
-        channel.id,
-        `
-Pense à donner du karma aux makers qui prennent le temps de t'aider !
-Tu peux le faire avec la commande \`/im karma donner maker:@martin \`
-    `
-      )
-      await sendChannel(
-        channel.id,
-        `Pour apprendre à m'utiliser (le bot) il y a une petite doc juste ici:
-https://indiemakers.gitbook.io/bot`
-      )
-      await sendChannel(
-        channel.id,
-        `voici un petit tuto vidéo pour te montrer :
-        https://www.youtube.com/watch?v=qrXN3Mai1Gw`
-      )
-      await sendChannel(
-        channel.id,
-        `Ps: n'attend pas de réponse je ne sais pas encore lire tes messages ici !`
-      )
-    })
     const newUser: User = Object.assign(base, user as User)
     await admin.firestore().collection('discord').doc(userId).set(newUser)
     return newUser

@@ -45,6 +45,24 @@ Ce moment est super important pour crée du lien entre tous les membres, n'hési
   )
 }
 
+const personalVocalReminder = async (users: User[]) => {
+  await Promise.all(
+    users.map((usr) => {
+      if (usr.taskReminder && usr.taskReminder === 'true' && usr.streak > 0) {
+        return openChannel(usr.userId).then((channel) => {
+          console.error('personalReminder', usr.userId)
+          return sendChannel(
+            channel.id,
+            `C'est l'heure de l'appel mensuel sur le general vocal ! Ne soit pas timide, c'est difficile pour tout le monde au debut, prend toi une biere met toi alaise et c'est parti !`
+          )
+        })
+      } else {
+        return Promise.resolve()
+      }
+    })
+  )
+}
+
 export const lateBot = async () => {
   const data = await getConfig()
   if (data) {
@@ -54,6 +72,13 @@ export const lateBot = async () => {
         "Hey Makers, il est temps de noter vos taches dans vos projets et d'aller chill !"
       )
       const users = await getAllUsers()
+      if (dayjs().day() === 1 && dayjs().date() < 8) {
+        await sendChannel(
+          data.channel_general,
+          `C'est l'heure de l'appel mensuel sur le general vocal ! 💪`
+        )
+        await personalVocalReminder(users)
+      }
       await personalTaskReminder(users)
     } catch (err) {
       console.error(err)
@@ -105,6 +130,13 @@ Continuez comme ça :`
         )
         await personalModayReminder(users)
         await updateIncomeAllProject()
+        if (dayjs().date() < 8) {
+          await sendChannel(
+            data.channel_general,
+            `Ce soir a 18h (UTC/GMT +1 heure) c'est l'appel mensuel sur le general vocal !
+Passe faire un tour et partager avec les autres makers !`
+          )
+        }
       }
     }
   } catch (err) {
