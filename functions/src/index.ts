@@ -193,7 +193,7 @@ export const onCreateDiscord = firestore
     const user = snapshot.data()
     if (user) {
       await onboardingMessage(user as any)
-      await admin.firestore().collection('discord').doc(uid).set({
+      await admin.firestore().collection('discord').doc(uid).update({
         onboardingSend: true,
       })
     }
@@ -208,7 +208,7 @@ export const onUpdateDiscord = firestore
       const user = snapshot.after.data()
       if (user && !user.onboardingSend) {
         await onboardingMessage(user as any)
-        await admin.firestore().collection('discord').doc(uid).set({
+        await admin.firestore().collection('discord').doc(uid).update({
           onboardingSend: true,
         })
       }
