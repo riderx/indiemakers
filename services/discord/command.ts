@@ -366,7 +366,14 @@ const makerOptions = [
   ),
   optionGen(
     'rappel_tache',
-    'Rappel de tache ',
+    "Rappel par message privée pour envoyer ses taches si aucune tache aujourd'hui",
+    SlashCommandOptionType.STRING,
+    false,
+    [choiceGen('Oui', 'true'), choiceGen('Non', 'false')]
+  ),
+  optionGen(
+    'rappel_lundi',
+    'Rappel par message privée pour faire son résumé de la semaine le lundi',
     SlashCommandOptionType.STRING,
     false,
     [choiceGen('Oui', 'true'), choiceGen('Non', 'false')]
