@@ -11,6 +11,8 @@ import project from '../api/project'
 import community from '../api/community'
 import ep from '../api/ep'
 import { lateBot, morningBot } from './discord/bot/schedule'
+// import { fixAllUsers } from './discord/fix_useraccount'
+// import { updateAllUsersNotif } from './maintenance/fix_usersnotif'
 
 dotenv.config()
 const app = express()
@@ -38,6 +40,8 @@ appRouter.get('/ep', ep)
 appRouter.all('/bot', bot)
 appRouter.get('/morning', morning)
 appRouter.get('/late', late)
+// appRouter.get('/fix_user', () => fixAllUsers())
+// appRouter.get('/update_user_notif', () => updateAllUsersNotif())
 appRouter.get('/', healthcheck)
 
 if (process.env.DEPLOY_API_ONLY) {

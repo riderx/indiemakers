@@ -3,19 +3,28 @@ import { getAllAllProject } from './project'
 import { updateIncomeAllProject } from './stripe'
 import { resetProjectStreak, resetUserStreak } from './tasks'
 import { getAllUsers, User, usersViewStreak } from './user'
-import { getConfig, openChannel, sendChannel } from './utils'
+import { getConfig, lastDay, lastWeek, openChannel, sendChannel } from './utils'
 
 const personalTaskReminder = async (users: User[]) => {
   await Promise.all(
     users.map((usr) => {
-      if (usr.taskReminder && usr.taskReminder === 'true' && usr.streak > 0) {
+      const lastTaskAt = dayjs(usr.lastTaskAt)
+      if (
+        usr.taskReminder &&
+        usr.taskReminder === 'true' &&
+        usr.streak > 0 &&
+        usr.lastTaskAt &&
+        lastTaskAt.isAfter(lastDay())
+      ) {
         return openChannel(usr.userId).then((channel) => {
           console.error('personalReminder', usr.userId)
           return sendChannel(
             channel.id,
-            `Tu as actuellement ${usr.streak} 🔥 !
-Si tu veux les conserver, fait une tache aujourd'hui sur tes projet même 10 min, ça compte !
-10 min * 365 jours = 60 heures sur ton projet a la fin de l'année ❤️`
+            `Tu as actuellement ${usr.streak} 🔥. Soit ${usr.streak} jours consécutif passé sur tes projets !
+Si tu veux les conserver, fait une tache aujourd'hui et poste la !
+Même 10 min, ça compte !
+10 min * 365 jours = 60 heures sur ton projet a la fin de l'année ❤️
+\`/im tache\` sur le channel construire en public`
           )
         })
       } else {
@@ -23,6 +32,37 @@ Si tu veux les conserver, fait une tache aujourd'hui sur tes projet même 10 min
       }
     })
   )
+}
+
+const personalFridayTaskReminder = async (users: User[]) => {
+  if (dayjs().day() === 5) {
+    await Promise.all(
+      users.map((usr) => {
+        const lastTaskAt = dayjs(usr.lastTaskAt)
+        if (
+          usr.taskReminder &&
+          usr.taskReminder === 'true' &&
+          usr.streak === 0 &&
+          usr.lastTaskAt &&
+          lastTaskAt.isBefore(lastWeek())
+        ) {
+          return openChannel(usr.userId).then((channel) => {
+            console.error('personalReminder', usr.userId)
+            return sendChannel(
+              channel.id,
+              `Cela fait plus d'une semaine que tu n'as pas posté de tache dans la communauté.
+N'oublie pas de partager ce que tu fait c'est essentiel pour béneficier de l'effets cummulée de la communauté !
+Chaque jour une petite tache crée l'habitude d'etre un maker !
+C'est cette habitude qui te feras atteindre tes objectifs !
+Lance toi : \`/im tache\` sur le channel construire en public`
+            )
+          })
+        } else {
+          return Promise.resolve()
+        }
+      })
+    )
+  }
 }
 
 const personalModayReminder = async (users: User[]) => {
@@ -80,6 +120,7 @@ export const lateBot = async () => {
         await personalVocalReminder(users)
       }
       await personalTaskReminder(users)
+      await personalFridayTaskReminder(users)
     } catch (err) {
       console.error(err)
     }

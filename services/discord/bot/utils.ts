@@ -248,6 +248,15 @@ export const lastDay = () => {
   return day
 }
 
+export const lastWeek = () => {
+  let day = dayjs()
+  day = day.set('hour', 0)
+  day = day.set('minute', 0)
+  day = day.set('second', 1)
+  day = day.subtract(7, 'day')
+  return day
+}
+
 export const getFields = (
   obj: object,
   publicFields: string[],
