@@ -46,6 +46,7 @@ export interface User {
   bio?: string
   twitter?: string
   github?: string
+  autoTranslate?: boolean
   makerlog?: string
   wip?: string
   nomadlist?: string
@@ -63,6 +64,7 @@ const userProtectedKey = [
   'userId',
   'username',
   'onboardingSend',
+  'autoTranslate',
   'karma',
   'avatar',
   'tasks',
@@ -160,7 +162,8 @@ export const updateUser = async (
       bestStreak: 0,
       taskReminder: 'true',
       onboardingSend: false,
-      mondayReminder: 'false',
+      mondayReminder: 'true',
+      autoTranslate: true,
       voiceReminder: 'false',
       incomes: 0,
       karma: 0,

@@ -5,6 +5,7 @@ import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
+import { initTranslate, frToEn } from '../translate'
 import {
   Langs,
   lastDay,
@@ -99,6 +100,14 @@ const createProjectTask = async (
         token
       )
     }
+    if (!task.content) {
+      return sendTxtLater(
+        `La tache n'as pas de contenue 😇`,
+        [],
+        applicationId,
+        token
+      )
+    }
     const done = task.status !== TaskStatus.TODO
     const lastTask = await getLastTask(user.userId, hashtag)
     if (lastTask) {
@@ -109,7 +118,10 @@ const createProjectTask = async (
     if (task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString()
     }
-    const taskWithHashtag = `${task.content} #${hashtag.toLowerCase()}`
+    if (user?.autoTranslate) initTranslate()
+    const taskWithHashtag = user?.autoTranslate
+      ? `${await frToEn(task.content)} #${hashtag.toLowerCase()}`
+      : `${task.content} #${hashtag.toLowerCase()}`
     if (user?.makerlogHook && task?.content) {
       task.makerlogHook = await sendToMakerlog(
         user.makerlogHook,
@@ -165,12 +177,22 @@ const updateProjectTask = async (
   task: Partial<Task>
 ): Promise<any> => {
   try {
+    const curTaskDoc = await getOneProjectsTaskDoc(userId, hashtag, taskId)
+    if (!curTaskDoc || !curTaskDoc?.exists) {
+      return null
+    }
+    const curTask = curTaskDoc.data() as Task
     const user = await getUsersById(userId)
     const done = task.status ? task.status !== TaskStatus.TODO : true
     if (task.status && task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString()
     }
-    const taskWithHashtag = `${task.content} #${hashtag.toLowerCase()}`
+    if (user?.autoTranslate) initTranslate()
+    const taskWithHashtag = user?.autoTranslate
+      ? `${await frToEn(
+          task.content || curTask.content
+        )} #${hashtag.toLowerCase()}`
+      : `${task.content} #${hashtag.toLowerCase()}`
     if (task?.makerlogHook && task?.content) {
       task.makerlogHook = await sendToMakerlog(
         task.makerlogHook,
@@ -186,22 +208,51 @@ const updateProjectTask = async (
         done
       )
     }
+    curTaskDoc.ref.update({ ...task, updatedAt: dayjs().toISOString() })
+    return curTask
   } catch (err) {
     console.error('updateProjectTask', err)
+    return null
   }
-  const snapshot = await admin
-    .firestore()
-    .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
-    .where('id', '==', parseInt(taskId))
-    .get()
-  let curTask
-  snapshot.forEach((doc) => {
-    // eslint-disable-next-line no-console
-    console.log('doc', doc.id)
-    curTask = doc.data()
-    doc.ref.update({ ...task, updatedAt: dayjs().toISOString() })
-  })
-  return curTask
+}
+
+export const getOneProjectsTaskDoc = async (
+  userId: string,
+  hashtag: string,
+  taskId: string
+): Promise<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData> | null> => {
+  try {
+    const snapshot = await admin
+      .firestore()
+      .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
+      .where('id', '==', parseInt(taskId))
+      .limit(1)
+      .get()
+    return snapshot.docs[0]
+  } catch (err) {
+    console.error('getProjectById', err)
+    return null
+  }
+}
+
+export const getOneProjectsTask = async (
+  userId: string,
+  hashtag: string,
+  taskId: string
+): Promise<Task | null> => {
+  try {
+    const snapshot = await admin
+      .firestore()
+      .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
+      .where('id', '==', parseInt(taskId))
+      .limit(1)
+      .get()
+    const curTask: Task = snapshot.docs[0].data() as Task
+    return curTask
+  } catch (err) {
+    console.error('getProjectById', err)
+    return null
+  }
 }
 
 export const getAllProjectsTasks = async (
@@ -396,14 +447,27 @@ const taskEdit = async (
   })
   // eslint-disable-next-line no-console
   console.log('updated task', task)
-  await updateProjectTask(userId, hashtag, taskId, task)
-  return sendTxtLater(
-    `La tache 💗: ${taskId}
-A été mise a jour dans le projet #${hashtag.toLowerCase()}, 🎉!`,
-    [],
-    interaction.application_id,
-    interaction.token
-  )
+  try {
+    const updated = await updateProjectTask(userId, hashtag, taskId, task)
+    if (!updated) {
+      return sendTxtLater(
+        `La tache 💗: ${taskId}
+N'exsite pas 🤯!`,
+        [],
+        interaction.application_id,
+        interaction.token
+      )
+    }
+    return sendTxtLater(
+      `La tache 💗: ${taskId}
+  A été mise a jour dans le projet #${hashtag.toLowerCase()}, 🎉!`,
+      [],
+      interaction.application_id,
+      interaction.token
+    )
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 const tasksView = async (

@@ -126,7 +126,7 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxt/image',
+    // '@nuxt/image',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -134,7 +134,7 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     'vue-warehouse/nuxt',
-    'nuxt-speedkit',
+    // 'nuxt-speedkit',
   ],
   speedkit: {
     detection: {
