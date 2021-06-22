@@ -56,11 +56,14 @@ export const fixAllUsers = async () => {
     for (let index = 0; index < documents.docs.length; index++) {
       const doc = documents.docs[index]
       if (doc.exists) {
+        // eslint-disable-next-line no-console
         console.log('doc.id', doc.id)
         const res = await updateUser(doc.id)
+        // eslint-disable-next-line no-console
         console.log('doc.id updated', doc.id, res)
       }
     }
+    // eslint-disable-next-line no-console
     console.log('updateUser done')
   } catch (err) {
     console.error('getAllUsers', err)

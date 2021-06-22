@@ -87,7 +87,8 @@ const bestKey = (url: string): string => {
   }
   return url
 }
-const shortURLPixel = (url: string): Promise<string> =>
+
+export const shortURLPixel = (url: string): Promise<string> =>
   new Promise((resolve) => {
     const key = bestKey(url)
     axios

@@ -4,6 +4,7 @@ import fFnit from '../firebase_init'
 // import { fixAllLink } from './fix_shorter'
 // import { fixAllUsers } from './fix_useraccount'
 // import { updateAllUsersNotif } from './update_users'
+// eslint-disable-next-line no-console
 console.log('init Firebase')
 dotenv.config()
 fFnit()
