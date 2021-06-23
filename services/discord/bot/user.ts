@@ -7,11 +7,11 @@ import {
 import {
   Embed,
   embed,
-  field,
   getFields,
   getUserData,
   getUserUrl,
   image,
+  l3s,
   Langs,
   lastDay,
   LName,
@@ -59,7 +59,26 @@ export interface User {
   createdAt: string
   updatedAt: string
 }
-const userPublicFlieds = ['karma', 'streak', 'tasks', 'projects', 'website']
+const userPublicFlieds = [
+  'karma',
+  'streak',
+  'tasks',
+  'projects',
+  'website',
+  'skills',
+  'twitter',
+  'wip',
+  'makerlog',
+  'nomadlist',
+  'cover',
+]
+const userConfidentialKey = [
+  'makerlogHook',
+  'wipApiKey',
+  'taskReminder',
+  'mondayReminder',
+  'voiceReminder',
+]
 const userProtectedKey = [
   'userId',
   'username',
@@ -95,11 +114,22 @@ export const getAllUsers = async (): Promise<User[]> => {
 const transforms: Langs[] = [
   t9r('color', 'couleur', 'Couleur'),
   t9r('name', 'nom', 'Nom'),
-  t9r('cover', 'couverture', 'Couverture'),
-  t9r('taskReminder', 'rappel_tache', 'Rappel journalier de tache'),
+  t9r(
+    'cover',
+    'couverture',
+    l3s('Couverture', (d) => (d ? 'Configuré' : 'Pas configuré'))
+  ),
+  t9r(
+    'taskReminder',
+    'rappel_tache',
+    l3s('Rappel journalier de tache', (d) => (d === 'true' ? 'Oui' : 'Non'))
+  ),
   t9r('mondayReminder', 'rappel_lundi', 'Rappel du résumé du lundi'),
   t9r('voiceReminder', 'rappel_vocal', 'Rappel du vocal mensuel'),
   t9r('makerlogHook', 'makerlog_hook', 'Makerlog webhook', undefined, false),
+  t9r('nomadlist', 'nomadlist', 'nomadlist', undefined, false),
+  t9r('wip', 'wip', 'wip.co', undefined, false),
+  t9r('makerlog', 'makerlog', 'getmakerlog.com', undefined, false),
   t9r('wipApiKey', 'wip_key', 'WIP clé API', undefined, false),
   t9r('avatarUrl', 'photo', 'Photo', undefined, false),
   t9r('website', 'website', 'Site web', undefined, false),
@@ -234,35 +264,6 @@ const userCard = (user: User) => {
   const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
   const bio = user.bio || 'Indie Maker en devenir !'
   const thumb = image(user.avatarUrl)
-  if (user.website) {
-    fields.push(field('website', user.website, false))
-  }
-  if (user.skills) {
-    fields.push(field('skills', user.skills, false))
-  }
-  if (user.twitter) {
-    fields.push(field('twitter', user.twitter, false))
-  }
-  if (user.wip) {
-    fields.push(field('wip', user.wip, false))
-  }
-  if (user.nomadlist) {
-    fields.push(field('nomadlist', user.nomadlist, false))
-  }
-  if (user.cover) {
-    fields.push(
-      field('cover', user.cover ? 'Configuré' : 'Pas configuré', false)
-    )
-  }
-  if (user.taskReminder) {
-    fields.push(
-      field(
-        'taskReminder',
-        user.taskReminder && user.taskReminder === 'true' ? 'Oui' : 'Non',
-        false
-      )
-    )
-  }
   return embed(
     name,
     bio,
@@ -361,12 +362,8 @@ const userView = async (
   } else if (user) {
     console.error('userView', userId)
     const card = userCard(user)
-    if (user.makerlogHook && card.fields) {
-      card.fields.push(field('Makerlog', String(user.makerlogHook), false))
-    }
-    if (user.wipApiKey && card.fields) {
-      card.fields.push(field('WIP', String(user.wipApiKey), false))
-    }
+    const fields = getFields(user, userConfidentialKey, transforms)
+    if (card.fields) card.fields.push(...fields)
     await sendTxtLater(
       'Voici tes infos',
       [userCard(user)],
