@@ -68,7 +68,7 @@ Lance toi : \`/im tache\` sur le channel construire en public`
 const personalModayReminder = async (users: User[]) => {
   await Promise.all(
     users.map((usr) => {
-      if (usr.taskReminder && usr.taskReminder === 'true' && usr.streak > 0) {
+      if (usr.taskReminder && usr.taskReminder === 'true') {
         return openChannel(usr.userId).then((channel) => {
           console.error('personalReminder', usr.userId)
           return sendChannel(
@@ -156,11 +156,6 @@ Continuez comme ça :`
           // console.error('card', card)
           await sendChannel(data.channel_bip, '', card)
         }
-      } else {
-        await sendChannel(
-          data.channel_bip,
-          `Hey Makers, Personne n'as shipper 🚤 cette semaine 😢 !`
-        )
       }
       if (dayjs().day() === 1) {
         await sendChannel(
