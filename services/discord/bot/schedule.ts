@@ -107,11 +107,14 @@ export const lateBot = async () => {
   const data = await getConfig()
   if (data) {
     try {
-      await sendChannel(
-        data.channel_bip,
-        "Hey Makers, il est temps de noter vos taches dans vos projets et d'aller chill !"
-      )
       const users = await getAllUsers()
+      const usersInfoCards = usersViewStreak(users)
+      if (usersInfoCards.length > 0) {
+        await sendChannel(
+          data.channel_bip,
+          "Hey Makers, il est temps de noter vos taches dans vos projets et d'aller chill !"
+        )
+      }
       if (dayjs().day() === 1 && dayjs().date() < 8) {
         await sendChannel(
           data.channel_general,
@@ -119,6 +122,7 @@ export const lateBot = async () => {
         )
         await personalVocalReminder(users)
       }
+
       await personalTaskReminder(users)
       await personalFridayTaskReminder(users)
     } catch (err) {
