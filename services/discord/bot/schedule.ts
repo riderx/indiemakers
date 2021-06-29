@@ -14,7 +14,7 @@ const personalTaskReminder = async (users: User[]) => {
         usr.taskReminder === 'true' &&
         usr.streak > 0 &&
         usr.lastTaskAt &&
-        lastTaskAt.isAfter(lastDay())
+        lastTaskAt.isBefore(lastDay())
       ) {
         return openChannel(usr.userId).then((channel) => {
           console.error('personalReminder', usr.userId)
