@@ -15,6 +15,7 @@
   },
   "main": "lib/functions/src/index.js",
   "dependencies": {
+    "@google-cloud/translate": "^6.2.4",
     "@types/dotenv": "^8.2.0",
     "@types/twitter": "^1.7.0",
     "await-semaphore": "^0.1.3",
