@@ -3,12 +3,13 @@ slug: comment-etre-mis-en-avant-sur-product-hunt
 title: Comment être mis en avant sur Product Hunt
 surtitle: ''
 subtitle: ''
+published: true
 description: Tout le monde rêve d'arriver à la première page de Product Hunt. C'est
   l'occasion de montrer ta création à des milliers de passionnés de technologie.
 type: Article
 headImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fproduct-hunt-books.jpg?alt=media&token=a749f1c7-c34b-4735-bdd4-cbbe64f895fe"
 readTime: 8 min
-date: 01 mai 2021
+date: 09 juillet 2021
 author: Martin Donadieu
 authorImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fprofil_martin.png?alt=media&token=845cecb1-7445-409d-8169-cc233f149071"
 
@@ -108,7 +109,7 @@ B) nous avons passé plus d'un an à participer activement à la communauté Pro
 
 Donner un upvote prend environ 1 seconde de ton temps, mais pour ce maker, cela signifie BEAUCOUP !
 
-Grâce à cet investissement dans la création de relations, les gens ont été heureux de nous aider lorsque nous avons partagé la page Product Hunt de OneUp sur Twitter.
+Grâce à cet investissement dans la création de relations, les gens ont été heureux de nous aider lorsque nous avons partagé la page Product Hunt de Naas sur Twitter.
 
 Ce qu'il faut retenir, c'est qu'il faut établir des relations authentiques et DONNER avant de DEMANDER.
 
