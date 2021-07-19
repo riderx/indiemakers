@@ -68,7 +68,7 @@ Lance toi : \`/im tache\` sur le channel construire en public`
 const personalModayReminder = async (users: User[]) => {
   await Promise.all(
     users.map((usr) => {
-      if (usr.taskReminder && usr.taskReminder === 'true') {
+      if (usr.mondayReminder && usr.mondayReminder === 'true') {
         return openChannel(usr.userId).then((channel) => {
           console.error('personalReminder', usr.userId)
           return sendChannel(
@@ -88,7 +88,7 @@ Ce moment est super important pour crée du lien entre tous les membres, n'hési
 const personalVocalReminder = async (users: User[]) => {
   await Promise.all(
     users.map((usr) => {
-      if (usr.taskReminder && usr.taskReminder === 'true' && usr.streak > 0) {
+      if (usr.voiceReminder && usr.voiceReminder === 'true') {
         return openChannel(usr.userId).then((channel) => {
           console.error('personalReminder', usr.userId)
           return sendChannel(
