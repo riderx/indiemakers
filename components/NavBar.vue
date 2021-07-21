@@ -75,8 +75,8 @@
               p-1
               text-base
               font-medium
-              text-orchid-200
-              hover:text-gray-900
+              text-orchid-300
+              hover:text-orchid-600
             "
           >
             {{ item.name }}

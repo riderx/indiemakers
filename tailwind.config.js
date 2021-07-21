@@ -10,12 +10,12 @@ module.exports = {
             a: {
               color: theme('colors.orchid.300'),
               '&:hover': {
-                color: theme('colors.orchid.100'),
+                color: theme('colors.orchid.600'),
               },
               strong: {
                 color: theme('colors.orchid.300'),
                 '&:hover': {
-                  color: theme('colors.orchid.100'),
+                  color: theme('colors.orchid.600'),
                 },
               },
             },
