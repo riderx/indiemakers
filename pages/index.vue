@@ -206,8 +206,10 @@ export default Vue.extend({
       const diffDays = Math.round(
         Math.abs((firstDate.getTime() - now.getTime()) / oneDay)
       )
-      const nextEp = 14 - (diffDays % 14)
-      return nextEp !== 14 ? `${nextEp} jours` : 'DEMAIN 10 heures'
+      // const epRepeat = 14
+      const epRepeat = 7
+      const nextEp = epRepeat - (diffDays % epRepeat)
+      return nextEp !== epRepeat ? `${nextEp} jours` : 'DEMAIN 10 heures'
     },
   },
 })
