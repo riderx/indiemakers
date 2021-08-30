@@ -23,6 +23,7 @@ import {
   transformVal,
 } from './utils'
 import { Project } from './project'
+import { Post } from './post'
 
 export interface User {
   userId: string
@@ -37,6 +38,7 @@ export interface User {
   bestStreak: number
   karma: number
   projects: number
+  posts: number
   incomes: number
   tasks: number
   emoji?: string
@@ -56,6 +58,7 @@ export interface User {
   makerlogHook?: string
   wipApiKey?: string
   projectsData?: Project[]
+  postsData?: Post[]
   createdAt: string
   updatedAt: string
 }
@@ -198,6 +201,7 @@ export const updateUser = async (
       incomes: 0,
       karma: 0,
       projects: 0,
+      posts: 0,
       tasks: 0,
       username: '',
       createdAt: dayjs().toISOString(),

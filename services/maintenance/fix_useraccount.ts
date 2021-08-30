@@ -27,6 +27,7 @@ export const updateUser = async (userId: string): Promise<User | undefined> => {
       incomes: 0,
       karma: 0,
       projects: 0,
+      posts: 0,
       tasks: 0,
       username: '',
       createdAt: dayjs().toISOString(),

@@ -128,6 +128,19 @@ const projetHashtag = optionGen(
   true
 )
 
+const projetHashtagOptional = optionGen(
+  'hashtag',
+  'Le hashtag de ton projet (nom sans espaces, ni majuscule)',
+  SlashCommandOptionType.STRING
+)
+
+const postId = optionGen(
+  'id',
+  'Identifiant unique du post',
+  SlashCommandOptionType.STRING,
+  true
+)
+
 const makerId = optionGen(
   'maker',
   'Le maker désiré',
@@ -432,6 +445,57 @@ const karma = optionGen(
   ]
 )
 
+const post = optionGen(
+  'post',
+  'gere tes post sur ton profil',
+  SlashCommandOptionType.SUB_COMMAND_GROUP,
+  undefined,
+  undefined,
+  [
+    optionGen(
+      'ajouter',
+      'Ajouter ton dernier message comme post sur ton profil ou sur un projet',
+      SlashCommandOptionType.SUB_COMMAND,
+      undefined,
+      undefined,
+      [projetHashtagOptional]
+    ),
+    optionGen(
+      'modifier',
+      'Modifie un post',
+      SlashCommandOptionType.SUB_COMMAND,
+      undefined,
+      undefined,
+      [postId]
+    ),
+    optionGen(
+      'supprimer',
+      'Supprime un post',
+      SlashCommandOptionType.SUB_COMMAND,
+      undefined,
+      undefined,
+      [postId]
+    ),
+    optionGen(
+      'liste',
+      "Voir la liste des posts d'un maker",
+      SlashCommandOptionType.SUB_COMMAND,
+      undefined,
+      undefined,
+      [makerIdOptional]
+    ),
+    optionGen(
+      'voir',
+      'Voir un seul post',
+      SlashCommandOptionType.SUB_COMMAND,
+      undefined,
+      undefined,
+      [postId, makerIdOptional]
+    ),
+    optionGen('aide', "Plus d'explication pour les posts", 1),
+  ]
+)
+
 const projet = optionGen(
   'projet',
   'Construit en public tes projets',
@@ -537,8 +601,9 @@ const jsonData = {
     karma,
     projet,
     tache,
-    income,
+    post,
     maker,
+    income,
     optionGen('doc', 'Lire la doc du bot', 1),
     // optionGen('login', 'se connecter sur le site', 1),
   ],

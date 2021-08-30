@@ -7,11 +7,16 @@ import { getAllProjectsIncomes } from '../../services/discord/bot/incomes'
 import { getAllProjectsTasks } from '../../services/discord/bot/tasks'
 import fFnit from '../../services/firebase_init'
 import { getAllUsers } from '../../services/discord/bot/user'
+import { getPostsByHash } from './../../services/discord/bot/post'
 
 const project = async (req: Request, res: Response) => {
   fFnit()
   if (req?.query?.hashtag) {
     const proj = await getProjectById(
+      String(req.query.uid),
+      String(req.query.hashtag)
+    )
+    const posts = await getPostsByHash(
       String(req.query.uid),
       String(req.query.hashtag)
     )
@@ -25,6 +30,7 @@ const project = async (req: Request, res: Response) => {
     )
     if (proj) {
       ;(proj as any).tasksData = tasks
+      ;(proj as any).postsData = posts
       ;(proj as any).incomesData = incomes
       ;(proj as any).stripeApiKey = !!proj.stripeApiKey
       res.json(proj)

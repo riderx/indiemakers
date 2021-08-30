@@ -4,6 +4,7 @@ import axios from 'axios'
 import { hexToDec } from 'hex2dec'
 import admin from 'firebase-admin'
 import dayjs from 'dayjs'
+import { APIMessage } from 'discord-api-types/v9'
 import { User } from './user'
 
 interface DiscorUser {
@@ -503,6 +504,74 @@ export const getConfig = async () => {
   const res = await admin.firestore().collection('bot').doc('config').get()
   const data = res.data()
   return data
+}
+
+export const getChannelMessages = async (
+  channelId: string
+): Promise<APIMessage[]> => {
+  const url = `https://discord.com/api/v8/channels/${channelId}/messages`
+  const data = (
+    await admin.firestore().collection('bot').doc('config').get()
+  ).data()
+  if (!data) {
+    return Promise.resolve([])
+  }
+
+  const headers = {
+    Authorization: `Bot ${
+      process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token
+    }`,
+  }
+  if (data.discordResetAfter && data.discordResetAfter > 0) {
+    console.error('Sleep a bit', data.discordResetAfter)
+    await sleep(data.discordResetAfter)
+  }
+  const res = await axios
+    .get(url, { headers })
+    .then(async (res) => {
+      if (
+        res?.headers['x-ratelimit-reset-after'] &&
+        !res?.headers['x-ratelimit-remaining']
+      ) {
+        await saveRateLimit(res.headers['x-ratelimit-reset-after'])
+      } else if (data.discordResetAfter && data.discordResetAfter > 0) {
+        await saveRateLimit(0)
+      }
+      return res.data
+    })
+    .catch(async (err) => {
+      if (err.response) {
+        if (err.response.headers['x-ratelimit-reset-after']) {
+          await saveRateLimit(err.response.headers['x-ratelimit-reset-after'])
+        }
+      }
+      return admin
+        .firestore()
+        .collection('errors')
+        .add({
+          function: 'getChannelMessages',
+          headers,
+          url,
+          error: JSON.stringify(err),
+        })
+        .then(() => err)
+    })
+  return res
+}
+
+export const getLastChannelMessage = async (
+  userId: string,
+  channelId: string
+): Promise<APIMessage | null> => {
+  let message: APIMessage | null = null
+  const messages = await getChannelMessages(channelId)
+  messages.sort((a, b) => (a.timestamp < b.timestamp === true ? 1 : -1))
+  messages.forEach((m) => {
+    if (m.author.id === userId) {
+      message = m
+    }
+  })
+  return message
 }
 
 export const sendChannel = async (

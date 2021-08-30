@@ -8,7 +8,6 @@ import { getStripeCharges, Charge } from './stripe'
 import {
   Embed,
   embed,
-  getConfig,
   getFields,
   image,
   openChannel,
@@ -216,70 +215,6 @@ export const updateProject = async (
   }
   await projDoc.ref.update({ ...project, updatedAt: dayjs().toISOString() })
   return projDoc.data() as Project
-}
-
-export const addProject = async (
-  interaction: Interaction,
-  userId: string,
-  newProj: Project
-): Promise<any> => {
-  const all: Promise<any>[] = []
-
-  await updateProject(userId, newProj.hashtag, newProj)
-  const allProj = await getAllProjects(userId)
-  const user = await updateUser(userId, { projects: allProj.length })
-  if (allProj.length === 1) {
-    all.push(
-      openChannel(userId).then((channel) => {
-        console.error('channel', channel)
-        return sendChannel(
-          channel.id,
-          `Ton premiers projet 🪴 !
-Tu peu maintenant remplir les informations de #${newProj.hashtag} avec:
-  \`/im projet modifier hashtag:${newProj.hashtag} nom:Mon super projet\`
-, fait:
-  \`/im projet aide\`
-pour voir les champs disponibles.
-Fait le sur le salon #01_construire_en_public .`
-        )
-      })
-    )
-    const data = await getConfig()
-    if (data) {
-      all.push(
-        sendChannel(
-          data.channel_general,
-          `Hey Makers, Donnez de la force 💪🏋️‍♂️ a <@${userId}>
-  il viens de crée son premier projet !`
-        )
-      )
-    }
-  } else {
-    all.push(
-      openChannel(userId).then((channel) => {
-        console.error('channel', channel)
-        return sendChannel(
-          channel.id,
-          `Rempli les informations de #${newProj.hashtag} 🪴 avec:
-  \`/im projet modifier hashtag:${newProj.hashtag} nom:Mon super projet\`
-, fait:
-  \`/im projet aide \`
-pour voir les champs disponibles.
-Fait le sur le salon #01_construire_en_public .`
-        )
-      })
-    )
-  }
-  all.push(
-    sendTxtLater(
-      `Tu as crée le projet: #${newProj.hashtag} 👏
-Tu peux voir tes projets sur ta page : ${getUserUrl(user)}`,
-      [],
-      interaction.application_id,
-      interaction.token
-    )
-  )
-  return Promise.all(all)
 }
 
 const deleteProject = (userId: string, hashtag: string): Promise<any> => {

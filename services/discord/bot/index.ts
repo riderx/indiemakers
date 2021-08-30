@@ -9,6 +9,7 @@ import { projectFn } from './project'
 import { sendTxtLater } from './utils'
 import { karmaFn } from './karma'
 import { taskFn } from './tasks'
+import { postFn } from './post'
 
 const im = async (
   interaction: Interaction,
@@ -29,6 +30,9 @@ const im = async (
       option.options.length > 0
     ) {
       return projectFn(interaction, option.options[0], senderId)
+    }
+    if (option.name === 'post' && option.options && option.options.length > 0) {
+      return postFn(interaction, option.options[0], senderId)
     }
     if (
       option.name === 'tache' &&

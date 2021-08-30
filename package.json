@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   },
   "scripts": {
     "dev": "nuxt",
@@ -12,9 +12,10 @@
     "generate": "nuxt generate",
     "analyze": "nuxt build --analyze",
     "api": "ts-node services/local",
-    "discord:config": "ts-node  services/discord/command.ts",
-    "maintenance": "ts-node  services/maintenance/index.ts",
-    "translate": "ts-node  services/discord/translate.ts",
+    "discord:config": "ts-node services/discord/command.ts",
+    "test": "ts-node services/test_imagekit.ts ",
+    "maintenance": "ts-node services/maintenance/index.ts",
+    "translate": "ts-node services/discord/translate.ts",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
     "lint": "npm run lint:js && npm run lint:style",
@@ -64,6 +65,7 @@
     "@types/linkifyjs": "^2.1.3",
     "@types/rss": "0.0.28",
     "babel-eslint": "^10.1.0",
+    "discord-api-types": "^0.22.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.27.0",
     "eslint-config-prettier": "^8.1.0",
