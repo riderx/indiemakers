@@ -403,9 +403,13 @@ export const postFn = (
   if (
     option.name === 'ajouter' &&
     option.options &&
-    option.options.length > 0
+    option.options.length > 0 &&
+    option.options[0].value
   ) {
     return postAdd(interaction, option.options[0].value, userId)
+  }
+  if (option.name === 'ajouter') {
+    return postAdd(interaction, undefined, userId)
   }
   if (
     option.name === 'modifier' &&
