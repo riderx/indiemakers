@@ -565,7 +565,7 @@ export const getLastChannelMessage = async (
 ): Promise<APIMessage | null> => {
   let message: APIMessage | null = null
   const messages = await getChannelMessages(channelId)
-  messages.sort((a, b) => (a.timestamp < b.timestamp === true ? 1 : -1))
+  messages.sort((a, b) => (a.timestamp > b.timestamp === true ? 1 : -1))
   messages.forEach((m) => {
     if (m.author.id === userId) {
       message = m

@@ -42,7 +42,7 @@ export const getAllPosts = async (userId: string): Promise<Post[]> => {
     for (let index = 0; index < documents.docs.length; index++) {
       const doc = documents.docs[index]
       const data = (await doc.data()) as Post
-      if (data !== undefined && data.hashtag && data.hashtag !== '') {
+      if (data !== undefined) {
         posts.push({ userId, id: Number(doc.id), ...(data as Post) })
       }
     }
@@ -252,7 +252,7 @@ const postAdd = async (
     getAllPosts(userId).then((allPost) =>
       updateUser(userId, { posts: allPost.length + 1 }).then((user) => {
         return sendTxtLater(
-          `Tu as crée le post: #${newPost.hashtag} 👏
+          `Tu as crée le post: #${newPost.id} 👏
     Tu peux voir tes posts sur ta page : ${getUserUrl(user)}`,
           [],
           interaction.application_id,
@@ -282,6 +282,8 @@ const postList = async (
 ): Promise<void> => {
   const cards: Embed[] = []
   const posts = await getAllPosts(userId)
+  // eslint-disable-next-line no-console
+  console.log(`userId ${userId}, posts ${posts}`)
   posts.forEach((post: Post) => {
     cards.push(postCard(post))
   })
@@ -448,7 +450,8 @@ export const postFn = (
     return sendTxtLater(
       `Voici ce que tu peux faire avec la commande post:
   - **ajouter** (ajouter ton dernier message sur le channel en tant que post public)
-    - hashtag: optionel (pas d'espace sans majuscules)
+    => Le markdown est utilisé pour formater le texte sur le site
+    - hashtag: optionel (pas d'espace sans majuscules) si tu met un hashtag, le bot va lier le post au projet correspondant
   - **modifier** (modifier un post avec ton dernier message sur le channel)
     - id: obligatoire
   - **supprimer** (supprimer un de tes posts)

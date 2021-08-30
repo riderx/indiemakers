@@ -454,7 +454,7 @@ const post = optionGen(
   [
     optionGen(
       'ajouter',
-      'Ajouter ton dernier message comme post sur ton profil ou sur un projet',
+      'Ajouter ton dernier message comme post',
       SlashCommandOptionType.SUB_COMMAND,
       undefined,
       undefined,
