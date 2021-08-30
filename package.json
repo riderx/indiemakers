@@ -33,7 +33,7 @@
     "@tailwindcss/typography": "^0.4.1",
     "await-semaphore": "^0.1.3",
     "axios": "^0.21.1",
-    "core-js": "^3.9.1",
+    "core-js": "^3.16.4",
     "dayjs": "1.10.6",
     "discord-interactions": "2.3.0",
     "firebase-admin": "9.11.1",
