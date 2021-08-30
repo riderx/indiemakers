@@ -5,6 +5,20 @@ import { User } from './discord/bot/user'
 import { Project } from './discord/bot/project'
 import { Person } from './types'
 
+export const discordPosts = ($config: NuxtConfig): Promise<User[]> => {
+  const url = `${$config.BASEAPI}/posts`
+  console.error('discordPosts', url)
+  return axios
+    .get(url)
+    .then((response) => {
+      return response.data
+    })
+    .catch((err) => {
+      console.error('discordPosts err', err)
+      return []
+    })
+}
+
 export const discordMakers = ($config: NuxtConfig): Promise<User[]> => {
   const url = `${$config.BASEAPI}/community`
   console.error('discordMakers', url)

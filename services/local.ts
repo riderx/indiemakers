@@ -7,6 +7,7 @@ import rss from '../api/rss'
 import healthcheck from '../api'
 import makershunt from '../api/makershunt'
 import maker from '../api/maker'
+import posts from '../api/posts'
 import project from '../api/project'
 import community from '../api/community'
 import ep from '../api/ep'
@@ -33,6 +34,7 @@ appRouter.get('/rss.xml', rss)
 appRouter.get('/makershunt', makershunt)
 appRouter.get('/community', community)
 appRouter.get('/maker', maker)
+appRouter.get('/posts', posts)
 appRouter.get('/project', project)
 appRouter.get('/ep', ep)
 appRouter.all('/bot', bot)
