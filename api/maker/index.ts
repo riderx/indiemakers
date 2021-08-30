@@ -9,7 +9,7 @@ const maker = async (req: Request, res: Response) => {
     fFnit()
     const user = await getUsersByUsername(String(req.query.id))
     const projects = await getAllProjects(String(user?.userId))
-    const posts = await getAllPosts(String(user?.userId))
+    const posts = user ? await getAllPosts(user) : []
     if (user) {
       user.projectsData = projects
       user.postsData = posts

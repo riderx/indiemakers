@@ -34,7 +34,7 @@ const bot = async (req: Request, res: Response) => {
     }
     if (
       req.body &&
-      req.body.type === InteractionType.COMMAND &&
+      req.body.type === InteractionType.APPLICATION_COMMAND &&
       req.body.data
     ) {
       await sendTxtLoading(res)

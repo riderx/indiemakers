@@ -19,6 +19,7 @@ export interface Post {
   id?: number
   userId?: string
   userName?: string
+  userAvatarUrl?: string
   text?: string
   createdAt: string
   updatedAt: string
@@ -30,11 +31,11 @@ export interface PostAll {
   total: number
 }
 
-export const getAllPosts = async (userId: string): Promise<Post[]> => {
+export const getAllPosts = async (user: Partial<User>): Promise<Post[]> => {
   try {
     const documents = await admin
       .firestore()
-      .collection(`discord/${userId}/posts`)
+      .collection(`discord/${user.userId}/posts`)
       .orderBy('id', 'desc')
       .get()
 
@@ -43,7 +44,13 @@ export const getAllPosts = async (userId: string): Promise<Post[]> => {
       const doc = documents.docs[index]
       const data = (await doc.data()) as Post
       if (data !== undefined) {
-        posts.push({ userId, id: Number(doc.id), ...(data as Post) })
+        posts.push({
+          userId: user.userId,
+          userName: user.name || user.username || '',
+          userAvatarUrl: user.avatarUrl || '',
+          id: Number(doc.id),
+          ...(data as Post),
+        })
       }
     }
     return posts
@@ -56,7 +63,7 @@ export const getAllPosts = async (userId: string): Promise<Post[]> => {
 export const getAllAllPosts = async (users: User[]): Promise<Post[]> => {
   const arrays: Post[][] = await Promise.all(
     users.map((usr: User) => {
-      return getAllPosts(String(usr?.userId))
+      return getAllPosts(usr)
     })
   )
   const posts: Post[] = arrays.reduce((a, b) => a.concat(b), [])
@@ -249,7 +256,7 @@ const postAdd = async (
   console.error('add post', newPost)
   return Promise.all([
     updatePost(userId, newPost.id, newPost),
-    getAllPosts(userId).then((allPost) =>
+    getAllPosts({ userId }).then((allPost) =>
       updateUser(userId, { posts: allPost.length + 1 }).then((user) => {
         return sendTxtLater(
           `Tu as crée le post: #${newPost.id} 👏
@@ -281,7 +288,7 @@ const postList = async (
   me = false
 ): Promise<void> => {
   const cards: Embed[] = []
-  const posts = await getAllPosts(userId)
+  const posts = await getAllPosts({ userId })
   // eslint-disable-next-line no-console
   console.log(`userId ${userId}, posts ${posts}`)
   posts.forEach((post: Post) => {
