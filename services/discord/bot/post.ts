@@ -196,12 +196,6 @@ const postEdit = async (
     )
   }
   update.text = lastMesssage.content
-  const lastPost = await getLastPost(userId)
-  if (lastPost) {
-    update.id = Number(lastPost.id) + 1
-  } else {
-    update.id = 0
-  }
   if (update.id) {
     console.error('postEdit', update)
     return Promise.all([

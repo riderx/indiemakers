@@ -466,7 +466,7 @@ const post = optionGen(
       SlashCommandOptionType.SUB_COMMAND,
       undefined,
       undefined,
-      [postId]
+      [postId, projetHashtagOptional]
     ),
     optionGen(
       'supprimer',
