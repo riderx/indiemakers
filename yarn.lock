@@ -2038,10 +2038,10 @@
   dependencies:
     "@types/unist" "*"
 
-"@types/hex2dec@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/@types/hex2dec/-/hex2dec-1.1.1.tgz"
-  integrity sha512-ErgrzyHUrUQrntnck45LHkoXKKNpqLRoy9NyiNlc4NVh93s5sJTTFJLqCd5tvr+TgImfC9XyJeWasdRrpDQQeA==
+"@types/hex2dec@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@types/hex2dec/-/hex2dec-1.1.2.tgz#de9418d7fdcd7fea8235f93a45e66291d42c7739"
+  integrity sha512-9mWQ0gKYWKybgC0UsW2ZwurhPYyCnO0ZmN7bnvxxk5m19PEydzums7ozq2p5f1pbV07IZ9qjR/IkGYpEIpXNoQ==
 
 "@types/html-minifier-terser@^5.0.0":
   version "5.1.1"
