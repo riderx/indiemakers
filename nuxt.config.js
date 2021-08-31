@@ -131,11 +131,15 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/markdownit',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     'vue-warehouse/nuxt',
     // 'nuxt-speedkit',
   ],
+  markdownit: {
+    runtime: true, // Support `$md()`
+  },
   speedkit: {
     detection: {
       performance: true,

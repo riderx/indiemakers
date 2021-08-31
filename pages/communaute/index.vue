@@ -1,43 +1,40 @@
 <template>
   <div>
-    <div class="mt-5 text-3xl text-center text-white font-indie">
-      La communauté :
-    </div>
-    <div class="flex flex-col justify-center w-full md:flex-row">
-      <LadderMakers v-if="loaded" :users="users" />
-      <LadderProject v-if="loaded" :projects="projects" />
-    </div>
-
-    <div class="flex w-full px-10 py-5 mx-auto text-white md:w-1/4">
-      <button
-        type="button"
-        class="
-          px-5
-          py-2
-          mx-auto
-          text-white
-          border-4 border-white
-          font-indie
-          hover:text-royalblue-700 hover:bg-white
-        "
-        @click="joinUs()"
-      >
-        👉 Rejoins nous
-      </button>
+    <div class="flex flex-wrap overflow-hidden">
+      <div class="w-full px-1 pt-1 overflow-hidden sm:pt-5 sm:px-5 sm:w-3/4">
+        <Posts v-if="loaded" class="bg-white" :posts="posts" />
+      </div>
+      <div class="w-full overflow-hidden sm:w-1/4">
+        <div class="flex flex-wrap overflow-hidden">
+          <div class="w-full overflow-hidden">
+            <JoinUs />
+          </div>
+          <div class="w-full overflow-hidden">
+            <LadderMakers v-if="loaded" :users="users" />
+          </div>
+          <div class="w-full overflow-hidden">
+            <LadderProject v-if="loaded" :projects="projects" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import { discordMakers, discordProjects } from '~/services/rss'
+import { discordMakers, discordProjects, discordPosts } from '~/services/rss'
+
 export default {
   components: {
+    JoinUs: () => import('~/components/JoinUs.vue'),
+    Posts: () => import('~/components/Posts.vue'),
     LadderMakers: () => import('~/components/LadderMakers.vue'),
     LadderProject: () => import('~/components/LadderProject.vue'),
   },
   async asyncData({ $config }) {
     const users = await discordMakers($config)
+    const posts = await discordPosts($config)
     const dataProj = await discordProjects($config)
-    return await { users, ...dataProj }
+    return await { users, posts, ...dataProj }
   },
   data() {
     return {

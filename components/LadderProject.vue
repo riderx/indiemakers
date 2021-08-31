@@ -1,6 +1,6 @@
 <template>
   <div class="w-full pt-5">
-    <div class="w-11/12 mx-auto mb-3 text-right text-white md:w-full lg:w-1/2">
+    <div class="w-11/12 w-full mx-auto mb-3 text-right text-white">
       <label for="sort-select">Top Projets par:</label>
       <select
         id="sort-select"
@@ -15,7 +15,7 @@
     </div>
     <div
       class="
-        w-11/12
+        w-11/12 w-full
         px-5
         py-5
         mx-auto
@@ -24,8 +24,6 @@
         bg-gray-50
         text-royalblue-700
         border-orchid-300
-        md:w-full
-        lg:w-1/2
         h-60
       "
     >
@@ -96,7 +94,7 @@ export default Vue.extend({
       }
       return {}
     },
-    openProject(id: string, hashtag: string) {
+    openProject(id: string | undefined, hashtag: string) {
       console.error(id, hashtag)
       // this.$router.push(`/communaute/maker/${encodeURI(id)}/projet/${hashtag}`)
     },
