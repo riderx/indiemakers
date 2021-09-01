@@ -2,13 +2,13 @@
 slug: top-5-des-endroits-ou-vivre-en-tant-que-maker-nomade
 title: Top 5 des endroits où vivre en tant que maker nomade
 surtitle: ''
-published: false
+published: true
 subtitle: ''
 description: ''
 type: Article
 headImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fpawel-janiak-foa_hz1bxii-unsplash.jpg?alt=media&token=7d112536-312a-4392-a31d-b066104c8b09"
 readTime: ''
-date: 2 mai 2021
+date: 1 septembre 2021
 author: Martin Donadieu
 authorImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fprofil_martin.png?alt=media&token=845cecb1-7445-409d-8169-cc233f149071"
 

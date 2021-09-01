@@ -60,7 +60,7 @@
                         <div class="text-sm">
                           <a
                             class="font-medium text-gray-900"
-                            @click="openProfil(post.userId)"
+                            @click="openProfil(post.userName)"
                             >{{ post.userName }}</a
                           >
                         </div>
