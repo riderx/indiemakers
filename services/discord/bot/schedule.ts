@@ -1,9 +1,11 @@
 import dayjs from 'dayjs'
+import { getAllUsers, getConfig } from '~/services/firebase/discord'
+import { User } from '~/services/types'
 import { getAllAllProject } from './project'
 import { updateIncomeAllProject } from './stripe'
 import { resetProjectStreak, resetUserStreak } from './tasks'
-import { getAllUsers, User, usersViewStreak } from './user'
-import { getConfig, lastDay, lastWeek, openChannel, sendChannel } from './utils'
+import { usersViewStreak } from './user'
+import { lastDay, lastWeek, openChannel, sendChannel } from './utils'
 
 const personalTaskReminder = async (users: User[]) => {
   await Promise.all(

@@ -1,6 +1,8 @@
 import { Request, Response } from 'express'
-import { Episode, feed } from '../../services/feed'
-import { run } from '../../services/firebase_func'
+import { firestore } from 'firebase-admin'
+import { Episode } from '~/services/types'
+import { feed } from '../../services/feed'
+import fFnit from '../../services/firebase/init'
 
 const findInEp = (name: string, episodes: Episode[]) => {
   let found = null
@@ -22,19 +24,22 @@ const findInEp = (name: string, episodes: Episode[]) => {
 
 const loadData = async () => {
   try {
-    const results = await run('getMakers')
-    if (results) {
-      const episodes = await feed()
-      return results.map((data: any) => {
-        if (data.login) {
-          data.guid = findInEp(data.login, episodes)
-        }
-        data.img = data.pic
-        return data
-      })
-    } else {
-      return []
-    }
+    const episodes = await feed()
+    const resultList = await firestore()
+      .collection('people')
+      .orderBy('votes', 'desc')
+      .orderBy('addDate', 'asc')
+      .get()
+      .then((querySnapshot) =>
+        querySnapshot.docs.map((doc: any) => {
+          if (doc.login) {
+            doc.guid = findInEp(doc.login, episodes)
+          }
+          doc.img = doc.pic
+          return Object.assign(doc.data(), { id: doc.id })
+        })
+      )
+    return resultList
   } catch (err) {
     console.error('loadData', err)
     return []
@@ -42,6 +47,7 @@ const loadData = async () => {
 }
 const maker = async (_req: Request, res: Response) => {
   try {
+    fFnit()
     const data = await loadData()
     return res.json(data)
   } catch (err) {

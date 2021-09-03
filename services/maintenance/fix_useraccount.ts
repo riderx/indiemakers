@@ -1,7 +1,7 @@
 import admin from 'firebase-admin'
 import dayjs from 'dayjs'
-import { User } from '../discord/bot/user'
-import { getUserData } from '../discord/bot/utils'
+import { getUserData } from '../firebase/discord'
+import { User } from '../types'
 
 export const updateUser = async (userId: string): Promise<User | undefined> => {
   try {

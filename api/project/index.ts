@@ -1,38 +1,39 @@
+import { getUsersByUsername, getAllUsers } from './../../services/firebase/discord';
 import { Request, Response } from 'express'
 import {
   getAllAllProject,
   getProjectById,
 } from '../../services/discord/bot/project'
 import { getAllProjectsIncomes } from '../../services/discord/bot/incomes'
-import { getAllProjectsTasks } from '../../services/discord/bot/tasks'
-import fFnit from '../../services/firebase_init'
-import { getAllUsers } from '../../services/discord/bot/user'
-import { getPostsByHash } from './../../services/discord/bot/post'
+import fFnit from '../../services/firebase/init'
+import { getPostsByHash } from '~/services/firebase/posts';
+import { getAllProjectsTasks } from '~/services/firebase/tasks';
 
 const project = async (req: Request, res: Response) => {
   fFnit()
   if (req?.query?.hashtag) {
+    const user = await getUsersByUsername(String(req.query.id))
     const proj = await getProjectById(
-      String(req.query.uid),
+      String(user?.userId),
       String(req.query.hashtag)
     )
     const posts = await getPostsByHash(
-      String(req.query.uid),
+      String(user?.userId),
       String(req.query.hashtag)
     )
     const tasks = await getAllProjectsTasks(
-      String(req.query.uid),
+      String(user?.userId),
       String(req.query.hashtag)
     )
     const incomes = await getAllProjectsIncomes(
-      String(req.query.uid),
+      String(user?.userId),
       String(req.query.hashtag)
     )
     if (proj) {
-      ;(proj as any).tasksData = tasks
-      ;(proj as any).postsData = posts
-      ;(proj as any).incomesData = incomes
-      ;(proj as any).stripeApiKey = !!proj.stripeApiKey
+      proj.tasksData = tasks
+      proj.postsData = posts
+      proj.incomesData = incomes
+      proj.isStripe = !!proj.stripeApiKey
       res.json(proj)
     } else {
       res.json({ error: 'not found' })
@@ -41,7 +42,7 @@ const project = async (req: Request, res: Response) => {
     try {
       const users = await getAllUsers()
       const projects = await getAllAllProject(users)
-      res.json({ projects })
+      res.json(projects)
     } catch (err) {
       res.json({ error: String(err) })
     }

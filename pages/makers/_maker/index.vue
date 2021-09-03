@@ -94,9 +94,12 @@
           🪴 {{ maker.projects }} Projets
         </h1>
         <div class="flex w-full overflow-x-scroll md:flex-col">
-          <div
+          <NuxtLink
             v-for="project in maker.projectsData"
             :key="project.hashtag"
+            :to="`/communaute/maker/${encodeURI(maker.username)}/projet/${
+              project.hashtag
+            }`"
             class="flex-none my-4 ml-3 cursor-pointer md:my-2 lg:my-4 md:ml-0"
             @click="hashtag = project.hashtag"
           >
@@ -130,9 +133,10 @@
                 >🔥{{ project.streak }}</span
               >
             </div>
-          </div>
+          </NuxtLink>
         </div>
       </div>
+      <NuxtChild />
       <div v-if="projectData && loadedProject" class="md:w-4/5 md:mx-2">
         <div
           class="
@@ -188,120 +192,86 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import { ref, onMounted } from '@vue/composition-api'
+import {
+  defineComponent,
+  useFetch,
+  useContext,
+  useRouter,
+  useRoute,
+  useMeta,
+} from '@nuxtjs/composition-api'
 import { discordMakerId, discordHashtag } from '~/services/rss'
-import { Project } from '~/services/discord/bot/project'
-import { User } from '~/services/discord/bot/user'
+import { createMeta } from '~/services/meta'
 
-export default Vue.extend({
-  components: {
-    ListTasks: () => import('~/components/ListTasks.vue'),
-    ListIncomes: () => import('~/components/ListIncomes.vue'),
-  },
-  async asyncData({ params, $config }) {
-    const maker = await discordMakerId($config, params.id)
-    if (maker && maker.projectsData && maker.projectsData.length > 0) {
-      return { maker, hashtag: maker.projectsData[0].hashtag }
-    }
-    return { maker, hashtag: null }
-  },
-  data() {
-    return {
-      noCover:
-        'https://res.cloudinary.com/forgr/image/upload/v1621191060/indiemakers/new_cover_fu6fcs.png',
-      noImge:
-        'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg',
-      maker: null as unknown as User,
-      projectData: null as unknown as Project,
-      hashtag: '',
-      loaded: false,
-      loadedProject: false,
-    }
-  },
-  head() {
-    return {
-      title: (this as any).maker.name || (this as any).maker.username,
-      meta: [
-        {
-          hid: 'og:url',
-          property: 'og:url',
-          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-        {
-          hid: 'title',
-          name: 'title',
-          content: (this as any).maker.name || (this as any).maker.username,
-        },
-        {
-          hid: 'description',
-          name: 'description',
-          content: (this as any).maker.bio || 'Indie Maker en devenir !',
-        },
-        {
-          hid: 'og:title',
-          property: 'og:title',
-          content: (this as any).maker.name || (this as any).maker.username,
-        },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: (this as any).maker.bio || 'Indie Maker en devenir !',
-        },
-        {
-          hid: 'og:image:alt',
-          property: 'og:image:alt',
-          content: (this as any).maker.name || (this as any).maker.username,
-        },
-        {
-          hid: 'og:image:type',
-          property: 'og:image:type',
-          content: 'image/jpg',
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: (this as any).maker.avatarUrl,
-        },
-        { hid: 'og:image:width', property: 'og:image:width', content: '300' },
-        { hid: 'og:image:height', property: 'og:image:height', content: '300' },
-      ],
-    }
-  },
-  watch: {
-    // whenever question changes, this function will run
-    hashtag(newId) {
-      this.getProject(newId)
-    },
-  },
-  mounted() {
-    this.getProject(this.hashtag)
-    this.loaded = true
-  },
-  methods: {
-    getBorderColor(color: string | undefined) {
-      if (color) {
-        return { 'border-color': `#${color}` }
+export default defineComponent({
+  setup() {
+    const { $config, params } = useContext()
+    const router = useRouter()
+    const route = useRoute()
+    const { title, meta } = useMeta()
+    const loaded = ref(false)
+    const loadedProject = ref(false)
+    const projectData = ref<Project>()
+    const maker = ref<User>()
+    const hashtag = ref<string>()
+    const noCover =
+      'https://res.cloudinary.com/forgr/image/upload/v1621191060/indiemakers/new_cover_fu6fcs.png'
+    const noImge =
+      'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
+    const { fetch } = useFetch(async () => {
+      const data = await discordMakerId($config, params.value.maker)
+      if (data && data.projectsData && data.projectsData.length > 0) {
+        maker.value = data
+        hashtag.value = data.projectsData[0].hashtag
+        getProject(hashtag.value)
+        loaded.value = true
       }
-      return {}
-    },
-    getTextColor(color: string | undefined) {
+    })
+    fetch()
+    if (maker.value) {
+      title.value = maker.value.name || maker.value.username
+      meta.value = createMeta(
+        `${$config.DOMAIN}${route.value.fullPath}`,
+        maker.value.name || maker.value.username,
+        maker.value.bio || 'Un jour je serais grand 👶!',
+        maker.value.cover || noImge
+      )
+    }
+    onMounted(() => {
+      loaded.value = true
+    })
+    const getTextColor = (color: string | undefined) => {
       if (color) {
         return { color: `#${color}` }
       }
       return {}
-    },
-    async getProject(hashtag: string): Promise<void> {
-      this.loadedProject = false
-      this.projectData = await discordHashtag(
-        this.$config,
-        this.maker.userId,
-        hashtag
-      )
-      this.loadedProject = true
-    },
-    goHome() {
-      this.$router.push('/communaute')
-    },
+    }
+    const getProject = async (hashtag: string): Promise<void> => {
+      if (maker.value) {
+        loadedProject.value = false
+        const proj = await discordHashtag($config, maker.value.userId, hashtag)
+        if (proj) {
+          projectData.value = proj
+          loadedProject.value = true
+        }
+      }
+    }
+    const goHome = () => {
+      router.push('/communaute')
+    }
+    return {
+      maker,
+      projectData,
+      loadedProject,
+      hashtag,
+      loaded,
+      noCover,
+      noImge,
+      goHome,
+      getTextColor,
+    }
   },
+  head: {},
 })
 </script>

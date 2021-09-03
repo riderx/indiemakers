@@ -64,44 +64,38 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import { User } from '~/services/discord/bot/user'
 
-export default Vue.extend({
-  name: 'LaderMakers',
+export default defineComponent({
   props: {
-    users: { type: Array, default: () => [] },
+    users: { type: Array as () => User[], default: () => [] },
   },
-  data() {
-    return {
-      sort: 'streak',
-      sorted: [] as User[],
-      noImge:
-        'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg',
-    }
-  },
-  watch: {
-    sort(newSort) {
-      this.sortAll(newSort)
-    },
-  },
-  mounted() {
-    this.sorted = [...(this.users as User[])]
-    this.sortAll(this.sort)
-  },
-  methods: {
-    sortAll(sort: string) {
-      this.sorted.sort((a, b) => (b as any)[sort] - (a as any)[sort])
-    },
-    getTextColor(color: string | undefined) {
+  setup({ users }) {
+    const router = useRouter()
+    const noImge =
+      'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
+    const sort = ref('karma')
+    const sorted = computed(() => {
+      return [...users].sort(
+        (a, b) => (b as any)[sort.value] - (a as any)[sort.value]
+      )
+    })
+    const getTextColor = (color: string | undefined) => {
       if (color) {
         return { color: `#${color}` }
       }
       return {}
-    },
-    openProfil(id: string) {
-      this.$router.push(`/communaute/${encodeURI(id)}`)
-    },
+    }
+    const openProfil = (id: string) => {
+      router.push(`/maker/${encodeURI(id)}`)
+    }
+    return { sort, sorted, getTextColor, openProfil, noImge }
   },
 })
 </script>

@@ -89,94 +89,47 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import Vue from 'vue'
 
-export default Vue.extend({
-  data() {
-    return {
-      email: '',
-      name: '',
-      loggin: null as any,
-      loading: true,
-      tools: [] as any[],
-      title: 'Mes outils quotidiens',
-      description:
-        "Voici les meilleurs outils que j'ai trouvé pour concretiser mes projets !",
-      submessage:
-        'Pour le moment seul mes outils qui ont un parrainage sont présents !',
-    }
-  },
-  head() {
-    return {
-      title: (this as any).title,
-      meta: [
-        {
-          hid: 'og:url',
-          property: 'og:url',
-          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-        { hid: 'title', name: 'title', content: (this as any).title },
-        {
-          hid: 'description',
-          name: 'description',
-          content: (this as any).desc,
-        },
-        { hid: 'og:title', property: 'og:title', content: (this as any).title },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: (this as any).desc,
-        },
-        {
-          hid: 'og:image:alt',
-          property: 'og:image:alt',
-          content: (this as any).title,
-        },
-        {
-          hid: 'og:image:type',
-          property: 'og:image:type',
-          content: 'image/png',
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
-        },
-        {
-          hid: 'og:image:secure_url',
-          property: 'og:image:secure_url',
-          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
-        },
-        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
-        { hid: 'og:image:height', property: 'og:image:height', content: 400 },
-      ],
-    }
-  },
-  mounted() {
-    this.email = this.$warehouse.get('emailForSignIn')
-    // this.loggin = fb.auth().currentUser
-    this.$firebase.auth.listen((user: any) => {
-      this.loggin = user
-      if (this.loggin && this.loggin.displayName === null) {
-        this.$modal.show('confirmName')
+<script lang="ts">
+import {
+  defineComponent,
+  useFetch,
+  useContext,
+  ref,
+  useRoute,
+  useMeta,
+} from '@nuxtjs/composition-api'
+import { createMeta } from '~/services/meta'
+import { getTools, Tool } from '~/services/tools'
+
+export default defineComponent({
+  setup() {
+    const { $config } = useContext()
+    const { title, meta } = useMeta()
+    const route = useRoute()
+    const loading = ref(false)
+    const tools = ref<Tool[]>([])
+
+    const description =
+      "Voici les meilleurs outils que j'ai trouvé pour concretiser mes projets !"
+    title.value = 'Mes outils quotidiens'
+    meta.value = createMeta(
+      `${$config.DOMAIN}${route.value.fullPath}`,
+      title.value,
+      description,
+      `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
+      null,
+      'Martin Donadieu'
+    )
+    const { fetch } = useFetch(async () => {
+      const toolsData = await getTools($config)
+      if (toolsData) {
+        tools.value = toolsData
+        loading.value = true
       }
     })
-    this.$firebase.db
-      .ref('tools')
-      .query()
-      .orderBy('votes', 'desc')
-      .orderBy('addDate', 'asc')
-      .run()
-      .then((results: any[]) => {
-        this.tools = results
-        this.loading = false
-      })
-  },
-  methods: {
-    openBlank(link: string) {
-      window.open(link, '_blank')
-    },
+    fetch()
+    return { title, tools, description, loading }
   },
 })
 </script>

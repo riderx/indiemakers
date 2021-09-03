@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import admin from 'firebase-admin'
-import { User } from '../discord/bot/user'
+import { User } from '../types'
 
 export const updateUser = async (
   userId: string

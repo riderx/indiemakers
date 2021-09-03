@@ -4,7 +4,7 @@ import {
   InteractionType,
   verifyKey,
 } from 'discord-interactions'
-import fFnit from '../../services/firebase_init'
+import fFnit from '../../services/firebase/init'
 import discordInteraction from '../../services/discord/bot'
 import { sendTxtLoading } from '../../services/discord/bot/utils'
 

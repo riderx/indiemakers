@@ -43,21 +43,21 @@
           >
             <div
               v-for="maker in makers"
-              :key="maker.id"
+              :key="maker.id_str"
               :class="
                 'w-full flex flex-wrap text-white border-b align-items-top ' +
-                maker.id
+                maker.id_str
               "
             >
               <ListItem
                 :title="maker.name"
                 :votes="maker.votes"
                 :name="maker.login"
-                :image="maker.img"
+                :image="maker.pic"
                 :preview="getTextLink(maker.bio)"
                 @voted="vote(maker)"
                 @name="open(linkTw(maker.login))"
-                @image="openImage(maker.guid, maker.login)"
+                @image="openImage(maker.id_str, maker.login)"
               />
             </div>
           </div>
@@ -147,108 +147,97 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import linkifyHtml from 'linkifyjs/html'
-import { makers } from '~/services/rss'
+import {
+  ref,
+  onMounted,
+  defineComponent,
+  useFetch,
+  useContext,
+  useRoute,
+  useRouter,
+  useMeta,
+} from '@nuxtjs/composition-api'
+import { makers as getMakers } from '~/services/rss'
+import { Person } from '~/services/types'
+import { createMeta } from '~/services/meta'
 
-export default {
+export interface UserInfo {
+  displayName: string | null
+  email: string | null
+  phoneNumber: string | null
+  photoURL: string | null
+  providerId: string
+  uid: string
+}
+
+export default defineComponent({
   components: {
     ListItem: () => import('~/components/ListItem.vue'),
   },
-  async asyncData({ $config }) {
-    const mkrs = await makers($config)
-    return { makers: mkrs }
-  },
-  data() {
-    return {
-      title: 'Les Makers Français les plus chaud 🔥',
-      message:
-        'Vote et ajoute tes MAKERS favoris, cela les insite a venir podcast !',
-      email: '',
-      guid: null,
-      isFalse: false,
-      user: false,
-      sizeHead: '100vh',
-      people: [],
-    }
-  },
-  head() {
-    return {
-      title: this.title,
-      meta: [
-        {
-          hid: 'og:url',
-          property: 'og:url',
-          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-        { hid: 'title', name: 'title', content: this.title },
-        { hid: 'description', name: 'description', content: this.message },
-        { hid: 'og:title', property: 'og:title', content: this.title },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: this.message,
-        },
-        { hid: 'og:image:alt', property: 'og:image:alt', content: this.title },
-        {
-          hid: 'og:image:type',
-          property: 'og:image:type',
-          content: 'image/png',
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
-        },
-        { hid: 'og:image:width', property: 'og:image:width', content: 400 },
-        { hid: 'og:image:height', property: 'og:image:height', content: 400 },
-      ],
-    }
-  },
-  mounted() {
-    this.setSizeHead()
-    this.$modal.show('loading')
-    this.$firebase.auth.listen((user) => {
-      this.$modal.hide('loading')
-      this.user = user
-      if (this.user && this.user.displayName === null) {
-        this.$modal.show('confirmName')
-      }
+  setup() {
+    const { $config, $firebase, $modal, $warehouse } = useContext()
+    const router = useRouter()
+    const route = useRoute()
+    const user = ref({} as UserInfo)
+    const sizeHead = ref('')
+    const guid = ref()
+    const message =
+      'Vote et ajoute tes MAKERS favoris, cela les insite a venir podcast !'
+    const { title, meta } = useMeta()
+    const makers = ref([] as Person[])
+    onMounted(() => {
+      setSizeHead()
+      $modal.show('loading')
+      $firebase.auth.listen((usr: UserInfo) => {
+        $modal.hide('loading')
+        user.value = usr
+        if (user.value && user.value.displayName === null) {
+          $modal.show('confirmName')
+        }
+      })
     })
-  },
-  methods: {
-    joinUs() {
-      this.$modal.show('join')
-    },
-    openImage(guid, login) {
-      if (guid) {
-        this.$warehouse.set('epFound', guid)
-        this.open(`/episode/${guid}`)
-      } else if (login) {
-        this.$warehouse.get('tweetMaker', login)
-        this.$modal.show('fail-open-ep')
+    const { fetch } = useFetch(async () => {
+      const mkr = await getMakers($config)
+      if (!mkr) {
+        return
       }
-    },
-    open(url) {
+      makers.value = mkr
+    })
+    fetch()
+    title.value = 'Les Makers Français les plus chaud 🔥'
+    meta.value = createMeta(
+      `${$config.DOMAIN}${route.value.fullPath}`,
+      title.value,
+      message,
+      'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
+    )
+    const linkTw = (login: string) => {
+      return `https://twitter.com/${login}`
+    }
+    const joinUs = () => {
+      $modal.show('join')
+    }
+    const openImage = (guid: string, login: string) => {
+      if (guid) {
+        $warehouse.set('epFound', guid)
+        open(`/episode/${guid}`)
+      } else if (login) {
+        $warehouse.get('tweetMaker', login)
+        $modal.show('fail-open-ep')
+      }
+    }
+    const open = (url: string) => {
       if (url && url.startsWith('http')) {
         window.open(url, '_blank')
       } else if (url && url.startsWith('/episode/')) {
-        this.$modal.show('found')
+        $modal.show('found')
       } else if (url) {
-        this.$router.push(url)
+        router.push(url)
       }
-    },
-    linkTw(login) {
-      return `https://twitter.com/${login}`
-    },
-    linkEp(guid, login) {
-      if (guid) {
-        this.$warehouse.set('epFound', guid)
-        return `/episode/${guid}`
-      }
-      return this.linkTw(login)
-    },
-    getTextLink(text) {
+    }
+    const getTextLink = (text: string) => {
       return linkifyHtml(text, {
         defaultProtocol: 'https',
         className: 'linkified',
@@ -272,76 +261,87 @@ export default {
         },
         validate: true,
       })
-    },
-    vote(person) {
-      if (!this.user) {
-        this.openRegister()
+    }
+    const vote = (person: Person) => {
+      if (!user.value) {
+        openRegister()
       } else {
-        this.$modal.show('loading')
-        this.$firebase.db
-          .ref(`people/${person.id}/votes/${this.user.uid}`)
+        $modal.show('loading')
+        $firebase.db
+          .ref(`people/${person.id_str}/votes/${user.value.uid}`)
           .set({
             date: Date(),
           })
           .then(() => {
-            this.$modal.hide('loading')
+            $modal.hide('loading')
             person.votes += 1
             setTimeout(() => {
-              if (person.guid) {
-                this.$warehouse.set('epFound', person.guid)
-                this.$modal.show('found')
+              if (person.id_str) {
+                $warehouse.set('epFound', person.id_str)
+                $modal.show('found')
               } else {
-                this.$warehouse.set('tweetMaker', person.login)
-                this.$modal.show('voted')
-                this.reload()
+                $warehouse.set('tweetMaker', person.login)
+                $modal.show('voted')
               }
             }, 50)
           })
-          .catch((error) => {
-            this.$modal.hide('loading')
+          .catch((error: any) => {
+            $modal.hide('loading')
             // eslint-disable-next-line no-console
             console.error('Error writing document: ', error)
-            if (person.guid) {
-              this.guid = person.guid
-              this.$modal.show('found')
+            if (person.id_str) {
+              guid.value = person.id_str
+              $modal.show('found')
             } else {
-              this.$warehouse.set('tweetMaker', person.login)
-              this.$modal.show('fail-vote')
+              $warehouse.set('tweetMaker', person.login)
+              $modal.show('fail-vote')
             }
           })
       }
-    },
-    openRegister() {
-      this.$modal.show('register')
-    },
-    openAdd() {
-      this.$modal.show('add')
-    },
-    showAddForm() {
-      if (!this.user) {
-        this.openRegister()
+    }
+    const openRegister = () => {
+      $modal.show('register')
+    }
+    const openAdd = () => {
+      $modal.show('add')
+    }
+    const showAddForm = () => {
+      if (!user.value) {
+        openRegister()
       } else {
-        this.openAdd()
+        openAdd()
       }
-    },
-    setSizeHead() {
+    }
+    const setSizeHead = () => {
+      const docHeaderMk = document.getElementById('header-mk')
+      const docHeader = document.getElementById('header')
+      const docContent = document.getElementById('content')
       if (
         process.client &&
-        document.getElementById('header-mk') &&
-        document.getElementById('header') &&
-        document.getElementById('content') &&
-        document.getElementById('content').offsetWidth !== window.innerWidth
+        docHeaderMk &&
+        docHeader &&
+        docContent &&
+        docContent.offsetWidth !== window.innerWidth
       ) {
         const size = `${
-          document.getElementById('header-mk').offsetHeight +
-          document.getElementById('header').offsetHeight +
-          5
+          docHeaderMk.offsetHeight + docHeader.offsetHeight + 5
         }px`
-        this.sizeHead = `calc(100vh - ${size})`
+        sizeHead.value = `calc(100vh - ${size})`
       } else {
-        this.sizeHead = 'auto'
+        sizeHead.value = 'auto'
       }
-    },
+    }
+    return {
+      makers,
+      linkTw,
+      joinUs,
+      title,
+      showAddForm,
+      vote,
+      getTextLink,
+      openImage,
+    }
   },
-}
+  head: {},
+})
 </script>

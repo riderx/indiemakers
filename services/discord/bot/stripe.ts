@@ -1,8 +1,9 @@
 import Stripe from 'stripe'
 import dayjs, { Dayjs } from 'dayjs'
-import { getAllUsers, User } from './user'
-import { getAllProjects, Project } from './project'
-import { getAllProjectsIncomes, Income, updateProjectIncome } from './incomes'
+import { getAllProjects } from './project'
+import { getAllProjectsIncomes, updateProjectIncome } from './incomes'
+import { Income, Project, User } from '~/services/types'
+import { getAllUsers } from '~/services/firebase/discord'
 
 // create restricted key here:https://dashboard.stripe.com/apikeys
 // with only charges read scope
@@ -95,7 +96,7 @@ export const getAllUsersAndProjects = async () => {
     const user = users[index]
     allUsers[user.userId] = {
       ...user,
-      projectsData: await getAllProjects(user.userId),
+      projectsData: await getAllProjects(user.userId, user.username),
     }
   }
   return allUsers

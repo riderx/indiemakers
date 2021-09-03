@@ -1,26 +1,15 @@
+import { User } from './../../types';
 import dayjs from 'dayjs'
 import admin from 'firebase-admin'
 import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
-import { getConfig, sendChannel, sendTxtLater } from './utils'
+import { sendChannel, sendTxtLater } from './utils'
 import { getAllProjects } from './project'
-import { updateUser, User } from './user'
+import { Income, IncomeAll } from '~/services/types'
+import { getConfig, updateUser } from '~/services/firebase/discord'
 
-export interface Income {
-  id?: string
-  ammount: number
-  stripeCharges?: Income[]
-  status: 'expense' | 'income'
-  date: string
-  createdAt?: string
-  updatedAt?: string
-}
-export interface IncomeAll {
-  incomes: Income[]
-  total: number
-}
 export const createProjectIncome = async (
   userId: string,
   hashtag: string,

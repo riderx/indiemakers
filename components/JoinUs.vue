@@ -37,14 +37,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from '@nuxtjs/composition-api'
 
-export default Vue.extend({
-  name: 'JoinUs',
-  methods: {
-    joinUs() {
+export default defineComponent({
+  setup() {
+    const joinUs = () => {
       window.open('https://discord.gg/GctKEcDpxk', '_blank')
-    },
+    }
+    return { joinUs }
   },
 })
 </script>

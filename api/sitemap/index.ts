@@ -1,10 +1,10 @@
+import { getAllUsers } from './../../services/firebase/discord';
 import { Request, Response } from 'express'
 import { SitemapStream, streamToPromise } from 'sitemap'
-import { getAllUsers } from '../../services/discord/bot/user'
+import { $content } from '@nuxt/content'
 // const func = require('../../plugins/firebase_func')
-import fFnit from '../../services/firebase_init'
-const { $content } = require('@nuxt/content')
-const util = require('../../services/feed')
+import fFnit from '../../services/firebase/init'
+import { feed } from '../../services/feed'
 
 const sitemap = async (_req: Request, res: Response) => {
   try {
@@ -15,7 +15,7 @@ const sitemap = async (_req: Request, res: Response) => {
     smStream.write({ url: '/makers', changefreq: 'daily', priority: 0.1 })
     smStream.write({ url: '/communaute', changefreq: 'daily', priority: 0.1 })
     smStream.write({ url: '/articles', changefreq: 'daily', priority: 1 })
-    const eps = await util.feed()
+    const eps = await feed()
     // const results = await func.run('getMakers')
     let prio = 1.0
 
@@ -60,3 +60,4 @@ const sitemap = async (_req: Request, res: Response) => {
 }
 
 export default sitemap
+

@@ -8,6 +8,7 @@ import healthcheck from '../api'
 import makershunt from '../api/makershunt'
 import maker from '../api/maker'
 import posts from '../api/posts'
+import tools from '../api/tools'
 import project from '../api/project'
 import community from '../api/community'
 import ep from '../api/ep'
@@ -32,6 +33,7 @@ appRouter.get('/feed', feed)
 appRouter.get('/sitemap.xml', sitemap)
 appRouter.get('/rss.xml', rss)
 appRouter.get('/makershunt', makershunt)
+appRouter.get('/tools', tools)
 appRouter.get('/community', community)
 appRouter.get('/maker', maker)
 appRouter.get('/posts', posts)
@@ -44,7 +46,7 @@ appRouter.get('/', healthcheck)
 
 if (process.env.DEPLOY_API_ONLY) {
   app.use('/api', appRouter)
-  app.use('/', (_req, res) => {
+  app.use('/', (_req: Request, res: Response) => {
     res.redirect('/api')
   })
 } else {

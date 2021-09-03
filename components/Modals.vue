@@ -1505,238 +1505,221 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  defineComponent,
+  ref,
+  useContext,
+  onMounted,
+  useRouter,
+} from '@nuxtjs/composition-api'
 
-export default Vue.extend({
-  name: 'Modals',
-  data() {
-    return {
-      user: null,
-      isFalse: false,
-      newMaker: null,
-      newName: null,
-      newEmail: null,
-    }
-  },
-  mounted() {
-    require('~/plugins/modal')
-    this.$firebase.auth.listen((user: any) => {
-      this.user = user
+export default defineComponent({
+  setup() {
+    const { $config, $warehouse, $modal, $firebase } = useContext()
+    const router = useRouter()
+    const user = ref(null)
+    const isFalse = ref(false)
+    const newMaker = ref(null)
+    const newName = ref(null)
+    const newEmail = ref(null)
+    onMounted(() => {
+      require('~/plugins/modal')
+      $firebase.auth.listen((usr: any) => {
+        user.value = usr
+      })
     })
-  },
-  methods: {
-    nextEp() {
-      const nextGuid = this.$warehouse.get('nextGuid')
+    const nextEp = () => {
+      const nextGuid = $warehouse.get('nextGuid')
       if (nextGuid) {
-        this.$warehouse.remove('nextGuid')
+        $warehouse.remove('nextGuid')
       }
-      this.$modal.hide('next-ep')
-      this.$modal.hide('random-ep')
-      this.$router.push(`/episode/${nextGuid}`)
-    },
-    rate() {
-      this.$modal.hide('rate')
+      $modal.hide('next-ep')
+      $modal.hide('random-ep')
+      router.push(`/episode/${nextGuid}`)
+    }
+    const rate = () => {
+      $modal.hide('rate')
       window.open('https://ratethispodcast.com/imf', '_blank')
-    },
-    bmc() {
-      window.open(
-        `https://www.buymeacoffee.com/${this.$config.handler}`,
-        '_blank'
-      )
-    },
-    copyTextToClipboard(text: string) {
-      if (!navigator.clipboard) {
-        this.fallbackCopyTextToClipboard(text)
-        return
-      }
-      navigator.clipboard.writeText(text).then(
-        () => {
-          // console.log("Async: Copying to clipboard was successful!");
-          this.$modal.hide('listen')
-          this.$modal.show('copied')
-        },
-        (err) => {
-          console.error('Async: Could not copy text: ', err)
-        }
-      )
-    },
-    fallbackCopyTextToClipboard(text: string) {
-      const textArea = document.createElement('textarea')
-      textArea.value = text
-      textArea.style.position = 'fixed' // avoid scrolling to bottom
-      document.body.appendChild(textArea)
-      textArea.focus()
-      textArea.select()
-      try {
-        if (!document.execCommand('copy')) {
-          console.error('unsuccessful')
-        } else {
-          this.$modal.hide('listen')
-          this.$modal.show('copied')
-        }
-      } catch (err) {
-        console.error('Fallback: Oops, unable to copy', err)
-      }
-      document.body.removeChild(textArea)
-    },
-    async joinDiscord() {
-      await this.addEMailSub('discord')
-      this.$modal.hide('discord')
+    }
+    const bmc = () => {
+      window.open(`https://www.buymeacoffee.com/${$config.handler}`, '_blank')
+    }
+    const joinDiscord = async () => {
+      await addEMailSub('discord')
+      $modal.hide('discord')
       window.open('https://discord.gg/GctKEcDpxk', '_blank')
-    },
-    addEMailSub(kind = 'email') {
-      return this.$firebase.db
-        .ref(`users/${this.newEmail}`)
+    }
+    const addEMailSub = (kind = 'email') => {
+      return $firebase.db
+        .ref(`users/${newEmail}`)
         .set({
           kind,
           created_at: new Date(),
-          first_name: this.newName,
-          email: this.newEmail,
+          first_name: newName,
+          email: newEmail,
         })
         .then(() => {
-          this.$warehouse.set('emailForNewletter', true)
-          this.$modal.hide('join')
+          $warehouse.set('emailForNewletter', true)
+          $modal.hide('join')
           if (kind === 'ebook') {
-            this.$modal.show('thanks_ebook')
+            $modal.show('thanks_ebook')
           } else {
-            this.$modal.show('thanks_register')
+            $modal.show('thanks_register')
           }
         })
-    },
-    addName() {
-      this.$modal.hide('confirmName')
-      this.$modal.show('loading')
-      if (this.user && this.user !== null) {
+    }
+    const addName = () => {
+      $modal.hide('confirmName')
+      $modal.show('loading')
+      if (user && user !== null) {
         ;(this as any).user
           .updateProfile({
-            displayName: this.newName,
+            displayName: newName,
           })
           .then(async () => {
             try {
-              await this.$firebase.db
-                .ref(`users/${(this as any).user.email}`)
-                .set({
-                  first_name: this.newName,
-                  email: (this as any).user.email,
-                })
+              await $firebase.db.ref(`users/${(this as any).user.email}`).set({
+                first_name: newName,
+                email: (this as any).user.email,
+              })
             } catch (err) {
               console.error('exist already', err)
             }
-            this.$modal.hide('loading')
-            const next = this.$warehouse.get('nextAfterSign')
+            $modal.hide('loading')
+            const next = $warehouse.get('nextAfterSign')
             if (next) {
-              this.$warehouse.remove('nextAfterSign')
+              $warehouse.remove('nextAfterSign')
             }
-            this.$router.push(next || '/makers')
+            router.push(next || '/makers')
           })
           .catch(() => {
-            this.$modal.hide('loading')
+            $modal.hide('loading')
           })
       }
-    },
-    listenExternal(url: string) {
+    }
+    const listenExternal = (url: string) => {
       window.open(url, '_blank')
-    },
-    openEp() {
-      const guid = this.$warehouse.get('epFound')
+    }
+    const openEp = () => {
+      const guid = $warehouse.get('epFound')
       if (guid) {
-        this.$warehouse.remove('epFound')
+        $warehouse.remove('epFound')
       }
-      this.$modal.hide('found')
-      this.$router.push(`/episode/${guid}`)
-    },
-    openRegister() {
-      this.$modal.show('register')
-    },
-    addMaker() {
-      this.$modal.hide('add')
-      this.$modal.show('loading')
-      if (!this.user) {
-        this.$modal.hide('loading')
-        this.openRegister()
+      $modal.hide('found')
+      router.push(`/episode/${guid}`)
+    }
+    const openRegister = () => {
+      $modal.show('register')
+    }
+    const addMaker = () => {
+      $modal.hide('add')
+      $modal.show('loading')
+      if (!user) {
+        $modal.hide('loading')
+        openRegister()
       } else {
-        this.$firebase
-          .func('addTwiterUser', { name: this.newMaker })
-          .then((addJson) => {
+        $firebase
+          .func('addTwiterUser', { name: newMaker })
+          .then((addJson: any) => {
             const added = addJson.data
-            this.$modal.hide('loading')
+            $modal.hide('loading')
             if (added.error && added.error === 'Already voted') {
-              this.$modal.show('fail-exist-vote')
+              $modal.show('fail-exist-vote')
             } else if (added.error) {
-              this.$modal.show('fail-add')
+              $modal.show('fail-add')
             } else if (added.done && added.done === 'Voted') {
-              this.$modal.show('fail-exist')
+              $modal.show('fail-exist')
             } else {
-              this.$modal.show('added')
+              $modal.show('added')
             }
           })
-          .catch((err) => {
-            this.$modal.hide('loading')
-            this.$modal.show('error')
+          .catch((err: string) => {
+            $modal.hide('loading')
+            $modal.show('error')
             console.error(err)
           })
       }
-    },
-    sendLogin() {
-      if (this.newEmail) {
-        this.$modal.hide('register')
-        this.$modal.show('loading')
+    }
+    const sendLogin = () => {
+      if (newEmail) {
+        $modal.hide('register')
+        $modal.show('loading')
         const loginPage = `${window.location.protocol}//${window.location.host}/login`
-        this.$firebase
-          .emailSigning(this.newEmail, loginPage)
+        $firebase
+          .emailSigning(newEmail, loginPage)
           .then(() => {
-            this.$warehouse.set('emailForSignIn', this.newEmail)
-            this.$warehouse.set('nextAfterSign', window.location.pathname)
-            this.$modal.hide('loading')
-            this.$modal.show('checkEmail')
+            $warehouse.set('emailForSignIn', newEmail)
+            $warehouse.set('nextAfterSign', window.location.pathname)
+            $modal.hide('loading')
+            $modal.show('checkEmail')
           })
           .catch((error: any) => {
-            this.$modal.hide('loading')
+            $modal.hide('loading')
             console.error(error)
           })
       }
-    },
-    tweetItHunt() {
-      const linkEp = 'https://indiemakers.fr/makers'
-      const tweet = `Je viens de découvrir les Makers Français les plus chaud sur ${linkEp} @${this.$config.handler}`
+    }
+    const tweetItHunt = () => {
+      const linkEp = 'https://indiemakers.fr/makershunt'
+      const tweet = `Je viens de découvrir les Makers Français les plus chaud sur ${linkEp} @${$config.handler}`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`
       window.open(tweetLink, '_blank')
-      this.$modal.hide('share_hunt')
-    },
-    tweetItMaker() {
-      const maker = this.$warehouse.get('tweetMaker')
+      $modal.hide('share_hunt')
+    }
+    const tweetItMaker = () => {
+      const maker = $warehouse.get('tweetMaker')
       if (maker) {
-        this.$warehouse.remove('tweetMaker')
+        $warehouse.remove('tweetMaker')
       }
-      const linkPage = `${this.$config.DOMAIN}/makers_hunt`
-      const tweet = `@${maker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${this.$config.handler} 🚀`
+      const linkPage = `${$config.DOMAIN}/makers_hunt`
+      const tweet = `@${maker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${$config.handler} 🚀`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`
       window.open(tweetLink, '_blank')
-      this.$modal.hide('added')
-      this.$modal.hide('voted')
-    },
-    tweetIt() {
-      const maker = this.$warehouse.get('tweetMaker')
-      const epGui = this.$warehouse.get('epGui')
+      $modal.hide('added')
+      $modal.hide('voted')
+    }
+    const tweetIt = () => {
+      const maker = $warehouse.get('tweetMaker')
+      const epGui = $warehouse.get('epGui')
       if (maker) {
-        this.$warehouse.remove('tweetMaker')
+        $warehouse.remove('tweetMaker')
       }
       if (epGui) {
-        this.$warehouse.remove('epGui')
+        $warehouse.remove('epGui')
       }
-      const linkEp = `${this.$config.DOMAIN}/episode/${epGui}`
-      const tweet = `@${this.$config.handler} et @${maker} merci pour le podcast ${linkEp} <3`
+      const linkEp = `${$config.DOMAIN}/episode/${epGui}`
+      const tweet = `@${$config.handler} et @${maker} merci pour le podcast ${linkEp} <3`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
         tweet
       )}`
       window.open(tweetLink, '_blank')
-      this.$modal.hide('added')
-      this.$modal.hide('voted')
-    },
+      $modal.hide('added')
+      $modal.hide('voted')
+    }
+    return {
+      user,
+      isFalse,
+      newMaker,
+      newName,
+      newEmail,
+      tweetIt,
+      tweetItMaker,
+      tweetItHunt,
+      listenExternal,
+      openEp,
+      addMaker,
+      bmc,
+      rate,
+      sendLogin,
+      addName,
+      joinDiscord,
+      addEMailSub,
+      nextEp,
+    }
   },
 })
 </script>

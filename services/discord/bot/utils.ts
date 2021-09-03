@@ -1,52 +1,12 @@
+import { sendError } from './../../firebase/error';
 import { InteractionResponseType } from 'discord-interactions'
 import { Response as Res } from 'express'
 import axios from 'axios'
 import { hexToDec } from 'hex2dec'
-import admin from 'firebase-admin'
 import dayjs from 'dayjs'
 import { APIMessage } from 'discord-api-types/v9'
-import { User } from './user'
-
-interface DiscorUser {
-  avatar: string
-  username: string
-}
-export interface Field {
-  name: string
-  value: string
-  inline: boolean
-}
-interface Author {
-  name: string
-  url?: string
-  // eslint-disable-next-line camelcase
-  icon_url?: string
-}
-interface Footer {
-  text: string
-  // eslint-disable-next-line camelcase
-  icon_url: string
-}
-
-interface Image {
-  url: string
-}
-export interface Embed {
-  title?: string
-  description?: string
-  url?: string
-  color?: string
-  fields?: Field[]
-  author?: Author
-  footer?: Footer
-  timestamp?: string
-  thumbnail?: Image
-  image?: Image
-}
-interface DiscordMessage {
-  content: string
-  embeds?: Embed[]
-}
+import { Footer, Author, Field, Embed, DiscordMessage, User, Image } from '~/services/types'
+import { getConfig, saveRateLimit } from '~/services/firebase/discord';
 
 export const image = (url: string): Image => ({ url })
 // eslint-disable-next-line camelcase
@@ -115,30 +75,6 @@ export const sendTxt = (res: Res, text: string): Res =>
       content: text,
     },
   })
-
-export const getUserData = async (
-  userId: string
-): Promise<DiscorUser | undefined> => {
-  const url = `https://discord.com/api/v8/users/${userId}`
-  const data = (
-    await admin.firestore().collection('bot').doc('config').get()
-  ).data()
-  if (!data) {
-    return Promise.resolve(undefined)
-  }
-  const headers = {
-    Authorization: `Bot ${
-      process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.bot_token
-    }`,
-  }
-  try {
-    const res = await axios.get(url, { headers })
-    return Promise.resolve(res.data as DiscorUser)
-  } catch (err) {
-    console.error('getUserData', err)
-    return Promise.resolve(undefined)
-  }
-}
 
 export const sendTxtLoading = (res: Res): Res =>
   res.send({
@@ -292,7 +228,7 @@ export const sendTxtLater = async (
   try {
     const res = await axios.patch(url, body)
     return res.data
-  } catch (err) {
+  } catch (err: any) {
     if (err.response) {
       // Request made and server responded
       console.error('sendTxtLater response', err.response.data)
@@ -314,26 +250,15 @@ export const sendTxtLater = async (
       .patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
       .catch((errErr) => {
         console.error('sendTxtLaterFallback', err.response, errErr.response)
-        return admin
-          .firestore()
-          .collection('errors')
-          .add(err)
-          .then(() => err)
+        return sendError(err)
       })
-    await admin
-      .firestore()
-      .collection('errors')
-      .add({ function: 'sendTxtLater', url, error: JSON.stringify(err) })
-      .then(() => err)
-    return res
+    return sendError({ function: 'sendTxtLater', url, error: JSON.stringify(err) })
   }
 }
 
 export const openChannel = async (userId: string): Promise<any> => {
   const url = 'https://discord.com/api/v8/users/@me/channels'
-  const data = (
-    await admin.firestore().collection('bot').doc('config').get()
-  ).data()
+  const data = await getConfig()
   if (!data) {
     return Promise.resolve(undefined)
   }
@@ -365,17 +290,13 @@ export const openChannel = async (userId: string): Promise<any> => {
           await saveRateLimit(err.response.headers['x-ratelimit-reset-after'])
         }
       }
-      return admin
-        .firestore()
-        .collection('errors')
-        .add({
+      return sendError({
           function: 'openChannel',
           headers,
           userId,
           url,
           error: JSON.stringify(err),
         })
-        .then(() => err)
     })
   return res
 }
@@ -489,30 +410,11 @@ https://indiemakers.gitbook.io/bot
   })
 }
 
-const saveRateLimit = (limit: string | number) => {
-  console.error('sendChannel x-ratelimit-reset-after', limit)
-  return admin
-    .firestore()
-    .collection('bot')
-    .doc('config')
-    .update({
-      discordResetAfter: Number(limit) * 1000,
-    })
-}
-
-export const getConfig = async () => {
-  const res = await admin.firestore().collection('bot').doc('config').get()
-  const data = res.data()
-  return data
-}
-
 export const getChannelMessages = async (
   channelId: string
 ): Promise<APIMessage[]> => {
   const url = `https://discord.com/api/v8/channels/${channelId}/messages`
-  const data = (
-    await admin.firestore().collection('bot').doc('config').get()
-  ).data()
+  const data = await getConfig()
   if (!data) {
     return Promise.resolve([])
   }
@@ -545,16 +447,12 @@ export const getChannelMessages = async (
           await saveRateLimit(err.response.headers['x-ratelimit-reset-after'])
         }
       }
-      return admin
-        .firestore()
-        .collection('errors')
-        .add({
+      return sendError({
           function: 'getChannelMessages',
           headers,
           url,
           error: JSON.stringify(err),
         })
-        .then(() => err)
     })
   return res
 }
@@ -580,9 +478,7 @@ export const sendChannel = async (
   embed: Embed | undefined = undefined
 ): Promise<any> => {
   const url = `https://discord.com/api/v8/channels/${channelId}/messages`
-  const data = (
-    await admin.firestore().collection('bot').doc('config').get()
-  ).data()
+  const data = await getConfig()
   if (!data) {
     return Promise.resolve(undefined)
   }
@@ -619,17 +515,13 @@ export const sendChannel = async (
           await saveRateLimit(err.response.headers['x-ratelimit-reset-after'])
         }
       }
-      return admin
-        .firestore()
-        .collection('errors')
-        .add({
+      return sendError({
           function: 'sendChannel',
           headers,
           body,
           url,
           error: JSON.stringify(err),
         })
-        .then(() => err)
     })
   return res
 }

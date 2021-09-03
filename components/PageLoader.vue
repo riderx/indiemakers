@@ -73,13 +73,17 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: 'Loader',
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   props: {
     show: {
       type: Boolean,
       required: true,
     },
   },
-}
+  setup() {
+    return {}
+  },
+})
 </script>

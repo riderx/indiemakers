@@ -60,7 +60,8 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from '@nuxtjs/composition-api'
+export default defineComponent({
   name: 'ListItem',
   props: {
     title: { type: String, default: null },
@@ -70,8 +71,7 @@ export default {
     votes: { type: Number, default: null },
     preview: { type: String, default: null },
   },
-  methods: {},
-}
+})
 </script>
 
 <style scoped>

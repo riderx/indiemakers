@@ -30,8 +30,8 @@
       <div
         v-for="project in sorted"
         :key="project.hashtag"
-        class="flex py-3 border-b-2 border-orchid-300"
-        @click="openProject(project.userId, project.hashtag)"
+        class="flex py-3 border-b-2 cursor-pointer border-orchid-300"
+        @click="openProject(project.userName, project.hashtag)"
       >
         <img
           class="object-cover w-12 h-12 border-2 rounded-full border-orchid-300"
@@ -60,44 +60,38 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import { Project } from '~/services/discord/bot/project'
-export default Vue.extend({
-  name: 'LaderProject',
+
+export default defineComponent({
   props: {
-    projects: { type: Array, default: () => [] },
+    projects: { type: Array as () => Project[], default: () => [] },
   },
-  data() {
-    return {
-      sort: 'streak',
-      sorted: [] as Project[],
-      noImge:
-        'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg',
-    }
-  },
-  watch: {
-    sort(newSort) {
-      this.sortAll(newSort)
-    },
-  },
-  mounted() {
-    this.sorted = [...(this.projects as Project[])]
-    this.sortAll(this.sort)
-  },
-  methods: {
-    sortAll(sort: string) {
-      this.sorted.sort((a, b) => (b as any)[sort] - (a as any)[sort])
-    },
-    getTextColor(color: string | undefined) {
+  setup({ projects }) {
+    const router = useRouter()
+    const noImge =
+      'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
+    const sort = ref('tasks')
+    const sorted = computed(() => {
+      return [...projects].sort(
+        (a, b) => (b as any)[sort.value] - (a as any)[sort.value]
+      )
+    })
+    const getTextColor = (color: string | undefined) => {
       if (color) {
         return { color: `#${color}` }
       }
       return {}
-    },
-    openProject(id: string | undefined, hashtag: string) {
-      console.error(id, hashtag)
-      // this.$router.push(`/communaute/maker/${encodeURI(id)}/projet/${hashtag}`)
-    },
+    }
+    const openProject = (id: string | undefined, hashtag: string) => {
+      if (id) router.push(`/makers/${encodeURI(id)}/projet/${hashtag}`)
+    }
+    return { sort, sorted, getTextColor, openProject, noImge }
   },
 })
 </script>

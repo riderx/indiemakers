@@ -31,32 +31,19 @@ const emailSigning = (email: string, url: string): any => {
   })
   return authRedir.sendOobCode('EMAIL_SIGNIN', email)
 }
-
-declare module 'vue/types/vue' {
-  interface Vue {
-    $firebase: {
-      // eslint-disable-next-line no-unused-vars
-      auth: any
-      db: Database
-      // eslint-disable-next-line no-unused-vars
-      func(key: string, data: object): Promise<AxiosResponse<any>>
-      emailSigning: any
-    }
-  }
+interface CustomFire {
+  // eslint-disable-next-line no-unused-vars
+  auth: any
+  db: Database
+  // eslint-disable-next-line no-unused-vars
+  func(key: string, data: object): Promise<AxiosResponse<any>>
+  emailSigning: any
 }
-// declare module 'vue/types/options' {
-//   interface ComponentOptions<V extends Vue> {
-//     metaInfo?: MetaInfo | MetaInfoComputed
-//   }
-// }
 
-declare module 'vue/types/vue' {
-  interface VueConstructor {
+declare module '@nuxt/types' {
+  interface Context {
     $warehouse: WarehouseStoreAPI
-  }
-
-  interface Vue {
-    $warehouse: WarehouseStoreAPI
+    $firebase: CustomFire
   }
 }
 

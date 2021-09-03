@@ -83,73 +83,48 @@
   </div>
 </template>
 
-<script>
-export default {
-  async asyncData({ $content }) {
-    const articles = await $content('articles')
-      .where({ published: true })
-      .sortBy('order')
-      .fetch()
+<script lang="ts">
+import { ref } from '@vue/composition-api'
+import {
+  defineComponent,
+  useFetch,
+  useContext,
+  useRoute,
+  useMeta,
+} from '@nuxtjs/composition-api'
+import { createMeta } from '~/services/meta'
 
+export default defineComponent({
+  setup() {
+    const { $content, $config } = useContext()
+    const route = useRoute()
+    const { title, meta } = useMeta()
+    const articles = ref([])
+    const blogImage =
+      'https://res.cloudinary.com/forgr/image/upload/v1621019063/indiemakers/blog_li7d4i.svg'
+    const description =
+      "Chaque semaine un maker du discord est désigné pour ecrire un article sur son projet, partager ses avancée, ou enrichir l'univer indie !"
+    const { fetch } = useFetch(async () => {
+      const data = await $content('articles')
+        .where({ published: true })
+        .sortBy('order')
+        .fetch()
+      articles.value = data
+    })
+    fetch()
+    title.value = 'Les articles indie !'
+    meta.value = createMeta(
+      `${$config.DOMAIN}${route.value.fullPath}`,
+      title.value,
+      description,
+      `${$config.DOMAIN}${blogImage}`
+    )
     return {
+      title,
+      description,
       articles,
     }
   },
-  data() {
-    return {
-      blogImage:
-        'https://res.cloudinary.com/forgr/image/upload/v1621019063/indiemakers/blog_li7d4i.svg',
-      title: 'Les articles indie !',
-      description:
-        "Chaque semaine un maker du discord est désigné pour ecrire un article sur son projet, partager ses avancée, ou enrichir l'univer indie !",
-    }
-  },
-  head() {
-    return {
-      title: this.title,
-      meta: [
-        {
-          hid: 'og:url',
-          property: 'og:url',
-          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-        { hid: 'title', name: 'title', content: this.title },
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.description,
-        },
-        { hid: 'twitter:title', name: 'twitter:title', content: this.title },
-        {
-          hid: 'twitter:description',
-          name: 'twitter:description',
-          content: this.description,
-        },
-        { hid: 'og:title', property: 'og:title', content: this.title },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: this.description,
-        },
-        {
-          hid: 'og:image:alt',
-          property: 'og:image:alt',
-          content: this.title,
-        },
-        {
-          hid: 'og:image:type',
-          property: 'og:image:type',
-          content: 'image/jpg',
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: `${this.$config.DOMAIN}${this.blogImage}`,
-        },
-        { hid: 'og:image:width', property: 'og:image:width', content: 300 },
-        { hid: 'og:image:height', property: 'og:image:height', content: 300 },
-      ],
-    }
-  },
-}
+  head: {},
+})
 </script>

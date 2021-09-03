@@ -1,14 +1,13 @@
 import dayjs from 'dayjs'
-import admin from 'firebase-admin'
+import { updateUser, getAllUsers, getUsersById } from '~/services/firebase/discord'
+import { User, Embed } from '~/services/types'
 import {
   ApplicationCommandInteractionDataOption,
   Interaction,
 } from '../command'
 import {
-  Embed,
   embed,
   getFields,
-  getUserData,
   getUserUrl,
   image,
   l3s,
@@ -22,46 +21,7 @@ import {
   transformKey,
   transformVal,
 } from './utils'
-import { Project } from './project'
-import { Post } from './post'
 
-export interface User {
-  userId: string
-  avatar: string
-  username: string
-  avatarUrl: string
-  onboardingSend: boolean
-  taskReminder: string
-  mondayReminder: string
-  voiceReminder: string
-  streak: number
-  bestStreak: number
-  karma: number
-  projects: number
-  posts: number
-  incomes: number
-  tasks: number
-  emoji?: string
-  skills?: string
-  color?: string
-  name?: string
-  bio?: string
-  twitter?: string
-  github?: string
-  autoTranslate?: boolean
-  makerlog?: string
-  wip?: string
-  nomadlist?: string
-  cover?: string
-  website?: string
-  lastTaskAt?: string
-  makerlogHook?: string
-  wipApiKey?: string
-  projectsData?: Project[]
-  postsData?: Post[]
-  createdAt: string
-  updatedAt: string
-}
 const userPublicFlieds = [
   'karma',
   'streak',
@@ -97,22 +57,6 @@ const userProtectedKey = [
   'updatedAt',
   'lastTaskAt',
 ]
-export const getAllUsers = async (): Promise<User[]> => {
-  try {
-    const documents = await admin.firestore().collection('/discord').get()
-    const users: User[] = []
-    documents.docs.forEach((doc) => {
-      const data: User = doc.data() as User
-      if (data !== undefined) {
-        users.push(data)
-      }
-    })
-    return users
-  } catch (err) {
-    console.error('getAllUsers', err)
-    return []
-  }
-}
 
 const transforms: Langs[] = [
   t9r('color', 'couleur', 'Couleur'),
@@ -144,86 +88,6 @@ const transforms: Langs[] = [
   t9r('projects', 'projets', '🌱 Projets'),
   t9r('tasks', 'taches', '💗 Taches'),
 ]
-
-export const getUsersById = async (userId: string): Promise<User | null> => {
-  try {
-    const res = await admin.firestore().collection('/discord').doc(userId).get()
-    const data = res.data()
-    return data !== undefined ? (data as User) : null
-  } catch (err) {
-    console.error('getUsersById', err)
-    return null
-  }
-}
-
-export const getUsersByUsername = async (
-  username: string
-): Promise<User | null> => {
-  try {
-    const snapshot = await admin
-      .firestore()
-      .collection('/discord')
-      .where('username', '==', username)
-      .get()
-    let data
-    snapshot.forEach((doc) => {
-      data = doc.data()
-    })
-    return data !== undefined ? (data as User) : null
-  } catch (err) {
-    console.error('getUsersById', err)
-    return null
-  }
-}
-
-export const updateUser = async (
-  userId: string,
-  user: Partial<User>
-): Promise<User> => {
-  const userDoc = await admin
-    .firestore()
-    .collection('/discord')
-    .doc(userId)
-    .get()
-  if (!userDoc.exists) {
-    const userInfo = await getUserData(userId)
-    const base: User = {
-      userId,
-      avatar: '',
-      avatarUrl: '',
-      streak: 0,
-      bestStreak: 0,
-      taskReminder: 'true',
-      onboardingSend: false,
-      mondayReminder: 'true',
-      autoTranslate: true,
-      voiceReminder: 'false',
-      incomes: 0,
-      karma: 0,
-      projects: 0,
-      posts: 0,
-      tasks: 0,
-      username: '',
-      createdAt: dayjs().toISOString(),
-      updatedAt: dayjs().toISOString(),
-    }
-    if (userInfo) {
-      if (userInfo.avatar) {
-        base.avatar = userInfo.avatar
-        base.avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${userInfo.avatar}.png`
-      } else {
-        base.avatarUrl =
-          'https://res.cloudinary.com/forgr/image/upload/v1621079734/indiemakers/cover-im_no_gjzhog.jpg'
-      }
-      base.username = userInfo.username
-    }
-    const newUser: User = Object.assign(base, user as User)
-    await admin.firestore().collection('discord').doc(userId).set(newUser)
-    return newUser
-  }
-  await userDoc.ref.update({ ...user, updatedAt: dayjs().toISOString() })
-  return userDoc.data() as User
-}
 
 const userEdit = (
   interaction: Interaction,

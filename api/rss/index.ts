@@ -26,7 +26,7 @@ const rss = async (_req: Request, res: Response) => {
         title: element.title,
         description: element.content,
         url: `https://indiemakers.fr/episode/${element.id}`,
-        guid: element.guidFix,
+        guid: element.id,
         author: `Martin Donadieu and ${element.title}`,
         date: element.pubDate,
         enclosure: {

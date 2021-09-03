@@ -1,51 +1,13 @@
-import dayjs from 'dayjs'
-import admin from 'firebase-admin'
+import { KarmaAll, User } from './../../types';
 import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
 import { openChannel, sendChannel, sendTxtLater } from './utils'
-import { updateUser, getAllUsers, User } from './user'
+import { addKarmaById, getKarmaById } from '~/services/firebase/karma';
+import { updateUser, getAllUsers } from '~/services/firebase/discord';
 
-interface Karma {
-  id?: string
-  userId: string
-  createdAt: string
-  value: number
-}
-const getKarmaById = async (
-  id: string
-): Promise<{ karmas: Karma[]; total: number }> => {
-  try {
-    const documents = await admin
-      .firestore()
-      .collection(`discord/${id}/karma`)
-      .get()
-    const karmas: Karma[] = []
-    documents.docs.forEach((doc) => {
-      const data = doc.data() as Karma
-      if (data !== undefined) {
-        karmas.push({ id: doc.id, ...(data as Karma) })
-      }
-    })
-    const total = karmas.reduce((tt, current) => tt + current.value, 0)
-    return { karmas, total }
-  } catch (err) {
-    console.error('getKarmaById', err)
-    return { karmas: [], total: 0 }
-  }
-}
-
-const addKarmaById = async (
-  userId: string,
-  senderId: string,
-  value: number
-): Promise<string> => {
-  await admin
-    .firestore()
-    .collection(`discord/${userId}/karma`)
-    .add({ userId: senderId, value, createdAt: dayjs().toISOString() })
-  const curKarma = await getKarmaById(userId)
+const afterAdd = async (value: number, userId: string, curKarma: KarmaAll): Promise<string> => {
   const botString = `Tu as ${
     value > 0 ? 'donné' : 'enlevé'
   } du karma a <@${userId}> 😎
@@ -63,6 +25,7 @@ const addKarmaById = async (
   return botString
 }
 
+
 const karmaAdd = async (
   interaction: Interaction,
   option: ApplicationCommandInteractionDataOption,
@@ -79,7 +42,8 @@ const karmaAdd = async (
         interaction.token
       )
     }
-    const botString = await addKarmaById(userId, senderId, 1)
+    const currentKarma = await addKarmaById(userId, senderId, 1)
+    const botString = await afterAdd(1, userId, currentKarma)
     return sendTxtLater(
       botString,
       [],
@@ -119,7 +83,8 @@ const karmaRm = async (
       interaction.token
     )
   }
-  const botString = await addKarmaById(userId, senderId, -1)
+  const currentKarma = await addKarmaById(userId, senderId, -1)
+  const botString = await afterAdd(1, userId, currentKarma)
   return sendTxtLater(
     botString,
     [],

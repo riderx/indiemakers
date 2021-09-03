@@ -1,5 +1,4 @@
 import dayjs from 'dayjs'
-import admin from 'firebase-admin'
 import { Mutex } from 'await-semaphore'
 import {
   Interaction,
@@ -17,38 +16,19 @@ import {
   transformKey,
   transformVal,
 } from './utils'
-import { updateUser, User, getUsersById } from './user'
 import { sendToWip, updateToWip } from './wip'
 import { sendToMakerlog } from './makerlog'
 import {
   getAllProjects,
   getProjectById,
-  Project,
   updateProject,
 } from './project'
+import { Project, Task, TaskAll, TaskStatus, User } from '~/services/types'
+import { getUsersById, updateUser } from '~/services/firebase/discord'
+import { addTask, getTask, getLastTask, getOneProjectsTaskDoc, getAllProjectsTasks, deleteProjectTask } from '~/services/firebase/tasks'
 
-// eslint-disable-next-line no-unused-vars
-enum TaskStatus {
-  // eslint-disable-next-line no-unused-vars
-  TODO = 'todo',
-  // eslint-disable-next-line no-unused-vars
-  DONE = 'done',
-}
 const projectSem: { [key: string]: Mutex } = {}
-export interface Task {
-  id: number
-  content: string
-  status: TaskStatus
-  doneAt?: string
-  wipId?: string
-  makerlogHook?: string
-  createdAt: string
-  updatedAt: string
-}
-export interface TaskAll {
-  tasks: Task[]
-  total: number
-}
+
 const taskPublicKey = ['id', 'content', 'status', 'doneAt', 'createdAt']
 const taskProtectedKey = [
   'id',
@@ -60,17 +40,6 @@ const taskProtectedKey = [
 ]
 const statusToText = (status: TaskStatus) => {
   return status === TaskStatus.DONE ? 'Fait' : 'A faire'
-}
-
-const getLastTask = async (userId: string, hashtag: string) => {
-  const taskList = await admin
-    .firestore()
-    .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
-    .orderBy('createdAt', 'desc')
-    .limit(1)
-    .get()
-    .then((querySnapshot) => querySnapshot.docs.map((doc) => doc.data()))
-  return taskList[0]
 }
 
 const createProjectTask = async (
@@ -87,11 +56,7 @@ const createProjectTask = async (
     `$[user.userId}_${hashtag.toLowerCase()}`
   ].acquire()
   try {
-    const projDoc = await admin
-      .firestore()
-      .collection(`discord/${user.userId}/projects`)
-      .doc(hashtag.toLowerCase())
-      .get()
+    const projDoc = await getTask(user.userId, hashtag)
     if (!projDoc.exists) {
       return sendTxtLater(
         `Le projet #${hashtag.toLowerCase()}, n'existe pas. tu peux le crée avec \`/im projet creer\` 😇`,
@@ -140,12 +105,7 @@ A été ajouté au projet #${hashtag} 🎉!`,
       applicationId,
       token
     )
-    const newTask = await admin
-      .firestore()
-      .collection(
-        `discord/${user.userId}/projects/${hashtag.toLowerCase()}/tasks`
-      )
-      .add({ ...task, createdAt: dayjs().toISOString() })
+    const newTask = await addTask(user.userId, hashtag, { ...task, createdAt: dayjs().toISOString() })
     release()
     const curProject = await getProjectById(user.userId, hashtag)
     await updateProjectTaskAndStreak(user.userId, curProject)
@@ -156,18 +116,6 @@ A été ajouté au projet #${hashtag} 🎉!`,
     release()
     return Promise.reject(err)
   }
-}
-
-const deleteProjectTask = (
-  userId: string,
-  hashtag: string,
-  taskId: string
-): Promise<any> => {
-  return admin
-    .firestore()
-    .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
-    .doc(taskId)
-    .delete()
 }
 
 const updateProjectTask = async (
@@ -216,69 +164,6 @@ const updateProjectTask = async (
   }
 }
 
-export const getOneProjectsTaskDoc = async (
-  userId: string,
-  hashtag: string,
-  taskId: string
-): Promise<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData> | null> => {
-  try {
-    const snapshot = await admin
-      .firestore()
-      .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
-      .where('id', '==', parseInt(taskId))
-      .limit(1)
-      .get()
-    return snapshot.docs[0]
-  } catch (err) {
-    console.error('getProjectById', err)
-    return null
-  }
-}
-
-export const getOneProjectsTask = async (
-  userId: string,
-  hashtag: string,
-  taskId: string
-): Promise<Task | null> => {
-  try {
-    const snapshot = await admin
-      .firestore()
-      .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
-      .where('id', '==', parseInt(taskId))
-      .limit(1)
-      .get()
-    const curTask: Task = snapshot.docs[0].data() as Task
-    return curTask
-  } catch (err) {
-    console.error('getProjectById', err)
-    return null
-  }
-}
-
-export const getAllProjectsTasks = async (
-  userId: string,
-  hashtag: string
-): Promise<TaskAll> => {
-  try {
-    const documents = await admin
-      .firestore()
-      .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
-      .orderBy('id', 'desc')
-      .get()
-    const tasks: Task[] = []
-    documents.docs.map((doc) => {
-      const data = doc.data() as Task
-      if (data !== undefined) {
-        tasks.push({ ...data })
-      }
-      return data
-    })
-    return { tasks, total: tasks.length }
-  } catch (err) {
-    console.error('getAllProjectsTasks', err)
-    return { tasks: [], total: 0 }
-  }
-}
 
 const transforms: Langs[] = [t9r('content', 'contenu', 'Contenu')]
 
@@ -335,7 +220,7 @@ const updateProjectTaskAndStreak = async (
   return updateProject(userId, proj.hashtag, updatedProject)
 }
 
-export const resetUserStreak = (usr: User) => {
+export const resetUserStreak = async (usr: User) => {
   const lastTaskAt = dayjs(usr.lastTaskAt)
   if (!usr.lastTaskAt || lastTaskAt.isBefore(lastDay())) {
     try {
@@ -343,7 +228,7 @@ export const resetUserStreak = (usr: User) => {
         usr.bestStreak && usr.bestStreak > usr.streak
           ? usr.bestStreak
           : usr.streak
-      return updateUser(usr.userId, { streak: 0, bestStreak })
+      return await updateUser(usr.userId, { streak: 0, bestStreak })
     } catch (err) {
       console.error(err)
     }

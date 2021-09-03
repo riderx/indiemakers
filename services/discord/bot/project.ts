@@ -6,7 +6,6 @@ import {
 } from '../command'
 import { getStripeCharges, Charge } from './stripe'
 import {
-  Embed,
   embed,
   getFields,
   image,
@@ -21,59 +20,15 @@ import {
   Langs,
   getUserUrl,
 } from './utils'
-import { updateUser, User } from './user'
 import {
   createProjectIncome,
   deleteProjectIncome,
   getAllProjectsIncomes,
-  Income,
 } from './incomes'
-import { Task } from './tasks'
+import { Embed, Income, Project, User } from '~/services/types'
+import { updateUser } from '~/services/firebase/discord'
 // eslint-disable-next-line no-unused-vars
-enum Category {
-  // eslint-disable-next-line no-unused-vars
-  SAAS = 'saas',
-  // eslint-disable-next-line no-unused-vars
-  COMMUNITY = 'community',
-  // eslint-disable-next-line no-unused-vars
-  NEWSLETTER = 'newsletter',
-  // eslint-disable-next-line no-unused-vars
-  FORMATION = 'formation',
-  // eslint-disable-next-line no-unused-vars
-  TEMPLATE = 'template',
-  // eslint-disable-next-line no-unused-vars
-  ECOMMERCE = 'ecommerce',
-  // eslint-disable-next-line no-unused-vars
-  OTHER = 'other',
-}
-export interface Project {
-  id?: string
-  userId?: string
-  userName?: string
-  lastTaskAt?: string
-  launchedAt?: string
-  createdAt: string
-  updatedAt: string
-  hashtag: string
-  tasks: number
-  incomes: number
-  tasksData?: Task[]
-  incomesData?: Income[]
-  openSource?: boolean
-  github?: string
-  twitter?: string
-  streak: number
-  bestStreak: number
-  emoji: string
-  color: string
-  name: string
-  logo: string
-  cover: string
-  description: string
-  category: Category
-  website: string
-  stripeApiKey?: string
-}
+
 const projectPublicKey = [
   'hashtag',
   'name',
@@ -112,7 +67,10 @@ const transforms: Langs[] = [
   t9r('hashtag', 'hashtag', '#️⃣'),
 ]
 
-export const getAllProjects = async (userId: string): Promise<Project[]> => {
+export const getAllProjects = async (
+  userId: string,
+  userName: string | undefined = undefined
+): Promise<Project[]> => {
   try {
     const documents = await admin
       .firestore()
@@ -124,7 +82,7 @@ export const getAllProjects = async (userId: string): Promise<Project[]> => {
       const doc = documents.docs[index]
       const data = (await doc.data()) as Project
       if (data !== undefined && data.hashtag && data.hashtag !== '') {
-        projects.push({ userId, id: doc.id, ...(data as Project) })
+        projects.push({ userId, userName, id: doc.id, ...(data as Project) })
       }
     }
     return projects
@@ -137,7 +95,7 @@ export const getAllProjects = async (userId: string): Promise<Project[]> => {
 export const getAllAllProject = async (users: User[]): Promise<Project[]> => {
   const arrays: Project[][] = await Promise.all(
     users.map((usr: User) => {
-      return getAllProjects(String(usr?.userId))
+      return getAllProjects(String(usr?.userId), usr?.username)
     })
   )
   const projects: Project[] = arrays.reduce((a, b) => a.concat(b), [])
@@ -294,7 +252,7 @@ const cleanPastStripe = async (userId: string, hashtag: string | undefined) => {
   if (!hashtag) return Promise.resolve()
   const res = await getAllProjectsIncomes(userId, hashtag)
   const all: Promise<any>[] = []
-  res.incomes.forEach((income) => {
+  res.incomes.forEach((income: Income) => {
     if (income.id && income.stripeCharges) {
       all.push(deleteProjectIncome(userId, hashtag, income.id))
     }

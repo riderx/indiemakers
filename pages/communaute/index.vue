@@ -20,73 +20,73 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
+import { ref, onMounted } from '@vue/composition-api'
+import {
+  defineComponent,
+  useFetch,
+  useContext,
+  useRoute,
+  useMeta,
+} from '@nuxtjs/composition-api'
 import { discordMakers, discordProjects, discordPosts } from '~/services/rss'
 
-export default {
+import { Project } from '~/services/discord/bot/project'
+import { User } from '~/services/discord/bot/user'
+import { Post } from '~/services/discord/bot/post'
+import { createMeta } from '~/services/meta'
+
+export default defineComponent({
   components: {
     JoinUs: () => import('~/components/JoinUs.vue'),
     Posts: () => import('~/components/Posts.vue'),
     LadderMakers: () => import('~/components/LadderMakers.vue'),
     LadderProject: () => import('~/components/LadderProject.vue'),
   },
-  async asyncData({ $config }) {
-    const users = await discordMakers($config)
-    const posts = await discordPosts($config)
-    const dataProj = await discordProjects($config)
-    return await { users, posts, ...dataProj }
-  },
-  data() {
-    return {
-      loaded: false,
-    }
-  },
-  head() {
-    return {
-      title: 'La communauté INDIE MAKERS',
-      meta: [
-        {
-          hid: 'og:url',
-          property: 'og:url',
-          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-        {
-          hid: 'title',
-          name: 'title',
-          content: 'La communauté INDIE MAKERS',
-        },
-        {
-          hid: 'description',
-          name: 'description',
-          content:
-            "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !",
-        },
-        {
-          hid: 'og:title',
-          property: 'og:title',
-          content: 'La communauté INDIE MAKERS',
-        },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content:
-            "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !",
-        },
-        {
-          hid: 'og:image:alt',
-          property: 'og:image:alt',
-          content: 'La communauté INDIE MAKERS',
-        },
-      ],
-    }
-  },
-  mounted() {
-    this.loaded = true
-  },
-  methods: {
-    joinUs() {
+  setup() {
+    const { title, meta } = useMeta()
+    const { $config } = useContext()
+    const route = useRoute()
+    const users = ref([] as User[])
+    const posts = ref([] as Post[])
+    const projects = ref([] as Project[])
+    const loaded = ref(false)
+
+    const { fetch } = useFetch(async () => {
+      const usersData = await discordMakers($config)
+      const postsData = await discordPosts($config)
+      const projectsData = await discordProjects($config)
+      if (usersData) {
+        users.value = usersData
+      }
+      if (postsData) {
+        posts.value = postsData
+      }
+      if (projectsData) {
+        projects.value = projectsData
+      }
+    })
+    fetch()
+    onMounted(() => {
+      loaded.value = true
+    })
+    title.value = 'La communauté INDIE MAKERS'
+    meta.value = createMeta(
+      `${$config.DOMAIN}${route.value.fullPath}`,
+      title.value,
+      "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !"
+    )
+    const joinUs = () => {
       window.open('https://discord.gg/GctKEcDpxk', '_blank')
-    },
+    }
+    return {
+      loaded,
+      users,
+      posts,
+      projects,
+      joinUs,
+    }
   },
-}
+  head: {},
+})
 </script>

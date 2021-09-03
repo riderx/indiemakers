@@ -1,17 +1,14 @@
 import axios from 'axios'
 import { NuxtConfig } from '@nuxt/types'
-import { Episode } from './feed'
-import { User } from './discord/bot/user'
-import { Project } from './discord/bot/project'
-import { Person } from './types'
+import { Episode, Person, Post, Project, User } from './types'
 
-export const discordPosts = ($config: NuxtConfig): Promise<User[]> => {
+export const discordPosts = ($config: NuxtConfig): Promise<Post[]> => {
   const url = `${$config.BASEAPI}/posts`
   console.error('discordPosts', url)
   return axios
     .get(url)
     .then((response) => {
-      return response.data
+      return response.data as Post[]
     })
     .catch((err) => {
       console.error('discordPosts err', err)
@@ -25,7 +22,7 @@ export const discordMakers = ($config: NuxtConfig): Promise<User[]> => {
   return axios
     .get(url)
     .then((response) => {
-      return response.data
+      return response.data as User[]
     })
     .catch((err) => {
       console.error('discordMakers err', err)
@@ -39,7 +36,7 @@ export const discordProjects = ($config: NuxtConfig): Promise<Project[]> => {
   return axios
     .get(url)
     .then((response) => {
-      return response.data
+      return response.data as Project[]
     })
     .catch((err) => {
       console.error('discordProjects err', err)
@@ -51,32 +48,32 @@ export const discordHashtag = (
   $config: NuxtConfig,
   userId: string,
   hashtag: string
-): Promise<Project> => {
-  const url = `${$config.BASEAPI}/project?uid=${userId}&hashtag=${hashtag}`
+): Promise<Project | null> => {
+  const url = `${$config.BASEAPI}/project?id=${userId}&hashtag=${hashtag}`
   return axios
     .get(url)
     .then((response) => {
-      return response.data
+      return response.data as Project
     })
     .catch((err) => {
       console.error('discordHashtag err', err)
-      return []
+      return null
     })
 }
 
 export const discordMakerId = (
   $config: NuxtConfig,
   id: string
-): Promise<User> => {
+): Promise<User | null> => {
   const url = `${$config.BASEAPI}/maker?id=${id}`
   return axios
     .get(url)
     .then((response) => {
-      return response.data
+      return response.data as User
     })
     .catch((err) => {
       console.error('discordMakerId err', err)
-      return []
+      return null
     })
 }
 
@@ -85,7 +82,7 @@ export const makers = ($config: NuxtConfig): Promise<Person[]> => {
   return axios
     .get(url)
     .then((response) => {
-      return response.data
+      return response.data as Person[]
     })
     .catch((err) => {
       console.error('makers err', err)
@@ -98,7 +95,7 @@ export const feed = ($config: NuxtConfig): Promise<Episode[]> => {
   return axios
     .get(url)
     .then((response) => {
-      return response.data
+      return response.data as Episode[]
     })
     .catch((err) => {
       console.error('feed err', err)
@@ -106,15 +103,18 @@ export const feed = ($config: NuxtConfig): Promise<Episode[]> => {
     })
 }
 
-export const ep = (guid: string, $config: NuxtConfig): Promise<Episode> => {
+export const ep = (
+  guid: string,
+  $config: NuxtConfig
+): Promise<Episode | null> => {
   const url = `${$config.BASEAPI}/ep?guid=${guid}`
   return axios
     .get(url)
     .then((response) => {
-      return response.data
+      return response.data as Episode
     })
     .catch((err) => {
       console.error('ep err', err)
-      return []
+      return null
     })
 }

@@ -12,7 +12,7 @@
         }"
         @click="status = 'done'"
       >
-        Fait {{ done.total }} ✅
+        Fait {{ done.length }} ✅
       </button>
       <button
         class="mr-3 text-2xl text-royalblue-700 focus:outline-none"
@@ -22,7 +22,7 @@
         }"
         @click="status = 'todo'"
       >
-        A faire {{ todo.total }} ☑️
+        A faire {{ todo.length }} ☑️
       </button>
     </div>
     <article
@@ -41,31 +41,27 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from 'vue'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import { Task, TaskAll } from '~/services/discord/bot/tasks'
-export default Vue.extend({
-  name: 'ListTasks',
+export default defineComponent({
   props: {
     all: {
-      type: Object,
+      type: Object as () => TaskAll,
       default: () => {},
-    } as PropOptions<TaskAll>,
-  },
-  data() {
-    return {
-      todo: [] as Task[],
-      done: [] as Task[],
-      status: 'done',
-    }
-  },
-  computed: {
-    filtered(): Task[] {
-      return this.status === 'todo' ? this.todo : this.done
     },
   },
-  mounted() {
-    this.todo = this.all.tasks.filter((a: Task) => a.status === 'todo')
-    this.done = this.all.tasks.filter((a: Task) => a.status === 'done')
+  setup({ all }) {
+    const status = ref('done')
+    const todo = computed(() =>
+      all.tasks.filter((a: Task) => a.status === 'todo')
+    )
+    const done = computed(() =>
+      all.tasks.filter((a: Task) => a.status === 'done')
+    )
+    const filtered = computed(() =>
+      status.value === 'todo' ? todo.value : done.value
+    )
+    return { filtered, status, todo, done }
   },
 })
 </script>

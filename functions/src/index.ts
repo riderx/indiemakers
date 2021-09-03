@@ -2,6 +2,7 @@ import { config, https, pubsub, firestore } from 'firebase-functions'
 import admin from 'firebase-admin'
 import { Person } from '../../services/types'
 import { onboardingMessage } from '../../services/discord/bot/utils'
+import { rssToFirebase } from '../../services/feedrss'
 import { lateBot, morningBot } from './../../services/discord/bot/schedule'
 import { getPerson, voteIfNotDone } from './users'
 import { TwUser, twUserPromise } from './twitter'
@@ -17,55 +18,55 @@ if (!admin.apps.length) {
 process.env.CLIENT_PUBLIC_KEY = config().discord.bot_public_key
 process.env.BOT_TOKEN = config().discord.bot_token
 
-export const getMakers = https.onRequest(async (req, res) => {
-  if (req.get('x-verceladmin-apikey') !== config().verceladmin.apikey) {
-    res.json({ error: 'unAuthorise' })
-    return
-  }
-  try {
-    const resultList = await admin
-      .firestore()
-      .collection('people')
-      .orderBy('votes', 'desc')
-      .orderBy('addDate', 'asc')
-      .get()
-      .then((querySnapshot) =>
-        querySnapshot.docs.map((doc) =>
-          Object.assign(doc.data(), { id: doc.id })
-        )
-      )
-    res.json(resultList)
-  } catch (err) {
-    console.error('err', err)
-    res.json([])
-  }
-})
+// export const getMakers = https.onRequest(async (req, res) => {
+//   if (req.get('x-verceladmin-apikey') !== config().verceladmin.apikey) {
+//     res.json({ error: 'unAuthorise' })
+//     return
+//   }
+//   try {
+//     const resultList = await admin
+//       .firestore()
+//       .collection('people')
+//       .orderBy('votes', 'desc')
+//       .orderBy('addDate', 'asc')
+//       .get()
+//       .then((querySnapshot) =>
+//         querySnapshot.docs.map((doc) =>
+//           Object.assign(doc.data(), { id: doc.id })
+//         )
+//       )
+//     res.json(resultList)
+//   } catch (err) {
+//     console.error('err', err)
+//     res.json([])
+//   }
+// })
 
-export const addEp = https.onRequest(async (req, res) => {
-  if (req.get('x-verceladmin-apikey') !== config().verceladmin.apikey) {
-    res.json({ error: 'unAuthorise' })
-    return
-  }
-  try {
-    await admin
-      .firestore()
-      .collection('episodes')
-      .doc(req.body.udi)
-      .update({ udi: req.body.udi })
-    res.json({ error: 'already done' })
-  } catch {
-    try {
-      await admin
-        .firestore()
-        .collection('episodes')
-        .doc(req.body.udi)
-        .set(req.body)
-      res.json({ status: 'done' })
-    } catch (err) {
-      res.json({ error: err })
-    }
-  }
-})
+// export const addEp = https.onRequest(async (req, res) => {
+//   if (req.get('x-verceladmin-apikey') !== config().verceladmin.apikey) {
+//     res.json({ error: 'unAuthorise' })
+//     return
+//   }
+//   try {
+//     await admin
+//       .firestore()
+//       .collection('episodes')
+//       .doc(req.body.udi)
+//       .update({ udi: req.body.udi })
+//     res.json({ error: 'already done' })
+//   } catch {
+//     try {
+//       await admin
+//         .firestore()
+//         .collection('episodes')
+//         .doc(req.body.udi)
+//         .set(req.body)
+//       res.json({ status: 'done' })
+//     } catch (err) {
+//       res.json({ error: err })
+//     }
+//   }
+// })
 
 export const updateTwiterUser = pubsub.schedule('0 0 * * *').onRun(async () => {
   const users = await admin
@@ -262,32 +263,14 @@ export const onUpdatePeople = firestore
 //     }
 //   })
 
-// export const bot = https.onRequest(async (req, res) => {
-//   const signature = req.get('X-Signature-Ed25519') || ''
-//   const timestamp = req.get('X-Signature-Timestamp') || ''
-//   const isValidRequest = await verifyKey(
-//     req.rawBody,
-//     signature,
-//     timestamp,
-//     config().discord.bot_public_key
-//   )
-//   if (!isValidRequest) {
-//     return res.status(401).end('Bad request signature')
-//   }
-//   if (
-//     req.body &&
-//     req.body.type === InteractionType.COMMAND &&
-//     req.body.data
-//   ) {
-//     await sendTxtLoading(res)
-//     await admin.firestore().collection('interaction').add(req.body)
-//     return
-//     // return discordInteraction(req.body);
-//   }
-//   await res.send({
-//     type: InteractionResponseType.PONG,
-//   })
-// })
+export const scheduledRssToFirebase = pubsub
+  .schedule('7 * * * *')
+  .timeZone('Europe/Paris')
+  .onRun(async () => {
+    console.error('This will be run every hours at **:07 AM Paris!')
+    await rssToFirebase()
+    return null
+  })
 
 export const scheduledBotBIP = pubsub
   .schedule('0 18 * * *')

@@ -182,99 +182,42 @@
   </div>
 </template>
 
-<script>
-export default {
-  async asyncData({ params, $content }) {
-    const page = (
-      await $content('articles').where({ slug: params.id }).fetch()
-    )[0]
-    return {
-      page,
+<script lang="ts">
+import { ref } from '@vue/composition-api'
+import {
+  defineComponent,
+  useFetch,
+  useContext,
+  useRoute,
+  useMeta,
+} from '@nuxtjs/composition-api'
+import { createMeta } from '~/services/meta'
+export default defineComponent({
+  setup() {
+    const { $content, $config, params } = useContext()
+    const route = useRoute()
+    const { title, meta } = useMeta()
+    const page = ref()
+    const { fetch } = useFetch(async () => {
+      const data = await $content('articles')
+        .where({ slug: params.value.id })
+        .fetch()[0]
+      page.value = data
+    })
+    fetch()
+    if (page.value) {
+      title.value = page.value.title
+      meta.value = createMeta(
+        `${$config.DOMAIN}${route.value.fullPath}`,
+        page.value.title,
+        page.value.description,
+        `${$config.DOMAIN}${page.value.headImage}`,
+        null,
+        page.value.author
+      )
     }
+    return { page }
   },
-  head() {
-    return {
-      title: this.page.title,
-      meta: [
-        { hid: 'author', name: 'author', content: this.page.author },
-        {
-          hid: 'apple-mobile-web-app-title',
-          name: 'apple-mobile-web-app-title',
-          content: this.page.title,
-        },
-        { hid: 'theme-color', name: 'theme-color', content: '#4b279b' },
-        {
-          hid: 'publisher',
-          name: 'publisher',
-          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-        {
-          hid: 'og:url',
-          property: 'og:url',
-          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.page.description,
-        },
-        {
-          hid: 'twitter:site',
-          name: 'twitter:site',
-          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-        {
-          hid: 'twitter:creator',
-          name: 'twitter:creator',
-          content: this.page.author,
-        },
-        {
-          hid: 'twitter:card',
-          name: 'twitter:card',
-          content: 'summary_large_image',
-        },
-        {
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: `${this.$config.DOMAIN}${this.page.headImage}`,
-        },
-        {
-          hid: 'twitter:title',
-          name: 'twitter:title',
-          content: this.page.title,
-        },
-        {
-          hid: 'twitter:description',
-          name: 'twitter:description',
-          content: this.page.description,
-        },
-        { hid: 'title', name: 'title', content: this.page.title },
-        { hid: 'og:title', property: 'og:title', content: this.page.title },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: this.page.description,
-        },
-        { name: 'og:article:author', content: this.page.author },
-        {
-          hid: 'og:image:alt',
-          property: 'og:image:alt',
-          content: this.page.title,
-        },
-        {
-          hid: 'og:image:type',
-          property: 'og:image:type',
-          content: 'image/jpg',
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: `${this.$config.DOMAIN}${this.page.headImage}`,
-        },
-        { hid: 'og:image:width', property: 'og:image:width', content: 300 },
-        { hid: 'og:image:height', property: 'og:image:height', content: 300 },
-      ],
-    }
-  },
-}
+  head: {},
+})
 </script>

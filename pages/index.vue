@@ -33,7 +33,7 @@
                   :title="episode.title"
                   :date="episode.date"
                   :preview="episode.preview"
-                  :image="episode.itunes.image"
+                  :image="episode.imageOptimized"
                 />
               </NuxtLink>
             </div>
@@ -95,111 +95,60 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import { ref } from '@vue/composition-api'
+import {
+  defineComponent,
+  useFetch,
+  useContext,
+  useRoute,
+  useMeta,
+} from '@nuxtjs/composition-api'
 import { feed } from '~/services/rss'
-import { crispLoader } from '~/services/crisp.client'
+import { crispLoader } from '~/services/crisp'
+import { createMeta } from '~/services/meta'
+import { cutText, Episode } from '~/services/feed'
+import dayjs from '~/services/dayjs'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     ListItem: () => import('~/components/ListItem.vue'),
   },
-  async asyncData({ $config }) {
-    const items = await feed($config)
-    return { episodes: items }
-  },
-  data() {
-    return {
-      show_loader: false,
-      sizeHead: '100vh',
-      image:
-        'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg',
-      episodes: [],
-      title: '🚀 Le podcast des entrepreneurs indépendant',
-      messages: [
-        "J'échange avec ceux qui ont su transformer leurs idées en business florissant.",
-        'Au-delà des belles histoires, je décrypte leur passé, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables en indépendant.',
-        'J’interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur projet profitable.',
-        'Un épisode tous les 15 jours',
-      ],
-    }
-  },
-  head() {
-    return {
-      title: (this as any).removeEmoji((this as any).title),
-      meta: [
-        {
-          hid: 'og:url',
-          property: 'og:url',
-          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-        {
-          hid: 'title',
-          name: 'title',
-          content: (this as any).removeEmoji((this as any).title),
-        },
-        {
-          hid: 'description',
-          name: 'description',
-          content: (this as any).removeEmoji((this as any).messages[0]),
-        },
-        {
-          hid: 'og:title',
-          property: 'og:title',
-          content: (this as any).removeEmoji((this as any).title),
-        },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: (this as any).removeEmoji((this as any).messages[0]),
-        },
-        {
-          hid: 'og:image:alt',
-          property: 'og:image:alt',
-          content: (this as any).title,
-        },
-        {
-          hid: 'og:image:type',
-          property: 'og:image:type',
-          content: 'image/png',
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
-        },
-        {
-          hid: 'og:image:secure_url',
-          property: 'og:image:secure_url',
-          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
-        },
-        { hid: 'og:image:width', property: 'og:image:width', content: '400' },
-        { hid: 'og:image:height', property: 'og:image:height', content: '400' },
-      ],
-    }
-  },
-  beforeMount() {
-    window.addEventListener(
-      'scroll',
-      () => {
-        crispLoader()
-      },
-      { capture: true, once: true, passive: true }
+  setup() {
+    const image =
+      'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
+    const episodes = ref<Episode[]>([])
+    const messages = [
+      "J'échange avec ceux qui ont su transformer leurs idées en business florissant.",
+      'Au-delà des belles histoires, je décrypte leur passé, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables en indépendant.',
+      'J’interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur projet profitable.',
+      'Un épisode tous les 15 jours',
+    ]
+    const { $config } = useContext()
+    const route = useRoute()
+    const { title, meta } = useMeta()
+    const { fetch } = useFetch(async () => {
+      const items = await feed($config)
+      // episodes.value = items
+      episodes.value = items.map((episode) => {
+        return {
+          ...episode,
+          preview: cutText(episode.content),
+          date: dayjs(episode.pubDate).fromNow(),
+        }
+      })
+    })
+
+    fetch()
+    title.value = '🚀 Le podcast des entrepreneurs indépendant'
+    meta.value = createMeta(
+      `${$config.DOMAIN}${route.value.fullPath}`,
+      title.value,
+      messages[0],
+      image,
+      null,
+      'Martin Donadieu'
     )
-  },
-  methods: {
-    joinUs() {
-      this.$modal.show('join')
-    },
-    removeEmoji(str: string): string {
-      return str.replace(
-        /([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g,
-        ''
-      )
-    },
-    removeAccent(str: string): string {
-      return str.normalize('NFD').replace(/[\u0300-\u036F]/g, '')
-    },
-    nextEpisode(): string {
+    const nextEpisode = (): string => {
       const oneDay = 24 * 60 * 60 * 1000 // hours*minutes*seconds*milliseconds
       const firstDate = new Date(2019, 10, 19)
       const now = new Date()
@@ -210,7 +159,18 @@ export default Vue.extend({
       const epRepeat = 7
       const nextEp = epRepeat - (diffDays % epRepeat)
       return nextEp !== epRepeat ? `${nextEp} jours` : 'DEMAIN 10 heures'
-    },
+    }
+    return { title, image, messages, episodes, nextEpisode }
+  },
+  head: {},
+  beforeMount() {
+    window.addEventListener(
+      'scroll',
+      () => {
+        crispLoader()
+      },
+      { capture: true, once: true, passive: true }
+    )
   },
 })
 </script>

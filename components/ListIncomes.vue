@@ -1,7 +1,7 @@
 <template>
   <div class="w-1/2 p-10 bg-white">
     <button class="mb-5 text-3xl text-royalblue-700 lg:mb-10 font-indie">
-      {{ all.total }} € revenus
+      {{ total }} € revenus
     </button>
     <div class="flex mb-5 border-b-2 lg:mb-10 border-royalblue-700">
       <button
@@ -39,37 +39,31 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from 'vue'
+import { ref, computed, defineComponent } from '@nuxtjs/composition-api'
 import { Income, IncomeAll } from '~/services/discord/bot/incomes'
-export default Vue.extend({
-  name: 'ListTasks',
+
+export default defineComponent({
   props: {
-    all: {
-      type: Object,
-      default: () => {},
-    } as PropOptions<IncomeAll>,
+    all: { type: Object as () => IncomeAll, default: () => {} },
   },
-  data() {
-    return {
-      incomes: [] as Income[],
-      incomesTotal: 0,
-      expenses: [] as Income[],
-      expensesTotal: 0,
-      status: 'income',
-    }
-  },
-  computed: {
-    filtered(): Income[] {
-      return this.status === 'income' ? this.incomes : this.expenses
-    },
-  },
-  mounted() {
-    this.incomes = this.all.incomes.filter((a: Income) => a.status === 'income')
-    this.expenses = this.all.incomes.filter(
-      (a: Income) => a.status === 'expense'
+  setup({ all }) {
+    const status = ref('income')
+    const incomes = computed(() =>
+      all.incomes.filter((a: Income) => a.status === 'income')
     )
-    this.expensesTotal = this.expenses.reduce((tt, v) => tt + v.ammount, 0)
-    this.incomesTotal = this.incomes.reduce((tt, v) => tt + v.ammount, 0)
+    const expenses = computed(() =>
+      all.incomes.filter((a: Income) => a.status === 'expense')
+    )
+    const incomesTotal = computed(() =>
+      incomes.value.reduce((tt: number, v: Income) => tt + v.ammount, 0)
+    )
+    const expensesTotal = computed(() =>
+      expenses.value.reduce((tt: number, v: Income) => tt + v.ammount, 0)
+    )
+    const filtered = computed(() =>
+      status.value === 'income' ? incomes.value : expenses.value
+    )
+    return { filtered, status, incomesTotal, expensesTotal, total: all.total }
   },
 })
 </script>

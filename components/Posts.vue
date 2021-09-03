@@ -85,22 +85,22 @@
     </div>
   </section>
 </template>
-
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, useRouter } from '@nuxtjs/composition-api'
 import { Post } from '../services/discord/bot/post'
 
-export default Vue.extend({
-  name: 'Posts',
+export default defineComponent({
   props: {
     posts: { type: Array as () => Post[], default: () => [] as Post[] },
   },
-  methods: {
-    openProfil(id: string | undefined) {
+  setup() {
+    const router = useRouter()
+    const openProfil = (id: string | undefined) => {
       if (id) {
-        this.$router.push(`/communaute/${encodeURI(id)}`)
+        router.push(`/communaute/${encodeURI(id)}`)
       }
-    },
+    }
+    return { openProfil }
   },
 })
 </script>
