@@ -93,7 +93,7 @@ export default defineComponent({
       return {}
     }
     const openProfil = (id: string) => {
-      router.push(`/maker/${encodeURI(id)}`)
+      router.push(`/makers/${encodeURI(id)}`)
     }
     return { sort, sorted, getTextColor, openProfil, noImge }
   },

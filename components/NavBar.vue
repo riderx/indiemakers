@@ -190,7 +190,7 @@
         </nav>
         <div class="flex items-center md:ml-12">
           <a
-            href="/communaute"
+            href="/makers"
             class="
               inline-flex
               items-center
@@ -343,7 +343,7 @@
           </div>
           <div class="mt-6">
             <a
-              href="/communaute"
+              href="/makers"
               class="
                 flex
                 items-center

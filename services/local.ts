@@ -5,11 +5,10 @@ import bot from '../api/bot'
 import sitemap from '../api/sitemap'
 import rss from '../api/rss'
 import makershunt from '../api/makershunt'
-import maker from '../api/maker'
+import makers from '../api/makers'
 import posts from '../api/posts'
 import tools from '../api/tools'
 import project from '../api/project'
-import community from '../api/community'
 import { lateBot, morningBot } from './discord/bot/schedule'
 
 dotenv.config()
@@ -32,8 +31,7 @@ appRouter.get('/sitemap.xml', sitemap)
 appRouter.get('/rss.xml', rss)
 appRouter.get('/makershunt', makershunt)
 appRouter.get('/tools', tools)
-appRouter.get('/community', community)
-appRouter.get('/maker', maker)
+appRouter.get('/makers', makers)
 appRouter.get('/posts', posts)
 appRouter.get('/project', project)
 appRouter.all('/bot', bot)

@@ -1,3 +1,4 @@
+import { getAllAllProject } from './../../services/discord/bot/project';
 import { getAllUsers } from './../../services/firebase/discord';
 import { Request, Response } from 'express'
 import { SitemapStream, streamToPromise } from 'sitemap'
@@ -13,7 +14,6 @@ const sitemap = async (_req: Request, res: Response) => {
 
     smStream.write({ url: '/tools', changefreq: 'monthly', priority: 0.1 })
     smStream.write({ url: '/makers', changefreq: 'daily', priority: 0.1 })
-    smStream.write({ url: '/communaute', changefreq: 'daily', priority: 0.1 })
     smStream.write({ url: '/articles', changefreq: 'daily', priority: 1 })
     const eps = await feed()
     // const results = await func.run('getMakers')
@@ -28,14 +28,23 @@ const sitemap = async (_req: Request, res: Response) => {
       prio = prio / 2
     })
     const users = await getAllUsers()
+    const projects = await getAllAllProject(users)
     users.forEach((user) => {
       smStream.write({
-        url: `/communaute/${encodeURI(user.username)}`,
+        url: `/makers/${encodeURI(user.username)}`,
         changefreq: 'daily',
         priority: 0.5,
       })
     })
-
+    projects.forEach((project) => {
+      if (project.userName) {
+        smStream.write({
+          url: `/makers/${encodeURI(project.userName)}/projects/${project.hashtag}`,
+          changefreq: 'daily',
+          priority: 0.5,
+        })
+      }
+    })
     const articles = await $content('articles').fetch()
 
     articles.forEach((article: any) => {

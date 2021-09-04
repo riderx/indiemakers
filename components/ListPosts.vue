@@ -6,13 +6,13 @@
         <div>
           <!-- Activity feed-->
           <div class="flow-root">
-            <ul role="list" class="-mb-8">
+            <ul role="list">
               <li
                 v-for="(post, itemIdx) in posts"
                 :key="`${post.userId}_${post.id}`"
                 class="bg-white"
               >
-                <div class="relative pb-8">
+                <div class="relative">
                   <span
                     v-if="itemIdx !== posts.length - 1"
                     class="
@@ -98,7 +98,7 @@ export default defineComponent({
     const router = useRouter()
     const openProfil = (id: string | undefined) => {
       if (id) {
-        router.push(`/communaute/${encodeURI(id)}`)
+        router.push(`/makers/${encodeURI(id)}`)
       }
     }
     return { openProfil }

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-1/2 p-10 bg-white">
+  <div>
     <button class="mb-5 text-3xl text-royalblue-700 lg:mb-10 font-indie">
       💗 {{ all.total }} Taches
     </button>
@@ -30,7 +30,7 @@
       :key="task.id"
       class="py-5 border-b-2 lg:mx-10 border-orchid-300"
     >
-      <h1 class="text-xl">
+      <h1 class="text-xl text-black">
         {{ task.content }}
       </h1>
       <time class="text-sm text-royalblue-700" :datetime="task.createdAt">{{

@@ -1,12 +1,12 @@
 import { Request, Response } from 'express'
-import { getUsersByUsername } from '../../services/firebase/discord'
+import { getAllUsers, getUsersByUsername } from '../../services/firebase/discord'
 import { getAllPosts } from '../../services/firebase/posts'
 import { getAllProjects } from '../../services/discord/bot/project'
 import fFnit from '../../services/firebase/init'
 
-const maker = async (req: Request, res: Response) => {
+const makers = async (req: Request, res: Response) => {
+  fFnit()
   if (req?.query?.id) {
-    fFnit()
     const user = await getUsersByUsername(String(req.query.id))
     const projects = await getAllProjects(String(user?.userId), user?.username)
     const posts = user ? await getAllPosts(user) : []
@@ -18,7 +18,12 @@ const maker = async (req: Request, res: Response) => {
     }
     res.json(user)
   } else {
-    res.json({ error: 'not found' })
+    const users = await getAllUsers()
+    users.forEach((user) => {
+      user.makerlogHook = ''
+      user.wipApiKey = ''
+    })
+    return res.json(users)
   }
 }
-export default maker
+export default makers

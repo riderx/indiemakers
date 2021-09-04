@@ -1,6 +1,9 @@
 <template>
   <div v-if="loaded">
-    <div v-if="!projectData" class="flex w-1/4 px-10 py-5 mx-auto text-white">
+    <div
+      v-if="!projectData"
+      class="flex w-full px-2 py-2 mx-auto text-white md:px-10 md:py-5"
+    >
       <button
         type="button"
         class="
@@ -17,32 +20,19 @@
         Ce Project n'existe pas
       </button>
     </div>
-    <div v-if="projectData" class="flex flex-col m-5 md:flex-row md:m-10">
-      <div
-        class="
-          p-5
-          mb-2
-          text-lg
-          bg-white
-          text-royalblue-700
-          md:p-10 md:mb-0 md:w-2/5
-          lg:w-1/5
-        "
-      >
-        <Posts
-          v-if="projectData.postsData"
-          class="bg-white"
-          :posts="projectData.postsData.posts"
-        />
-      </div>
-      <div v-if="projectData && loaded" class="md:w-4/5 md:mx-2">
+    <div
+      v-if="projectData"
+      class="flex w-full px-2 py-2 mx-auto text-white md:px-10 md:py-5"
+    >
+      <div class="md:w-full md:mx-2">
         <div
           class="
             flex flex-col
             items-center
-            p-10
+            p-2
             mb-2
             bg-white
+            md:p-10
             text-royalblue-700
             lg:flex-row
           "
@@ -85,22 +75,46 @@
             </div>
           </div>
         </div>
-        <div class="flex w-full">
-          <ListTasks
-            v-if="projectData.tasksData"
-            :all="projectData.tasksData"
-          />
-          <ListIncomes
-            v-if="projectData.incomesData"
-            :all="projectData.incomesData"
-          />
+        <div class="flex flex-col w-full md:flex-row">
+          <div
+            v-if="projectData.postsData && projectData.postsData.total > 0"
+            class="w-full p-3 mb-3 bg-white md:p-10 md:w-1/2 md:mb-0"
+          >
+            <ListPosts :posts="projectData.postsData.posts" />
+          </div>
+          <div
+            v-if="projectData.tasksData && projectData.tasksData.total > 0"
+            class="w-full p-3 mb-3 bg-white md:p-10 md:w-1/2 md:mb-0"
+          >
+            <ListTasks :all="projectData.tasksData" />
+          </div>
+          <div
+            v-if="projectData.incomesData && projectData.incomesData.total > 0"
+            class="w-full p-3 mb-3 bg-white md:p-10 md:w-1/2 md:mb-0"
+          >
+            <ListIncomes :all="projectData.incomesData" />
+          </div>
+          <div
+            v-if="
+              projectData.tasksData &&
+              projectData.tasksData.total == 0 &&
+              projectData.postsData &&
+              projectData.postsData.total == 0 &&
+              projectData.incomesData &&
+              projectData.incomesData.total == 0
+            "
+            class="w-full p-3 mb-3 bg-white md:p-10 md:mb-0"
+          >
+            Ce projet n'as pas encore de revenus, de tache ou de post
+          </div>
         </div>
       </div>
     </div>
+    <PageLoader :show="!loaded" />
   </div>
 </template>
 <script lang="ts">
-import { ref, onMounted } from '@vue/composition-api'
+import { ref } from '@vue/composition-api'
 import {
   defineComponent,
   useFetch,
@@ -115,8 +129,10 @@ import { Project } from '~/services/types'
 
 export default defineComponent({
   components: {
+    ListPosts: () => import('~/components/ListPosts.vue'),
     ListTasks: () => import('~/components/ListTasks.vue'),
     ListIncomes: () => import('~/components/ListIncomes.vue'),
+    PageLoader: () => import('~/components/PageLoader.vue'),
   },
   setup() {
     const { $config, params } = useContext()
@@ -148,9 +164,6 @@ export default defineComponent({
         projectData.value.logo || noImge
       )
     }
-    onMounted(() => {
-      loaded.value = true
-    })
     const getTextColor = (color: string | undefined) => {
       if (color) {
         return { color: `#${color}` }
@@ -158,7 +171,7 @@ export default defineComponent({
       return {}
     }
     const goHome = () => {
-      router.push('/communaute')
+      router.push('/makers')
     }
     return {
       noImge,

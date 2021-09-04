@@ -308,7 +308,7 @@ export const sleep = (ms: number) => {
 }
 
 export const getUserUrl = (user: User) =>
-  `https://indiemakers.fr/communaute/${encodeURI(user?.username)}`
+  `https://indiemakers.fr/makers/${encodeURI(user?.username)}`
 
 export const onboardingMessage = (user: User) => {
   return openChannel(user.userId).then(async (channel) => {

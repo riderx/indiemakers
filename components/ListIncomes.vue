@@ -1,5 +1,5 @@
 <template>
-  <div class="w-1/2 p-10 bg-white">
+  <div>
     <button class="mb-5 text-3xl text-royalblue-700 lg:mb-10 font-indie">
       {{ total }} € revenus
     </button>

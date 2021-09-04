@@ -17,7 +17,7 @@ export const discordPosts = ($config: NuxtConfig): Promise<Post[]> => {
 }
 
 export const discordMakers = ($config: NuxtConfig): Promise<User[]> => {
-  const url = `${$config.BASEAPI}/community`
+  const url = `${$config.BASEAPI}/makers`
   console.error('discordMakers', url)
   return axios
     .get(url)
@@ -65,7 +65,7 @@ export const discordMakerId = (
   $config: NuxtConfig,
   id: string
 ): Promise<User | null> => {
-  const url = `${$config.BASEAPI}/maker?id=${id}`
+  const url = `${$config.BASEAPI}/makers?id=${id}`
   return axios
     .get(url)
     .then((response) => {

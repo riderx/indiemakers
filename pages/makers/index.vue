@@ -2,7 +2,7 @@
   <div>
     <div class="flex flex-wrap overflow-hidden">
       <div class="w-full px-1 pt-1 overflow-hidden sm:pt-5 sm:px-5 sm:w-3/4">
-        <Posts v-if="loaded" :posts="posts" />
+        <ListPosts v-if="loaded" :posts="posts" />
       </div>
       <div class="w-full overflow-hidden sm:w-1/4">
         <div class="flex flex-wrap overflow-hidden">
@@ -18,10 +18,11 @@
         </div>
       </div>
     </div>
+    <PageLoader :show="!loaded" />
   </div>
 </template>
 <script lang="ts">
-import { ref, onMounted } from '@vue/composition-api'
+import { ref } from '@vue/composition-api'
 import {
   defineComponent,
   useFetch,
@@ -36,7 +37,8 @@ import { Post, Project, User } from '~/services/types'
 export default defineComponent({
   components: {
     JoinUs: () => import('~/components/JoinUs.vue'),
-    Posts: () => import('~/components/Posts.vue'),
+    ListPosts: () => import('~/components/ListPosts.vue'),
+    PageLoader: () => import('~/components/PageLoader.vue'),
     LadderMakers: () => import('~/components/LadderMakers.vue'),
     LadderProject: () => import('~/components/LadderProject.vue'),
   },
@@ -62,11 +64,9 @@ export default defineComponent({
       if (projectsData) {
         projects.value = projectsData
       }
-    })
-    fetch()
-    onMounted(() => {
       loaded.value = true
     })
+    fetch()
     title.value = 'La communauté INDIE MAKERS'
     meta.value = createMeta(
       `${$config.DOMAIN}${route.value.fullPath}`,

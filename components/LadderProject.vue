@@ -89,7 +89,7 @@ export default defineComponent({
       return {}
     }
     const openProject = (id: string | undefined, hashtag: string) => {
-      if (id) router.push(`/makers/${encodeURI(id)}/projet/${hashtag}`)
+      if (id) router.push(`/makers/${encodeURI(id)}/projets/${hashtag}`)
     }
     return { sort, sorted, getTextColor, openProject, noImge }
   },

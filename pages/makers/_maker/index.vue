@@ -23,7 +23,7 @@
         :alt="'image profil ' + maker.username"
       />
     </div>
-    <div class="flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center justify-center mx-3 md:mx-0">
       <h1
         class="mt-20 text-3xl font-medium text-white font-indie"
         :style="getTextColor(maker.color)"
@@ -71,37 +71,26 @@
     <div v-if="hashtag" class="flex flex-col m-5 md:flex-row md:m-10">
       <div
         class="
-          p-5
           mb-2
           text-lg
           bg-white
+          md:p-5
           text-royalblue-700
-          md:p-10 md:mb-0 md:w-2/5
+          md:mb-0 md:w-2/5
           lg:w-1/5
         "
       >
         <h1
-          class="
-            hidden
-            mb-5
-            text-3xl
-            md:block
-            text-royalblue-700
-            lg:mb-10
-            font-indie
-          "
+          class="hidden text-3xl md:block text-royalblue-700 lg:mb-5 font-indie"
         >
           🪴 {{ maker.projects }} Projets
         </h1>
         <div class="flex w-full overflow-x-scroll md:flex-col">
-          <NuxtLink
+          <a
             v-for="project in maker.projectsData"
             :key="project.hashtag"
-            :to="`/communaute/maker/${encodeURI(maker.username)}/projet/${
-              project.hashtag
-            }`"
             class="flex-none my-4 ml-3 cursor-pointer md:my-2 lg:my-4 md:ml-0"
-            @click="hashtag = project.hashtag"
+            @click="setHastag(project.hashtag)"
           >
             <div class="relative flex items-end">
               <img
@@ -115,12 +104,6 @@
                 "
                 :src="project.logo || noImge"
               />
-              <h2
-                class="mx-1 text-2xl truncate font-indie"
-                :style="getTextColor(project.color)"
-              >
-                {{ project.emoji || '' }} {{ project.name || project.hashtag }}
-              </h2>
               <span
                 class="
                   absolute
@@ -132,8 +115,14 @@
                 "
                 >🔥{{ project.streak }}</span
               >
+              <h2
+                class="mx-1 text-2xl truncate font-indie"
+                :style="getTextColor(project.color)"
+              >
+                {{ project.emoji || '' }} {{ project.name || project.hashtag }}
+              </h2>
             </div>
-          </NuxtLink>
+          </a>
         </div>
       </div>
       <NuxtChild />
@@ -142,58 +131,94 @@
           class="
             flex flex-col
             items-center
-            p-10
+            p-2
             mb-2
             bg-white
+            md:p-10
             text-royalblue-700
             lg:flex-row
           "
         >
-          <img
-            class="
-              object-cover
-              w-32
-              h-32
-              mb-5
-              border-2
-              rounded-lg
-              border-royalblue-700
-              lg:mb-0 lg:mr-3
-            "
-            :src="projectData.logo || noImge"
-          />
-          <div class="text-center lg:text-left">
-            <h1
-              class="text-3xl font-indie"
-              :style="getTextColor(projectData.color)"
+          <div class="relative flex items-end">
+            <img
+              class="
+                object-cover object-top
+                w-32
+                h-32
+                border-2
+                rounded-lg
+                border-royalblue-700
+              "
+              :src="projectData.logo || noImge"
+            />
+            <span
+              class="
+                absolute
+                bottom-0
+                text-sm text-white
+                bg-opacity-75
+                rounded-tr-lg rounded-bl-lg
+                bg-royalblue-700
+              "
+              >🔥{{ projectData.streak }}</span
             >
-              {{ projectData.emoji || '' }}
-              {{ projectData.name || projectData.hashtag }}
-              <span class="text-base">🔥{{ projectData.streak }}</span>
-            </h1>
-            <p class="my-2 text-xl">{{ projectData.description }}</p>
-            <a :href="projectData.website" target="_blank" class="text-lg">{{
-              projectData.website
-            }}</a>
+            <div class="mx-3 text-center lg:text-left">
+              <h2
+                class="text-2xl truncate cursor-pointer font-indie"
+                :style="getTextColor(projectData.color)"
+                @click="openProject()"
+              >
+                {{ projectData.emoji || '' }}
+                {{ projectData.name || projectData.hashtag }}
+              </h2>
+              <p class="my-2 text-xl">{{ projectData.description }}</p>
+              <a :href="projectData.website" target="_blank" class="text-lg">{{
+                projectData.website
+              }}</a>
+            </div>
           </div>
         </div>
-        <div class="flex w-full">
-          <ListTasks
-            v-if="projectData.tasksData"
-            :all="projectData.tasksData"
-          />
-          <ListIncomes
-            v-if="projectData.incomesData"
-            :all="projectData.incomesData"
-          />
+        <div class="flex flex-col w-full md:flex-row">
+          <div
+            v-if="projectData.postsData && projectData.postsData.total > 0"
+            class="w-full p-3 mb-3 bg-white md:p-10 md:w-1/2 md:mb-0"
+          >
+            <ListPosts :posts="projectData.postsData.posts" />
+          </div>
+          <div
+            v-if="projectData.tasksData && projectData.tasksData.total > 0"
+            class="w-full p-3 mb-3 bg-white md:p-10 md:w-1/2 md:mb-0"
+          >
+            <ListTasks :all="projectData.tasksData" />
+          </div>
+          <div
+            v-if="projectData.incomesData && projectData.incomesData.total > 0"
+            class="w-full p-3 mb-3 bg-white md:p-10 md:w-1/2 md:mb-0"
+          >
+            <ListIncomes :all="projectData.incomesData" />
+          </div>
+          <div
+            v-if="
+              projectData.tasksData &&
+              projectData.tasksData.total == 0 &&
+              projectData.postsData &&
+              projectData.postsData.total == 0 &&
+              projectData.incomesData &&
+              projectData.incomesData.total == 0
+            "
+            class="w-full p-3 mb-3 bg-white md:p-10 md:mb-0"
+          >
+            Ce projet n'as pas encore de revenus, de tache ou de post
+          </div>
         </div>
       </div>
     </div>
+    <PageLoader :show="!loaded || !loadedProject" />
   </div>
 </template>
 <script lang="ts">
-import { ref, onMounted } from '@vue/composition-api'
 import {
+  ref,
   defineComponent,
   useFetch,
   useContext,
@@ -206,6 +231,12 @@ import { discordMakerId, discordHashtag } from '~/services/rss'
 import { createMeta } from '~/services/meta'
 
 export default defineComponent({
+  components: {
+    ListTasks: () => import('~/components/ListTasks.vue'),
+    PageLoader: () => import('~/components/PageLoader.vue'),
+    ListPosts: () => import('~/components/ListPosts.vue'),
+    ListIncomes: () => import('~/components/ListIncomes.vue'),
+  },
   setup() {
     const { $config, params } = useContext()
     const router = useRouter()
@@ -239,9 +270,16 @@ export default defineComponent({
         maker.value.cover || noImge
       )
     }
-    onMounted(() => {
-      loaded.value = true
-    })
+    const setHastag = (ht: string) => {
+      hashtag.value = ht
+      getProject(hashtag.value)
+    }
+    const openProject = () => {
+      if (maker.value && hashtag.value)
+        router.push(
+          `/makers/${encodeURI(maker.value?.username)}/projets/${hashtag.value}`
+        )
+    }
     const getTextColor = (color: string | undefined) => {
       if (color) {
         return { color: `#${color}` }
@@ -251,7 +289,11 @@ export default defineComponent({
     const getProject = async (hashtag: string): Promise<void> => {
       if (maker.value) {
         loadedProject.value = false
-        const proj = await discordHashtag($config, maker.value.userId, hashtag)
+        const proj = await discordHashtag(
+          $config,
+          maker.value.username,
+          hashtag
+        )
         if (proj) {
           projectData.value = proj
           loadedProject.value = true
@@ -259,17 +301,19 @@ export default defineComponent({
       }
     }
     const goHome = () => {
-      router.push('/communaute')
+      router.push('/makers')
     }
     return {
       maker,
       projectData,
       loadedProject,
+      setHastag,
       hashtag,
       loaded,
       noCover,
       noImge,
       goHome,
+      openProject,
       getTextColor,
     }
   },
