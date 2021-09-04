@@ -291,4 +291,3 @@ export const scheduledBotBIPMorning = pubsub
 function rssToFirebase() {
   throw new Error('Function not implemented.')
 }
-

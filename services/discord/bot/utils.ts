@@ -246,7 +246,7 @@ export const sendTxtLater = async (
       console.error('sendTxtLater Error', err.message)
     }
     // console.error('sendTxtLater content', url, JSON.stringify(content))
-    const res = await axios
+    await axios
       .patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
       .catch((errErr) => {
         console.error('sendTxtLaterFallback', err.response, errErr.response)
