@@ -42,7 +42,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
-import { Task, TaskAll } from '~/services/discord/bot/tasks'
+import { Task, TaskAll } from '~/services/types'
+
 export default defineComponent({
   props: {
     all: {

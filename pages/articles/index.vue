@@ -92,6 +92,7 @@ import {
   useRoute,
   useMeta,
 } from '@nuxtjs/composition-api'
+import { IContentDocument } from '@nuxt/content/types/content'
 import { createMeta } from '~/services/meta'
 
 export default defineComponent({
@@ -99,7 +100,7 @@ export default defineComponent({
     const { $content, $config } = useContext()
     const route = useRoute()
     const { title, meta } = useMeta()
-    const articles = ref([])
+    const articles = ref<IContentDocument | IContentDocument[]>([])
     const blogImage =
       'https://res.cloudinary.com/forgr/image/upload/v1621019063/indiemakers/blog_li7d4i.svg'
     const description =

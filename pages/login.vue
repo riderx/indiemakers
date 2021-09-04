@@ -80,105 +80,75 @@
     </div>
   </div>
 </template>
+
 <script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({
-  data() {
-    return {
-      title: 'Connecte toi a indie makers' as string,
-      message: 'Pour voter pour tes makers favorie' as string,
-      isFalse: false as boolean,
-      user: {} as any,
-      // email: '' as string,
-    }
-  },
-  head() {
-    return {
-      title: (this as any).title,
-      meta: [
-        {
-          hid: 'og:url',
-          property: 'og:url',
-          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-        { hid: 'title', name: 'title', content: (this as any).title },
-        {
-          hid: 'description',
-          name: 'description',
-          content: (this as any).message,
-        },
-        {
-          hid: 'og:title',
-          property: 'og:title',
-          content: (this as any).title,
-        },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: (this as any).message,
-        },
-        {
-          hid: 'og:image:alt',
-          property: 'og:image:alt',
-          content: (this as any).title,
-        },
-        {
-          hid: 'og:image:type',
-          property: 'og:image:type',
-          content: 'image/png',
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
-        },
-        { hid: 'og:image:width', property: 'og:image:width', content: '400' },
-        { hid: 'og:image:height', property: 'og:image:height', content: '400' },
-      ],
-    }
-  },
-  mounted() {
-    ;(this as any).email = this.$warehouse.get('emailForSignIn')
-    this.$firebase.auth.listen((user: any) => {
-      this.user = user
-      if (this.user && this.user.displayName === null) {
-        this.$modal.show('confirmName')
-      } else if (this.user) {
-        this.$firebase.db.ref(`users/${this.user.id}`).set({
-          name: this.user.displayName,
-          email: this.user.email,
-        })
-        const next = this.$warehouse.get('nextAfterSign')
-        if (next) {
-          this.$warehouse.remove('nextAfterSign')
+import {
+  ref,
+  defineComponent,
+  onMounted,
+  useContext,
+  useMeta,
+  useRoute,
+  useRouter,
+} from '@nuxtjs/composition-api'
+import { createMeta } from '~/services/meta'
+
+export default defineComponent({
+  setup() {
+    const { $config, $firebase, $modal, $warehouse } = useContext()
+    const { title, meta } = useMeta()
+    const router = useRouter()
+    const route = useRoute()
+    const email = ref('')
+    const desc = 'Pour voter pour tes makers favorie'
+    title.value = 'Connecte toi a indie makers'
+    meta.value = createMeta(
+      `${$config.DOMAIN}${route.value.fullPath}`,
+      title.value,
+      desc,
+      'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
+    )
+    onMounted(() => {
+      email.value = $warehouse.get('emailForSignIn')
+      $firebase.auth.listen((user: any) => {
+        if (user && user.displayName === null) {
+          $modal.show('confirmName')
+        } else if (user) {
+          $firebase.db.ref(`users/${user.id}`).set({
+            name: user.displayName,
+            email: user.email,
+          })
+          const next = $warehouse.get('nextAfterSign')
+          if (next) {
+            $warehouse.remove('nextAfterSign')
+          }
+          router.push(next || '/makers')
         }
-        this.$router.push(next || '/makers')
+      })
+      if (email.value) {
+        sendConfirm()
       }
     })
-    if ((this as any).email) {
-      this.sendConfirm()
-    }
-  },
-  methods: {
-    sendConfirm() {
-      if ((this as any).email) {
-        this.$modal.show('loading')
-        this.$firebase.auth
+    const sendConfirm = () => {
+      if (email.value) {
+        $modal.show('loading')
+        $firebase.auth
           .handleSignInRedirect({
-            email: (this as any).email,
+            email: email.value,
           })
           .then(() => {
-            this.$warehouse.remove('emailForSignIn')
-            ;(this as any).email = ''
-            this.$modal.hide('loading')
+            $warehouse.remove('emailForSignIn')
+            email.value = ''
+            $modal.hide('loading')
           })
           .catch((error: any) => {
             console.error(error)
-            this.$modal.hide('loading')
-            this.$router.push('/')
+            $modal.hide('loading')
+            router.push('/')
           })
       }
-    },
+    }
+    return { sendConfirm, email }
   },
 })
 </script>

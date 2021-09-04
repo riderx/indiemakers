@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import fFnit from '../../services/firebase/init'
 import dayjs from './../../services/dayjs'
-import { getAllUsers } from '~/services/firebase/discord'
-import { getAllAllPosts } from '~/services/firebase/posts'
+import { getAllUsers } from '../../services/firebase/discord'
+import { getAllAllPosts } from '../../services/firebase/posts'
 
 const list = async (_req: Request, res: Response) => {
   fFnit()

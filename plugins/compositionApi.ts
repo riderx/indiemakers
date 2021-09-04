@@ -9,3 +9,9 @@ declare module '@nuxt/types' {
     $md: MarkdownIt
   }
 }
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $md: MarkdownIt
+  }
+}

@@ -1,3 +1,4 @@
+import { contentFunc } from '@nuxt/content/types/content'
 import Vue from 'vue'
 // @ts-ignore
 import VModal from 'vue-js-modal/dist/ssr.nocss'
@@ -28,5 +29,15 @@ declare module 'vue/types/vue' {
 declare module '@nuxt/types' {
   interface Context {
     $modal: CustomModal
+    $content: contentFunc
   }
 }
+
+import { Plugin } from '@nuxt/types'
+
+
+const myPlugin: Plugin = (context) => {
+  context.$modal = Vue.prototype.$modal
+}
+
+export default myPlugin

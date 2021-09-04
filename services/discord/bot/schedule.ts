@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
-import { getAllUsers, getConfig } from '~/services/firebase/discord'
-import { User } from '~/services/types'
+import { getAllUsers, getConfig } from '../../../services/firebase/discord'
+import { User } from '../../../services/types'
 import { getAllAllProject } from './project'
 import { updateIncomeAllProject } from './stripe'
 import { resetProjectStreak, resetUserStreak } from './tasks'

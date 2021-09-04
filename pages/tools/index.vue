@@ -100,7 +100,8 @@ import {
   useMeta,
 } from '@nuxtjs/composition-api'
 import { createMeta } from '~/services/meta'
-import { getTools, Tool } from '~/services/tools'
+import { getTools } from '~/services/tools'
+import { Tool } from '~/services/types'
 
 export default defineComponent({
   setup() {

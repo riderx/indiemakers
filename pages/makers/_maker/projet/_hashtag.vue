@@ -109,9 +109,9 @@ import {
   useRoute,
   useMeta,
 } from '@nuxtjs/composition-api'
-import { Project } from '~/services/discord/bot/project'
 import { discordHashtag } from '~/services/rss'
 import { createMeta } from '~/services/meta'
+import { Project } from '~/services/types'
 
 export default defineComponent({
   components: {

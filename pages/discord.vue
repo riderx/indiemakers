@@ -98,91 +98,60 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import {
+  ref,
+  defineComponent,
+  useContext,
+  useMeta,
+  useRoute,
+  useRouter,
+} from '@nuxtjs/composition-api'
+import { createMeta } from '~/services/meta'
 
-export default Vue.extend({
-  data() {
-    return {
-      email: '',
-      name: '',
-      logo: {
-        title: 'Communauté LOGO',
-        source:
-          'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/undraw_connection_b38q_czvwhb.svg',
-      },
-      title: 'Rejoint le Discord',
-      desc: '300 Makers là pour échanger et disponible pour répondre à tes questions !',
+export default defineComponent({
+  setup() {
+    const { $config, $firebase, $modal } = useContext()
+    const { title, meta } = useMeta()
+    const email = ref('')
+    const name = ref('')
+    const route = useRoute()
+    const router = useRouter()
+    const logo = {
+      title: 'Communauté LOGO',
+      source:
+        'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/undraw_connection_b38q_czvwhb.svg',
     }
-  },
-  head() {
-    return {
-      title: (this as any).title,
-      meta: [
-        {
-          hid: 'og:url',
-          property: 'og:url',
-          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-        { hid: 'title', name: 'title', content: (this as any).title },
-        {
-          hid: 'description',
-          name: 'description',
-          content: (this as any).desc,
-        },
-        { hid: 'og:title', property: 'og:title', content: (this as any).title },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: (this as any).desc,
-        },
-        {
-          hid: 'og:image:alt',
-          property: 'og:image:alt',
-          content: (this as any).title,
-        },
-        {
-          hid: 'og:image:type',
-          property: 'og:image:type',
-          content: 'image/png',
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
-        },
-        {
-          hid: 'og:image:secure_url',
-          property: 'og:image:secure_url',
-          content: `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
-        },
-        { hid: 'og:image:width', property: 'og:image:width', content: '400' },
-        { hid: 'og:image:height', property: 'og:image:height', content: '400' },
-      ],
-    }
-  },
-  mounted() {},
-  methods: {
-    joinDiscord() {
-      this.$firebase.db
-        .ref(`users/${this.email}`)
+    const desc =
+      "Plus de 300 Makers Français qui construise leur projets et s'entre aide !"
+    title.value = 'Rejoint le Discord'
+    meta.value = createMeta(
+      `${$config.DOMAIN}${route.value.fullPath}`,
+      title.value,
+      desc,
+      'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
+    )
+    const joinDiscord = () => {
+      $firebase.db
+        .ref(`users/${email.value}`)
         .set({
-          first_name: this.name,
-          email: this.email,
+          first_name: name.value,
+          email: email.value,
         })
         .then(() => {
           window.open('https://discord.gg/GctKEcDpxk', '_blank')
           setTimeout(() => {
-            this.$router.push('/')
+            router.push('/')
           }, 2000)
         })
         .catch(() => {
-          this.$modal.show('already_register')
+          $modal.show('already_register')
           window.open('https://discord.gg/GctKEcDpxk', '_blank')
           setTimeout(() => {
-            this.$router.push('/')
+            router.push('/')
           }, 2000)
         })
-    },
+    }
+    return { joinDiscord, logo, title, desc, email, name }
   },
 })
 </script>

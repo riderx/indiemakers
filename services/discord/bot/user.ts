@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
-import { updateUser, getAllUsers, getUsersById } from '~/services/firebase/discord'
-import { User, Embed } from '~/services/types'
+import { updateUser, getAllUsers, getUsersById } from '../../../services/firebase/discord'
+import { User, Embed } from '../../../services/types'
 import {
   ApplicationCommandInteractionDataOption,
   Interaction,

@@ -3,13 +3,14 @@
   <section aria-labelledby="activity-title" class="px-4 pb-2">
     <div>
       <div class="divide-y divide-gray-200">
-        <div class="pt-6">
+        <div>
           <!-- Activity feed-->
           <div class="flow-root">
             <ul role="list" class="-mb-8">
               <li
                 v-for="(post, itemIdx) in posts"
                 :key="`${post.userId}_${post.id}`"
+                class="bg-white"
               >
                 <div class="relative pb-8">
                   <span
@@ -21,7 +22,7 @@
                       -ml-px
                       h-full
                       w-0.5
-                      bg-gray-200
+                      bg-orchid-300
                     "
                     aria-hidden="true"
                   />
@@ -34,8 +35,8 @@
                           justify-center
                           w-10
                           h-10
-                          bg-gray-400
                           rounded-full
+                          bg-orchid-300
                           ring-8 ring-white
                         "
                         :src="post.userAvatarUrl"
@@ -87,7 +88,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, useRouter } from '@nuxtjs/composition-api'
-import { Post } from '../services/discord/bot/post'
+import { Post } from '~/services/types'
 
 export default defineComponent({
   props: {

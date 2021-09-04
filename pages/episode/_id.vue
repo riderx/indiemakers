@@ -291,9 +291,10 @@ import {
   useMeta,
 } from '@nuxtjs/composition-api'
 import Vue from 'vue'
-import { cutText, Episode, removeEmoji } from '~/services/feed'
+import { cutText, removeEmoji } from '~/services/feed'
 import { feed, ep } from '~/services/rss'
 import { createMeta } from '~/services/meta'
+import { Episode } from '~/services/types'
 
 export default defineComponent({
   setup() {

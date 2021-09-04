@@ -8,7 +8,10 @@
         >
           ← Tous les articles
         </a>
-        <div class="relative py-16 mt-4 overflow-hidden bg-white">
+        <div
+          v-if="loaded && page"
+          class="relative py-16 mt-4 overflow-hidden bg-white"
+        >
           <div
             class="hidden lg:block lg:absolute lg:inset-y-0 lg:h-full lg:w-full"
           >
@@ -191,18 +194,21 @@ import {
   useRoute,
   useMeta,
 } from '@nuxtjs/composition-api'
+import { IContentDocument } from '@nuxt/content/types/content'
 import { createMeta } from '~/services/meta'
 export default defineComponent({
   setup() {
     const { $content, $config, params } = useContext()
     const route = useRoute()
+    const loaded = ref(false)
     const { title, meta } = useMeta()
-    const page = ref()
+    const page = ref<IContentDocument>()
     const { fetch } = useFetch(async () => {
-      const data = await $content('articles')
+      const data = (await $content('articles')
         .where({ slug: params.value.id })
-        .fetch()[0]
-      page.value = data
+        .fetch()) as IContentDocument[]
+      page.value = data[0]
+      loaded.value = true
     })
     fetch()
     if (page.value) {
@@ -216,7 +222,7 @@ export default defineComponent({
         page.value.author
       )
     }
-    return { page }
+    return { page, loaded }
   },
   head: {},
 })

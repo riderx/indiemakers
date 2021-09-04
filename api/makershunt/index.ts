@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { firestore } from 'firebase-admin'
-import { Episode } from '~/services/types'
+import { Episode } from '../../services/types'
 import { feed } from '../../services/feed'
 import fFnit from '../../services/firebase/init'
 

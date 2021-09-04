@@ -5,8 +5,8 @@ import axios from 'axios'
 import { hexToDec } from 'hex2dec'
 import dayjs from 'dayjs'
 import { APIMessage } from 'discord-api-types/v9'
-import { Footer, Author, Field, Embed, DiscordMessage, User, Image } from '~/services/types'
-import { getConfig, saveRateLimit } from '~/services/firebase/discord';
+import { Footer, Author, Field, Embed, DiscordMessage, User, Image } from '../../../services/types'
+import { getConfig, saveRateLimit } from '../../../services/firebase/discord';
 
 export const image = (url: string): Image => ({ url })
 // eslint-disable-next-line camelcase

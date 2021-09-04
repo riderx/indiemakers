@@ -1,4 +1,4 @@
-import { getAllPodcast } from './../../services/firebase/podcasts';
+import { getAllPodcast } from '../../services/firebase/podcasts';
 import { Request, Response } from 'express'
 import fFnit from '../../services/firebase/init'
 

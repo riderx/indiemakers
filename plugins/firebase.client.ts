@@ -47,4 +47,21 @@ declare module '@nuxt/types' {
   }
 }
 
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $warehouse: WarehouseStoreAPI
+    $firebase: CustomFire
+  }
+}
+
 Vue.prototype.$firebase = { auth, db, func, emailSigning }
+
+import { Plugin } from '@nuxt/types'
+
+
+const myPlugin: Plugin = (context) => {
+  context.$firebase = { auth, db, func, emailSigning }
+}
+
+export default myPlugin

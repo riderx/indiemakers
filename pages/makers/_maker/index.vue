@@ -201,6 +201,7 @@ import {
   useRoute,
   useMeta,
 } from '@nuxtjs/composition-api'
+import { User, Project } from '~/services/types'
 import { discordMakerId, discordHashtag } from '~/services/rss'
 import { createMeta } from '~/services/meta'
 

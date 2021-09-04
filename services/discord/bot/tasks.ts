@@ -23,9 +23,9 @@ import {
   getProjectById,
   updateProject,
 } from './project'
-import { Project, Task, TaskAll, TaskStatus, User } from '~/services/types'
-import { getUsersById, updateUser } from '~/services/firebase/discord'
-import { addTask, getTask, getLastTask, getOneProjectsTaskDoc, getAllProjectsTasks, deleteProjectTask } from '~/services/firebase/tasks'
+import { Project, Task, TaskStatus, User } from '../../../services/types'
+import { getUsersById, updateUser } from '../../../services/firebase/discord'
+import { addTask, getTask, getLastTask, getOneProjectsTaskDoc, getAllProjectsTasks, deleteProjectTask } from '../../../services/firebase/tasks'
 
 const projectSem: { [key: string]: Mutex } = {}
 

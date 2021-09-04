@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import { getUsersByUsername } from '~/services/firebase/discord'
-import { getAllPosts } from '~/services/firebase/posts'
-import { getAllProjects } from '~/services/discord/bot/project'
-import fFnit from '~/services/firebase/init'
+import { getUsersByUsername } from '../../services/firebase/discord'
+import { getAllPosts } from '../../services/firebase/posts'
+import { getAllProjects } from '../../services/discord/bot/project'
+import fFnit from '../../services/firebase/init'
 
 const maker = async (req: Request, res: Response) => {
   if (req?.query?.id) {

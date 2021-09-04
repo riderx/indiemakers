@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import { ref, computed, defineComponent } from '@nuxtjs/composition-api'
-import { Income, IncomeAll } from '~/services/discord/bot/incomes'
+import { Income, IncomeAll } from '~/services/types'
 
 export default defineComponent({
   props: {

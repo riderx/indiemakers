@@ -6,8 +6,8 @@ import {
 } from '../../services/discord/bot/project'
 import { getAllProjectsIncomes } from '../../services/discord/bot/incomes'
 import fFnit from '../../services/firebase/init'
-import { getPostsByHash } from '~/services/firebase/posts';
-import { getAllProjectsTasks } from '~/services/firebase/tasks';
+import { getPostsByHash } from '../../services/firebase/posts';
+import { getAllProjectsTasks } from '../../services/firebase/tasks';
 
 const project = async (req: Request, res: Response) => {
   fFnit()

@@ -91,7 +91,7 @@ export const makers = ($config: NuxtConfig): Promise<Person[]> => {
 }
 
 export const feed = ($config: NuxtConfig): Promise<Episode[]> => {
-  const url = `${$config.BASEAPI}/feed`
+  const url = `${$config.BASEAPI}/podcasts`
   return axios
     .get(url)
     .then((response) => {
@@ -107,7 +107,7 @@ export const ep = (
   guid: string,
   $config: NuxtConfig
 ): Promise<Episode | null> => {
-  const url = `${$config.BASEAPI}/ep?guid=${guid}`
+  const url = `${$config.BASEAPI}/podcast?guid=${guid}`
   return axios
     .get(url)
     .then((response) => {

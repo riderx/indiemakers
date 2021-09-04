@@ -66,7 +66,7 @@ import {
   ref,
   useRouter,
 } from '@nuxtjs/composition-api'
-import { Project } from '~/services/discord/bot/project'
+import { Project } from '~/services/types'
 
 export default defineComponent({
   props: {

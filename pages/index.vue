@@ -106,8 +106,9 @@ import {
 import { feed } from '~/services/rss'
 import { crispLoader } from '~/services/crisp'
 import { createMeta } from '~/services/meta'
-import { cutText, Episode } from '~/services/feed'
+import { cutText } from '~/services/feed'
 import dayjs from '~/services/dayjs'
+import { Episode } from '~/services/types'
 
 export default defineComponent({
   components: {

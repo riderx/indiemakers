@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { getAllUsers } from '~/services/firebase/discord'
-import fFnit from '~/services/firebase/init'
+import { getAllUsers } from '../../services/firebase/discord'
+import fFnit from '../../services/firebase/init'
 
 const list = async (_req: Request, res: Response) => {
   fFnit()

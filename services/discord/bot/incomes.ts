@@ -7,8 +7,8 @@ import {
 } from '../command'
 import { sendChannel, sendTxtLater } from './utils'
 import { getAllProjects } from './project'
-import { Income, IncomeAll } from '~/services/types'
-import { getConfig, updateUser } from '~/services/firebase/discord'
+import { Income, IncomeAll } from '../../../services/types'
+import { getConfig, updateUser } from '../../../services/firebase/discord'
 
 export const createProjectIncome = async (
   userId: string,

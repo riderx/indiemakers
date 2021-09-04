@@ -2,7 +2,7 @@
   <div>
     <div class="flex flex-wrap overflow-hidden">
       <div class="w-full px-1 pt-1 overflow-hidden sm:pt-5 sm:px-5 sm:w-3/4">
-        <Posts v-if="loaded" class="bg-white" :posts="posts" />
+        <Posts v-if="loaded" :posts="posts" />
       </div>
       <div class="w-full overflow-hidden sm:w-1/4">
         <div class="flex flex-wrap overflow-hidden">
@@ -30,11 +30,8 @@ import {
   useMeta,
 } from '@nuxtjs/composition-api'
 import { discordMakers, discordProjects, discordPosts } from '~/services/rss'
-
-import { Project } from '~/services/discord/bot/project'
-import { User } from '~/services/discord/bot/user'
-import { Post } from '~/services/discord/bot/post'
 import { createMeta } from '~/services/meta'
+import { Post, Project, User } from '~/services/types'
 
 export default defineComponent({
   components: {

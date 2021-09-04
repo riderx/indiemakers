@@ -11,9 +11,9 @@ import {
   getUserUrl,
   getLastChannelMessage,
 } from './utils'
-import { Embed, Post } from '~/services/types'
-import { updateUser } from '~/services/firebase/discord'
-import { updatePost, getLastPost, getAllPosts, getPostById, deletePost } from '~/services/firebase/posts'
+import { Embed, Post } from '../../../services/types'
+import { updateUser } from '../../../services/firebase/discord'
+import { updatePost, getLastPost, getAllPosts, getPostById, deletePost } from '../../../services/firebase/posts'
 
 const postEdit = async (
   interaction: Interaction,

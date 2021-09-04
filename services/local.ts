@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import * as dotenv from 'dotenv'
-import feed from '../api/feed'
+import podcasts from '../api/podcasts'
 import bot from '../api/bot'
 import sitemap from '../api/sitemap'
 import rss from '../api/rss'
@@ -11,7 +11,7 @@ import posts from '../api/posts'
 import tools from '../api/tools'
 import project from '../api/project'
 import community from '../api/community'
-import ep from '../api/ep'
+import podcast from '../api/podcast'
 import { lateBot, morningBot } from './discord/bot/schedule'
 
 dotenv.config()
@@ -29,7 +29,7 @@ const late = async (_req: Request, res: Response) => {
   return res.status(200).end('Late send')
 }
 app.use(express.json())
-appRouter.get('/feed', feed)
+appRouter.get('/podcasts', podcasts)
 appRouter.get('/sitemap.xml', sitemap)
 appRouter.get('/rss.xml', rss)
 appRouter.get('/makershunt', makershunt)
@@ -38,7 +38,7 @@ appRouter.get('/community', community)
 appRouter.get('/maker', maker)
 appRouter.get('/posts', posts)
 appRouter.get('/project', project)
-appRouter.get('/ep', ep)
+appRouter.get('/podcast', podcast)
 appRouter.all('/bot', bot)
 appRouter.get('/morning', morning)
 appRouter.get('/late', late)

@@ -25,8 +25,8 @@ import {
   deleteProjectIncome,
   getAllProjectsIncomes,
 } from './incomes'
-import { Embed, Income, Project, User } from '~/services/types'
-import { updateUser } from '~/services/firebase/discord'
+import { Embed, Income, Project, User } from '../../../services/types'
+import { updateUser } from '../../../services/firebase/discord'
 // eslint-disable-next-line no-unused-vars
 
 const projectPublicKey = [

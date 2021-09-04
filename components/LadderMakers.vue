@@ -70,7 +70,7 @@ import {
   ref,
   useRouter,
 } from '@nuxtjs/composition-api'
-import { User } from '~/services/discord/bot/user'
+import { User } from '~/services/types'
 
 export default defineComponent({
   props: {
