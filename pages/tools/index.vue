@@ -85,7 +85,7 @@
           </a>
         </div>
       </div>
-      <PageLoader :show="loading" />
+      <PageLoader :show="fetchState.pending" />
     </div>
   </div>
 </template>
@@ -108,9 +108,8 @@ export default defineComponent({
     const { $config } = useContext()
     const { title, meta } = useMeta()
     const route = useRoute()
-    const loading = ref(false)
     const tools = ref<Tool[]>([])
-
+    // v-if="$fetchState.pending"
     const description =
       "Voici les meilleurs outils que j'ai trouvé pour concretiser mes projets !"
     title.value = 'Mes outils quotidiens'
@@ -122,16 +121,16 @@ export default defineComponent({
       null,
       'Martin Donadieu'
     )
-    const { fetch } = useFetch(async () => {
+    const { fetch, fetchState } = useFetch(async () => {
       const toolsData = await getTools($config)
       if (toolsData) {
         tools.value = toolsData
-        loading.value = true
       }
     })
     fetch()
-    return { title, tools, description, loading }
+    return { title, tools, description, fetchState }
   },
+  head: {},
 })
 </script>
 <style scoped>

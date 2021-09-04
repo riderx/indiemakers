@@ -150,5 +150,6 @@ export default defineComponent({
     }
     return { sendConfirm, email }
   },
+  head: {},
 })
 </script>

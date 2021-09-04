@@ -73,15 +73,11 @@ export default defineComponent({
       title.value,
       "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !"
     )
-    const joinUs = () => {
-      window.open('https://discord.gg/GctKEcDpxk', '_blank')
-    }
     return {
       loaded,
       users,
       posts,
       projects,
-      joinUs,
     }
   },
   head: {},

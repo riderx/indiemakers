@@ -154,6 +154,7 @@ export default defineComponent({
     }
     return { addEMailSub, title, desc, name, email, logo }
   },
+  head: {},
 })
 </script>
 <style scoped>

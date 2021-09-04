@@ -153,6 +153,7 @@ export default defineComponent({
     }
     return { joinDiscord, logo, title, desc, email, name }
   },
+  head: {},
 })
 </script>
 <style scoped>
