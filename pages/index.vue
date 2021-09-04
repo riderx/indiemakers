@@ -4,14 +4,14 @@
       <div class="container w-full px-0 mx-auto">
         <div class="flex flex-wrap w-full">
           <div class="w-full md:w-1/2 md:px-4">
-            <div
+            <!-- <div
               id="header-eps"
               class="flex flex-wrap w-full py-1 border-8 border-white py-md-2"
             >
               <div class="flex-grow px-0 py-2 text-center text-white">
                 <p class="text-3xl md:text-4xl font-indie">🎙 Episodes</p>
               </div>
-            </div>
+            </div> -->
             <div
               id="scrollable"
               class="
@@ -122,7 +122,7 @@ export default defineComponent({
       "J'échange avec ceux qui ont su transformer leurs idées en business florissant.",
       'Au-delà des belles histoires, je décrypte leur passé, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables en indépendant.',
       'J’interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur projet profitable.',
-      'Un épisode tous les 15 jours',
+      'Un épisode toute les semaines',
     ]
     const { $config } = useContext()
     const route = useRoute()
@@ -133,7 +133,7 @@ export default defineComponent({
       episodes.value = items.map((episode) => {
         return {
           ...episode,
-          preview: cutText(episode.content),
+          preview: cutText(episode.content, 30),
           date: dayjs(episode.pubDate).fromNow(),
         }
       })
