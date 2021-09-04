@@ -1,3 +1,4 @@
+import { podcastToFirebase } from './../../services/firebase/podcasts';
 import { config, https, pubsub, firestore } from 'firebase-functions'
 import admin from 'firebase-admin'
 import { Person } from '../../services/types'
@@ -266,8 +267,8 @@ export const scheduledRssToFirebase = pubsub
   .schedule('7 * * * *')
   .timeZone('Europe/Paris')
   .onRun(async () => {
-    console.error('This will be run every hours at **:07 AM Paris!')
-    await rssToFirebase()
+    console.error('This will be run every hours at **:07 Paris!')
+    await podcastToFirebase()
     return null
   })
 
@@ -288,6 +289,3 @@ export const scheduledBotBIPMorning = pubsub
     await morningBot()
     return null
   })
-function rssToFirebase() {
-  throw new Error('Function not implemented.')
-}
