@@ -107,7 +107,7 @@ export const ep = (
   guid: string,
   $config: NuxtConfig
 ): Promise<Episode | null> => {
-  const url = `${$config.BASEAPI}/podcast?guid=${guid}`
+  const url = `${$config.BASEAPI}/podcasts?guid=${guid}`
   return axios
     .get(url)
     .then((response) => {
