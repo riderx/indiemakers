@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
-import * as functions from 'firebase-functions'
+import { config } from 'firebase-functions'
 
-const configSecret = functions.config()
+const configSecret = config()
 axios.defaults.baseURL = 'https://www.getrevue.co'
 axios.defaults.headers.common.Authorization = `Token ${configSecret.getrevue.apikey}`
 

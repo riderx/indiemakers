@@ -14,7 +14,7 @@ export const userExists = async (uid: string): Promise<boolean> => {
     }
 
     return false
-  } catch (e) {
+  } catch (e: any) {
     if (e.code === 'auth/user-not-found') {
       return false
     }

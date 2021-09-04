@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import * as functions from 'firebase-functions'
+import { config } from 'firebase-functions'
 
 const Twitter = require('twitter')
 
@@ -51,7 +51,7 @@ export interface TwUser {
 }
 
 // PixelMeApiToken
-const configSecret = functions.config()
+const configSecret = config()
 const TwitterApiToken = {
   consumer_key: configSecret.twitter.consumer_key,
   consumer_secret: configSecret.twitter.consumer_secret,

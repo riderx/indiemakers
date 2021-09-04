@@ -1,8 +1,8 @@
-import * as functions from 'firebase-functions'
+import { config } from 'firebase-functions'
 import axios from 'axios'
 import findUrl from 'get-urls'
 import { TwEntities, TwUrl } from './twitter'
-const configSecret = functions.config()
+const configSecret = config()
 
 const rebrandlyKey = configSecret.rebrandly.key
 const rebrandlyId = configSecret.rebrandly.id
@@ -23,7 +23,7 @@ const bestKey = (url: string): string => {
   return url
 }
 
-const config = {
+const configHttp = {
   headers: {
     'Content-Type': 'application/json',
     apikey: rebrandlyKey,
@@ -42,7 +42,7 @@ const shortURLPixel = (url: string): Promise<string> =>
           domain: { fullName: 'imf.to' },
           slashtag: key,
         },
-        config
+        configHttp
       )
       .then((response) => {
         if (response && response.data && response.data.shortUrl) {

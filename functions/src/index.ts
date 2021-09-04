@@ -2,7 +2,6 @@ import { config, https, pubsub, firestore } from 'firebase-functions'
 import admin from 'firebase-admin'
 import { Person } from '../../services/types'
 import { onboardingMessage } from '../../services/discord/bot/utils'
-import { rssToFirebase } from '../../services/feedrss'
 import { lateBot, morningBot } from './../../services/discord/bot/schedule'
 import { getPerson, voteIfNotDone } from './users'
 import { TwUser, twUserPromise } from './twitter'
@@ -289,3 +288,7 @@ export const scheduledBotBIPMorning = pubsub
     await morningBot()
     return null
   })
+function rssToFirebase() {
+  throw new Error('Function not implemented.')
+}
+
