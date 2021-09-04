@@ -1,8 +1,8 @@
-import { podcastToFirebase } from './../../services/firebase/podcasts';
 import { config, https, pubsub, firestore } from 'firebase-functions'
 import admin from 'firebase-admin'
 import { Person } from '../../services/types'
 import { onboardingMessage } from '../../services/discord/bot/utils'
+import { podcastToFirebase } from './../../services/firebase/podcasts'
 import { lateBot, morningBot } from './../../services/discord/bot/schedule'
 import { getPerson, voteIfNotDone } from './users'
 import { TwUser, twUserPromise } from './twitter'
