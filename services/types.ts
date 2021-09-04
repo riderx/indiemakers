@@ -210,7 +210,7 @@ export interface Post {
   userId?: string
   userName?: string
   userAvatarUrl?: string
-  text?: string
+  text: string
   createdAt: string
   updatedAt: string
   hashtag: string
