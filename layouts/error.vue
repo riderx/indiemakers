@@ -42,8 +42,9 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, useRouter } from '@nuxtjs/composition-api'
+export default defineComponent({
   layout: 'error',
   props: {
     error: {
@@ -51,19 +52,17 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      logo: {
-        title: '404 LOGO',
-        source:
-          'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/404_xivjox.svg',
-      },
+  setup() {
+    const router = useRouter()
+    const logo = {
+      title: '404 LOGO',
+      source:
+        'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/404_xivjox.svg',
     }
+    const goHome = () => {
+      router.push('/')
+    }
+    return { logo, goHome }
   },
-  methods: {
-    goHome() {
-      this.$router.push('/')
-    },
-  },
-}
+})
 </script>

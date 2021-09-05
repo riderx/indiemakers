@@ -6,47 +6,58 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {
+  defineComponent,
+  useContext,
+  useRoute,
+  useMeta,
+} from '@nuxtjs/composition-api'
+import Modals from '~/components/Modals.vue'
+import NavBar from '~/components/NavBar.vue'
+
+export default defineComponent({
   components: {
-    Modals: () => import('~/components/Modals.vue'),
-    NavBar: () => import('~/components/NavBar.vue'),
+    Modals,
+    NavBar,
   },
-  head() {
-    return {
-      meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'og:type', property: 'og:type', content: 'website' },
-        {
-          hid: 'apple-mobile-web-app-title',
-          name: 'apple-mobile-web-app-title',
-          content: 'indiemakers.fr',
-        },
-        { hid: 'theme-color', name: 'theme-color', content: '#4b279b' },
-        {
-          hid: 'og:site_name',
-          property: 'og:site_name',
-          content: 'indiemakers.fr',
-        },
-        {
-          hid: 'og:url',
-          property: 'og:url',
-          content: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-        { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
-      ],
-      link: [
-        {
-          rel: 'alternate',
-          hreflang: 'x-default',
-          title: 'INDIE MAKERS',
-          href: `${this.$config.DOMAIN}${this.$route.fullPath}`,
-        },
-      ],
-    }
+  setup() {
+    const { $config } = useContext()
+    const route = useRoute()
+    const { meta, link } = useMeta()
+    meta.value = [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      {
+        hid: 'apple-mobile-web-app-title',
+        name: 'apple-mobile-web-app-title',
+        content: 'indiemakers.fr',
+      },
+      { hid: 'theme-color', name: 'theme-color', content: '#4b279b' },
+      {
+        hid: 'og:site_name',
+        property: 'og:site_name',
+        content: 'indiemakers.fr',
+      },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: `${$config.DOMAIN}${route.value.fullPath}`,
+      },
+      { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
+    ]
+    link.value = [
+      {
+        rel: 'alternate',
+        hreflang: 'x-default',
+        title: 'INDIE MAKERS',
+        href: `${$config.DOMAIN}${route.value.fullPath}`,
+      },
+    ]
   },
-}
+  head: {},
+})
 </script>
 
 <style>
