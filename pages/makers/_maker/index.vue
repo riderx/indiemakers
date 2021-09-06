@@ -87,6 +87,35 @@
         </h1>
         <div class="flex w-full overflow-x-scroll md:flex-col">
           <a
+            class="flex-none my-4 ml-3 cursor-pointer md:my-2 lg:my-4 md:ml-0"
+            @click="setHastag('feed')"
+          >
+            <div class="relative flex items-center">
+              <svg
+                class="
+                  object-cover object-top
+                  w-16
+                  h-16
+                  border-2
+                  rounded-lg
+                  border-royalblue-700
+                "
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                />
+              </svg>
+              <h2 class="mx-1 text-2xl truncate font-indie">Feed</h2>
+            </div>
+          </a>
+          <a
             v-for="project in maker.projectsData"
             :key="project.hashtag"
             class="flex-none my-4 ml-3 cursor-pointer md:my-2 lg:my-4 md:ml-0"
@@ -126,7 +155,13 @@
         </div>
       </div>
       <NuxtChild />
-      <div v-if="projectData && loadedProject" class="md:w-4/5 md:mx-2">
+      <div
+        v-if="!projectData && maker.postsData && loadedProject"
+        class="md:w-4/5 md:mx-2"
+      >
+        <ListPosts :posts="maker.postsData" />
+      </div>
+      <div v-else-if="projectData && loadedProject" class="md:w-4/5 md:mx-2">
         <div
           class="
             flex flex-col
@@ -253,10 +288,17 @@ export default defineComponent({
       'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
     const { fetch } = useFetch(async () => {
       const data = await discordMakerId($config, params.value.maker)
-      if (data && data.projectsData && data.projectsData.length > 0) {
+      if (data) {
         maker.value = data
-        hashtag.value = data.projectsData[0].hashtag
-        getProject(hashtag.value)
+        if (data.postsData && data.postsData?.length > 0) {
+          hashtag.value = 'feed'
+          loadedProject.value = true
+        } else if (data.projectsData && data.projectsData.length > 0) {
+          hashtag.value = data.projectsData[0].hashtag
+          getProject(hashtag.value)
+        } else {
+          loadedProject.value = true
+        }
         loaded.value = true
       }
     })
@@ -272,7 +314,11 @@ export default defineComponent({
     }
     const setHastag = (ht: string) => {
       hashtag.value = ht
-      getProject(hashtag.value)
+      if (ht !== 'feed') {
+        getProject(hashtag.value)
+      } else {
+        projectData.value = undefined
+      }
     }
     const openProject = () => {
       if (maker.value && hashtag.value)
