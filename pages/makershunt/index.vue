@@ -155,7 +155,6 @@ import {
   defineComponent,
   useFetch,
   useContext,
-  useRoute,
   useRouter,
   useMeta,
 } from '@nuxtjs/composition-api'
@@ -179,7 +178,6 @@ export default defineComponent({
   setup() {
     const { $config, $firebase, $modal, $warehouse } = useContext()
     const router = useRouter()
-    const route = useRoute()
     const user = ref({} as UserInfo)
     const sizeHead = ref('')
     const guid = ref()
@@ -208,7 +206,6 @@ export default defineComponent({
     fetch()
     title.value = 'Les Makers Français les plus chaud 🔥'
     meta.value = createMeta(
-      `${$config.DOMAIN}${route.value.fullPath}`,
       title.value,
       message,
       'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'

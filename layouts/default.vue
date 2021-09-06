@@ -24,37 +24,38 @@ export default defineComponent({
   setup() {
     const { $config } = useContext()
     const route = useRoute()
-    const { meta, link } = useMeta()
-    meta.value = [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'og:type', property: 'og:type', content: 'website' },
-      {
-        hid: 'apple-mobile-web-app-title',
-        name: 'apple-mobile-web-app-title',
-        content: 'indiemakers.fr',
-      },
-      { hid: 'theme-color', name: 'theme-color', content: '#4b279b' },
-      {
-        hid: 'og:site_name',
-        property: 'og:site_name',
-        content: 'indiemakers.fr',
-      },
-      {
-        hid: 'og:url',
-        property: 'og:url',
-        content: `${$config.DOMAIN}${route.value.fullPath}`,
-      },
-      { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
-    ]
-    link.value = [
-      {
-        rel: 'alternate',
-        hreflang: 'x-default',
-        title: 'INDIE MAKERS',
-        href: `${$config.DOMAIN}${route.value.fullPath}`,
-      },
-    ]
+    useMeta(() => ({
+      link: [
+        {
+          rel: 'alternate',
+          hreflang: 'x-default',
+          title: 'INDIE MAKERS',
+          href: `${$config.DOMAIN}${route.value.fullPath}`,
+        },
+      ],
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'og:type', property: 'og:type', content: 'website' },
+        {
+          hid: 'apple-mobile-web-app-title',
+          name: 'apple-mobile-web-app-title',
+          content: 'indiemakers.fr',
+        },
+        { hid: 'theme-color', name: 'theme-color', content: '#4b279b' },
+        {
+          hid: 'og:site_name',
+          property: 'og:site_name',
+          content: 'indiemakers.fr',
+        },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: `${$config.DOMAIN}${route.value.fullPath}`,
+        },
+        { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
+      ],
+    }))
   },
   head: {},
 })

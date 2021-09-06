@@ -100,7 +100,6 @@ import {
   defineComponent,
   useFetch,
   useContext,
-  useRoute,
   useMeta,
 } from '@nuxtjs/composition-api'
 import { feed } from '~/services/rss'
@@ -125,7 +124,6 @@ export default defineComponent({
       'Un épisode toute les semaines',
     ]
     const { $config } = useContext()
-    const route = useRoute()
     const { title, meta } = useMeta()
     const { fetch } = useFetch(async () => {
       const items = await feed($config)
@@ -142,7 +140,6 @@ export default defineComponent({
     fetch()
     title.value = '🚀 Le podcast des entrepreneurs indépendant'
     meta.value = createMeta(
-      `${$config.DOMAIN}${route.value.fullPath}`,
       title.value,
       messages[0],
       image,

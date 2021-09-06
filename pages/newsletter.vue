@@ -104,17 +104,15 @@ import {
   useContext,
   useMeta,
   useRouter,
-  useRoute,
 } from '@nuxtjs/composition-api'
 import { createMeta } from '~/services/meta'
 
 export default defineComponent({
   setup() {
-    const { $config, $firebase, $modal } = useContext()
+    const { $firebase, $modal } = useContext()
     const name = ref('')
     const email = ref('')
     const { title, meta } = useMeta()
-    const route = useRoute()
     const router = useRouter()
     const logo = {
       title: 'Newletter LOGO',
@@ -125,7 +123,6 @@ export default defineComponent({
       '💥Tu ne sais pas par où commencer ton projet ? Je te confie mes actions sur mes projets et sur le podcast ! Chaque semaine directement dans ta boîte mail. 💌'
     title.value = 'Mes Emails Hebdo'
     meta.value = createMeta(
-      `${$config.DOMAIN}${route.value.fullPath}`,
       title.value,
       desc,
       'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg',

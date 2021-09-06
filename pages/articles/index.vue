@@ -89,7 +89,6 @@ import {
   defineComponent,
   useFetch,
   useContext,
-  useRoute,
   useMeta,
 } from '@nuxtjs/composition-api'
 import { IContentDocument } from '@nuxt/content/types/content'
@@ -98,7 +97,6 @@ import { createMeta } from '~/services/meta'
 export default defineComponent({
   setup() {
     const { $content, $config } = useContext()
-    const route = useRoute()
     const { title, meta } = useMeta()
     const articles = ref<IContentDocument | IContentDocument[]>([])
     const blogImage =
@@ -115,7 +113,6 @@ export default defineComponent({
     fetch()
     title.value = 'Les articles indie !'
     meta.value = createMeta(
-      `${$config.DOMAIN}${route.value.fullPath}`,
       title.value,
       description,
       `${$config.DOMAIN}${blogImage}`

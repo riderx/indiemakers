@@ -1,5 +1,4 @@
 export const createMeta = (
-  url: string,
   title: string,
   description: string,
   image: string | null = null,
@@ -7,11 +6,6 @@ export const createMeta = (
   audio: string | null = null
 ) => {
   const base = [
-    {
-      hid: 'og:url',
-      property: 'og:url',
-      content: url,
-    },
     { hid: 'title', name: 'title', content: title },
     {
       hid: 'description',

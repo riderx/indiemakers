@@ -287,7 +287,6 @@ import {
   defineComponent,
   useFetch,
   useContext,
-  useRoute,
   useMeta,
 } from '@nuxtjs/composition-api'
 import Vue from 'vue'
@@ -300,7 +299,6 @@ export default defineComponent({
   setup() {
     const { title, meta, script, link } = useMeta()
     const { $config, $warehouse, $modal, params } = useContext()
-    const route = useRoute()
     const episode = ref({} as Episode)
     const timeoutPlayer = ref()
     const plyr = ref()
@@ -458,7 +456,6 @@ export default defineComponent({
     ]
     title.value = titleNoEmoji.value
     meta.value = createMeta(
-      `${$config.DOMAIN}${route.value.fullPath}`,
       titleNoEmoji.value,
       previewNoEmoji.value,
       episode.value.imageOptimized,

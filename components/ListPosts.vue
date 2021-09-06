@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <section aria-labelledby="activity-title" class="px-4 pb-2">
+  <section aria-labelledby="activity-title" class="pb-2 md:px-4">
     <div>
       <div class="divide-y divide-gray-200">
         <div>

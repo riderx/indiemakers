@@ -27,7 +27,6 @@ import {
   defineComponent,
   useFetch,
   useContext,
-  useRoute,
   useMeta,
 } from '@nuxtjs/composition-api'
 import { discordMakers, discordProjects, discordPosts } from '~/services/rss'
@@ -45,7 +44,6 @@ export default defineComponent({
   setup() {
     const { title, meta } = useMeta()
     const { $config } = useContext()
-    const route = useRoute()
     const users = ref([] as User[])
     const posts = ref([] as Post[])
     const projects = ref([] as Project[])
@@ -69,7 +67,6 @@ export default defineComponent({
     fetch()
     title.value = 'La communauté INDIE MAKERS'
     meta.value = createMeta(
-      `${$config.DOMAIN}${route.value.fullPath}`,
       title.value,
       "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !"
     )

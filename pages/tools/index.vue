@@ -96,7 +96,6 @@ import {
   useFetch,
   useContext,
   ref,
-  useRoute,
   useMeta,
 } from '@nuxtjs/composition-api'
 import { createMeta } from '~/services/meta'
@@ -107,14 +106,12 @@ export default defineComponent({
   setup() {
     const { $config } = useContext()
     const { title, meta } = useMeta()
-    const route = useRoute()
     const tools = ref<Tool[]>([])
     // v-if="$fetchState.pending"
     const description =
       "Voici les meilleurs outils que j'ai trouvé pour concretiser mes projets !"
     title.value = 'Mes outils quotidiens'
     meta.value = createMeta(
-      `${$config.DOMAIN}${route.value.fullPath}`,
       title.value,
       description,
       `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,

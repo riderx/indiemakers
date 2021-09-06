@@ -87,7 +87,16 @@
         </h1>
         <div class="flex w-full overflow-x-scroll md:flex-col">
           <a
-            class="flex-none my-4 ml-3 cursor-pointer md:my-2 lg:my-4 md:ml-0"
+            class="
+              flex-none
+              my-4
+              ml-3
+              cursor-pointer
+              hover:text-orchid-600
+              md:my-2
+              lg:my-4
+              md:ml-0
+            "
             @click="setHastag('feed')"
           >
             <div class="relative flex items-center">
@@ -98,6 +107,7 @@
                   h-16
                   border-2
                   rounded-lg
+                  bg-royalblue-700
                   border-royalblue-700
                 "
                 xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +128,16 @@
           <a
             v-for="project in maker.projectsData"
             :key="project.hashtag"
-            class="flex-none my-4 ml-3 cursor-pointer md:my-2 lg:my-4 md:ml-0"
+            class="
+              flex-none
+              my-4
+              ml-3
+              cursor-pointer
+              hover:text-orchid-600
+              md:my-2
+              lg:my-4
+              md:ml-0
+            "
             @click="setHastag(project.hashtag)"
           >
             <div class="relative flex items-end">
@@ -157,7 +176,7 @@
       <NuxtChild />
       <div
         v-if="!projectData && maker.postsData && loadedProject"
-        class="md:w-4/5 md:mx-2"
+        class="w-full mx-0 md:w-4/5 md:mx-2"
       >
         <ListPosts :posts="maker.postsData" />
       </div>
@@ -169,7 +188,7 @@
             p-2
             mb-2
             bg-white
-            md:p-10
+            md:p-5
             text-royalblue-700
             lg:flex-row
           "
@@ -216,19 +235,19 @@
         <div class="flex flex-col w-full md:flex-row">
           <div
             v-if="projectData.postsData && projectData.postsData.total > 0"
-            class="w-full p-3 mb-3 bg-white md:p-10 md:w-1/2 md:mb-0"
+            class="w-full p-3 mb-3 bg-white md:p-5 md:w-1/2 md:mb-0"
           >
             <ListPosts :posts="projectData.postsData.posts" />
           </div>
           <div
             v-if="projectData.tasksData && projectData.tasksData.total > 0"
-            class="w-full p-3 mb-3 bg-white md:p-10 md:w-1/2 md:mb-0"
+            class="w-full p-3 mb-3 bg-white md:p-5 md:w-1/2 md:mb-0"
           >
             <ListTasks :all="projectData.tasksData" />
           </div>
           <div
             v-if="projectData.incomesData && projectData.incomesData.total > 0"
-            class="w-full p-3 mb-3 bg-white md:p-10 md:w-1/2 md:mb-0"
+            class="w-full p-3 mb-3 bg-white md:p-5 md:w-1/2 md:mb-0"
           >
             <ListIncomes :all="projectData.incomesData" />
           </div>
@@ -258,7 +277,6 @@ import {
   useFetch,
   useContext,
   useRouter,
-  useRoute,
   useMeta,
 } from '@nuxtjs/composition-api'
 import { User, Project } from '~/services/types'
@@ -275,8 +293,7 @@ export default defineComponent({
   setup() {
     const { $config, params } = useContext()
     const router = useRouter()
-    const route = useRoute()
-    const { title, meta } = useMeta()
+    const { meta } = useMeta()
     const loaded = ref(false)
     const loadedProject = ref(false)
     const projectData = ref<Project>()
@@ -303,15 +320,22 @@ export default defineComponent({
       }
     })
     fetch()
-    if (maker.value) {
-      title.value = maker.value.name || maker.value.username
-      meta.value = createMeta(
-        `${$config.DOMAIN}${route.value.fullPath}`,
-        maker.value.name || maker.value.username,
-        maker.value.bio || 'Un jour je serais grand 👶!',
-        maker.value.cover || noImge
-      )
-    }
+    useMeta(() => {
+      const newMeta = meta.value
+      if (maker.value) {
+        newMeta.push(
+          ...createMeta(
+            maker.value.name || maker.value.username,
+            maker.value.bio || 'Un jour je serais grand 👶!',
+            maker.value.cover || noImge
+          )
+        )
+      }
+      return {
+        title: maker.value ? maker.value.name || maker.value.username : '',
+        meta: newMeta,
+      }
+    })
     const setHastag = (ht: string) => {
       hashtag.value = ht
       if (ht !== 'feed') {

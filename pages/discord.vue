@@ -103,18 +103,16 @@ import {
   defineComponent,
   useContext,
   useMeta,
-  useRoute,
   useRouter,
 } from '@nuxtjs/composition-api'
 import { createMeta } from '~/services/meta'
 
 export default defineComponent({
   setup() {
-    const { $config, $firebase, $modal } = useContext()
+    const { $firebase, $modal } = useContext()
     const { title, meta } = useMeta()
     const email = ref('')
     const name = ref('')
-    const route = useRoute()
     const router = useRouter()
     const logo = {
       title: 'Communauté LOGO',
@@ -125,7 +123,6 @@ export default defineComponent({
       "Plus de 300 Makers Français qui construise leur projets et s'entre aide !"
     title.value = 'Rejoint le Discord'
     meta.value = createMeta(
-      `${$config.DOMAIN}${route.value.fullPath}`,
       title.value,
       desc,
       'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'

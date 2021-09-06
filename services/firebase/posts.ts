@@ -41,23 +41,29 @@ export const getAllAllPosts = async (users: User[]): Promise<Post[]> => {
 }
 
 export const getPostsByHash = async (
-  userId: string,
+  user: Partial<User>,
   hashtag: string
 ): Promise<PostAll> => {
   const posts: Post[] = []
   try {
     const documents = await firestore()
-      .collection(`discord/${userId}/posts`)
+      .collection(`discord/${user.userId}/posts`)
       .orderBy('id', 'desc')
       .where('hashtag', '==', hashtag)
       .get()
-    documents.docs.map((doc) => {
-      const data = doc.data() as Post
+    for (let index = 0; index < documents.docs.length; index++) {
+      const doc = documents.docs[index]
+      const data = (await doc.data()) as Post
       if (data !== undefined) {
-        posts.push({ ...data })
+        posts.push({
+          userId: user.userId,
+          userName: user.name || user.username || '',
+          userAvatarUrl: user.avatarUrl || '',
+          id: Number(doc.id),
+          ...(data as Post),
+        })
       }
-      return data
-    })
+    }
     return { posts, total: posts.length }
   } catch (err) {
     console.error('getPostsByHash', err)

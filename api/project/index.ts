@@ -13,30 +13,32 @@ const project = async (req: Request, res: Response) => {
   fFnit()
   if (req?.query?.hashtag) {
     const user = await getUsersByUsername(String(req.query.id))
-    const proj = await getProjectById(
-      String(user?.userId),
-      String(req.query.hashtag)
-    )
-    const posts = await getPostsByHash(
-      String(user?.userId),
-      String(req.query.hashtag)
-    )
-    const tasks = await getAllProjectsTasks(
-      String(user?.userId),
-      String(req.query.hashtag)
-    )
-    const incomes = await getAllProjectsIncomes(
-      String(user?.userId),
-      String(req.query.hashtag)
-    )
-    if (proj) {
-      proj.tasksData = tasks
-      proj.postsData = posts
-      proj.incomesData = incomes
-      proj.isStripe = !!proj.stripeApiKey
-      res.json(proj)
-    } else {
-      res.json({ error: 'not found' })
+    if (user) {
+      const proj = await getProjectById(
+        String(user?.userId),
+        String(req.query.hashtag)
+      )
+      const posts = await getPostsByHash(
+        user,
+        String(req.query.hashtag)
+      )
+      const tasks = await getAllProjectsTasks(
+        String(user?.userId),
+        String(req.query.hashtag)
+      )
+      const incomes = await getAllProjectsIncomes(
+        String(user?.userId),
+        String(req.query.hashtag)
+      )
+      if (proj) {
+        proj.tasksData = tasks
+        proj.postsData = posts
+        proj.incomesData = incomes
+        proj.isStripe = !!proj.stripeApiKey
+        res.json(proj)
+      } else {
+        res.json({ error: 'not found' })
+      }
     }
   } else {
     try {
