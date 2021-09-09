@@ -28,7 +28,7 @@
   "dependencies": {
     "@google-cloud/translate": "6.2.7",
     "@nuxt/content": "^1.14.0",
-    "@nuxtjs/composition-api": "^0.27.0",
+    "@nuxtjs/composition-api": "^0.29.0",
     "@nuxtjs/markdownit": "^2.0.0",
     "@tailwindcss/line-clamp": "0.2.1",
     "@tailwindcss/typography": "^0.4.1",
