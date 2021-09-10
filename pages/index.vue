@@ -1,89 +1,87 @@
 <template>
-  <div>
-    <div>
-      <div class="container w-full px-0 mx-auto">
-        <div class="flex flex-wrap w-full">
-          <div class="w-full md:w-1/2 md:px-4">
-            <div
-              class="
-                flex flex-wrap
-                w-full
-                overflow-hidden
-                border-4 border-white
-                md:h-78 md:overflow-y-scroll md:custom-scroll
-              "
-            >
-              <NuxtLink
-                v-for="episode in episodes"
-                :key="episode.id"
-                :to="`/episode/${episode.id}`"
-                class="w-full text-white border-b align-items-top"
-              >
-                <ListItem
-                  class="w-full"
-                  :title="episode.title"
-                  :date="episode.date"
-                  :preview="episode.preview"
-                  :image="episode.imageOptimized"
-                />
-              </NuxtLink>
-            </div>
-          </div>
+  <client-only>
+    <div class="container w-full px-0 mx-auto">
+      <div class="flex flex-wrap w-full">
+        <div class="w-full md:w-1/2 md:px-4">
           <div
-            id="content"
-            class="w-full px-4 text-white md:w-1/2 pt-md-0 px-md-5"
+            class="
+              flex flex-wrap
+              w-full
+              overflow-hidden
+              border-4 border-white
+              md:h-78 md:overflow-y-scroll md:custom-scroll
+            "
           >
-            <div class="flex flex-wrap">
-              <div class="w-full mb-3 md:w-1/5 offset-3 offset-md-0">
-                <img
-                  width="100%"
-                  height="100%"
-                  class="
-                    w-1/2
-                    h-auto
-                    mx-auto
-                    my-10
-                    border-white
-                    md:m-0 md:w-4/5
-                  "
-                  alt="IM COVER"
-                  :src="image"
-                />
-              </div>
-              <div class="text-center md:w-3/5 md:px-4 md:text-left">
-                <h1 class="pb-2 text-3xl font-indie">
-                  {{ title }}
-                </h1>
-              </div>
-              <div class="py-1 text-sm">
-                <h2 class="text-xl font-indie">
-                  Prochain episode dans {{ nextEpisode() }}
-                </h2>
-              </div>
-              <div class="pt-3 text-sm">
-                <div v-for="(message, index) in messages" :key="`ep-${index}`">
-                  <p class="pb-2">
-                    {{ message }}
-                  </p>
-                </div>
-              </div>
-              <div class="pt-3 text-sm">
+            <div
+              v-for="(empty, index) in empties"
+              :key="index"
+              class="w-full text-white border-b align-items-top"
+            >
+              <ListItem class="w-full" :title="empty" />
+            </div>
+            <NuxtLink
+              v-for="episode in episodes"
+              :key="episode.id"
+              :to="`/episode/${episode.id}`"
+              class="w-full text-white border-b align-items-top"
+            >
+              <ListItem
+                class="w-full"
+                :title="episode.title"
+                :date="episode.date"
+                :preview="episode.preview"
+                :image="episode.imageOptimized"
+              />
+            </NuxtLink>
+          </div>
+        </div>
+        <div
+          id="content"
+          class="w-full px-4 text-white md:w-1/2 pt-md-0 px-md-5"
+        >
+          <div class="flex flex-wrap">
+            <div class="w-full mb-3 md:w-1/5 offset-3 offset-md-0">
+              <img
+                width="100%"
+                height="100%"
+                class="w-1/2 h-auto mx-auto my-10 border-white md:m-0 md:w-4/5"
+                alt="IM COVER"
+                :src="image"
+              />
+            </div>
+            <div class="text-center md:w-3/5 md:px-4 md:text-left">
+              <h1 class="pb-2 text-3xl font-indie">
+                {{ title }}
+              </h1>
+            </div>
+            <div class="py-1 text-sm">
+              <h2 class="text-xl font-indie">
+                Prochain episode dans {{ nextEpisode() }}
+              </h2>
+            </div>
+            <div class="pt-3 text-sm">
+              <div v-for="(message, index) in messages" :key="`ep-${index}`">
                 <p class="pb-2">
-                  Par
-                  <a
-                    rel="noreferrer"
-                    target="_blank"
-                    href="https://twitter.com/martindonadieu"
-                    >Martin DONADIEU</a
-                  >
+                  {{ message }}
                 </p>
               </div>
+            </div>
+            <div class="pt-3 text-sm">
+              <p class="pb-2">
+                Par
+                <a
+                  rel="noreferrer"
+                  target="_blank"
+                  href="https://twitter.com/martindonadieu"
+                  >Martin DONADIEU</a
+                >
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </client-only>
 </template>
 <script lang="ts">
 import {
@@ -92,6 +90,7 @@ import {
   defineComponent,
   useFetch,
   useContext,
+  computed,
   useMeta,
 } from '@nuxtjs/composition-api'
 import { feed } from '~/services/rss'
@@ -106,6 +105,9 @@ export default defineComponent({
     const image =
       'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
     const episodes = ref<Episode[]>([])
+    const empties = computed(() =>
+      episodes.value && episodes.value.length === 0 ? [null, null, null] : []
+    )
     const title = '🚀 Le podcast des entrepreneurs indépendant'
     const messages = [
       "J'échange avec ceux qui ont su transformer leurs idées en business florissant.",
@@ -150,7 +152,7 @@ export default defineComponent({
       const nextEp = epRepeat - (diffDays % epRepeat)
       return nextEp !== epRepeat ? `${nextEp} jours` : 'DEMAIN 10 heures'
     }
-    return { title, image, messages, episodes, nextEpisode }
+    return { title, image, messages, episodes, empties, nextEpisode }
   },
   head: {},
 })

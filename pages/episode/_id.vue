@@ -13,9 +13,13 @@
                 md:pb-1 md:border-8
               "
             >
-              <p class="px-3 text-3xl text-center font-indie">
+              <p
+                v-if="episode.title !== 'No title'"
+                class="px-3 text-3xl text-center font-indie"
+              >
                 {{ episode.title }}
               </p>
+              <p v-else class="w-4/5 h-8 px-3 animate-pulse bg-orchid-300"></p>
 
               <div class="block w-full px-0 h-w-screen sm:hidden">
                 <img
@@ -60,6 +64,7 @@
               "
             >
               <div
+                v-if="episode.content !== 'No content'"
                 class="
                   px-1
                   prose-sm prose prose-orchid
@@ -71,6 +76,40 @@
                 "
                 v-html="episode.content"
               />
+              <div v-else>
+                <p
+                  class="
+                    w-4/5
+                    h-4
+                    px-1 px-md-5
+                    md:pt-3
+                    animate-pulse
+                    bg-orchid-300
+                  "
+                ></p>
+                <p
+                  class="
+                    w-full
+                    h-4
+                    px-1
+                    mt-3
+                    px-md-5
+                    animate-pulse
+                    bg-orchid-300
+                  "
+                ></p>
+                <p
+                  class="
+                    w-2/5
+                    h-4
+                    px-1
+                    mt-3
+                    px-md-5
+                    animate-pulse
+                    bg-orchid-300
+                  "
+                ></p>
+              </div>
             </div>
             <div class="flex flex-wrap py-4 md:hidden">
               <div class="px-1 text-center">
@@ -179,6 +218,7 @@
                 <div>
                   <div class="relative square">
                     <img
+                      v-if="episode.image"
                       :src="episode.image"
                       width="100%"
                       height="100%"
@@ -189,8 +229,20 @@
                         border-8 border-white
                         square_content
                       "
-                      alt="Logo person"
+                      :alt="`Cover_${episode.name}`"
                     />
+                    <div
+                      v-else
+                      class="
+                        w-full
+                        h-auto
+                        max-w-full
+                        border-8 border-white
+                        square_content
+                        animate-pulse
+                        bg-orchid-300
+                      "
+                    ></div>
                   </div>
                   <vue-plyr v-if="showAudio" ref="plyr2">
                     <audio>
@@ -297,7 +349,6 @@ import { Episode } from '~/services/types'
 
 export default defineComponent({
   setup() {
-    // const { title, meta, script, link } = useMeta()
     const { $config, $warehouse, $modal, params } = useContext()
     const episode = ref({ title: 'No title', content: 'No content' } as Episode)
     const timeoutPlayer = ref()

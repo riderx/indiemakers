@@ -141,51 +141,51 @@ export default {
   markdownit: {
     runtime: true, // Support `$md()`
   },
-  speedkit: {
-    detection: {
-      performance: true,
-      browserSupport: true,
-    },
-    performance: {
-      device: {
-        hardwareConcurrency: { min: 2, max: 48 },
-        deviceMemory: { min: 2 },
-      },
-      timing: {
-        fcp: 800,
-        dcl: 1200,
-      },
-      lighthouseDetectionByUserAgent: false,
-    },
-    fonts: [
-      {
-        family: 'Rex Bold',
-        locals: ['Rex Bold'],
-        fallback: ['Arial', 'sans-serif'],
-        variances: [
-          {
-            style: 'normal',
-            weight: 400,
-            sources: [
-              { src: '@/assets/fonts/Rex-Bold.woff', type: 'woff' },
-              { src: '@/assets/fonts/Rex-Bold.woff2', type: 'woff2' },
-            ],
-          },
-        ],
-      },
-    ],
+  // speedkit: {
+  //   detection: {
+  //     performance: true,
+  //     browserSupport: true,
+  //   },
+  //   performance: {
+  //     device: {
+  //       hardwareConcurrency: { min: 2, max: 48 },
+  //       deviceMemory: { min: 2 },
+  //     },
+  //     timing: {
+  //       fcp: 800,
+  //       dcl: 1200,
+  //     },
+  //     lighthouseDetectionByUserAgent: false,
+  //   },
+  //   fonts: [
+  //     {
+  //       family: 'Rex Bold',
+  //       locals: ['Rex Bold'],
+  //       fallback: ['Arial', 'sans-serif'],
+  //       variances: [
+  //         {
+  //           style: 'normal',
+  //           weight: 400,
+  //           sources: [
+  //             { src: '@/assets/fonts/Rex-Bold.woff', type: 'woff' },
+  //             { src: '@/assets/fonts/Rex-Bold.woff2', type: 'woff2' },
+  //           ],
+  //         },
+  //       ],
+  //     },
+  //   ],
 
-    componentAutoImport: false,
-    componentPrefix: undefined,
+  //   componentAutoImport: false,
+  //   componentPrefix: undefined,
 
-    /**
-     * IntersectionObserver rootMargin for Compoennts and Assets
-     */
-    lazyOffset: {
-      component: '0%',
-      asset: '0%',
-    },
-  },
+  //   /**
+  //    * IntersectionObserver rootMargin for Compoennts and Assets
+  //    */
+  //   lazyOffset: {
+  //     component: '0%',
+  //     asset: '0%',
+  //   },
+  // },
   // image: {
   //   imagekit: {
   //     baseURL: 'https://ik.imagekit.io/gyc0uxoln1',
