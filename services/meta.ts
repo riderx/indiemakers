@@ -1,10 +1,12 @@
+import { MetaPropertyCharset, MetaPropertyEquiv, MetaPropertyMicrodata, MetaPropertyName, MetaPropertyProperty } from 'vue-meta/types/vue-meta'
+
 export const createMeta = (
   title: string,
   description: string,
   image: string | null = null,
   author: string | null = null,
   audio: string | null = null
-) => {
+):(MetaPropertyCharset | MetaPropertyEquiv | MetaPropertyName | MetaPropertyMicrodata | MetaPropertyProperty)[] => {
   const base = [
     { hid: 'title', name: 'title', content: title },
     {

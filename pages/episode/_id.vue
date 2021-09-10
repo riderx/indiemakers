@@ -283,11 +283,12 @@
 import {
   ref,
   computed,
-  onMounted,
+  onBeforeUnmount,
   defineComponent,
   useFetch,
   useContext,
   useMeta,
+  onUnmounted,
 } from '@nuxtjs/composition-api'
 import Vue from 'vue'
 import { cutText, removeEmoji } from '~/services/feed'
@@ -297,7 +298,7 @@ import { Episode } from '~/services/types'
 
 export default defineComponent({
   setup() {
-    const { title, meta, script, link } = useMeta()
+    // const { title, meta, script, link } = useMeta()
     const { $config, $warehouse, $modal, params } = useContext()
     const episode = ref({} as Episode)
     const timeoutPlayer = ref()
@@ -305,7 +306,6 @@ export default defineComponent({
     const plyr2 = ref()
     const playerSet = ref(false)
     const timeoutModal = ref()
-    const sizeHead = ref('')
     const showAudio = ref(false)
     const episodes = ref([] as Episode[])
     const titleNoEmoji = computed(() => removeEmoji(episode.value.title))
@@ -381,21 +381,7 @@ export default defineComponent({
       // this.$modal.show('join')
       window.open('https://discord.gg/GctKEcDpxk', '_blank')
     }
-    const setSizeHead = () => {
-      const headerTitle = document.getElementById('header-title')
-      const header = document.getElementById('header')
-      if (
-        process.client &&
-        headerTitle &&
-        header &&
-        headerTitle.offsetWidth !== window.innerWidth
-      ) {
-        const size = `${headerTitle.offsetHeight + header.offsetHeight + 5}px`
-        sizeHead.value = `calc(100vh - ${size})`
-      } else {
-        sizeHead.value = 'auto'
-      }
-    }
+
     const rate = () => {
       $modal.show('rate')
     }
@@ -415,8 +401,7 @@ export default defineComponent({
       episodes.value = items
     })
     fetch()
-    onMounted(() => {
-      setSizeHead()
+    onBeforeUnmount(() => {
       timeoutPlayer.value = setTimeout(() => {
         Vue.use((window as any).VuePlyr, {
           plyr: {
@@ -440,32 +425,40 @@ export default defineComponent({
         }
       }, 15000) as any
     })
-    link.value = [
-      {
-        rel: 'stylesheet',
-        href: 'https://unpkg.com/vue-plyr/dist/vue-plyr.css',
-      },
-    ]
-    script.value = [
-      {
-        type: 'text/javascript',
-        src: 'https://unpkg.com/@skjnldsv/vue-plyr',
-        async: true,
-        defer: true,
-      },
-    ]
-    title.value = titleNoEmoji.value
-    meta.value = createMeta(
-      titleNoEmoji.value,
-      previewNoEmoji.value,
-      episode.value.imageOptimized,
-      episode.value.audio
-    )
+    onUnmounted(() => {
+      if (timeoutModal.value) {
+        clearTimeout(timeoutModal.value)
+      }
+      if (timeoutPlayer.value) {
+        clearTimeout(timeoutPlayer.value)
+      }
+    })
+    useMeta({
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://unpkg.com/vue-plyr/dist/vue-plyr.css',
+        },
+      ],
+      script: [
+        {
+          type: 'text/javascript',
+          src: 'https://unpkg.com/@skjnldsv/vue-plyr',
+          async: true,
+          defer: true,
+        },
+      ],
+      title: titleNoEmoji.value,
+      meta: createMeta(
+        titleNoEmoji.value,
+        previewNoEmoji.value,
+        episode.value.imageOptimized,
+        episode.value.audio
+      ),
+    })
     return {
       episode,
       showAudio,
-      timeoutModal,
-      timeoutPlayer,
       listen,
       rate,
       joinUs,
@@ -473,14 +466,6 @@ export default defineComponent({
     }
   },
   head: {},
-  destroyed() {
-    if (this.timeoutModal) {
-      clearTimeout(this.timeoutModal)
-    }
-    if (this.timeoutPlayer) {
-      clearTimeout(this.timeoutPlayer)
-    }
-  },
 })
 </script>
 <style>
