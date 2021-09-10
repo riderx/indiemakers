@@ -300,7 +300,7 @@ export default defineComponent({
   setup() {
     // const { title, meta, script, link } = useMeta()
     const { $config, $warehouse, $modal, params } = useContext()
-    const episode = ref({} as Episode)
+    const episode = ref({ title: 'No title', content: 'No content' } as Episode)
     const timeoutPlayer = ref()
     const plyr = ref()
     const plyr2 = ref()
@@ -433,7 +433,7 @@ export default defineComponent({
         clearTimeout(timeoutPlayer.value)
       }
     })
-    useMeta({
+    useMeta(() => ({
       link: [
         {
           rel: 'stylesheet',
@@ -455,7 +455,7 @@ export default defineComponent({
         episode.value.imageOptimized,
         episode.value.audio
       ),
-    })
+    }))
     return {
       episode,
       showAudio,
