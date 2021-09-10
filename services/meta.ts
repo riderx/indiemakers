@@ -22,7 +22,7 @@ export const createMeta = (
     {
       hid: 'og:description',
       property: 'og:description',
-      content: (this as any).previewMeta,
+      content: description,
     },
   ]
   if (author) {
