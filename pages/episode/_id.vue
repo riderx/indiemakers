@@ -452,7 +452,7 @@ export default defineComponent({
         titleNoEmoji.value,
         previewNoEmoji.value,
         episode.value.imageOptimized,
-        episode.value.name
+        episode.value.name,
         episode.value.audio
       ),
     }))
