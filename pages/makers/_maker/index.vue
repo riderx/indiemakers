@@ -293,7 +293,6 @@ export default defineComponent({
   setup() {
     const { $config, params } = useContext()
     const router = useRouter()
-    const { meta } = useMeta()
     const loaded = ref(false)
     const loadedProject = ref(false)
     const projectData = ref<Project>()
@@ -320,22 +319,17 @@ export default defineComponent({
       }
     })
     fetch()
-    useMeta(() => {
-      const newMeta = meta.value
-      if (maker.value) {
-        newMeta.push(
-          ...createMeta(
-            maker.value.name || maker.value.username,
-            maker.value.bio || 'Un jour je serais grand 👶!',
-            maker.value.cover || noImge
-          )
-        )
-      }
-      return {
+    if (maker.value && maker.value !== undefined) {
+      useMeta(() => ({
         title: maker.value ? maker.value.name || maker.value.username : '',
-        meta: newMeta,
-      }
-    })
+        meta: createMeta(
+          maker.value.name || maker.value.username,
+          maker.value.bio || 'Un jour je serais grand 👶!',
+          maker.value.cover || noImge
+        ),
+      }))
+    }
+
     const setHastag = (ht: string) => {
       hashtag.value = ht
       if (ht !== 'feed') {

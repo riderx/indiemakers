@@ -199,7 +199,6 @@ export default defineComponent({
   setup() {
     const { $content, $config, params } = useContext()
     const loaded = ref(false)
-    const { title, meta } = useMeta()
     const page = ref<IContentDocument>()
     const { fetch } = useFetch(async () => {
       const data = (await $content('articles')
@@ -209,15 +208,17 @@ export default defineComponent({
       loaded.value = true
     })
     fetch()
-    if (page.value) {
-      title.value = page.value.title
-      meta.value = createMeta(
-        page.value.title,
-        page.value.description,
-        `${$config.DOMAIN}${page.value.headImage}`,
-        null,
-        page.value.author
-      )
+    if (page.value && page.value !== undefined) {
+      useMeta(() => ({
+        title: page.value.title,
+        meta: createMeta(
+          page.value.title,
+          page.value.description,
+          `${$config.DOMAIN}${page.value.headImage}`,
+          null,
+          page.value.author
+        ),
+      }))
     }
     return { page, loaded }
   },

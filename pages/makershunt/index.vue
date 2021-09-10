@@ -181,9 +181,9 @@ export default defineComponent({
     const user = ref({} as UserInfo)
     const sizeHead = ref('')
     const guid = ref()
+    const title = 'Les Makers Français les plus chaud 🔥'
     const message =
       'Vote et ajoute tes MAKERS favoris, cela les insite a venir podcast !'
-    const { title, meta } = useMeta()
     const makers = ref([] as Person[])
     onMounted(() => {
       setSizeHead()
@@ -204,12 +204,14 @@ export default defineComponent({
       makers.value = mkr
     })
     fetch()
-    title.value = 'Les Makers Français les plus chaud 🔥'
-    meta.value = createMeta(
-      title.value,
-      message,
-      'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
-    )
+    useMeta(() => ({
+      title,
+      meta: createMeta(
+        title,
+        message,
+        'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
+      ),
+    }))
     const linkTw = (login: string) => {
       return `https://twitter.com/${login}`
     }

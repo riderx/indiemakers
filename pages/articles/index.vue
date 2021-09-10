@@ -97,10 +97,10 @@ import { createMeta } from '~/services/meta'
 export default defineComponent({
   setup() {
     const { $content, $config } = useContext()
-    const { title, meta } = useMeta()
     const articles = ref<IContentDocument | IContentDocument[]>([])
     const blogImage =
       'https://res.cloudinary.com/forgr/image/upload/v1621019063/indiemakers/blog_li7d4i.svg'
+    const title = 'Les articles indie !'
     const description =
       "Chaque semaine un maker du discord est désigné pour ecrire un article sur son projet, partager ses avancée, ou enrichir l'univer indie !"
     const { fetch } = useFetch(async () => {
@@ -111,12 +111,10 @@ export default defineComponent({
       articles.value = data
     })
     fetch()
-    title.value = 'Les articles indie !'
-    meta.value = createMeta(
-      title.value,
-      description,
-      `${$config.DOMAIN}${blogImage}`
-    )
+    useMeta(() => ({
+      title,
+      meta: createMeta(title, description, `${$config.DOMAIN}${blogImage}`),
+    }))
     return {
       title,
       description,

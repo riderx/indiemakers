@@ -120,7 +120,6 @@ import {
   useFetch,
   useContext,
   useRouter,
-  useRoute,
   useMeta,
 } from '@nuxtjs/composition-api'
 import { discordHashtag } from '~/services/rss'
@@ -137,8 +136,6 @@ export default defineComponent({
   setup() {
     const { $config, params } = useContext()
     const router = useRouter()
-    const route = useRoute()
-    const { title, meta } = useMeta()
     const loaded = ref(false)
     const projectData = ref<Project>()
     const noImge =
@@ -155,14 +152,15 @@ export default defineComponent({
       }
     })
     fetch()
-    if (projectData.value) {
-      title.value = projectData.value.name || projectData.value.hashtag
-      meta.value = createMeta(
-        `${$config.DOMAIN}${route.value.fullPath}`,
-        title.value,
-        projectData.value.description || 'Un jour je serais grand 👶!',
-        projectData.value.logo || noImge
-      )
+    if (projectData.value && projectData.value !== undefined) {
+      useMeta(() => ({
+        title: projectData.value.name || projectData.value.hashtag,
+        meta: createMeta(
+          projectData.value.name || projectData.value.hashtag,
+          projectData.value.description || 'Un jour je serais grand 👶!',
+          projectData.value.logo || noImge
+        ),
+      }))
     }
     const getTextColor = (color: string | undefined) => {
       if (color) {

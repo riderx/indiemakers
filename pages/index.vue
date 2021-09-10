@@ -117,6 +117,7 @@ export default defineComponent({
     const image =
       'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
     const episodes = ref<Episode[]>([])
+    const title = '🚀 Le podcast des entrepreneurs indépendant'
     const messages = [
       "J'échange avec ceux qui ont su transformer leurs idées en business florissant.",
       'Au-delà des belles histoires, je décrypte leur passé, leur stratégie, leurs challenges, afin de comprendre comment ils ont réussi à devenir profitables en indépendant.',
@@ -124,7 +125,6 @@ export default defineComponent({
       'Un épisode toute les semaines',
     ]
     const { $config } = useContext()
-    const { title, meta } = useMeta()
     const { fetch } = useFetch(async () => {
       const items = await feed($config)
       // episodes.value = items
@@ -138,14 +138,11 @@ export default defineComponent({
     })
 
     fetch()
-    title.value = '🚀 Le podcast des entrepreneurs indépendant'
-    meta.value = createMeta(
-      title.value,
-      messages[0],
-      image,
-      null,
-      'Martin Donadieu'
-    )
+    useMeta(() => ({
+      title: '🚀 Le podcast des entrepreneurs indépendant',
+      meta: createMeta(title, messages[0], image, null, 'Martin Donadieu'),
+    }))
+
     const nextEpisode = (): string => {
       const oneDay = 24 * 60 * 60 * 1000 // hours*minutes*seconds*milliseconds
       const firstDate = new Date(2019, 10, 19)

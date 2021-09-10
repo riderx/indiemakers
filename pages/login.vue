@@ -96,18 +96,21 @@ import { createMeta } from '~/services/meta'
 export default defineComponent({
   setup() {
     const { $config, $firebase, $modal, $warehouse } = useContext()
-    const { title, meta } = useMeta()
     const router = useRouter()
     const route = useRoute()
     const email = ref('')
     const desc = 'Pour voter pour tes makers favorie'
-    title.value = 'Connecte toi a indie makers'
-    meta.value = createMeta(
-      `${$config.DOMAIN}${route.value.fullPath}`,
-      title.value,
-      desc,
-      'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
-    )
+    const title = 'Connecte toi a indie makers'
+
+    useMeta(() => ({
+      title,
+      meta: createMeta(
+        `${$config.DOMAIN}${route.value.fullPath}`,
+        title,
+        desc,
+        'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
+      ),
+    }))
     onMounted(() => {
       email.value = $warehouse.get('emailForSignIn')
       $firebase.auth.listen((user: any) => {

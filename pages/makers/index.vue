@@ -42,12 +42,12 @@ export default defineComponent({
     LadderProject: () => import('~/components/LadderProject.vue'),
   },
   setup() {
-    const { title, meta } = useMeta()
     const { $config } = useContext()
     const users = ref([] as User[])
     const posts = ref([] as Post[])
     const projects = ref([] as Project[])
     const loaded = ref(false)
+    const title = 'La communauté INDIE MAKERS'
 
     const { fetch } = useFetch(async () => {
       const usersData = await discordMakers($config)
@@ -65,11 +65,14 @@ export default defineComponent({
       loaded.value = true
     })
     fetch()
-    title.value = 'La communauté INDIE MAKERS'
-    meta.value = createMeta(
-      title.value,
-      "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !"
-    )
+    useMeta(() => ({
+      title,
+      meta: createMeta(
+        title,
+        "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !"
+      ),
+    }))
+
     return {
       loaded,
       users,

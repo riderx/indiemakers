@@ -110,7 +110,6 @@ import { createMeta } from '~/services/meta'
 export default defineComponent({
   setup() {
     const { $firebase, $modal } = useContext()
-    const { title, meta } = useMeta()
     const email = ref('')
     const name = ref('')
     const router = useRouter()
@@ -121,12 +120,15 @@ export default defineComponent({
     }
     const desc =
       "Plus de 300 Makers Français qui construise leur projets et s'entre aide !"
-    title.value = 'Rejoint le Discord'
-    meta.value = createMeta(
-      title.value,
-      desc,
-      'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
-    )
+    const title = 'Rejoint le Discord'
+    useMeta(() => ({
+      title,
+      meta: createMeta(
+        title,
+        desc,
+        'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
+      ),
+    }))
     const joinDiscord = () => {
       $firebase.db
         .ref(`users/${email.value}`)

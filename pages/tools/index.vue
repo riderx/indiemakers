@@ -105,19 +105,20 @@ import { Tool } from '~/services/types'
 export default defineComponent({
   setup() {
     const { $config } = useContext()
-    const { title, meta } = useMeta()
     const tools = ref<Tool[]>([])
-    // v-if="$fetchState.pending"
     const description =
       "Voici les meilleurs outils que j'ai trouvé pour concretiser mes projets !"
-    title.value = 'Mes outils quotidiens'
-    meta.value = createMeta(
-      title.value,
-      description,
-      `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
-      null,
-      'Martin Donadieu'
-    )
+    const title = 'Mes outils quotidiens'
+    useMeta(() => ({
+      title,
+      meta: createMeta(
+        title,
+        description,
+        `https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg`,
+        null,
+        'Martin Donadieu'
+      ),
+    }))
     const { fetch, fetchState } = useFetch(async () => {
       const toolsData = await getTools($config)
       if (toolsData) {
