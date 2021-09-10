@@ -152,16 +152,15 @@ export default defineComponent({
       }
     })
     fetch()
-    if (projectData.value && projectData.value !== undefined) {
-      useMeta(() => ({
-        title: projectData.value.name || projectData.value.hashtag,
-        meta: createMeta(
-          projectData.value.name || projectData.value.hashtag,
-          projectData.value.description || 'Un jour je serais grand 👶!',
-          projectData.value.logo || noImge
-        ),
-      }))
-    }
+    useMeta(() => ({
+      title:
+        projectData.value?.name || projectData.value?.hashtag || 'Pas de titre',
+      meta: createMeta(
+        projectData.value?.name || projectData.value?.hashtag || 'Pas de titre',
+        projectData.value?.description || 'Un jour je serais grand 👶!',
+        projectData.value?.logo || noImge
+      ),
+    }))
     const getTextColor = (color: string | undefined) => {
       if (color) {
         return { color: `#${color}` }

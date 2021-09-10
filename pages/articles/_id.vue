@@ -200,6 +200,8 @@ export default defineComponent({
     const { $content, $config, params } = useContext()
     const loaded = ref(false)
     const page = ref<IContentDocument>()
+    const noImge =
+      'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
     const { fetch } = useFetch(async () => {
       const data = (await $content('articles')
         .where({ slug: params.value.id })
@@ -208,18 +210,18 @@ export default defineComponent({
       loaded.value = true
     })
     fetch()
-    if (page.value && page.value !== undefined) {
-      useMeta(() => ({
-        title: page.value.title,
-        meta: createMeta(
-          page.value.title,
-          page.value.description,
-          `${$config.DOMAIN}${page.value.headImage}`,
-          null,
-          page.value.author
-        ),
-      }))
-    }
+    useMeta(() => ({
+      title: page.value?.title || 'pas de titre',
+      meta: createMeta(
+        page.value?.title || 'pas de titre',
+        page.value?.description || 'pas de description',
+        page.value && page.value.headImage
+          ? `${$config.DOMAIN}${page.value?.headImage}`
+          : noImge,
+        null,
+        page.value?.author || 'Martin Donadieu'
+      ),
+    }))
     return { page, loaded }
   },
   head: {},

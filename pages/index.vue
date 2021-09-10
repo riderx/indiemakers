@@ -1,19 +1,10 @@
 <template>
   <div>
-    <div id="episodes">
+    <div>
       <div class="container w-full px-0 mx-auto">
         <div class="flex flex-wrap w-full">
           <div class="w-full md:w-1/2 md:px-4">
-            <!-- <div
-              id="header-eps"
-              class="flex flex-wrap w-full py-1 border-8 border-white py-md-2"
-            >
-              <div class="flex-grow px-0 py-2 text-center text-white">
-                <p class="text-3xl md:text-4xl font-indie">🎙 Episodes</p>
-              </div>
-            </div> -->
             <div
-              id="scrollable"
               class="
                 flex flex-wrap
                 w-full
@@ -95,8 +86,9 @@
   </div>
 </template>
 <script lang="ts">
-import { ref } from '@vue/composition-api'
 import {
+  ref,
+  onMounted,
   defineComponent,
   useFetch,
   useContext,
@@ -110,9 +102,6 @@ import dayjs from '~/services/dayjs'
 import { Episode } from '~/services/types'
 
 export default defineComponent({
-  components: {
-    ListItem: () => import('~/components/ListItem.vue'),
-  },
   setup() {
     const image =
       'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
@@ -127,7 +116,6 @@ export default defineComponent({
     const { $config } = useContext()
     const { fetch } = useFetch(async () => {
       const items = await feed($config)
-      // episodes.value = items
       episodes.value = items.map((episode) => {
         return {
           ...episode,
@@ -142,7 +130,15 @@ export default defineComponent({
       title: '🚀 Le podcast des entrepreneurs indépendant',
       meta: createMeta(title, messages[0], image, null, 'Martin Donadieu'),
     }))
-
+    onMounted(() => {
+      window.addEventListener(
+        'scroll',
+        () => {
+          crispLoader()
+        },
+        { capture: true, once: true, passive: true }
+      )
+    })
     const nextEpisode = (): string => {
       const oneDay = 24 * 60 * 60 * 1000 // hours*minutes*seconds*milliseconds
       const firstDate = new Date(2019, 10, 19)
@@ -150,7 +146,6 @@ export default defineComponent({
       const diffDays = Math.round(
         Math.abs((firstDate.getTime() - now.getTime()) / oneDay)
       )
-      // const epRepeat = 14
       const epRepeat = 7
       const nextEp = epRepeat - (diffDays % epRepeat)
       return nextEp !== epRepeat ? `${nextEp} jours` : 'DEMAIN 10 heures'
@@ -158,14 +153,5 @@ export default defineComponent({
     return { title, image, messages, episodes, nextEpisode }
   },
   head: {},
-  beforeMount() {
-    window.addEventListener(
-      'scroll',
-      () => {
-        crispLoader()
-      },
-      { capture: true, once: true, passive: true }
-    )
-  },
 })
 </script>

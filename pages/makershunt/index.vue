@@ -172,9 +172,6 @@ export interface UserInfo {
 }
 
 export default defineComponent({
-  components: {
-    ListItem: () => import('~/components/ListItem.vue'),
-  },
   setup() {
     const { $config, $firebase, $modal, $warehouse } = useContext()
     const router = useRouter()

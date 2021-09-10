@@ -319,16 +319,14 @@ export default defineComponent({
       }
     })
     fetch()
-    if (maker.value && maker.value !== undefined) {
-      useMeta(() => ({
-        title: maker.value ? maker.value.name || maker.value.username : '',
-        meta: createMeta(
-          maker.value.name || maker.value.username,
-          maker.value.bio || 'Un jour je serais grand 👶!',
-          maker.value.cover || noImge
-        ),
-      }))
-    }
+    useMeta(() => ({
+      title: maker.value?.name || maker.value?.username || '',
+      meta: createMeta(
+        maker.value?.name || maker.value?.username || 'inconue',
+        maker.value?.bio || 'Un jour je serais grand 👶!',
+        maker.value?.cover || noImge
+      ),
+    }))
 
     const setHastag = (ht: string) => {
       hashtag.value = ht

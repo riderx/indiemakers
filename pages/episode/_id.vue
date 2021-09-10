@@ -1,11 +1,10 @@
 <template>
   <client-only>
-    <div id="emission">
+    <div>
       <div class="container w-full px-0 mx-auto">
         <div class="flex flex-wrap">
           <div class="w-full text-sm text-white lg:w-1/2 md:px-4">
             <div
-              id="header-title"
               class="
                 flex flex-wrap
                 justify-center
