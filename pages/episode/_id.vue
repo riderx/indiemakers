@@ -287,7 +287,7 @@ import {
   useFetch,
   useContext,
   useMeta,
-  onUnmounted,
+  onMounted,
 } from '@nuxtjs/composition-api'
 import Vue from 'vue'
 import { cutText, removeEmoji } from '~/services/feed'
@@ -400,7 +400,7 @@ export default defineComponent({
       episodes.value = items
     })
     fetch()
-    onBeforeUnmount(() => {
+    onMounted(() => {
       timeoutPlayer.value = setTimeout(() => {
         Vue.use((window as any).VuePlyr, {
           plyr: {
@@ -424,7 +424,7 @@ export default defineComponent({
         }
       }, 15000) as any
     })
-    onUnmounted(() => {
+    onBeforeMount(() => {
       if (timeoutModal.value) {
         clearTimeout(timeoutModal.value)
       }
