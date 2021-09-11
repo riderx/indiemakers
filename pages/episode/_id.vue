@@ -424,7 +424,7 @@ export default defineComponent({
         }
       }, 15000) as any
     })
-    onBeforeMount(() => {
+    onBeforeUnmount(() => {
       if (timeoutModal.value) {
         clearTimeout(timeoutModal.value)
       }
