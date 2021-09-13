@@ -61,7 +61,8 @@ const sitemap = async (_req: Request, res: Response) => {
     // les indie maker conquerissent le web une app a la fois
     // les-indie-maker-conquerissent-le-web-une-app-a-la-fois
     smStream.end()
-    streamToPromise(smStream).then((data: any) => res.send(data.toString()))
+    const data = await streamToPromise(smStream)
+    return res.send(data.toString())
   } catch (e) {
     console.error(e)
     res.status(500).end()

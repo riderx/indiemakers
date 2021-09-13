@@ -96,6 +96,37 @@ export const updateToWip = async (
   return Promise.resolve(task ? task.id : undefined)
 }
 
+export const deleteToWip = async (
+  key: string,
+  id: string,
+  done = true
+): Promise<string | undefined> => {
+  const headers = {
+    Authorization: `bearer ${key}`,
+  }
+  const queryCreate = {
+    query: `
+    mutation deleteTodo {
+      deleteTodo(id: ${id}) {
+        id
+      }
+    }
+  `,
+  }
+  const task = await axios
+    .post(url, queryCreate, { headers })
+    .then((res) => res.data.data.createTodo)
+    .catch((err) => {
+      console.error('deleteToWip', err)
+      return null
+    })
+  if (done && task && !task.errors) {
+    return doneToWip(key, task.id)
+  }
+  return Promise.resolve(task ? task.id : undefined)
+}
+
+
 export const sendToWip = async (
   key: string,
   content: string,

@@ -44,7 +44,7 @@ const bot = async (req: Request, res: Response) => {
     return res.send({
       type: InteractionResponseType.PONG,
     })
-  } catch (error) {
+  } catch (error: any) {
     console.error(error.message)
     return res.status(500).end('Error bot', error.message)
   }

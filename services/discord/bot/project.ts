@@ -1,3 +1,4 @@
+import { getConfig } from './../../firebase/discord';
 import dayjs from 'dayjs'
 import admin from 'firebase-admin'
 import {
@@ -161,15 +162,15 @@ export const updateProject = async (
   }
   const data: Project = projDoc.data() as Project
   if (!data.name && project.name) {
-    await openChannel(userId).then((channel) => {
-      console.error('channel', channel)
-      return sendChannel(
-        channel.id,
-        `💗 Il est temps d'envoyer 💌 ta première tâche au projet #${lowHash} avec:
+    const config = await getConfig()
+    const channel = await openChannel(userId)
+    console.error('channel', channel)
+    return sendChannel(
+      channel.id,
+      `💗 Il est temps d'envoyer 💌 ta première tâche au projet #${lowHash} avec:
 \`/im tache ajouter hashtag:${lowHash} contenu:Ajout du projet sur INDIE MAKERS\`
-  Fait le sur le salon #01_construire_en_public, il est fait pour ça, il est en silencieux pour tout le monde !`
-      )
-    })
+Fait le sur le salon <#${config.channel_bip}>, il est fait pour ça, il est en silencieux pour tout le monde !`
+    )
   }
   await projDoc.ref.update({ ...project, updatedAt: dayjs().toISOString() })
   return projDoc.data() as Project

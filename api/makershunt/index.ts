@@ -25,21 +25,18 @@ const findInEp = (name: string, episodes: Episode[]) => {
 const loadData = async () => {
   try {
     const episodes = await feed()
-    const resultList = await firestore()
+    const querySnapshot = await firestore()
       .collection('people')
       .orderBy('votes', 'desc')
       .orderBy('addDate', 'asc')
       .get()
-      .then((querySnapshot) =>
-        querySnapshot.docs.map((doc: any) => {
-          if (doc.login) {
-            doc.guid = findInEp(doc.login, episodes)
-          }
-          doc.img = doc.pic
-          return Object.assign(doc.data(), { id: doc.id })
-        })
-      )
-    return resultList
+    return querySnapshot.docs.map((doc: any) => {
+      if (doc.login) {
+        doc.guid = findInEp(doc.login, episodes)
+      }
+      doc.img = doc.pic
+      return Object.assign(doc.data(), { id: doc.id })
+    })
   } catch (err) {
     console.error('loadData', err)
     return []

@@ -22,10 +22,10 @@ export const createProjectIncome = async (
   const all = await updateProjecttotalIncome(userId, hashtag)
   const superTotal = await getTotalIncomeByUser(userId)
   if (superTotal === all.total) {
-    const data = await getConfig()
-    if (data) {
+    const config = await getConfig()
+    if (config) {
       await sendChannel(
-        data.channel_general,
+        config.channel_general,
         `Hey Makers, Donnez de la force 💪🏋️‍♂️ a <@${userId}>
   il viens d'ajouter son premier revenu sur #${hashtag}!`
       )

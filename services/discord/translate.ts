@@ -1,21 +1,26 @@
 import { v2 } from '@google-cloud/translate'
 const { Translate } = v2
 
-let translate: any
-
-export const frToEn = async (text: string) => {
+export const frToEn = async (translate: v2.Translate | null, text: string) => {
+  if (!translate) return text
   // The target language
   const target = 'en'
 
-  // Translates some text into Russian
-  const [translation] = await translate.translate(text, target)
-  return translation
+  // Translates some text into French
+  try {
+    const [translation] = await translate.translate(text, target)
+    return translation
+  } catch (err) {
+    console.error('frToEn', err)
+    return text
+  }
+
 }
 
 export const initTranslate = () => {
   if (process.env.GOOGLE_SERVICE_ACCOUNT) {
     const googleId = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT)
-    translate = new Translate({
+    return new Translate({
       projectId: googleId.project_id,
       credentials: {
         client_email: googleId.client_email,
@@ -23,4 +28,5 @@ export const initTranslate = () => {
       },
     })
   }
+  return null
 }

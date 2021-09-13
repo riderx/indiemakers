@@ -69,6 +69,7 @@ export interface UserWithAccessToken extends User {
 export interface DiscordConfig {
   discordResetAfter: number
   channel_bip: string
+  channel_intro: string
   channel_general: string
   discord: {
     bot_token: string

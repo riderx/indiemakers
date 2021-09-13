@@ -1,13 +1,14 @@
 import { sendError } from './../../firebase/error';
 import { InteractionResponseType } from 'discord-interactions'
 import { Response as Res } from 'express'
-import axios from 'axios'
+import  axios from 'axios'
 import { hexToDec } from 'hex2dec'
 import dayjs from 'dayjs'
 import { APIMessage } from 'discord-api-types/v9'
 import { Footer, Author, Field, Embed, DiscordMessage, User, Image } from '../../../services/types'
 import { getConfig, saveRateLimit } from '../../../services/firebase/discord';
 
+const { post, patch, get } = axios
 export const image = (url: string): Image => ({ url })
 // eslint-disable-next-line camelcase
 export const footer = (text: string, icon_url: string): Footer => ({
@@ -226,7 +227,7 @@ export const sendTxtLater = async (
     embeds,
   }
   try {
-    const res = await axios.patch(url, body)
+    const res = await patch(url, body)
     return res.data
   } catch (err: any) {
     if (err.response) {
@@ -246,9 +247,8 @@ export const sendTxtLater = async (
       console.error('sendTxtLater Error', err.message)
     }
     // console.error('sendTxtLater content', url, JSON.stringify(content))
-    await axios
-      .patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
-      .catch((errErr) => {
+    await patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
+      .catch((errErr: any) => {
         console.error('sendTxtLaterFallback', err.response, errErr.response)
         return sendError(err)
       })
@@ -271,34 +271,31 @@ export const openChannel = async (userId: string): Promise<any> => {
     console.error('Sleep a bit', data.discordResetAfter)
     await sleep(data.discordResetAfter)
   }
-  const res = await axios
-    .post(url, { recipient_id: userId }, { headers })
-    .then(async (res) => {
-      if (
-        res?.headers['x-ratelimit-reset-after'] &&
-        !res?.headers['x-ratelimit-remaining']
-      ) {
-        await saveRateLimit(res.headers['x-ratelimit-reset-after'])
-      } else if (data.discordResetAfter && data.discordResetAfter > 0) {
-        await saveRateLimit(0)
+  try {
+    const res = await post(url, { recipient_id: userId }, { headers })
+    if (
+      res?.headers['x-ratelimit-reset-after'] &&
+      !res?.headers['x-ratelimit-remaining']
+    ) {
+      await saveRateLimit(res.headers['x-ratelimit-reset-after'])
+    } else if (data.discordResetAfter && data.discordResetAfter > 0) {
+      await saveRateLimit(0)
+    }
+    return res.data
+  } catch (err: any) {
+    if (err.response) {
+      if (err.response.headers['x-ratelimit-reset-after']) {
+        await saveRateLimit(err.response.headers['x-ratelimit-reset-after'])
       }
-      return res.data
-    })
-    .catch(async (err) => {
-      if (err.response) {
-        if (err.response.headers['x-ratelimit-reset-after']) {
-          await saveRateLimit(err.response.headers['x-ratelimit-reset-after'])
-        }
-      }
-      return sendError({
-          function: 'openChannel',
-          headers,
-          userId,
-          url,
-          error: JSON.stringify(err),
-        })
-    })
-  return res
+    }
+    return sendError({
+        function: 'openChannel',
+        headers,
+        userId,
+        url,
+        error: JSON.stringify(err),
+      })
+  }
 }
 // https://discord.com/api/webhooks/841492487125598218/b0Rvbv41Uy2w6UxUutctXYeKYd0QAXOKnjhgCOTOyfjSs9hgpYOPxjizWiu4vi-s17nX
 export const sleep = (ms: number) => {
@@ -310,104 +307,108 @@ export const sleep = (ms: number) => {
 export const getUserUrl = (user: User) =>
   `https://indiemakers.fr/makers/${encodeURI(user?.username)}`
 
-export const onboardingMessage = (user: User) => {
-  return openChannel(user.userId).then(async (channel) => {
+export const onboardingMessage = async (user: User) => {
+  try {
+    const config = await getConfig()
+    const channel = await openChannel(user.userId)
     console.error('channel', channel)
     await sendChannel(
       channel.id,
       `Bienvenue dans la communauté INDIE MAKERS ❤️
-Je suis le bot de la communauté !
-Mon but c'est t'aider a etre plus régulier sur tes projets.
+  Je suis le bot de la communauté !
+  Mon but c'est t'aider a etre plus régulier sur tes projets.
 
-Pour ça je favorise les interactions entre les makers(membres) de la communauté!
-Je te permet de distribuer du karma aux membres qui partager et aide les autres
+  Pour ça je favorise les interactions entre les makers(membres) de la communauté!
+  Je te permet de distribuer du karma aux membres qui partager et aide les autres
 
-Grace a mes commande tu peux aussi crée tes projets sur le site indiemakers.fr
-crée des taches ou des revenue sur tes projets !
+  Grace a mes commande tu peux aussi crée tes projets sur le site indiemakers.fr
+  crée des taches, des post ou des revenue sur tes projets !
 
-Je suis la aussi pour crée des moments d'echanges particulier entre vous.
-Comme le résumé du lundi, ou le vocal mensuel !
+  Je suis la aussi pour crée des moments d'echanges particulier entre vous.
+  Comme le résumé du lundi, ou le vocal mensuel !
 
-`
+  `
     )
     await sleep(20)
     await sendChannel(
       channel.id,
-      `Prends 5 minutes pour te présenter sur le salon #00_presentation
-Tu peu utiliser ce modèle :
-`
+      `Prends 5 minutes pour te présenter sur le salon <#${config.channel_intro}>
+  Tu peu utiliser ce modèle :
+  `
     )
     await sleep(5)
     await sendChannel(
       channel.id,
       `
-Salut Les INDIE MAKERS! 🕉
-Moi c'est XXX, j'ai XX ans et je viens de XX.
-Dans la vie je suis XXX depuis XXX ans.
-J'ai aussi plusieurs projets à côté, comme:
-- XXX une app de XXX qui fait XXX de revenu
-- XXX un site pour les XXX, pas de revenu
-- XXX que j'ai abandonné car XXX
-Je fais des projets dans le but de XXX.
-Je vous ai rejoints dans le but de XXX.
-Ravi d'etre parmi vous !
-`
+  Salut Les INDIE MAKERS! 🕉
+  Moi c'est XXX, j'ai XX ans et je viens de XX.
+  Dans la vie je suis XXX depuis XXX ans.
+  J'ai aussi plusieurs projets à côté, comme:
+  - XXX une app de XXX qui fait XXX de revenu
+  - XXX un site pour les XXX, pas de revenu
+  - XXX que j'ai abandonné car XXX
+  Je fais des projets dans le but de XXX.
+  Je vous ai rejoints dans le but de XXX.
+  Ravi d'etre parmi vous !
+  `
     )
     await sleep(15)
     await sendChannel(
       channel.id,
       `Ton profil est maintenant visible ici: ${getUserUrl(user)}
-`
+  `
     )
     await sleep(5)
     await sendChannel(
       channel.id,
       `Tu peux l'enrichir depuis la communauté avec la commande:
 
-\`/im maker modifier nom:TON NOM\`
+  \`/im maker modifier nom:TON NOM\`
 
-Si tu souhaite voir la liste, des champs possibles:
-\`/im maker aide\`
+  Si tu souhaite voir la liste, des champs possibles:
+  \`/im maker aide\`
 
-N'oublie pas, pour ajouter un champ à une commande, utilise la touche TAB
+  N'oublie pas, pour ajouter un champ à une commande, utilise la touche TAB
 
-**Mes commande fonctione uniquement dans un salon**, prend 01_construire_en_public il est fait opour ça !`
+  **Mes commande fonctione uniquement dans un salon**, prend <#${config.channel_bip}> il est fait opour ça !`
     )
     await sleep(15)
     await sendChannel(
       channel.id,
       `
-Pense à donner du karma aux makers qui prennent le temps de t'aider !
-Tu peux le faire avec la commande \`/im karma donner maker:@martin \`
-`
+  Pense à donner du karma aux makers qui prennent le temps de t'aider !
+  Tu peux le faire avec la commande \`/im karma donner maker:@martin \`
+  `
     )
     await sleep(5)
     await sendChannel(
       channel.id,
       `Pour apprendre à m'utiliser (le bot) il y a une petite documentation juste ici:
-https://indiemakers.gitbook.io/bot
-`
+  https://indiemakers.gitbook.io/bot
+  `
     )
     await sleep(5)
     await sendChannel(
       channel.id,
       `voici un petit tuto vidéo pour te montrer comment crée ta premiere tache sur un projet:
       https://www.youtube.com/watch?v=qrXN3Mai1Gw
-`
+  `
     )
     await sleep(5)
     await sendChannel(
       channel.id,
       `Ps: n'attend pas de réponse de ma part ici, je ne sais pas encore lire tes messages !
-`
+  `
     )
     await sleep(5)
     await sendChannel(
       channel.id,
       `Si t'as des question demande aux utilisateur avec le rôle Moderateur !
-`
+  `
     )
-  })
+  } catch (err) {
+    console.error('onboardingMessage', err);
+  }
 }
 
 export const getChannelMessages = async (
@@ -428,33 +429,31 @@ export const getChannelMessages = async (
     console.error('Sleep a bit', data.discordResetAfter)
     await sleep(data.discordResetAfter)
   }
-  const res = await axios
-    .get(url, { headers })
-    .then(async (res) => {
-      if (
-        res?.headers['x-ratelimit-reset-after'] &&
-        !res?.headers['x-ratelimit-remaining']
-      ) {
-        await saveRateLimit(res.headers['x-ratelimit-reset-after'])
-      } else if (data.discordResetAfter && data.discordResetAfter > 0) {
-        await saveRateLimit(0)
+  try {
+    const res = await get(url, { headers })
+    if (
+      res?.headers['x-ratelimit-reset-after'] &&
+      !res?.headers['x-ratelimit-remaining']
+    ) {
+      await saveRateLimit(res.headers['x-ratelimit-reset-after'])
+    } else if (data.discordResetAfter && data.discordResetAfter > 0) {
+      await saveRateLimit(0)
+    }
+    return res.data
+  } catch (err: any) {
+    if (err.response) {
+      if (err.response.headers['x-ratelimit-reset-after']) {
+        await saveRateLimit(err.response.headers['x-ratelimit-reset-after'])
       }
-      return res.data
-    })
-    .catch(async (err) => {
-      if (err.response) {
-        if (err.response.headers['x-ratelimit-reset-after']) {
-          await saveRateLimit(err.response.headers['x-ratelimit-reset-after'])
-        }
-      }
-      return sendError({
-          function: 'getChannelMessages',
-          headers,
-          url,
-          error: JSON.stringify(err),
-        })
-    })
-  return res
+    }
+    sendError({
+        function: 'getChannelMessages',
+        headers,
+        url,
+        error: JSON.stringify(err),
+      })
+    return []
+  }
 }
 
 export const getLastChannelMessage = async (
@@ -496,32 +495,29 @@ export const sendChannel = async (
     console.error('Sleep a bit', data.discordResetAfter)
     await sleep(data.discordResetAfter)
   }
-  const res = await axios
-    .post(url, body, { headers })
-    .then(async (res) => {
-      if (
-        res?.headers['x-ratelimit-reset-after'] &&
-        !res?.headers['x-ratelimit-remaining']
-      ) {
-        await saveRateLimit(res.headers['x-ratelimit-reset-after'])
-      } else if (data.discordResetAfter && data.discordResetAfter > 0) {
-        await saveRateLimit(0)
+  try {
+    const res = await post(url, body, { headers })
+    if (
+      res?.headers['x-ratelimit-reset-after'] &&
+      !res?.headers['x-ratelimit-remaining']
+    ) {
+      await saveRateLimit(res.headers['x-ratelimit-reset-after'])
+    } else if (data.discordResetAfter && data.discordResetAfter > 0) {
+      await saveRateLimit(0)
+    }
+    return res.data
+  } catch (err: any) {
+    if (err.response) {
+      if (err.response.headers['x-ratelimit-reset-after']) {
+        await saveRateLimit(err.response.headers['x-ratelimit-reset-after'])
       }
-      return res.data
-    })
-    .catch(async (err) => {
-      if (err.response) {
-        if (err.response.headers['x-ratelimit-reset-after']) {
-          await saveRateLimit(err.response.headers['x-ratelimit-reset-after'])
-        }
-      }
-      return sendError({
-          function: 'sendChannel',
-          headers,
-          body,
-          url,
-          error: JSON.stringify(err),
-        })
-    })
-  return res
+    }
+    return sendError({
+        function: 'sendChannel',
+        headers,
+        body,
+        url,
+        error: JSON.stringify(err),
+      })
+  }
 }

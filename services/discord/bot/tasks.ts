@@ -24,7 +24,7 @@ import {
   updateProject,
 } from './project'
 import { Project, Task, TaskStatus, User } from '../../../services/types'
-import { getUsersById, updateUser } from '../../../services/firebase/discord'
+import { getConfig, getUsersById, updateUser } from '../../../services/firebase/discord'
 import { addTask, getTask, getLastTask, getOneProjectsTaskDoc, getAllProjectsTasks, deleteProjectTask } from '../../../services/firebase/tasks'
 
 const projectSem: { [key: string]: Mutex } = {}
@@ -83,19 +83,22 @@ const createProjectTask = async (
     if (task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString()
     }
-    if (user?.autoTranslate) initTranslate()
-    const taskWithHashtag = user?.autoTranslate
-      ? `${await frToEn(task.content)} #${hashtag.toLowerCase()}`
-      : `${task.content} #${hashtag.toLowerCase()}`
-    if (user?.makerlogHook && task?.content) {
-      task.makerlogHook = await sendToMakerlog(
-        user.makerlogHook,
-        taskWithHashtag,
-        done
-      )
-    }
-    if (user?.wipApiKey && task?.content) {
-      task.wipId = await sendToWip(user.wipApiKey, taskWithHashtag, done)
+    try {
+      const taskWithHashtag = user?.autoTranslate
+        ? `${await frToEn(initTranslate(), task.content)} #${hashtag.toLowerCase()}`
+        : `${task.content} #${hashtag.toLowerCase()}`
+      if (user?.makerlogHook && task?.content) {
+        task.makerlogHook = await sendToMakerlog(
+          user.makerlogHook,
+          taskWithHashtag,
+          done
+        )
+      }
+      if (user?.wipApiKey && task?.content) {
+        task.wipId = await sendToWip(user.wipApiKey, taskWithHashtag, done)
+      }
+    } catch (err) {
+      console.error('Cannot send to third party', err)
     }
     await sendTxtLater(
       `La tache 💗 ${task.id}:
@@ -135,26 +138,29 @@ const updateProjectTask = async (
     if (task.status && task.status === TaskStatus.DONE) {
       task.doneAt = dayjs().toISOString()
     }
-    if (user?.autoTranslate) initTranslate()
-    const taskWithHashtag = user?.autoTranslate
-      ? `${await frToEn(
-          task.content || curTask.content
-        )} #${hashtag.toLowerCase()}`
-      : `${task.content} #${hashtag.toLowerCase()}`
-    if (task?.makerlogHook && task?.content) {
-      task.makerlogHook = await sendToMakerlog(
-        task.makerlogHook,
-        taskWithHashtag,
-        done
-      )
-    }
-    if (user?.wipApiKey && task?.wipId && task?.content) {
-      task.wipId = await updateToWip(
-        user.wipApiKey,
-        task.wipId,
-        taskWithHashtag,
-        done
-      )
+    try {
+      const taskWithHashtag = user?.autoTranslate
+        ? `${await frToEn(initTranslate(),
+            task.content || curTask.content
+          )} #${hashtag.toLowerCase()}`
+        : `${task.content} #${hashtag.toLowerCase()}`
+      if (task?.makerlogHook && task?.content) {
+        task.makerlogHook = await sendToMakerlog(
+          task.makerlogHook,
+          taskWithHashtag,
+          done
+        )
+      }
+      if (user?.wipApiKey && task?.wipId && task?.content) {
+        task.wipId = await updateToWip(
+          user.wipApiKey,
+          task.wipId,
+          taskWithHashtag,
+          done
+        )
+      }
+    } catch (err) {
+      console.error('Cannot send to third party', err)
     }
     curTaskDoc.ref.update({ ...task, updatedAt: dayjs().toISOString() })
     return curTask
@@ -197,15 +203,15 @@ const updateProjectTaskAndStreak = async (
   const curTasks = await getAllProjectsTasks(userId, lowHash)
   // enregistrer un premier revenu avec \`/im revenu ajouter hashtag: ${newProj.hashtag} revenu 42 mois: Février 2021 \`💰!
   if (curTasks.total === 1) {
-    await openChannel(userId).then((channel) => {
-      console.error('channel', channel)
-      return sendChannel(
-        channel.id,
-        `Il est temps d'enregistrer un premier revenu 💰 ou dépense 💸 sur #${lowHash} avec:
-  \`/im revenu ajouter hashtag:${lowHash} montant:-300 mois:Janvier année:2021 \`
-💪 Fait le sur le salon #01_construire_en_public .`
-      )
-    })
+    const config = await getConfig()
+    const channel = await openChannel(userId)
+    console.error('channel', channel)
+    return sendChannel(
+      channel.id,
+      `Il est temps d'enregistrer un premier revenu 💰 ou dépense 💸 sur #${lowHash} avec:
+\`/im revenu ajouter hashtag:${lowHash} montant:-300 mois:Janvier année:2021 \`
+💪 Fait le sur le salon <#${config.channel_bip}> .`
+    )
   }
   const updatedProject: Partial<Project> = {
     tasks: curTasks.total,

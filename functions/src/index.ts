@@ -1,6 +1,6 @@
 import { config, https, pubsub, firestore } from 'firebase-functions'
 import admin from 'firebase-admin'
-import { Person } from '../../services/types'
+import { Person, User } from '../../services/types'
 import { onboardingMessage } from '../../services/discord/bot/utils'
 import { podcastToFirebase } from './../../services/firebase/podcasts'
 import { lateBot, morningBot } from './../../services/discord/bot/schedule'
@@ -192,9 +192,9 @@ export const onCreateDiscord = firestore
   .document('/discord/{uid}')
   .onCreate(async (snapshot, context) => {
     const { uid } = context.params
-    const user = snapshot.data()
+    const user = snapshot.data() as User
     if (user) {
-      await onboardingMessage(user as any)
+      await onboardingMessage(user)
       await admin.firestore().collection('discord').doc(uid).update({
         onboardingSend: true,
       })
@@ -207,9 +207,9 @@ export const onUpdateDiscord = firestore
     const { uid } = context.params
     const onboardingSend = snapshot.before.data().onboardingSend
     if (!onboardingSend) {
-      const user = snapshot.after.data()
+      const user = snapshot.after.data() as User
       if (user && !user.onboardingSend) {
-        await onboardingMessage(user as any)
+        await onboardingMessage(user)
         await admin.firestore().collection('discord').doc(uid).update({
           onboardingSend: true,
         })

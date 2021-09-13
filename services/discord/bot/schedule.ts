@@ -7,9 +7,10 @@ import { resetProjectStreak, resetUserStreak } from './tasks'
 import { usersViewStreak } from './user'
 import { lastDay, lastWeek, openChannel, sendChannel } from './utils'
 
-const personalTaskReminder = async (users: User[]) => {
+export const personalTaskReminder = async (users: User[]) => {
+  const config = await getConfig()
   await Promise.all(
-    users.map((usr) => {
+    users.map(async(usr) => {
       const lastTaskAt = dayjs(usr.lastTaskAt)
       if (
         usr.taskReminder &&
@@ -18,17 +19,16 @@ const personalTaskReminder = async (users: User[]) => {
         usr.lastTaskAt &&
         lastTaskAt.isBefore(lastDay())
       ) {
-        return openChannel(usr.userId).then((channel) => {
-          console.error('personalReminder', usr.userId)
-          return sendChannel(
-            channel.id,
-            `Tu as actuellement ${usr.streak} 🔥. Soit ${usr.streak} jours consécutif passé sur tes projets !
+        const channel = await openChannel(usr.userId)
+        console.error('personalReminder', usr.userId)
+        return sendChannel(
+          channel.id,
+          `Tu as actuellement ${usr.streak} 🔥. Soit ${usr.streak} jours consécutif passé sur tes projets !
 Si tu veux les conserver, fait une tache aujourd'hui et poste la !
 Même 10 min, ça compte !
 10 min * 365 jours = 60 heures sur ton projet a la fin de l'année ❤️
-\`/im tache\` sur le channel construire en public`
-          )
-        })
+\`/im tache\` sur le channel <#${config.channel_bip}>`
+        )
       } else {
         return Promise.resolve()
       }
@@ -36,10 +36,10 @@ Même 10 min, ça compte !
   )
 }
 
-const personalFridayTaskReminder = async (users: User[]) => {
-  if (dayjs().day() === 5) {
+export const personalFridayTaskReminder = async (users: User[]) => {
+  const config = await getConfig()
     await Promise.all(
-      users.map((usr) => {
+      users.map(async(usr) => {
         const lastTaskAt = dayjs(usr.lastTaskAt)
         if (
           usr.taskReminder &&
@@ -48,38 +48,40 @@ const personalFridayTaskReminder = async (users: User[]) => {
           usr.lastTaskAt &&
           lastTaskAt.isBefore(lastWeek())
         ) {
-          return openChannel(usr.userId).then((channel) => {
-            console.error('personalReminder', usr.userId)
-            return sendChannel(
-              channel.id,
-              `Cela fait plus d'une semaine que tu n'as pas posté de tache dans la communauté.
+          const channel = await openChannel(usr.userId)
+          console.error('personalReminder', usr.userId)
+          return sendChannel(
+            channel.id,
+            `Cela fait plus d'une semaine que tu n'as pas posté de tache dans la communauté.
 N'oublie pas de partager ce que tu fait c'est essentiel pour béneficier de l'effets cummulée de la communauté !
 Chaque jour une petite tache crée l'habitude d'etre un maker !
 C'est cette habitude qui te feras atteindre tes objectifs !
-Lance toi : \`/im tache\` sur le channel construire en public`
-            )
-          })
+Lance toi : \`/im tache\` sur le channel <#${config.channel_bip}>`
+          )
         } else {
           return Promise.resolve()
         }
       })
     )
-  }
 }
 
-const personalModayReminder = async (users: User[]) => {
+export const personalModayReminder = async (users: User[]) => {
+  const config = await getConfig()
   await Promise.all(
-    users.map((usr) => {
+    users.map(async(usr) => {
       if (usr.mondayReminder && usr.mondayReminder === 'true') {
-        return openChannel(usr.userId).then((channel) => {
+        try {
+          const channel = await openChannel(usr.userId)
           console.error('personalReminder', usr.userId)
           return sendChannel(
             channel.id,
-            `C'est l'heure de faire ton résumé de la semaine sur tes projets :slight_smile: sur le salon General de la communauté indie makers .
+            `C'est l'heure de faire ton résumé de la semaine sur tes projets :slight_smile: sur le salon <#${config.channel_general}> de la communauté indie makers .
 C'est notre petit rituel du lundi pour se motiver et échanger sur nos avancés !
 Ce moment est super important pour crée du lien entre tous les membres, n'hésite pas a répondre aux autres et a poser des questions !`
           )
-        })
+        } catch (err) {
+          console.error('personalModayReminder', err)
+        }
       } else {
         return Promise.resolve()
       }
@@ -87,17 +89,16 @@ Ce moment est super important pour crée du lien entre tous les membres, n'hési
   )
 }
 
-const personalVocalReminder = async (users: User[]) => {
+export const personalVocalReminder = async (users: User[]) => {
   await Promise.all(
-    users.map((usr) => {
+    users.map(async (usr) => {
       if (usr.voiceReminder && usr.voiceReminder === 'true') {
-        return openChannel(usr.userId).then((channel) => {
-          console.error('personalReminder', usr.userId)
-          return sendChannel(
-            channel.id,
-            `C'est l'heure de l'appel mensuel sur le general vocal ! Ne soit pas timide, c'est difficile pour tout le monde au debut, prend toi une biere met toi alaise et c'est parti !`
-          )
-        })
+        const channel = await openChannel(usr.userId)
+        console.error('personalReminder', usr.userId)
+        return sendChannel(
+          channel.id,
+          `C'est l'heure de l'appel mensuel sur le general vocal ! Ne soit pas timide, c'est difficile pour tout le monde au debut, prend toi une biere met toi alaise et c'est parti !`
+        )
       } else {
         return Promise.resolve()
       }
@@ -106,27 +107,29 @@ const personalVocalReminder = async (users: User[]) => {
 }
 
 export const lateBot = async () => {
-  const data = await getConfig()
-  if (data) {
+  const config = await getConfig()
+  if (config) {
     try {
       const users = await getAllUsers()
       const usersInfoCards = usersViewStreak(users)
       if (usersInfoCards.length > 0) {
         await sendChannel(
-          data.channel_bip,
-          "Hey Makers, il est temps de noter vos taches dans vos projets et d'aller chill !"
+          config.channel_bip,
+          "<@everyone> Hey Makers, il est temps de noter vos taches dans vos projets et d'aller chill !"
         )
       }
       if (dayjs().day() === 1 && dayjs().date() < 8) {
         await sendChannel(
-          data.channel_general,
+          config.channel_general,
           `C'est l'heure de l'appel mensuel sur le general vocal ! 💪`
         )
         await personalVocalReminder(users)
       }
 
       await personalTaskReminder(users)
+      if (dayjs().day() === 5) {
       await personalFridayTaskReminder(users)
+      }
     } catch (err) {
       console.error(err)
     }
@@ -166,7 +169,7 @@ Continuez comme ça :`
       if (dayjs().day() === 1) {
         await sendChannel(
           data.channel_general,
-          `Hey Makers, Faites moi un petit récap de votre semaine passé MINIMUM :
+          `<@everyone> Hey Makers, Faites moi un petit récap de votre semaine passé MINIMUM :
   - **1 point 👍**
   - **1 point 👎**`
         )
@@ -175,7 +178,7 @@ Continuez comme ça :`
         if (dayjs().date() < 8) {
           await sendChannel(
             data.channel_general,
-            `Ce soir a 18h (UTC/GMT +1 heure) c'est l'appel mensuel sur le general vocal !
+            `Ce soir a 18h10 (UTC/GMT +1 heure) c'est l'appel mensuel sur le general vocal !
 Passe faire un tour et partager avec les autres makers !`
           )
         }
