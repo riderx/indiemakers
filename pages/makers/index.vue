@@ -1,24 +1,25 @@
 <template>
   <div>
-    <div class="flex flex-wrap overflow-hidden">
-      <div class="w-full px-1 pt-1 overflow-hidden sm:pt-5 sm:px-5 sm:w-3/4">
-        <ListPosts v-if="loaded" :posts="posts" />
-      </div>
-      <div class="w-full overflow-hidden sm:w-1/4">
-        <div class="flex flex-wrap overflow-hidden">
-          <div class="w-full overflow-hidden">
-            <JoinUs />
-          </div>
-          <div class="w-full overflow-hidden">
-            <LadderMakers v-if="loaded" :users="users" />
-          </div>
-          <div class="w-full overflow-hidden">
-            <LadderProject v-if="loaded" :projects="projects" />
+    <client-only>
+      <div class="flex flex-wrap overflow-hidden">
+        <div class="w-full px-1 pt-1 overflow-hidden sm:pt-5 sm:px-5 sm:w-3/4">
+          <ListPosts :posts="posts" />
+        </div>
+        <div class="w-full overflow-hidden sm:w-1/4">
+          <div class="flex flex-wrap overflow-hidden">
+            <div class="w-full overflow-hidden">
+              <JoinUs />
+            </div>
+            <div class="w-full overflow-hidden">
+              <LadderMakers :users="users" />
+            </div>
+            <div class="w-full overflow-hidden">
+              <LadderProject :projects="projects" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <PageLoader :show="!loaded" />
+    </client-only>
   </div>
 </template>
 <script lang="ts">
@@ -34,13 +35,6 @@ import { createMeta } from '~/services/meta'
 import { Post, Project, User } from '~/services/types'
 
 export default defineComponent({
-  components: {
-    JoinUs: () => import('~/components/JoinUs.vue'),
-    ListPosts: () => import('~/components/ListPosts.vue'),
-    PageLoader: () => import('~/components/PageLoader.vue'),
-    LadderMakers: () => import('~/components/LadderMakers.vue'),
-    LadderProject: () => import('~/components/LadderProject.vue'),
-  },
   setup() {
     const { $config } = useContext()
     const users = ref([] as User[])
@@ -50,19 +44,24 @@ export default defineComponent({
     const title = 'La communauté INDIE MAKERS'
 
     const { fetch } = useFetch(async () => {
-      const usersData = await discordMakers($config)
-      const postsData = await discordPosts($config)
-      const projectsData = await discordProjects($config)
-      if (usersData) {
-        users.value = usersData
+      try {
+        const usersData = await discordMakers($config)
+        const postsData = await discordPosts($config)
+        const projectsData = await discordProjects($config)
+        if (usersData) {
+          users.value = usersData
+        }
+        if (postsData) {
+          posts.value = postsData
+        }
+        if (projectsData) {
+          projects.value = projectsData
+        }
+        loaded.value = true
+      } catch (err) {
+        console.error(err)
+        loaded.value = false
       }
-      if (postsData) {
-        posts.value = postsData
-      }
-      if (projectsData) {
-        projects.value = projectsData
-      }
-      loaded.value = true
     })
     fetch()
     useMeta(() => ({
