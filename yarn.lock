@@ -8150,10 +8150,10 @@ linkify-it@^2.0.0:
   dependencies:
     uc.micro "^1.0.1"
 
-linkifyjs@^2.1.9:
-  version "2.1.9"
-  resolved "https://registry.npmjs.org/linkifyjs/-/linkifyjs-2.1.9.tgz"
-  integrity sha512-74ivurkK6WHvHFozVaGtQWV38FzBwSTGNmJolEgFp7QgR2bl6ArUWlvT4GcHKbPe1z3nWYi+VUdDZk16zDOVug==
+linkifyjs@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/linkifyjs/-/linkifyjs-3.0.0.tgz#6e3b6b0887af4c927ad21003329709a94e17d9b1"
+  integrity sha512-pbaVEs7PMhRgrxKz44dkElP1A3wpd20L8BFhd0y1H8DcNaV3IPHdIVNu1LiBUZPf+5FJEwnIwudjI3yLqNyp1g==
 
 lint-staged@11.1.2:
   version "11.1.2"
