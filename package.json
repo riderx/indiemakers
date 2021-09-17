@@ -44,7 +44,7 @@
     "firebase-firestore-lite": "^1.0.3",
     "hex2dec": "^1.1.2",
     "imagekit": "^3.2.2",
-    "linkifyjs": "^2.1.9",
+    "linkifyjs": "^3.0.1",
     "nuxt": "2.15.8",
     "nuxt-purgecss": "^1.0.0",
     "rss": "^1.2.2",
