@@ -148,7 +148,8 @@
   </div>
 </template>
 <script lang="ts">
-import linkifyHtml from 'linkifyjs/html'
+// import linkifyHtml from 'linkifyjs/html'
+import linkifyHtml from 'linkify-html'
 import {
   ref,
   onMounted,
@@ -238,7 +239,7 @@ export default defineComponent({
         defaultProtocol: 'https',
         className: 'linkified',
         ignoreTags: [],
-        format(value, type) {
+        format(value: any, type: any) {
           let newVal = value + ''
           if (type === 'url' && newVal.includes('https://')) {
             newVal = newVal.replace('https://', '')
