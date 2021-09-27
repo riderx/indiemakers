@@ -3,7 +3,7 @@
     <client-only>
       <div class="flex flex-wrap overflow-hidden">
         <div class="w-full px-1 pt-1 overflow-hidden sm:pt-5 sm:px-5 sm:w-3/4">
-          <list-posts :posts="posts" />
+          <list-posts :posts="posts" :users="users" />
         </div>
         <div class="w-full overflow-hidden sm:w-1/4">
           <div class="flex flex-wrap overflow-hidden">

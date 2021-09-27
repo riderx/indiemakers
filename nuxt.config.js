@@ -140,6 +140,9 @@ export default {
   ],
   markdownit: {
     runtime: true, // Support `$md()`
+    html: true,
+    linkify: true,
+    typographer: true,
   },
   // speedkit: {
   //   detection: {

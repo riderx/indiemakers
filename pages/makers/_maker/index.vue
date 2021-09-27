@@ -178,7 +178,7 @@
         v-if="!projectData && maker.postsData && loadedProject"
         class="w-full mx-0 md:w-4/5 md:mx-2"
       >
-        <ListPosts :posts="maker.postsData" />
+        <ListPosts :posts="maker.postsData" :users="users" />
       </div>
       <div v-else-if="projectData && loadedProject" class="md:w-4/5 md:mx-2">
         <div
@@ -237,7 +237,7 @@
             v-if="projectData.postsData && projectData.postsData.total > 0"
             class="w-full p-3 mb-3 bg-white md:p-5 md:w-1/2 md:mb-0"
           >
-            <ListPosts :posts="projectData.postsData.posts" />
+            <ListPosts :posts="projectData.postsData.posts" :users="users" />
           </div>
           <div
             v-if="projectData.tasksData && projectData.tasksData.total > 0"
@@ -280,7 +280,7 @@ import {
   useMeta,
 } from '@nuxtjs/composition-api'
 import { User, Project } from '~/services/types'
-import { discordMakerId, discordHashtag } from '~/services/rss'
+import { discordMakerId, discordHashtag, discordMakers } from '~/services/rss'
 import { createMeta } from '~/services/meta'
 
 export default defineComponent({
@@ -297,6 +297,7 @@ export default defineComponent({
     const loadedProject = ref(false)
     const projectData = ref<Project>()
     const maker = ref<User>()
+    const users = ref<User[]>([])
     const hashtag = ref<string>()
     const noCover =
       'https://res.cloudinary.com/forgr/image/upload/v1621191060/indiemakers/new_cover_fu6fcs.png'
@@ -304,6 +305,7 @@ export default defineComponent({
       'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
     const { fetch } = useFetch(async () => {
       const data = await discordMakerId($config, params.value.maker)
+      users.value = await discordMakers($config)
       if (data) {
         maker.value = data
         if (data.postsData && data.postsData?.length > 0) {
@@ -367,6 +369,7 @@ export default defineComponent({
     }
     return {
       maker,
+      users,
       projectData,
       loadedProject,
       setHastag,

@@ -72,7 +72,7 @@
                       <div class="mt-2 text-sm text-gray-700">
                         <p
                           class="prose-sm prose prose-blue"
-                          v-html="$md.render(post.text)"
+                          v-html="$md.render(transformPost(post.text))"
                         ></p>
                       </div>
                     </div>
@@ -88,20 +88,42 @@
 </template>
 <script lang="ts">
 import { defineComponent, useRouter } from '@nuxtjs/composition-api'
-import { Post } from '~/services/types'
+import { Post, User } from '~/services/types'
+
+// function to find user by userId in users list
+const findUser = (users: User[], userId: string) => {
+  return users ? users.find((user) => user.userId === userId) : undefined
+}
 
 export default defineComponent({
   props: {
     posts: { type: Array as () => Post[], default: () => [] as Post[] },
+    users: { type: Array as () => User[], default: () => [] as User[] },
   },
-  setup() {
+  setup({ users }) {
     const router = useRouter()
+    const transformPost = (text: string) => {
+      if (typeof text !== 'string') return text
+      const transformed = text.replace(/<@(.*)>/g, (userId: string) => {
+        userId = userId.replace(/[^0-9.]/g, '')
+        const user = findUser(users, userId)
+        if (user) {
+          return `<a href="/makers/${encodeURI(user?.username)}">@${
+            user?.username
+          }</a>`
+        } else {
+          return `<a href="https://discordapp.com/users/${userId}">@${userId}</a>`
+        }
+      })
+      return transformed
+    }
+
     const openProfil = (id: string | undefined) => {
       if (id) {
         router.push(`/makers/${encodeURI(id)}`)
       }
     }
-    return { openProfil }
+    return { openProfil, transformPost }
   },
 })
 </script>

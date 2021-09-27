@@ -80,7 +80,7 @@
             v-if="projectData.postsData && projectData.postsData.total > 0"
             class="w-full p-3 mb-3 bg-white md:p-10 md:w-1/2 md:mb-0"
           >
-            <ListPosts :posts="projectData.postsData.posts" />
+            <ListPosts :posts="projectData.postsData.posts" :users="users" />
           </div>
           <div
             v-if="projectData.tasksData && projectData.tasksData.total > 0"
@@ -122,9 +122,9 @@ import {
   useRouter,
   useMeta,
 } from '@nuxtjs/composition-api'
-import { discordHashtag } from '~/services/rss'
+import { discordHashtag, discordMakers } from '~/services/rss'
 import { createMeta } from '~/services/meta'
-import { Project } from '~/services/types'
+import { Project, User } from '~/services/types'
 
 export default defineComponent({
   components: {
@@ -137,10 +137,12 @@ export default defineComponent({
     const { $config, params } = useContext()
     const router = useRouter()
     const loaded = ref(false)
+    const users = ref<User[]>([])
     const projectData = ref<Project>()
     const noImge =
       'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
     const { fetch } = useFetch(async () => {
+      users.value = await discordMakers($config)
       const data = await discordHashtag(
         $config,
         params.value.maker,
@@ -172,6 +174,7 @@ export default defineComponent({
     }
     return {
       noImge,
+      users,
       projectData,
       loaded,
       getTextColor,
