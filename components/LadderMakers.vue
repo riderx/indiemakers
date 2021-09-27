@@ -78,8 +78,10 @@ export default defineComponent({
     const sort = ref('karma')
     const sorted = () =>
       users
-        .slice()
-        .sort((a, b) => (b as any)[sort.value] - (a as any)[sort.value])
+        ? users
+            .slice()
+            .sort((a, b) => (b as any)[sort.value] - (a as any)[sort.value])
+        : []
     const getTextColor = (color: string | undefined) => {
       if (color) {
         return { color: `#${color}` }
