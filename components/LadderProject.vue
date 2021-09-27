@@ -29,7 +29,7 @@
     >
       <div
         v-for="project in sorted"
-        :key="project.hashtag"
+        :key="`{project.userName}_${project.hashtag}`"
         class="flex py-3 border-b-2 cursor-pointer border-orchid-300"
         @click="openProject(project.userName, project.hashtag)"
       >

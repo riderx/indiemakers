@@ -30,7 +30,7 @@
     >
       <div
         v-for="maker in sorted"
-        :key="maker.username"
+        :key="maker.userId"
         class="flex py-3 border-b-2 cursor-pointer border-orchid-300"
         @click="openProfil(maker.username)"
       >

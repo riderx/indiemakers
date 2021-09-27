@@ -5,7 +5,7 @@ import { DiscordConfig, DiscordUser, User } from '../types'
 
 export const getAllUsers = async (): Promise<User[]> => {
   try {
-    const documents = await firestore().collection('/discord').get()
+    const documents = await firestore().collection('/discord').where('userId', '!=', null).get()
     const users: User[] = []
     documents.docs.forEach((doc) => {
       const data: User = doc.data() as User

@@ -76,6 +76,7 @@ export const getAllProjects = async (
     const documents = await admin
       .firestore()
       .collection(`discord/${userId}/projects`)
+      .where('hashtag', '!=', null)
       .get()
 
     const projects: Project[] = []
