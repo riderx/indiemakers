@@ -19,6 +19,7 @@
           </div>
         </div>
       </div>
+      <PageLoader :show="!loaded" />
     </client-only>
   </div>
 </template>

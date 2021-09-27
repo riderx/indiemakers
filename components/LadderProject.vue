@@ -77,11 +77,11 @@ export default defineComponent({
     const noImge =
       'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
     const sort = ref('tasks')
-    const sorted = computed(() => {
-      return [...projects].sort(
-        (a, b) => (b as any)[sort.value] - (a as any)[sort.value]
-      )
-    })
+    const sorted = computed(() =>
+      projects
+        .slice()
+        .sort((a, b) => (b as any)[sort.value] - (a as any)[sort.value])
+    )
     const getTextColor = (color: string | undefined) => {
       if (color) {
         return { color: `#${color}` }
