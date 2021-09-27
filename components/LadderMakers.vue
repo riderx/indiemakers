@@ -29,7 +29,7 @@
       "
     >
       <div
-        v-for="maker in sorted"
+        v-for="maker in sorted()"
         :key="maker.userId"
         class="flex py-3 border-b-2 cursor-pointer border-orchid-300"
         @click="openProfil(maker.username)"
@@ -64,12 +64,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  ref,
-  useRouter,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRouter } from '@nuxtjs/composition-api'
 import { User } from '~/services/types'
 
 export default defineComponent({
@@ -81,11 +76,10 @@ export default defineComponent({
     const noImge =
       'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
     const sort = ref('karma')
-    const sorted = computed(() =>
+    const sorted = () =>
       users
         .slice()
         .sort((a, b) => (b as any)[sort.value] - (a as any)[sort.value])
-    )
     const getTextColor = (color: string | undefined) => {
       if (color) {
         return { color: `#${color}` }
