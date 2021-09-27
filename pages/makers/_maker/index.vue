@@ -297,22 +297,28 @@ export default defineComponent({
     const loadedProject = ref(false)
     const projectData = ref<Project>()
     const maker = ref<User>()
-    const users = ref<User[]>([])
+    const users = ref<User[]>()
     const hashtag = ref<string>()
     const noCover =
       'https://res.cloudinary.com/forgr/image/upload/v1621191060/indiemakers/new_cover_fu6fcs.png'
     const noImge =
       'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
     const { fetch } = useFetch(async () => {
-      const data = await discordMakerId($config, params.value.maker)
-      users.value = await discordMakers($config)
-      if (data) {
-        maker.value = data
-        if (data.postsData && data.postsData?.length > 0) {
+      const [makerData, usersData] = await Promise.all([
+        discordMakerId($config, params.value.maker),
+        discordMakers($config),
+      ])
+      users.value = usersData
+      if (makerData) {
+        maker.value = makerData
+        if (makerData.postsData && makerData.postsData?.length > 0) {
           hashtag.value = 'feed'
           loadedProject.value = true
-        } else if (data.projectsData && data.projectsData.length > 0) {
-          hashtag.value = data.projectsData[0].hashtag
+        } else if (
+          makerData.projectsData &&
+          makerData.projectsData.length > 0
+        ) {
+          hashtag.value = makerData.projectsData[0].hashtag
           getProject(hashtag.value)
         } else {
           loadedProject.value = true

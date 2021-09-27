@@ -4,7 +4,6 @@ import { Episode, Person, Post, Project, User } from './types'
 
 export const discordPosts = ($config: NuxtConfig): Promise<Post[]> => {
   const url = `${$config.BASEAPI}/posts`
-  console.error('discordPosts', url)
   return axios
     .get(url)
     .then((response) => {
@@ -18,7 +17,6 @@ export const discordPosts = ($config: NuxtConfig): Promise<Post[]> => {
 
 export const discordMakers = ($config: NuxtConfig): Promise<User[]> => {
   const url = `${$config.BASEAPI}/makers`
-  console.error('discordMakers', url)
   return axios
     .get(url)
     .then((response) => {
@@ -32,7 +30,6 @@ export const discordMakers = ($config: NuxtConfig): Promise<User[]> => {
 
 export const discordProjects = ($config: NuxtConfig): Promise<Project[]> => {
   const url = `${$config.BASEAPI}/project`
-  console.error('discordProjects', url)
   return axios
     .get(url)
     .then((response) => {

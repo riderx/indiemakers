@@ -38,17 +38,19 @@ import { Post, Project, User } from '~/services/types'
 export default defineComponent({
   setup() {
     const { $config } = useContext()
-    const users = ref([] as User[])
-    const posts = ref([] as Post[])
-    const projects = ref([] as Project[])
+    const users = ref<User[]>()
+    const posts = ref<Post[]>()
+    const projects = ref<Project[]>()
     const loaded = ref(false)
     const title = 'La communauté INDIE MAKERS'
 
     const { fetch } = useFetch(async () => {
       try {
-        const usersData = await discordMakers($config)
-        const postsData = await discordPosts($config)
-        const projectsData = await discordProjects($config)
+        const [usersData, postsData, projectsData] = await Promise.all([
+          discordMakers($config),
+          discordPosts($config),
+          discordProjects($config),
+        ])
         if (usersData) {
           users.value = usersData
         }

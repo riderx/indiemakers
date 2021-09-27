@@ -142,14 +142,13 @@ export default defineComponent({
     const noImge =
       'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
     const { fetch } = useFetch(async () => {
-      users.value = await discordMakers($config)
-      const data = await discordHashtag(
-        $config,
-        params.value.maker,
-        params.value.hashtag
-      )
-      if (data) {
-        projectData.value = data
+      const [makerData, pData] = await Promise.all([
+        discordMakers($config),
+        discordHashtag($config, params.value.maker, params.value.hashtag),
+      ])
+      users.value = makerData
+      if (pData) {
+        projectData.value = pData
         loaded.value = true
       }
     })
