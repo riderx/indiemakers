@@ -3,18 +3,18 @@
     <client-only>
       <div class="flex flex-wrap overflow-hidden">
         <div class="w-full px-1 pt-1 overflow-hidden sm:pt-5 sm:px-5 sm:w-3/4">
-          <ListPosts :posts="posts" />
+          <list-posts :posts="posts" />
         </div>
         <div class="w-full overflow-hidden sm:w-1/4">
           <div class="flex flex-wrap overflow-hidden">
             <div class="w-full overflow-hidden">
-              <JoinUs />
+              <join-us />
             </div>
             <div class="w-full overflow-hidden">
-              <LadderMakers :users="users" />
+              <ladder-makers :users="users" />
             </div>
             <div class="w-full overflow-hidden">
-              <LadderProject :projects="projects" />
+              <ladder-project :projects="projects" />
             </div>
           </div>
         </div>
