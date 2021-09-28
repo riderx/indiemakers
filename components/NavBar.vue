@@ -395,7 +395,7 @@ const solutions = [
 const resources = [
   {
     name: 'Écouter le podcast',
-    description: "Choisi ta plateforme préféré où l'écouter.",
+    description: "Choisi ta plateforme préféré d'écoute",
     href: '/',
   },
   {
@@ -406,7 +406,7 @@ const resources = [
   {
     name: 'Construisons ensemble',
     description:
-      "Participe a l'amélioration de la communauté en votant et proposant de nouvelles fonctionnalitée, tu peut aussi aider en les codant!",
+      "Participe a l'amélioration de la communauté en votant et proposant de nouvelles fonctionnalitée",
     href: '/canny',
   },
   {
@@ -417,30 +417,14 @@ const resources = [
   },
   {
     name: 'La Newletter',
-    description:
-      "Suis l'evolution de mes projets, podcast, app, hackathon tout y passe",
+    description: 'Suis mon evolution vers les 1k de MRR',
     href: '/newsletter',
   },
   {
-    name: 'Hackathon makers | 4 jours pour gagner tes premiers euros',
+    name: 'Coworking pour makers',
     description:
-      'Envie de te lancer dans le grand bain, démarre ton projet dans un hackathon!',
-    href: 'https://hackathon-makers.com',
-  },
-  {
-    name: 'Captime | Crossfit timer',
-    description: 'Ton timer comme a la salle',
-    href: 'https://captime.app',
-  },
-  {
-    name: 'Bewise | Citation simple',
-    description: 'Une citation par jours pour se sentir mieux, sans pub',
-    href: 'https://bewise.love',
-  },
-  {
-    name: 'Mimesis | Jeu de mime',
-    description: 'Fait deviner des expressions a ton équipe en les mimants',
-    href: 'https://mimesis.fun',
+      'Ne te sens plus jamais seul, rejoins les autres makers dans un coworking virtuel',
+    href: 'https://app.indiemakers.space',
   },
 ]
 
