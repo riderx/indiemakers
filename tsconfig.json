@@ -8,6 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
     "sourceMap": true,
+    "noUnusedLocals": true,
     "strict": true,
     "noEmit": true,
     "experimentalDecorators": true,

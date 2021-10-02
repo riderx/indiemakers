@@ -1,10 +1,10 @@
-import { personalModayReminder, personalTaskReminder, personalFridayTaskReminder, personalVocalReminder } from './../discord/bot/schedule';
+import { personalModayReminder, personalTaskReminder, personalVocalReminder } from './../discord/bot/schedule';
 // import { lateBot, morningBot } from './../discord/bot/schedule';
 import * as dotenv from 'dotenv'
-import { onboardingMessage } from '../discord/bot/utils'
+// import { onboardingMessage } from '../discord/bot/utils'
 import { getUsersById } from '../firebase/discord'
 import fFnit from '../firebase/init'
-import { initTranslate } from '../discord/translate';
+// import { initTranslate } from '../discord/translate';
 // import { podcastToFirebase } from '../firebase/podcasts'
 dotenv.config()
 // import { initTranslate, frToEn } from '../discord/translate'
