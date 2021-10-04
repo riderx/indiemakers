@@ -45,9 +45,10 @@ const shortURLPixel = (url: string): Promise<string> =>
         configHttp
       )
       .then((response) => {
-        if (response && response.data && response.data.shortUrl) {
+        const data = response.data as any
+        if (response && data && data.shortUrl) {
           console.error('new link', response.data)
-          resolve(response.data.shortUrl)
+          resolve(data.shortUrl)
         } else {
           console.error('shorten error, no shorten found', response)
           resolve(url)
