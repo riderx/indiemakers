@@ -153,7 +153,7 @@ const incomeAdd = async (
     .get()
   if (!projDoc.exists) {
     return sendTxtLater(
-      `Le projet #${hashtag.toLowerCase()}, n'existe pas. tu peux le crée avec \`/im projet creer\` 😇`,
+      `Le projet #${hashtag.toLowerCase()}, n'existe pas. tu peux le crée avec \`/im projet ajouter\` 😇`,
       [],
       interaction.application_id,
       interaction.token
