@@ -8,10 +8,9 @@ import { addKarmaById, getKarmaById } from '../../../services/firebase/karma';
 import { updateUser, getAllUsers } from '../../../services/firebase/discord';
 
 const afterAdd = async (value: number, userId: string, curKarma: KarmaAll): Promise<string> => {
-  const botString = `Tu as ${
-    value > 0 ? 'donné' : 'enlevé'
-  } du karma a <@${userId}> 😎
-  Total 🕉: ${curKarma.total} karma!`
+  const botString = value > 0 ? `Merci <@${userId}> ❤️ !
+  Ton total karma 🕉 est maintenant de: ${curKarma.total}` : `Pas cool <@${userId}> 😩!
+  Ton total karma 🕉 est maintenant de: ${curKarma.total}`
   if (curKarma.total < 0) {
     await openChannel(userId).then((channel) => {
       console.error('channel', channel)
