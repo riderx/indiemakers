@@ -102,7 +102,7 @@ export default defineComponent({
       'https://res.cloudinary.com/forgr/image/upload/v1621019063/indiemakers/blog_li7d4i.svg'
     const title = 'Les articles indie !'
     const description =
-      "Chaque semaine un maker du discord est désigné pour ecrire un article sur son projet, partager ses avancée, ou enrichir l'univer indie !"
+      'Des articles fait par des indie, des astuces, des conseils, des avancée, ou enrichir la culture indie !'
     const { fetch } = useFetch(async () => {
       const data = await $content('articles')
         .where({ published: true })
