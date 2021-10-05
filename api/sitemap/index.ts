@@ -2,14 +2,12 @@ import { getAllAllProject } from './../../services/discord/bot/project';
 import { getAllUsers } from './../../services/firebase/discord';
 import { Request, Response } from 'express'
 import { SitemapStream, streamToPromise } from 'sitemap'
-// import { $content } from '@nuxt/content'
-// const func = require('../../plugins/firebase_func')
 import fFnit from '../../services/firebase/init'
 import { feed } from '../../services/feed'
 import fs from 'fs'
 
 const getArticles = async () => {
-  const files = await fs.readdirSync('content/articles');
+  const files = await fs.readdirSync(`${__dirname}/../../content/articles`);
   console.log('files', files);
   return files.map((file) => ({slug: file.replace('.md', '').replace(/-/g, '_')}));
 }
