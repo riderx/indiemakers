@@ -2,10 +2,17 @@ import { getAllAllProject } from './../../services/discord/bot/project';
 import { getAllUsers } from './../../services/firebase/discord';
 import { Request, Response } from 'express'
 import { SitemapStream, streamToPromise } from 'sitemap'
-import { $content } from '@nuxt/content'
+// import { $content } from '@nuxt/content'
 // const func = require('../../plugins/firebase_func')
 import fFnit from '../../services/firebase/init'
 import { feed } from '../../services/feed'
+import fs from 'fs'
+
+const getArticles = async () => {
+  const files = await fs.readdirSync('content/articles');
+  console.log('files', files);
+  return files.map((file) => ({slug: file.replace('.md', '').replace(/-/g, '_')}));
+}
 
 const sitemap = async (_req: Request, res: Response) => {
   try {
@@ -44,7 +51,8 @@ const sitemap = async (_req: Request, res: Response) => {
         })
       }
     })
-    const articles = await $content('articles').fetch()
+    // const articles = await $content('articles').fetch()
+    const articles = await getArticles();
 
     articles.forEach((article: any) => {
       smStream.write({
