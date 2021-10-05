@@ -12,11 +12,11 @@ export const sendUserToRevue = (
     url: '/api/v2/subscribers',
     baseURL: 'https://www.getrevue.co',
     headers: {
-      Authorization: `Token ${configSecret.getrevue.apikey}`
+      Authorization: `Token ${configSecret.getrevue.apikey}`,
     },
     data: {
       email,
       first_name: firstName,
       double_opt_in: false,
-  }
-})
+    },
+  })
