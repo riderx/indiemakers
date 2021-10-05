@@ -115,7 +115,7 @@ export const lateBot = async () => {
       if (usersInfoCards.length > 0) {
         await sendChannel(
           config.channel_bip,
-          "<@everyone> Hey Makers, il est temps de noter vos tachesdu jour dans vos projets et d'aller chill !"
+          "@everyone Hey Makers, il est temps de noter vos taches du jour dans vos projets et d'aller chill !"
         )
       }
       if (dayjs().day() === 1 && dayjs().date() < 8) {
@@ -169,7 +169,7 @@ Continuez comme ça :`
       if (dayjs().day() === 1) {
         await sendChannel(
           data.channel_general,
-          `<@everyone> Hey Makers, C'est l'heure du récap de ta semaine passé :
+          `@everyone Hey Makers, C'est l'heure du récap de ta semaine passé :
   - **1 point 👍**
   - **1 point 👎**
   - **1 point 🔮 (A faire cette semaine)**`
