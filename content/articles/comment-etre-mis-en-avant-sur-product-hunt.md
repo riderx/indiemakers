@@ -1,5 +1,5 @@
 ---
-slug: comment-etre-mis-en-avant-sur-product-hunt
+slug: comment_etre_mis_en_avant_sur_product_hunt
 title: Comment être mis en avant sur Product Hunt
 surtitle: ''
 subtitle: ''

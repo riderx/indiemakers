@@ -1,5 +1,5 @@
 ---
-slug: comment-indie-hackers-et-product-hunt-ont-change-ma-vie
+slug: comment_indi_-hackers_et_product_hunt_ont_change_ma_vie
 title: Comment Indie Hackers et Product Hunt ont changé ma vie
 surtitle: ''
 subtitle: ''

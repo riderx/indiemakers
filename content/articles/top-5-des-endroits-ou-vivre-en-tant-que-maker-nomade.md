@@ -1,5 +1,5 @@
 ---
-slug: top-5-des-endroits-ou-vivre-en-tant-que-maker-nomade
+slug: top_5_des-endroits_ou_vivre_en_tant_que_maker_nomade
 title: Top 5 des endroits où vivre en tant que maker nomade
 surtitle: ''
 published: true

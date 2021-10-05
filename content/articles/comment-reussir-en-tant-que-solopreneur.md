@@ -1,5 +1,5 @@
 ---
-slug: comment-reussir-en-tant-que-solopreneur
+slug: comment_reussir_en_tant_que_solopreneur
 title: Comment réussir en tant que solopreneur
 surtitle: ''
 published: true

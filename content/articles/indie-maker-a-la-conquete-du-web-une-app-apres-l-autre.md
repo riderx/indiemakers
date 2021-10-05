@@ -1,5 +1,5 @@
 ---
-slug: indie-makers-a-la-conquete-du-web-une-app-apres-l-autre
+slug: indie_makers_a_la_conquete_du_web_une_app_apres_l_autre
 title:  À la conquete du web
 surtitle: Indie makers
 subtitle: une app après l'autre
@@ -45,7 +45,7 @@ Non, ces maker se soucient de nous et veulent que nous réussissions dans n'impo
 ### S'impliquer
 
 Il y a pas mal de makers indépendants dans la communauté maintenant, et par communauté j'entends une main d'œuvre distribuée de programmeurs pendant leur temps libre, travaillant pour bouleverser l'internet tel que nous le connaissons, sur des sites comme [indiehackers](http://indiehackers.com/), [wip.chat](http://wip.chat/), [getmakerlog.com](http://getmakerlog.com/), et en Francais notre discord:
-<div class="flex w-full" style=""><a href="/discord" class="px-4 py-4 mx-auto font-medium border border-transparent rounded-md shadow-sm bg-orchid-300 hover:bg-orchid-600" style="color: white !important">Rejoindre</a></div>
+<div class="flex w-full" ><a href="/discord" class="px-4 py-4 mx-auto font-medium border border-transparent rounded-md shadow-sm bg-orchid-300 hover:bg-orchid-600" style="color: white !important">Rejoindre</a></div>
 
 Nous ne faisons plus seulement de l'open source pour que les grandes entreprises en profitent, nous en profitons nous-mêmes.
 
