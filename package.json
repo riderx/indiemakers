@@ -68,7 +68,7 @@
     "@nuxtjs/tailwindcss": "4.2.1",
     "@types/hex2dec": "1.1.2",
     "@types/imagekit": "3.1.2",
-    "@types/markdown-it": "^12.2.1",
+    "@types/markdown-it": "^12.2.2",
     "@types/rss": "0.0.29",
     "babel-eslint": "^10.1.0",
     "discord-api-types": "^0.23.1",
