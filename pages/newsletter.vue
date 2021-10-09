@@ -23,7 +23,6 @@
         <div class="pt-3 pl-4 pr-4 mx-auto text-center md:w-1/2">
           <div class="mb-0 mb-4">
             <input
-              ref="name"
               v-model="email"
               type="text"
               class="
@@ -50,7 +49,6 @@
         <div class="pt-3 pl-4 pr-4 mx-auto text-center md:w-1/2">
           <div class="mb-4">
             <input
-              ref="name"
               v-model="name"
               type="text"
               class="
