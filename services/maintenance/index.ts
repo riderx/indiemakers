@@ -1,9 +1,10 @@
-import { personalModayReminder, personalTaskReminder, personalVocalReminder } from './../discord/bot/schedule';
+// import { personalModayReminder, personalTaskReminder, personalVocalReminder } from './../discord/bot/schedule';
 // import { lateBot, morningBot } from './../discord/bot/schedule';
 import * as dotenv from 'dotenv'
 // import { onboardingMessage } from '../discord/bot/utils'
-import { getUsersById } from '../firebase/discord'
+// import { getUsersById } from '../firebase/discord'
 import fFnit from '../firebase/init'
+import { fixAllUsersDeep } from './fix_userProjectCount'
 // import { initTranslate } from '../discord/translate';
 // import { podcastToFirebase } from '../firebase/podcasts'
 dotenv.config()
@@ -19,21 +20,22 @@ console.log('init Firebase done')
 // updateAllUsersNotif()
 // fixAllUsers()
 // get user from discord id
-const testOnboarding = async() => {
-  const user = await getUsersById('309008240274964480')
-  if (user) {
-    // await onboardingMessage(user)
-    await personalModayReminder([user])
-    await personalTaskReminder([user])
-    // await personalFridayTaskReminder([user])
-    await personalVocalReminder([user])
-  }
-}
+// const testOnboarding = async() => {
+//   const user = await getUsersById('309008240274964480')
+//   if (user) {
+//     // await onboardingMessage(user)
+//     await personalModayReminder([user])
+//     await personalTaskReminder([user])
+//     // await personalFridayTaskReminder([user])
+//     await personalVocalReminder([user])
+//   }
+// }
 // initTranslate()
-testOnboarding()
+// testOnboarding()
 // morningBot()
 // await lateBot()
 // fixAllLink()
+fixAllUsersDeep()
 // initTranslate()
 // frToEn('bonjour, ceci est un message')
 // try {
