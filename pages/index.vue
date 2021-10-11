@@ -142,15 +142,23 @@ export default defineComponent({
       )
     })
     const nextEpisode = (): string => {
-      const oneDay = 24 * 60 * 60 * 1000 // hours*minutes*seconds*milliseconds
-      const firstDate = new Date(2019, 10, 19)
+      const oneHours = 60 * 60 * 1000 // minutes*seconds*milliseconds
+      const oneDay = 24 * oneHours // 24*hours
+      const firstDate = new Date(2019, 10, 19, 10, 0)
+      const tomorow = new Date()
+      tomorow.setHours(10)
+      tomorow.setMinutes(0)
+      tomorow.setMilliseconds(0)
+      tomorow.setDate(tomorow.getDate() + 1)
       const now = new Date()
       const diffDays = Math.round(
         Math.abs((firstDate.getTime() - now.getTime()) / oneDay)
       )
+      const diffHours = tomorow.getTime() - now.getTime()
       const epRepeat = 7
       const nextEp = epRepeat - (diffDays % epRepeat)
-      return nextEp !== epRepeat ? `${nextEp} jours` : 'DEMAIN 10 heures'
+      const nextEpH = Math.round(diffHours / oneHours - 24)
+      return nextEp !== epRepeat ? `${nextEp} jours` : `${nextEpH} heures`
     }
     return { title, image, messages, episodes, empties, nextEpisode }
   },
