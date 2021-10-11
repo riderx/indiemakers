@@ -8,9 +8,9 @@
         name="sort"
         class="border rounded bg-royalblue-700 border-orchid-300"
       >
-        <option value="streak">🔥</option>
-        <option value="tasks">💗</option>
-        <option value="incomes">💰</option>
+        <option value="streak">🔥 Flammes</option>
+        <option value="tasks">💗 Taches</option>
+        <option value="incomes">💰 Revenue</option>
       </select>
     </div>
     <div
@@ -71,7 +71,7 @@ export default defineComponent({
     const router = useRouter()
     const noImge =
       'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
-    const sort = ref('tasks')
+    const sort = ref('incomes')
     const sorted = () =>
       projects
         .slice()
@@ -99,6 +99,6 @@ select {
   background-size: 12px;
   background-position: calc(100% - 10px) center;
   background-repeat: no-repeat;
-  width: 50px;
+  width: 120px;
 }
 </style>

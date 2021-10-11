@@ -8,10 +8,11 @@
         name="sort"
         class="border rounded bg-royalblue-700 border-orchid-300"
       >
-        <option value="streak">🔥</option>
-        <option value="karma">🕉</option>
-        <option value="incomes">💰</option>
-        <option value="projects">🪴</option>
+        <option value="karma">🕉 Karma</option>
+        <option value="streak">🔥 Flammes</option>
+        <option value="projects">🪴 Projets</option>
+        <option value="tasks">💗 Taches</option>
+        <option value="incomes">💰 Revenue</option>
       </select>
     </div>
     <div
@@ -45,13 +46,16 @@
           </h1>
           <div class="flex text-sm">
             <p class="px-2 mx-2 bg-white rounded text-royalblue-700">
-              🔥{{ maker.streak }}
-            </p>
-            <p class="px-2 mx-2 bg-white rounded text-royalblue-700">
               🕉 {{ maker.karma }}
             </p>
             <p class="px-2 mx-2 bg-white rounded text-royalblue-700">
+              🔥{{ maker.streak }}
+            </p>
+            <p class="px-2 mx-2 bg-white rounded text-royalblue-700">
               🪴 {{ maker.projects }}
+            </p>
+            <p class="px-2 mx-2 bg-white rounded text-royalblue-700">
+              💗 {{ maker.tasks }}
             </p>
             <p class="px-2 mx-2 bg-white rounded text-royalblue-700">
               💰 {{ maker.incomes }} €
@@ -105,6 +109,6 @@ select {
   background-size: 12px;
   background-position: calc(100% - 10px) center;
   background-repeat: no-repeat;
-  width: 50px;
+  width: 120px;
 }
 </style>
