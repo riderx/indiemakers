@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import admin from 'firebase-admin'
+import getMetaData from 'metadata-scraper'
 import {
   Interaction,
   ApplicationCommandInteractionDataOption,
@@ -161,6 +162,25 @@ export const updateProject = async (
       .set(newProject)
     return newProject
   }
+  if (project.website) {
+    try {
+      const data = await getMetaData(project.website)
+      if ((!project.name || !data.name) && data.name) {
+        project.name = data.title
+      }
+      if ((!project.cover || !data.cover) && data.image) {
+        project.cover = data.image
+      }
+      if ((!project.logo || !data.logo) && data.icon) {
+        project.logo = data.icon
+      }
+      if ((!project.description || !data.description) && data.description) {
+        project.description = data.description
+      }
+    } catch (err) {
+      console.error('getMetaData', err)
+    }
+  }
   const data: Project = projDoc.data() as Project
   if (!data.name && project.name) {
     const config = await getConfig()
@@ -310,7 +330,8 @@ const projectAdd = (
         console.error('channel', channel)
         return sendChannel(
           channel.id,
-          `Tu peu maintenant remplir les informations de #${newProj.hashtag} avec \`/im projet modifier hashtag: ${newProj.hashtag} nom: Mon super projet\` 🪴
+          `Tu peu maintenant remplir les informations de #${newProj.hashtag} avec \`/im projet modifier hashtag: ${newProj.hashtag} website: https://google.com\` 🪴
+          Mettre le site en premier permet au bot de contacter le site pour récupérer les informations pour toi.
           (Fait \`/im projet aide \` pour voir les champs disponibles)`
         )
       }),
@@ -319,7 +340,9 @@ const projectAdd = (
         updateUser(userId, { projects: allProj.length + 1 }).then((user) => {
           return sendTxtLater(
             `Tu as crée le projet: #${newProj.hashtag} 👏
-    Tu peux voir tes projets sur ta page : ${getUserUrl(user)}`,
+    Tu peux voir tes projets sur ta page : ${getUserUrl(user)}/projets/${
+              newProj.hashtag
+            }`,
             [],
             interaction.application_id,
             interaction.token
@@ -329,7 +352,13 @@ const projectAdd = (
     ]).then(() => Promise.resolve())
   } else {
     return sendTxtLater(
-      'hashtag manquant ou incorect!',
+      `Hashtag: "${newProj.hashtag}" incorect!
+Le hashtag est un identifian unique qui permet d'utiliser d'autre commande du bot.
+Il dois etre simple, seulement avec des lettre, sans espace sans caratères spéciaux, sans chiffres.
+Exemple:
+Google.com => google
+INDIE MAKERS => indiemakers
+`,
       [],
       interaction.application_id,
       interaction.token

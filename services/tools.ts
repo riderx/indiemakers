@@ -2,9 +2,7 @@ import { NuxtConfig } from '@nuxt/types'
 import axios from 'axios'
 import { Tool } from './types'
 
-export const getTools = (
-  $config: NuxtConfig,
-): Promise<Tool[] | null> => {
+export const getTools = ($config: NuxtConfig): Promise<Tool[] | null> => {
   const url = `${$config.BASEAPI}/tools`
   return axios
     .get(url)
