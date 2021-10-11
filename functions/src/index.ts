@@ -16,7 +16,7 @@ if (!admin.apps.length) {
 }
 
 process.env.CLIENT_PUBLIC_KEY = config().discord.bot_public_key
-process.env.IMAGEKIT_KEY = config().discord.imagekit_key
+process.env.IMAGEKIT_KEY = config().imagekit.key
 process.env.BOT_TOKEN = config().discord.bot_token
 
 // export const getMakers = https.onRequest(async (req, res) => {
