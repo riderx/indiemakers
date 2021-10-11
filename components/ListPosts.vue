@@ -60,7 +60,12 @@
                       <div>
                         <div class="text-sm">
                           <a
-                            class="font-medium text-gray-900"
+                            class="
+                              font-medium
+                              text-gray-900
+                              cursor-pointer
+                              hover:text-royalblue-500
+                            "
                             @click="openProfil(post.userName)"
                             >{{ post.userName }}</a
                           >

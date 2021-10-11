@@ -25,6 +25,11 @@
       class="flex w-full px-2 py-2 mx-auto text-white md:px-10 md:py-5"
     >
       <div class="md:w-full md:mx-2">
+        <img
+          class="object-cover object-center w-full h-80"
+          :src="projectData.cover || noCover"
+          :alt="'cover project ' + projectData.hashtag"
+        />
         <div
           class="
             flex flex-col
@@ -134,6 +139,8 @@ export default defineComponent({
     PageLoader: () => import('~/components/PageLoader.vue'),
   },
   setup() {
+    const noCover =
+      'https://res.cloudinary.com/forgr/image/upload/v1621191060/indiemakers/new_cover_fu6fcs.png'
     const { $config, params } = useContext()
     const router = useRouter()
     const loaded = ref(false)
@@ -173,6 +180,7 @@ export default defineComponent({
     }
     return {
       noImge,
+      noCover,
       users,
       projectData,
       loaded,
