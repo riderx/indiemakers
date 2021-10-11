@@ -47,6 +47,11 @@
         <p
           class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700"
         >
+          💗 {{ maker.streak }}
+        </p>
+        <p
+          class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700"
+        >
           💰 {{ maker.incomes }} €
         </p>
       </div>
@@ -81,53 +86,35 @@
         "
       >
         <h1
+          class="
+            hidden
+            text-3xl
+            cursor-pointer
+            md:block
+            text-royalblue-700
+            lg:mb-5
+            font-indie
+          "
+          :class="{
+            'border-b-4 border-orchid-300 pb-3': hashtag === 'feed',
+          }"
+          @click="setHastag('feed')"
+        >
+          📰 Journal
+        </h1>
+
+        <h1
           class="hidden text-3xl md:block text-royalblue-700 lg:mb-5 font-indie"
         >
           🪴 {{ maker.projects }} Projets
         </h1>
         <div class="flex w-full overflow-x-scroll md:flex-col">
           <a
-            class="
-              flex-none
-              my-4
-              ml-3
-              cursor-pointer
-              hover:text-orchid-600
-              md:my-2
-              lg:my-4
-              md:ml-0
-            "
-            @click="setHastag('feed')"
-          >
-            <div class="relative flex items-center">
-              <svg
-                class="
-                  object-cover object-top
-                  w-16
-                  h-16
-                  border-2
-                  rounded-lg
-                  bg-royalblue-700
-                  border-royalblue-700
-                "
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
-                />
-              </svg>
-              <h2 class="mx-1 text-2xl truncate font-indie">Feed</h2>
-            </div>
-          </a>
-          <a
             v-for="project in maker.projectsData"
             :key="project.hashtag"
+            :class="{
+              'border-b-4 border-orchid-300 pb-3': hashtag === project.hashtag,
+            }"
             class="
               flex-none
               my-4
