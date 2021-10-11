@@ -1,10 +1,11 @@
-import { getConfig } from './../../firebase/discord';
 import dayjs from 'dayjs'
 import admin from 'firebase-admin'
 import {
   Interaction,
   ApplicationCommandInteractionDataOption,
 } from '../command'
+import { Embed, Income, Project, User } from '../../../services/types'
+import { updateUser } from '../../../services/firebase/discord'
 import { getStripeCharges, Charge } from './stripe'
 import {
   embed,
@@ -26,8 +27,7 @@ import {
   deleteProjectIncome,
   getAllProjectsIncomes,
 } from './incomes'
-import { Embed, Income, Project, User } from '../../../services/types'
-import { updateUser } from '../../../services/firebase/discord'
+import { getConfig } from './../../firebase/discord'
 // eslint-disable-next-line no-unused-vars
 
 const projectPublicKey = [
@@ -166,7 +166,7 @@ export const updateProject = async (
     const config = await getConfig()
     const channel = await openChannel(userId)
     console.error('channel', channel)
-    return sendChannel(
+    await sendChannel(
       channel.id,
       `💗 Il est temps d'envoyer 💌 ta première tâche au projet #${lowHash} avec:
 \`/im tache ajouter hashtag:${lowHash} contenu:Ajout du projet sur INDIE MAKERS\`
