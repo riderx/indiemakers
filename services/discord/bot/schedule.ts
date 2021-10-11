@@ -10,7 +10,7 @@ import { lastDay, lastWeek, openChannel, sendChannel } from './utils'
 export const personalTaskReminder = async (users: User[]) => {
   const config = await getConfig()
   await Promise.all(
-    users.map(async(usr) => {
+    users.map(async (usr) => {
       const lastTaskAt = dayjs(usr.lastTaskAt)
       if (
         usr.taskReminder &&
@@ -38,37 +38,37 @@ Même 10 min, ça compte !
 
 export const personalFridayTaskReminder = async (users: User[]) => {
   const config = await getConfig()
-    await Promise.all(
-      users.map(async(usr) => {
-        const lastTaskAt = dayjs(usr.lastTaskAt)
-        if (
-          usr.taskReminder &&
-          usr.taskReminder === 'true' &&
-          usr.streak === 0 &&
-          usr.lastTaskAt &&
-          lastTaskAt.isBefore(lastWeek())
-        ) {
-          const channel = await openChannel(usr.userId)
-          console.error('personalReminder', usr.userId)
-          return sendChannel(
-            channel.id,
-            `Cela fait plus d'une semaine que tu n'as pas posté de tache dans la communauté.
+  await Promise.all(
+    users.map(async (usr) => {
+      const lastTaskAt = dayjs(usr.lastTaskAt)
+      if (
+        usr.taskReminder &&
+        usr.taskReminder === 'true' &&
+        usr.streak === 0 &&
+        usr.lastTaskAt &&
+        lastTaskAt.isBefore(lastWeek())
+      ) {
+        const channel = await openChannel(usr.userId)
+        console.error('personalReminder', usr.userId)
+        return sendChannel(
+          channel.id,
+          `Cela fait plus d'une semaine que tu n'as pas posté de tache dans la communauté.
 N'oublie pas de partager ce que tu fait c'est essentiel pour béneficier de l'effets cummulée de la communauté !
 Chaque jour une petite tache crée l'habitude d'etre un maker !
 C'est cette habitude qui te feras atteindre tes objectifs !
 Lance toi : \`/im tache\` sur le channel <#${config.channel_bip}>`
-          )
-        } else {
-          return Promise.resolve()
-        }
-      })
-    )
+        )
+      } else {
+        return Promise.resolve()
+      }
+    })
+  )
 }
 
 export const personalModayReminder = async (users: User[]) => {
   const config = await getConfig()
   await Promise.all(
-    users.map(async(usr) => {
+    users.map(async (usr) => {
       if (usr.mondayReminder && usr.mondayReminder === 'true') {
         try {
           const channel = await openChannel(usr.userId)
@@ -128,7 +128,7 @@ export const lateBot = async () => {
 
       await personalTaskReminder(users)
       if (dayjs().day() === 5) {
-      await personalFridayTaskReminder(users)
+        await personalFridayTaskReminder(users)
       }
     } catch (err) {
       console.error(err)
@@ -172,7 +172,8 @@ Continuez comme ça :`
           `@everyone Hey Makers, C'est l'heure du récap de ta semaine passé :
   - **1 point 👍**
   - **1 point 👎**
-  - **1 point 🔮 (A faire cette semaine)**`
+  - **1 point 🔮 (A faire cette semaine)**
+=> Publie le sur le site en faisant \`/im post ajouter\` juste après ton message discord, pour construire en public.`
         )
         await personalModayReminder(users)
         await updateIncomeAllProject()
