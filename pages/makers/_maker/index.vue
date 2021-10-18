@@ -319,7 +319,7 @@ export default defineComponent({
       meta: createMeta(
         maker.value?.name || maker.value?.username || 'inconue',
         maker.value?.bio || 'Un jour je serais grand 👶!',
-        maker.value?.cover || noImge
+        maker.value?.avatarUrl || noImge
       ),
     }))
 
