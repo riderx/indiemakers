@@ -26,7 +26,7 @@
     >
       <div class="md:w-full md:mx-2">
         <img
-          class="object-cover object-center w-full h-80"
+          class="object-cover object-center w-full h-80 bg-white"
           :src="projectData.cover || noCover"
           :alt="'cover project ' + projectData.hashtag"
         />

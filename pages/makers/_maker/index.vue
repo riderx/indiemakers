@@ -2,7 +2,7 @@
   <div v-if="maker && loaded">
     <div class="relative">
       <img
-        class="object-cover object-top w-full h-72"
+        class="object-cover object-top w-full h-72 bg-white"
         :src="maker.cover || noCover"
         :alt="'cover profil ' + maker.username"
       />
