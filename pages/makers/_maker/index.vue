@@ -47,6 +47,11 @@
         <p
           class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700"
         >
+          🪴 {{ maker.projects }}
+        </p>
+        <p
+          class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700"
+        >
           💗 {{ maker.streak }}
         </p>
         <p
@@ -101,12 +106,6 @@
           @click="setHastag('feed')"
         >
           📰 Journal
-        </h1>
-
-        <h1
-          class="hidden text-3xl md:block text-royalblue-700 lg:mb-5 font-indie"
-        >
-          🪴 {{ maker.projects }} Projets
         </h1>
         <div class="flex w-full overflow-x-scroll md:flex-col">
           <a
