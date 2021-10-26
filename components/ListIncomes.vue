@@ -1,8 +1,6 @@
 <template>
   <div>
-    <button class="mb-5 text-3xl text-royalblue-700 lg:mb-10 font-indie">
-      {{ total }} € revenus
-    </button>
+    <button class="mb-5 text-3xl text-royalblue-700 lg:mb-10 font-indie">{{ total }} € revenus</button>
     <div class="flex mb-5 border-b-2 lg:mb-10 border-royalblue-700">
       <button
         class="mr-3 text-2xl text-royalblue-700 focus:outline-none"
@@ -25,15 +23,9 @@
         Dépense {{ expensesTotal }} € 💸
       </button>
     </div>
-    <article
-      v-for="income in filtered"
-      :key="income.id"
-      class="py-5 border-b-2 lg:mx-10 border-orchid-300"
-    >
+    <article v-for="income in filtered" :key="income.id" class="py-5 border-b-2 lg:mx-10 border-orchid-300">
       <h1 class="text-xl">{{ income.ammount }} €</h1>
-      <time class="text-sm text-royalblue-700" :datetime="income.date">{{
-        income.date
-      }}</time>
+      <time class="text-sm text-royalblue-700" :datetime="income.date">{{ income.date }}</time>
     </article>
   </div>
 </template>
@@ -48,21 +40,11 @@ export default defineComponent({
   },
   setup({ all }) {
     const status = ref('income')
-    const incomes = computed(() =>
-      all.incomes.filter((a: Income) => a.status === 'income')
-    )
-    const expenses = computed(() =>
-      all.incomes.filter((a: Income) => a.status === 'expense')
-    )
-    const incomesTotal = computed(() =>
-      incomes.value.reduce((tt: number, v: Income) => tt + v.ammount, 0)
-    )
-    const expensesTotal = computed(() =>
-      expenses.value.reduce((tt: number, v: Income) => tt + v.ammount, 0)
-    )
-    const filtered = computed(() =>
-      status.value === 'income' ? incomes.value : expenses.value
-    )
+    const incomes = computed(() => all.incomes.filter((a: Income) => a.status === 'income'))
+    const expenses = computed(() => all.incomes.filter((a: Income) => a.status === 'expense'))
+    const incomesTotal = computed(() => incomes.value.reduce((tt: number, v: Income) => tt + v.ammount, 0))
+    const expensesTotal = computed(() => expenses.value.reduce((tt: number, v: Income) => tt + v.ammount, 0))
+    const filtered = computed(() => (status.value === 'income' ? incomes.value : expenses.value))
     return { filtered, status, incomesTotal, expensesTotal, total: all.total }
   },
 })

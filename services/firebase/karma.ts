@@ -2,14 +2,9 @@ import dayjs from 'dayjs'
 import { firestore } from 'firebase-admin'
 import { Karma, KarmaAll } from '../types'
 
-
-export const getKarmaById = async (
-  id: string
-): Promise<KarmaAll> => {
+export const getKarmaById = async (id: string): Promise<KarmaAll> => {
   try {
-    const documents = await firestore()
-      .collection(`discord/${id}/karma`)
-      .get()
+    const documents = await firestore().collection(`discord/${id}/karma`).get()
     const karmas: Karma[] = []
     documents.docs.forEach((doc) => {
       const data = doc.data() as Karma

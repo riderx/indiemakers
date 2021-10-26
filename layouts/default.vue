@@ -7,12 +7,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  useContext,
-  useRoute,
-  useMeta,
-} from '@nuxtjs/composition-api'
+import { defineComponent, useContext, useRoute, useMeta } from '@nuxtjs/composition-api'
 import Modals from '~/components/Modals.vue'
 import NavBar from '~/components/NavBar.vue'
 

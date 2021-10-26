@@ -11,16 +11,9 @@
           :alt="logo.title"
           :aria-label="logo.title"
         />
-        <h1 class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie">
-          Tu SEMBLES ÊTRE PERDU!
-        </h1>
-        <p class="px-5 text-white">
-          La page que vous recherchez n'est pas disponible. Essayez à nouveau ou
-          utilise le bouton ci-dessous.
-        </p>
-        <div
-          class="pt-3 pb-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2"
-        >
+        <h1 class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie">Tu SEMBLES ÊTRE PERDU!</h1>
+        <p class="px-5 text-white">La page que vous recherchez n'est pas disponible. Essayez à nouveau ou utilise le bouton ci-dessous.</p>
+        <div class="pt-3 pb-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
           <button
             type="button"
             class="
@@ -56,8 +49,7 @@ export default defineComponent({
     const router = useRouter()
     const logo = {
       title: '404 LOGO',
-      source:
-        'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/404_xivjox.svg',
+      source: 'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/404_xivjox.svg',
     }
     const goHome = () => {
       router.push('/')

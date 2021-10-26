@@ -30,8 +30,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title:
-      'Le 1er podcast francais qui aide les independants a vivre de leur business.',
+    title: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
     script: [
       {
         src: 'https://indiemakers-pls.digitalshift-ee.workers.dev/js/script.js',
@@ -46,20 +45,17 @@ export default {
       {
         hid: 'title',
         name: 'title',
-        content:
-          'Le 1er podcast francais qui aide les independants a vivre de leur business.',
+        content: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
       },
       {
         hid: 'description',
         name: 'description',
-        content:
-          "Ici, tu trouveras des podcasts où j'échange avec ceux qui ont su transformer leurs idées en business florissant.",
+        content: "Ici, tu trouveras des podcasts où j'échange avec ceux qui ont su transformer leurs idées en business florissant.",
       },
       {
         hid: 'og:title',
         property: 'og:title',
-        content:
-          'Le 1er podcast francais qui aide les independants a vivre de leur business.',
+        content: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
       },
       { hid: 'og:type', property: 'og:type', content: 'website' },
       { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
@@ -81,8 +77,7 @@ export default {
       {
         hid: 'og:description',
         property: 'og:description',
-        content:
-          "Ici, tu trouveras des podcasts où j'échange avec ceux qui ont su transformer leurs idées en business florissant.",
+        content: "Ici, tu trouveras des podcasts où j'échange avec ceux qui ont su transformer leurs idées en business florissant.",
       },
     ],
     link: [
@@ -110,10 +105,7 @@ export default {
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    { src: '~/plugins/modal.ts' },
-    { src: '~/plugins/firebase.client.ts' },
-  ],
+  plugins: [{ src: '~/plugins/modal.ts' }, { src: '~/plugins/firebase.client.ts' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

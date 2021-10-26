@@ -2,9 +2,7 @@
   <div class="flex items-center justify-center pt-40">
     <div class="w-full max-w-md px-4 space-y-8 sm:px-4">
       <div>
-        <h2 class="mt-6 text-3xl font-extrabold text-center text-white">
-          🔑 Email Verification
-        </h2>
+        <h2 class="mt-6 text-3xl font-extrabold text-center text-white">🔑 Email Verification</h2>
       </div>
       <form class="mt-8 space-y-6" action="#" method="POST">
         <input type="hidden" name="remember" value="true" />
@@ -29,10 +27,7 @@
                 placeholder-gray-500
                 border border-gray-300
                 appearance-none
-                focus:outline-none
-                focus:ring-indigo-500
-                focus:border-indigo-500
-                focus:z-10
+                focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10
                 sm:text-sm
               "
             />
@@ -82,15 +77,7 @@
 </template>
 
 <script lang="ts">
-import {
-  ref,
-  defineComponent,
-  onMounted,
-  useContext,
-  useMeta,
-  useRoute,
-  useRouter,
-} from '@nuxtjs/composition-api'
+import { ref, defineComponent, onMounted, useContext, useMeta, useRoute, useRouter } from '@nuxtjs/composition-api'
 import { createMeta } from '~/services/meta'
 
 export default defineComponent({

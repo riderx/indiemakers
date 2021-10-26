@@ -25,12 +25,7 @@
 </template>
 <script lang="ts">
 import { ref } from '@vue/composition-api'
-import {
-  defineComponent,
-  useFetch,
-  useContext,
-  useMeta,
-} from '@nuxtjs/composition-api'
+import { defineComponent, useFetch, useContext, useMeta } from '@nuxtjs/composition-api'
 import { discordMakers, discordProjects, discordPosts } from '~/services/rss'
 import { createMeta } from '~/services/meta'
 import { Post, Project, User } from '~/services/types'
@@ -69,10 +64,7 @@ export default defineComponent({
     fetch()
     useMeta(() => ({
       title,
-      meta: createMeta(
-        title,
-        "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !"
-      ),
+      meta: createMeta(title, "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !"),
     }))
 
     return {

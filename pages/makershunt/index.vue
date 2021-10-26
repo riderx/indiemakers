@@ -3,51 +3,15 @@
     <div class="container w-full px-0 mx-auto">
       <div class="flex flex-wrap">
         <div class="w-full md:w-1/2 md:px-4">
-          <div
-            id="header-mk"
-            class="
-              flex flex-wrap
-              items-center
-              justify-between
-              w-full
-              text-white
-              border-8 border-white
-              md:pb-1 md:pt-2
-            "
-          >
-            <div
-              class="
-                w-4/5
-                my-2
-                text-3xl text-center
-                font-indie
-                md:text-4xl md:my-0
-              "
-            >
-              💃 Makers
-            </div>
-            <button
-              type="button"
-              class="w-1/5 p-0 px-4 -mt-4 text-6xl border-0 md:pb-3"
-              @click="showAddForm()"
-            >
-              +
-            </button>
+          <div id="header-mk" class="flex flex-wrap items-center justify-between w-full text-white border-8 border-white md:pb-1 md:pt-2">
+            <div class="w-4/5 my-2 text-3xl text-center font-indie md:text-4xl md:my-0">💃 Makers</div>
+            <button type="button" class="w-1/5 p-0 px-4 -mt-4 text-6xl border-0 md:pb-3" @click="showAddForm()">+</button>
           </div>
-          <div
-            class="
-              overflow-hidden
-              border-4 border-white
-              md:h-78 md:overflow-y-scroll md:custom-scroll
-            "
-          >
+          <div class="overflow-hidden border-4 border-white md:h-78 md:overflow-y-scroll md:custom-scroll">
             <div
               v-for="maker in makers"
               :key="maker.id_str"
-              :class="
-                'w-full flex flex-wrap text-white border-b align-items-top ' +
-                maker.id_str
-              "
+              :class="'w-full flex flex-wrap text-white border-b align-items-top ' + maker.id_str"
             >
               <ListItem
                 :title="maker.name"
@@ -62,21 +26,7 @@
             </div>
           </div>
         </div>
-        <div
-          id="content"
-          class="
-            order-1
-            hidden
-            pt-0
-            pl-4
-            pr-4
-            text-white
-            md:w-1/2
-            px-md-5
-            order-md-2
-            xl:block
-          "
-        >
+        <div id="content" class="order-1 hidden pt-0 pl-4 pr-4 text-white md:w-1/2 px-md-5 order-md-2 xl:block">
           <div class="flex flex-wrap">
             <div class="text-center text-sm-left">
               <h1 class="pb-2 text-3xl font-indie">
@@ -88,53 +38,27 @@
                 Les Makers sont encore méconnue en France !<br /><br />
                 Parfois ils ne font pas de personal branding...<br />
                 Parfois ils ne postent qu'en anglais...<br />
-                Et parfois on découvre seulement 10 ans plus tard qui était aux
-                commandes !<br /><br />
+                Et parfois on découvre seulement 10 ans plus tard qui était aux commandes !<br /><br />
                 L'écosysteme est le facteur numéro 1 de succès !<br />
-                Ensemble allons plus loin, cassons les barrières vers le succès
-                !<br />
+                Ensemble allons plus loin, cassons les barrières vers le succès !<br />
                 C'est pour cela que cette liste existe !<br /><br />
                 Comme Producthunt,<br />
                 Vote et ajoute pour tes MAKERS favoris,<br />
                 en bonus tu gagnes une chance de les voir dans le podcast !
               </p>
-              <p class="pt-5 h5 font-indie">
-                Tu aimerais qu'un d'eux vienne dans le podcast ?
-              </p>
+              <p class="pt-5 h5 font-indie">Tu aimerais qu'un d'eux vienne dans le podcast ?</p>
+              <p class="pl-2">Vote pour lui en cliquant sur "👍" sur sa photo</p>
               <p class="pl-2">
-                Vote pour lui en cliquant sur "👍" sur sa photo
+                Partage sur Twitter ton vote pour montrer ton soutiens au maker,<br />
+                s'il n'est pas encore venue dans le podcast cela le motivera à venir !
               </p>
-              <p class="pl-2">
-                Partage sur Twitter ton vote pour montrer ton soutiens au
-                maker,<br />
-                s'il n'est pas encore venue dans le podcast cela le motivera à
-                venir !
-              </p>
-              <p class="pt-5 h5 font-indie">
-                Ton maker préféré n'est pas dans la liste ?
-              </p>
+              <p class="pt-5 h5 font-indie">Ton maker préféré n'est pas dans la liste ?</p>
               <p class="pl-2">Clique sur le bonton "+" pour l'ajouter !</p>
-              <p class="pb-4 pl-2">
-                Partage sur Twitter ton vote, cela le motivera à venir !
-              </p>
-              <div
-                class="
-                  flex
-                  justify-between
-                  w-10/12
-                  text-lg text-white
-                  font-indie
-                "
-              >
+              <p class="pb-4 pl-2">Partage sur Twitter ton vote, cela le motivera à venir !</p>
+              <div class="flex justify-between w-10/12 text-lg text-white font-indie">
                 <button
                   type="button"
-                  class="
-                    px-5
-                    py-2
-                    border-4 border-white
-                    font-indie
-                    hover:text-royalblue-700 hover:bg-white
-                  "
+                  class="px-5 py-2 border-4 border-white font-indie hover:text-royalblue-700 hover:bg-white"
                   @click="joinUs()"
                 >
                   👉 Deviens un Maker
@@ -150,15 +74,7 @@
 <script lang="ts">
 // import linkifyHtml from 'linkifyjs/html'
 import linkifyHtml from 'linkify-html'
-import {
-  ref,
-  onMounted,
-  defineComponent,
-  useFetch,
-  useContext,
-  useRouter,
-  useMeta,
-} from '@nuxtjs/composition-api'
+import { ref, onMounted, defineComponent, useFetch, useContext, useRouter, useMeta } from '@nuxtjs/composition-api'
 import { makers as getMakers } from '~/services/rss'
 import { Person } from '~/services/types'
 import { createMeta } from '~/services/meta'
@@ -180,8 +96,7 @@ export default defineComponent({
     const sizeHead = ref('')
     const guid = ref()
     const title = 'Les Makers Français les plus chaud 🔥'
-    const message =
-      'Vote et ajoute tes MAKERS favoris, cela les insite a venir podcast !'
+    const message = 'Vote et ajoute tes MAKERS favoris, cela les insite a venir podcast !'
     const makers = ref([] as Person[])
     onMounted(() => {
       setSizeHead()
@@ -204,11 +119,7 @@ export default defineComponent({
     fetch()
     useMeta(() => ({
       title,
-      meta: createMeta(
-        title,
-        message,
-        'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
-      ),
+      meta: createMeta(title, message, 'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'),
     }))
     const linkTw = (login: string) => {
       return `https://twitter.com/${login}`
@@ -313,16 +224,8 @@ export default defineComponent({
       const docHeaderMk = document.getElementById('header-mk')
       const docHeader = document.getElementById('header')
       const docContent = document.getElementById('content')
-      if (
-        process.client &&
-        docHeaderMk &&
-        docHeader &&
-        docContent &&
-        docContent.offsetWidth !== window.innerWidth
-      ) {
-        const size = `${
-          docHeaderMk.offsetHeight + docHeader.offsetHeight + 5
-        }px`
+      if (process.client && docHeaderMk && docHeader && docContent && docContent.offsetWidth !== window.innerWidth) {
+        const size = `${docHeaderMk.offsetHeight + docHeader.offsetHeight + 5}px`
         sizeHead.value = `calc(100vh - ${size})`
       } else {
         sizeHead.value = 'auto'

@@ -1,17 +1,7 @@
 <template>
   <!-- This example requires Tailwind CSS v2.0+ -->
   <div class="relative">
-    <div
-      class="
-        flex
-        items-center
-        justify-between
-        px-4
-        py-6
-        sm:px-6
-        md:justify-start md:space-x-10
-      "
-    >
+    <div class="flex items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10">
       <div>
         <a href="/" class="flex">
           <span class="sr-only">Logo Site</span>
@@ -38,30 +28,15 @@
             bg-white
             rounded-md
             hover:text-gray-500 hover:bg-gray-100
-            focus:outline-none
-            focus:ring-2
-            focus:ring-inset
-            focus:ring-indigo-500
+            focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500
           "
           aria-expanded="false"
           @click="menuMobile = true"
         >
           <span class="sr-only">Ouvrir menu</span>
           <!-- Heroicon name: outline/menu -->
-          <svg
-            class="w-6 h-6"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
+          <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
       </div>
@@ -71,13 +46,7 @@
             v-for="item in solutions"
             :key="item.name"
             :href="item.href"
-            class="
-              p-1
-              text-base
-              font-medium
-              text-orchid-300
-              hover:text-orchid-600
-            "
+            class="p-1 text-base font-medium text-orchid-300 hover:text-orchid-600"
           >
             {{ item.name }}
           </a>
@@ -96,10 +65,7 @@
                 rounded-md
                 group
                 hover:text-gray-900
-                focus:outline-none
-                focus:ring-2
-                focus:ring-offset-2
-                focus:ring-indigo-500
+                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
               "
               aria-expanded="false"
               @click="menu = !menu"
@@ -111,10 +77,7 @@
               Item active: "text-gray-600", Item inactive: "text-gray-400"
             -->
               <svg
-                :class="[
-                  menu ? 'text-gray-600' : 'text-gray-400',
-                  'ml-2 h-5 w-5 group-hover:text-gray-500',
-                ]"
+                :class="[menu ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -138,36 +101,10 @@
               From: "opacity-100 translate-y-0"
               To: "opacity-0 translate-y-1"
           -->
-            <div
-              v-if="menu"
-              class="
-                absolute
-                z-10
-                w-screen
-                max-w-xs
-                px-2
-                mt-3
-                transform
-                -translate-x-1/2
-                left-1/2
-                sm:px-0
-              "
-            >
-              <div
-                class="
-                  overflow-hidden
-                  rounded-lg
-                  shadow-lg
-                  ring-1 ring-black ring-opacity-5
-                "
-              >
-                <div
-                  class="relative grid gap-6 px-5 py-6 bg-white sm:gap-8 sm:p-8"
-                >
-                  <a
-                    href="#"
-                    class="block p-3 -m-3 rounded-md hover:bg-gray-50"
-                  >
+            <div v-if="menu" class="absolute z-10 w-screen max-w-xs px-2 mt-3 transform -translate-x-1/2 left-1/2 sm:px-0">
+              <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                <div class="relative grid gap-6 px-5 py-6 bg-white sm:gap-8 sm:p-8">
+                  <a href="#" class="block p-3 -m-3 rounded-md hover:bg-gray-50">
                     <a
                       v-for="item in resources"
                       :key="item.name"
@@ -224,30 +161,8 @@
       From: "opacity-100 scale-100"
       To: "opacity-0 scale-95"
   -->
-    <div
-      v-if="menuMobile"
-      class="
-        absolute
-        inset-x-0
-        top-0
-        z-10
-        p-2
-        transition
-        origin-top-right
-        transform
-        md:hidden
-      "
-    >
-      <div
-        class="
-          bg-white
-          divide-y-2
-          rounded-lg
-          shadow-lg
-          ring-1 ring-black ring-opacity-5
-          divide-gray-50
-        "
-      >
+    <div v-if="menuMobile" class="absolute inset-x-0 top-0 z-10 p-2 transition origin-top-right transform md:hidden">
+      <div class="bg-white divide-y-2 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 divide-gray-50">
         <div class="px-5 pt-5 pb-6">
           <div class="flex items-center justify-between">
             <div>
@@ -273,10 +188,7 @@
                   bg-white
                   rounded-md
                   hover:text-gray-500 hover:bg-gray-100
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-inset
-                  focus:ring-indigo-500
+                  focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500
                 "
                 @click="menuMobile = false"
               >
@@ -289,12 +201,7 @@
                   stroke="currentColor"
                   aria-hidden="true"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
@@ -307,19 +214,7 @@
                 :href="item.href"
                 class="flex items-center p-3 -m-3 rounded-lg hover:bg-gray-50"
               >
-                <div
-                  class="
-                    flex
-                    items-center
-                    justify-center
-                    flex-shrink-0
-                    w-10
-                    h-10
-                    text-white
-                    bg-indigo-500
-                    rounded-md
-                  "
-                >
+                <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 text-white bg-indigo-500 rounded-md">
                   <div class="w-6 h-6" aria-hidden="true" v-html="item.icon" />
                 </div>
                 <div class="ml-4 text-base font-medium text-gray-900">
@@ -405,8 +300,7 @@ const resources = [
   },
   {
     name: 'Construisons ensemble',
-    description:
-      "Participe a l'amélioration de la communauté en votant et proposant de nouvelles fonctionnalitée",
+    description: "Participe a l'amélioration de la communauté en votant et proposant de nouvelles fonctionnalitée",
     href: '/canny',
   },
   {
@@ -422,8 +316,7 @@ const resources = [
   },
   {
     name: 'Coworking pour makers',
-    description:
-      'Ne te sens plus jamais seul, rejoins les autres makers dans un coworking virtuel',
+    description: 'Ne te sens plus jamais seul, rejoins les autres makers dans un coworking virtuel',
     href: 'https://app.indiemakers.space',
   },
 ]
@@ -434,8 +327,7 @@ export default defineComponent({
     const menuMobile = ref(false)
     const logo = {
       title: 'INDIE MAKERS LOGO',
-      source:
-        'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/isolated-monochrome-white_lzhdfh.svg',
+      source: 'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/isolated-monochrome-white_lzhdfh.svg',
       link: '/',
     }
     return { solutions, resources, menu, menuMobile, logo }

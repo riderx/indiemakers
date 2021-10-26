@@ -3,24 +3,14 @@
     <div class="relative px-4 pt-10 pb-20 sm:px-6 lg:pt-14 lg:pb-16 lg:px-8">
       <div class="relative mx-auto max-w-7xl">
         <div class="text-center">
-          <h1
-            class="
-              text-3xl
-              font-extrabold
-              tracking-tight
-              text-white
-              sm:text-4xl
-            "
-          >
+          <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
             {{ title }}
           </h1>
           <p class="max-w-2xl mx-auto mt-3 text-xl text-gray-300 sm:mt-4">
             {{ description }}
           </p>
         </div>
-        <div
-          class="grid max-w-lg gap-5 mx-auto mt-12 lg:grid-cols-3 lg:max-w-none"
-        >
+        <div class="grid max-w-lg gap-5 mx-auto mt-12 lg:grid-cols-3 lg:max-w-none">
           <a
             v-for="tool in tools"
             :key="tool.name"
@@ -30,13 +20,7 @@
           >
             <div class="flex-shrink-0 h-48 bg-gray-600">
               <client-only>
-                <img
-                  class="object-cover w-full h-48"
-                  width="100%"
-                  height="100%"
-                  :src="tool.image"
-                  :alt="`${tool.name} Logo`"
-                />
+                <img class="object-cover w-full h-48" width="100%" height="100%" :src="tool.image" :alt="`${tool.name} Logo`" />
               </client-only>
             </div>
             <div class="flex flex-col justify-between flex-1 p-6 bg-white">
@@ -91,13 +75,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  useFetch,
-  useContext,
-  ref,
-  useMeta,
-} from '@nuxtjs/composition-api'
+import { defineComponent, useFetch, useContext, ref, useMeta } from '@nuxtjs/composition-api'
 import { createMeta } from '~/services/meta'
 import { getTools } from '~/services/tools'
 import { Tool } from '~/services/types'
@@ -106,8 +84,7 @@ export default defineComponent({
   setup() {
     const { $config } = useContext()
     const tools = ref<Tool[]>([])
-    const description =
-      "Voici les meilleurs outils que j'ai trouvé pour concretiser mes projets !"
+    const description = "Voici les meilleurs outils que j'ai trouvé pour concretiser mes projets !"
     const title = 'Mes outils quotidiens'
     useMeta(() => ({
       title,

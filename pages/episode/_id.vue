@@ -4,19 +4,8 @@
       <div class="container w-full px-0 mx-auto">
         <div class="flex flex-wrap">
           <div class="w-full text-sm text-white lg:w-1/2 md:px-4">
-            <div
-              class="
-                flex flex-wrap
-                justify-center
-                pt-3
-                border-t-8 border-white
-                md:pb-1 md:border-8
-              "
-            >
-              <p
-                v-if="episode.title !== 'No title'"
-                class="px-3 text-3xl text-center font-indie"
-              >
+            <div class="flex flex-wrap justify-center pt-3 border-t-8 border-white md:pb-1 md:border-8">
+              <p v-if="episode.title !== 'No title'" class="px-3 text-3xl text-center font-indie">
                 {{ episode.title }}
               </p>
               <p v-else class="w-4/5 h-8 px-3 animate-pulse bg-orchid-300"></p>
@@ -26,27 +15,11 @@
                   width="100%"
                   height="100%"
                   :src="episode.image"
-                  class="
-                    w-full
-                    h-auto
-                    max-w-full
-                    border-t-8 border-white
-                    md:border-8
-                  "
+                  class="w-full h-auto max-w-full border-t-8 border-white md:border-8"
                   :alt="episode.title"
                 />
               </div>
-              <div
-                class="
-                  block
-                  w-full
-                  px-0
-                  text-white
-                  border-b-8
-                  sm:hidden
-                  border-royalblue-700
-                "
-              >
+              <div class="block w-full px-0 text-white border-b-8 sm:hidden border-royalblue-700">
                 <vue-plyr v-if="showAudio" ref="plyr">
                   <audio>
                     <source :src="episode.audio" type="audio/mp3" />
@@ -54,61 +27,16 @@
                 </vue-plyr>
               </div>
             </div>
-            <div
-              class="
-                px-5
-                overflow-hidden
-                bg-white
-                border-4 border-white
-                md:h-78 md:overflow-y-scroll md:custom-scroll
-              "
-            >
+            <div class="px-5 overflow-hidden bg-white border-4 border-white md:h-78 md:overflow-y-scroll md:custom-scroll">
               <div
                 v-if="episode.content !== 'No content'"
-                class="
-                  px-1
-                  prose-sm prose prose-orchid
-                  sm:prose
-                  lg:prose-lg
-                  xl:prose-xl
-                  px-md-5
-                  md:pt-3
-                "
+                class="px-1 prose-sm prose prose-orchid sm:prose lg:prose-lg xl:prose-xl px-md-5 md:pt-3"
                 v-html="episode.content"
               />
               <div v-else>
-                <p
-                  class="
-                    w-4/5
-                    h-4
-                    px-1 px-md-5
-                    md:pt-3
-                    animate-pulse
-                    bg-orchid-300
-                  "
-                ></p>
-                <p
-                  class="
-                    w-full
-                    h-4
-                    px-1
-                    mt-3
-                    px-md-5
-                    animate-pulse
-                    bg-orchid-300
-                  "
-                ></p>
-                <p
-                  class="
-                    w-2/5
-                    h-4
-                    px-1
-                    mt-3
-                    px-md-5
-                    animate-pulse
-                    bg-orchid-300
-                  "
-                ></p>
+                <p class="w-4/5 h-4 px-1 px-md-5 md:pt-3 animate-pulse bg-orchid-300"></p>
+                <p class="w-full h-4 px-1 mt-3 px-md-5 animate-pulse bg-orchid-300"></p>
+                <p class="w-2/5 h-4 px-1 mt-3 px-md-5 animate-pulse bg-orchid-300"></p>
               </div>
             </div>
             <div class="flex flex-wrap py-4 md:hidden">
@@ -222,27 +150,10 @@
                       :src="episode.image"
                       width="100%"
                       height="100%"
-                      class="
-                        w-full
-                        h-auto
-                        max-w-full
-                        border-8 border-white
-                        square_content
-                      "
+                      class="w-full h-auto max-w-full border-8 border-white square_content"
                       :alt="`Cover_${episode.name}`"
                     />
-                    <div
-                      v-else
-                      class="
-                        w-full
-                        h-auto
-                        max-w-full
-                        border-8 border-white
-                        square_content
-                        animate-pulse
-                        bg-orchid-300
-                      "
-                    ></div>
+                    <div v-else class="w-full h-auto max-w-full border-8 border-white square_content animate-pulse bg-orchid-300"></div>
                   </div>
                   <vue-plyr v-if="showAudio" ref="plyr2">
                     <audio>
@@ -251,27 +162,10 @@
                   </vue-plyr>
                 </div>
               </div>
-              <div
-                class="
-                  flex
-                  justify-between
-                  w-11/12
-                  pt-4
-                  text-lg text-white
-                  font-indie
-                "
-              >
+              <div class="flex justify-between w-11/12 pt-4 text-lg text-white font-indie">
                 <button
                   type="button"
-                  class="
-                    px-3
-                    pt-2
-                    pb-1
-                    border-4 border-white
-                    hover:border-gray-200
-                    hover:text-royalblue-700
-                    hover:bg-gray-200
-                  "
+                  class="px-3 pt-2 pb-1 border-4 border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
                   @click="listen()"
                 >
                   🎧 Ecouter
@@ -279,45 +173,21 @@
                 <button
                   id="rtp-button"
                   type="button"
-                  class="
-                    px-3
-                    pt-2
-                    pb-1
-                    border-4 border-white
-                    hover:border-gray-200
-                    hover:text-royalblue-700
-                    hover:bg-gray-200
-                  "
+                  class="px-3 pt-2 pb-1 border-4 border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
                   @click="rate()"
                 >
                   ⭐️ Note
                 </button>
                 <button
                   type="button"
-                  class="
-                    px-3
-                    pt-2
-                    pb-1
-                    border-4 border-white
-                    hover:border-gray-200
-                    hover:text-royalblue-700
-                    hover:bg-gray-200
-                  "
+                  class="px-3 pt-2 pb-1 border-4 border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
                   @click="tweetIt()"
                 >
                   ❤️ Partage
                 </button>
                 <button
                   type="button"
-                  class="
-                    px-3
-                    pt-2
-                    pb-1
-                    border-4 border-white
-                    hover:border-gray-200
-                    hover:text-royalblue-700
-                    hover:bg-gray-200
-                  "
+                  class="px-3 pt-2 pb-1 border-4 border-white hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
                   @click="joinUs()"
                 >
                   👉 Rejoins la communauté
@@ -331,16 +201,7 @@
   </client-only>
 </template>
 <script lang="ts">
-import {
-  ref,
-  computed,
-  onBeforeUnmount,
-  defineComponent,
-  useFetch,
-  useContext,
-  useMeta,
-  onMounted,
-} from '@nuxtjs/composition-api'
+import { ref, computed, onBeforeUnmount, defineComponent, useFetch, useContext, useMeta, onMounted } from '@nuxtjs/composition-api'
 import Vue from 'vue'
 import { cutText, removeEmoji } from '~/services/feed'
 import { feed, ep } from '~/services/rss'
@@ -385,19 +246,13 @@ export default defineComponent({
         }
       })
       player.on('pause', () => {
-        localStorage.setItem(
-          `${params.value.id}:currentTime`,
-          player.currentTime
-        )
+        localStorage.setItem(`${params.value.id}:currentTime`, player.currentTime)
       })
       player.on('ended', () => {
         checkNext()
       })
       player.on('timeupdate', () => {
-        localStorage.setItem(
-          `${params.value.id}:currentTime`,
-          player.currentTime
-        )
+        localStorage.setItem(`${params.value.id}:currentTime`, player.currentTime)
       })
     }
     const showRandomModal = () => {
@@ -440,10 +295,7 @@ export default defineComponent({
     }
 
     const { fetch } = useFetch(async () => {
-      const [items, element] = await Promise.all([
-        feed($config),
-        ep(params.value.id, $config),
-      ])
+      const [items, element] = await Promise.all([feed($config), ep(params.value.id, $config)])
       if (!element || !items) {
         return
       }
@@ -499,13 +351,7 @@ export default defineComponent({
         },
       ],
       title: titleNoEmoji.value,
-      meta: createMeta(
-        titleNoEmoji.value,
-        previewNoEmoji.value,
-        episode.value.imageOptimized,
-        episode.value.name,
-        episode.value.audio
-      ),
+      meta: createMeta(titleNoEmoji.value, previewNoEmoji.value, episode.value.imageOptimized, episode.value.name, episode.value.audio),
     }))
     return {
       episode,

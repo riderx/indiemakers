@@ -1,8 +1,6 @@
 <template>
   <div>
-    <button class="mb-5 text-3xl text-royalblue-700 lg:mb-10 font-indie">
-      💗 {{ all.total }} Taches
-    </button>
+    <button class="mb-5 text-3xl text-royalblue-700 lg:mb-10 font-indie">💗 {{ all.total }} Taches</button>
     <div class="flex mb-5 border-b-2 lg:mb-10 border-royalblue-700">
       <button
         class="mr-3 text-2xl text-royalblue-700 focus:outline-none"
@@ -25,17 +23,11 @@
         A faire {{ todo.length }} ☑️
       </button>
     </div>
-    <article
-      v-for="task in filtered"
-      :key="task.id"
-      class="py-5 border-b-2 lg:mx-10 border-orchid-300"
-    >
+    <article v-for="task in filtered" :key="task.id" class="py-5 border-b-2 lg:mx-10 border-orchid-300">
       <h1 class="text-xl text-black">
         {{ task.content }}
       </h1>
-      <time class="text-sm text-royalblue-700" :datetime="task.createdAt">{{
-        task.createdAt
-      }}</time>
+      <time class="text-sm text-royalblue-700" :datetime="task.createdAt">{{ task.createdAt }}</time>
     </article>
   </div>
 </template>
@@ -53,15 +45,9 @@ export default defineComponent({
   },
   setup({ all }) {
     const status = ref('done')
-    const todo = computed(() =>
-      all.tasks.filter((a: Task) => a.status === 'todo')
-    )
-    const done = computed(() =>
-      all.tasks.filter((a: Task) => a.status === 'done')
-    )
-    const filtered = computed(() =>
-      status.value === 'todo' ? todo.value : done.value
-    )
+    const todo = computed(() => all.tasks.filter((a: Task) => a.status === 'todo'))
+    const done = computed(() => all.tasks.filter((a: Task) => a.status === 'done'))
+    const filtered = computed(() => (status.value === 'todo' ? todo.value : done.value))
     return { filtered, status, todo, done }
   },
 })

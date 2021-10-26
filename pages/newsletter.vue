@@ -17,9 +17,7 @@
         <p class="px-5 text-white">
           {{ desc }}
         </p>
-        <p class="px-5 text-white">
-          Tu seras également informé de la sortie des épisodes !
-        </p>
+        <p class="px-5 text-white">Tu seras également informé de la sortie des épisodes !</p>
         <div class="pt-3 pl-4 pr-4 mx-auto text-center md:w-1/2">
           <div class="mb-0 mb-4">
             <input
@@ -96,13 +94,7 @@
 </template>
 
 <script lang="ts">
-import {
-  ref,
-  defineComponent,
-  useContext,
-  useMeta,
-  useRouter,
-} from '@nuxtjs/composition-api'
+import { ref, defineComponent, useContext, useMeta, useRouter } from '@nuxtjs/composition-api'
 import { createMeta } from '~/services/meta'
 
 export default defineComponent({
@@ -113,8 +105,7 @@ export default defineComponent({
     const router = useRouter()
     const logo = {
       title: 'Newletter LOGO',
-      source:
-        'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/newsletter_hlctgq.svg',
+      source: 'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/newsletter_hlctgq.svg',
     }
     const desc =
       '💥Tu ne sais pas par où commencer ton projet ? Je te confie mes actions sur mes projets et sur le podcast ! Chaque semaine directement dans ta boîte mail. 💌'

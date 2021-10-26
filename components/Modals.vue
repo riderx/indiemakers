@@ -51,15 +51,9 @@
                       btn-lg
                       md:m-3
                       h1
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                     "
-                    @click="
-                      listenExternal(
-                        'https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg'
-                      )
-                    "
+                    @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
                   >
                     Spotify
                   </button>
@@ -75,15 +69,9 @@
                       btn-lg
                       md:m-3
                       h1
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                     "
-                    @click="
-                      listenExternal(
-                        'https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972'
-                      )
-                    "
+                    @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
                   >
                     Apple Podcast
                   </button>
@@ -99,15 +87,9 @@
                       btn-lg
                       md:m-3
                       h1
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                     "
-                    @click="
-                      listenExternal(
-                        'https://www.youtube.com/channel/UCMedW_Y4K0alzeVz1bSBvjA?sub_confirmation=1'
-                      )
-                    "
+                    @click="listenExternal('https://www.youtube.com/channel/UCMedW_Y4K0alzeVz1bSBvjA?sub_confirmation=1')"
                   >
                     Youtube
                   </button>
@@ -127,10 +109,7 @@
               <h1 class="text-3xl font-indie">✅C'est fait !</h1>
             </div>
             <div class="pt-2 text-center text-white col-12">
-              <p>
-                Lien Copié, je sais pas trop ce que tu compte en faire mais
-                enjoy, c'est tout❤️
-              </p>
+              <p>Lien Copié, je sais pas trop ce que tu compte en faire mais enjoy, c'est tout❤️</p>
             </div>
             <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
               <button
@@ -166,10 +145,7 @@
             <div class="col-12">
               <div class="pt-4 row h-100">
                 <div class="pt-2 pb-3 text-center text-white col-12">
-                  <p>
-                    Check tes emails, tu y trouveras mon premier email, si tu ne
-                    le vois pas check tes spams !
-                  </p>
+                  <p>Check tes emails, tu y trouveras mon premier email, si tu ne le vois pas check tes spams !</p>
                 </div>
               </div>
             </div>
@@ -191,8 +167,7 @@
               <div class="pt-4 row h-100">
                 <div class="pt-2 pb-3 text-center text-white col-12">
                   <p>
-                    Check tes emails, tu y trouveras le lien vers l'ebook et une
-                    petite surprise, si tu ne le vois pas check tes spams !
+                    Check tes emails, tu y trouveras le lien vers l'ebook et une petite surprise, si tu ne le vois pas check tes spams !
                   </p>
                 </div>
               </div>
@@ -233,25 +208,10 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <h1
-                class="
-                  py-2
-                  m-0
-                  text-3xl text-center text-white
-                  font-indie
-                  pl-md-2
-                "
-              >
-                Rejoint le Discord
-              </h1>
-              <p class="px-2 text-white md:px-5">
-                300 Makers là pour échanger et disponible pour répondre à tes
-                questions !
-              </p>
+              <h1 class="py-2 m-0 text-3xl text-center text-white font-indie pl-md-2">Rejoint le Discord</h1>
+              <p class="px-2 text-white md:px-5">300 Makers là pour échanger et disponible pour répondre à tes questions !</p>
               <br />
-              <p class="px-2 text-white md:px-5">
-                Tu seras également informé de la sortie des épisodes par email !
-              </p>
+              <p class="px-2 text-white md:px-5">Tu seras également informé de la sortie des épisodes par email !</p>
               <div class="pt-3 text-center text-white offset-md-3 col-md-6">
                 <div class="mb-0 form-group">
                   <input
@@ -277,9 +237,7 @@
                   />
                 </div>
               </div>
-              <div
-                class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-              >
+              <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                 <button
                   type="button"
                   class="
@@ -287,9 +245,7 @@
                     py-1
                     border-4 border-white
                     rounded-none
-                    hover:border-gray-200
-                    hover:text-royalblue-700
-                    hover:bg-gray-200
+                    hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                     text-light
                     h1
                   "
@@ -314,24 +270,11 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <h1
-                class="
-                  py-2
-                  m-0
-                  text-3xl text-center text-white
-                  font-indie
-                  pl-md-2
-                "
-              >
-                Mes Emails Privés
-              </h1>
+              <h1 class="py-2 m-0 text-3xl text-center text-white font-indie pl-md-2">Mes Emails Privés</h1>
               <p class="text-white md:px-5">
-                Reçoit ton email hebdomadaire avec mes conseils actionables pour
-                lancer ton projet, et gagner ta liberté !
+                Reçoit ton email hebdomadaire avec mes conseils actionables pour lancer ton projet, et gagner ta liberté !
               </p>
-              <p class="text-white md:px-5">
-                Tu seras également informé de la sortie des épisodes !
-              </p>
+              <p class="text-white md:px-5">Tu seras également informé de la sortie des épisodes !</p>
               <div class="pt-3 text-center text-white offset-md-3 col-md-6">
                 <div class="mb-0 form-group">
                   <input
@@ -357,9 +300,7 @@
                   />
                 </div>
               </div>
-              <div
-                class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-              >
+              <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                 <button
                   type="button"
                   class="
@@ -367,9 +308,7 @@
                     py-1
                     border-4 border-white
                     rounded-none
-                    hover:border-gray-200
-                    hover:text-royalblue-700
-                    hover:bg-gray-200
+                    hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                     text-light
                     h1
                   "
@@ -394,18 +333,9 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12">
-              <h1
-                class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie"
-              >
-                Le guide pour lancer ton projet !
-              </h1>
-              <p class="px-5 text-white">
-                Reçoit ton guide en 6 étapes, il te fera éviter bien des erreurs
-                et gagner un temps précieux !
-              </p>
-              <p class="px-5 text-white">
-                Tu seras également informé de la sortie des épisodes !
-              </p>
+              <h1 class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie">Le guide pour lancer ton projet !</h1>
+              <p class="px-5 text-white">Reçoit ton guide en 6 étapes, il te fera éviter bien des erreurs et gagner un temps précieux !</p>
+              <p class="px-5 text-white">Tu seras également informé de la sortie des épisodes !</p>
               <div class="pt-3 text-center text-white offset-md-3 col-md-6">
                 <div class="mb-0 form-group">
                   <input
@@ -431,9 +361,7 @@
                   />
                 </div>
               </div>
-              <div
-                class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-              >
+              <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                 <button
                   type="button"
                   class="
@@ -441,9 +369,7 @@
                     py-1
                     border-4 border-white
                     rounded-none
-                    hover:border-gray-200
-                    hover:text-royalblue-700
-                    hover:bg-gray-200
+                    hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                     text-light
                     h1
                   "
@@ -463,12 +389,7 @@
           </div>
         </div>
       </modal>
-      <modal
-        height="auto"
-        adaptive
-        :click-to-close="isFalse"
-        name="confirmName"
-      >
+      <modal height="auto" adaptive :click-to-close="isFalse" name="confirmName">
         <div class="relative border-8 border-white">
           <div class="py-5 row bg-royalblue-700">
             <button
@@ -485,10 +406,7 @@
           </div>
           <div class="pt-4 row bg-royalblue-700 h-100">
             <div class="pt-2 text-center text-white col-12">
-              <p>
-                Ajoute ton prénom pour que je puisse savoir a qui s'adresse mes
-                emails !
-              </p>
+              <p>Ajoute ton prénom pour que je puisse savoir a qui s'adresse mes emails !</p>
             </div>
             <div class="pt-2 text-center text-white col-12">
               <p>Si tu choisie de ne pas en mettre tu t'apelleras Bob</p>
@@ -514,9 +432,7 @@
                   py-1
                   border-4 border-white
                   rounded-none
-                  hover:border-gray-200
-                  hover:text-royalblue-700
-                  hover:bg-gray-200
+                  hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                   text-light
                   h1
                 "
@@ -542,18 +458,14 @@
             <div class="col-12 h-100">
               <div class="py-2 row bg-royalblue-700">
                 <div class="pt-2 text-center text-white col-12">
-                  <h1 class="text-3xl font-indie">
-                    😨 Quelque chose n'as pas marché
-                  </h1>
+                  <h1 class="text-3xl font-indie">😨 Quelque chose n'as pas marché</h1>
                 </div>
               </div>
               <div class="pt-2 row bg-royalblue-700">
                 <div class="text-center text-white col-12">
                   <p>Essais plus tard</p>
                 </div>
-                <div
-                  class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -561,9 +473,7 @@
                       py-1
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -597,10 +507,7 @@
               <div class="pt-2 row bg-royalblue-700">
                 <div class="text-white col-12">
                   <ul class="pt-2 text-center">
-                    <li>
-                      Grace aux votes, ce·tte maker a accepter de venir dans le
-                      podcast !
-                    </li>
+                    <li>Grace aux votes, ce·tte maker a accepter de venir dans le podcast !</li>
                     <li>Merci 😍</li>
                   </ul>
                 </div>
@@ -612,9 +519,7 @@
                       py-2
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -647,18 +552,11 @@
               </div>
               <div class="pt-4 row bg-royalblue-700 h-100">
                 <div class="pt-2 text-center text-white col-12">
-                  <p>
-                    Twitte pour motiver ce·tte Maker à venir sur le podcast !
-                  </p>
+                  <p>Twitte pour motiver ce·tte Maker à venir sur le podcast !</p>
                   <p class="font-weight-bold">Voici un message tout pret 😎</p>
-                  <p>
-                    Quand l'épisode sortira je t'enverrais un email pour te
-                    remercier 💃
-                  </p>
+                  <p>Quand l'épisode sortira je t'enverrais un email pour te remercier 💃</p>
                 </div>
-                <div
-                  class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -666,9 +564,7 @@
                       py-2
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-indiepurple
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -701,13 +597,9 @@
               </div>
               <div class="pt-4 row bg-royalblue-700 h-100">
                 <div class="pt-2 text-center text-white col-12">
-                  <p class="font-weight-bold">
-                    Voici l'épisode suivant, tu vas adorer 💃
-                  </p>
+                  <p class="font-weight-bold">Voici l'épisode suivant, tu vas adorer 💃</p>
                 </div>
-                <div
-                  class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -715,9 +607,7 @@
                       py-2
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-indiepurple
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -750,16 +640,10 @@
               </div>
               <div class="pt-4 row bg-royalblue-700 h-100">
                 <div class="pt-2 text-center text-white col-12">
-                  <p>
-                    Tu viens d'écouter l'épisode le plus recent du podcast !
-                  </p>
-                  <p class="font-weight-bold">
-                    Voici un épisode que tu vas adorer💃
-                  </p>
+                  <p>Tu viens d'écouter l'épisode le plus recent du podcast !</p>
+                  <p class="font-weight-bold">Voici un épisode que tu vas adorer💃</p>
                 </div>
-                <div
-                  class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -767,9 +651,7 @@
                       py-2
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-indiepurple
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -797,21 +679,14 @@
             <div class="col-12 h-100">
               <div class="py-2 row bg-royalblue-700">
                 <div class="pt-2 text-center text-white col-12">
-                  <h1 class="text-3xl font-indie">
-                    👀Je ne trouve pas ce·tte Maker
-                  </h1>
+                  <h1 class="text-3xl font-indie">👀Je ne trouve pas ce·tte Maker</h1>
                 </div>
               </div>
               <div class="pt-4 row bg-royalblue-700 h-100">
                 <div class="pt-2 text-center text-white col-12">
-                  <p>
-                    Je ne peut pas ajouter de Maker qui n'est pas sur Twitter
-                    pour le moment.
-                  </p>
+                  <p>Je ne peut pas ajouter de Maker qui n'est pas sur Twitter pour le moment.</p>
                 </div>
-                <div
-                  class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -819,9 +694,7 @@
                       py-2
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-indiepurple
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -855,16 +728,10 @@
               <div class="pt-2 row bg-royalblue-700">
                 <div class="text-center text-white col-12">
                   <p>tu as deja voté pour ce·tte Maker</p>
-                  <p>
-                    Twitter pour motiver ce·tte Maker à venir sur le podcast !
-                  </p>
-                  <p class="font-weight-bold">
-                    Voici un message tout pret pour l'inviter 😎
-                  </p>
+                  <p>Twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
                 </div>
-                <div
-                  class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -872,9 +739,7 @@
                       py-1
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -907,10 +772,7 @@
               </div>
               <div class="pt-2 row bg-royalblue-700">
                 <div class="text-white col-12">
-                  <h5 class="text-center text-1xl">
-                    Ce·tte maker a besoin de plus de force pour venir dans le
-                    podcast
-                  </h5>
+                  <h5 class="text-center text-1xl">Ce·tte maker a besoin de plus de force pour venir dans le podcast</h5>
                   <ul class="pt-2 text-center">
                     <li>Twitter pour motiver ce·tte Maker à venir!</li>
                     <li>Voici un message tout pret pour l'inviter 😎</li>
@@ -924,9 +786,7 @@
                       py-2
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -959,20 +819,11 @@
               </div>
               <div class="pt-4 row bg-royalblue-700 h-100">
                 <div class="pt-2 text-center text-white col-12">
-                  <p>
-                    Ce·tte maker est déjà présent dans la liste, J'ai ajouté ton
-                    vote pour lui/elle.
-                  </p>
-                  <p>
-                    Twitte pour motiver ce·tte Maker à venir sur le podcast !
-                  </p>
-                  <p class="font-weight-bold">
-                    Voici un message tout pret pour l'inviter 😎
-                  </p>
+                  <p>Ce·tte maker est déjà présent dans la liste, J'ai ajouté ton vote pour lui/elle.</p>
+                  <p>Twitte pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
                 </div>
-                <div
-                  class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -980,9 +831,7 @@
                       py-2
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-indiepurple
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -1015,20 +864,11 @@
               </div>
               <div class="pt-4 row bg-royalblue-700 h-100">
                 <div class="pt-2 text-center text-white col-12">
-                  <p>
-                    Ce·tte maker est déjà présent dans la liste, et tu as déjà
-                    voté pour lui/elle 😇.
-                  </p>
-                  <p>
-                    Twitter pour motiver ce·tte Maker à venir sur le podcast !
-                  </p>
-                  <p class="font-weight-bold">
-                    Voici un message tout pret pour l'inviter 😎
-                  </p>
+                  <p>Ce·tte maker est déjà présent dans la liste, et tu as déjà voté pour lui/elle 😇.</p>
+                  <p>Twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
                 </div>
-                <div
-                  class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -1036,9 +876,7 @@
                       py-2
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-indiepurple
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -1055,12 +893,7 @@
       <modal height="auto" adaptive name="add">
         <div class="relative border-8 border-white">
           <div class="row">
-            <button
-              type="button"
-              class="absolute top-0 z-10 pl-2 text-3xl text-white close"
-              aria-label="Close"
-              @click="$modal.hide('add')"
-            >
+            <button type="button" class="absolute top-0 z-10 pl-2 text-3xl text-white close" aria-label="Close" @click="$modal.hide('add')">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="col-12 h-100">
@@ -1073,9 +906,7 @@
                 <div class="text-center text-white col-12">
                   <p>Le moyens le plus simple d'ajouter quelqu'un</p>
                   <p>C'est avec son nom Twitter</p>
-                  <p>
-                    Cela permet de trouver sa photo et description d'un coup !
-                  </p>
+                  <p>Cela permet de trouver sa photo et description d'un coup !</p>
                 </div>
                 <div class="pt-3 text-center text-white offset-md-3 col-md-6">
                   <div class="mb-0 form-group">
@@ -1090,9 +921,7 @@
                     />
                   </div>
                 </div>
-                <div
-                  class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -1100,9 +929,7 @@
                       py-1
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -1135,21 +962,13 @@
               </div>
               <div class="pt-2 row bg-royalblue-700">
                 <div class="text-center text-white col-12">
+                  <p>N'hésite pas a twitter pour motiver ce·tte Maker à venir sur le podcast !</p>
+                  <p class="font-weight-bold">Voici un message tout pret pour l'inviter 😎</p>
                   <p>
-                    N'hésite pas a twitter pour motiver ce·tte Maker à venir sur
-                    le podcast !
-                  </p>
-                  <p class="font-weight-bold">
-                    Voici un message tout pret pour l'inviter 😎
-                  </p>
-                  <p>
-                    Quand l'épisode sortira je t'enverrais un email pour te
-                    remercier et te partager l'épisode qui existe grâce a toi.💃
+                    Quand l'épisode sortira je t'enverrais un email pour te remercier et te partager l'épisode qui existe grâce a toi.💃
                   </p>
                 </div>
-                <div
-                  class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -1157,9 +976,7 @@
                       py-1
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -1192,14 +1009,9 @@
               </div>
               <div class="pt-2 row bg-royalblue-700">
                 <div class="text-center text-white col-12">
-                  <p>
-                    Tu viens de recevoir ton lien de login par email, click
-                    dessus, c'est tout❤️
-                  </p>
+                  <p>Tu viens de recevoir ton lien de login par email, click dessus, c'est tout❤️</p>
                 </div>
-                <div
-                  class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -1207,9 +1019,7 @@
                       py-1
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -1241,14 +1051,9 @@
                 </div>
                 <div class="text-center text-white col-12">
                   <p>Parfois pour se lancer, un podcast ne suffit pas</p>
-                  <p>
-                    J'ai crée pour toi des outils pour passer a l'étape
-                    supérieure !
-                  </p>
+                  <p>J'ai crée pour toi des outils pour passer a l'étape supérieure !</p>
                 </div>
-                <div
-                  class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -1256,9 +1061,7 @@
                       py-2
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-indiepurple
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -1286,21 +1089,14 @@
             <div class="col-12 h-100">
               <div class="py-2 row bg-royalblue-700">
                 <div class="pt-2 text-center text-white col-12">
-                  <h1 class="text-3xl font-indie">
-                    Partage le classement des makers
-                  </h1>
+                  <h1 class="text-3xl font-indie">Partage le classement des makers</h1>
                 </div>
               </div>
               <div class="pt-2 row bg-royalblue-700">
                 <div class="text-center text-white col-12">
-                  <p>
-                    Voici un tweet tout prêt, pour partager la page et faire
-                    réagir tweeter
-                  </p>
+                  <p>Voici un tweet tout prêt, pour partager la page et faire réagir tweeter</p>
                 </div>
-                <div
-                  class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -1308,9 +1104,7 @@
                       py-2
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-indiepurple
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -1343,14 +1137,9 @@
               </div>
               <div class="pt-2 row bg-royalblue-700">
                 <div class="text-center text-white col-12">
-                  <p>
-                    Note le 5 ⭐️, en cliquant ci dessous, ca permet au podcast
-                    d'être découvert par d'autres !
-                  </p>
+                  <p>Note le 5 ⭐️, en cliquant ci dessous, ca permet au podcast d'être découvert par d'autres !</p>
                 </div>
-                <div
-                  class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -1358,9 +1147,7 @@
                       py-1
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -1395,9 +1182,7 @@
                 <div class="text-center text-white col-12">
                   <p>Envois du love a l'invité du podcast via twitter !</p>
                 </div>
-                <div
-                  class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6"
-                >
+                <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                   <button
                     type="button"
                     class="
@@ -1405,9 +1190,7 @@
                       py-1
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -1440,9 +1223,7 @@
               </div>
               <div class="pt-2 row bg-royalblue-700">
                 <div class="text-white col-12">
-                  <h5 class="text-center text-1xl">
-                    j’ai besoin que tu valides ton email !
-                  </h5>
+                  <h5 class="text-center text-1xl">j’ai besoin que tu valides ton email !</h5>
                   <ul class="pt-2 text-center">
                     <li>Pour éviter les faux votes</li>
                     <li>Te tenir au courant de la sortie de l'épisode</li>
@@ -1484,9 +1265,7 @@
                       py-2
                       border-4 border-white
                       rounded-none
-                      hover:border-gray-200
-                      hover:text-royalblue-700
-                      hover:bg-gray-200
+                      hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
                       text-light
                       h1
                     "
@@ -1505,13 +1284,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  useContext,
-  onMounted,
-  useRouter,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, onMounted, useRouter } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
@@ -1662,9 +1435,7 @@ export default defineComponent({
     const tweetItHunt = () => {
       const linkEp = 'https://indiemakers.fr/makershunt'
       const tweet = `Je viens de découvrir les Makers Français les plus chaud sur ${linkEp} @${$config.handler}`
-      const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        tweet
-      )}`
+      const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`
       window.open(tweetLink, '_blank')
       $modal.hide('share_hunt')
     }
@@ -1675,9 +1446,7 @@ export default defineComponent({
       }
       const linkPage = `${$config.DOMAIN}/makers_hunt`
       const tweet = `@${maker} j'ai voté sur ${linkPage}, j'aimerais te voir dans le podcast @${$config.handler} 🚀`
-      const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        tweet
-      )}`
+      const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`
       window.open(tweetLink, '_blank')
       $modal.hide('added')
       $modal.hide('voted')
@@ -1693,9 +1462,7 @@ export default defineComponent({
       }
       const linkEp = `${$config.DOMAIN}/episode/${epGui}`
       const tweet = `@${$config.handler} et @${maker} merci pour le podcast ${linkEp} <3`
-      const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        tweet
-      )}`
+      const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`
       window.open(tweetLink, '_blank')
       $modal.hide('added')
       $modal.hide('voted')

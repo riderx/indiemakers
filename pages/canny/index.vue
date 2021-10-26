@@ -26,11 +26,7 @@ export default {
           }
           c.q = []
           w.Canny = c
-          d.readyState === 'complete'
-            ? l()
-            : w.attachEvent
-            ? w.attachEvent('onload', l)
-            : w.addEventListener('load', l, !1)
+          d.readyState === 'complete' ? l() : w.attachEvent ? w.attachEvent('onload', l) : w.addEventListener('load', l, !1)
         }
       })(window, document, 'canny-jssdk', 'script')
 
