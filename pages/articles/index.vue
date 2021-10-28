@@ -78,12 +78,12 @@ import { createMeta } from '~/services/meta'
 export default defineComponent({
   setup() {
     const { $content, $config } = useContext()
-    const articles = ref<IContentDocument | IContentDocument[]>([])
+    const articles = ref<IContentDocument[]>([])
     const blogImage = 'https://res.cloudinary.com/forgr/image/upload/v1621019063/indiemakers/blog_li7d4i.svg'
     const title = 'Les articles indie !'
     const description = 'Des articles fait par des indie, des astuces, des conseils, des avancée, ou enrichir la culture indie !'
     const { fetch } = useFetch(async () => {
-      const data = await $content('articles').where({ published: true }).sortBy('order').fetch()
+      const data = (await $content('articles').where({ published: true }).sortBy('order').fetch<IContentDocument[]>()) as IContentDocument[]
       articles.value = data
     })
     fetch()
