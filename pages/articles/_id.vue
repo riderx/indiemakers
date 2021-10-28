@@ -73,7 +73,7 @@ export default defineComponent({
     const page = ref<IContentDocument>()
     const noImge = 'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
     const { fetch } = useFetch(async () => {
-      const data = (await $content('articles').where({ slug: params.value.id }).fetch()) as IContentDocument[]
+      const data = (await $content('articles').where({ slug: params.value.id }).fetch<IContentDocument[]>()) as IContentDocument[]
       page.value = data[0]
       loaded.value = true
     })
