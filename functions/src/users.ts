@@ -44,9 +44,7 @@ export const voteIfNotDone = (personId: string, uid: string) => {
     })
 }
 
-export const getPerson = async (
-  idStr: string
-): Promise<firestore.DocumentReference | null> => {
+export const getPerson = async (idStr: string): Promise<firestore.DocumentReference | null> => {
   const person = await firestore()
     .collection('people')
     .where('id_str', '==', idStr)

@@ -3,10 +3,7 @@ import { config } from 'firebase-functions'
 
 const configSecret = config()
 
-export const sendUserToRevue = (
-  email: string,
-  firstName: string
-): Promise<AxiosResponse<any>> =>
+export const sendUserToRevue = (email: string, firstName: string): Promise<AxiosResponse<any>> =>
   axios({
     method: 'POST',
     url: '/api/v2/subscribers',

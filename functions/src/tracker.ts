@@ -75,10 +75,7 @@ export const findInTwUrls = (url: string, twUrls: TwUrl[]): string => {
   return found ? found.expanded_url : url
 }
 
-export const transformURLtoTracked = async (
-  text: string,
-  entities: TwEntities | null
-) => {
+export const transformURLtoTracked = async (text: string, entities: TwEntities | null) => {
   let newDescription = '' + text
   const links: string[] = Array.from(findUrl(text))
   const hashtags = findHashtags(text)

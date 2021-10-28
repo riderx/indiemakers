@@ -63,19 +63,15 @@ const client = new Twitter(TwitterApiToken)
 export const twUserPromise = (screen_name: string): Promise<TwUser> =>
   new Promise((resolve, reject) => {
     const params = { screen_name, include_entities: true }
-    client.get(
-      'users/show',
-      params,
-      (error: any, user: TwUser, response: any) => {
-        if (!error && user) {
-          console.error('User', user, 'response', response)
-          resolve(user)
-        } else {
-          console.error('Cannot find user', error, response)
-          reject(error)
-        }
+    client.get('users/show', params, (error: any, user: TwUser, response: any) => {
+      if (!error && user) {
+        console.error('User', user, 'response', response)
+        resolve(user)
+      } else {
+        console.error('Cannot find user', error, response)
+        reject(error)
       }
-    )
+    })
   })
 
 export const getTwiterAccounts = (text: string) => {
