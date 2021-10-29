@@ -23,7 +23,6 @@ export default defineComponent({
       link: [
         {
           rel: 'alternate',
-          hreflang: 'x-default',
           title: 'INDIE MAKERS',
           href: `${$config.DOMAIN}${route.value.fullPath}`,
         },

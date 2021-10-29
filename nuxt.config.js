@@ -83,7 +83,6 @@ export default {
     link: [
       {
         rel: 'alternate',
-        hreflang: 'x-default',
         title: 'RSS INDIE MAKERS',
         type: 'application/rss+xml',
         href: `${baseUrl()}/rss.xml`,
