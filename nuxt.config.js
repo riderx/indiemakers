@@ -86,7 +86,7 @@ export default {
         hreflang: 'x-default',
         title: 'RSS INDIE MAKERS',
         type: 'application/rss+xml',
-        href: 'https://indiemakers/rss.xml',
+        href: `${baseUrl()}/rss.xml`,
       },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
@@ -124,11 +124,19 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/robots',
     '@nuxtjs/markdownit',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     'vue-warehouse/nuxt',
     // 'nuxt-speedkit',
+  ],
+  robots: [
+    {
+      UserAgent: '*',
+      Disallow: '/login',
+      Sitemap: `${baseUrl()}/sitemap.xml`,
+    },
   ],
   markdownit: {
     runtime: true, // Support `$md()`

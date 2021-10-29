@@ -27,6 +27,11 @@ export default defineComponent({
           title: 'INDIE MAKERS',
           href: `${$config.DOMAIN}${route.value.fullPath}`,
         },
+        {
+          rel: 'canonical',
+          title: 'INDIE MAKERS',
+          href: `${$config.DOMAIN}${route.value.fullPath}`,
+        },
       ],
       meta: [
         { charset: 'utf-8' },
