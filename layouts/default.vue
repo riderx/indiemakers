@@ -35,6 +35,11 @@ export default defineComponent({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        {
+          hid: 'keywords',
+          property: 'keywordse',
+          content: 'podcast, indie makers, indie hackers, bootsstrappers, independants, entrepreneurs, Makers, business',
+        },
         { hid: 'og:type', property: 'og:type', content: 'website' },
         {
           hid: 'apple-mobile-web-app-title',
