@@ -306,6 +306,7 @@ export const onboardingMessage = async (user: User) => {
 
   `
     )
+    await sendChannel(channel.channel_general, `@everyone C'est le premier karma de <@${user.userId}> , bienvenue <3`)
     await sleep(20)
     await sendChannel(
       channel.id,
@@ -313,14 +314,14 @@ export const onboardingMessage = async (user: User) => {
   Tu peu utiliser ce modèle :
   `
     )
-    await sleep(5)
+    await sleep(20)
     await sendChannel(
       channel.id,
       `
   Salut Les INDIE MAKERS! 🕉
   Moi c'est XXX, j'ai XX ans et je viens de XX.
-  Dans la vie je suis XXX depuis XXX ans.
-  J'ai aussi plusieurs projets à côté, comme:
+  Dans la vie je suis XXX .
+  J'ai plusieurs projets à côté, comme:
   - XXX une app de XXX qui fait XXX de revenu
   - XXX un site pour les XXX, pas de revenu
   - XXX que j'ai abandonné car XXX
@@ -329,13 +330,13 @@ export const onboardingMessage = async (user: User) => {
   Ravi d'etre parmi vous !
   `
     )
-    await sleep(15)
+    await sleep(20)
     await sendChannel(
       channel.id,
       `Ton profil est maintenant visible ici: ${getUserUrl(user)}
   `
     )
-    await sleep(5)
+    await sleep(25)
     await sendChannel(
       channel.id,
       `Tu peux l'enrichir depuis la communauté avec la commande:
@@ -349,7 +350,7 @@ export const onboardingMessage = async (user: User) => {
 
   **Mes commande fonctione uniquement dans un salon**, prend <#${config.channel_bip}> il est fait opour ça !`
     )
-    await sleep(15)
+    await sleep(25)
     await sendChannel(
       channel.id,
       `
@@ -364,20 +365,20 @@ export const onboardingMessage = async (user: User) => {
   https://indiemakers.gitbook.io/bot
   `
     )
-    await sleep(5)
+    await sleep(15)
     await sendChannel(
       channel.id,
       `voici un petit tuto vidéo pour te montrer comment crée ta premiere tache sur un projet:
       https://www.youtube.com/watch?v=qrXN3Mai1Gw
   `
     )
-    await sleep(5)
+    await sleep(15)
     await sendChannel(
       channel.id,
       `Ps: n'attend pas de réponse de ma part ici, je ne sais pas encore lire tes messages !
   `
     )
-    await sleep(5)
+    await sleep(15)
     await sendChannel(
       channel.id,
       `Si t'as des question demande aux utilisateur avec le rôle Moderateur !

@@ -12,10 +12,9 @@ const afterAdd = async (value: number, userId: string, curKarma: KarmaAll): Prom
       : `Pas cool <@${userId}> 😩!
   Ton total karma 🕉 est maintenant de: ${curKarma.total}`
   if (curKarma.total < 0) {
-    await openChannel(userId).then((channel) => {
-      console.error('channel', channel)
-      return sendChannel(channel.id, `Ton karma est négatif ... un admin vas te contacter.`)
-    })
+    const channel = await openChannel(userId)
+    console.error('channel', channel)
+    await sendChannel(channel.id, `Ton karma est négatif ... un admin vas te contacter.`)
   }
   await updateUser(userId, { karma: curKarma.total })
   return botString
@@ -30,7 +29,9 @@ const karmaAdd = async (interaction: Interaction, option: ApplicationCommandInte
     }
     try {
       const currentKarma = await addKarmaById(userId, senderId, 1)
+      console.error('addKarmaById')
       const botString = await afterAdd(1, userId, currentKarma)
+      console.error('afterAdd')
       return sendTxtLater(botString, [], interaction.application_id, interaction.token)
     } catch (err) {
       console.error('karmaAdd', err)

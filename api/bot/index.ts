@@ -40,8 +40,12 @@ const bot = async (req: Request, res: Response) => {
       return res.status(401).end('Bad request signature')
     }
     if (req.body && req.body.type === InteractionType.APPLICATION_COMMAND && req.body.data) {
-      await sendTxtLoading(res)
-      await discordInteraction(req.body)
+      try {
+        await sendTxtLoading(res)
+        await discordInteraction(req.body)
+      } catch (e) {
+        console.error('bot', e)
+      }
       return
     }
     return res.send({
