@@ -1,5 +1,5 @@
-import { getAllPodcast, getOnePodcastById } from '../../services/firebase/podcasts';
 import { Request, Response } from 'express'
+import { getAllPodcast, getOnePodcastById } from '../../services/firebase/podcasts'
 import fFnit from '../../services/firebase/init'
 
 const feed = async (req: Request, res: Response) => {
