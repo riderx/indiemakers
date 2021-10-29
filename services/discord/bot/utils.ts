@@ -231,11 +231,14 @@ export const sendTxtLater = async (
       console.error('sendTxtLater Error', err.message)
     }
     // console.error('sendTxtLater content', url, JSON.stringify(content))
-    await patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" }).catch((errErr: any) => {
-      console.error('sendTxtLaterFallback', err.response, errErr.response)
-      return sendError(err)
-    })
-    return sendError({ function: 'sendTxtLater', url, error: JSON.stringify(err) })
+    try {
+      await patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
+    } catch (errErr: any) {
+      console.error('sendTxtLaterFallback', errErr.response)
+      await sendError({ function: 'sendTxtLaterFallback', error: JSON.stringify(errErr), url, body })
+    }
+    await sendError({ function: 'sendTxtLater', url, error: JSON.stringify(err), body })
+    return Promise.reject(Error('Cannot send to discord'))
   }
 }
 
