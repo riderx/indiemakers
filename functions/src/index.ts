@@ -1,4 +1,6 @@
 import { config, https, pubsub, firestore } from 'firebase-functions'
+import { initializeApp, getApps, getApp } from 'firebase-admin/app'
+import { getFirestore, Timestamp, DocumentReference } from 'firebase-admin/firestore'
 import { Person, User } from '../../services/types'
 import { onboardingMessage } from '../../services/discord/bot/utils'
 import { podcastToFirebase } from './../../services/firebase/podcasts'
@@ -8,10 +10,10 @@ import { TwUser, twUserPromise } from './twitter'
 import { sendUserToRevue } from './newletter'
 import { transformURLtoTracked } from './tracker'
 
-if (!admin.apps.length) {
-  admin.initializeApp()
+if (!getApps().length) {
+  initializeApp()
 } else {
-  admin.app() // if already initialized, use that one
+  getApp() // if already initialized, use that one
 }
 
 process.env.CLIENT_PUBLIC_KEY = config().discord.bot_public_key
@@ -69,21 +71,19 @@ process.env.BOT_TOKEN = config().discord.bot_token
 // })
 
 export const updateTwiterUser = pubsub.schedule('0 0 * * *').onRun(async () => {
-  const users = await admin
-    .firestore()
+  const users = await getFirestore()
     .collection('people')
     .get()
     .then((querySnapshot) => querySnapshot.docs.map((doc) => Object.assign(doc.data(), { id: doc.id })))
   users.forEach(async (user) => {
-    await admin
-      .firestore()
+    await getFirestore()
       .collection('/people')
       .doc(user.id)
-      .update({ updateDate: admin.firestore.Timestamp.now(), toUpdate: true })
+      .update({ updateDate: Timestamp.now(), toUpdate: true })
       .then(() => {
         console.error('updateDate updated')
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error('Error update person', error)
       })
   })
@@ -100,8 +100,8 @@ export const addTwiterUser = https.onCall(async (data, context) => {
         console.error('user', twUser)
         const newPerson: Person = {
           addedBy: uid,
-          updateDate: admin.firestore.Timestamp.now(),
-          addDate: admin.firestore.Timestamp.now(),
+          updateDate: Timestamp.now(),
+          addDate: Timestamp.now(),
           toUpdate: true,
           id_str: twUser.id_str,
           name: twUser.name,
@@ -111,15 +111,14 @@ export const addTwiterUser = https.onCall(async (data, context) => {
           votes: 1,
           number: Number.MAX_SAFE_INTEGER,
         }
-        let exist: admin.firestore.DocumentReference | null = null
+        let exist: DocumentReference | null = null
         try {
           exist = await getPerson(newPerson.id_str)
         } catch (err) {
           console.error('Not exist', newPerson.id_str)
         }
         if (!exist) {
-          return await admin
-            .firestore()
+          return await getFirestore()
             .collection('people')
             .add(newPerson)
             .then(async (person) => {
@@ -127,7 +126,7 @@ export const addTwiterUser = https.onCall(async (data, context) => {
               console.error('New account added')
               return { done: 'New account added' }
             })
-            .catch((err) => {
+            .catch((err: any) => {
               console.error('Cannot create', err)
               return { error: 'Cannot create' }
             })
@@ -150,8 +149,8 @@ export const calcVotesByPerson = firestore.document('/people/{personId}/votes/{v
     const { personId } = context.params
     // eslint-disable-next-line camelcase
     const { id_str } = vote
-    const person = await admin.firestore().collection('people').doc(personId)
-    const snap = await admin.firestore().collection(`/people/${personId}/votes`).get()
+    const person = await getFirestore().collection('people').doc(personId)
+    const snap = await getFirestore().collection(`/people/${personId}/votes`).get()
     const votesTotal = snap.size
     if (person && snap && votesTotal) {
       return person
@@ -180,7 +179,7 @@ export const onCreateDiscord = firestore.document('/discord/{uid}').onCreate(asy
   const user = snapshot.data() as User
   if (user) {
     await onboardingMessage(user)
-    await admin.firestore().collection('discord').doc(uid).update({
+    await getFirestore().collection('discord').doc(uid).update({
       onboardingSend: true,
     })
   }
@@ -193,7 +192,7 @@ export const onUpdateDiscord = firestore.document('/discord/{uid}').onUpdate(asy
     const user = snapshot.after.data() as User
     if (user && !user.onboardingSend) {
       await onboardingMessage(user)
-      await admin.firestore().collection('discord').doc(uid).update({
+      await getFirestore().collection('discord').doc(uid).update({
         onboardingSend: true,
       })
     }
@@ -209,15 +208,14 @@ export const onUpdatePeople = firestore.document('/people/{personId}').onUpdate(
     const bio = await transformURLtoTracked(twUser.description || person.bio, twUser ? twUser.entities : null)
     const pic = twUser ? twUser.profile_image_url_https.replace('_normal', '') : person.pic
     if (bio !== person.bio || pic !== person.pic || name !== person.name) {
-      await admin
-        .firestore()
+      await getFirestore()
         .collection('/people')
         .doc(personId)
         .update({ bio, pic, name, toUpdate: false })
         .then(() => {
           console.error('bio updated', personId)
         })
-        .catch((error) => {
+        .catch((error: any) => {
           console.error('Error update person', error)
         })
     }

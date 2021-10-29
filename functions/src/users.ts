@@ -1,6 +1,5 @@
-import { auth, firestore } from 'firebase-admin'
-import { getFirestore } from 'firebase-admin/firestore'
-
+import { getFirestore, DocumentReference } from 'firebase-admin/firestore'
+import { getAuth } from 'firebase-admin/auth'
 
 /**
  * Helper function for checking if a user exists
@@ -10,7 +9,7 @@ import { getFirestore } from 'firebase-admin/firestore'
  */
 export const userExists = async (uid: string): Promise<boolean> => {
   try {
-    const user = await auth().getUser(uid)
+    const user = await getAuth().getUser(uid)
     if (user) {
       return true
     }
@@ -28,7 +27,7 @@ export const userExists = async (uid: string): Promise<boolean> => {
 }
 
 export const voteIfNotDone = (personId: string, uid: string) => {
-  const voteRef = firestore().collection(`/people/${personId}/votes`).doc(uid)
+  const voteRef = getFirestore().collection(`/people/${personId}/votes`).doc(uid)
   return voteRef
     .get()
     .then((docSnapshot): Promise<{ error: string } | { done: string }> => {
@@ -46,13 +45,13 @@ export const voteIfNotDone = (personId: string, uid: string) => {
     })
 }
 
-export const getPerson = async (idStr: string): Promise<firestore.DocumentReference | null> => {
-  const person = await firestore()
+export const getPerson = async (idStr: string): Promise<DocumentReference | null> => {
+  const person = await getFirestore()
     .collection('people')
     .where('id_str', '==', idStr)
     .get()
     .then((snapshot) => {
-      let result: firestore.DocumentReference | null = null
+      let result: DocumentReference | null = null
       if (snapshot.empty) {
         console.error('No matching person', idStr)
         return null
