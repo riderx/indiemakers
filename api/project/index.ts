@@ -17,6 +17,7 @@ const project = async (req: Request, res: Response) => {
       const incomes = await getAllProjectsIncomes(String(user?.userId), String(req.query.hashtag))
       if (proj) {
         proj.userId = user.userId
+        proj.userName = user.username || user.userId
         proj.tasksData = tasks
         proj.postsData = posts
         proj.incomesData = incomes
