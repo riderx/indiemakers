@@ -8,9 +8,9 @@ const afterAdd = async (value: number, userId: string, curKarma: KarmaAll): Prom
   const botString =
     value > 0
       ? `Merci <@${userId}> ❤️ !
-  Ton total karma 🕉 est maintenant de: ${curKarma.total}`
+  Ton karma 🕉 est maintenant de: ${curKarma.total}`
       : `Pas cool <@${userId}> 😩!
-  Ton total karma 🕉 est maintenant de: ${curKarma.total}`
+  Ton karma 🕉 est maintenant de: ${curKarma.total}`
   if (curKarma.total < 0) {
     const channel = await openChannel(userId)
     console.error('channel', channel)
