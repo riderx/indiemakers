@@ -30,6 +30,9 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
+    htmlAttrs: {
+      lang: 'fr',
+    },
     title: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
     script: [
       {
