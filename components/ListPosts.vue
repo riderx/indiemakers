@@ -27,9 +27,11 @@
                     <div class="flex-1 min-w-0">
                       <div>
                         <div class="text-sm">
-                          <a class="font-medium text-gray-900 cursor-pointer hover:text-royalblue-500" @click="openProfil(post.userName)">{{
-                            post.userName
-                          }}</a>
+                          <NuxtLink
+                            :to="`/makers/${encodeURI(post.userName || '')}`"
+                            class="font-medium text-gray-900 cursor-pointer hover:text-royalblue-500"
+                            >{{ post.userName }}</NuxtLink
+                          >
                         </div>
                         <p class="mt-0.5 text-sm text-gray-500">
                           {{ post.createdAt }}
@@ -50,7 +52,7 @@
   </section>
 </template>
 <script lang="ts">
-import { defineComponent, useRouter } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import { Post, User } from '~/services/types'
 
 // function to find user by userId in users list
@@ -64,7 +66,6 @@ export default defineComponent({
     users: { type: Array as () => User[], default: () => [] as User[] },
   },
   setup({ users }) {
-    const router = useRouter()
     const transformPost = (text: string) => {
       if (typeof text !== 'string') return text
       const transformed = text.replace(/<@(.*)>/g, (userId: string) => {
@@ -79,12 +80,7 @@ export default defineComponent({
       return transformed
     }
 
-    const openProfil = (id: string | undefined) => {
-      if (id) {
-        router.push(`/makers/${encodeURI(id)}`)
-      }
-    }
-    return { openProfil, transformPost }
+    return { transformPost }
   },
 })
 </script>

@@ -121,11 +121,13 @@ export default defineComponent({
   .header-image {
     width: 50% !important;
   }
+
   .card-img-top {
     /* height: auto !important; */
     height: 170px !important;
   }
 }
+
 .card-img-top {
   width: 100%;
   height: 12vw;

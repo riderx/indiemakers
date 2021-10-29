@@ -62,14 +62,17 @@ body {
   overflow-x: hidden;
   background-color: rgba(75, 39, 155, 1);
 }
+
 img:not([src]) {
   display: none;
 }
+
 .square::after {
   content: '';
   display: block;
   padding-bottom: 100%;
 }
+
 .h-w-screen {
   height: 100vw;
 }
@@ -87,12 +90,15 @@ img:not([src]) {
 .custom-scroll::-webkit-scrollbar {
   width: 10px;
 }
+
 .custom-scroll::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
+
 .custom-scroll::-webkit-scrollbar-thumb {
   background: #df99d8;
 }
+
 .custom-scroll::-webkit-scrollbar-thumb:hover {
   background: rgba(75, 39, 155, 1) !important;
 }

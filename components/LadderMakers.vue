@@ -11,11 +11,11 @@
       </select>
     </div>
     <div class="w-11/12 w-full px-5 py-5 mx-auto overflow-y-auto border-4 bg-gray-50 text-royalblue-700 border-orchid-300 h-60">
-      <div
+      <NuxtLink
         v-for="maker in sorted()"
         :key="maker.userId"
+        :to="`/makers/${encodeURI(maker.username || '')}`"
         class="flex py-3 border-b-2 cursor-pointer border-orchid-300"
-        @click="openProfil(maker.username)"
       >
         <img class="object-cover w-12 h-12 border-2 rounded-full border-orchid-300" :src="maker.avatarUrl" alt="cover profil" />
         <div class="flex flex-col mx-3">
@@ -28,7 +28,7 @@
             <p class="px-2 mx-2 bg-white rounded text-royalblue-700">💰 {{ maker.incomes }} €</p>
           </div>
         </div>
-      </div>
+      </NuxtLink>
     </div>
   </div>
 </template>

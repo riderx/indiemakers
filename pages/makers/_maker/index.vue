@@ -1,7 +1,7 @@
 <template>
   <div v-if="maker && loaded">
     <div class="relative">
-      <img class="object-cover object-top w-full h-72 bg-white" :src="maker.cover || noCover" :alt="'cover profil ' + maker.username" />
+      <img class="object-cover object-top w-full bg-white h-72" :src="maker.cover || noCover" :alt="'cover profil ' + maker.username" />
       <img
         class="absolute inset-x-0 object-cover mx-auto border-8 rounded-full -bottom-1/4 h-36 w-36 border-orchid-300"
         :src="maker.avatarUrl"
@@ -78,8 +78,10 @@
             >
             <div class="mx-3 text-center lg:text-left">
               <h2 class="text-2xl truncate cursor-pointer font-indie" :style="getTextColor(projectData.color)" @click="openProject()">
-                {{ projectData.emoji || '' }}
-                {{ projectData.name || projectData.hashtag }}
+                <NuxtLink :to="`/makers/${encodeURI(maker.username || '')}/projets/${projectData.hashtag}`">
+                  {{ projectData.emoji || '' }}
+                  {{ projectData.name || projectData.hashtag }}
+                </NuxtLink>
               </h2>
               <p class="my-2 text-xl">{{ projectData.description }}</p>
               <a :href="projectData.website" target="_blank" class="text-lg">{{ projectData.website }}</a>
