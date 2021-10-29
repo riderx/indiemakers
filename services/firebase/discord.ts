@@ -1,11 +1,11 @@
 import axios from 'axios'
 import dayjs from 'dayjs'
-import { firestore } from 'firebase-admin'
+import { getFirestore } from 'firebase-admin/firestore'
 import { DiscordConfig, DiscordUser, User } from '../types'
 
 export const getAllUsers = async (): Promise<User[]> => {
   try {
-    const documents = await firestore().collection('/discord').where('userId', '!=', null).get()
+    const documents = await getFirestore().collection('/discord').where('userId', '!=', null).get()
     const users: User[] = []
     documents.docs.forEach((doc) => {
       const data: User = doc.data() as User
@@ -22,7 +22,7 @@ export const getAllUsers = async (): Promise<User[]> => {
 
 export const getUsersById = async (userId: string): Promise<User | null> => {
   try {
-    const res = await firestore().collection('/discord').doc(userId).get()
+    const res = await getFirestore().collection('/discord').doc(userId).get()
     const data = res.data()
     return data !== undefined ? (data as User) : null
   } catch (err) {
@@ -33,7 +33,7 @@ export const getUsersById = async (userId: string): Promise<User | null> => {
 
 export const getUsersByUsername = async (username: string): Promise<User | null> => {
   try {
-    const snapshot = await firestore().collection('/discord').where('username', '==', username).get()
+    const snapshot = await getFirestore().collection('/discord').where('username', '==', username).get()
     let data
     snapshot.forEach((doc) => {
       data = doc.data()
@@ -47,7 +47,7 @@ export const getUsersByUsername = async (username: string): Promise<User | null>
 
 export const saveRateLimit = (limit: string | number) => {
   console.error('sendChannel x-ratelimit-reset-after', limit)
-  return firestore()
+  return getFirestore()
     .collection('bot')
     .doc('config')
     .update({
@@ -56,7 +56,7 @@ export const saveRateLimit = (limit: string | number) => {
 }
 
 export const getConfig = async () => {
-  const res = await firestore().collection('bot').doc('config').get()
+  const res = await getFirestore().collection('bot').doc('config').get()
   const data = res.data() as DiscordConfig
   return data
 }
@@ -80,7 +80,7 @@ export const getUserData = async (userId: string): Promise<DiscordUser | undefin
 }
 
 export const updateUser = async (userId: string, user: Partial<User>): Promise<User> => {
-  const userDoc = await firestore().collection('/discord').doc(userId).get()
+  const userDoc = await getFirestore().collection('/discord').doc(userId).get()
   if (!userDoc.exists) {
     const userInfo = await getUserData(userId)
     const base: User = {
@@ -113,7 +113,7 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<U
       base.username = userInfo.username
     }
     const newUser: User = Object.assign(base, user as User)
-    await firestore().collection('discord').doc(userId).set(newUser)
+    await getFirestore().collection('discord').doc(userId).set(newUser)
     return newUser
   }
   await userDoc.ref.update({ ...user, updatedAt: dayjs().toISOString() })

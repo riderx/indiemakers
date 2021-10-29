@@ -4,14 +4,11 @@ axios.defaults.baseURL = 'https://api.rebrandly.com/'
 const config = {
   headers: {
     'Content-Type': 'application/json',
-    apikey: process.env.rebrandlyKey,
-    workspace: process.env.rebrandlyId,
+    apikey: process.env.rebrandlyKey || '',
+    workspace: process.env.rebrandlyId || '',
   },
 }
-const destinations = [
-  'http://youtube.com/c/BenjaminCode',
-  'https://twitter.com/Qovery_',
-]
+const destinations = ['http://youtube.com/c/BenjaminCode', 'https://twitter.com/Qovery_']
 export const getLinks = (id: string | null = null): Promise<any[]> =>
   new Promise((resolve) => {
     axios
@@ -60,9 +57,7 @@ export const fixAllLink = async () => {
         destinations.includes(element.destination) ||
         element.destination.startsWith('http://imf.to/') ||
         element.destination.startsWith('http://hotspot.earth') ||
-        element.destination.startsWith(
-          'https://indiehackers.com/product/apiflash'
-        ) ||
+        element.destination.startsWith('https://indiehackers.com/product/apiflash') ||
         element.destination.startsWith('http://youtube.com/frenchguycooking') ||
         element.destination.startsWith('https://twitter.com/hashtag/')
       ) {

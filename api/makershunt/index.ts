@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { firestore } from 'firebase-admin'
+import { getFirestore } from 'firebase-admin/firestore'
 import { Episode } from '../../services/types'
 import { feed } from '../../services/feed'
 import fFnit from '../../services/firebase/init'
@@ -9,12 +9,7 @@ const findInEp = (name: string, episodes: Episode[]) => {
   const lowName = name.toLowerCase()
   for (let index = 0; index < episodes.length; index++) {
     const element = episodes[index]
-    if (
-      element &&
-      element.twitter &&
-      element.twitter.name &&
-      element.twitter.name.toLowerCase() === lowName
-    ) {
+    if (element && element.twitter && element.twitter.name && element.twitter.name.toLowerCase() === lowName) {
       found = element.guid
       break
     }
@@ -25,11 +20,7 @@ const findInEp = (name: string, episodes: Episode[]) => {
 const loadData = async () => {
   try {
     const episodes = await feed()
-    const querySnapshot = await firestore()
-      .collection('people')
-      .orderBy('votes', 'desc')
-      .orderBy('addDate', 'asc')
-      .get()
+    const querySnapshot = await getFirestore().collection('people').orderBy('votes', 'desc').orderBy('addDate', 'asc').get()
     return querySnapshot.docs.map((doc: any) => {
       if (doc.login) {
         doc.guid = findInEp(doc.login, episodes)

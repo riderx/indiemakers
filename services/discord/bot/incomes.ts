@@ -1,15 +1,13 @@
 import dayjs from 'dayjs'
-import admin from 'firebase-admin'
+import { getFirestore } from 'firebase-admin/firestore'
 import { Interaction, ApplicationCommandInteractionDataOption } from '../command'
-import { Income, IncomeAll } from '../../../services/types'
+import { Income, IncomeAll, User } from '../../../services/types'
 import { getConfig, updateUser } from '../../../services/firebase/discord'
 import { sendChannel, sendTxtLater } from './utils'
 import { getAllProjects } from './project'
-import { User } from './../../types'
 
 export const createProjectIncome = async (userId: string, hashtag: string, income: Partial<Income>) => {
-  await admin
-    .firestore()
+  await getFirestore()
     .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`)
     .add({ ...income, createdAt: dayjs().toISOString() })
   const all = await updateProjecttotalIncome(userId, hashtag)
@@ -31,20 +29,19 @@ export const createProjectIncome = async (userId: string, hashtag: string, incom
 }
 
 export const deleteProjectIncome = async (userId: string, hashtag: string, incomeId: string) => {
-  await admin.firestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`).doc(incomeId).delete()
+  await getFirestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`).doc(incomeId).delete()
   await updateProjecttotalIncome(userId, hashtag)
 }
 
 export const updateProjectIncome = (userId: string, hashtag: string, incomeId: string, income: Partial<Income>) => {
-  return admin
-    .firestore()
+  return getFirestore()
     .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`)
     .doc(incomeId)
     .update({ ...income, updatedAt: dayjs().toISOString() })
 }
 
 const updateProjecttotalIncome = async (userId: string, hashtag: string): Promise<IncomeAll> => {
-  const projDoc = await admin.firestore().collection(`discord/${userId}/projects/`).doc(hashtag.toLowerCase()).get()
+  const projDoc = await getFirestore().collection(`discord/${userId}/projects/`).doc(hashtag.toLowerCase()).get()
   const curIncomes = await getAllProjectsIncomes(userId, hashtag)
   if (!projDoc.exists) {
     console.error(`Cannot add total to userId: ${userId}, hashtag: ${hashtag.toLowerCase()}, incomes: ${curIncomes.total}`)
@@ -58,7 +55,7 @@ const updateProjecttotalIncome = async (userId: string, hashtag: string): Promis
 
 export const getAllProjectsIncomes = async (userId: string, hashtag: string): Promise<IncomeAll> => {
   try {
-    const documents = await admin.firestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`).get()
+    const documents = await getFirestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`).get()
     const incomes: Income[] = []
     documents.docs.map((doc) => {
       const data = doc.data() as Income
@@ -103,7 +100,7 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
       date.set('year', Number(element.value))
     }
   })
-  const projDoc = await admin.firestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).get()
+  const projDoc = await getFirestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).get()
   if (!projDoc.exists) {
     return sendTxtLater(
       `Le projet #${hashtag.toLowerCase()}, n'existe pas. tu peux le crée avec \`/im projet ajouter\` 😇`,

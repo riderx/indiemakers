@@ -1,4 +1,6 @@
 import { auth, firestore } from 'firebase-admin'
+import { getFirestore } from 'firebase-admin/firestore'
+
 
 /**
  * Helper function for checking if a user exists

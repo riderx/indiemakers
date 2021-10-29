@@ -1,8 +1,8 @@
-import { firestore } from 'firebase-admin'
+import { getFirestore } from 'firebase-admin/firestore'
 import { Task, TaskAll } from '../types'
 
 export const getLastTask = async (userId: string, hashtag: string) => {
-  const taskList = await firestore()
+  const taskList = await getFirestore()
     .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
     .orderBy('createdAt', 'desc')
     .limit(1)
@@ -12,15 +12,15 @@ export const getLastTask = async (userId: string, hashtag: string) => {
 }
 
 export const deleteProjectTask = (userId: string, hashtag: string, taskId: string): Promise<any> => {
-  return firestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`).doc(taskId).delete()
+  return getFirestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`).doc(taskId).delete()
 }
 
 export const getTask = (userId: string, hashtag: string) => {
-  return firestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).get()
+  return getFirestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).get()
 }
 
 export const addTask = (userId: string, hashtag: string, doc: Partial<Task>) => {
-  return firestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`).add(doc)
+  return getFirestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`).add(doc)
 }
 export const getOneProjectsTaskDoc = async (
   userId: string,
@@ -28,7 +28,7 @@ export const getOneProjectsTaskDoc = async (
   taskId: string
 ): Promise<FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData> | null> => {
   try {
-    const snapshot = await firestore()
+    const snapshot = await getFirestore()
       .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
       .where('id', '==', parseInt(taskId))
       .limit(1)
@@ -42,7 +42,7 @@ export const getOneProjectsTaskDoc = async (
 
 export const getOneProjectsTask = async (userId: string, hashtag: string, taskId: string): Promise<Task | null> => {
   try {
-    const snapshot = await firestore()
+    const snapshot = await getFirestore()
       .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
       .where('id', '==', parseInt(taskId))
       .limit(1)
@@ -57,7 +57,10 @@ export const getOneProjectsTask = async (userId: string, hashtag: string, taskId
 
 export const getAllProjectsTasks = async (userId: string, hashtag: string): Promise<TaskAll> => {
   try {
-    const documents = await firestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`).orderBy('id', 'desc').get()
+    const documents = await getFirestore()
+      .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
+      .orderBy('id', 'desc')
+      .get()
     const tasks: Task[] = []
     documents.docs.map((doc) => {
       const data = doc.data() as Task

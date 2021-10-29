@@ -1,15 +1,15 @@
-import { firestore } from 'firebase-admin'
+import { getFirestore } from 'firebase-admin/firestore'
 import { feed } from '../feed'
 import { sendImageToCache } from '../imageCache'
 import { Episode } from '../types'
 
 const postEp = async (element: Episode): Promise<void> => {
   try {
-    await firestore().collection('podcasts').doc(element.id).update(element)
+    await getFirestore().collection('podcasts').doc(element.id).update(element)
     return Promise.resolve()
   } catch {
     try {
-      await firestore().collection('podcasts').doc(element.id).set(element)
+      await getFirestore().collection('podcasts').doc(element.id).set(element)
       return Promise.resolve()
     } catch (err) {
       console.error('postEp', err)
@@ -38,7 +38,7 @@ export const podcastToFirebase = async () => {
 
 export const getOnePodcastById = async (id: string): Promise<Episode | null> => {
   try {
-    const Ep = await firestore().collection('/podcasts').doc(id).get()
+    const Ep = await getFirestore().collection('/podcasts').doc(id).get()
     if (Ep.exists) {
       const data = Ep.data() as Episode
       return data
@@ -52,7 +52,7 @@ export const getOnePodcastById = async (id: string): Promise<Episode | null> => 
 
 export const getAllPodcast = async (): Promise<Episode[]> => {
   try {
-    const documents = await firestore().collection('/podcasts').orderBy('pubDate', 'desc').get()
+    const documents = await getFirestore().collection('/podcasts').orderBy('pubDate', 'desc').get()
     const eps: Episode[] = []
     documents.docs.forEach((doc) => {
       const data: Episode = doc.data() as Episode

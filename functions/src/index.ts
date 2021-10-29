@@ -1,5 +1,4 @@
 import { config, https, pubsub, firestore } from 'firebase-functions'
-import admin from 'firebase-admin'
 import { Person, User } from '../../services/types'
 import { onboardingMessage } from '../../services/discord/bot/utils'
 import { podcastToFirebase } from './../../services/firebase/podcasts'
@@ -26,7 +25,7 @@ process.env.BOT_TOKEN = config().discord.bot_token
 //   }
 //   try {
 //     const resultList = await admin
-//       .firestore()
+//       .getFirestore()
 //       .collection('people')
 //       .orderBy('votes', 'desc')
 //       .orderBy('addDate', 'asc')

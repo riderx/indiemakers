@@ -1,9 +1,9 @@
 import dayjs from 'dayjs'
-import admin from 'firebase-admin'
+import { getFirestore } from 'firebase-admin/firestore'
 import getMetaData from 'metadata-scraper'
 import { Interaction, ApplicationCommandInteractionDataOption } from '../command'
 import { Embed, Income, Project, User } from '../../../services/types'
-import { updateUser } from '../../../services/firebase/discord'
+import { updateUser, getConfig } from '../../../services/firebase/discord'
 import { getStripeCharges, Charge } from './stripe'
 import {
   embed,
@@ -21,7 +21,7 @@ import {
   getUserUrl,
 } from './utils'
 import { createProjectIncome, deleteProjectIncome, getAllProjectsIncomes } from './incomes'
-import { getConfig } from './../../firebase/discord'
+
 // eslint-disable-next-line no-unused-vars
 
 const projectPublicKey = ['hashtag', 'name', 'category', 'emoji', 'color', 'cover', 'github', 'openSource', 'website', 'tasks', 'streak']
@@ -44,7 +44,7 @@ const transforms: Langs[] = [
 
 export const getAllProjects = async (userId: string, userName: string | undefined = undefined): Promise<Project[]> => {
   try {
-    const documents = await admin.firestore().collection(`discord/${userId}/projects`).where('hashtag', '!=', null).get()
+    const documents = await getFirestore().collection(`discord/${userId}/projects`).where('hashtag', '!=', null).get()
 
     const projects: Project[] = []
     for (let index = 0; index < documents.docs.length; index++) {
@@ -73,7 +73,7 @@ export const getAllAllProject = async (users: User[]): Promise<Project[]> => {
 
 export const getProjectById = async (userId: string, hashtag: string): Promise<Project | null> => {
   try {
-    const res = await admin.firestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).get()
+    const res = await getFirestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).get()
     const data = res.data()
     return data !== undefined ? (data as Project) : null
   } catch (err) {
@@ -84,7 +84,7 @@ export const getProjectById = async (userId: string, hashtag: string): Promise<P
 
 export const updateProject = async (userId: string, hashtag: string, project: Partial<Project>): Promise<Project> => {
   const lowHash = hashtag.toLowerCase()
-  const projDoc = await admin.firestore().collection(`discord/${userId}/projects`).doc(lowHash).get()
+  const projDoc = await getFirestore().collection(`discord/${userId}/projects`).doc(lowHash).get()
   if (!projDoc.exists) {
     const newProject: Project = Object.assign(
       {
@@ -106,7 +106,7 @@ export const updateProject = async (userId: string, hashtag: string, project: Pa
       },
       project
     )
-    await admin.firestore().collection(`discord/${userId}/projects`).doc(lowHash).set(newProject)
+    await getFirestore().collection(`discord/${userId}/projects`).doc(lowHash).set(newProject)
     return newProject
   }
   if (project.website) {
@@ -145,12 +145,12 @@ Fait le sur le salon <#${config.channel_bip}>, il est fait pour ça, il est en s
 }
 
 const deleteProject = (userId: string, hashtag: string): Promise<any> => {
-  return admin.firestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).delete()
+  return getFirestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).delete()
 }
 
 export const deleteAllProjectsTasks = async (userId: string, hashtag: string): Promise<void> => {
   try {
-    const documents = await admin.firestore().collection(`discord/${userId}/projects/${hashtag}/tasks`).get()
+    const documents = await getFirestore().collection(`discord/${userId}/projects/${hashtag}/tasks`).get()
     const listDel: any[] = []
     documents.docs.forEach((doc) => {
       listDel.push(doc.ref.delete())

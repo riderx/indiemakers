@@ -1,16 +1,16 @@
-import admin from 'firebase-admin'
+import { getApps, getApp, initializeApp, cert } from 'firebase-admin/app'
 
 export default () => {
-  if (!admin.apps.length) {
+  if (!getApps().length) {
     if (process.env.GOOGLE_SERVICE_ACCOUNT) {
-      admin.initializeApp({
-        credential: admin.credential.cert(JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT)),
+      initializeApp({
+        credential: cert(JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT)),
         databaseURL: process.env.FIREBASE_DATABASE,
       })
     } else {
-      admin.initializeApp()
+      initializeApp()
     }
   } else {
-    admin.app() // if already initialized, use that one
+    getApp() // if already initialized, use that one
   }
 }

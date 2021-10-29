@@ -1,31 +1,19 @@
-import admin from 'firebase-admin'
+import { getFirestore } from 'firebase-admin/firestore'
 import dayjs from 'dayjs'
 import { User } from '../types'
 import { getAllProjects } from '../discord/bot/project'
 
-export const updateUser = async (
-  userId: string
-): Promise<Partial<User> | undefined> => {
+export const updateUser = async (userId: string): Promise<Partial<User> | undefined> => {
   try {
     const projects = await getAllProjects(userId)
-    const posts = await admin
-      .firestore()
-      .collection(`discord/${userId}/posts`)
-      .orderBy('id', 'desc')
-      .get()
+    const posts = await getFirestore().collection(`discord/${userId}/posts`).orderBy('id', 'desc').get()
     const res = projects.reduce(
       (acc, project) => {
         return {
           tasks: acc.tasks + (project.tasks || 0),
           incomes: acc.incomes + (project.incomes || 0),
-          streak:
-            acc.streak > (project.streak || 0)
-              ? acc.streak
-              : project.streak || 0,
-          bestStreak:
-            acc.bestStreak > (project.bestStreak || 0)
-              ? acc.bestStreak
-              : project.bestStreak || 0,
+          streak: acc.streak > (project.streak || 0) ? acc.streak : project.streak || 0,
+          bestStreak: acc.bestStreak > (project.bestStreak || 0) ? acc.bestStreak : project.bestStreak || 0,
         }
       },
       {
@@ -42,7 +30,7 @@ export const updateUser = async (
       posts: posts.docs.length,
       updatedAt: dayjs().toISOString(),
     }
-    await admin.firestore().collection('discord').doc(userId).update(base)
+    await getFirestore().collection('discord').doc(userId).update(base)
     return base
   } catch (err) {
     console.error('updateUser', err, userId)
@@ -52,7 +40,7 @@ export const updateUser = async (
 
 export const fixAllUsersDeep = async () => {
   try {
-    const documents = await admin.firestore().collection('/discord').get()
+    const documents = await getFirestore().collection('/discord').get()
 
     for (let index = 0; index < documents.docs.length; index++) {
       const doc = documents.docs[index]

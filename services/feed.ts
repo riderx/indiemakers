@@ -1,5 +1,5 @@
 import Parser from 'rss-parser'
-import emojiRegex from 'emoji-regex/RGI_Emoji'
+import emojiRegex from 'emoji-regex'
 import slug from 'elegant-slug'
 import { Episode, Social } from './types'
 
@@ -9,13 +9,10 @@ const rss = 'https://anchor.fm/s/414d1d4/podcast/rss'
 const ikBase = 'https://ik.imagekit.io/gyc0uxoln1/ik-seo/indiemakers/'
 
 const regexHtml = /(<([^>]+)>)/gi
-const linkTwitterRe =
-  /[sS]on.*[tT]witter.*:.*<a.*href="(?<link>.*?)".*>(?<name>.*?)<\/a>/i
+const linkTwitterRe = /[sS]on.*[tT]witter.*:.*<a.*href="(?<link>.*?)".*>(?<name>.*?)<\/a>/i
 const nameRe = /accueille (?<name>.*?)[.,]/i
-const linkInstagramRe =
-  /[sS]on [iI]nstagram.*:.*<a.*href="(?<link>.*?)".*>(?<name>.*?)<\/a>/i
-const linkLinkedinRe =
-  /[sS]on.*[lL]inkedin.*:.*<a.*href="(?<link>.*?)".*>(?<name>.*?)<\/a>/i
+const linkInstagramRe = /[sS]on [iI]nstagram.*:.*<a.*href="(?<link>.*?)".*>(?<name>.*?)<\/a>/i
+const linkLinkedinRe = /[sS]on.*[lL]inkedin.*:.*<a.*href="(?<link>.*?)".*>(?<name>.*?)<\/a>/i
 const parser = new Parser()
 
 const cleanHandler = (handler: string) => {

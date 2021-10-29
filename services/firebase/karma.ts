@@ -1,10 +1,10 @@
 import dayjs from 'dayjs'
-import { firestore } from 'firebase-admin'
+import { getFirestore } from 'firebase-admin/firestore'
 import { Karma, KarmaAll } from '../types'
 
 export const getKarmaById = async (id: string): Promise<KarmaAll> => {
   try {
-    const documents = await firestore().collection(`discord/${id}/karma`).get()
+    const documents = await getFirestore().collection(`discord/${id}/karma`).get()
     const karmas: Karma[] = []
     documents.docs.forEach((doc) => {
       const data = doc.data() as Karma
@@ -21,7 +21,7 @@ export const getKarmaById = async (id: string): Promise<KarmaAll> => {
 }
 
 export const addKarmaById = async (userId: string, senderId: string, value: number): Promise<KarmaAll> => {
-  await firestore().collection(`discord/${userId}/karma`).add({ userId: senderId, value, createdAt: dayjs().toISOString() })
+  await getFirestore().collection(`discord/${userId}/karma`).add({ userId: senderId, value, createdAt: dayjs().toISOString() })
   const curKarma = await getKarmaById(userId)
   return curKarma
 }

@@ -1,9 +1,10 @@
-import { firestore } from 'firebase-admin'
+import { getFirestore } from 'firebase-admin/firestore'
+
 import { Tool } from '../types'
 
 export const getToolsDb = async (): Promise<Tool[] | null> => {
   try {
-    const documents = await firestore().collection('/tools').orderBy('votes', 'desc').orderBy('addDate', 'asc').get()
+    const documents = await getFirestore().collection('/tools').orderBy('votes', 'desc').orderBy('addDate', 'asc').get()
     const tools: Tool[] = []
     documents.docs.forEach((doc) => {
       const data: Tool = doc.data() as Tool
