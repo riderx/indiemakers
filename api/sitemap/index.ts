@@ -60,6 +60,7 @@ const sitemap = async (_req: Request, res: Response) => {
     })
     smStream.end()
     const data = await streamToPromise(smStream)
+    res.type('application/xml')
     return res.send(data.toString())
   } catch (e) {
     console.error(e)

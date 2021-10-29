@@ -124,19 +124,11 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/robots',
     '@nuxtjs/markdownit',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     'vue-warehouse/nuxt',
     // 'nuxt-speedkit',
-  ],
-  robots: [
-    {
-      UserAgent: '*',
-      Disallow: '/login',
-      Sitemap: `${baseUrl()}/sitemap.xml`,
-    },
   ],
   markdownit: {
     runtime: true, // Support `$md()`

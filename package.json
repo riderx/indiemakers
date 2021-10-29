@@ -30,7 +30,6 @@
     "@nuxt/content": "^1.14.0",
     "@nuxtjs/composition-api": "^0.29.2",
     "@nuxtjs/markdownit": "^2.0.0",
-    "@nuxtjs/robots": "^2.5.0",
     "@tailwindcss/line-clamp": "0.2.2",
     "@tailwindcss/typography": "^0.4.1",
     "@vue/composition-api": "^1.2.2",

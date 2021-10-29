@@ -37,7 +37,7 @@ export default defineComponent({
     const posts = ref<Post[]>()
     const projects = ref<Project[]>()
     const loaded = ref(false)
-    const title = 'La communauté INDIE MAKERS'
+    const title = 'La communauté plus grande INDIE MAKERS Française'
 
     const { fetch } = useFetch(async () => {
       try {

@@ -22,6 +22,7 @@
     { "src": "/api.*", "headers": { "Cache-Control": "max-age=0, s-maxage=1, stale-while-revalidate" }, "continue": true },
     { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=14400, s-maxage=1, stale-while-revalidate" }, "continue": true },
     { "src": "/sitemap.xml", "dest": "/api/sitemap" },
+    { "src": "/robot.text", "dest": "/api/robot" },
     { "src": "/rss.xml", "dest": "/api/rss" },
     { "src": "^/(?!.*api)(.*)$", "dest": "$1" }
   ]
