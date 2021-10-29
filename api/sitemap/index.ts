@@ -1,15 +1,14 @@
-import { getAllAllProject } from './../../services/discord/bot/project';
-import { getAllUsers } from './../../services/firebase/discord';
+import fs from 'fs'
 import { Request, Response } from 'express'
 import { SitemapStream, streamToPromise } from 'sitemap'
 import fFnit from '../../services/firebase/init'
 import { feed } from '../../services/feed'
-import fs from 'fs'
+import { getAllUsers } from './../../services/firebase/discord'
+import { getAllAllProject } from './../../services/discord/bot/project'
 
 const getArticles = async () => {
-  const files = await fs.readdirSync(`${__dirname}/../../content/articles`);
-  console.log('files', files);
-  return files.map((file) => ({slug: file.replace('.md', '').replace(/-/g, '_')}));
+  const files = await fs.readdirSync(`${__dirname}/../../content/articles`)
+  return files.map((file) => ({ slug: file.replace('.md', '').replace(/-/g, '_') }))
 }
 
 const sitemap = async (_req: Request, res: Response) => {
@@ -43,14 +42,14 @@ const sitemap = async (_req: Request, res: Response) => {
     projects.forEach((project) => {
       if (project.userName) {
         smStream.write({
-          url: `/makers/${encodeURI(project.userName)}/projects/${project.hashtag}`,
+          url: `/makers/${encodeURI(project.userName)}/projets/${project.hashtag}`,
           changefreq: 'daily',
           priority: 0.5,
         })
       }
     })
     // const articles = await $content('articles').fetch()
-    const articles = await getArticles();
+    const articles = await getArticles()
 
     articles.forEach((article: any) => {
       smStream.write({
@@ -69,4 +68,3 @@ const sitemap = async (_req: Request, res: Response) => {
 }
 
 export default sitemap
-
