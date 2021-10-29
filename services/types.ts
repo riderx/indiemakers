@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { firestore } from 'firebase-admin'
+import { Timestamp } from 'firebase-admin/firestore'
 
 export type Nullable<T> = T | null
 export type Optional<T> = T | undefined
@@ -47,8 +47,8 @@ export interface WebsiteUser {
  */
 export interface Person {
   addedBy: string
-  addDate: firestore.Timestamp
-  updateDate: firestore.Timestamp
+  addDate: Timestamp
+  updateDate: Timestamp
   toUpdate: boolean
   id_str: string
   name: string
