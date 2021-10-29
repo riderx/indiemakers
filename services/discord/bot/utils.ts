@@ -287,7 +287,7 @@ export const sleep = (ms: number) => {
   })
 }
 
-export const getUserUrl = (user: User) => `https://indiemakers.fr/makers/${encodeURI(user?.username)}`
+export const getUserUrl = (user: User) => `https://indiemakers.fr/makers/${encodeURIComponent(user?.username)}`
 
 export const onboardingMessage = async (user: User) => {
   try {

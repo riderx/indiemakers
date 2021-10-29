@@ -28,7 +28,7 @@
                       <div>
                         <div class="text-sm">
                           <NuxtLink
-                            :to="`/makers/${encodeURI(post.userName || '')}`"
+                            :to="`/makers/${encodeURIComponent(post.userName || '')}`"
                             class="font-medium text-gray-900 cursor-pointer hover:text-royalblue-500"
                             >{{ post.userName }}</NuxtLink
                           >
@@ -72,7 +72,7 @@ export default defineComponent({
         userId = userId.replace(/[^0-9.]/g, '')
         const user = findUser(users, userId)
         if (user) {
-          return `<a href="/makers/${encodeURI(user?.username)}">@${user?.username}</a>`
+          return `<a href="/makers/${encodeURIComponent(user?.username)}">@${user?.username}</a>`
         } else {
           return `<a href="https://discordapp.com/users/${userId}">@${userId}</a>`
         }

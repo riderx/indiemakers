@@ -14,7 +14,7 @@
       <NuxtLink
         v-for="maker in sorted()"
         :key="maker.userId"
-        :to="`/makers/${encodeURI(maker.username || '')}`"
+        :to="`/makers/${encodeURIComponent(maker.username || '')}`"
         class="flex py-3 border-b-2 cursor-pointer border-orchid-300"
       >
         <img class="object-cover w-12 h-12 border-2 rounded-full border-orchid-300" :src="maker.avatarUrl" alt="cover profil" />
@@ -53,7 +53,7 @@ export default defineComponent({
       return {}
     }
     const openProfil = (id: string) => {
-      router.push(`/makers/${encodeURI(id)}`)
+      router.push(`/makers/${encodeURIComponent(id)}`)
     }
     return { sort, sorted, getTextColor, openProfil, noImge }
   },

@@ -256,7 +256,7 @@ const projectAdd = (interaction: Interaction, options: ApplicationCommandInterac
         updateUser(userId, { projects: allProj.length + 1 }).then((user) => {
           return sendTxtLater(
             `Tu as crée le projet: #${newProj.hashtag} 👏
-    Tu peux voir tes projets sur ta page : ${getUserUrl(user)}/projets/${encodeURI(newProj.hashtag || '')}`,
+    Tu peux voir tes projets sur ta page : ${getUserUrl(user)}/projets/${encodeURIComponent(newProj.hashtag || '')}`,
             [],
             interaction.application_id,
             interaction.token

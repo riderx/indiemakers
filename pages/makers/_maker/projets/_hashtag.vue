@@ -30,7 +30,8 @@
               <p class="my-2 text-xl">{{ projectData.description }}</p>
               <a :href="projectData.website" target="_blank" class="text-lg">{{ projectData.website }}</a>
               <p class="my-2 text-xl">
-                Par: <NuxtLink :to="`/makers/${encodeURI(projectData.userName || '')}`"> {{ projectData.userName || '' }} </NuxtLink>
+                Par:
+                <NuxtLink :to="`/makers/${encodeURIComponent(projectData.userName || '')}`"> {{ projectData.userName || '' }} </NuxtLink>
               </p>
             </div>
           </div>
