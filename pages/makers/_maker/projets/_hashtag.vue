@@ -12,13 +12,13 @@
     <div v-if="projectData" class="flex w-full px-2 py-2 mx-auto text-white md:px-10 md:py-5">
       <div class="md:w-full md:mx-2">
         <img
-          class="object-cover object-center w-full h-80 bg-white"
+          class="object-cover object-center w-full bg-white h-80"
           :src="projectData.cover || noCover"
           :alt="'cover project ' + projectData.hashtag"
         />
         <div class="flex flex-col items-center p-2 mb-2 bg-white md:p-10 text-royalblue-700 lg:flex-row">
           <div class="relative flex items-end">
-            <img class="object-cover object-top w-32 h-32 border-2 rounded-lg border-royalblue-700" :src="projectData.logo || noImge" />
+            <img class="object-cover object-top w-40 h-40 border-2 rounded-lg border-royalblue-700" :src="projectData.logo || noImge" />
             <span class="absolute bottom-0 text-sm text-white bg-opacity-75 rounded-tr-lg rounded-bl-lg bg-royalblue-700"
               >🔥{{ projectData.streak }}</span
             >
@@ -29,6 +29,9 @@
               </h2>
               <p class="my-2 text-xl">{{ projectData.description }}</p>
               <a :href="projectData.website" target="_blank" class="text-lg">{{ projectData.website }}</a>
+              <p class="my-2 text-xl">
+                Par: <NuxtLink :to="`/makers/${encodeURI(projectData.userName || '')}`"> {{ projectData.userName || '' }} </NuxtLink>
+              </p>
             </div>
           </div>
         </div>

@@ -53,7 +53,7 @@
             class="flex-none my-4 ml-3 cursor-pointer hover:text-orchid-600 md:my-2 lg:my-4 md:ml-0"
             @click="setHastag(project.hashtag)"
           >
-            <div class="relative flex items-end">
+            <div class="relative flex items-center">
               <img class="object-cover object-top w-16 h-16 border-2 rounded-lg border-royalblue-700" :src="project.logo || noImge" />
               <span class="absolute bottom-0 text-sm text-white bg-opacity-75 rounded-tr-lg rounded-bl-lg bg-royalblue-700"
                 >🔥{{ project.streak }}</span
@@ -61,6 +61,9 @@
               <h2 class="mx-1 text-2xl truncate font-indie" :style="getTextColor(project.color)">
                 {{ project.emoji || '' }} {{ project.name || project.hashtag }}
               </h2>
+              <NuxtLink class="hidden" :to="`/makers/${encodeURI(maker.username || '')}/projets/${project.hashtag}`">{{
+                project.hashtag
+              }}</NuxtLink>
             </div>
           </a>
         </div>
