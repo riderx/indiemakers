@@ -107,7 +107,8 @@ export default defineComponent({
       meta: createMeta(
         projectData.value?.name || projectData.value?.hashtag || 'Pas de titre',
         projectData.value?.description || 'Un jour je serais grand 👶!',
-        projectData.value?.logo || noImge
+        projectData.value?.logo || noImge,
+        projectData.value?.userName || ''
       ),
     }))
     const getTextColor = (color: string | undefined) => {

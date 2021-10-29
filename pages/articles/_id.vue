@@ -84,7 +84,6 @@ export default defineComponent({
         page.value?.title || 'pas de titre',
         page.value?.description || 'pas de description',
         page.value && page.value.headImage ? `${$config.DOMAIN}${page.value?.headImage}` : noImge,
-        null,
         page.value?.author || 'Martin Donadieu'
       ),
     }))

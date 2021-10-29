@@ -116,7 +116,6 @@ export default defineComponent({
         title,
         desc,
         'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg',
-        null,
         'Martin Donadieu'
       ),
     }))
