@@ -13,6 +13,7 @@ export const image = (url: string): Image => ({ url })
 // eslint-disable-next-line camelcase
 export const footer = (text: string, icon_url: string): Footer => ({
   text,
+  // eslint-disable-next-line camelcase
   icon_url,
 })
 export const author = (
@@ -20,6 +21,7 @@ export const author = (
   url: string,
   // eslint-disable-next-line camelcase
   icon_url: string
+  // eslint-disable-next-line camelcase
 ): Author => ({ name, url, icon_url })
 export const field = (name: string, value: string, inline = true): Field => ({
   name,
