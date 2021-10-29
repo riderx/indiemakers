@@ -13,7 +13,7 @@
         v-for="project in sorted()"
         :key="`{project.userName}_${project.hashtag}`"
         class="flex py-3 border-b-2 cursor-pointer border-orchid-300"
-        :to="`/makers/${encodeURI(project.userName || '')}/projets/${project.hashtag}`"
+        :to="`/makers/${encodeURI(project.userName || '')}/projets/${encodeURI(project.hashtag)}`"
       >
         <img class="object-cover w-12 h-12 border-2 rounded-full border-orchid-300" :src="project.logo || noImge" alt="cover profil" />
         <div class="flex flex-col mx-3">
@@ -51,7 +51,7 @@ export default defineComponent({
       return {}
     }
     const openProject = (id: string | undefined, hashtag: string) => {
-      if (id) router.push(`/makers/${encodeURI(id)}/projets/${hashtag}`)
+      if (id) router.push(`/makers/${encodeURI(id)}/projets/${encodeURI(hashtag)}`)
     }
     return { sort, sorted, getTextColor, openProject, noImge }
   },

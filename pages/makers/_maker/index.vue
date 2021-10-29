@@ -61,7 +61,7 @@
               <h2 class="mx-1 text-2xl truncate font-indie" :style="getTextColor(project.color)">
                 {{ project.emoji || '' }} {{ project.name || project.hashtag }}
               </h2>
-              <NuxtLink class="hidden" :to="`/makers/${encodeURI(maker.username || '')}/projets/${project.hashtag}`">{{
+              <NuxtLink class="hidden" :to="`/makers/${encodeURI(maker.username || '')}/projets/${encodeURI(project.hashtag)}`">{{
                 project.hashtag
               }}</NuxtLink>
             </div>
@@ -81,7 +81,7 @@
             >
             <div class="mx-3 text-center lg:text-left">
               <h2 class="text-2xl truncate cursor-pointer font-indie" :style="getTextColor(projectData.color)" @click="openProject()">
-                <NuxtLink :to="`/makers/${encodeURI(maker.username || '')}/projets/${projectData.hashtag}`">
+                <NuxtLink :to="`/makers/${encodeURI(maker.username || '')}/projets/${encodeURI(projectData.hashtag)}`">
                   {{ projectData.emoji || '' }}
                   {{ projectData.name || projectData.hashtag }}
                 </NuxtLink>
@@ -180,7 +180,7 @@ export default defineComponent({
       }
     }
     const openProject = () => {
-      if (maker.value && hashtag.value) router.push(`/makers/${encodeURI(maker.value?.username)}/projets/${hashtag.value}`)
+      if (maker.value && hashtag.value) router.push(`/makers/${encodeURI(maker.value?.username)}/projets/${encodeURI(hashtag.value)}`)
     }
     const getTextColor = (color: string | undefined) => {
       if (color) {

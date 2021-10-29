@@ -42,7 +42,7 @@ const sitemap = async (_req: Request, res: Response) => {
     projects.forEach((project) => {
       if (project.userName) {
         smStream.write({
-          url: `/makers/${encodeURI(project.userName)}/projets/${project.hashtag}`,
+          url: `/makers/${encodeURI(project.userName)}/projets/${encodeURI(project.hashtag)}`,
           changefreq: 'daily',
           priority: 0.5,
         })
