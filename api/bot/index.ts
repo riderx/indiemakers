@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { InteractionResponseType, InteractionType, verifyKey } from 'discord-interactions'
 import getRawBody from 'raw-body'
-import contentType from 'content-type'
+import { parse } from 'content-type'
 import fFnit from '../../services/firebase/init'
 import discordInteraction from '../../services/discord/bot'
 import { sendTxtLoading } from '../../services/discord/bot/utils'
@@ -13,7 +13,7 @@ const getRaw = (req: Request): Promise<string> =>
       {
         length: req.headers['content-length'],
         limit: '1mb',
-        encoding: contentType.parse(req).parameters.charset,
+        encoding: parse(req).parameters.charset,
       },
       (err, string) => {
         if (err) return reject(err)
