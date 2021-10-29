@@ -1,10 +1,7 @@
 import dayjs from 'dayjs'
 import { updateUser, getAllUsers, getUsersById } from '../../../services/firebase/discord'
 import { User, Embed } from '../../../services/types'
-import {
-  ApplicationCommandInteractionDataOption,
-  Interaction,
-} from '../command'
+import { ApplicationCommandInteractionDataOption, Interaction } from '../command'
 import {
   embed,
   getFields,
@@ -22,26 +19,8 @@ import {
   transformVal,
 } from './utils'
 
-const userPublicFlieds = [
-  'karma',
-  'streak',
-  'tasks',
-  'projects',
-  'website',
-  'skills',
-  'twitter',
-  'wip',
-  'makerlog',
-  'nomadlist',
-  'cover',
-]
-const userConfidentialKey = [
-  'makerlogHook',
-  'wipApiKey',
-  'taskReminder',
-  'mondayReminder',
-  'voiceReminder',
-]
+const userPublicFlieds = ['karma', 'streak', 'tasks', 'projects', 'website', 'skills', 'twitter', 'wip', 'makerlog', 'nomadlist', 'cover']
+const userConfidentialKey = ['makerlogHook', 'wipApiKey', 'taskReminder', 'mondayReminder', 'voiceReminder']
 const userProtectedKey = [
   'userId',
   'username',
@@ -89,29 +68,14 @@ const transforms: Langs[] = [
   t9r('tasks', 'taches', '💗 Taches'),
 ]
 
-const userEdit = (
-  interaction: Interaction,
-  options: ApplicationCommandInteractionDataOption[],
-  userId: string
-): Promise<void> => {
+const userEdit = (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], userId: string): Promise<void> => {
   const update: Partial<User> = {
     updatedAt: dayjs().toISOString(),
   }
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    const key = transformKey(
-      transforms,
-      element.name,
-      LName.discord,
-      LName.database
-    )
+    const key = transformKey(transforms, element.name, LName.discord, LName.database)
     if (!userProtectedKey.includes(key)) {
-      ;(update as any)[key] = transformVal(
-        transforms,
-        element.name,
-        element.value,
-        LName.discord,
-        LName.database
-      )
+      ;(update as any)[key] = transformVal(transforms, element.name, element.value, LName.discord, LName.database)
     }
   })
   console.error('userEdit', update)
@@ -132,28 +96,14 @@ const userCard = (user: User) => {
   const name = `${user.emoji || '👨‍🌾'} ${user.name || user.username}`
   const bio = user.bio || 'Indie Maker en devenir !'
   const thumb = image(user.avatarUrl)
-  return embed(
-    name,
-    bio,
-    user.color,
-    fields,
-    undefined,
-    undefined,
-    user.createdAt,
-    getUserUrl(user),
-    thumb
-  )
+  return embed(name, bio, user.color, fields, undefined, undefined, user.createdAt, getUserUrl(user), thumb)
 }
 
 export const usersViewStreak = (usrs: User[]): Embed[] => {
   const embeds: Embed[] = []
   const limitStreak = lastDay()
-  let users = usrs.sort(
-    (firstEl: User, secondEl: User) => secondEl.streak - firstEl.streak
-  )
-  users = users.filter((user: User) =>
-    user.lastTaskAt ? dayjs(user.lastTaskAt).isAfter(limitStreak) : false
-  )
+  let users = usrs.sort((firstEl: User, secondEl: User) => secondEl.streak - firstEl.streak)
+  users = users.filter((user: User) => (user.lastTaskAt ? dayjs(user.lastTaskAt).isAfter(limitStreak) : false))
   users.forEach((user: User) => {
     if (embeds.length < 10) {
       embeds.push(userCard(user))
@@ -164,12 +114,7 @@ export const usersViewStreak = (usrs: User[]): Embed[] => {
 
 const userList = async (interaction: Interaction): Promise<void> => {
   const users = await getAllUsers()
-  await sendTxtLater(
-    'Voici la liste des makers:',
-    [],
-    interaction.application_id,
-    interaction.token
-  )
+  await sendTxtLater('Voici la liste des makers:', [], interaction.application_id, interaction.token)
   for (let index = 0; index < users.length; index++) {
     const user = users[index]
     const card = userCard(user)
@@ -185,12 +130,7 @@ const userListStreak = async (interaction: Interaction): Promise<void> => {
   const usersInfoCards = usersViewStreak(users)
   console.error('userList', usersInfoCards)
   if (usersInfoCards.length > 0) {
-    await sendTxtLater(
-      `Voici la liste des 10 premiers makers avec les flammes 🔥 :`,
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    await sendTxtLater(`Voici la liste des 10 premiers makers avec les flammes 🔥 :`, [], interaction.application_id, interaction.token)
     for (let index = 0; index < usersInfoCards.length; index++) {
       const card = usersInfoCards[index]
       // console.error('card', card)
@@ -198,80 +138,35 @@ const userListStreak = async (interaction: Interaction): Promise<void> => {
     }
     return Promise.resolve()
   } else {
-    return sendTxtLater(
-      `Les makers n'ont plus de flamme 😢!`,
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater(`Les makers n'ont plus de flamme 😢!`, [], interaction.application_id, interaction.token)
   }
 }
 
-const userView = async (
-  interaction: Interaction,
-  myId: string,
-  userId: string | undefined
-): Promise<void> => {
+const userView = async (interaction: Interaction, myId: string, userId: string | undefined): Promise<void> => {
   const user = await getUsersById(userId || myId)
   if (user && userId && myId !== userId) {
     console.error('userView', userId)
-    await sendTxtLater(
-      `Voici les infos sur ce maker :`,
-      [userCard(user)],
-      interaction.application_id,
-      interaction.token
-    )
-    return sendChannel(
-      interaction.channel_id,
-      `Tu peux aussi voir toute les infos sur la page publique : ${getUserUrl(
-        user
-      )}`
-    )
+    await sendTxtLater(`Voici les infos sur ce maker :`, [userCard(user)], interaction.application_id, interaction.token)
+    return sendChannel(interaction.channel_id, `Tu peux aussi voir toute les infos sur la page publique : ${getUserUrl(user)}`)
   } else if (user) {
     console.error('userView', userId)
     const card = userCard(user)
     const fields = getFields(user, userConfidentialKey, transforms)
     if (card.fields) card.fields.push(...fields)
-    await sendTxtLater(
-      'Voici tes infos',
-      [userCard(user)],
-      interaction.application_id,
-      interaction.token
-    )
-    await sendChannel(
-      interaction.channel_id,
-      `Je t'ai envoyé plus info en privé 🤫`
-    )
-    await sendChannel(
-      interaction.channel_id,
-      `Tu peux aussi voir toute les infos sur la page publique : ${getUserUrl(
-        user
-      )}`
-    )
+    await sendTxtLater('Voici tes infos', [userCard(user)], interaction.application_id, interaction.token)
+    await sendChannel(interaction.channel_id, `Je t'ai envoyé plus info en privé 🤫`)
+    await sendChannel(interaction.channel_id, `Tu peux aussi voir toute les infos sur la page publique : ${getUserUrl(user)}`)
     await openChannel(myId).then((channel) => {
       console.error('channel', channel)
       return sendChannel(channel.id, `Voici tes infos complètes :`, card)
     })
     return Promise.resolve()
   }
-  return sendTxtLater(
-    `Je ne trouve pas <@${userId}>`,
-    [],
-    interaction.application_id,
-    interaction.token
-  )
+  return sendTxtLater(`Je ne trouve pas <@${userId}>`, [], interaction.application_id, interaction.token)
 }
 
-export const userFn = (
-  interaction: Interaction,
-  option: ApplicationCommandInteractionDataOption,
-  senderId: string
-): Promise<void> => {
-  if (
-    option.name === 'modifier' &&
-    option.options &&
-    option.options.length > 0
-  ) {
+export const userFn = (interaction: Interaction, option: ApplicationCommandInteractionDataOption, senderId: string): Promise<void> => {
+  if (option.name === 'modifier' && option.options && option.options.length > 0) {
     return userEdit(interaction, option.options, senderId)
   }
   if (option.name === 'liste') {
@@ -315,10 +210,5 @@ export const userFn = (
       interaction.token
     )
   }
-  return sendTxtLater(
-    `La Commande ${option.name} n'est pas pris en charge 🤫`,
-    [],
-    interaction.application_id,
-    interaction.token
-  )
+  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge 🤫`, [], interaction.application_id, interaction.token)
 }

@@ -1,10 +1,7 @@
 import dayjs from 'dayjs'
 import admin from 'firebase-admin'
 import getMetaData from 'metadata-scraper'
-import {
-  Interaction,
-  ApplicationCommandInteractionDataOption,
-} from '../command'
+import { Interaction, ApplicationCommandInteractionDataOption } from '../command'
 import { Embed, Income, Project, User } from '../../../services/types'
 import { updateUser } from '../../../services/firebase/discord'
 import { getStripeCharges, Charge } from './stripe'
@@ -23,36 +20,12 @@ import {
   Langs,
   getUserUrl,
 } from './utils'
-import {
-  createProjectIncome,
-  deleteProjectIncome,
-  getAllProjectsIncomes,
-} from './incomes'
+import { createProjectIncome, deleteProjectIncome, getAllProjectsIncomes } from './incomes'
 import { getConfig } from './../../firebase/discord'
 // eslint-disable-next-line no-unused-vars
 
-const projectPublicKey = [
-  'hashtag',
-  'name',
-  'category',
-  'emoji',
-  'color',
-  'cover',
-  'github',
-  'openSource',
-  'website',
-  'tasks',
-  'streak',
-]
-const projectProtectedKey = [
-  'id',
-  'tasks',
-  'streak',
-  'bestStreak',
-  'createdAt',
-  'updatedAt',
-  'lastTaskAt',
-]
+const projectPublicKey = ['hashtag', 'name', 'category', 'emoji', 'color', 'cover', 'github', 'openSource', 'website', 'tasks', 'streak']
+const projectProtectedKey = ['id', 'tasks', 'streak', 'bestStreak', 'createdAt', 'updatedAt', 'lastTaskAt']
 
 const transforms: Langs[] = [
   t9r('color', 'couleur', 'Couleur'),
@@ -69,16 +42,9 @@ const transforms: Langs[] = [
   t9r('hashtag', 'hashtag', '#️⃣'),
 ]
 
-export const getAllProjects = async (
-  userId: string,
-  userName: string | undefined = undefined
-): Promise<Project[]> => {
+export const getAllProjects = async (userId: string, userName: string | undefined = undefined): Promise<Project[]> => {
   try {
-    const documents = await admin
-      .firestore()
-      .collection(`discord/${userId}/projects`)
-      .where('hashtag', '!=', null)
-      .get()
+    const documents = await admin.firestore().collection(`discord/${userId}/projects`).where('hashtag', '!=', null).get()
 
     const projects: Project[] = []
     for (let index = 0; index < documents.docs.length; index++) {
@@ -105,16 +71,9 @@ export const getAllAllProject = async (users: User[]): Promise<Project[]> => {
   return projects
 }
 
-export const getProjectById = async (
-  userId: string,
-  hashtag: string
-): Promise<Project | null> => {
+export const getProjectById = async (userId: string, hashtag: string): Promise<Project | null> => {
   try {
-    const res = await admin
-      .firestore()
-      .collection(`discord/${userId}/projects`)
-      .doc(hashtag.toLowerCase())
-      .get()
+    const res = await admin.firestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).get()
     const data = res.data()
     return data !== undefined ? (data as Project) : null
   } catch (err) {
@@ -123,17 +82,9 @@ export const getProjectById = async (
   }
 }
 
-export const updateProject = async (
-  userId: string,
-  hashtag: string,
-  project: Partial<Project>
-): Promise<Project> => {
+export const updateProject = async (userId: string, hashtag: string, project: Partial<Project>): Promise<Project> => {
   const lowHash = hashtag.toLowerCase()
-  const projDoc = await admin
-    .firestore()
-    .collection(`discord/${userId}/projects`)
-    .doc(lowHash)
-    .get()
+  const projDoc = await admin.firestore().collection(`discord/${userId}/projects`).doc(lowHash).get()
   if (!projDoc.exists) {
     const newProject: Project = Object.assign(
       {
@@ -155,11 +106,7 @@ export const updateProject = async (
       },
       project
     )
-    await admin
-      .firestore()
-      .collection(`discord/${userId}/projects`)
-      .doc(lowHash)
-      .set(newProject)
+    await admin.firestore().collection(`discord/${userId}/projects`).doc(lowHash).set(newProject)
     return newProject
   }
   if (project.website) {
@@ -198,22 +145,12 @@ Fait le sur le salon <#${config.channel_bip}>, il est fait pour ça, il est en s
 }
 
 const deleteProject = (userId: string, hashtag: string): Promise<any> => {
-  return admin
-    .firestore()
-    .collection(`discord/${userId}/projects`)
-    .doc(hashtag.toLowerCase())
-    .delete()
+  return admin.firestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).delete()
 }
 
-export const deleteAllProjectsTasks = async (
-  userId: string,
-  hashtag: string
-): Promise<void> => {
+export const deleteAllProjectsTasks = async (userId: string, hashtag: string): Promise<void> => {
   try {
-    const documents = await admin
-      .firestore()
-      .collection(`discord/${userId}/projects/${hashtag}/tasks`)
-      .get()
+    const documents = await admin.firestore().collection(`discord/${userId}/projects/${hashtag}/tasks`).get()
     const listDel: any[] = []
     documents.docs.forEach((doc) => {
       listDel.push(doc.ref.delete())
@@ -282,46 +219,25 @@ const cleanPastStripe = async (userId: string, hashtag: string | undefined) => {
   Promise.all(all).then(() => Promise.resolve())
 }
 
-const updateStripe = (
-  userId: string,
-  hashtag: string | undefined,
-  stripeHook: string | undefined
-) => {
+const updateStripe = (userId: string, hashtag: string | undefined, stripeHook: string | undefined) => {
   if (!stripeHook) {
     return Promise.resolve()
   }
   if (stripeHook && !stripeHook.startsWith('rk_live')) {
     return cleanPastStripe(userId, hashtag)
   }
-  return cleanPastStripe(userId, hashtag).then(() =>
-    getPastCharges(userId, hashtag)
-  )
+  return cleanPastStripe(userId, hashtag).then(() => getPastCharges(userId, hashtag))
 }
 
-const projectAdd = (
-  interaction: Interaction,
-  options: ApplicationCommandInteractionDataOption[],
-  userId: string
-): Promise<void> => {
+const projectAdd = (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], userId: string): Promise<void> => {
   const newProj: Partial<Project> = {
     createdAt: dayjs().toISOString(),
     logo: 'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg',
   }
 
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    const key = transformKey(
-      transforms,
-      element.name,
-      LName.discord,
-      LName.database
-    )
-    ;(newProj as any)[key] = transformVal(
-      transforms,
-      element.name,
-      element.value,
-      LName.discord,
-      LName.database
-    )
+    const key = transformKey(transforms, element.name, LName.discord, LName.database)
+    ;(newProj as any)[key] = transformVal(transforms, element.name, element.value, LName.discord, LName.database)
   })
   if (newProj.hashtag && /^[a-z]+$/.test(newProj.hashtag)) {
     console.error('add project', newProj)
@@ -340,9 +256,7 @@ const projectAdd = (
         updateUser(userId, { projects: allProj.length + 1 }).then((user) => {
           return sendTxtLater(
             `Tu as crée le projet: #${newProj.hashtag} 👏
-    Tu peux voir tes projets sur ta page : ${getUserUrl(user)}/projets/${
-              newProj.hashtag
-            }`,
+    Tu peux voir tes projets sur ta page : ${getUserUrl(user)}/projets/${newProj.hashtag}`,
             [],
             interaction.application_id,
             interaction.token
@@ -366,29 +280,14 @@ INDIE MAKERS => indiemakers
   }
 }
 
-const projectEdit = (
-  interaction: Interaction,
-  options: ApplicationCommandInteractionDataOption[],
-  userId: string
-): Promise<void> => {
+const projectEdit = (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], userId: string): Promise<void> => {
   const update: Partial<Project> = {
     updatedAt: dayjs().toISOString(),
   }
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    const key = transformKey(
-      transforms,
-      element.name,
-      LName.discord,
-      LName.database
-    )
+    const key = transformKey(transforms, element.name, LName.discord, LName.database)
     if (!projectProtectedKey.includes(key)) {
-      ;(update as any)[key] = transformVal(
-        transforms,
-        element.name,
-        element.value,
-        LName.discord,
-        LName.database
-      )
+      ;(update as any)[key] = transformVal(transforms, element.name, element.value, LName.discord, LName.database)
     }
   })
   if (update.hashtag) {
@@ -405,12 +304,7 @@ Bravo 💪, une marche après l'autre tu fais grandir ce projet !`,
       updateProject(userId, update.hashtag, update),
     ]).then(() => Promise.resolve())
   } else {
-    return sendTxtLater(
-      'hashtag manquant!',
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater('hashtag manquant!', [], interaction.application_id, interaction.token)
   }
 }
 
@@ -419,24 +313,10 @@ const projectCard = (project: Project) => {
   const name = `${project.emoji || '🪴'} ${project.name || project.hashtag}`
   const description = project.description || 'Un jour je serais grand 👶!'
   const thumb = project.logo ? image(project.logo) : undefined
-  return embed(
-    name,
-    description,
-    project.color,
-    fields,
-    undefined,
-    undefined,
-    project.createdAt,
-    undefined,
-    thumb
-  )
+  return embed(name, description, project.color, fields, undefined, undefined, project.createdAt, undefined, thumb)
 }
 
-const projectList = async (
-  interaction: Interaction,
-  userId: string,
-  me = false
-): Promise<void> => {
+const projectList = async (interaction: Interaction, userId: string, me = false): Promise<void> => {
   const cards: Embed[] = []
   const projects = await getAllProjects(userId)
   projects.forEach((project: Project) => {
@@ -444,22 +324,14 @@ const projectList = async (
   })
   console.error('project_list')
   if (cards.length > 0) {
-    const sentence = me
-      ? 'Voici la liste de tes projets !'
-      : `Voici la liste des projets de <@${userId}> !`
-    await sendTxtLater(
-      `${sentence}\n\n`,
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    const sentence = me ? 'Voici la liste de tes projets !' : `Voici la liste des projets de <@${userId}> !`
+    await sendTxtLater(`${sentence}\n\n`, [], interaction.application_id, interaction.token)
     for (let index = 0; index < cards.length; index++) {
       const card = cards[index]
       console.error('card', card)
       const result = await sendChannel(interaction.channel_id, '', card)
       if (result?.response?.headers['x-ratelimit-reset-after']) {
-        const lenSize =
-          Number(result.response.headers['x-ratelimit-reset-after']) * 1000
+        const lenSize = Number(result.response.headers['x-ratelimit-reset-after']) * 1000
         console.error('Sleep a bit', lenSize)
         await sleep(lenSize)
       }
@@ -469,20 +341,11 @@ const projectList = async (
     const sentence = me
       ? 'Tu n\'as pas encore de projet, ajoute en avec la commande "/im projet ajouter" !'
       : `<@${userId}> n'a pas encore de projet !`
-    return sendTxtLater(
-      sentence,
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater(sentence, [], interaction.application_id, interaction.token)
   }
 }
 
-const projectView = async (
-  interaction: Interaction,
-  options: ApplicationCommandInteractionDataOption[],
-  userId: string
-): Promise<void> => {
+const projectView = async (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], userId: string): Promise<void> => {
   let hashtag = ''
   let makerId = userId
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
@@ -496,40 +359,18 @@ const projectView = async (
     const project = await getProjectById(makerId, hashtag)
     if (project) {
       console.error('projectView', hashtag, makerId)
-      const text =
-        makerId === userId
-          ? 'Voici les infos sur ton projet !'
-          : `Voici les infos sur le projet de <@${makerId}> !`
-      return sendTxtLater(
-        `${text}\n`,
-        [projectCard(project)],
-        interaction.application_id,
-        interaction.token
-      )
+      const text = makerId === userId ? 'Voici les infos sur ton projet !' : `Voici les infos sur le projet de <@${makerId}> !`
+      return sendTxtLater(`${text}\n`, [projectCard(project)], interaction.application_id, interaction.token)
     } else {
       console.error('projectView', hashtag, makerId)
-      return sendTxtLater(
-        `Je ne trouve pas le projet ${hashtag} pour <@${makerId}>...`,
-        [],
-        interaction.application_id,
-        interaction.token
-      )
+      return sendTxtLater(`Je ne trouve pas le projet ${hashtag} pour <@${makerId}>...`, [], interaction.application_id, interaction.token)
     }
   } else {
-    return sendTxtLater(
-      'Donne moi un projet !',
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater('Donne moi un projet !', [], interaction.application_id, interaction.token)
   }
 }
 
-const projectDelete = (
-  interaction: Interaction,
-  option: ApplicationCommandInteractionDataOption,
-  userId: string
-): Promise<void> => {
+const projectDelete = (interaction: Interaction, option: ApplicationCommandInteractionDataOption, userId: string): Promise<void> => {
   const hashtag = option.value
   if (hashtag) {
     console.error('projectDelete', hashtag)
@@ -545,58 +386,27 @@ Savoir terminer un projet est une force!`,
       ),
     ]).then(() => Promise.resolve())
   } else {
-    return sendTxtLater(
-      'Donne moi un projet !',
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater('Donne moi un projet !', [], interaction.application_id, interaction.token)
   }
 }
 
-export const projectFn = (
-  interaction: Interaction,
-  option: ApplicationCommandInteractionDataOption,
-  userId: string
-): Promise<void> => {
-  if (
-    option.name === 'ajouter' &&
-    option.options &&
-    option.options.length > 0
-  ) {
+export const projectFn = (interaction: Interaction, option: ApplicationCommandInteractionDataOption, userId: string): Promise<void> => {
+  if (option.name === 'ajouter' && option.options && option.options.length > 0) {
     return projectAdd(interaction, option.options, userId)
   }
-  if (
-    option.name === 'modifier' &&
-    option.options &&
-    option.options.length > 0
-  ) {
+  if (option.name === 'modifier' && option.options && option.options.length > 0) {
     return projectEdit(interaction, option.options, userId)
   }
-  if (
-    option.name === 'liste' &&
-    option.options &&
-    option.options.length > 0 &&
-    option.options[0].value
-  ) {
+  if (option.name === 'liste' && option.options && option.options.length > 0 && option.options[0].value) {
     return projectList(interaction, option.options[0].value)
   }
   if (option.name === 'liste') {
     return projectList(interaction, userId, true)
   }
-  if (
-    option.name === 'voir' &&
-    option.options &&
-    option.options.length > 0 &&
-    option.options[0].value
-  ) {
+  if (option.name === 'voir' && option.options && option.options.length > 0 && option.options[0].value) {
     return projectView(interaction, option.options, userId)
   }
-  if (
-    option.name === 'supprimer' &&
-    option.options &&
-    option.options.length > 0
-  ) {
+  if (option.name === 'supprimer' && option.options && option.options.length > 0) {
     return projectDelete(interaction, option.options[0], userId)
   }
   if (option.name === 'aide') {
@@ -639,10 +449,5 @@ export const projectFn = (
       interaction.token
     )
   }
-  return sendTxtLater(
-    `La Commande ${option.name} n'est pas pris en charge 🤫`,
-    [],
-    interaction.application_id,
-    interaction.token
-  )
+  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge 🤫`, [], interaction.application_id, interaction.token)
 }

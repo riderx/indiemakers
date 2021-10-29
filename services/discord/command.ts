@@ -95,10 +95,7 @@ export interface Interaction {
   version: number
 }
 
-const choiceGen = (
-  name: string,
-  value: string
-): applicationCommandOptionChoice => ({ name, value })
+const choiceGen = (name: string, value: string): applicationCommandOptionChoice => ({ name, value })
 
 const optionGen = (
   name: string,
@@ -121,12 +118,7 @@ const optionGen = (
   return result
 }
 
-const projetHashtag = optionGen(
-  'hashtag',
-  'Le hashtag de ton projet (nom sans espaces, ni majuscule)',
-  SlashCommandOptionType.STRING,
-  true
-)
+const projetHashtag = optionGen('hashtag', 'Le hashtag de ton projet (nom sans espaces, ni majuscule)', SlashCommandOptionType.STRING, true)
 
 const projetHashtagOptional = optionGen(
   'hashtag',
@@ -134,76 +126,39 @@ const projetHashtagOptional = optionGen(
   SlashCommandOptionType.STRING
 )
 
-const postId = optionGen(
-  'id',
-  'Identifiant unique du post',
-  SlashCommandOptionType.STRING,
-  true
-)
+const postId = optionGen('id', 'Identifiant unique du post', SlashCommandOptionType.STRING, true)
 
-const makerId = optionGen(
-  'maker',
-  'Le maker désiré',
-  SlashCommandOptionType.USER,
-  true
-)
+const makerId = optionGen('maker', 'Le maker désiré', SlashCommandOptionType.USER, true)
 
-const makerIdOptional = optionGen(
-  'maker',
-  'Le maker désiré',
-  SlashCommandOptionType.USER
-)
+const makerIdOptional = optionGen('maker', 'Le maker désiré', SlashCommandOptionType.USER)
 
-const taskContent = (required = true) =>
-  optionGen(
-    'contenu',
-    'Contenu de la tâche',
-    SlashCommandOptionType.STRING,
-    required
-  )
+const taskContent = (required = true) => optionGen('contenu', 'Contenu de la tâche', SlashCommandOptionType.STRING, required)
 
 const taskStatus = (required = false) =>
-  optionGen(
-    'status',
-    'Status de la tâche',
-    SlashCommandOptionType.STRING,
-    required,
-    [choiceGen('A faire', 'todo'), choiceGen('Fait', 'done')]
-  )
+  optionGen('status', 'Status de la tâche', SlashCommandOptionType.STRING, required, [
+    choiceGen('A faire', 'todo'),
+    choiceGen('Fait', 'done'),
+  ])
 
-const taskId = optionGen(
-  'id',
-  'Identifiant unique de la tâche',
-  SlashCommandOptionType.STRING,
-  true
-)
+const taskId = optionGen('id', 'Identifiant unique de la tâche', SlashCommandOptionType.STRING, true)
 
-const taskAdd = optionGen(
-  'ajouter',
-  'Ajouter une tâche à un projet',
-  SlashCommandOptionType.SUB_COMMAND,
-  undefined,
-  undefined,
-  [projetHashtag, taskContent(), taskStatus()]
-)
+const taskAdd = optionGen('ajouter', 'Ajouter une tâche à un projet', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [
+  projetHashtag,
+  taskContent(),
+  taskStatus(),
+])
 
-const taskEdit = optionGen(
-  'modifier',
-  "Modifier une tâche d'un projet",
-  SlashCommandOptionType.SUB_COMMAND,
-  undefined,
-  undefined,
-  [projetHashtag, taskId, taskContent(false), taskStatus(false)]
-)
+const taskEdit = optionGen('modifier', "Modifier une tâche d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [
+  projetHashtag,
+  taskId,
+  taskContent(false),
+  taskStatus(false),
+])
 
-const taskDelete = optionGen(
-  'supprimer',
-  "Supprimer une tâche d'un projet",
-  SlashCommandOptionType.SUB_COMMAND,
-  undefined,
-  undefined,
-  [projetHashtag, taskId]
-)
+const taskDelete = optionGen('supprimer', "Supprimer une tâche d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [
+  projetHashtag,
+  taskId,
+])
 
 const taskList = optionGen(
   'liste',
@@ -214,8 +169,7 @@ const taskList = optionGen(
   [projetHashtag, makerIdOptional]
 )
 
-const year = (name: string, required = true) =>
-  optionGen('année', `Année ${name}`, SlashCommandOptionType.STRING, required)
+const year = (name: string, required = true) => optionGen('année', `Année ${name}`, SlashCommandOptionType.STRING, required)
 
 const month = (name: string, required = true) =>
   optionGen('mois', `mois ${name}`, SlashCommandOptionType.STRING, required, [
@@ -234,50 +188,25 @@ const month = (name: string, required = true) =>
     choiceGen('Decembre', '12'),
   ])
 
-const incomeValues = [
-  optionGen(
-    'montant',
-    'Montant du revenu',
-    SlashCommandOptionType.STRING,
-    true
-  ),
-  month('du revenu'),
-  year('du revenu'),
-]
+const incomeValues = [optionGen('montant', 'Montant du revenu', SlashCommandOptionType.STRING, true), month('du revenu'), year('du revenu')]
 
-const incomeId = optionGen(
-  'id',
-  'identifiant unique du revenu',
-  SlashCommandOptionType.STRING,
-  true
-)
+const incomeId = optionGen('id', 'identifiant unique du revenu', SlashCommandOptionType.STRING, true)
 
-const incomeAdd = optionGen(
-  'ajouter',
-  'ajouter un revenu à un projet',
-  SlashCommandOptionType.SUB_COMMAND,
-  undefined,
-  undefined,
-  [projetHashtag, ...incomeValues]
-)
+const incomeAdd = optionGen('ajouter', 'ajouter un revenu à un projet', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [
+  projetHashtag,
+  ...incomeValues,
+])
 
-const incomeEdit = optionGen(
-  'modifier',
-  "Modifier un revenu d'un projet",
-  SlashCommandOptionType.SUB_COMMAND,
-  undefined,
-  undefined,
-  [projetHashtag, incomeId, ...incomeValues]
-)
+const incomeEdit = optionGen('modifier', "Modifier un revenu d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [
+  projetHashtag,
+  incomeId,
+  ...incomeValues,
+])
 
-const incomeDelete = optionGen(
-  'supprimer',
-  "Supprimer un revenu d'un projet",
-  SlashCommandOptionType.SUB_COMMAND,
-  undefined,
-  undefined,
-  [projetHashtag, incomeId]
-)
+const incomeDelete = optionGen('supprimer', "Supprimer un revenu d'un projet", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [
+  projetHashtag,
+  incomeId,
+])
 
 const incomeList = optionGen(
   'liste',
@@ -292,62 +221,29 @@ const projetOptions = [
   projetHashtag,
   optionGen('nom', 'Le nom de ton projet', SlashCommandOptionType.STRING),
   optionGen('website', 'Le site de ton projet', SlashCommandOptionType.STRING),
-  optionGen(
-    'description',
-    'La description ton projet',
-    SlashCommandOptionType.STRING
-  ),
-  optionGen(
-    'categorie',
-    'La categorie de ton projet',
-    SlashCommandOptionType.STRING,
-    undefined,
-    [
-      choiceGen('SaaS', 'saas'),
-      choiceGen('Application', 'app'),
-      choiceGen('Communauté', 'community'),
-      choiceGen('Newsletter', 'newsletter'),
-      choiceGen('Formation', 'formation'),
-      choiceGen('template', 'template'),
-      choiceGen('Ecommerce', 'ecommerce'),
-      choiceGen('Autre', 'autre'),
-    ]
-  ),
+  optionGen('description', 'La description ton projet', SlashCommandOptionType.STRING),
+  optionGen('categorie', 'La categorie de ton projet', SlashCommandOptionType.STRING, undefined, [
+    choiceGen('SaaS', 'saas'),
+    choiceGen('Application', 'app'),
+    choiceGen('Communauté', 'community'),
+    choiceGen('Newsletter', 'newsletter'),
+    choiceGen('Formation', 'formation'),
+    choiceGen('template', 'template'),
+    choiceGen('Ecommerce', 'ecommerce'),
+    choiceGen('Autre', 'autre'),
+  ]),
   month('de création', false),
   year('de création', false),
-  optionGen(
-    'logo',
-    "L'url vers le logo de ton projet",
-    SlashCommandOptionType.STRING
-  ),
-  optionGen(
-    'emoji',
-    "L'émoji qui correspond le plus a ton projet",
-    SlashCommandOptionType.STRING
-  ),
-  optionGen(
-    'couleur',
-    'La couleur de ton projet',
-    SlashCommandOptionType.STRING
-  ),
-  optionGen(
-    'couverture',
-    "L'url vers la photo de couverture du projet",
-    SlashCommandOptionType.STRING
-  ),
-  optionGen(
-    'stripe',
-    "L'url vers la webhook stripe pour get les charges en auto tous les lundi",
-    SlashCommandOptionType.STRING
-  ),
+  optionGen('logo', "L'url vers le logo de ton projet", SlashCommandOptionType.STRING),
+  optionGen('emoji', "L'émoji qui correspond le plus a ton projet", SlashCommandOptionType.STRING),
+  optionGen('couleur', 'La couleur de ton projet', SlashCommandOptionType.STRING),
+  optionGen('couverture', "L'url vers la photo de couverture du projet", SlashCommandOptionType.STRING),
+  optionGen('stripe', "L'url vers la webhook stripe pour get les charges en auto tous les lundi", SlashCommandOptionType.STRING),
   optionGen('github', "L'url vers le github", SlashCommandOptionType.STRING),
-  optionGen(
-    'open_source',
-    'Le projet est il open source ?',
-    SlashCommandOptionType.STRING,
-    undefined,
-    [choiceGen('Oui', 'true'), choiceGen('non', 'false')]
-  ),
+  optionGen('open_source', 'Le projet est il open source ?', SlashCommandOptionType.STRING, undefined, [
+    choiceGen('Oui', 'true'),
+    choiceGen('non', 'false'),
+  ]),
 ]
 
 const makerOptions = [
@@ -356,27 +252,15 @@ const makerOptions = [
   // optionGen('email', 'Ton email', SlashCommandOptionType.STRING),
   optionGen('website', 'Ton site perso', SlashCommandOptionType.STRING),
   optionGen('photo', "L'url vers ta photo", SlashCommandOptionType.STRING),
-  optionGen(
-    'emoji',
-    "L'émoji qui te correspond le plus",
-    SlashCommandOptionType.STRING
-  ),
+  optionGen('emoji', "L'émoji qui te correspond le plus", SlashCommandOptionType.STRING),
   optionGen('couleur', 'Ta couleur préféré', SlashCommandOptionType.STRING),
-  optionGen(
-    'couverture',
-    "L'url vers ta photo de couverture",
-    SlashCommandOptionType.STRING
-  ),
+  optionGen('couverture', "L'url vers ta photo de couverture", SlashCommandOptionType.STRING),
   optionGen('github', 'Ton github', SlashCommandOptionType.STRING),
   optionGen('makerlog', 'Ton makerlog', SlashCommandOptionType.STRING),
   optionGen('wip', 'Ton wip', SlashCommandOptionType.STRING),
   optionGen('twitter', 'Ton twitter', SlashCommandOptionType.STRING),
   optionGen('nomadlist', 'Ton nomadlist', SlashCommandOptionType.STRING),
-  optionGen(
-    'talents',
-    'Tes talents ( tes competences phares)',
-    SlashCommandOptionType.STRING
-  ),
+  optionGen('talents', 'Tes talents ( tes competences phares)', SlashCommandOptionType.STRING),
   optionGen(
     'rappel_tache',
     "Rappel par message privée pour envoyer ses taches si aucune tache aujourd'hui",
@@ -391,23 +275,12 @@ const makerOptions = [
     false,
     [choiceGen('Oui', 'true'), choiceGen('Non', 'false')]
   ),
-  optionGen(
-    'rappel_vocal',
-    "Rappel par message privée pour faire rejoindre l'appel vocal mensuel",
-    SlashCommandOptionType.STRING,
-    false,
-    [choiceGen('Oui', 'true'), choiceGen('Non', 'false')]
-  ),
-  optionGen(
-    'makerlog_hook',
-    'La web hook de ton compte makerlog, pour que le bot poste tes taches',
-    SlashCommandOptionType.STRING
-  ),
-  optionGen(
-    'wip_key',
-    'La clé api de ton compte wip.co, pour que le bot poste tes taches',
-    SlashCommandOptionType.STRING
-  ),
+  optionGen('rappel_vocal', "Rappel par message privée pour faire rejoindre l'appel vocal mensuel", SlashCommandOptionType.STRING, false, [
+    choiceGen('Oui', 'true'),
+    choiceGen('Non', 'false'),
+  ]),
+  optionGen('makerlog_hook', 'La web hook de ton compte makerlog, pour que le bot poste tes taches', SlashCommandOptionType.STRING),
+  optionGen('wip_key', 'La clé api de ton compte wip.co, pour que le bot poste tes taches', SlashCommandOptionType.STRING),
 ]
 
 const karma = optionGen(
@@ -417,182 +290,57 @@ const karma = optionGen(
   undefined,
   undefined,
   [
-    optionGen(
-      'donner',
-      'Donner du karma',
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [makerId]
-    ),
-    optionGen(
-      'enlever',
-      'Enlever du karma',
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [makerId]
-    ),
-    optionGen(
-      'voir',
-      "Voir le karma d'un maker",
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [makerId]
-    ),
+    optionGen('donner', 'Donner du karma', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerId]),
+    optionGen('enlever', 'Enlever du karma', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerId]),
+    optionGen('voir', "Voir le karma d'un maker", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerId]),
     optionGen('classement', 'Le classement des makers par karma', 1),
   ]
 )
 
-const post = optionGen(
-  'post',
-  'gere tes post sur ton profil',
-  SlashCommandOptionType.SUB_COMMAND_GROUP,
-  undefined,
-  undefined,
-  [
-    optionGen(
-      'ajouter',
-      'Ajouter ton dernier message comme post',
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [projetHashtagOptional]
-    ),
-    optionGen(
-      'modifier',
-      'Modifie un post',
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [postId, projetHashtagOptional]
-    ),
-    optionGen(
-      'supprimer',
-      'Supprime un post',
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [postId]
-    ),
-    optionGen(
-      'liste',
-      "Voir la liste des posts d'un maker",
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [makerIdOptional]
-    ),
-    optionGen(
-      'voir',
-      'Voir un seul post',
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [postId, makerIdOptional]
-    ),
-    optionGen('aide', "Plus d'explication pour les posts", 1),
-  ]
-)
+const post = optionGen('post', 'gere tes post sur ton profil', SlashCommandOptionType.SUB_COMMAND_GROUP, undefined, undefined, [
+  optionGen('ajouter', 'Ajouter ton dernier message comme post', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [
+    projetHashtagOptional,
+  ]),
+  optionGen('modifier', 'Modifie un post', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [postId, projetHashtagOptional]),
+  optionGen('supprimer', 'Supprime un post', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [postId]),
+  optionGen('liste', "Voir la liste des posts d'un maker", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerIdOptional]),
+  optionGen('voir', 'Voir un seul post', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [postId, makerIdOptional]),
+  optionGen('aide', "Plus d'explication pour les posts", 1),
+])
 
-const projet = optionGen(
-  'projet',
-  'Construit en public tes projets',
-  SlashCommandOptionType.SUB_COMMAND_GROUP,
-  undefined,
-  undefined,
-  [
-    optionGen(
-      'ajouter',
-      'Ajouter ton projet',
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [projetHashtag]
-    ),
-    optionGen(
-      'modifier',
-      'Modifie un de tes projets',
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      projetOptions
-    ),
-    optionGen(
-      'supprimer',
-      'Supprime un de tes projets',
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [projetHashtag]
-    ),
-    optionGen(
-      'liste',
-      "Voir la liste des projets d'un maker",
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [makerIdOptional]
-    ),
-    optionGen(
-      'voir',
-      'Voir un seul projet et ses taches',
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [projetHashtag, makerIdOptional]
-    ),
-    optionGen('aide', "Plus d'explication pour les projets", 1),
-  ]
-)
+const projet = optionGen('projet', 'Construit en public tes projets', SlashCommandOptionType.SUB_COMMAND_GROUP, undefined, undefined, [
+  optionGen('ajouter', 'Ajouter ton projet', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag]),
+  optionGen('modifier', 'Modifie un de tes projets', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, projetOptions),
+  optionGen('supprimer', 'Supprime un de tes projets', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [projetHashtag]),
+  optionGen('liste', "Voir la liste des projets d'un maker", SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerIdOptional]),
+  optionGen('voir', 'Voir un seul projet et ses taches', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [
+    projetHashtag,
+    makerIdOptional,
+  ]),
+  optionGen('aide', "Plus d'explication pour les projets", 1),
+])
 
-const income = optionGen(
-  'revenu',
-  "Gerer les revenus d'un projet",
-  SlashCommandOptionType.SUB_COMMAND_GROUP,
-  undefined,
-  undefined,
-  [incomeAdd, incomeList, incomeEdit, incomeDelete]
-)
+const income = optionGen('revenu', "Gerer les revenus d'un projet", SlashCommandOptionType.SUB_COMMAND_GROUP, undefined, undefined, [
+  incomeAdd,
+  incomeList,
+  incomeEdit,
+  incomeDelete,
+])
 
-const tache = optionGen(
-  'tache',
-  "Gérer les tâches d'un projet",
-  SlashCommandOptionType.SUB_COMMAND_GROUP,
-  undefined,
-  undefined,
-  [taskAdd, taskList, taskEdit, taskDelete]
-)
+const tache = optionGen('tache', "Gérer les tâches d'un projet", SlashCommandOptionType.SUB_COMMAND_GROUP, undefined, undefined, [
+  taskAdd,
+  taskList,
+  taskEdit,
+  taskDelete,
+])
 
-const maker = optionGen(
-  'maker',
-  'Gérer ton profil de maker',
-  SlashCommandOptionType.SUB_COMMAND_GROUP,
-  undefined,
-  undefined,
-  [
-    optionGen(
-      'modifier',
-      'Modifie ton profil',
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      makerOptions
-    ),
-    optionGen('liste', 'Voir la liste des makers', 1),
-    optionGen('flammes', 'Voir la liste des makers avec des flammes', 1),
-    optionGen(
-      'voir',
-      'Voir un seul maker',
-      SlashCommandOptionType.SUB_COMMAND,
-      undefined,
-      undefined,
-      [makerIdOptional]
-    ),
-    optionGen('aide', "Plus d'explication pour les makers", 1),
-  ]
-)
+const maker = optionGen('maker', 'Gérer ton profil de maker', SlashCommandOptionType.SUB_COMMAND_GROUP, undefined, undefined, [
+  optionGen('modifier', 'Modifie ton profil', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, makerOptions),
+  optionGen('liste', 'Voir la liste des makers', 1),
+  optionGen('flammes', 'Voir la liste des makers avec des flammes', 1),
+  optionGen('voir', 'Voir un seul maker', SlashCommandOptionType.SUB_COMMAND, undefined, undefined, [makerIdOptional]),
+  optionGen('aide', "Plus d'explication pour les makers", 1),
+])
 
 const jsonData = {
   name: 'im',

@@ -3,10 +3,7 @@ import axios from 'axios'
 // get apikey here: https://wip.co/api
 const url = 'https://wip.chat/graphql'
 
-export const doneToWip = async (
-  key: string,
-  id: string
-): Promise<string | undefined> => {
+export const doneToWip = async (key: string, id: string): Promise<string | undefined> => {
   const headers = {
     Authorization: `bearer ${key}`,
   }
@@ -32,10 +29,7 @@ export const doneToWip = async (
   return Promise.resolve(res ? res.id : undefined)
 }
 
-export const unDoneToWip = async (
-  key: string,
-  id: string
-): Promise<string | undefined> => {
+export const unDoneToWip = async (key: string, id: string): Promise<string | undefined> => {
   const headers = {
     Authorization: `bearer ${key}`,
   }
@@ -60,12 +54,7 @@ export const unDoneToWip = async (
   return Promise.resolve(res ? res.id : undefined)
 }
 
-export const updateToWip = async (
-  key: string,
-  id: string,
-  content: string,
-  done = true
-): Promise<string | undefined> => {
+export const updateToWip = async (key: string, id: string, content: string, done = true): Promise<string | undefined> => {
   const headers = {
     Authorization: `bearer ${key}`,
   }
@@ -96,11 +85,7 @@ export const updateToWip = async (
   return Promise.resolve(task ? task.id : undefined)
 }
 
-export const deleteToWip = async (
-  key: string,
-  id: string,
-  done = true
-): Promise<string | undefined> => {
+export const deleteToWip = async (key: string, id: string, done = true): Promise<string | undefined> => {
   const headers = {
     Authorization: `bearer ${key}`,
   }
@@ -126,12 +111,7 @@ export const deleteToWip = async (
   return Promise.resolve(task ? task.id : undefined)
 }
 
-
-export const sendToWip = async (
-  key: string,
-  content: string,
-  done = true
-): Promise<string | undefined> => {
+export const sendToWip = async (key: string, content: string, done = true): Promise<string | undefined> => {
   const headers = {
     Authorization: `bearer ${key}`,
   }

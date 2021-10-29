@@ -11,28 +11,16 @@ export const getLastTask = async (userId: string, hashtag: string) => {
   return taskList[0]
 }
 
-export const deleteProjectTask = (
-  userId: string,
-  hashtag: string,
-  taskId: string
-): Promise<any> => {
-  return firestore()
-    .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
-    .doc(taskId)
-    .delete()
+export const deleteProjectTask = (userId: string, hashtag: string, taskId: string): Promise<any> => {
+  return firestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`).doc(taskId).delete()
 }
 
-export const getTask = (userId: string, hashtag:string) => {
-  return firestore()
-      .collection(`discord/${userId}/projects`)
-      .doc(hashtag.toLowerCase())
-      .get()
+export const getTask = (userId: string, hashtag: string) => {
+  return firestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).get()
 }
 
-export const addTask = (userId: string, hashtag:string, doc: Partial<Task>) => {
-  return firestore()
-      .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
-      .add(doc)
+export const addTask = (userId: string, hashtag: string, doc: Partial<Task>) => {
+  return firestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`).add(doc)
 }
 export const getOneProjectsTaskDoc = async (
   userId: string,
@@ -52,11 +40,7 @@ export const getOneProjectsTaskDoc = async (
   }
 }
 
-export const getOneProjectsTask = async (
-  userId: string,
-  hashtag: string,
-  taskId: string
-): Promise<Task | null> => {
+export const getOneProjectsTask = async (userId: string, hashtag: string, taskId: string): Promise<Task | null> => {
   try {
     const snapshot = await firestore()
       .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
@@ -71,15 +55,9 @@ export const getOneProjectsTask = async (
   }
 }
 
-export const getAllProjectsTasks = async (
-  userId: string,
-  hashtag: string
-): Promise<TaskAll> => {
+export const getAllProjectsTasks = async (userId: string, hashtag: string): Promise<TaskAll> => {
   try {
-    const documents = await firestore()
-      .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`)
-      .orderBy('id', 'desc')
-      .get()
+    const documents = await firestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/tasks`).orderBy('id', 'desc').get()
     const tasks: Task[] = []
     documents.docs.map((doc) => {
       const data = doc.data() as Task

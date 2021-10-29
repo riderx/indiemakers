@@ -1,4 +1,10 @@
-import { MetaPropertyCharset, MetaPropertyEquiv, MetaPropertyMicrodata, MetaPropertyName, MetaPropertyProperty } from 'vue-meta/types/vue-meta'
+import {
+  MetaPropertyCharset,
+  MetaPropertyEquiv,
+  MetaPropertyMicrodata,
+  MetaPropertyName,
+  MetaPropertyProperty,
+} from 'vue-meta/types/vue-meta'
 
 export const createMeta = (
   title: string,
@@ -6,7 +12,7 @@ export const createMeta = (
   image: string | null = null,
   author: string | null = null,
   audio: string | null = null
-):(MetaPropertyCharset | MetaPropertyEquiv | MetaPropertyName | MetaPropertyMicrodata | MetaPropertyProperty)[] => {
+): (MetaPropertyCharset | MetaPropertyEquiv | MetaPropertyName | MetaPropertyMicrodata | MetaPropertyProperty)[] => {
   const base = [
     { hid: 'title', name: 'title', content: title },
     {
@@ -26,10 +32,7 @@ export const createMeta = (
     },
   ]
   if (author) {
-    base.push(
-      { hid: 'author', name: 'author', content: author },
-      { hid: 'og:article:author', name: 'og:article:author', content: author }
-    )
+    base.push({ hid: 'author', name: 'author', content: author }, { hid: 'og:article:author', name: 'og:article:author', content: author })
   }
   if (image) {
     base.push(

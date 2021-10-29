@@ -1,12 +1,12 @@
-import { sendError } from './../../firebase/error';
 import { InteractionResponseType } from 'discord-interactions'
 import { Response as Res } from 'express'
-import  axios from 'axios'
+import axios from 'axios'
 import { hexToDec } from 'hex2dec'
 import dayjs from 'dayjs'
 import { APIMessage } from 'discord-api-types/v9'
 import { Footer, Author, Field, Embed, DiscordMessage, User, Image } from '../../../services/types'
-import { getConfig, saveRateLimit } from '../../../services/firebase/discord';
+import { getConfig, saveRateLimit } from '../../../services/firebase/discord'
+import { sendError } from './../../firebase/error'
 
 const { post, patch, get } = axios
 export const image = (url: string): Image => ({ url })
@@ -138,12 +138,7 @@ export const t9r = (
   en: en ? stringOrLang(en) : stringOrLang(db),
 })
 
-export const transformKey = (
-  transformers: Langs[],
-  key: string,
-  lang: LName,
-  langRes: LName
-): string => {
+export const transformKey = (transformers: Langs[], key: string, lang: LName, langRes: LName): string => {
   const found = transformers.find((val: Langs) => val[lang].key === key)
   if (found) {
     return found[langRes].key
@@ -151,11 +146,7 @@ export const transformKey = (
   return key
 }
 
-export const transformInline = (
-  transformers: Langs[],
-  key: string,
-  lang: LName
-): boolean => {
+export const transformInline = (transformers: Langs[], key: string, lang: LName): boolean => {
   const found = transformers.find((val: Langs) => val[lang].key === key)
   if (found) {
     return found?.inline
@@ -195,11 +186,7 @@ export const lastWeek = () => {
   return day
 }
 
-export const getFields = (
-  obj: object,
-  publicFields: string[],
-  transformers: Langs[]
-) => {
+export const getFields = (obj: object, publicFields: string[], transformers: Langs[]) => {
   const fields: Field[] = []
   publicFields.forEach((key) => {
     if ((obj as any)[key]) {
@@ -234,10 +221,7 @@ export const sendTxtLater = async (
       // Request made and server responded
       console.error('sendTxtLater response', err.response.data)
       console.error('sendTxtLater response status', err.response.status)
-      console.error(
-        'sendTxtLater response errors',
-        err.response.data.errors.content
-      )
+      console.error('sendTxtLater response errors', err.response.data.errors.content)
       // console.error(err.response.headers)
     } else if (err.request) {
       // The request was made but no response was received
@@ -247,11 +231,10 @@ export const sendTxtLater = async (
       console.error('sendTxtLater Error', err.message)
     }
     // console.error('sendTxtLater content', url, JSON.stringify(content))
-    await patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
-      .catch((errErr: any) => {
-        console.error('sendTxtLaterFallback', err.response, errErr.response)
-        return sendError(err)
-      })
+    await patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" }).catch((errErr: any) => {
+      console.error('sendTxtLaterFallback', err.response, errErr.response)
+      return sendError(err)
+    })
     return sendError({ function: 'sendTxtLater', url, error: JSON.stringify(err) })
   }
 }
@@ -263,9 +246,7 @@ export const openChannel = async (userId: string): Promise<any> => {
     return Promise.resolve(undefined)
   }
   const headers = {
-    Authorization: `Bot ${
-      process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token
-    }`,
+    Authorization: `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token}`,
   }
   if (data.discordResetAfter && data.discordResetAfter > 0) {
     console.error('Sleep a bit', data.discordResetAfter)
@@ -273,10 +254,7 @@ export const openChannel = async (userId: string): Promise<any> => {
   }
   try {
     const res = await post(url, { recipient_id: userId }, { headers })
-    if (
-      res?.headers['x-ratelimit-reset-after'] &&
-      !res?.headers['x-ratelimit-remaining']
-    ) {
+    if (res?.headers['x-ratelimit-reset-after'] && !res?.headers['x-ratelimit-remaining']) {
       await saveRateLimit(res.headers['x-ratelimit-reset-after'])
     } else if (data.discordResetAfter && data.discordResetAfter > 0) {
       await saveRateLimit(0)
@@ -289,12 +267,12 @@ export const openChannel = async (userId: string): Promise<any> => {
       }
     }
     return sendError({
-        function: 'openChannel',
-        headers,
-        userId,
-        url,
-        error: JSON.stringify(err),
-      })
+      function: 'openChannel',
+      headers,
+      userId,
+      url,
+      error: JSON.stringify(err),
+    })
   }
 }
 // https://discord.com/api/webhooks/841492487125598218/b0Rvbv41Uy2w6UxUutctXYeKYd0QAXOKnjhgCOTOyfjSs9hgpYOPxjizWiu4vi-s17nX
@@ -304,8 +282,7 @@ export const sleep = (ms: number) => {
   })
 }
 
-export const getUserUrl = (user: User) =>
-  `https://indiemakers.fr/makers/${encodeURI(user?.username)}`
+export const getUserUrl = (user: User) => `https://indiemakers.fr/makers/${encodeURI(user?.username)}`
 
 export const onboardingMessage = async (user: User) => {
   try {
@@ -407,13 +384,11 @@ export const onboardingMessage = async (user: User) => {
   `
     )
   } catch (err) {
-    console.error('onboardingMessage', err);
+    console.error('onboardingMessage', err)
   }
 }
 
-export const getChannelMessages = async (
-  channelId: string
-): Promise<APIMessage[]> => {
+export const getChannelMessages = async (channelId: string): Promise<APIMessage[]> => {
   const url = `https://discord.com/api/v8/channels/${channelId}/messages`
   const data = await getConfig()
   if (!data) {
@@ -421,9 +396,7 @@ export const getChannelMessages = async (
   }
 
   const headers = {
-    Authorization: `Bot ${
-      process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token
-    }`,
+    Authorization: `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token}`,
   }
   if (data.discordResetAfter && data.discordResetAfter > 0) {
     console.error('Sleep a bit', data.discordResetAfter)
@@ -431,10 +404,7 @@ export const getChannelMessages = async (
   }
   try {
     const res = await get(url, { headers })
-    if (
-      res?.headers['x-ratelimit-reset-after'] &&
-      !res?.headers['x-ratelimit-remaining']
-    ) {
+    if (res?.headers['x-ratelimit-reset-after'] && !res?.headers['x-ratelimit-remaining']) {
       await saveRateLimit(res.headers['x-ratelimit-reset-after'])
     } else if (data.discordResetAfter && data.discordResetAfter > 0) {
       await saveRateLimit(0)
@@ -447,19 +417,16 @@ export const getChannelMessages = async (
       }
     }
     sendError({
-        function: 'getChannelMessages',
-        headers,
-        url,
-        error: JSON.stringify(err),
-      })
+      function: 'getChannelMessages',
+      headers,
+      url,
+      error: JSON.stringify(err),
+    })
     return []
   }
 }
 
-export const getLastChannelMessage = async (
-  userId: string,
-  channelId: string
-): Promise<APIMessage | null> => {
+export const getLastChannelMessage = async (userId: string, channelId: string): Promise<APIMessage | null> => {
   let message: APIMessage | null = null
   const messages = await getChannelMessages(channelId)
   messages.sort((a, b) => (a.timestamp > b.timestamp === true ? 1 : -1))
@@ -471,11 +438,7 @@ export const getLastChannelMessage = async (
   return message
 }
 
-export const sendChannel = async (
-  channelId: string,
-  content: string,
-  embed: Embed | undefined = undefined
-): Promise<any> => {
+export const sendChannel = async (channelId: string, content: string, embed: Embed | undefined = undefined): Promise<any> => {
   const url = `https://discord.com/api/v8/channels/${channelId}/messages`
   const data = await getConfig()
   if (!data) {
@@ -483,9 +446,7 @@ export const sendChannel = async (
   }
 
   const headers = {
-    Authorization: `Bot ${
-      process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token
-    }`,
+    Authorization: `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token}`,
   }
   const body: any = { content }
   if (embed) {
@@ -497,10 +458,7 @@ export const sendChannel = async (
   }
   try {
     const res = await post(url, body, { headers })
-    if (
-      res?.headers['x-ratelimit-reset-after'] &&
-      !res?.headers['x-ratelimit-remaining']
-    ) {
+    if (res?.headers['x-ratelimit-reset-after'] && !res?.headers['x-ratelimit-remaining']) {
       await saveRateLimit(res.headers['x-ratelimit-reset-after'])
     } else if (data.discordResetAfter && data.discordResetAfter > 0) {
       await saveRateLimit(0)
@@ -513,11 +471,11 @@ export const sendChannel = async (
       }
     }
     return sendError({
-        function: 'sendChannel',
-        headers,
-        body,
-        url,
-        error: JSON.stringify(err),
-      })
+      function: 'sendChannel',
+      headers,
+      body,
+      url,
+      error: JSON.stringify(err),
+    })
   }
 }

@@ -1,9 +1,9 @@
 import Stripe from 'stripe'
 import dayjs, { Dayjs } from 'dayjs'
-import { getAllProjects } from './project'
-import { getAllProjectsIncomes, updateProjectIncome } from './incomes'
 import { Income, Project, User } from '../../../services/types'
 import { getAllUsers } from '../../../services/firebase/discord'
+import { getAllProjects } from './project'
+import { getAllProjectsIncomes, updateProjectIncome } from './incomes'
 
 // create restricted key here:https://dashboard.stripe.com/apikeys
 // with only charges read scope
@@ -35,17 +35,11 @@ const convertAmmount = (ammount: number) => {
   return ammount / 100
 }
 
-const iterateCharges = (
-  apiRes: Stripe.ApiList<Stripe.Charge>,
-  startDate: Dayjs,
-  endDate: Dayjs
-): Charge[] => {
+const iterateCharges = (apiRes: Stripe.ApiList<Stripe.Charge>, startDate: Dayjs, endDate: Dayjs): Charge[] => {
   const allCharges: Charge[] = []
   apiRes.data.forEach((charge: Stripe.Charge) => {
     const curDate = dayjs(secondsToISOString(charge.created))
-    const ammount = convertAmmount(
-      charge.amount_captured - charge.amount_refunded
-    )
+    const ammount = convertAmmount(charge.amount_captured - charge.amount_refunded)
     const status = ammount >= 0 ? 'income' : 'expense'
     if (dayjs(curDate).isAfter(startDate) && dayjs(curDate).isBefore(endDate)) {
       allCharges.push({
@@ -59,11 +53,7 @@ const iterateCharges = (
   return allCharges
 }
 
-export const getStripeCharges = async (
-  key: string,
-  startDate = dayjs('2010-01-01'),
-  endDate = dayjs()
-) => {
+export const getStripeCharges = async (key: string, startDate = dayjs('2010-01-01'), endDate = dayjs()) => {
   const stripe = new Stripe(key, {
     apiVersion: '2020-08-27',
   })
@@ -82,9 +72,7 @@ export const getStripeCharges = async (
     allCharges.push(...iterateCharges(charges, startDate, endDate))
     hasMore = charges.has_more
     startingAfter = charges.data[charges.data.length - 1].id
-    startingAfterDate = dayjs(
-      secondsToISOString(charges.data[charges.data.length - 1].created)
-    )
+    startingAfterDate = dayjs(secondsToISOString(charges.data[charges.data.length - 1].created))
   }
   return allCharges
 }
@@ -102,11 +90,7 @@ export const getAllUsersAndProjects = async () => {
   return allUsers
 }
 
-const mixIncomeCharges = async (
-  userId: string,
-  project: Project,
-  startMonth: dayjs.Dayjs
-): Promise<StripeResume | null> => {
+const mixIncomeCharges = async (userId: string, project: Project, startMonth: dayjs.Dayjs): Promise<StripeResume | null> => {
   if (!project.stripeApiKey || !project.id) return null
   return Promise.resolve({
     userId,
@@ -126,9 +110,7 @@ const foundIncome = (incomes: Income[], dateKey: string): Income | null => {
   return null
 }
 
-const updateCurrentIcome = async (
-  data: StripeResume | null
-): Promise<StripeResume | null> => {
+const updateCurrentIcome = async (data: StripeResume | null): Promise<StripeResume | null> => {
   if (!data) return Promise.resolve(null)
   const dateKey = dayjs(data.charges[0].date).format('MM_YYYY')
   const income = foundIncome(data.incomes, dateKey)
@@ -162,9 +144,7 @@ export const updateIncomeAllProject = async () => {
       const project = user.projectsData[index]
       if (!project.id) break
       if (project.stripeApiKey) {
-        all.push(
-          mixIncomeCharges(userId, project, startMonth).then(updateCurrentIcome)
-        )
+        all.push(mixIncomeCharges(userId, project, startMonth).then(updateCurrentIcome))
       }
     }
     return userId

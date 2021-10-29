@@ -1,95 +1,47 @@
 import dayjs from 'dayjs'
-import {
-  Interaction,
-  ApplicationCommandInteractionDataOption,
-} from '../command'
-import {
-  embed,
-  sendChannel,
-  sendTxtLater,
-  sleep,
-  getUserUrl,
-  getLastChannelMessage,
-} from './utils'
+import { Interaction, ApplicationCommandInteractionDataOption } from '../command'
 import { Embed, Post } from '../../../services/types'
 import { updateUser } from '../../../services/firebase/discord'
 import { updatePost, getLastPost, getAllPosts, getPostById, deletePost } from '../../../services/firebase/posts'
+import { embed, sendChannel, sendTxtLater, sleep, getUserUrl, getLastChannelMessage } from './utils'
 
-const postEdit = async (
-  interaction: Interaction,
-  options: ApplicationCommandInteractionDataOption[],
-  userId: string
-): Promise<void> => {
+const postEdit = async (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], userId: string): Promise<void> => {
   const update: Partial<Post> = {
     updatedAt: dayjs().toISOString(),
   }
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
-    if (
-      element.name === 'hashtag' &&
-      element.value &&
-      /^[a-z]+$/.test(element.value)
-    ) {
+    if (element.name === 'hashtag' && element.value && /^[a-z]+$/.test(element.value)) {
       update.hashtag = element.value
     } else if (element.name === 'id') {
       update.id = Number(element.value)
     }
   })
-  const lastMesssage = await getLastChannelMessage(
-    userId,
-    interaction.channel_id
-  )
+  const lastMesssage = await getLastChannelMessage(userId, interaction.channel_id)
   if (!lastMesssage) {
-    return sendTxtLater(
-      'Aucun message dans ce channel',
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater('Aucun message dans ce channel', [], interaction.application_id, interaction.token)
   }
   update.text = lastMesssage.content
   if (update.id) {
     console.error('postEdit', update)
     return Promise.all([
-      sendTxtLater(
-        `Tu as mis à jour le post #${update.id}`,
-        [],
-        interaction.application_id,
-        interaction.token
-      ),
+      sendTxtLater(`Tu as mis à jour le post #${update.id}`, [], interaction.application_id, interaction.token),
       updatePost(userId, update.id, update),
     ]).then(() => Promise.resolve())
   } else {
-    return sendTxtLater(
-      'hashtag manquant!',
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater('hashtag manquant!', [], interaction.application_id, interaction.token)
   }
 }
 
-const postAdd = async (
-  interaction: Interaction,
-  hashtag: string | undefined,
-  userId: string
-): Promise<void> => {
+const postAdd = async (interaction: Interaction, hashtag: string | undefined, userId: string): Promise<void> => {
   const newPost: Partial<Post> = {
     createdAt: dayjs().toISOString(),
   }
   if (hashtag && /^[a-z]+$/.test(hashtag)) {
     newPost.hashtag = hashtag
   }
-  const lastMesssage = await getLastChannelMessage(
-    userId,
-    interaction.channel_id
-  )
+  const lastMesssage = await getLastChannelMessage(userId, interaction.channel_id)
   if (!lastMesssage) {
-    return sendTxtLater(
-      'Aucun message dans ce channel',
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater('Aucun message dans ce channel', [], interaction.application_id, interaction.token)
   }
   newPost.text = lastMesssage.content
   const lastPost = await getLastPost(userId)
@@ -116,22 +68,10 @@ const postAdd = async (
 }
 
 const postCard = (post: Post) => {
-  return embed(
-    `Post number ${post.id}`,
-    post.text,
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-    post.createdAt
-  )
+  return embed(`Post number ${post.id}`, post.text, undefined, undefined, undefined, undefined, post.createdAt)
 }
 
-const postList = async (
-  interaction: Interaction,
-  userId: string,
-  me = false
-): Promise<void> => {
+const postList = async (interaction: Interaction, userId: string, me = false): Promise<void> => {
   const cards: Embed[] = []
   const posts = await getAllPosts({ userId })
   // eslint-disable-next-line no-console
@@ -141,22 +81,14 @@ const postList = async (
   })
   console.error('post_list')
   if (cards.length > 0) {
-    const sentence = me
-      ? 'Voici la liste de tes posts !'
-      : `Voici la liste des posts de <@${userId}> !`
-    await sendTxtLater(
-      `${sentence}\n\n`,
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    const sentence = me ? 'Voici la liste de tes posts !' : `Voici la liste des posts de <@${userId}> !`
+    await sendTxtLater(`${sentence}\n\n`, [], interaction.application_id, interaction.token)
     for (let index = 0; index < cards.length; index++) {
       const card = cards[index]
       console.error('card', card)
       const result = await sendChannel(interaction.channel_id, '', card)
       if (result?.response?.headers['x-ratelimit-reset-after']) {
-        const lenSize =
-          Number(result.response.headers['x-ratelimit-reset-after']) * 1000
+        const lenSize = Number(result.response.headers['x-ratelimit-reset-after']) * 1000
         console.error('Sleep a bit', lenSize)
         await sleep(lenSize)
       }
@@ -166,20 +98,11 @@ const postList = async (
     const sentence = me
       ? 'Tu n\'as pas encore de post, ajoute en avec la commande "/im post ajouter" !'
       : `<@${userId}> n'a pas encore de post !`
-    return sendTxtLater(
-      sentence,
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater(sentence, [], interaction.application_id, interaction.token)
   }
 }
 
-const postView = async (
-  interaction: Interaction,
-  options: ApplicationCommandInteractionDataOption[],
-  userId: string
-): Promise<void> => {
+const postView = async (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], userId: string): Promise<void> => {
   let id = ''
   let makerId = userId
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
@@ -193,109 +116,50 @@ const postView = async (
     const post = await getPostById(makerId, id)
     if (post) {
       console.error('postView', id, makerId)
-      const text =
-        makerId === userId
-          ? 'Voici les infos sur ton post !'
-          : `Voici les infos sur le post de <@${makerId}> !`
-      return sendTxtLater(
-        `${text}\n`,
-        [postCard(post)],
-        interaction.application_id,
-        interaction.token
-      )
+      const text = makerId === userId ? 'Voici les infos sur ton post !' : `Voici les infos sur le post de <@${makerId}> !`
+      return sendTxtLater(`${text}\n`, [postCard(post)], interaction.application_id, interaction.token)
     } else {
       console.error('postView', id, makerId)
-      return sendTxtLater(
-        `Je ne trouve pas le post ${id} pour <@${makerId}>...`,
-        [],
-        interaction.application_id,
-        interaction.token
-      )
+      return sendTxtLater(`Je ne trouve pas le post ${id} pour <@${makerId}>...`, [], interaction.application_id, interaction.token)
     }
   } else {
-    return sendTxtLater(
-      'Donne moi un post !',
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater('Donne moi un post !', [], interaction.application_id, interaction.token)
   }
 }
 
-const postDelete = (
-  interaction: Interaction,
-  option: ApplicationCommandInteractionDataOption,
-  userId: string
-): Promise<void> => {
+const postDelete = (interaction: Interaction, option: ApplicationCommandInteractionDataOption, userId: string): Promise<void> => {
   const id = option.value
   if (id) {
     console.error('postDelete', id)
     return Promise.all([
       deletePost(userId, id),
-      sendTxtLater(
-        `Tu as supprimé ton post ${id}`,
-        [],
-        interaction.application_id,
-        interaction.token
-      ),
+      sendTxtLater(`Tu as supprimé ton post ${id}`, [], interaction.application_id, interaction.token),
     ]).then(() => Promise.resolve())
   } else {
-    return sendTxtLater(
-      'Donne moi un post !',
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater('Donne moi un post !', [], interaction.application_id, interaction.token)
   }
 }
 
-export const postFn = (
-  interaction: Interaction,
-  option: ApplicationCommandInteractionDataOption,
-  userId: string
-): Promise<void> => {
-  if (
-    option.name === 'ajouter' &&
-    option.options &&
-    option.options.length > 0 &&
-    option.options[0].value
-  ) {
+export const postFn = (interaction: Interaction, option: ApplicationCommandInteractionDataOption, userId: string): Promise<void> => {
+  if (option.name === 'ajouter' && option.options && option.options.length > 0 && option.options[0].value) {
     return postAdd(interaction, option.options[0].value, userId)
   }
   if (option.name === 'ajouter') {
     return postAdd(interaction, undefined, userId)
   }
-  if (
-    option.name === 'modifier' &&
-    option.options &&
-    option.options.length > 0
-  ) {
+  if (option.name === 'modifier' && option.options && option.options.length > 0) {
     return postEdit(interaction, option.options, userId)
   }
-  if (
-    option.name === 'liste' &&
-    option.options &&
-    option.options.length > 0 &&
-    option.options[0].value
-  ) {
+  if (option.name === 'liste' && option.options && option.options.length > 0 && option.options[0].value) {
     return postList(interaction, option.options[0].value)
   }
   if (option.name === 'liste') {
     return postList(interaction, userId, true)
   }
-  if (
-    option.name === 'voir' &&
-    option.options &&
-    option.options.length > 0 &&
-    option.options[0].value
-  ) {
+  if (option.name === 'voir' && option.options && option.options.length > 0 && option.options[0].value) {
     return postView(interaction, option.options, userId)
   }
-  if (
-    option.name === 'supprimer' &&
-    option.options &&
-    option.options.length > 0
-  ) {
+  if (option.name === 'supprimer' && option.options && option.options.length > 0) {
     return postDelete(interaction, option.options[0], userId)
   }
   if (option.name === 'aide') {
@@ -319,10 +183,5 @@ export const postFn = (
       interaction.token
     )
   }
-  return sendTxtLater(
-    `La Commande ${option.name} n'est pas pris en charge 🤫`,
-    [],
-    interaction.application_id,
-    interaction.token
-  )
+  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge 🤫`, [], interaction.application_id, interaction.token)
 }

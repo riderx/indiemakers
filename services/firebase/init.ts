@@ -4,9 +4,7 @@ export default () => {
   if (!admin.apps.length) {
     if (process.env.GOOGLE_SERVICE_ACCOUNT) {
       admin.initializeApp({
-        credential: admin.credential.cert(
-          JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT)
-        ),
+        credential: admin.credential.cert(JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT)),
         databaseURL: process.env.FIREBASE_DATABASE,
       })
     } else {

@@ -36,9 +36,7 @@ export const podcastToFirebase = async () => {
   }
 }
 
-export const getOnePodcastById = async (
-  id: string
-): Promise<Episode | null> => {
+export const getOnePodcastById = async (id: string): Promise<Episode | null> => {
   try {
     const Ep = await firestore().collection('/podcasts').doc(id).get()
     if (Ep.exists) {
@@ -54,9 +52,7 @@ export const getOnePodcastById = async (
 
 export const getAllPodcast = async (): Promise<Episode[]> => {
   try {
-    const documents = await firestore().collection('/podcasts')
-    .orderBy('pubDate', 'desc')
-    .get()
+    const documents = await firestore().collection('/podcasts').orderBy('pubDate', 'desc').get()
     const eps: Episode[] = []
     documents.docs.forEach((doc) => {
       const data: Episode = doc.data() as Episode

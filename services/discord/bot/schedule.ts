@@ -12,13 +12,7 @@ export const personalTaskReminder = async (users: User[]) => {
   await Promise.all(
     users.map(async (usr) => {
       const lastTaskAt = dayjs(usr.lastTaskAt)
-      if (
-        usr.taskReminder &&
-        usr.taskReminder === 'true' &&
-        usr.streak > 0 &&
-        usr.lastTaskAt &&
-        lastTaskAt.isBefore(lastDay())
-      ) {
+      if (usr.taskReminder && usr.taskReminder === 'true' && usr.streak > 0 && usr.lastTaskAt && lastTaskAt.isBefore(lastDay())) {
         const channel = await openChannel(usr.userId)
         console.error('personalReminder', usr.userId)
         return sendChannel(
@@ -41,13 +35,7 @@ export const personalFridayTaskReminder = async (users: User[]) => {
   await Promise.all(
     users.map(async (usr) => {
       const lastTaskAt = dayjs(usr.lastTaskAt)
-      if (
-        usr.taskReminder &&
-        usr.taskReminder === 'true' &&
-        usr.streak === 0 &&
-        usr.lastTaskAt &&
-        lastTaskAt.isBefore(lastWeek())
-      ) {
+      if (usr.taskReminder && usr.taskReminder === 'true' && usr.streak === 0 && usr.lastTaskAt && lastTaskAt.isBefore(lastWeek())) {
         const channel = await openChannel(usr.userId)
         console.error('personalReminder', usr.userId)
         return sendChannel(
@@ -119,10 +107,7 @@ export const lateBot = async () => {
         )
       }
       if (dayjs().day() === 1 && dayjs().date() < 8) {
-        await sendChannel(
-          config.channel_general,
-          `C'est l'heure de l'appel mensuel sur le general vocal ! 💪`
-        )
+        await sendChannel(config.channel_general, `C'est l'heure de l'appel mensuel sur le general vocal ! 💪`)
         await personalVocalReminder(users)
       }
 

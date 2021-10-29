@@ -28,9 +28,14 @@ const karmaAdd = async (interaction: Interaction, option: ApplicationCommandInte
     if (senderId === userId) {
       return sendTxtLater("Tu ne peux pas t'ajouter du karma toi même !", [], interaction.application_id, interaction.token)
     }
-    const currentKarma = await addKarmaById(userId, senderId, 1)
-    const botString = await afterAdd(1, userId, currentKarma)
-    return sendTxtLater(botString, [], interaction.application_id, interaction.token)
+    try {
+      const currentKarma = await addKarmaById(userId, senderId, 1)
+      const botString = await afterAdd(1, userId, currentKarma)
+      return sendTxtLater(botString, [], interaction.application_id, interaction.token)
+    } catch (err) {
+      console.error('karmaAdd', err)
+      return sendTxtLater('Erreur karma', [], interaction.application_id, interaction.token)
+    }
   } else {
     return sendTxtLater('Donne moi un Maker 👨‍🌾 !', [], interaction.application_id, interaction.token)
   }

@@ -31,14 +31,9 @@ export const getUsersById = async (userId: string): Promise<User | null> => {
   }
 }
 
-export const getUsersByUsername = async (
-  username: string
-): Promise<User | null> => {
+export const getUsersByUsername = async (username: string): Promise<User | null> => {
   try {
-    const snapshot = await firestore()
-      .collection('/discord')
-      .where('username', '==', username)
-      .get()
+    const snapshot = await firestore().collection('/discord').where('username', '==', username).get()
     let data
     snapshot.forEach((doc) => {
       data = doc.data()
@@ -66,18 +61,14 @@ export const getConfig = async () => {
   return data
 }
 
-export const getUserData = async (
-  userId: string
-): Promise<DiscordUser | undefined> => {
+export const getUserData = async (userId: string): Promise<DiscordUser | undefined> => {
   const url = `https://discord.com/api/v8/users/${userId}`
   const data = await getConfig()
   if (!data) {
     return Promise.resolve(undefined)
   }
   const headers = {
-    Authorization: `Bot ${
-      process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token
-    }`,
+    Authorization: `Bot ${process.env.BOT_TOKEN ? process.env.BOT_TOKEN : data.discord.bot_token}`,
   }
   try {
     const res = await axios.get(url, { headers })
@@ -88,10 +79,7 @@ export const getUserData = async (
   }
 }
 
-export const updateUser = async (
-  userId: string,
-  user: Partial<User>
-): Promise<User> => {
+export const updateUser = async (userId: string, user: Partial<User>): Promise<User> => {
   const userDoc = await firestore().collection('/discord').doc(userId).get()
   if (!userDoc.exists) {
     const userInfo = await getUserData(userId)
@@ -120,8 +108,7 @@ export const updateUser = async (
         base.avatar = userInfo.avatar
         base.avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${userInfo.avatar}.png`
       } else {
-        base.avatarUrl =
-          'https://res.cloudinary.com/forgr/image/upload/v1621079734/indiemakers/cover-im_no_gjzhog.jpg'
+        base.avatarUrl = 'https://res.cloudinary.com/forgr/image/upload/v1621079734/indiemakers/cover-im_no_gjzhog.jpg'
       }
       base.username = userInfo.username
     }

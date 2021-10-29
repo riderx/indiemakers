@@ -60,12 +60,6 @@ export interface Person {
   number: number
 }
 
-export type EncryptedUser = User
-
-export interface UserWithAccessToken extends User {
-  accessToken: AccessTokenObject
-}
-
 export interface DiscordConfig {
   discordResetAfter: number
   channel_bip: string
@@ -83,7 +77,7 @@ export interface Karma {
 }
 
 export interface KarmaAll {
-  karmas: Karma[];
+  karmas: Karma[]
   total: number
 }
 
@@ -137,6 +131,58 @@ export enum Category {
   // eslint-disable-next-line no-unused-vars
   OTHER = 'other',
 }
+
+// eslint-disable-next-line no-unused-vars
+export enum TaskStatus {
+  // eslint-disable-next-line no-unused-vars
+  TODO = 'todo',
+  // eslint-disable-next-line no-unused-vars
+  DONE = 'done',
+}
+export interface Task {
+  id: number
+  content: string
+  status: TaskStatus
+  doneAt?: string
+  wipId?: string
+  makerlogHook?: string
+  createdAt: string
+  updatedAt: string
+}
+export interface TaskAll {
+  tasks: Task[]
+  total: number
+}
+
+export interface Post {
+  id?: number
+  userId?: string
+  userName?: string
+  userAvatarUrl?: string
+  text: string
+  createdAt: string
+  updatedAt: string
+  hashtag: string
+}
+
+export interface PostAll {
+  posts: Post[]
+  total: number
+}
+
+export interface Income {
+  id?: string
+  ammount: number
+  stripeCharges?: Income[]
+  status: 'expense' | 'income'
+  date: string
+  createdAt?: string
+  updatedAt?: string
+}
+export interface IncomeAll {
+  incomes: Income[]
+  total: number
+}
 export interface Project {
   id?: string
   userId?: string
@@ -167,7 +213,6 @@ export interface Project {
   isStripe?: boolean
   stripeApiKey?: string
 }
-
 export interface User {
   userId: string
   avatar: string
@@ -205,59 +250,10 @@ export interface User {
   createdAt: string
   updatedAt: string
 }
+export type EncryptedUser = User
 
-export interface Post {
-  id?: number
-  userId?: string
-  userName?: string
-  userAvatarUrl?: string
-  text: string
-  createdAt: string
-  updatedAt: string
-  hashtag: string
-}
-
-export interface PostAll {
-  posts: Post[]
-  total: number
-}
-
-
-export interface Income {
-  id?: string
-  ammount: number
-  stripeCharges?: Income[]
-  status: 'expense' | 'income'
-  date: string
-  createdAt?: string
-  updatedAt?: string
-}
-export interface IncomeAll {
-  incomes: Income[]
-  total: number
-}
-
-// eslint-disable-next-line no-unused-vars
-export enum TaskStatus {
-  // eslint-disable-next-line no-unused-vars
-  TODO = 'todo',
-  // eslint-disable-next-line no-unused-vars
-  DONE = 'done',
-}
-
-export interface Task {
-  id: number
-  content: string
-  status: TaskStatus
-  doneAt?: string
-  wipId?: string
-  makerlogHook?: string
-  createdAt: string
-  updatedAt: string
-}
-export interface TaskAll {
-  tasks: Task[]
-  total: number
+export interface UserWithAccessToken extends User {
+  accessToken: AccessTokenObject
 }
 export interface Image {
   url: string
@@ -277,10 +273,6 @@ export interface Footer {
   text: string
   // eslint-disable-next-line camelcase
   icon_url: string
-}
-
-export interface Image {
-  url: string
 }
 export interface Embed {
   title?: string

@@ -20,14 +20,8 @@ export const getKarmaById = async (id: string): Promise<KarmaAll> => {
   }
 }
 
-export const addKarmaById = async (
-  userId: string,
-  senderId: string,
-  value: number
-): Promise<KarmaAll> => {
-  await firestore()
-    .collection(`discord/${userId}/karma`)
-    .add({ userId: senderId, value, createdAt: dayjs().toISOString() })
+export const addKarmaById = async (userId: string, senderId: string, value: number): Promise<KarmaAll> => {
+  await firestore().collection(`discord/${userId}/karma`).add({ userId: senderId, value, createdAt: dayjs().toISOString() })
   const curKarma = await getKarmaById(userId)
   return curKarma
 }

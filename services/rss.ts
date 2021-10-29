@@ -41,11 +41,7 @@ export const discordProjects = ($config: NuxtConfig): Promise<Project[]> => {
     })
 }
 
-export const discordHashtag = (
-  $config: NuxtConfig,
-  userId: string,
-  hashtag: string
-): Promise<Project | null> => {
+export const discordHashtag = ($config: NuxtConfig, userId: string, hashtag: string): Promise<Project | null> => {
   const url = `${$config.BASEAPI}/project?id=${userId}&hashtag=${hashtag}`
   return axios
     .get(url)
@@ -58,10 +54,7 @@ export const discordHashtag = (
     })
 }
 
-export const discordMakerId = (
-  $config: NuxtConfig,
-  id: string
-): Promise<User | null> => {
+export const discordMakerId = ($config: NuxtConfig, id: string): Promise<User | null> => {
   const url = `${$config.BASEAPI}/makers?id=${id}`
   return axios
     .get(url)
@@ -100,10 +93,7 @@ export const feed = ($config: NuxtConfig): Promise<Episode[]> => {
     })
 }
 
-export const ep = (
-  guid: string,
-  $config: NuxtConfig
-): Promise<Episode | null> => {
+export const ep = (guid: string, $config: NuxtConfig): Promise<Episode | null> => {
   const url = `${$config.BASEAPI}/podcasts?guid=${guid}`
   return axios
     .get(url)

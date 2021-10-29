@@ -1,20 +1,13 @@
-import { User } from './../../types';
 import dayjs from 'dayjs'
 import admin from 'firebase-admin'
-import {
-  Interaction,
-  ApplicationCommandInteractionDataOption,
-} from '../command'
-import { sendChannel, sendTxtLater } from './utils'
-import { getAllProjects } from './project'
+import { Interaction, ApplicationCommandInteractionDataOption } from '../command'
 import { Income, IncomeAll } from '../../../services/types'
 import { getConfig, updateUser } from '../../../services/firebase/discord'
+import { sendChannel, sendTxtLater } from './utils'
+import { getAllProjects } from './project'
+import { User } from './../../types'
 
-export const createProjectIncome = async (
-  userId: string,
-  hashtag: string,
-  income: Partial<Income>
-) => {
+export const createProjectIncome = async (userId: string, hashtag: string, income: Partial<Income>) => {
   await admin
     .firestore()
     .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`)
@@ -37,25 +30,12 @@ export const createProjectIncome = async (
   return updateUser(userId, updatedUser)
 }
 
-export const deleteProjectIncome = async (
-  userId: string,
-  hashtag: string,
-  incomeId: string
-) => {
-  await admin
-    .firestore()
-    .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`)
-    .doc(incomeId)
-    .delete()
+export const deleteProjectIncome = async (userId: string, hashtag: string, incomeId: string) => {
+  await admin.firestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`).doc(incomeId).delete()
   await updateProjecttotalIncome(userId, hashtag)
 }
 
-export const updateProjectIncome = (
-  userId: string,
-  hashtag: string,
-  incomeId: string,
-  income: Partial<Income>
-) => {
+export const updateProjectIncome = (userId: string, hashtag: string, incomeId: string, income: Partial<Income>) => {
   return admin
     .firestore()
     .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`)
@@ -63,22 +43,11 @@ export const updateProjectIncome = (
     .update({ ...income, updatedAt: dayjs().toISOString() })
 }
 
-const updateProjecttotalIncome = async (
-  userId: string,
-  hashtag: string
-): Promise<IncomeAll> => {
-  const projDoc = await admin
-    .firestore()
-    .collection(`discord/${userId}/projects/`)
-    .doc(hashtag.toLowerCase())
-    .get()
+const updateProjecttotalIncome = async (userId: string, hashtag: string): Promise<IncomeAll> => {
+  const projDoc = await admin.firestore().collection(`discord/${userId}/projects/`).doc(hashtag.toLowerCase()).get()
   const curIncomes = await getAllProjectsIncomes(userId, hashtag)
   if (!projDoc.exists) {
-    console.error(
-      `Cannot add total to userId: ${userId}, hashtag: ${hashtag.toLowerCase()}, incomes: ${
-        curIncomes.total
-      }`
-    )
+    console.error(`Cannot add total to userId: ${userId}, hashtag: ${hashtag.toLowerCase()}, incomes: ${curIncomes.total}`)
   }
   await projDoc.ref.update({
     incomes: curIncomes.total,
@@ -87,15 +56,9 @@ const updateProjecttotalIncome = async (
   return curIncomes
 }
 
-export const getAllProjectsIncomes = async (
-  userId: string,
-  hashtag: string
-): Promise<IncomeAll> => {
+export const getAllProjectsIncomes = async (userId: string, hashtag: string): Promise<IncomeAll> => {
   try {
-    const documents = await admin
-      .firestore()
-      .collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`)
-      .get()
+    const documents = await admin.firestore().collection(`discord/${userId}/projects/${hashtag.toLowerCase()}/incomes`).get()
     const incomes: Income[] = []
     documents.docs.map((doc) => {
       const data = doc.data() as Income
@@ -105,9 +68,7 @@ export const getAllProjectsIncomes = async (
       return data
     })
     const total = incomes.reduce((tt, current) => {
-      return current.status === 'expense'
-        ? tt - Number(current.ammount)
-        : tt + Number(current.ammount)
+      return current.status === 'expense' ? tt - Number(current.ammount) : tt + Number(current.ammount)
     }, 0)
     return { incomes, total }
   } catch (err) {
@@ -121,11 +82,7 @@ const getTotalIncomeByUser = async (userId: string): Promise<number> => {
   return projects.reduce((tt, project) => tt + project.incomes, 0)
 }
 
-const incomeAdd = async (
-  interaction: Interaction,
-  options: ApplicationCommandInteractionDataOption[],
-  userId: string
-) => {
+const incomeAdd = async (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], userId: string) => {
   let hashtag = ''
   const newIncome: Partial<Income> = {
     createdAt: dayjs().toISOString(),
@@ -146,11 +103,7 @@ const incomeAdd = async (
       date.set('year', Number(element.value))
     }
   })
-  const projDoc = await admin
-    .firestore()
-    .collection(`discord/${userId}/projects`)
-    .doc(hashtag.toLowerCase())
-    .get()
+  const projDoc = await admin.firestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).get()
   if (!projDoc.exists) {
     return sendTxtLater(
       `Le projet #${hashtag.toLowerCase()}, n'existe pas. tu peux le crée avec \`/im projet ajouter\` 😇`,
@@ -166,9 +119,7 @@ const incomeAdd = async (
   newIncome.date = date.toISOString()
   await createProjectIncome(userId, hashtag, newIncome)
   return sendTxtLater(
-    `${newIncome.status === 'expense' ? 'La dépense' : 'Le revenu'} 💰: ${
-      newIncome.ammount
-    } ${dayjs(newIncome.date).format('MM/YYYY')}
+    `${newIncome.status === 'expense' ? 'La dépense' : 'Le revenu'} 💰: ${newIncome.ammount} ${dayjs(newIncome.date).format('MM/YYYY')}
 À été ajouté au projet #${hashtag}, 🎉!`,
     [],
     interaction.application_id,
@@ -176,11 +127,7 @@ const incomeAdd = async (
   )
 }
 
-const incomeEdit = (
-  interaction: Interaction,
-  options: ApplicationCommandInteractionDataOption[],
-  userId: string
-) => {
+const incomeEdit = (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], userId: string) => {
   let hashtag = ''
   let incomeId = ''
   const update: Partial<Income> = {}
@@ -216,11 +163,7 @@ const incomeEdit = (
   ]).then(() => Promise.resolve())
 }
 
-const incomesView = async (
-  interaction: Interaction,
-  options: ApplicationCommandInteractionDataOption[],
-  userId: string
-) => {
+const incomesView = async (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], userId: string) => {
   let hashtag = ''
   let makerId = userId
   options.forEach((element: ApplicationCommandInteractionDataOption) => {
@@ -234,12 +177,7 @@ const incomesView = async (
     const allIncomes = await getAllProjectsIncomes(makerId, hashtag)
     let target
     if (allIncomes.incomes.length === 0) {
-      return sendTxtLater(
-        'Pas encore de revenue sur ce projet, ça viendra !',
-        [],
-        interaction.application_id,
-        interaction.token
-      )
+      return sendTxtLater('Pas encore de revenue sur ce projet, ça viendra !', [], interaction.application_id, interaction.token)
     } else if (makerId !== userId) {
       target = `<@${makerId}> a fait`
     } else {
@@ -251,31 +189,17 @@ Voici La liste des revenus :
 
 `
     allIncomes.incomes.forEach((element: Income) => {
-      incomeInfos += `💰 ${element.id} - ${dayjs(element.createdAt).format(
-        'DD-MM-YYYY'
-      )}    ${element.status === 'expense' ? '-' : ''}${element.ammount} €\n`
+      incomeInfos += `💰 ${element.id} - ${dayjs(element.createdAt).format('DD-MM-YYYY')}    ${element.status === 'expense' ? '-' : ''}${
+        element.ammount
+      } €\n`
     })
-    return sendTxtLater(
-      incomeInfos,
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater(incomeInfos, [], interaction.application_id, interaction.token)
   } else {
-    return sendTxtLater(
-      `Je ne trouve pas le projet #${hashtag} pour <@${makerId}> 😅`,
-      [],
-      interaction.application_id,
-      interaction.token
-    )
+    return sendTxtLater(`Je ne trouve pas le projet #${hashtag} pour <@${makerId}> 😅`, [], interaction.application_id, interaction.token)
   }
 }
 
-const incomesDelete = (
-  interaction: Interaction,
-  options: ApplicationCommandInteractionDataOption[],
-  userId: string
-) => {
+const incomesDelete = (interaction: Interaction, options: ApplicationCommandInteractionDataOption[], userId: string) => {
   let hashtag = ''
   let incomeId = ''
   options.forEach((element: any) => {
@@ -287,48 +211,22 @@ const incomesDelete = (
   })
   return Promise.all([
     deleteProjectIncome(userId, hashtag, incomeId),
-    sendTxtLater(
-      `Tu as supprimé le revenu ${incomeId} 💸!`,
-      [],
-      interaction.application_id,
-      interaction.token
-    ),
+    sendTxtLater(`Tu as supprimé le revenu ${incomeId} 💸!`, [], interaction.application_id, interaction.token),
   ]).then(() => Promise.resolve())
 }
 
-export const incomeFn = (
-  interaction: any,
-  option: ApplicationCommandInteractionDataOption,
-  userId: string
-): Promise<void> => {
-  if (
-    option.name === 'ajouter' &&
-    option.options &&
-    option.options.length > 0
-  ) {
+export const incomeFn = (interaction: any, option: ApplicationCommandInteractionDataOption, userId: string): Promise<void> => {
+  if (option.name === 'ajouter' && option.options && option.options.length > 0) {
     return incomeAdd(interaction, option.options, userId)
   }
   if (option.name === 'liste' && option.options && option.options.length > 0) {
     return incomesView(interaction, option.options, userId)
   }
-  if (
-    option.name === 'modifier' &&
-    option.options &&
-    option.options.length > 0
-  ) {
+  if (option.name === 'modifier' && option.options && option.options.length > 0) {
     return incomeEdit(interaction, option.options, userId)
   }
-  if (
-    option.name === 'supprimer' &&
-    option.options &&
-    option.options.length > 0
-  ) {
+  if (option.name === 'supprimer' && option.options && option.options.length > 0) {
     return incomesDelete(interaction, option.options, userId)
   }
-  return sendTxtLater(
-    `La Commande ${option.name} n'est pas pris en charge 🤫`,
-    [],
-    interaction.application_id,
-    interaction.token
-  )
+  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge 🤫`, [], interaction.application_id, interaction.token)
 }

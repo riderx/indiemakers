@@ -14,7 +14,6 @@ export const frToEn = async (translate: v2.Translate | null, text: string) => {
     console.error('frToEn', err)
     return text
   }
-
 }
 
 export const initTranslate = () => {
