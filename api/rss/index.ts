@@ -36,6 +36,9 @@ const rss = async (_req: Request, res: Response) => {
       })
     })
     const xml = feed.xml()
+    if (res.type) {
+      res.type('application/xml')
+    }
     return res.send(xml)
   } catch (e) {
     console.error(e)
