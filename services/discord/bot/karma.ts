@@ -28,6 +28,7 @@ const karmaAdd = async (interaction: Interaction, option: ApplicationCommandInte
       return sendTxtLater("Tu ne peux pas t'ajouter du karma toi même !", [], interaction.application_id, interaction.token)
     }
     try {
+      console.error('start addKarmaById')
       const currentKarma = await addKarmaById(userId, senderId, 1)
       console.error('addKarmaById')
       const botString = await afterAdd(1, userId, currentKarma)
