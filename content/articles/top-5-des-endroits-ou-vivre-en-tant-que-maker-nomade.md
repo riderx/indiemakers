@@ -4,7 +4,8 @@ title: Top 5 des endroits où vivre en tant que maker nomade
 surtitle: ''
 published: true
 subtitle: ''
-description: ''
+description: Être un indie maker (créateur indépendant) signifie souvent être plus frugal qu'un employé à temps plein avec un revenu prévisible.
+Mais cela signifie aussi plus de liberté, et la possibilité de travailler de n'importe où.
 type: Article
 headImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fpawel-janiak-foa_hz1bxii-unsplash.jpg?alt=media&token=7d112536-312a-4392-a31d-b066104c8b09"
 readTime: ''
