@@ -3,9 +3,9 @@
   <div class="relative px-4 pt-10 pb-20 sm:px-6 lg:pt-14 lg:pb-16 lg:px-8">
     <div class="relative mx-auto max-w-7xl">
       <div class="text-center">
-        <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+        <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
           {{ title }}
-        </h2>
+        </h1>
         <p class="max-w-2xl mx-auto mt-3 text-xl text-gray-300 sm:mt-4">
           {{ description }}
         </p>
@@ -29,9 +29,9 @@
                   </a>
                 </p>
                 <a href="#" class="block mt-2">
-                  <p class="text-xl font-semibold text-gray-900">
+                  <h2 class="text-xl font-semibold text-gray-900">
                     {{ article.title }}
-                  </p>
+                  </h2>
                   <p class="mt-3 text-base text-gray-500">
                     {{ article.description }}
                   </p>

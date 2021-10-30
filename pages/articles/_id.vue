@@ -40,16 +40,16 @@
           </div>
           <div class="relative px-4 sm:px-6 lg:px-8">
             <div class="mx-auto text-lg max-w-prose">
-              <h1>
+              <div>
                 <span class="block text-base font-semibold tracking-wide text-center text-indigo-600 uppercase">{{ page.surtitle }}</span>
-                <span class="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-center text-gray-900 sm:text-4xl">{{
-                  page.title
-                }}</span>
-                <span class="block text-base font-semibold tracking-wide text-center text-indigo-600 uppercase">{{ page.subtitle }}</span>
-              </h1>
-              <p class="mt-8 text-xl leading-8 text-gray-500">
+                <h1 class="block mt-2 text-3xl font-extrabold leading-8 tracking-tight text-center text-gray-900 sm:text-4xl">
+                  {{ page.title }}
+                </h1>
+                <h2 class="block text-base font-semibold tracking-wide text-center text-indigo-600 uppercase">{{ page.subtitle }}</h2>
+              </div>
+              <h3 class="mt-8 text-xl leading-8 text-gray-500">
                 {{ page.description }}
-              </p>
+              </h3>
             </div>
             <div class="mx-auto mt-6">
               <nuxt-content class="mx-auto prose-sm prose prose-blue sm:prose lg:prose-lg xl:prose-2xl" :document="page" />
