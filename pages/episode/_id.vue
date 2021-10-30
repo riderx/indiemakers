@@ -5,10 +5,11 @@
         <div class="flex flex-wrap">
           <div class="w-full text-sm text-white lg:w-1/2 md:px-4">
             <div class="flex flex-wrap justify-center pt-3 border-t-8 border-white md:pb-1 md:border-8">
-              <p v-if="episode.title !== 'No title'" class="px-3 text-3xl text-center font-indie">
+              <h1 v-if="episode.title !== 'No title'" class="px-3 text-3xl text-center font-indie">
                 {{ episode.title }}
-              </p>
+              </h1>
               <p v-else class="w-4/5 h-8 px-3 animate-pulse bg-orchid-300"></p>
+              <h2 class="hidden">{{ episode.name }}</h2>
 
               <div class="block w-full px-0 h-w-screen sm:hidden">
                 <img
@@ -151,7 +152,7 @@
                       width="100%"
                       height="100%"
                       class="w-full h-auto max-w-full border-8 border-white square_content"
-                      :alt="`Cover_${episode.name}`"
+                      :alt="`Couverture podcast ${episode.name}`"
                     />
                     <div v-else class="w-full h-auto max-w-full border-8 border-white square_content animate-pulse bg-orchid-300"></div>
                   </div>
@@ -221,7 +222,7 @@ export default defineComponent({
     const episodes = ref([] as Episode[])
     const titleNoEmoji = computed(() => removeEmoji(episode.value.title))
     const contentNoEmoji = computed(() => removeEmoji(episode.value.content))
-    const previewNoEmoji = computed(() => cutText(contentNoEmoji.value))
+    const previewNoEmoji = computed(() => cutText(contentNoEmoji.value.replace(/<[^>]*>?/gm, '')))
 
     const randomEp = (length: number): number => {
       return Math.floor(Math.random() * length) + 0
@@ -351,7 +352,13 @@ export default defineComponent({
         },
       ],
       title: titleNoEmoji.value,
-      meta: createMeta(titleNoEmoji.value, previewNoEmoji.value, episode.value.imageOptimized, episode.value.name, episode.value.audio),
+      meta: createMeta(
+        titleNoEmoji.value,
+        previewNoEmoji.value.replace(/<[^>]*>?/gm, ''),
+        episode.value.imageOptimized,
+        episode.value.name,
+        episode.value.audio
+      ),
     }))
     return {
       episode,
