@@ -24,9 +24,9 @@
       </button>
     </div>
     <article v-for="task in filtered" :key="task.id" class="py-5 border-b-2 lg:mx-10 border-orchid-300">
-      <h1 class="text-xl text-black">
+      <p class="text-xl text-black">
         {{ task.content }}
-      </h1>
+      </p>
       <time class="text-sm text-royalblue-700" :datetime="task.createdAt">{{ task.createdAt }}</time>
     </article>
   </div>

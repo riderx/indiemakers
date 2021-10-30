@@ -24,7 +24,7 @@
       </button>
     </div>
     <article v-for="income in filtered" :key="income.id" class="py-5 border-b-2 lg:mx-10 border-orchid-300">
-      <h1 class="text-xl">{{ income.ammount }} €</h1>
+      <p class="text-xl text-black">{{ income.ammount }} €</p>
       <time class="text-sm text-royalblue-700" :datetime="income.date">{{ income.date }}</time>
     </article>
   </div>

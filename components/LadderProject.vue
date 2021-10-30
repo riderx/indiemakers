@@ -17,9 +17,9 @@
       >
         <img class="object-cover w-12 h-12 border-2 rounded-full border-orchid-300" :src="project.logo || noImge" alt="cover profil" />
         <div class="flex flex-col mx-3">
-          <h1 class="text-lg font-medium" :style="getTextColor(project.color)">
+          <h4 class="text-lg font-medium" :style="getTextColor(project.color)">
             {{ project.emoji || '' }} {{ project.name || project.hashtag }}
-          </h1>
+          </h4>
           <div class="flex text-sm">
             <p class="px-2 mx-2 bg-white rounded text-royalblue-700">🔥{{ project.streak }}</p>
             <p class="px-2 mx-2 bg-white rounded text-royalblue-700">💗 {{ project.tasks }}</p>

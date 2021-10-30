@@ -12,9 +12,9 @@
       <h1 class="mt-20 text-3xl font-medium text-white font-indie" :style="getTextColor(maker.color)">
         {{ maker.emoji || '' }} {{ maker.name || maker.username }}
       </h1>
-      <h3 v-if="maker.bio" class="mb-3 text-2xl text-orchid-300">
+      <h2 v-if="maker.bio" class="mb-3 text-2xl text-orchid-300">
         {{ maker.bio }}
-      </h3>
+      </h2>
       <div class="flex items-center justify-center">
         <p class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700">🕉 {{ maker.karma }}</p>
         <p class="px-4 py-1 mx-3 text-lg bg-white rounded-lg text-royalblue-700">🔥 {{ maker.streak }}</p>
@@ -58,9 +58,9 @@
               <span class="absolute bottom-0 text-sm text-white bg-opacity-75 rounded-tr-lg rounded-bl-lg bg-royalblue-700"
                 >🔥{{ project.streak }}</span
               >
-              <h2 class="mx-1 text-2xl truncate font-indie" :style="getTextColor(project.color)">
+              <p class="mx-1 text-2xl truncate font-indie" :style="getTextColor(project.color)">
                 {{ project.emoji || '' }} {{ project.name || project.hashtag }}
-              </h2>
+              </p>
               <NuxtLink
                 class="hidden"
                 :to="`/makers/${encodeURIComponent(maker.username || '')}/projets/${encodeURIComponent(project.hashtag)}`"
@@ -82,12 +82,12 @@
               >🔥{{ projectData.streak }}</span
             >
             <div class="mx-3 text-center lg:text-left">
-              <h2 class="text-2xl truncate cursor-pointer font-indie" :style="getTextColor(projectData.color)" @click="openProject()">
+              <h3 class="text-2xl truncate cursor-pointer font-indie" :style="getTextColor(projectData.color)" @click="openProject()">
                 <NuxtLink :to="`/makers/${encodeURIComponent(maker.username || '')}/projets/${encodeURIComponent(projectData.hashtag)}`">
                   {{ projectData.emoji || '' }}
                   {{ projectData.name || projectData.hashtag }}
                 </NuxtLink>
-              </h2>
+              </h3>
               <p class="my-2 text-xl">{{ projectData.description }}</p>
               <a :href="projectData.website" target="_blank" class="text-lg">{{ projectData.website }}</a>
             </div>

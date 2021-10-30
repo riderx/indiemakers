@@ -23,11 +23,11 @@
               >🔥{{ projectData.streak }}</span
             >
             <div class="mx-3 text-center lg:text-left">
-              <h2 class="text-2xl truncate font-indie" :style="getTextColor(projectData.color)">
+              <h1 class="text-2xl truncate font-indie" :style="getTextColor(projectData.color)">
                 {{ projectData.emoji || '' }}
                 {{ projectData.name || projectData.hashtag }}
-              </h2>
-              <p class="my-2 text-xl">{{ projectData.description }}</p>
+              </h1>
+              <h3 class="my-2 text-xl">{{ projectData.description }}</h3>
               <a :href="projectData.website" target="_blank" class="text-lg">{{ projectData.website }}</a>
               <p class="my-2 text-xl">
                 Par:
