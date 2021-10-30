@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { InteractionResponseType, InteractionType, verifyKey } from 'discord-interactions'
-import fFnit from '../../services/firebase/init'
+import initF from '../../services/firebase/init'
 import discordInteraction from '../../services/discord/bot'
 import { sendTxtLoading } from '../../services/discord/bot/utils'
 
@@ -12,7 +12,7 @@ export const config = {
 
 const bot = async (req: Request, res: Response) => {
   console.error('bot')
-  fFnit()
+  initF()
   try {
     const signature = String(req.headers ? req.headers['x-signature-ed25519'] : req.get('X-Signature-Ed25519'))
     const timestamp = String(req.headers ? req.headers['x-signature-timestamp'] : req.get('X-Signature-Timestamp'))

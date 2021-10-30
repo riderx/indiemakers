@@ -1,13 +1,13 @@
 import { Request, Response } from 'express'
 import { getAllAllProject, getProjectById } from '../../services/discord/bot/project'
 import { getAllProjectsIncomes } from '../../services/discord/bot/incomes'
-import fFnit from '../../services/firebase/init'
+import initF from '../../services/firebase/init'
 import { getPostsByHash } from '../../services/firebase/posts'
 import { getAllProjectsTasks } from '../../services/firebase/tasks'
 import { getUsersByUsername, getAllUsers } from './../../services/firebase/discord'
 
 const project = async (req: Request, res: Response) => {
-  fFnit()
+  initF()
   if (req?.query?.hashtag) {
     const user = await getUsersByUsername(String(req.query.id))
     if (user) {

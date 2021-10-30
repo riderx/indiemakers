@@ -297,21 +297,21 @@ export const onboardingMessage = async (user: User) => {
     await sendChannel(
       channel.id,
       `Bienvenue dans la communauté INDIE MAKERS ❤️
-  Je suis le bot de la communauté !
-  Mon but c'est t'aider a etre plus régulier sur tes projets.
 
-  Pour ça je favorise les interactions entre les makers(membres) de la communauté!
-  Je te permet de distribuer du karma aux membres qui partager et aide les autres
+Je suis le bot de la communauté !
+Mon but c'est t'aider a etre plus régulier sur tes projets.
 
-  Grace a mes commande tu peux aussi crée tes projets sur le site indiemakers.fr
-  crée des taches, des post ou des revenue sur tes projets !
+Pour ça, je favorise les interactions entre les makers(membres) de la communauté!
+Je te permet de distribuer du karma aux membres qui partager et aide les autres.
 
-  Je suis la aussi pour crée des moments d'echanges particulier entre vous.
-  Comme le résumé du lundi, ou le vocal mensuel !
+Avec mes commande tu peux mettre en avant tes projets sur le site indiemakers.fr
+crée des taches, des post ou des revenue sur tes projets !
 
-  `
+Je suis la aussi pour crée des moments d'echanges particulier entre vous.
+Comme le résumé du lundi.
+`
     )
-    await sendChannel(channel.channel_general, `@everyone C'est le premier karma de <@${user.userId}> , bienvenue <3`)
+    await sendChannel(config.channel_general, `@everyone C'est le premier karma de <@${user.userId}> , bienvenue <3`)
     await sleep(20)
     await sendChannel(
       channel.id,
@@ -346,7 +346,7 @@ export const onboardingMessage = async (user: User) => {
       channel.id,
       `Tu peux l'enrichir depuis la communauté avec la commande:
 
-  \`/im maker modifier nom:TON NOM\`
+  \`/im maker modifier nom:${user.name || 'Martin'}\`
 
   Si tu souhaite voir la liste, des champs possibles:
   \`/im maker aide\`
@@ -367,28 +367,20 @@ export const onboardingMessage = async (user: User) => {
     await sendChannel(
       channel.id,
       `Pour apprendre à m'utiliser (le bot) il y a une petite documentation juste ici:
-  https://indiemakers.gitbook.io/bot
+https://indiemakers.gitbook.io/bot
   `
     )
     await sleep(15)
     await sendChannel(
       channel.id,
       `voici un petit tuto vidéo pour te montrer comment crée ta premiere tache sur un projet:
-      https://www.youtube.com/watch?v=qrXN3Mai1Gw
+https://www.youtube.com/watch?v=qrXN3Mai1Gw
   `
     )
     await sleep(15)
-    await sendChannel(
-      channel.id,
-      `Ps: n'attend pas de réponse de ma part ici, je ne sais pas encore lire tes messages !
-  `
-    )
+    await sendChannel(channel.id, `Ps: n'attend pas de réponse de ma part ici, je ne sais pas encore lire tes messages !`)
     await sleep(15)
-    await sendChannel(
-      channel.id,
-      `Si t'as des question demande aux utilisateur avec le rôle Moderateur !
-  `
-    )
+    await sendChannel(channel.id, `Si t'as des question demande aux utilisateur avec le rôle Moderateur !`)
   } catch (err) {
     console.error('onboardingMessage', err)
   }
@@ -460,7 +452,7 @@ export const sendChannel = async (channelId: string, content: string, embed: Emb
   }
   if (data.discordResetAfter && data.discordResetAfter > 0) {
     console.error('Sleep a bit', data.discordResetAfter)
-    await sleep(data.discordResetAfter)
+    await sleep(data.discordResetAfter + 1)
   }
   try {
     const res = await post(url, body, { headers })

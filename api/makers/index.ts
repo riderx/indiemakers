@@ -2,10 +2,10 @@ import { Request, Response } from 'express'
 import { getAllUsers, getUsersByUsername } from '../../services/firebase/discord'
 import { getAllPosts } from '../../services/firebase/posts'
 import { getAllProjects } from '../../services/discord/bot/project'
-import fFnit from '../../services/firebase/init'
+import initF from '../../services/firebase/init'
 
 const makers = async (req: Request, res: Response) => {
-  fFnit()
+  initF()
   if (req?.query?.id) {
     const user = await getUsersByUsername(String(req.query.id))
     const projects = await getAllProjects(String(user?.userId), user?.username)

@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
-import fFnit from '../../services/firebase/init'
+import initF from '../../services/firebase/init'
 import { getToolsDb } from './../../services/firebase/tools'
 
 const list = async (_req: Request, res: Response) => {
-  fFnit()
+  initF()
   try {
     const tools = await getToolsDb()
     return res.json(tools)

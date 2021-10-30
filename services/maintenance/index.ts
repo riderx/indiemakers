@@ -3,7 +3,7 @@
 import * as dotenv from 'dotenv'
 // import { onboardingMessage } from '../discord/bot/utils'
 // import { getUsersById } from '../firebase/discord'
-import fFnit from '../firebase/init'
+import initF from '../firebase/init'
 import { fixAllUsersDeep } from './fix_userProjectCount'
 // import { initTranslate } from '../discord/translate';
 // import { podcastToFirebase } from '../firebase/podcasts'
@@ -14,7 +14,7 @@ dotenv.config()
 // import { updateAllUsersNotif } from './update_users'
 // eslint-disable-next-line no-console
 console.log('init Firebase')
-fFnit()
+initF()
 // eslint-disable-next-line no-console
 console.log('init Firebase done')
 // updateAllUsersNotif()

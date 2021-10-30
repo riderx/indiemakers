@@ -177,7 +177,7 @@ export const onCreateUser = firestore.document('/users/{uid}').onCreate(async (s
 export const onCreateDiscord = firestore.document('/discord/{uid}').onCreate(async (snapshot, context) => {
   const { uid } = context.params
   const user = snapshot.data() as User
-  if (user) {
+  if (user && user.userId) {
     await onboardingMessage(user)
     await getFirestore().collection('discord').doc(uid).update({
       onboardingSend: true,
@@ -187,9 +187,8 @@ export const onCreateDiscord = firestore.document('/discord/{uid}').onCreate(asy
 
 export const onUpdateDiscord = firestore.document('/discord/{uid}').onUpdate(async (snapshot, context) => {
   const { uid } = context.params
-  const onboardingSend = snapshot.before.data().onboardingSend
-  if (!onboardingSend) {
-    const user = snapshot.after.data() as User
+  const user = snapshot.after.data() as User
+  if (!user.onboardingSend) {
     if (user && !user.onboardingSend) {
       await onboardingMessage(user)
       await getFirestore().collection('discord').doc(uid).update({

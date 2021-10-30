@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { Request, Response } from 'express'
 import { SitemapStream, streamToPromise } from 'sitemap'
-import fFnit from '../../services/firebase/init'
+import initF from '../../services/firebase/init'
 import { feed } from '../../services/feed'
 import { getAllUsers } from './../../services/firebase/discord'
 import { getAllAllProject } from './../../services/discord/bot/project'
@@ -13,7 +13,7 @@ const getArticles = async () => {
 
 const sitemap = async (_req: Request, res: Response) => {
   try {
-    fFnit()
+    initF()
     const smStream = new SitemapStream({ hostname: 'https://indiemakers.fr' })
 
     smStream.write({ url: '/tools', changefreq: 'monthly', priority: 0.1 })

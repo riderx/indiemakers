@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { getFirestore } from 'firebase-admin/firestore'
 import { Episode } from '../../services/types'
 import { feed } from '../../services/feed'
-import fFnit from '../../services/firebase/init'
+import initF from '../../services/firebase/init'
 
 const findInEp = (name: string, episodes: Episode[]) => {
   let found = null
@@ -35,7 +35,7 @@ const loadData = async () => {
 }
 const maker = async (_req: Request, res: Response) => {
   try {
-    fFnit()
+    initF()
     const data = await loadData()
     return res.json(data)
   } catch (err) {

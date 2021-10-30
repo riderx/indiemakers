@@ -57,15 +57,21 @@ export const personalModayReminder = async (users: User[]) => {
   const config = await getConfig()
   await Promise.all(
     users.map(async (usr) => {
-      if (usr.mondayReminder && usr.mondayReminder === 'true') {
+      if (usr.userId && usr.mondayReminder && usr.mondayReminder === 'true') {
         try {
           const channel = await openChannel(usr.userId)
           console.error('personalReminder', usr.userId)
+          await sendChannel(
+            channel.id,
+            `C'est l'heure de faire ton résumé de la semaine :slight_smile: sur le salon <#${config.channel_general}>.
+C'est notre rituel du lundi pour se motiver et échanger sur nos avancés !
+Ce moment est super important pour crée du lien entre tous les membres, n'hésite pas a répondre aux autres et a poser des questions !`
+          )
           return sendChannel(
             channel.id,
-            `C'est l'heure de faire ton résumé de la semaine sur tes projets :slight_smile: sur le salon <#${config.channel_general}> de la communauté indie makers .
-C'est notre petit rituel du lundi pour se motiver et échanger sur nos avancés !
-Ce moment est super important pour crée du lien entre tous les membres, n'hésite pas a répondre aux autres et a poser des questions !`
+            `C'est aussi un moment pour toi pour partager en public ce que tu fait.
+Apres ton post fait \`/im post ajouter\` pour que ton post apparaisse sur le site indiemakers.fr
+Voici une video pour te montrer https://www.youtube.com/watch?v=Z8q4HNhiwLg`
           )
         } catch (err) {
           console.error('personalModayReminder', err)
@@ -106,10 +112,10 @@ export const lateBot = async () => {
           "@everyone Hey Makers, il est temps de noter vos taches du jour dans vos projets et d'aller chill !"
         )
       }
-      if (dayjs().day() === 1 && dayjs().date() < 8) {
-        await sendChannel(config.channel_general, `C'est l'heure de l'appel mensuel sur le general vocal ! 💪`)
-        await personalVocalReminder(users)
-      }
+      // if (dayjs().day() === 1 && dayjs().date() < 8) {
+      //   await sendChannel(config.channel_general, `C'est l'heure de l'appel mensuel sur le general vocal ! 💪`)
+      //   await personalVocalReminder(users)
+      // }
 
       await personalTaskReminder(users)
       if (dayjs().day() === 5) {
@@ -162,13 +168,13 @@ Continuez comme ça :`
         )
         await personalModayReminder(users)
         await updateIncomeAllProject()
-        if (dayjs().date() < 8) {
-          await sendChannel(
-            data.channel_general,
-            `Ce soir a 18h10 (UTC/GMT +1 heure) c'est l'appel mensuel sur le general vocal !
-Passe faire un tour et partager avec les autres makers !`
-          )
-        }
+        //         if (dayjs().date() < 8) {
+        //           await sendChannel(
+        //             data.channel_general,
+        //             `Ce soir a 18h10 (UTC/GMT +1 heure) c'est l'appel mensuel sur le general vocal !
+        // Passe faire un tour et partager avec les autres makers !`
+        //           )
+        //         }
       }
     }
   } catch (err) {
