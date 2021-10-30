@@ -34,7 +34,7 @@
     </div>
     <div v-if="hashtag" class="flex flex-col m-5 md:flex-row md:m-10">
       <div class="mb-2 text-lg bg-white md:p-5 text-royalblue-700 md:mb-0 md:w-2/5 lg:w-1/5">
-        <h1
+        <p
           class="hidden text-3xl cursor-pointer md:block text-royalblue-700 lg:mb-5 font-indie"
           :class="{
             'border-b-4 border-orchid-300 pb-3': hashtag === 'feed',
@@ -42,7 +42,7 @@
           @click="setHastag('feed')"
         >
           📰 Journal
-        </h1>
+        </p>
         <div class="flex w-full overflow-x-scroll md:flex-col">
           <a
             v-for="project in maker.projectsData"
