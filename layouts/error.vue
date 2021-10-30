@@ -11,8 +11,8 @@
           :alt="logo.title"
           :aria-label="logo.title"
         />
-        <h1 class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie">Tu SEMBLES ÊTRE PERDU!</h1>
-        <p class="px-5 text-white">La page que vous recherchez n'est pas disponible. Essayez à nouveau ou utilise le bouton ci-dessous.</p>
+        <h1 class="py-2 pl-2 m-0 text-3xl text-center text-white font-indie">Tu sembles perdu!</h1>
+        <p class="px-5 text-white">La page que tu recherche n'est pas disponible. Essaye à nouveau ou utilise le bouton ci-dessous.</p>
         <div class="pt-3 pb-3 pl-4 pr-4 mx-auto text-center text-white md:w-1/2">
           <button
             type="button"

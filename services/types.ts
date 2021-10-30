@@ -184,6 +184,7 @@ export interface IncomeAll {
   total: number
 }
 export interface Project {
+  error?: string
   id?: string
   userId?: string
   userName?: string
