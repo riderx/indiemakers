@@ -3,14 +3,14 @@ slug: comment_indi_-hackers_et_product_hunt_ont_change_ma_vie
 title: Comment Indie Hackers et Product Hunt ont changé ma vie
 surtitle: ''
 subtitle: ''
-published: false
+published: true
 description: J'ai aussi découvert des sites comme Product Hunt et Indie Hackers, qui
   partageaient le travail incroyable que faisaient les makers et promouvaient l'image
   que tout le monde pouvait être un maker indé.
 type: Article
 headImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fjoshua-aragon-eab4ml7c7fe-unsplash.jpg?alt=media&token=ac9c900d-6c8a-48ee-8c1c-da02f5770c37"
-readTime: 15 min
-date: 30 avril 2021
+readTime: 10 min
+date: 30 octobre 2021
 author: Martin donadieu
 authorImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fprofil_martin.png?alt=media&token=845cecb1-7445-409d-8169-cc233f149071"
 
@@ -128,6 +128,6 @@ Chaque jour, je célèbre les efforts incroyables des Maker indépendants du mon
 
 Aux Maker indépendants du monde entier, je vous remercie.
 
-Un Message spécial à Ryan Hoover, Abadesi Osunsade, Amrith Shanbhag, Pieter Levels, Ben Tossell, Pat Walls, Product Hunt, Makers Kitchen, Makerlog, WIP et d'autres pour vos contributions inspirantes aux makers indé. ✌️
+Un Message spécial à Ryan Hoover, Pieter Levels, Ben Tossell, Pat Walls, Product Hunt, Makers Kitchen, Makerlog, WIP et d'autres pour vos contributions inspirantes aux makers indé. ✌️
 
 Tu veux discuter des communautés, de la technologie, des indie makers ou de tout autre sujet ? Contacte-moi [@martindonadieu](https://imf.to/martin) sur Twitter.
