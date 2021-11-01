@@ -91,7 +91,8 @@ export const personalVocalReminder = async (users: User[]) => {
         console.error('personalReminder', usr.userId)
         return sendChannel(
           channel.id,
-          `C'est l'heure de l'appel mensuel sur le general vocal ! Ne soit pas timide, c'est difficile pour tout le monde au debut, prend toi une biere met toi alaise et c'est parti !`
+          `C'est l'heure de l'apero mensuel sur l'indieverse ! Ne soit pas timide, c'est difficile pour tout le monde au debut, prend toi une biere met toi alaise et c'est parti !
+app.indiemakers.space/invite/iRaqGsbWMcMTdoBZj`
         )
       } else {
         return Promise.resolve()
@@ -112,10 +113,14 @@ export const lateBot = async () => {
           "@everyone Hey Makers, il est temps de noter vos taches du jour dans vos projets et d'aller chill !"
         )
       }
-      // if (dayjs().day() === 1 && dayjs().date() < 8) {
-      //   await sendChannel(config.channel_general, `C'est l'heure de l'appel mensuel sur le general vocal ! 💪`)
-      //   await personalVocalReminder(users)
-      // }
+      if (dayjs().day() === 1 && dayjs().date() < 8) {
+        await sendChannel(
+          config.channel_general,
+          `C'est l'heure de l'apero mensuel sur le general vocal ! 💪
+app.indiemakers.space/invite/iRaqGsbWMcMTdoBZj`
+        )
+        await personalVocalReminder(users)
+      }
 
       await personalTaskReminder(users)
       if (dayjs().day() === 5) {

@@ -275,7 +275,7 @@ const makerOptions = [
     false,
     [choiceGen('Oui', 'true'), choiceGen('Non', 'false')]
   ),
-  optionGen('rappel_vocal', "Rappel par message privée pour faire rejoindre l'appel vocal mensuel", SlashCommandOptionType.STRING, false, [
+  optionGen('rappel_vocal', "Rappel par message privée pour faire rejoindre l'apero mensuel", SlashCommandOptionType.STRING, false, [
     choiceGen('Oui', 'true'),
     choiceGen('Non', 'false'),
   ]),
