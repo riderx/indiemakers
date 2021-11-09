@@ -116,8 +116,8 @@ export default defineComponent({
       const diffHours = tomorow.getTime() - now.getTime()
       const epRepeat = 7
       const nextEp = epRepeat - (diffDays % epRepeat)
-      const nextEpH = Math.round(diffHours / oneHours - 24)
-      return nextEp !== epRepeat ? `${nextEp} jours` : `${nextEpH} heures`
+      const nextEpH = 24 + Math.round(diffHours / oneHours - 24)
+      return nextEp > 1 ? `${nextEp} jours` : `${nextEpH} heures`
     }
     return { title, image, messages, episodes, empties, nextEpisode }
   },
