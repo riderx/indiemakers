@@ -33,14 +33,16 @@ const sitemap = async (_req: Request, res: Response) => {
     const users = await getAllUsers()
     const projects = await getAllAllProject(users)
     users.forEach((user) => {
-      smStream.write({
-        url: `/makers/${encodeURIComponent(user.username)}`,
-        changefreq: 'daily',
-        priority: 0.5,
-      })
+      if (user.projects > 0 && user.tasks > 5 && user.bio) {
+        smStream.write({
+          url: `/makers/${encodeURIComponent(user.username)}`,
+          changefreq: 'daily',
+          priority: 0.5,
+        })
+      }
     })
     projects.forEach((project) => {
-      if (project.userName) {
+      if (project.userName && project.tasks > 5 && project.description) {
         smStream.write({
           url: `/makers/${encodeURIComponent(project.userName)}/projets/${encodeURIComponent(project.hashtag)}`,
           changefreq: 'daily',
