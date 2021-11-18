@@ -2,7 +2,9 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 import { getFirestore } from 'firebase-admin/firestore'
 import { DiscordConfig, DiscordUser, User } from '../types'
+import { TwitterApiToken, useTwitter } from '~/services/twitter'
 
+const twitter = useTwitter(process.env.TWITTER_TOKEN ? (JSON.parse(process.env.TWITTER_TOKEN) as TwitterApiToken) : undefined)
 export const getAllUsers = async (): Promise<User[]> => {
   try {
     const documents = await getFirestore().collection('/discord').where('userId', '!=', null).get()
@@ -87,6 +89,25 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<U
     user.avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${userInfo.avatar}.png`
     user.avatar = userInfo.avatar
     user.username = userInfo.username
+  }
+  if (user.twitter) {
+    try {
+      const data = await twitter.user(user.twitter.split('/').pop() || '')
+      if (!user.name && data.name) {
+        user.name = data.name
+      }
+      if (!user.cover && data.profile_banner_url) {
+        user.cover = data.profile_banner_url
+      }
+      if (!user.avatarUrl && data.profile_image_url_https) {
+        user.avatarUrl = data.profile_image_url_https
+      }
+      if (!user.bio && data.description) {
+        user.bio = data.description
+      }
+    } catch (err) {
+      console.error('twitter', err, user.twitter)
+    }
   }
   if (!userDoc.exists) {
     const base: User = {

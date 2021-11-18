@@ -22,11 +22,14 @@ import {
   l3s,
 } from './utils'
 import { createProjectIncome, deleteProjectIncome, getAllProjectsIncomes } from './incomes'
+import { TwitterApiToken, useTwitter } from '~/services/twitter'
 
 // eslint-disable-next-line no-unused-vars
 
 const projectPublicKey = ['hashtag', 'name', 'category', 'emoji', 'color', 'cover', 'github', 'openSource', 'website', 'tasks', 'streak']
 const projectProtectedKey = ['id', 'tasks', 'streak', 'bestStreak', 'createdAt', 'updatedAt', 'lastTaskAt']
+
+const twitter = useTwitter(process.env.TWITTER_TOKEN ? (JSON.parse(process.env.TWITTER_TOKEN) as TwitterApiToken) : undefined)
 
 const transforms: Langs[] = [
   t9r('color', 'couleur', 'Couleur'),
@@ -121,20 +124,39 @@ export const updateProject = async (userId: string, hashtag: string, project: Pa
   if (project.website) {
     try {
       const data = await getMetaData(project.website)
-      if ((!project.name || !data.name) && data.name) {
+      if (!project.name && data.title) {
         project.name = data.title
       }
-      if ((!project.cover || !data.cover) && data.image) {
+      if (!project.cover && data.image) {
         project.cover = data.image
       }
-      if ((!project.logo || !data.logo) && data.icon) {
+      if (!project.logo && data.icon) {
         project.logo = data.icon
       }
-      if ((!project.description || !data.description) && data.description) {
+      if (!project.description && data.description) {
         project.description = data.description
       }
     } catch (err) {
-      console.error('getMetaData', err)
+      console.error('getMetaData', err, project.website)
+    }
+  }
+  if (project.twitter) {
+    try {
+      const data = await twitter.user(project.twitter.split('/').pop() || '')
+      if (!project.name && data.name) {
+        project.name = data.name
+      }
+      if (!project.cover && data.profile_banner_url) {
+        project.cover = data.profile_banner_url
+      }
+      if (!project.logo && data.profile_image_url_https) {
+        project.logo = data.profile_image_url_https
+      }
+      if (!project.description && data.description) {
+        project.description = data.description
+      }
+    } catch (err) {
+      console.error('twitter', err, project.twitter)
     }
   }
   const data: Project = projDoc.data() as Project

@@ -1,4 +1,5 @@
 import fs from 'fs'
+import path from 'path'
 import { Request, Response } from 'express'
 import { SitemapStream, streamToPromise } from 'sitemap'
 import initF from '../../services/firebase/init'
@@ -6,8 +7,8 @@ import { feed } from '../../services/feed'
 import { getAllUsers } from './../../services/firebase/discord'
 import { getAllAllProject } from './../../services/discord/bot/project'
 
-const getArticles = async () => {
-  const files = await fs.readdirSync(`${__dirname}/../../content/articles`)
+const getArticles = () => {
+  const files = fs.readdirSync(path.join(__dirname, '..', '..', 'content', 'articles'))
   return files.map((file) => ({ slug: file.replace('.md', '').replace(/-/g, '_') }))
 }
 
