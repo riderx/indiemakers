@@ -54,6 +54,7 @@
     "sitemap": "^7.0.0",
     "store": "^2.0.12",
     "stripe": "^8.178.0",
+    "twitter": "^1.7.1",
     "vue-js-modal": "2.0.1",
     "vue-meta": "^2.4.0",
     "vue-warehouse": "^2.2.0"

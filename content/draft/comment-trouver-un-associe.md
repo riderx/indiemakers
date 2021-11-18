@@ -3,7 +3,7 @@ slug: comment-trouver-un-associe
 title: comment trouver son associé
 surtitle: ''
 subtitle: ''
-published: true
+published: false
 description: La création et la gestion d'une startup en ligne sont devenues beaucoup
   plus accessibles grâce à l'émergence de quelques entreprises qui ont pour objectif
   commun de faciliter la vie des entrepreneurs et des nomades numériques.

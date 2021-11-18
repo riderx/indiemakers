@@ -2,7 +2,7 @@ import axios from 'axios'
 import dayjs from 'dayjs'
 import { getFirestore } from 'firebase-admin/firestore'
 import { DiscordConfig, DiscordUser, User } from '../types'
-import { TwitterApiToken, useTwitter } from '~/services/twitter'
+import { TwitterApiToken, useTwitter } from '../twitter'
 
 const twitter = useTwitter(process.env.TWITTER_TOKEN ? (JSON.parse(process.env.TWITTER_TOKEN) as TwitterApiToken) : undefined)
 export const getAllUsers = async (): Promise<User[]> => {

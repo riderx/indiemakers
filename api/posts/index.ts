@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import initF from '../../services/firebase/init'
-import dayjs from './../../services/dayjs'
 import { getAllUsers } from '../../services/firebase/discord'
 import { getAllAllPosts } from '../../services/firebase/posts'
+import dayjs from './../../services/dayjs'
 
 const list = async (_req: Request, res: Response) => {
   initF()

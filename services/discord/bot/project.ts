@@ -4,6 +4,7 @@ import getMetaData from 'metadata-scraper'
 import { Interaction, ApplicationCommandInteractionDataOption } from '../command'
 import { Embed, Income, Project, User } from '../../../services/types'
 import { updateUser, getConfig } from '../../../services/firebase/discord'
+import { TwitterApiToken, useTwitter } from '../../../services/twitter'
 import { getStripeCharges, Charge } from './stripe'
 import {
   embed,
@@ -22,7 +23,6 @@ import {
   l3s,
 } from './utils'
 import { createProjectIncome, deleteProjectIncome, getAllProjectsIncomes } from './incomes'
-import { TwitterApiToken, useTwitter } from '~/services/twitter'
 
 // eslint-disable-next-line no-unused-vars
 
