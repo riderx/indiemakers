@@ -18,7 +18,11 @@
         />
         <div class="flex flex-col items-center p-2 mb-2 bg-white md:p-10 text-royalblue-700 lg:flex-row">
           <div class="relative flex items-end">
-            <img class="object-cover object-top w-40 h-40 border-2 rounded-lg border-royalblue-700" :src="projectData.logo || noImge" />
+            <img
+              class="object-cover object-top w-40 h-40 border-2 rounded-lg border-royalblue-700"
+              :alt="`logo ${projectData.hashtag}`"
+              :src="projectData.logo || noImge"
+            />
             <span class="absolute bottom-0 text-sm text-white bg-opacity-75 rounded-tr-lg rounded-bl-lg bg-royalblue-700"
               >🔥{{ projectData.streak }}</span
             >

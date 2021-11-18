@@ -15,7 +15,11 @@
         class="flex py-3 border-b-2 cursor-pointer border-orchid-300"
         :to="`/makers/${encodeURIComponent(project.userName || '')}/projets/${encodeURIComponent(project.hashtag)}`"
       >
-        <img class="object-cover w-12 h-12 border-2 rounded-full border-orchid-300" :src="project.logo || noImge" alt="cover profil" />
+        <img
+          class="object-cover w-12 h-12 border-2 rounded-full border-orchid-300"
+          :src="project.logo || noImge"
+          :alt="`image profil ${project.name || project.hashtag}`"
+        />
         <div class="flex flex-col mx-3">
           <h4 class="text-lg font-medium" :style="getTextColor(project.color)">
             {{ project.emoji || '' }} {{ project.name || project.hashtag }}
