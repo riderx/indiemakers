@@ -81,12 +81,18 @@ export const getUserData = async (userId: string): Promise<DiscordUser | undefin
 
 export const updateUser = async (userId: string, user: Partial<User>): Promise<User> => {
   const userDoc = await getFirestore().collection('/discord').doc(userId).get()
+  const userInfo = await getUserData(userId)
+  user.avatarUrl = 'https://res.cloudinary.com/forgr/image/upload/v1621079734/indiemakers/cover-im_no_gjzhog.jpg'
+  if (userInfo && userInfo.avatar && userInfo.username) {
+    user.avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${userInfo.avatar}.png`
+    user.avatar = userInfo.avatar
+    user.username = userInfo.username
+  }
   if (!userDoc.exists) {
-    const userInfo = await getUserData(userId)
     const base: User = {
       userId,
-      avatar: '',
       avatarUrl: '',
+      avatar: '',
       streak: 0,
       bestStreak: 0,
       taskReminder: 'true',
@@ -102,15 +108,6 @@ export const updateUser = async (userId: string, user: Partial<User>): Promise<U
       username: '',
       createdAt: dayjs().toISOString(),
       updatedAt: dayjs().toISOString(),
-    }
-    if (userInfo) {
-      if (userInfo.avatar) {
-        base.avatar = userInfo.avatar
-        base.avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${userInfo.avatar}.png`
-      } else {
-        base.avatarUrl = 'https://res.cloudinary.com/forgr/image/upload/v1621079734/indiemakers/cover-im_no_gjzhog.jpg'
-      }
-      base.username = userInfo.username
     }
     const newUser: User = Object.assign(base, user as User)
     await getFirestore().collection('discord').doc(userId).set(newUser)
