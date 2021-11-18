@@ -33,7 +33,7 @@ const sitemap = async (_req: Request, res: Response) => {
     const users = await getAllUsers()
     const projects = await getAllAllProject(users)
     users.forEach((user) => {
-      if ((user.posts > 1 || user.tasks > 10 || user.karma > 15) && user.bio) {
+      if ((user.incomes || user.posts || user.tasks > 10 || user.karma > 15) && user.bio) {
         smStream.write({
           url: `/makers/${encodeURIComponent(user.username)}`,
           changefreq: 'daily',
@@ -42,7 +42,7 @@ const sitemap = async (_req: Request, res: Response) => {
       }
     })
     projects.forEach((project) => {
-      if (project.userName && (project.postsData?.total || project.tasks > 5 || project.incomes > 1) && project.description) {
+      if (project.userName && (project.incomes || project.postsData?.total || project.tasks > 5) && project.description) {
         smStream.write({
           url: `/makers/${encodeURIComponent(project.userName)}/projets/${encodeURIComponent(project.hashtag)}`,
           changefreq: 'daily',

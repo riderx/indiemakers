@@ -33,7 +33,7 @@ const project = async (req: Request, res: Response) => {
       const projects = await getAllAllProject(users)
       res.json(
         projects.filter(
-          (project) => project.userName && (project.postsData?.total || project.tasks > 5 || project.incomes > 1) && project.description
+          (project) => project.userName && (project.postsData?.total || project.tasks > 5 || project.incomes) && project.description
         )
       )
     } catch (err) {
