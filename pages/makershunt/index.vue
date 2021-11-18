@@ -96,7 +96,7 @@ export default defineComponent({
     const sizeHead = ref('')
     const guid = ref()
     const title = 'Les Makers Français les plus chaud 🔥'
-    const message = 'Vote et ajoute tes MAKERS favoris, cela les insite a venir podcast !'
+    const message = 'Vote et  pour tes MAKERS favoris, cela les insiteras a venir parler de leur parcours dans le podcast !'
     const makers = ref([] as Person[])
     onMounted(() => {
       setSizeHead()
