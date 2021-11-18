@@ -7,7 +7,12 @@ const feed = async (req: Request, res: Response) => {
   if (req?.query?.guid) {
     return res.json(await getOnePodcastById(req.query.guid as string))
   } else if (req?.query?.random) {
-    const random = (await getAllPodcast()).sort(() => 0.5 - Math.random()).slice(0, Number(req?.query?.random))
+    const all = await getAllPodcast()
+    const current = req?.query?.guid || ''
+    const random = all
+      .filter((e) => e.guid !== current)
+      .sort(() => 0.5 - Math.random())
+      .slice(0, Number(req?.query?.random))
     return res.json(random)
   } else {
     return res.json(await getAllPodcast())
