@@ -64,7 +64,11 @@
               @click="setHastag(project.hashtag)"
             >
               <div class="relative flex items-center">
-                <img class="object-cover object-top w-16 h-16 border-2 rounded-lg border-royalblue-700" :src="project.logo || noImge" />
+                <img
+                  class="object-cover object-top w-16 h-16 border-2 rounded-lg border-royalblue-700"
+                  :alt="`logo ${project.hashtag}`"
+                  :src="project.logo || noImge"
+                />
                 <span class="absolute bottom-0 text-sm text-white bg-opacity-75 rounded-tr-lg rounded-bl-lg bg-royalblue-700"
                   >🔥{{ project.streak }}</span
                 >
@@ -87,7 +91,11 @@
         <div v-else-if="projectData && loadedProject" class="md:w-4/5 md:mx-2">
           <div class="flex flex-col items-center p-2 mb-2 bg-white md:p-5 text-royalblue-700 lg:flex-row">
             <div class="relative flex items-end">
-              <img class="object-cover object-top w-32 h-32 border-2 rounded-lg border-royalblue-700" :src="projectData.logo || noImge" />
+              <img
+                :alt="`logo ${projectData.hashtag}`"
+                class="object-cover object-top w-32 h-32 border-2 rounded-lg border-royalblue-700"
+                :src="projectData.logo || noImge"
+              />
               <span class="absolute bottom-0 text-sm text-white bg-opacity-75 rounded-tr-lg rounded-bl-lg bg-royalblue-700"
                 >🔥{{ projectData.streak }}</span
               >
