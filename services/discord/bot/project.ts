@@ -19,6 +19,7 @@ import {
   LName,
   Langs,
   getUserUrl,
+  l3s,
 } from './utils'
 import { createProjectIncome, deleteProjectIncome, getAllProjectsIncomes } from './incomes'
 
@@ -35,7 +36,15 @@ const transforms: Langs[] = [
   t9r('month', 'mois', 'Mois'),
   t9r('category', 'categorie', 'Categorie'),
   t9r('openSource', 'open_source', 'Open source'),
-  t9r('website', 'website', 'Site web', undefined, false),
+  t9r(
+    'website',
+    l3s('website', (d) => {
+      return d.startsWith('https://') ? d : d.startsWith('http://') ? d.replace('http://', 'https://') : `https://${d}`
+    }),
+    'Site web',
+    undefined,
+    false
+  ),
   t9r('github', 'github', 'Github', undefined, false),
   t9r('twitter', 'twitter', 'Twitter', undefined, false),
   t9r('emoji', 'emoji', 'Emoji'),

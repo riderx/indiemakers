@@ -58,7 +58,15 @@ const transforms: Langs[] = [
   t9r('makerlog', 'makerlog', 'getmakerlog.com', undefined, false),
   t9r('wipApiKey', 'wip_key', 'WIP clé API', undefined, false),
   t9r('avatarUrl', 'photo', 'Photo', undefined, false),
-  t9r('website', 'website', 'Site web', undefined, false),
+  t9r(
+    'website',
+    l3s('website', (d) => {
+      return d.startsWith('https://') ? d : d.startsWith('http://') ? d.replace('http://', 'https://') : `https://${d}`
+    }),
+    'Site web',
+    undefined,
+    false
+  ),
   t9r('github', 'github', 'Github', undefined, false),
   t9r('twitter', 'twitter', 'Twitter', undefined, false),
   t9r('skills', 'talents', 'Talents'),
