@@ -54,6 +54,7 @@
     "sitemap": "^7.0.0",
     "store": "^2.0.12",
     "stripe": "^8.178.0",
+    "twitter": "^1.7.1",
     "vue-js-modal": "2.0.1",
     "vue-meta": "^2.4.0",
     "vue-warehouse": "^2.2.0"
@@ -81,7 +82,7 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-nuxt": "^3.0.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "7.20.0",
+    "eslint-plugin-vue": "8.1.1",
     "express": "^4.17.1",
     "husky": "^7.0.2",
     "lint-staged": "11.2.6",
