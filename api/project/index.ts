@@ -31,7 +31,7 @@ const project = async (req: Request, res: Response) => {
     try {
       const users = await getAllUsers()
       const projects = await getAllAllProject(users)
-      res.json(projects)
+      res.json(projects.filter((project) => !!(project.userName && (project.tasks > 5 || project.incomes > 1) && project.description)))
     } catch (err) {
       res.json({ error: String(err) })
     }

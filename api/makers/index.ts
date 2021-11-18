@@ -23,7 +23,7 @@ const makers = async (req: Request, res: Response) => {
       user.makerlogHook = ''
       user.wipApiKey = ''
     })
-    return res.json(users)
+    return res.json(users.filter((user) => !!(user.projects > 0 && user.tasks > 5 && user.karma > 5 && user.bio)))
   }
 }
 export default makers
