@@ -34,7 +34,7 @@ const sitemap = async (_req: Request, res: Response) => {
     const users = await getAllUsers()
     const projects = await getAllAllProject(users)
     users.forEach((user) => {
-      if ((user.incomes || user.posts || user.tasks > 10 || user.karma > 15) && user.bio) {
+      if (user.incomes || user.posts || user.tasks > 10 || user.karma > 15) {
         smStream.write({
           url: `/makers/${encodeURIComponent(user.username)}`,
           changefreq: 'daily',
