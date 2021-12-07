@@ -25,7 +25,13 @@ const karmaAdd = async (interaction: Interaction, option: ApplicationCommandInte
   if (userId) {
     console.error('add karma userId', userId)
     if (senderId === userId) {
-      return sendTxtLater("Tu ne peux pas t'ajouter du karma toi même !", [], interaction.application_id, interaction.token)
+      return sendTxtLater(
+        "Tu ne peux pas t'ajouter du karma toi même !",
+        [],
+        interaction.application_id,
+        interaction.token,
+        interaction.channel_id
+      )
     }
     try {
       console.error('start addKarmaById')
@@ -33,28 +39,34 @@ const karmaAdd = async (interaction: Interaction, option: ApplicationCommandInte
       console.error('addKarmaById')
       const botString = await afterAdd(1, userId, currentKarma)
       console.error('afterAdd')
-      return sendTxtLater(botString, [], interaction.application_id, interaction.token)
+      return sendTxtLater(botString, [], interaction.application_id, interaction.token, interaction.channel_id)
     } catch (err) {
       console.error('karmaAdd', err)
-      return sendTxtLater('Erreur karma', [], interaction.application_id, interaction.token)
+      return sendTxtLater('Erreur karma', [], interaction.application_id, interaction.token, interaction.channel_id)
     }
   } else {
-    return sendTxtLater('Donne moi un Maker 👨‍🌾 !', [], interaction.application_id, interaction.token)
+    return sendTxtLater('Donne moi un Maker 👨‍🌾 !', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
 const karmaRm = async (interaction: Interaction, option: ApplicationCommandInteractionDataOption, senderId: string): Promise<void> => {
   const userId = option.value
   if (!userId) {
-    return sendTxtLater('Donne moi un Maker 👨‍🌾 !', [], interaction.application_id, interaction.token)
+    return sendTxtLater('Donne moi un Maker 👨‍🌾 !', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
   console.error('remove karma userId', userId)
   if (senderId === userId) {
-    return sendTxtLater('Tu ne peux pas te prendre du karma toi même !', [], interaction.application_id, interaction.token)
+    return sendTxtLater(
+      'Tu ne peux pas te prendre du karma toi même !',
+      [],
+      interaction.application_id,
+      interaction.token,
+      interaction.channel_id
+    )
   }
   const currentKarma = await addKarmaById(userId, senderId, -1)
   const botString = await afterAdd(1, userId, currentKarma)
-  return sendTxtLater(botString, [], interaction.application_id, interaction.token)
+  return sendTxtLater(botString, [], interaction.application_id, interaction.token, interaction.channel_id)
 }
 
 const generateKarmaStats = async (): Promise<string> => {
@@ -72,21 +84,28 @@ const karmaStats = async (interaction: Interaction, option: ApplicationCommandIn
   if (userId) {
     console.error('stats karma userId', userId)
     const curKarma = await getKarmaById(userId)
-    return sendTxtLater(`<@${userId}> as ${curKarma.total} karma 🕉!`, [], interaction.application_id, interaction.token)
+    return sendTxtLater(
+      `<@${userId}> as ${curKarma.total} karma 🕉!`,
+      [],
+      interaction.application_id,
+      interaction.token,
+      interaction.channel_id
+    )
   } else {
-    return sendTxtLater('Donne moi un Maker 👨‍🌾 !', [], interaction.application_id, interaction.token)
+    return sendTxtLater('Donne moi un Maker 👨‍🌾 !', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
 const karmaLadder = async (interaction: Interaction): Promise<void> => {
   console.error('stats karma global')
-  return sendTxtLater(
+  await sendTxtLater(
     `Voici le classement karma de tous les makers:
 
 ${await generateKarmaStats()}`,
     [],
     interaction.application_id,
-    interaction.token
+    interaction.token,
+    interaction.channel_id
   )
 }
 
@@ -103,5 +122,11 @@ export const karmaFn = (interaction: Interaction, option: ApplicationCommandInte
   if (option.name === 'classement') {
     return karmaLadder(interaction)
   }
-  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge 🤫`, [], interaction.application_id, interaction.token)
+  return sendTxtLater(
+    `La Commande ${option.name} n'est pas pris en charge 🤫`,
+    [],
+    interaction.application_id,
+    interaction.token,
+    interaction.channel_id
+  )
 }

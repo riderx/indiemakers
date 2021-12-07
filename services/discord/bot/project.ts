@@ -290,7 +290,8 @@ const projectAdd = (interaction: Interaction, options: ApplicationCommandInterac
     Tu peux voir tes projets sur ta page : ${getUserUrl(user)}/projets/${encodeURIComponent(newProj.hashtag || '')}`,
             [],
             interaction.application_id,
-            interaction.token
+            interaction.token,
+            interaction.channel_id
           )
         })
       ),
@@ -306,7 +307,8 @@ INDIE MAKERS => indiemakers
 `,
       [],
       interaction.application_id,
-      interaction.token
+      interaction.token,
+      interaction.channel_id
     )
   }
 }
@@ -329,13 +331,14 @@ const projectEdit = (interaction: Interaction, options: ApplicationCommandIntera
 Bravo 💪, une marche après l'autre tu fais grandir ce projet !`,
         [],
         interaction.application_id,
-        interaction.token
+        interaction.token,
+        interaction.channel_id
       ),
       updateStripe(userId, update.hashtag, update.stripeApiKey),
       updateProject(userId, update.hashtag, update),
     ]).then(() => Promise.resolve())
   } else {
-    return sendTxtLater('hashtag manquant!', [], interaction.application_id, interaction.token)
+    return sendTxtLater('hashtag manquant!', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -356,7 +359,7 @@ const projectList = async (interaction: Interaction, userId: string, me = false)
   console.error('project_list')
   if (cards.length > 0) {
     const sentence = me ? 'Voici la liste de tes projets !' : `Voici la liste des projets de <@${userId}> !`
-    await sendTxtLater(`${sentence}\n\n`, [], interaction.application_id, interaction.token)
+    await sendTxtLater(`${sentence}\n\n`, [], interaction.application_id, interaction.token, interaction.channel_id)
     for (let index = 0; index < cards.length; index++) {
       const card = cards[index]
       console.error('card', card)
@@ -372,7 +375,7 @@ const projectList = async (interaction: Interaction, userId: string, me = false)
     const sentence = me
       ? 'Tu n\'as pas encore de projet, ajoute en avec la commande "/im projet ajouter" !'
       : `<@${userId}> n'a pas encore de projet !`
-    return sendTxtLater(sentence, [], interaction.application_id, interaction.token)
+    return sendTxtLater(sentence, [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -391,13 +394,19 @@ const projectView = async (interaction: Interaction, options: ApplicationCommand
     if (project) {
       console.error('projectView', hashtag, makerId)
       const text = makerId === userId ? 'Voici les infos sur ton projet !' : `Voici les infos sur le projet de <@${makerId}> !`
-      return sendTxtLater(`${text}\n`, [projectCard(project)], interaction.application_id, interaction.token)
+      return sendTxtLater(`${text}\n`, [projectCard(project)], interaction.application_id, interaction.token, interaction.channel_id)
     } else {
       console.error('projectView', hashtag, makerId)
-      return sendTxtLater(`Je ne trouve pas le projet ${hashtag} pour <@${makerId}>...`, [], interaction.application_id, interaction.token)
+      return sendTxtLater(
+        `Je ne trouve pas le projet ${hashtag} pour <@${makerId}>...`,
+        [],
+        interaction.application_id,
+        interaction.token,
+        interaction.channel_id
+      )
     }
   } else {
-    return sendTxtLater('Donne moi un projet !', [], interaction.application_id, interaction.token)
+    return sendTxtLater('Donne moi un projet !', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -413,11 +422,12 @@ const projectDelete = (interaction: Interaction, option: ApplicationCommandInter
 Savoir terminer un projet est une force!`,
         [],
         interaction.application_id,
-        interaction.token
+        interaction.token,
+        interaction.channel_id
       ),
     ]).then(() => Promise.resolve())
   } else {
-    return sendTxtLater('Donne moi un projet !', [], interaction.application_id, interaction.token)
+    return sendTxtLater('Donne moi un projet !', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -477,8 +487,15 @@ export const projectFn = (interaction: Interaction, option: ApplicationCommandIn
   `,
       [],
       interaction.application_id,
-      interaction.token
+      interaction.token,
+      interaction.channel_id
     )
   }
-  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge 🤫`, [], interaction.application_id, interaction.token)
+  return sendTxtLater(
+    `La Commande ${option.name} n'est pas pris en charge 🤫`,
+    [],
+    interaction.application_id,
+    interaction.token,
+    interaction.channel_id
+  )
 }

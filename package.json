@@ -12,7 +12,7 @@
     "generate": "nuxt generate",
     "analyze": "nuxt build --analyze",
     "api": "ts-node services/local",
-    "discord:config": "ts-node services/discord/command.ts",
+    "discord:config": "ts-node --transpile-only services/discord/command.ts",
     "test": "ts-node services/test_imagekit.ts ",
     "maintenance": "ts-node services/maintenance/index.ts",
     "translate": "ts-node services/discord/translate.ts",

@@ -95,9 +95,9 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
     } else if (element.name === 'montant') {
       newIncome.ammount = Number(element.value)
     } else if (element.name === 'mois') {
-      date.set('month', Number(element.value) - 1)
+      date = date.set('month', Number(element.value) - 1)
     } else if (element.name === 'année') {
-      date.set('year', Number(element.value))
+      date = date.set('year', Number(element.value))
     }
   })
   const projDoc = await getFirestore().collection(`discord/${userId}/projects`).doc(hashtag.toLowerCase()).get()
@@ -106,7 +106,8 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
       `Le projet #${hashtag.toLowerCase()}, n'existe pas. tu peux le crée avec \`/im projet ajouter\` 😇`,
       [],
       interaction.application_id,
-      interaction.token
+      interaction.token,
+      interaction.channel_id
     )
   }
   if (newIncome.ammount) {
@@ -120,7 +121,8 @@ const incomeAdd = async (interaction: Interaction, options: ApplicationCommandIn
 À été ajouté au projet #${hashtag}, 🎉!`,
     [],
     interaction.application_id,
-    interaction.token
+    interaction.token,
+    interaction.channel_id
   )
 }
 
@@ -141,9 +143,9 @@ const incomeEdit = (interaction: Interaction, options: ApplicationCommandInterac
     } else if (element.name === 'status') {
       update.status = element.value
     } else if (element.name === 'mois') {
-      date.set('month', Number(element.value) - 1)
+      date = date.set('month', Number(element.value) - 1)
     } else if (element.name === 'année') {
-      date.set('year', Number(element.value))
+      date = date.set('year', Number(element.value))
     } else if (element.name === 'id') {
       incomeId = element.value
     }
@@ -155,7 +157,8 @@ const incomeEdit = (interaction: Interaction, options: ApplicationCommandInterac
       `Le revenu 💰 ${incomeId} a été mise à jour dans le projet #${hashtag}, 🎉!`,
       [],
       interaction.application_id,
-      interaction.token
+      interaction.token,
+      interaction.channel_id
     ),
   ]).then(() => Promise.resolve())
 }
@@ -174,7 +177,13 @@ const incomesView = async (interaction: Interaction, options: ApplicationCommand
     const allIncomes = await getAllProjectsIncomes(makerId, hashtag)
     let target
     if (allIncomes.incomes.length === 0) {
-      return sendTxtLater('Pas encore de revenue sur ce projet, ça viendra !', [], interaction.application_id, interaction.token)
+      return sendTxtLater(
+        'Pas encore de revenue sur ce projet, ça viendra !',
+        [],
+        interaction.application_id,
+        interaction.token,
+        interaction.channel_id
+      )
     } else if (makerId !== userId) {
       target = `<@${makerId}> a fait`
     } else {
@@ -190,9 +199,15 @@ Voici La liste des revenus :
         element.ammount
       } €\n`
     })
-    return sendTxtLater(incomeInfos, [], interaction.application_id, interaction.token)
+    return sendTxtLater(incomeInfos, [], interaction.application_id, interaction.token, interaction.channel_id)
   } else {
-    return sendTxtLater(`Je ne trouve pas le projet #${hashtag} pour <@${makerId}> 😅`, [], interaction.application_id, interaction.token)
+    return sendTxtLater(
+      `Je ne trouve pas le projet #${hashtag} pour <@${makerId}> 😅`,
+      [],
+      interaction.application_id,
+      interaction.token,
+      interaction.channel_id
+    )
   }
 }
 
@@ -208,7 +223,7 @@ const incomesDelete = (interaction: Interaction, options: ApplicationCommandInte
   })
   return Promise.all([
     deleteProjectIncome(userId, hashtag, incomeId),
-    sendTxtLater(`Tu as supprimé le revenu ${incomeId} 💸!`, [], interaction.application_id, interaction.token),
+    sendTxtLater(`Tu as supprimé le revenu ${incomeId} 💸!`, [], interaction.application_id, interaction.token, interaction.channel_id),
   ]).then(() => Promise.resolve())
 }
 
@@ -225,5 +240,11 @@ export const incomeFn = (interaction: any, option: ApplicationCommandInteraction
   if (option.name === 'supprimer' && option.options && option.options.length > 0) {
     return incomesDelete(interaction, option.options, userId)
   }
-  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge 🤫`, [], interaction.application_id, interaction.token)
+  return sendTxtLater(
+    `La Commande ${option.name} n'est pas pris en charge 🤫`,
+    [],
+    interaction.application_id,
+    interaction.token,
+    interaction.channel_id
+  )
 }

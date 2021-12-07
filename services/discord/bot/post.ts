@@ -18,17 +18,17 @@ const postEdit = async (interaction: Interaction, options: ApplicationCommandInt
   })
   const lastMesssage = await getLastChannelMessage(userId, interaction.channel_id)
   if (!lastMesssage) {
-    return sendTxtLater('Aucun message dans ce channel', [], interaction.application_id, interaction.token)
+    return sendTxtLater('Aucun message dans ce channel', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
   update.text = lastMesssage.content
   if (update.id) {
     console.error('postEdit', update)
     return Promise.all([
-      sendTxtLater(`Tu as mis à jour le post #${update.id}`, [], interaction.application_id, interaction.token),
+      sendTxtLater(`Tu as mis à jour le post #${update.id}`, [], interaction.application_id, interaction.token, interaction.channel_id),
       updatePost(userId, update.id, update),
     ]).then(() => Promise.resolve())
   } else {
-    return sendTxtLater('hashtag manquant!', [], interaction.application_id, interaction.token)
+    return sendTxtLater('hashtag manquant!', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -41,7 +41,7 @@ const postAdd = async (interaction: Interaction, hashtag: string | undefined, us
   }
   const lastMesssage = await getLastChannelMessage(userId, interaction.channel_id)
   if (!lastMesssage) {
-    return sendTxtLater('Aucun message dans ce channel', [], interaction.application_id, interaction.token)
+    return sendTxtLater('Aucun message dans ce channel', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
   newPost.text = lastMesssage.content
   const lastPost = await getLastPost(userId)
@@ -60,7 +60,8 @@ const postAdd = async (interaction: Interaction, hashtag: string | undefined, us
     Tu peux voir tes posts sur ta page : ${getUserUrl(user)}`,
           [],
           interaction.application_id,
-          interaction.token
+          interaction.token,
+          interaction.channel_id
         )
       })
     ),
@@ -82,7 +83,7 @@ const postList = async (interaction: Interaction, userId: string, me = false): P
   console.error('post_list')
   if (cards.length > 0) {
     const sentence = me ? 'Voici la liste de tes posts !' : `Voici la liste des posts de <@${userId}> !`
-    await sendTxtLater(`${sentence}\n\n`, [], interaction.application_id, interaction.token)
+    await sendTxtLater(`${sentence}\n\n`, [], interaction.application_id, interaction.token, interaction.channel_id)
     for (let index = 0; index < cards.length; index++) {
       const card = cards[index]
       console.error('card', card)
@@ -98,7 +99,7 @@ const postList = async (interaction: Interaction, userId: string, me = false): P
     const sentence = me
       ? 'Tu n\'as pas encore de post, ajoute en avec la commande "/im post ajouter" !'
       : `<@${userId}> n'a pas encore de post !`
-    return sendTxtLater(sentence, [], interaction.application_id, interaction.token)
+    return sendTxtLater(sentence, [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -117,13 +118,19 @@ const postView = async (interaction: Interaction, options: ApplicationCommandInt
     if (post) {
       console.error('postView', id, makerId)
       const text = makerId === userId ? 'Voici les infos sur ton post !' : `Voici les infos sur le post de <@${makerId}> !`
-      return sendTxtLater(`${text}\n`, [postCard(post)], interaction.application_id, interaction.token)
+      return sendTxtLater(`${text}\n`, [postCard(post)], interaction.application_id, interaction.token, interaction.channel_id)
     } else {
       console.error('postView', id, makerId)
-      return sendTxtLater(`Je ne trouve pas le post ${id} pour <@${makerId}>...`, [], interaction.application_id, interaction.token)
+      return sendTxtLater(
+        `Je ne trouve pas le post ${id} pour <@${makerId}>...`,
+        [],
+        interaction.application_id,
+        interaction.token,
+        interaction.channel_id
+      )
     }
   } else {
-    return sendTxtLater('Donne moi un post !', [], interaction.application_id, interaction.token)
+    return sendTxtLater('Donne moi un post !', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -133,10 +140,10 @@ const postDelete = (interaction: Interaction, option: ApplicationCommandInteract
     console.error('postDelete', id)
     return Promise.all([
       deletePost(userId, id),
-      sendTxtLater(`Tu as supprimé ton post ${id}`, [], interaction.application_id, interaction.token),
+      sendTxtLater(`Tu as supprimé ton post ${id}`, [], interaction.application_id, interaction.token, interaction.channel_id),
     ]).then(() => Promise.resolve())
   } else {
-    return sendTxtLater('Donne moi un post !', [], interaction.application_id, interaction.token)
+    return sendTxtLater('Donne moi un post !', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -180,8 +187,15 @@ export const postFn = (interaction: Interaction, option: ApplicationCommandInter
   `,
       [],
       interaction.application_id,
-      interaction.token
+      interaction.token,
+      interaction.channel_id
     )
   }
-  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge 🤫`, [], interaction.application_id, interaction.token)
+  return sendTxtLater(
+    `La Commande ${option.name} n'est pas pris en charge 🤫`,
+    [],
+    interaction.application_id,
+    interaction.token,
+    interaction.channel_id
+  )
 }

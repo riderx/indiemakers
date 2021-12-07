@@ -94,7 +94,8 @@ const userEdit = (interaction: Interaction, options: ApplicationCommandInteracti
 Cela aidera les autres makers 👨‍🌾 à te connaitre !`,
       [],
       interaction.application_id,
-      interaction.token
+      interaction.token,
+      interaction.channel_id
     ),
   ]).then(() => Promise.resolve())
 }
@@ -122,7 +123,7 @@ export const usersViewStreak = (usrs: User[]): Embed[] => {
 
 const userList = async (interaction: Interaction): Promise<void> => {
   const users = await getAllUsers()
-  await sendTxtLater('Voici la liste des makers:', [], interaction.application_id, interaction.token)
+  await sendTxtLater('Voici la liste des makers:', [], interaction.application_id, interaction.token, interaction.channel_id)
   for (let index = 0; index < users.length; index++) {
     const user = users[index]
     const card = userCard(user)
@@ -138,7 +139,13 @@ const userListStreak = async (interaction: Interaction): Promise<void> => {
   const usersInfoCards = usersViewStreak(users)
   console.error('userList', usersInfoCards)
   if (usersInfoCards.length > 0) {
-    await sendTxtLater(`Voici la liste des 10 premiers makers avec les flammes 🔥 :`, [], interaction.application_id, interaction.token)
+    await sendTxtLater(
+      `Voici la liste des 10 premiers makers avec les flammes 🔥 :`,
+      [],
+      interaction.application_id,
+      interaction.token,
+      interaction.channel_id
+    )
     for (let index = 0; index < usersInfoCards.length; index++) {
       const card = usersInfoCards[index]
       // console.error('card', card)
@@ -146,7 +153,7 @@ const userListStreak = async (interaction: Interaction): Promise<void> => {
     }
     return Promise.resolve()
   } else {
-    return sendTxtLater(`Les makers n'ont plus de flamme 😢!`, [], interaction.application_id, interaction.token)
+    return sendTxtLater(`Les makers n'ont plus de flamme 😢!`, [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -154,14 +161,20 @@ const userView = async (interaction: Interaction, myId: string, userId: string |
   const user = await getUsersById(userId || myId)
   if (user && userId && myId !== userId) {
     console.error('userView', userId)
-    await sendTxtLater(`Voici les infos sur ce maker :`, [userCard(user)], interaction.application_id, interaction.token)
+    await sendTxtLater(
+      `Voici les infos sur ce maker :`,
+      [userCard(user)],
+      interaction.application_id,
+      interaction.token,
+      interaction.channel_id
+    )
     return sendChannel(interaction.channel_id, `Tu peux aussi voir toute les infos sur la page publique : ${getUserUrl(user)}`)
   } else if (user) {
     console.error('userView', userId)
     const card = userCard(user)
     const fields = getFields(user, userConfidentialKey, transforms)
     if (card.fields) card.fields.push(...fields)
-    await sendTxtLater('Voici tes infos', [userCard(user)], interaction.application_id, interaction.token)
+    await sendTxtLater('Voici tes infos', [userCard(user)], interaction.application_id, interaction.token, interaction.channel_id)
     await sendChannel(interaction.channel_id, `Je t'ai envoyé plus info en privé 🤫`)
     await sendChannel(interaction.channel_id, `Tu peux aussi voir toute les infos sur la page publique : ${getUserUrl(user)}`)
     await openChannel(myId).then((channel) => {
@@ -170,7 +183,7 @@ const userView = async (interaction: Interaction, myId: string, userId: string |
     })
     return Promise.resolve()
   }
-  return sendTxtLater(`Je ne trouve pas <@${userId}>`, [], interaction.application_id, interaction.token)
+  return sendTxtLater(`Je ne trouve pas <@${userId}>`, [], interaction.application_id, interaction.token, interaction.channel_id)
 }
 
 export const userFn = (interaction: Interaction, option: ApplicationCommandInteractionDataOption, senderId: string): Promise<void> => {
@@ -215,8 +228,15 @@ export const userFn = (interaction: Interaction, option: ApplicationCommandInter
   `,
       [],
       interaction.application_id,
-      interaction.token
+      interaction.token,
+      interaction.channel_id
     )
   }
-  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge 🤫`, [], interaction.application_id, interaction.token)
+  return sendTxtLater(
+    `La Commande ${option.name} n'est pas pris en charge 🤫`,
+    [],
+    interaction.application_id,
+    interaction.token,
+    interaction.channel_id
+  )
 }
