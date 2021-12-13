@@ -15,6 +15,8 @@ authorImage: ''
 ---
 Dans cet article je vais parler de mon side project principal : [LinuxJobs.fr](https://www.linuxjobs.fr "LinuxJobs.fr"), le site d'emploi de la communauté du Logiciel Libre et Open Source. Le service a généré 37645€ en chiffre d'affaire, m'a coûté 7000€ à faire développer, on ajoute 1200€ de coût de serveur, pour un gain total de 29445€ en 4 ans soit 7361€ de revenu par an.
 
+![LinuxJobs.fr, le site d'emploi de la communauté du Logiciel Libre et de l'Open Source](/v1639411180/indiemakers/linuxjobs-fr-screenshot_dy8r8q.png "LinuxJobs.fr, le site d'emploi de la communauté du Logiciel Libre et de l'Open Source")
+
 Amateur de gros chiffres et de startups ayant fait fortune en 15 jours, passez votre chemin, il n'en sera pas question ici. On va parler de bootstrapping, de solopreneur, d'indiemaker, bref à être rentable et à gagner de l'argent sur un projet. Nous parlerons aussi dans cet article des étapes-clés du projet et des éléments importants de ces étapes-clés.
 
 ## Le besoin
