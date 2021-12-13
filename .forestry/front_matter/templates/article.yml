@@ -38,3 +38,5 @@ fields:
 - type: textarea
   name: authorImage
   label: authorImage
+pages:
+- content/7361-de-revenu-par-an-avec-un-side-project-le-site-d-emploi-linuxjobs.fr.md
