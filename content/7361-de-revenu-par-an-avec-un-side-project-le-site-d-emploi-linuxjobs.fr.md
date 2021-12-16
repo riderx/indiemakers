@@ -1,9 +1,9 @@
 ---
-slug: 7361-euros-side-project-site-emploi-linuxJobs-fr
-title: '7361€ de revenu par an avec un side project : le site d''emploi LinuxJobs.fr'
+slug: 7361-euros-side-project
+title: 7361€ de revenu par an avec un side project
 surtitle: ''
 published: false
-subtitle: ''
+subtitle: Histoire et étapes-clés d'un side project
 description: ''
 type: Article
 headImage: ''
