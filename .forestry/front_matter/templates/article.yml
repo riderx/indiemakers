@@ -20,9 +20,6 @@ fields:
 - type: textarea
   name: description
   label: description
-- type: text
-  name: type
-  label: type
 - type: textarea
   name: headImage
   label: headImage
@@ -38,5 +35,18 @@ fields:
 - type: textarea
   name: authorImage
   label: authorImage
+- name: type
+  type: select
+  default: Article
+  config:
+    required: false
+    options:
+    - Article
+    source:
+      type: simple
+      section: 
+      file: 
+      path: 
+  label: type
 pages:
 - content/7361-de-revenu-par-an-avec-un-side-project-le-site-d-emploi-linuxjobs.fr.md
