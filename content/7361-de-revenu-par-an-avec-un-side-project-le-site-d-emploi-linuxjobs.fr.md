@@ -5,7 +5,7 @@ surtitle: ''
 published: false
 subtitle: ''
 description: ''
-type: ''
+type: Article
 headImage: ''
 readTime: ''
 date: 13-12-2021
