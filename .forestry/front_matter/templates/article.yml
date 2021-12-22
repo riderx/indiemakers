@@ -1,0 +1,52 @@
+---
+label: Article
+hide_body: false
+fields:
+- type: text
+  name: slug
+  label: slug
+- type: text
+  name: title
+  label: title
+- type: text
+  name: surtitle
+  label: surtitle
+- type: boolean
+  name: published
+  label: published
+- type: text
+  name: subtitle
+  label: subtitle
+- type: textarea
+  name: description
+  label: description
+- type: textarea
+  name: headImage
+  label: headImage
+- type: text
+  name: readTime
+  label: readTime
+- type: text
+  name: date
+  label: date
+- type: text
+  name: author
+  label: author
+- type: textarea
+  name: authorImage
+  label: authorImage
+- name: type
+  type: select
+  default: Article
+  config:
+    required: false
+    options:
+    - Article
+    source:
+      type: simple
+      section: 
+      file: 
+      path: 
+  label: type
+pages:
+- content/7361-de-revenu-par-an-avec-un-side-project-le-site-d-emploi-linuxjobs.fr.md

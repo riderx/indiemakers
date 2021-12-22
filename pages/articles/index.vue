@@ -41,7 +41,7 @@
                 <div class="flex-shrink-0">
                   <a href="#">
                     <span class="sr-only">{{ article.author }}</span>
-                    <img class="w-10 h-10 rounded-full" :src="article.authorImage" alt="" />
+                    <img class="w-10 h-10 rounded-full" :src="article.authorImage" :alt="`Author image ${article.author}`" />
                   </a>
                 </div>
                 <div class="ml-3">

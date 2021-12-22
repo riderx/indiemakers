@@ -205,7 +205,7 @@
 import { ref, computed, onBeforeUnmount, defineComponent, useFetch, useContext, useMeta, onMounted } from '@nuxtjs/composition-api'
 import Vue from 'vue'
 import { cutText, removeEmoji } from '~/services/feed'
-import { feed, ep } from '~/services/rss'
+import { ep, epRandom } from '~/services/rss'
 import { createMeta } from '~/services/meta'
 import { Episode } from '~/services/types'
 
@@ -228,12 +228,8 @@ export default defineComponent({
       return Math.floor(Math.random() * length) + 0
     }
     const checkNext = () => {
-      const epIndex = Number(episode.value.id) - 1
       const totalLength = episodes.value.length
-      let newEp = randomEp(totalLength)
-      while (newEp === epIndex) {
-        newEp = randomEp(totalLength)
-      }
+      const newEp = randomEp(totalLength)
       const nextId = episodes.value[newEp].id
       $warehouse.set('nextGuid', nextId)
       $modal.show('random-ep')
@@ -296,7 +292,7 @@ export default defineComponent({
     }
 
     const { fetch } = useFetch(async () => {
-      const [items, element] = await Promise.all([feed($config), ep(params.value.id, $config)])
+      const [items, element] = await Promise.all([epRandom(params.value.id, 3, $config), ep(params.value.id, $config)])
       if (!element || !items) {
         return
       }

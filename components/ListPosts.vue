@@ -19,7 +19,7 @@
                       <img
                         class="flex items-center justify-center w-10 h-10 rounded-full bg-orchid-300 ring-8 ring-white"
                         :src="post.userAvatarUrl"
-                        alt=""
+                        :alt="`image profil ${post.userName || ''}`"
                       />
 
                       <span class="absolute -bottom-0.5 -right-1 bg-white rounded-tl px-0.5 py-px"> </span>

@@ -25,7 +25,14 @@ const statusToText = (status: TaskStatus) => {
   return status === TaskStatus.DONE ? 'Fait' : 'A faire'
 }
 
-const createProjectTask = async (applicationId: string, token: string, user: User, hashtag: string, task: Partial<Task>): Promise<any> => {
+const createProjectTask = async (
+  applicationId: string,
+  token: string,
+  user: User,
+  hashtag: string,
+  task: Partial<Task>,
+  channelId: string
+): Promise<any> => {
   if (!projectSem[`$[user.userId}_${hashtag.toLowerCase()}`]) {
     projectSem[`$[user.userId}_${hashtag.toLowerCase()}`] = new Mutex()
   }
@@ -37,11 +44,12 @@ const createProjectTask = async (applicationId: string, token: string, user: Use
         `Le projet #${hashtag.toLowerCase()}, n'existe pas. tu peux le crée avec \`/im projet ajouter\` 😇`,
         [],
         applicationId,
-        token
+        token,
+        channelId
       )
     }
     if (!task.content) {
-      return sendTxtLater(`La tache n'as pas de contenue 😇`, [], applicationId, token)
+      return sendTxtLater(`La tache n'as pas de contenue 😇`, [], applicationId, token, channelId)
     }
     const done = task.status !== TaskStatus.TODO
     const lastTask = await getLastTask(user.userId, hashtag)
@@ -72,7 +80,8 @@ ${task.content}
 A été ajouté au projet #${hashtag} 🎉!`,
       [],
       applicationId,
-      token
+      token,
+      channelId
     )
     const newTask = await addTask(user.userId, hashtag, { ...task, createdAt: dayjs().toISOString() })
     release()
@@ -211,9 +220,17 @@ const taskAdd = async (interaction: Interaction, options: ApplicationCommandInte
   })
   const curUser = await getUsersById(userId)
   if (curUser) {
-    return createProjectTask(interaction.application_id, interaction.token, curUser, hashtag, task).then(() => Promise.resolve())
+    return createProjectTask(interaction.application_id, interaction.token, curUser, hashtag, task, interaction.channel_id).then(() =>
+      Promise.resolve()
+    )
   } else {
-    return sendTxtLater('Le Maker ou le projet est introuvable 🤫!', [], interaction.application_id, interaction.token)
+    return sendTxtLater(
+      'Le Maker ou le projet est introuvable 🤫!',
+      [],
+      interaction.application_id,
+      interaction.token,
+      interaction.channel_id
+    )
   }
 }
 
@@ -242,7 +259,8 @@ const taskEdit = async (interaction: Interaction, options: ApplicationCommandInt
 N'exsite pas 🤯!`,
         [],
         interaction.application_id,
-        interaction.token
+        interaction.token,
+        interaction.channel_id
       )
     }
     return sendTxtLater(
@@ -250,7 +268,8 @@ N'exsite pas 🤯!`,
   A été mise a jour dans le projet #${hashtag.toLowerCase()}, 🎉!`,
       [],
       interaction.application_id,
-      interaction.token
+      interaction.token,
+      interaction.channel_id
     )
   } catch (err) {
     console.error(err)
@@ -271,29 +290,34 @@ const tasksView = async (interaction: Interaction, options: ApplicationCommandIn
     const allTaks = await getAllProjectsTasks(makerId, hashtag)
     let target
     if (allTaks.tasks.length === 0) {
-      return sendTxtLater('Pas encore de taches sur ce projet, ça viendra !', [], interaction.application_id, interaction.token)
+      return sendTxtLater(
+        'Pas encore de taches sur ce projet, ça viendra !',
+        [],
+        interaction.application_id,
+        interaction.token,
+        interaction.channel_id
+      )
     } else if (makerId !== userId) {
       target = `<@${makerId}> a fait`
     } else {
       target = `Tu as fait`
     }
     const text = `${target} ${allTaks.total} taches sur #${hashtag}, BRAVO 🎉!`
-    const taskInfos = `${text}!
+    const tasks = allTaks.tasks.sort((a, b) => a.id - b.id)
+
+    let taskInfos = `${text}!
 
     Voici La liste:\n\n`
-
-    await sendTxtLater(taskInfos, [], interaction.application_id, interaction.token)
-    const tasks = allTaks.tasks.sort((a, b) => a.id - b.id)
     for (let index = 0; index < tasks.length; index++) {
       const element = tasks[index]
-      const taskInfos = `💗 ${element.id} - ${statusToText(element.status)}  - ${dayjs(element.createdAt).format('DD/MM/YYYY')}  - ${
+      taskInfos += `💗 ${element.id} - ${statusToText(element.status)}  - ${dayjs(element.createdAt).format('DD/MM/YYYY')}  - ${
         element.content
       }\n`
-      await sendChannel(interaction.channel_id, taskInfos)
     }
+    await sendTxtLater(taskInfos, [], interaction.application_id, interaction.token, interaction.channel_id)
     return Promise.resolve()
   } else {
-    return sendTxtLater('Donne moi un projet !', [], interaction.application_id, interaction.token)
+    return sendTxtLater('Donne moi un projet !', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -322,7 +346,7 @@ const tasksDelete = (interaction: Interaction, options: ApplicationCommandIntera
     }),
     getAllProjectsTasks(userId, hashtag).then((curTasks) => updateUser(userId, { tasks: curTasks.total - 1 })),
     deleteProjectTask(userId, hashtag, taskId),
-    sendTxtLater(`Tu as supprimé la tache ${taskId} !`, [], interaction.application_id, interaction.token),
+    sendTxtLater(`Tu as supprimé la tache ${taskId} !`, [], interaction.application_id, interaction.token, interaction.channel_id),
   ]).then(() => Promise.resolve())
 }
 
@@ -339,5 +363,11 @@ export const taskFn = (interaction: Interaction, option: ApplicationCommandInter
   if (option.name === 'supprimer' && option.options && option.options.length > 0) {
     return tasksDelete(interaction, option.options, userId)
   }
-  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge 🤫`, [], interaction.application_id, interaction.token)
+  return sendTxtLater(
+    `La Commande ${option.name} n'est pas pris en charge 🤫`,
+    [],
+    interaction.application_id,
+    interaction.token,
+    interaction.channel_id
+  )
 }

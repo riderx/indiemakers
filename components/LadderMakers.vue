@@ -17,7 +17,11 @@
         :to="`/makers/${encodeURIComponent(maker.username || '')}`"
         class="flex py-3 border-b-2 cursor-pointer border-orchid-300"
       >
-        <img class="object-cover w-12 h-12 border-2 rounded-full border-orchid-300" :src="maker.avatarUrl" alt="cover profil" />
+        <img
+          class="object-cover w-12 h-12 border-2 rounded-full border-orchid-300"
+          :src="maker.avatarUrl"
+          :alt="`image profil ${maker.name || maker.username}`"
+        />
         <div class="flex flex-col mx-3">
           <h4 class="text-lg font-medium" :style="getTextColor(maker.color)">{{ maker.emoji || '' }} {{ maker.name || maker.username }}</h4>
           <div class="flex text-sm">

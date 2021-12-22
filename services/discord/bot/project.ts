@@ -4,6 +4,7 @@ import getMetaData from 'metadata-scraper'
 import { Interaction, ApplicationCommandInteractionDataOption } from '../command'
 import { Embed, Income, Project, User } from '../../../services/types'
 import { updateUser, getConfig } from '../../../services/firebase/discord'
+import { TwitterApiToken, useTwitter } from '../../../services/twitter'
 import { getStripeCharges, Charge } from './stripe'
 import {
   embed,
@@ -19,6 +20,7 @@ import {
   LName,
   Langs,
   getUserUrl,
+  l3s,
 } from './utils'
 import { createProjectIncome, deleteProjectIncome, getAllProjectsIncomes } from './incomes'
 
@@ -26,6 +28,8 @@ import { createProjectIncome, deleteProjectIncome, getAllProjectsIncomes } from 
 
 const projectPublicKey = ['hashtag', 'name', 'category', 'emoji', 'color', 'cover', 'github', 'openSource', 'website', 'tasks', 'streak']
 const projectProtectedKey = ['id', 'tasks', 'streak', 'bestStreak', 'createdAt', 'updatedAt', 'lastTaskAt']
+
+const twitter = useTwitter(process.env.TWITTER_TOKEN ? (JSON.parse(process.env.TWITTER_TOKEN) as TwitterApiToken) : undefined)
 
 const transforms: Langs[] = [
   t9r('color', 'couleur', 'Couleur'),
@@ -35,7 +39,15 @@ const transforms: Langs[] = [
   t9r('month', 'mois', 'Mois'),
   t9r('category', 'categorie', 'Categorie'),
   t9r('openSource', 'open_source', 'Open source'),
-  t9r('website', 'website', 'Site web', undefined, false),
+  t9r(
+    'website',
+    l3s('website', (d) => {
+      return d.startsWith('https://') ? d : d.startsWith('http://') ? d.replace('http://', 'https://') : `https://${d}`
+    }),
+    'Site web',
+    undefined,
+    false
+  ),
   t9r('github', 'github', 'Github', undefined, false),
   t9r('twitter', 'twitter', 'Twitter', undefined, false),
   t9r('emoji', 'emoji', 'Emoji'),
@@ -112,20 +124,39 @@ export const updateProject = async (userId: string, hashtag: string, project: Pa
   if (project.website) {
     try {
       const data = await getMetaData(project.website)
-      if ((!project.name || !data.name) && data.name) {
+      if (!project.name && data.title) {
         project.name = data.title
       }
-      if ((!project.cover || !data.cover) && data.image) {
+      if (!project.cover && data.image) {
         project.cover = data.image
       }
-      if ((!project.logo || !data.logo) && data.icon) {
+      if (!project.logo && data.icon) {
         project.logo = data.icon
       }
-      if ((!project.description || !data.description) && data.description) {
+      if (!project.description && data.description) {
         project.description = data.description
       }
     } catch (err) {
-      console.error('getMetaData', err)
+      console.error('getMetaData', err, project.website)
+    }
+  }
+  if (project.twitter) {
+    try {
+      const data = await twitter.user(project.twitter.split('/').pop() || '')
+      if (!project.name && data.name) {
+        project.name = data.name
+      }
+      if (!project.cover && data.profile_banner_url) {
+        project.cover = data.profile_banner_url
+      }
+      if (!project.logo && data.profile_image_url_https) {
+        project.logo = data.profile_image_url_https
+      }
+      if (!project.description && data.description) {
+        project.description = data.description
+      }
+    } catch (err) {
+      console.error('twitter', err, project.twitter)
     }
   }
   const data: Project = projDoc.data() as Project
@@ -259,7 +290,8 @@ const projectAdd = (interaction: Interaction, options: ApplicationCommandInterac
     Tu peux voir tes projets sur ta page : ${getUserUrl(user)}/projets/${encodeURIComponent(newProj.hashtag || '')}`,
             [],
             interaction.application_id,
-            interaction.token
+            interaction.token,
+            interaction.channel_id
           )
         })
       ),
@@ -275,7 +307,8 @@ INDIE MAKERS => indiemakers
 `,
       [],
       interaction.application_id,
-      interaction.token
+      interaction.token,
+      interaction.channel_id
     )
   }
 }
@@ -298,13 +331,14 @@ const projectEdit = (interaction: Interaction, options: ApplicationCommandIntera
 Bravo 💪, une marche après l'autre tu fais grandir ce projet !`,
         [],
         interaction.application_id,
-        interaction.token
+        interaction.token,
+        interaction.channel_id
       ),
       updateStripe(userId, update.hashtag, update.stripeApiKey),
       updateProject(userId, update.hashtag, update),
     ]).then(() => Promise.resolve())
   } else {
-    return sendTxtLater('hashtag manquant!', [], interaction.application_id, interaction.token)
+    return sendTxtLater('hashtag manquant!', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -325,7 +359,7 @@ const projectList = async (interaction: Interaction, userId: string, me = false)
   console.error('project_list')
   if (cards.length > 0) {
     const sentence = me ? 'Voici la liste de tes projets !' : `Voici la liste des projets de <@${userId}> !`
-    await sendTxtLater(`${sentence}\n\n`, [], interaction.application_id, interaction.token)
+    await sendTxtLater(`${sentence}\n\n`, [], interaction.application_id, interaction.token, interaction.channel_id)
     for (let index = 0; index < cards.length; index++) {
       const card = cards[index]
       console.error('card', card)
@@ -341,7 +375,7 @@ const projectList = async (interaction: Interaction, userId: string, me = false)
     const sentence = me
       ? 'Tu n\'as pas encore de projet, ajoute en avec la commande "/im projet ajouter" !'
       : `<@${userId}> n'a pas encore de projet !`
-    return sendTxtLater(sentence, [], interaction.application_id, interaction.token)
+    return sendTxtLater(sentence, [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -360,13 +394,19 @@ const projectView = async (interaction: Interaction, options: ApplicationCommand
     if (project) {
       console.error('projectView', hashtag, makerId)
       const text = makerId === userId ? 'Voici les infos sur ton projet !' : `Voici les infos sur le projet de <@${makerId}> !`
-      return sendTxtLater(`${text}\n`, [projectCard(project)], interaction.application_id, interaction.token)
+      return sendTxtLater(`${text}\n`, [projectCard(project)], interaction.application_id, interaction.token, interaction.channel_id)
     } else {
       console.error('projectView', hashtag, makerId)
-      return sendTxtLater(`Je ne trouve pas le projet ${hashtag} pour <@${makerId}>...`, [], interaction.application_id, interaction.token)
+      return sendTxtLater(
+        `Je ne trouve pas le projet ${hashtag} pour <@${makerId}>...`,
+        [],
+        interaction.application_id,
+        interaction.token,
+        interaction.channel_id
+      )
     }
   } else {
-    return sendTxtLater('Donne moi un projet !', [], interaction.application_id, interaction.token)
+    return sendTxtLater('Donne moi un projet !', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -382,11 +422,12 @@ const projectDelete = (interaction: Interaction, option: ApplicationCommandInter
 Savoir terminer un projet est une force!`,
         [],
         interaction.application_id,
-        interaction.token
+        interaction.token,
+        interaction.channel_id
       ),
     ]).then(() => Promise.resolve())
   } else {
-    return sendTxtLater('Donne moi un projet !', [], interaction.application_id, interaction.token)
+    return sendTxtLater('Donne moi un projet !', [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -446,8 +487,15 @@ export const projectFn = (interaction: Interaction, option: ApplicationCommandIn
   `,
       [],
       interaction.application_id,
-      interaction.token
+      interaction.token,
+      interaction.channel_id
     )
   }
-  return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge 🤫`, [], interaction.application_id, interaction.token)
+  return sendTxtLater(
+    `La Commande ${option.name} n'est pas pris en charge 🤫`,
+    [],
+    interaction.application_id,
+    interaction.token,
+    interaction.channel_id
+  )
 }

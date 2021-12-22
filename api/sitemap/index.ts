@@ -1,4 +1,5 @@
 import fs from 'fs'
+import path from 'path'
 import { Request, Response } from 'express'
 import { SitemapStream, streamToPromise } from 'sitemap'
 import initF from '../../services/firebase/init'
@@ -6,8 +7,8 @@ import { feed } from '../../services/feed'
 import { getAllUsers } from './../../services/firebase/discord'
 import { getAllAllProject } from './../../services/discord/bot/project'
 
-const getArticles = async () => {
-  const files = await fs.readdirSync(`${__dirname}/../../content/articles`)
+const getArticles = () => {
+  const files = fs.readdirSync(path.join(__dirname, '..', '..', 'content', 'articles'))
   return files.map((file) => ({ slug: file.replace('.md', '').replace(/-/g, '_') }))
 }
 
@@ -33,7 +34,7 @@ const sitemap = async (_req: Request, res: Response) => {
     const users = await getAllUsers()
     const projects = await getAllAllProject(users)
     users.forEach((user) => {
-      if (user.projects > 0 && user.tasks > 5 && user.bio) {
+      if (user.incomes || user.posts || user.tasks > 10 || user.karma > 15) {
         smStream.write({
           url: `/makers/${encodeURIComponent(user.username)}`,
           changefreq: 'daily',
@@ -42,7 +43,7 @@ const sitemap = async (_req: Request, res: Response) => {
       }
     })
     projects.forEach((project) => {
-      if (project.userName && project.tasks > 5 && project.description) {
+      if (project.userName && (project.incomes || project.postsData?.total || project.tasks > 5) && project.description) {
         smStream.write({
           url: `/makers/${encodeURIComponent(project.userName)}/projets/${encodeURIComponent(project.hashtag)}`,
           changefreq: 'daily',

@@ -5,8 +5,8 @@ import { Person, User } from '../../services/types'
 import { onboardingMessage } from '../../services/discord/bot/utils'
 import { podcastToFirebase } from './../../services/firebase/podcasts'
 import { lateBot, morningBot } from './../../services/discord/bot/schedule'
+import { TwUser, useTwitter } from './../../services/twitter'
 import { getPerson, voteIfNotDone } from './users'
-import { TwUser, twUserPromise } from './twitter'
 import { sendUserToRevue } from './newletter'
 import { transformURLtoTracked } from './tracker'
 
@@ -15,13 +15,22 @@ if (!getApps().length) {
 } else {
   getApp() // if already initialized, use that one
 }
+const configSecret = config()
 
-process.env.CLIENT_PUBLIC_KEY = config().discord.bot_public_key
-process.env.IMAGEKIT_KEY = config().imagekit.key
-process.env.BOT_TOKEN = config().discord.bot_token
+process.env.CLIENT_PUBLIC_KEY = configSecret.discord.bot_public_key
+process.env.IMAGEKIT_KEY = configSecret.imagekit.key
+process.env.BOT_TOKEN = configSecret.discord.bot_token
+process.env.TWITTER_TOKEN = JSON.stringify({
+  consumer_key: configSecret.twitter.consumer_key,
+  consumer_secret: configSecret.twitter.consumer_secret,
+  access_token_key: configSecret.twitter.access_token_key,
+  access_token_secret: configSecret.twitter.access_token_secret,
+})
+
+const twitter = useTwitter(JSON.parse(process.env.TWITTER_TOKEN))
 
 // export const getMakers = https.onRequest(async (req, res) => {
-//   if (req.get('x-verceladmin-apikey') !== config().verceladmin.apikey) {
+//   if (req.get('x-verceladmin-apikey') !== configSecret.verceladmin.apikey) {
 //     res.json({ error: 'unAuthorise' })
 //     return
 //   }
@@ -45,7 +54,7 @@ process.env.BOT_TOKEN = config().discord.bot_token
 // })
 
 // export const addEp = https.onRequest(async (req, res) => {
-//   if (req.get('x-verceladmin-apikey') !== config().verceladmin.apikey) {
+//   if (req.get('x-verceladmin-apikey') !== configSecret.verceladmin.apikey) {
 //     res.json({ error: 'unAuthorise' })
 //     return
 //   }
@@ -95,7 +104,7 @@ export const addTwiterUser = https.onCall(async (data, context) => {
   const uid = context.auth ? context.auth.uid : null
   if (uid) {
     try {
-      const twUser = await twUserPromise(name)
+      const twUser = await twitter.user(name)
       if (twUser) {
         console.error('user', twUser)
         const newPerson: Person = {
@@ -202,7 +211,7 @@ export const onUpdatePeople = firestore.document('/people/{personId}').onUpdate(
   const person: Person | undefined = <Person>snapshot.after.data()
   const { personId } = context.params
   if (person && person.bio && person.toUpdate === true) {
-    const twUser: TwUser | null = await twUserPromise(person.login)
+    const twUser: TwUser | null = await twitter.user(person.login)
     const { name } = twUser
     const bio = await transformURLtoTracked(twUser.description || person.bio, twUser ? twUser.entities : null)
     const pic = twUser ? twUser.profile_image_url_https.replace('_normal', '') : person.pic

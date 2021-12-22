@@ -91,7 +91,7 @@ export default defineComponent({
     fetch()
     useMeta(() => ({
       title: '🚀 Le podcast des entrepreneurs indépendant',
-      meta: createMeta(title, messages[0], image, 'Martin Donadieu'),
+      meta: createMeta(title, messages[0] + messages[3], image, 'Martin Donadieu'),
     }))
     onMounted(() => {
       window.addEventListener(

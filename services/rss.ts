@@ -105,3 +105,16 @@ export const ep = (guid: string, $config: NuxtConfig): Promise<Episode | null> =
       return null
     })
 }
+
+export const epRandom = (guid: string, random: number, $config: NuxtConfig): Promise<Episode[]> => {
+  const url = `${$config.BASEAPI}/podcasts?guid=${guid}&random=${random}`
+  return axios
+    .get(url)
+    .then((response) => {
+      return response.data as Episode[]
+    })
+    .catch((err) => {
+      console.error('ep err', err)
+      return [] as Episode[]
+    })
+}

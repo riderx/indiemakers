@@ -33,13 +33,20 @@ const im = (interaction: Interaction, option: ApplicationCommandInteractionDataO
         `Voici la doc pou m'utiliser ! https://indiemakers.gitbook.io/bot/`,
         [],
         interaction.application_id,
-        interaction.token
+        interaction.token,
+        interaction.channel_id
       )
     }
-    return sendTxtLater(`La Commande ${option.name} n'est pas pris en charge 🤫`, [], interaction.application_id, interaction.token)
+    return sendTxtLater(
+      `La Commande ${option.name} n'est pas pris en charge 🤫`,
+      [],
+      interaction.application_id,
+      interaction.token,
+      interaction.channel_id
+    )
   } catch (err) {
     console.error('im', err)
-    return sendTxtLater(`La Commande ${option.name} a échoué`, [], interaction.application_id, interaction.token)
+    return sendTxtLater(`La Commande ${option.name} a échoué`, [], interaction.application_id, interaction.token, interaction.channel_id)
   }
 }
 
@@ -52,7 +59,8 @@ const discordInteraction = (interaction: Interaction): Promise<void> => {
       `La Commande ${interaction.data.name} n'est pas pris en charge 🤫`,
       [],
       interaction.application_id,
-      interaction.token
+      interaction.token,
+      interaction.channel_id
     )
   }
   return Promise.resolve()

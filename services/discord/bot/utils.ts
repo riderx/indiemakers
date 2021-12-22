@@ -204,19 +204,61 @@ export const getFields = (obj: object, publicFields: string[], transformers: Lan
   return fields
 }
 
+const splitChunck = (input: string, perChunk: number): string[] => {
+  // merge array in one string and split by newline
+  const splited = input.split('\n')
+  // create result by looping through splited array and spliting it by perChunk
+  const result: string[] = ['']
+  let y = 0
+  for (let i = 0; i < splited.length; i++) {
+    // loop through splited array and add to result if legth is less than perChunk
+    if (splited[i].length > perChunk) {
+      // split splited[i] by space and add to result if legth is less than perChunk
+      const splitedBySpace = splited[i].split(' ')
+      for (let j = 0; j < splitedBySpace.length; j++) {
+        if (splitedBySpace[j].length + result[y].length > perChunk) {
+          y++
+          result[y] = ''
+        }
+        result[y] += splitedBySpace[j]
+      }
+    } else {
+      if (splited[i].length + result[y].length > perChunk) {
+        y++
+        result[y] = ''
+      }
+      result[y] += `${splited[i]}\n`
+    }
+  }
+  return result
+}
+
 export const sendTxtLater = async (
   content: string,
   embeds: Embed[] = [],
   applicationId: string,
-  interactionToken: string
+  interactionToken: string,
+  channelId: string
 ): Promise<void> => {
   const url = `https://discord.com/api/v8/webhooks/${applicationId}/${interactionToken}/messages/@original`
+  let res = `${content}`
+  let rest: string[] = []
+  if ([...content].length > 1999) {
+    rest = splitChunck(content, 1999)
+    res = rest.shift() || content
+  }
   const body: DiscordMessage = {
-    content,
+    content: res,
     embeds,
   }
   try {
     const res = await patch(url, body)
+    if (rest.length > 0) {
+      for (let index = 0; index < rest.length; index++) {
+        const element = rest[index]
+        await sendChannel(channelId, element)
+      }
+    }
     return res.data
   } catch (err: any) {
     if (err.response) {
