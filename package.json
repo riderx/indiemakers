@@ -43,7 +43,7 @@
     "firebase-auth-lite": "^0.8.9",
     "firebase-firestore-lite": "^1.0.3",
     "hex2dec": "^1.1.2",
-    "imagekit": "^3.2.2",
+    "imagekit": "^3.2.3",
     "linkify-html": "^3.0.2",
     "linkifyjs": "^3.0.1",
     "metadata-scraper": "^0.2.43",
