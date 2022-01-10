@@ -45,7 +45,7 @@
     "hex2dec": "^1.1.2",
     "imagekit": "^3.2.3",
     "linkify-html": "^3.0.2",
-    "linkifyjs": "^3.0.1",
+    "linkifyjs": "^3.0.5",
     "metadata-scraper": "^0.2.43",
     "nuxt": "2.15.8",
     "nuxt-purgecss": "^1.0.0",
