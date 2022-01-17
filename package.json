@@ -30,7 +30,7 @@
     "@nuxt/content": "^1.14.0",
     "@nuxtjs/composition-api": "^0.29.2",
     "@nuxtjs/markdownit": "^2.0.0",
-    "@tailwindcss/line-clamp": "0.2.2",
+    "@tailwindcss/line-clamp": "0.3.1",
     "@tailwindcss/typography": "^0.4.1",
     "@vue/composition-api": "^1.4.2",
     "await-semaphore": "^0.1.3",
