@@ -276,7 +276,7 @@ export default defineComponent({
     }
     const tweetIt = () => {
       $warehouse.set('tweetMaker', episode.value.twitter.name)
-      $warehouse.set('epGui', episode.value.guid)
+      $warehouse.set('epGui', params.value.id)
       $modal.show('share')
     }
     const joinUs = () => {
