@@ -409,7 +409,7 @@ Comme le résumé du lundi.
     await sendChannel(
       channel.id,
       `Pour apprendre à m'utiliser (le bot) il y a une petite documentation juste ici:
-https://indiemakers.gitbook.io/bot
+https://doc.indiemakers.fr
   `
     )
     await sleep(15)

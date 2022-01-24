@@ -30,7 +30,7 @@ const im = (interaction: Interaction, option: ApplicationCommandInteractionDataO
     }
     if (option.name === 'doc') {
       return sendTxtLater(
-        `Voici la doc pou m'utiliser ! https://indiemakers.gitbook.io/bot/`,
+        `Voici la doc pou m'utiliser ! https://doc.indiemakers.fr`,
         [],
         interaction.application_id,
         interaction.token,
