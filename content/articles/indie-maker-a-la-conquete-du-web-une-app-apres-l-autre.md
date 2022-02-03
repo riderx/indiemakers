@@ -44,8 +44,9 @@ Non, ces maker se soucient de nous et veulent que nous réussissions dans n'impo
 
 ### S'impliquer
 
-Il y a pas mal de makers indépendants dans la communauté maintenant, et par communauté j'entends une main d'œuvre distribuée de programmeurs pendant leur temps libre, travaillant pour bouleverser l'internet tel que nous le connaissons, sur des sites comme [indiehackers](http://indiehackers.com/), [wip.chat](http://wip.chat/), [getmakerlog.com](http://getmakerlog.com/), et en Francais notre discord:
-<div class="flex w-full" ><a href="/discord" class="px-4 py-4 mx-auto font-medium border border-transparent rounded-md shadow-sm bg-orchid-300 hover:bg-orchid-600" style="color: white !important">Rejoindre</a></div>
+Il y a pas mal de makers indépendants dans la communauté maintenant, et par communauté j'entends des dev ou nocodeur qui pendant leur temps libre, travaillant pour bouleverser l'internet tel que nous le connaissons.
+<div class="flex w-full" ><a href="/makers" class="px-4 py-4 mx-auto font-medium border border-transparent rounded-md shadow-sm bg-orchid-300 hover:bg-orchid-600" style="color: white !important">Rejoin la seule communauté Française</a></div>
+Nous sommes aussi présent sur des communauté internationale comme [indiehackers](http://indiehackers.com/), [wip.chat](http://wip.chat/), [getmakerlog.com](http://getmakerlog.com/) ou encore [bootstrappedfamily.com](https://vy.tc/nFhgf21) .
 
 Nous ne faisons plus seulement de l'open source pour que les grandes entreprises en profitent, nous en profitons nous-mêmes.
 
