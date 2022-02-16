@@ -7,7 +7,7 @@ subtitle: Histoire et étapes-clés d'un side project
 description: ''
 type: Article
 headImage: ''
-readTime: ''
+readTime: 4 min
 date: 13-12-2021
 author: Carl Chenet
 authorImage: ''
