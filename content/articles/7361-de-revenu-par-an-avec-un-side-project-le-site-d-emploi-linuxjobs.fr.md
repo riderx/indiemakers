@@ -2,7 +2,7 @@
 slug: 7361-euros-side-project
 title: 7361€ de revenu par an avec un side project
 surtitle: ''
-published: false
+published: true
 subtitle: Histoire et étapes-clés d'un side project
 description: ''
 type: Article
