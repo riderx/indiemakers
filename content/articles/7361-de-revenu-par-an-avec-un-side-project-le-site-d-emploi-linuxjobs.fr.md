@@ -10,7 +10,7 @@ description: 'Dans cet article, je parlerai de mon side project principal : Linu
   on ajoute 1 200 € de coût de serveur, pour un gain total de 29 445 € en 4 ans soit
   7 361 € de revenu par an.'
 type: Article
-headImage: "/v1639411180/indiemakers/linuxjobs-fr-screenshot_dy8r8q.png"
+headImage: https://res.cloudinary.com/forgr/image/upload/v1639411180/indiemakers/linuxjobs-fr-screenshot_dy8r8q.png
 readTime: 4 min
 date: 13-12-2021
 author: Carl Chenet
