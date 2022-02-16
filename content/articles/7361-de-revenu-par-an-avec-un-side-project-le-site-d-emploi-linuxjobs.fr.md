@@ -14,7 +14,7 @@ headImage: "/v1639411180/indiemakers/linuxjobs-fr-screenshot_dy8r8q.png"
 readTime: 4 min
 date: 13-12-2021
 author: Carl Chenet
-authorImage: "/v1644971955/indiemakers/carl_oiubzi.jpg"
+authorImage: https://res.cloudinary.com/forgr/image/upload/v1644971955/indiemakers/carl_oiubzi.jpg
 
 ---
 Dans cet article je vais parler de mon side project principal : [LinuxJobs.fr](https://www.linuxjobs.fr "LinuxJobs.fr"), le site d'emploi de la communauté du Logiciel Libre et Open Source. Le service a généré 37 645 € en chiffre d'affaires, m'a coûté 7 000 € à faire développer, on ajoute 1 200 € de coût de serveur, pour un gain total de 29 445 € en 4 ans soit 7 361 € de revenu par an.
