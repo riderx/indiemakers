@@ -4,9 +4,13 @@ title: 7361€ de revenu par an avec un side project
 surtitle: ''
 published: true
 subtitle: Histoire et étapes-clés d'un side project
-description: ''
+description: 'Dans cet article, je parlerai de mon side project principal : LinuxJobs.fr,
+  le site d''emploi de la communauté du Logiciel Libre et Open Source. Le service
+  a généré 37 645 € en chiffre d''affaires, m''a coûté 7 000 € à faire développer,
+  on ajoute 1 200 € de coût de serveur, pour un gain total de 29 445 € en 4 ans soit
+  7 361 € de revenu par an.'
 type: Article
-headImage: ''
+headImage: "/v1639411180/indiemakers/linuxjobs-fr-screenshot_dy8r8q.png"
 readTime: 4 min
 date: 13-12-2021
 author: Carl Chenet
