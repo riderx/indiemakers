@@ -507,7 +507,7 @@
               <div class="pt-2 row bg-royalblue-700">
                 <div class="text-white col-12">
                   <ul class="pt-2 text-center">
-                    <li>Grace aux votes, ce·tte maker a accepter de venir dans le podcast !</li>
+                    <li>Grace aux votes, ce·tte maker a accepé de venir dans le podcast !</li>
                     <li>Merci 😍</li>
                   </ul>
                 </div>
