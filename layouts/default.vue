@@ -44,13 +44,13 @@ export default defineComponent({
         {
           hid: 'apple-mobile-web-app-title',
           name: 'apple-mobile-web-app-title',
-          content: 'indiemakers.fr',
+          content: $config.DOMAIN,
         },
         { hid: 'theme-color', name: 'theme-color', content: '#4b279b' },
         {
           hid: 'og:site_name',
           property: 'og:site_name',
-          content: 'indiemakers.fr',
+          content: $config.DOMAIN,
         },
         {
           hid: 'og:url',

@@ -10,12 +10,15 @@ const serverMiddleware = () => {
   }
   return []
 }
-const baseUrl = () => {
-  if (process.env.VERCEL && process.env.VERCEL_ENV === 'production') {
-    return 'https://indiemakers.fr'
-  }
+const baseDomain = () => {
   if (process.env.VERCEL) {
-    return `https://${process.env.VERCEL_URL}`
+    return process.env.VERCEL_URL
+  }
+  return 'indiemakers.fr'
+}
+const baseUrl = () => {
+  if (process.env.VERCEL) {
+    return `https://${baseDomain()}`
   }
   return 'http://localhost:3000'
 }
@@ -23,7 +26,7 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'server',
   publicRuntimeConfig: {
-    DOMAIN: baseUrl(),
+    DOMAIN: baseDomain(),
     BASEAPI: `${baseUrl()}/api`,
     handler: 'indiemakersfr',
   },
@@ -65,7 +68,7 @@ export default {
       {
         hid: 'og:site_name',
         property: 'og:site_name',
-        content: 'indiemakers.fr',
+        content: baseUrl(),
       },
       {
         hid: 'og:article:author',

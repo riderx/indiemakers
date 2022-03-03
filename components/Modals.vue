@@ -1433,7 +1433,7 @@ export default defineComponent({
       }
     }
     const tweetItHunt = () => {
-      const linkEp = 'https://indiemakers.fr/makershunt'
+      const linkEp = `${$config.DOMAIN}/makershunt`
       const tweet = `Je viens de découvrir les Makers Français les plus chaud sur ${linkEp} @${$config.handler}`
       const tweetLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`
       window.open(tweetLink, '_blank')
