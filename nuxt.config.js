@@ -11,8 +11,8 @@ const serverMiddleware = () => {
   return []
 }
 const baseDomain = () => {
-  if (process.env.VERCEL) {
-    return process.env.VERCEL_URL
+  if (process.env.VERCEL && process.env.DOMAIN) {
+    return process.env.DOMAIN
   }
   return 'indiemakers.fr'
 }
