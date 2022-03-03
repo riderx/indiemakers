@@ -11,5 +11,6 @@ module.exports = {
     'max-len': [1, { code: 140 }],
     'no-unused-vars': ['error', { args: 'after-used' }],
     'no-console': ['error', { allow: ['off', 'error'] }],
+    'vue/multi-word-component-names': 'off',
   },
 }
