@@ -1,7 +1,7 @@
 import { config } from 'firebase-functions'
 import axios from 'axios'
 import findUrl from 'get-urls'
-import { TwEntities, TwUrl } from './twitter'
+import { TwUrl, TwEntities } from '../../services/twitter'
 const configSecret = config()
 
 const rebrandlyKey = configSecret.rebrandly.key
