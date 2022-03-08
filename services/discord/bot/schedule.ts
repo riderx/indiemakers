@@ -114,11 +114,7 @@ export const lateBot = async () => {
         )
       }
       if (dayjs().day() === 1) {
-        await sendChannel(
-          config.channel_general,
-          `C'est l'heure de l'apero mensuel sur le general vocal ! 💪
-app.indiemakers.space/invite/iRaqGsbWMcMTdoBZj`
-        )
+        await sendChannel(config.channel_general, `C'est l'heure de l'appel sur le general vocal ! 💪`)
         await personalVocalReminder(users)
       }
 
@@ -176,7 +172,7 @@ Continuez comme ça :`
         //         if (dayjs().date() < 8) {
         await sendChannel(
           data.channel_general,
-          `Ce soir a 18h00 (UTC/GMT +1) c'est l'appel mensuel sur le general vocal !
+          `Ce soir a 18h00 (UTC/GMT +1) c'est l'appel hebdomadaire sur le general vocal !
         Passe faire un tour et partager avec les autres makers !`
         )
         //         }
