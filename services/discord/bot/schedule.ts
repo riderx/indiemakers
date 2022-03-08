@@ -113,7 +113,7 @@ export const lateBot = async () => {
           "@everyone Hey Makers, il est temps de noter vos taches du jour dans vos projets et d'aller chill !"
         )
       }
-      if (dayjs().day() === 1 && dayjs().date() < 8) {
+      if (dayjs().day() === 1) {
         await sendChannel(
           config.channel_general,
           `C'est l'heure de l'apero mensuel sur le general vocal ! 💪
@@ -174,11 +174,11 @@ Continuez comme ça :`
         await personalModayReminder(users)
         await updateIncomeAllProject()
         //         if (dayjs().date() < 8) {
-        //           await sendChannel(
-        //             data.channel_general,
-        //             `Ce soir a 18h10 (UTC/GMT +1 heure) c'est l'appel mensuel sur le general vocal !
-        // Passe faire un tour et partager avec les autres makers !`
-        //           )
+        await sendChannel(
+          data.channel_general,
+          `Ce soir a 18h00 (UTC/GMT +1) c'est l'appel mensuel sur le general vocal !
+        Passe faire un tour et partager avec les autres makers !`
+        )
         //         }
       }
     }
