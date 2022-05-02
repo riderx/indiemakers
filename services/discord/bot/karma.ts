@@ -38,7 +38,7 @@ const karmaAdd = async (interaction: Interaction, option: ApplicationCommandInte
       const currentKarma = await addKarmaById(userId, senderId, 1)
       console.error('addKarmaById')
       const botString = await afterAdd(1, userId, currentKarma)
-      console.error('afterAdd')
+      console.error('afterAdd', botString)
       return sendTxtLater(botString, [], interaction.application_id, interaction.token, interaction.channel_id)
     } catch (err) {
       console.error('karmaAdd', err)
