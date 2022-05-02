@@ -34,7 +34,7 @@ export const handler: Handler = async (event) => {
       } catch (e) {
         console.error('bot', e)
       }
-      return
+      return sendRes({ status: 'fail' }, 500)
     }
     return sendRes({
       type: InteractionResponseType.PONG,
