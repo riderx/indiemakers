@@ -22,7 +22,7 @@ const bot = async (req: Request, res: Response) => {
     }
     if (req.body && req.body.type === InteractionType.APPLICATION_COMMAND && req.body.data) {
       try {
-        await sendTxtLoading(res)
+        res.send(sendTxtLoading())
         await discordInteraction(req.body)
       } catch (e) {
         console.error('bot', e)

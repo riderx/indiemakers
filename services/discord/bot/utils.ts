@@ -79,13 +79,12 @@ export const sendTxt = (res: Res, text: string): Res =>
     },
   })
 
-export const sendTxtLoading = (res: Res): Res =>
-  res.send({
-    type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-    data: {
-      content: 'Le bot réflechis..',
-    },
-  })
+export const sendTxtLoading = (): any => ({
+  type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+  data: {
+    content: 'Le bot réflechis..',
+  },
+})
 
 // eslint-disable-next-line no-unused-vars
 export enum LName {
