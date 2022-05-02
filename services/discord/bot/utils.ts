@@ -9,6 +9,11 @@ import { getConfig, saveRateLimit } from '../../../services/firebase/discord'
 import { sendError } from './../../firebase/error'
 
 const { post, patch, get } = axios
+
+export interface ResBot {
+  content: string
+  embeds?: Embed[]
+}
 export const image = (url: string): Image => ({ url })
 // eslint-disable-next-line camelcase
 export const footer = (text: string, icon_url: string): Footer => ({
@@ -71,13 +76,10 @@ export const embed = (
   return data
 }
 
-export const sendTxt = (res: Res, text: string): Res =>
-  res.send({
-    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-    data: {
-      content: text,
-    },
-  })
+export const sendTxt = (data: string): any => ({
+  type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+  data,
+})
 
 export const sendTxtLoading = (): any => ({
   type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
@@ -251,7 +253,7 @@ export const sendTxtLater = async (
     embeds,
   }
   try {
-    const res = await post(url, body)
+    const res = await patch(url, body)
     if (rest.length > 0) {
       for (let index = 0; index < rest.length; index++) {
         const element = rest[index]
@@ -276,7 +278,7 @@ export const sendTxtLater = async (
     }
     // console.error('sendTxtLater content', url, JSON.stringify(content))
     try {
-      await post(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
+      await patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
     } catch (errErr: any) {
       console.error('sendTxtLaterFallback', errErr.response)
       await sendError({ function: 'sendTxtLaterFallback', error: JSON.stringify(errErr), url, body })
