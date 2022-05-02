@@ -1,5 +1,4 @@
 import { InteractionResponseType } from 'discord-interactions'
-import { Response as Res } from 'express'
 import axios from 'axios'
 import { hexToDec } from 'hex2dec'
 import dayjs from 'dayjs'

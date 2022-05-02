@@ -1,7 +1,7 @@
-import { Interaction, ApplicationCommandInteractionDataOption } from '../command'
+import { ApplicationCommandInteractionDataOption } from '../command'
 import { addKarmaById, getKarmaById } from '../../../services/firebase/karma'
 import { updateUser, getAllUsers } from '../../../services/firebase/discord'
-import { openChannel, ResBot, sendChannel, sendTxtLater } from './utils'
+import { openChannel, ResBot, sendChannel } from './utils'
 import { KarmaAll, User } from './../../types'
 
 const afterAdd = async (value: number, userId: string, curKarma: KarmaAll): Promise<string> => {

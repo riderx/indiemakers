@@ -2,7 +2,7 @@ import type { Handler } from '@netlify/functions'
 import { InteractionResponseType, InteractionType, verifyKey } from 'discord-interactions'
 import initF from '../../services/firebase/init'
 import discordInteraction from '../../services/discord/bot'
-import { sendTxt, sendTxtLoading } from '../../services/discord/bot/utils'
+import { sendTxt } from '../../services/discord/bot/utils'
 
 export const basicHeaders = {
   'Access-Control-Allow-Origin': '*',
