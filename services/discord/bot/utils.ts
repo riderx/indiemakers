@@ -262,7 +262,7 @@ export const sendTxtLater = async (
   } catch (err: any) {
     if (err.response) {
       // Request made and server responded
-      console.error('sendTxtLater url', url)
+      console.error('sendTxtLater url', url, body)
       console.error('sendTxtLater response', err.response.data)
       console.error('sendTxtLater response status', err.response.status)
       console.error('sendTxtLater response errors', err.response.data.errors)
