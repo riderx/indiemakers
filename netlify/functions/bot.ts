@@ -29,7 +29,9 @@ export const handler: Handler = async (event) => {
     const body = JSON.parse(event.body || '{}')
     if (event.body && body.type === InteractionType.APPLICATION_COMMAND && body.data) {
       try {
-        return sendRes(sendTxt(await discordInteraction(body)))
+        const res = sendTxt(await discordInteraction(body))
+        console.error('bot res', res)
+        return sendRes(res)
       } catch (e) {
         console.error('bot', e)
       }
