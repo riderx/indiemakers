@@ -251,7 +251,7 @@ export const sendTxtLater = async (
     embeds,
   }
   try {
-    const res = await patch(url, body)
+    const res = await post(url, body)
     if (rest.length > 0) {
       for (let index = 0; index < rest.length; index++) {
         const element = rest[index]
@@ -276,7 +276,7 @@ export const sendTxtLater = async (
     }
     // console.error('sendTxtLater content', url, JSON.stringify(content))
     try {
-      await patch(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
+      await post(url, { content: "🤖 Oups, previens mon créateur j'ai un bug!" })
     } catch (errErr: any) {
       console.error('sendTxtLaterFallback', errErr.response)
       await sendError({ function: 'sendTxtLaterFallback', error: JSON.stringify(errErr), url, body })
