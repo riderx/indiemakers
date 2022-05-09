@@ -28,14 +28,14 @@ jobs:
       - name: Build and push main
         if: ${{ github.ref == 'refs/heads/main' }}
         id: docker_build_master
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           push: true
           tags: riderx/indiemakers:latest
       - name: Build and push next
         if: ${{ github.ref == 'refs/heads/next' }}
         id: docker_build_next
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           push: true
           tags: riderx/indiemakers:next
