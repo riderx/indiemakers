@@ -1,7 +1,7 @@
 import Stripe from 'stripe'
 import dayjs, { Dayjs } from 'dayjs'
-import { Income, Project, User } from '../../../services/types'
-import { getAllUsers } from '../../../services/firebase/discord'
+import { Income, Project, User } from './types'
+import { getAllUsers } from './discord'
 import { getAllProjects } from './project'
 import { getAllProjectsIncomes, updateProjectIncome } from './incomes'
 

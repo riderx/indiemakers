@@ -3,9 +3,9 @@ import axios from 'axios'
 import { hexToDec } from 'hex2dec'
 import dayjs from 'dayjs'
 import { APIMessage } from 'discord-api-types/v9'
-import { Footer, Author, Field, Embed, DiscordMessage, User, Image } from '../../../services/types'
-import { getConfig, saveRateLimit } from '../../../services/firebase/discord'
-import { sendError } from './../../firebase/error'
+import { Footer, Author, Field, Embed, DiscordMessage, User, Image } from './types'
+import { getConfig, saveRateLimit } from './discord'
+import { sendError } from './error'
 
 const { post, patch, get } = axios
 
@@ -252,14 +252,14 @@ export const sendTxtLater = async (
     embeds,
   }
   try {
-    const res = await patch(url, body)
+    await patch(url, body)
     if (rest.length > 0) {
       for (let index = 0; index < rest.length; index++) {
         const element = rest[index]
         await sendChannel(channelId, element)
       }
     }
-    return res.data
+    return
   } catch (err: any) {
     if (err.response) {
       // Request made and server responded
