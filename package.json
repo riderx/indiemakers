@@ -40,7 +40,7 @@
     "dayjs": "1.10.7",
     "discord-interactions": "2.4.1",
     "emoji-regex": "^10",
-    "firebase-admin": "10.0.0",
+    "firebase-admin": "10.2.0",
     "firebase-auth-lite": "^0.8.9",
     "firebase-firestore-lite": "^1.0.3",
     "hex2dec": "^1.1.2",
