@@ -29,7 +29,7 @@
     "@google-cloud/translate": "6.3.1",
     "@netlify/functions": "^1.0.0",
     "@nuxt/content": "^1.14.0",
-    "@nuxtjs/composition-api": "^0.29.2",
+    "@nuxtjs/composition-api": "^0.32.0",
     "@nuxtjs/markdownit": "^2.0.0",
     "@tailwindcss/line-clamp": "0.2.2",
     "@tailwindcss/typography": "^0.4.1",
