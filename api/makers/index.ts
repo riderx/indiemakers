@@ -1,8 +1,28 @@
 import { Request, Response } from 'express'
+import { getFirestore } from 'firebase-admin/firestore'
 import { getAllUsers, getUsersByUsername } from '../../services/firebase/discord'
 import { getAllPosts } from '../../services/firebase/posts'
-import { getAllProjects } from '../../services/discord/bot/project'
 import initF from '../../services/firebase/init'
+import { Project } from '~/services/types'
+
+const getAllProjects = async (userId: string, userName: string | undefined = undefined): Promise<Project[]> => {
+  try {
+    const documents = await getFirestore().collection(`discord/${userId}/projects`).where('hashtag', '!=', null).get()
+
+    const projects: Project[] = []
+    for (let index = 0; index < documents.docs.length; index++) {
+      const doc = documents.docs[index]
+      const data = (await doc.data()) as Project
+      if (data !== undefined && data.hashtag && data.hashtag !== '') {
+        projects.push({ userId, userName, id: doc.id, ...(data as Project) })
+      }
+    }
+    return projects
+  } catch (err) {
+    console.error('getAllProjects', err)
+    return []
+  }
+}
 
 const makers = async (req: Request, res: Response) => {
   initF()
