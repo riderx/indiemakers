@@ -5,6 +5,8 @@ import { Database } from 'firebase-firestore-lite'
 import Auth from 'firebase-auth-lite'
 import { WarehouseStoreAPI } from 'vue-warehouse/types/warehouse'
 
+import { Plugin } from '@nuxt/types'
+
 const auth = new Auth({
   apiKey: 'AIzaSyAC0aCq1umg8bZtOuhzH8GkflqUCtInOp8',
   redirectUri: 'https://indiemakers.fr/login',
@@ -47,7 +49,6 @@ declare module '@nuxt/types' {
   }
 }
 
-
 declare module 'vue/types/vue' {
   interface Vue {
     $warehouse: WarehouseStoreAPI
@@ -56,9 +57,6 @@ declare module 'vue/types/vue' {
 }
 
 Vue.prototype.$firebase = { auth, db, func, emailSigning }
-
-import { Plugin } from '@nuxt/types'
-
 
 const myPlugin: Plugin = (context) => {
   context.$firebase = { auth, db, func, emailSigning }

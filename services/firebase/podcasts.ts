@@ -1,40 +1,5 @@
 import { getFirestore } from 'firebase-admin/firestore'
-import { feed } from '../feed'
-import { sendImageToCache } from '../imageCache'
 import { Episode } from '../types'
-
-const postEp = async (element: Episode): Promise<void> => {
-  try {
-    await getFirestore().collection('podcasts').doc(element.id).update(element)
-    return Promise.resolve()
-  } catch {
-    try {
-      await getFirestore().collection('podcasts').doc(element.id).set(element)
-      return Promise.resolve()
-    } catch (err) {
-      console.error('postEp', err)
-      return Promise.reject(err)
-    }
-  }
-}
-
-export const podcastToFirebase = async () => {
-  try {
-    const epList = await feed()
-    // declare pormise list
-    const pList: Promise<unknown>[] = []
-    // loop through episodes
-    epList.forEach((element: Episode) => {
-      // push promise to list
-      pList.push(sendImageToCache(element.image, element.id))
-      pList.push(postEp(element))
-    })
-    return Promise.all(pList)
-  } catch (err) {
-    console.error(err)
-    return Promise.reject(err)
-  }
-}
 
 export const getOnePodcastById = async (id: string): Promise<Episode | null> => {
   try {

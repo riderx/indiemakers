@@ -1,14 +1,14 @@
 /* eslint-disable camelcase */
 const Twitter = require('twitter')
 
-export interface TwUrl {
+interface TwUrl {
   url: string
   expanded_url: string
   display_url: string
   indices: [number, number]
 }
 
-export interface TwEntities {
+interface TwEntities {
   url: {
     hashtags: []
     symbols: []
@@ -23,7 +23,7 @@ export interface TwEntities {
   }
 }
 
-export interface TwUser {
+interface TwUser {
   created_at: string
   default_profile_image: boolean
   default_profile: boolean
@@ -47,7 +47,7 @@ export interface TwUser {
   withheld_in_countries?: string[]
   withheld_scope?: string
 }
-export interface TwitterApiToken {
+interface TwitterApiToken {
   consumer_key: string
   consumer_secret: string
   access_token_key: string

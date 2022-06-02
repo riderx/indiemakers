@@ -69,17 +69,6 @@ export interface DiscordConfig {
     bot_token: string
   }
 }
-export interface Karma {
-  id?: string
-  userId: string
-  createdAt: string
-  value: number
-}
-
-export interface KarmaAll {
-  karmas: Karma[]
-  total: number
-}
 
 export interface Tool {
   link: string
@@ -115,7 +104,8 @@ export interface Episode {
   audio: string
 }
 
-export enum Category {
+// eslint-disable-next-line no-unused-vars
+enum Category {
   // eslint-disable-next-line no-unused-vars
   SAAS = 'saas',
   // eslint-disable-next-line no-unused-vars
@@ -133,7 +123,7 @@ export enum Category {
 }
 
 // eslint-disable-next-line no-unused-vars
-export enum TaskStatus {
+enum TaskStatus {
   // eslint-disable-next-line no-unused-vars
   TODO = 'todo',
   // eslint-disable-next-line no-unused-vars
@@ -170,7 +160,7 @@ export interface PostAll {
   total: number
 }
 
-export interface Income {
+interface Income {
   id?: string
   ammount: number
   stripeCharges?: Income[]
@@ -179,10 +169,12 @@ export interface Income {
   createdAt?: string
   updatedAt?: string
 }
-export interface IncomeAll {
+
+interface IncomeAll {
   incomes: Income[]
   total: number
 }
+
 export interface Project {
   error?: string
   id?: string
@@ -250,44 +242,4 @@ export interface User {
   postsData?: Post[]
   createdAt: string
   updatedAt: string
-}
-export type EncryptedUser = User
-
-export interface UserWithAccessToken extends User {
-  accessToken: AccessTokenObject
-}
-export interface Image {
-  url: string
-}
-export interface Field {
-  name: string
-  value: string
-  inline: boolean
-}
-export interface Author {
-  name: string
-  url?: string
-  // eslint-disable-next-line camelcase
-  icon_url?: string
-}
-export interface Footer {
-  text: string
-  // eslint-disable-next-line camelcase
-  icon_url: string
-}
-export interface Embed {
-  title?: string
-  description?: string
-  url?: string
-  color?: string
-  fields?: Field[]
-  author?: Author
-  footer?: Footer
-  timestamp?: string
-  thumbnail?: Image
-  image?: Image
-}
-export interface DiscordMessage {
-  content: string
-  embeds?: Embed[]
 }

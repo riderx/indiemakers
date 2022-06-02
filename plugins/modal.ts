@@ -4,6 +4,8 @@ import Vue from 'vue'
 import VModal from 'vue-js-modal/dist/ssr.nocss'
 import 'vue-js-modal/dist/styles.css'
 
+import { Plugin } from '@nuxt/types'
+
 Vue.use(VModal, {
   dynamic: true,
   injectModalsContainer: true,
@@ -32,9 +34,6 @@ declare module '@nuxt/types' {
     $content: contentFunc
   }
 }
-
-import { Plugin } from '@nuxt/types'
-
 
 const myPlugin: Plugin = (context) => {
   context.$modal = Vue.prototype.$modal
