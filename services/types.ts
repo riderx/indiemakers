@@ -1,46 +1,5 @@
 /* eslint-disable camelcase */
 import { Timestamp } from 'firebase-admin/firestore'
-
-export type Nullable<T> = T | null
-export type Optional<T> = T | undefined
-
-export type AccessTokenObject = {
-  access_token: string
-  token_type: 'Bearer'
-  expires_in: number
-  refresh_token: string
-  scope: string
-}
-
-export type DiscordUser = {
-  id: string
-  username: string
-  avatar: string
-  discriminator: string
-  public_flags: number
-  flags: number
-  locale: string
-  mfa_enabled: boolean
-  premium_type: number
-}
-
-export class InvalidCodeError extends Error {}
-export class NoAccessTokenError extends Error {}
-export class ExpiredAccessTokenError extends Error {}
-
-/**
- * User  discord interface
- *
- */
-export interface WebsiteUser {
-  uid: string
-  twitter: string
-  email: string
-  firstName: string
-  lastName: string
-  karma: number
-}
-
 /**
  * User  discord interface
  *
@@ -59,28 +18,6 @@ export interface Person {
   votes: number
   number: number
 }
-
-export interface DiscordConfig {
-  discordResetAfter: number
-  channel_bip: string
-  channel_intro: string
-  channel_general: string
-  discord: {
-    bot_token: string
-  }
-}
-export interface Karma {
-  id?: string
-  userId: string
-  createdAt: string
-  value: number
-}
-
-export interface KarmaAll {
-  karmas: Karma[]
-  total: number
-}
-
 export interface Tool {
   link: string
   name: string
@@ -88,7 +25,6 @@ export interface Tool {
   image: string
   description: string
 }
-
 export interface Social {
   name: string
   link: string
@@ -115,7 +51,7 @@ export interface Episode {
   audio: string
 }
 
-export enum Category {
+enum Category {
   // eslint-disable-next-line no-unused-vars
   SAAS = 'saas',
   // eslint-disable-next-line no-unused-vars
@@ -133,7 +69,7 @@ export enum Category {
 }
 
 // eslint-disable-next-line no-unused-vars
-export enum TaskStatus {
+enum TaskStatus {
   // eslint-disable-next-line no-unused-vars
   TODO = 'todo',
   // eslint-disable-next-line no-unused-vars
@@ -250,44 +186,4 @@ export interface User {
   postsData?: Post[]
   createdAt: string
   updatedAt: string
-}
-export type EncryptedUser = User
-
-export interface UserWithAccessToken extends User {
-  accessToken: AccessTokenObject
-}
-export interface Image {
-  url: string
-}
-export interface Field {
-  name: string
-  value: string
-  inline: boolean
-}
-export interface Author {
-  name: string
-  url?: string
-  // eslint-disable-next-line camelcase
-  icon_url?: string
-}
-export interface Footer {
-  text: string
-  // eslint-disable-next-line camelcase
-  icon_url: string
-}
-export interface Embed {
-  title?: string
-  description?: string
-  url?: string
-  color?: string
-  fields?: Field[]
-  author?: Author
-  footer?: Footer
-  timestamp?: string
-  thumbnail?: Image
-  image?: Image
-}
-export interface DiscordMessage {
-  content: string
-  embeds?: Embed[]
 }

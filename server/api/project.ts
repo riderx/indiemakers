@@ -4,6 +4,7 @@ import { getPostsByHash } from '~~/services/firebase/posts'
 import { getAllProjectsTasks } from '~~/services/firebase/tasks'
 import { Income, IncomeAll, Project, User } from '~~/services/types'
 import { getUsersByUsername, getAllUsers } from '~~/services/firebase/discord'
+import { getAllAllProject } from '~~/services/firebase/project'
 
 const getAllProjectsIncomes = async (userId: string, hashtag: string): Promise<IncomeAll> => {
   try {
@@ -54,15 +55,6 @@ const getAllProjects = async (userId: string, userName: string | undefined = und
     console.error('getAllProjects', err)
     return []
   }
-}
-const getAllAllProject = async (users: User[]): Promise<Project[]> => {
-  const arrays: Project[][] = await Promise.all(
-    users.map((usr: User) => {
-      return getAllProjects(String(usr?.userId), usr?.username)
-    })
-  )
-  const projects: Project[] = arrays.reduce((a, b) => a.concat(b), [])
-  return projects
 }
 
 export default defineEventHandler(async (event) => {
