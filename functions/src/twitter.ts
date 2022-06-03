@@ -73,13 +73,3 @@ export const twUserPromise = (screen_name: string): Promise<TwUser> =>
       }
     })
   })
-
-export const getTwiterAccounts = (text: string) => {
-  const list: Promise<TwUser>[] = []
-  const reTwitter = /^@?([a-zA-Z0-9_]){1,15}$/
-  text.replace(reTwitter, (_match, login) => {
-    list.push(twUserPromise(login))
-    return login
-  })
-  return Promise.all(list)
-}
