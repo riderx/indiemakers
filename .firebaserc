@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "prod": "indiemakerfr",
+    "default": "indiemakerfr"
+  }
+}
