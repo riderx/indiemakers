@@ -1,8 +1,10 @@
 import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
+import relativeTime from 'dayjs/plugin/relativeTime.js'
+import customParseFormat from 'dayjs/plugin/customParseFormat.js'
 
 dayjs.extend(relativeTime)
-require('dayjs/locale/fr')
+dayjs.extend(customParseFormat)
+import 'dayjs/locale/fr'
 
 dayjs.locale('fr')
 

@@ -93,51 +93,46 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import { ref, defineComponent, useContext, useMeta, useRouter } from '@nuxtjs/composition-api'
-import { createMeta } from '~/services/meta'
+<script setup lang="ts">
+  import { createMeta } from '~/services/meta'
+  import { useMainStore } from '~~/store/main';
 
-export default defineComponent({
-  setup() {
-    const { $firebase, $modal } = useContext()
-    const email = ref('')
-    const name = ref('')
-    const router = useRouter()
-    const logo = {
-      title: 'Communauté LOGO',
-      source: 'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/undraw_connection_b38q_czvwhb.svg',
-    }
-    const desc = "Plus de 300 Makers Français qui construise leur projets et s'entre aide !"
-    const title = 'Rejoint le Discord'
-    useMeta(() => ({
-      title,
-      meta: createMeta(title, desc, 'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'),
-    }))
-    const joinDiscord = () => {
-      $firebase.db
-        .ref(`users/${email.value}`)
-        .set({
-          first_name: name.value,
-          email: email.value,
-        })
-        .then(() => {
-          window.open('https://discord.gg/GctKEcDpxk', '_blank')
-          setTimeout(() => {
-            router.push('/')
-          }, 2000)
-        })
-        .catch(() => {
-          $modal.show('already_register')
-          window.open('https://discord.gg/GctKEcDpxk', '_blank')
-          setTimeout(() => {
-            router.push('/')
-          }, 2000)
-        })
-    }
-    return { joinDiscord, logo, title, desc, email, name }
-  },
-  head: {},
-})
+  const { $firebase } = useNuxtApp()
+  const email = ref('')
+  const name = ref('')
+  const router = useRouter()
+  const main = useMainStore()
+  const logo = {
+    title: 'Communauté LOGO',
+    source: 'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/undraw_connection_b38q_czvwhb.svg',
+  }
+  const desc = "Plus de 300 Makers Français qui construise leur projets et s'entre aide !"
+  const title = 'Rejoint le Discord'
+  useHead(() => ({
+    titleTemplate: title,
+    meta: createMeta(title, desc, 'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'),
+  }))
+  const joinDiscord = () => {
+    $firebase.db
+      .ref(`users/${email.value}`)
+      .set({
+        first_name: name.value,
+        email: email.value,
+      })
+      .then(() => {
+        window.open('https://discord.gg/GctKEcDpxk', '_blank')
+        setTimeout(() => {
+          router.push('/')
+        }, 2000)
+      })
+      .catch(() => {
+        main.modal = 'already_register'
+        window.open('https://discord.gg/GctKEcDpxk', '_blank')
+        setTimeout(() => {
+          router.push('/')
+        }, 2000)
+      })
+  }
 </script>
 <style scoped>
 .form-size {

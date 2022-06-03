@@ -38,7 +38,7 @@
                         </p>
                       </div>
                       <div class="mt-2 text-sm text-gray-700">
-                        <p class="prose-sm prose prose-blue" v-html="$md.render(transformPost(post.text))"></p>
+                        <p class="prose-sm prose prose-blue" v-html="md.render(transformPost(post.text))"></p>
                       </div>
                     </div>
                   </div>
@@ -51,36 +51,31 @@
     </div>
   </section>
 </template>
-<script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-import { Post, User } from '~/services/types'
+<script setup lang="ts">
+  import { Post, User } from '~/services/types'
+  import MarkdownIt from 'markdown-it'
 
-// function to find user by userId in users list
-const findUser = (users: User[], userId: string) => {
-  return users ? users.find((user) => user.userId === userId) : undefined
-}
-
-export default defineComponent({
-  props: {
+  const md = new MarkdownIt()
+  // function to find user by userId in users list
+  const findUser = (users: User[], userId: string) => {
+    return users ? users.find((user) => user.userId === userId) : undefined
+  }
+  const { users } = defineProps({
     posts: { type: Array as () => Post[], default: () => [] as Post[] },
     users: { type: Array as () => User[], default: () => [] as User[] },
-  },
-  setup({ users }) {
-    const transformPost = (text: string) => {
-      if (typeof text !== 'string') return text
-      const transformed = text.replace(/<@(.*)>/g, (userId: string) => {
-        userId = userId.replace(/[^0-9.]/g, '')
-        const user = findUser(users, userId)
-        if (user) {
-          return `<a href="/makers/${encodeURIComponent(user?.username)}">@${user?.username}</a>`
-        } else {
-          return `<a href="https://discordapp.com/users/${userId}">@${userId}</a>`
-        }
-      })
-      return transformed
-    }
+  })
 
-    return { transformPost }
-  },
-})
+  const transformPost = (text: string) => {
+    if (typeof text !== 'string') return text
+    const transformed = text.replace(/<@(.*)>/g, (userId: string) => {
+      userId = userId.replace(/[^0-9.]/g, '')
+      const user = findUser(users, userId)
+      if (user) {
+        return `<a href="/makers/${encodeURIComponent(user?.username)}">@${user?.username}</a>`
+      } else {
+        return `<a href="https://discordapp.com/users/${userId}">@${userId}</a>`
+      }
+    })
+    return transformed
+  }
 </script>

@@ -41,18 +41,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-export default defineComponent({
-  props: {
+<script setup lang="ts">
+  defineProps({
     title: { type: String, default: null },
     name: { type: String, default: null },
     image: { type: String, default: null },
     date: { type: String, default: null },
     votes: { type: Number, default: null },
     preview: { type: String, default: null },
-  },
-})
+  })
 </script>
 
 <style scoped>

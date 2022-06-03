@@ -1,27 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "ES2018",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "sourceMap": true,
-    "noUnusedLocals": true,
-    "strict": true,
-    "noEmit": true,
-    "experimentalDecorators": true,
-    "baseUrl": ".",
-    "paths": { "~/*": ["./*"], "@/*": ["./*"] },
-    "types": ["@nuxt/types", "@nuxt/content", "@types/node"]
-  },
-  "exclude": [
-    "node_modules",
-    "functions",
-    ".nuxt",
-    "dist",
-    "node_modules_dev",
-    "node_modules_prod"
-  ]
+  // https://v3.nuxtjs.org/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json"
 }

@@ -35,18 +35,12 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+<script setup lang="ts">
 
-export default defineComponent({
-  props: {
-    show: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  setup() {
-    return {}
-  },
+defineProps({
+  show: {
+    type: Boolean,
+    required: true,
+  }
 })
 </script>

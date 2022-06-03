@@ -1,11 +1,12 @@
 import { getApps, getApp, initializeApp, cert } from 'firebase-admin/app'
 
 export default () => {
+  const runtimeConfig = useRuntimeConfig()
   if (!getApps().length) {
-    if (process.env.GOOGLE_SERVICE_ACCOUNT) {
+    if (runtimeConfig.googleServiceAccount) {
       initializeApp({
-        credential: cert(JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT)),
-        databaseURL: process.env.FIREBASE_DATABASE,
+        credential: cert(JSON.parse(runtimeConfig.googleServiceAccount)),
+        databaseURL: runtimeConfig.firebaseDatabase,
       })
     } else {
       initializeApp()

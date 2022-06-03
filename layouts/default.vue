@@ -2,67 +2,57 @@
   <div>
     <NavBar />
     <Modals />
-    <Nuxt keep-alive :keep-alive-props="{ max: 10 }" />
+    <slot />
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, useContext, useRoute, useMeta } from '@nuxtjs/composition-api'
-import Modals from '~/components/Modals.vue'
-import NavBar from '~/components/NavBar.vue'
+<script setup lang="ts">
+  import Modals from '~/components/Modals.vue'
+  import NavBar from '~/components/NavBar.vue'
 
-export default defineComponent({
-  components: {
-    Modals,
-    NavBar,
-  },
-  setup() {
-    const { $config } = useContext()
-    const route = useRoute()
-    useMeta(() => ({
-      link: [
-        {
-          rel: 'alternate',
-          title: 'INDIE MAKERS',
-          href: `${$config.DOMAIN}${route.value.fullPath}`,
-        },
-        {
-          rel: 'canonical',
-          title: 'INDIE MAKERS',
-          href: `${$config.DOMAIN}${route.value.fullPath}`,
-        },
-      ],
-      meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        {
-          hid: 'keywords',
-          property: 'keywordse',
-          content: 'podcast, indie makers, indie hackers, bootsstrappers, independants, entrepreneurs, Makers, business',
-        },
-        { hid: 'og:type', property: 'og:type', content: 'website' },
-        {
-          hid: 'apple-mobile-web-app-title',
-          name: 'apple-mobile-web-app-title',
-          content: $config.DOMAIN,
-        },
-        { hid: 'theme-color', name: 'theme-color', content: '#4b279b' },
-        {
-          hid: 'og:site_name',
-          property: 'og:site_name',
-          content: $config.DOMAIN,
-        },
-        {
-          hid: 'og:url',
-          property: 'og:url',
-          content: `${$config.DOMAIN}${route.value.fullPath}`,
-        },
-        { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
-      ],
-    }))
-  },
-  head: {},
-})
+  const config = useRuntimeConfig()
+  const route = useRoute()
+  useHead(() => ({
+    link: [
+      {
+        rel: 'alternate',
+        title: 'INDIE MAKERS',
+        href: `${config.baseUrl}/${route.fullPath}`,
+      },
+      {
+        rel: 'canonical',
+        title: 'INDIE MAKERS',
+        href: `${config.baseUrl}/${route.fullPath}`,
+      },
+    ],
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        hid: 'keywords',
+        property: 'keywordse',
+        content: 'podcast, indie makers, indie hackers, bootsstrappers, independants, entrepreneurs, Makers, business',
+      },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      {
+        hid: 'apple-mobile-web-app-title',
+        name: 'apple-mobile-web-app-title',
+        content: config.domain,
+      },
+      { hid: 'theme-color', name: 'theme-color', content: '#4b279b' },
+      {
+        hid: 'og:site_name',
+        property: 'og:site_name',
+        content: config.domain,
+      },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: `${config.baseUrl}/${route.fullPath}`,
+      },
+      { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
+    ],
+  }))
 </script>
 
 <style>

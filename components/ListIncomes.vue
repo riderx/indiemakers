@@ -30,22 +30,18 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref, computed, defineComponent } from '@nuxtjs/composition-api'
-import { Income, IncomeAll } from '~/services/types'
+<script setup lang="ts">
+  import { Income, IncomeAll } from '~/services/types'
 
-export default defineComponent({
-  props: {
+  const { all } = defineProps({
     all: { type: Object as () => IncomeAll, default: () => {} },
-  },
-  setup({ all }) {
-    const status = ref('income')
-    const incomes = computed(() => all.incomes.filter((a: Income) => a.status === 'income'))
-    const expenses = computed(() => all.incomes.filter((a: Income) => a.status === 'expense'))
-    const incomesTotal = computed(() => incomes.value.reduce((tt: number, v: Income) => tt + v.ammount, 0))
-    const expensesTotal = computed(() => expenses.value.reduce((tt: number, v: Income) => tt + v.ammount, 0))
-    const filtered = computed(() => (status.value === 'income' ? incomes.value : expenses.value))
-    return { filtered, status, incomesTotal, expensesTotal, total: all.total }
-  },
-})
+  })
+  const total = all.total
+  const status = ref('income')
+  const incomes = computed(() => all.incomes.filter((a: Income) => a.status === 'income'))
+  const expenses = computed(() => all.incomes.filter((a: Income) => a.status === 'expense'))
+  const incomesTotal = computed(() => incomes.value.reduce((tt: number, v: Income) => tt + v.ammount, 0))
+  const expensesTotal = computed(() => expenses.value.reduce((tt: number, v: Income) => tt + v.ammount, 0))
+  const filtered = computed(() => (status.value === 'income' ? incomes.value : expenses.value))
+
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <client-only>
-      <div v-if="loaded" class="flex flex-row-reverse overflow-hidden sm:flex-row">
+    <ClientOnly>
+      <div class="flex flex-row-reverse overflow-hidden sm:flex-row">
         <div class="w-full px-1 pt-2 overflow-hidden sm:pt-5 sm:px-5 sm:w-3/4">
           <list-posts :posts="posts" :users="users" />
         </div>
@@ -19,61 +19,24 @@
           </div>
         </div>
       </div>
-      <PageLoader :show="!loaded" />
-    </client-only>
+      <template #fallback>
+        <PageLoader show />
+      </template>
+    </ClientOnly>
   </div>
 </template>
-<script lang="ts">
-import { ref } from '@vue/composition-api'
-import { defineComponent, useFetch, useContext, useMeta } from '@nuxtjs/composition-api'
-import { discordMakers, discordProjects, discordPosts } from '~/services/rss'
-import { createMeta } from '~/services/meta'
-import { Post, Project, User } from '~/services/types'
+<script setup lang="ts">
+  import { createMeta } from '~/services/meta'
+  import { Post, Project, User } from '~/services/types'
 
-export default defineComponent({
-  setup() {
-    const { $config } = useContext()
-    const users = ref<User[]>()
-    const posts = ref<Post[]>()
-    const projects = ref<Project[]>()
-    const loaded = ref(false)
-    const title = 'La communauté plus grande INDIE MAKERS Française'
+  const title = 'La communauté plus grande INDIE MAKERS Française'
 
-    const { fetch } = useFetch(async () => {
-      try {
-        const [usersData, postsData, projectsData] = await Promise.all([
-          discordMakers($config),
-          discordPosts($config),
-          discordProjects($config),
-        ])
-        if (usersData) {
-          users.value = usersData
-        }
-        if (postsData) {
-          posts.value = postsData
-        }
-        if (projectsData) {
-          projects.value = projectsData
-        }
-        loaded.value = true
-      } catch (err) {
-        console.error(err)
-        loaded.value = false
-      }
-    })
-    fetch()
-    useMeta(() => ({
-      title,
-      meta: createMeta(title, "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !"),
-    }))
+  const { data: users } = await useFetch<User[]>('/api/makers')
+  const { data: posts } = await useFetch<Post[]>('/api/posts')
+  const { data: projects } = await useFetch<Project[]>('/api/project')
 
-    return {
-      loaded,
-      users,
-      posts,
-      projects,
-    }
-  },
-  head: {},
-})
+  useHead(() => ({
+    titleTemplate: title,
+    meta: createMeta(title, "Découvre les Makers et leurs projets, ensemble on s'aider et se pousser a etre regulier sur nos projets !"),
+  }))
 </script>

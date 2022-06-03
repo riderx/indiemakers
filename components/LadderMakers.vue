@@ -37,31 +37,19 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, useRouter } from '@nuxtjs/composition-api'
-import { User } from '~/services/types'
-
-export default defineComponent({
-  props: {
+<script setup lang="ts">
+  import { User } from '~/services/types'
+  const { users } = defineProps({
     users: { type: Array as () => User[], default: () => [] },
-  },
-  setup({ users }) {
-    const router = useRouter()
-    const noImge = 'https://res.cloudinary.com/forgr/image/upload/v1621441258/indiemakers/cover-im_unknow_ukenjd.jpg'
-    const sort = ref('karma')
-    const sorted = () => (users ? users.slice().sort((a, b) => (b as any)[sort.value] - (a as any)[sort.value]) : [])
-    const getTextColor = (color: string | undefined) => {
-      if (color) {
-        return { color: `#${color}` }
-      }
-      return {}
+  })
+  const sort = ref('karma')
+  const sorted = () => (users ? users.slice().sort((a, b) => (b as any)[sort.value] - (a as any)[sort.value]) : [])
+  const getTextColor = (color: string | undefined) => {
+    if (color) {
+      return { color: `#${color}` }
     }
-    const openProfil = (id: string) => {
-      router.push(`/makers/${encodeURIComponent(id)}`)
-    }
-    return { sort, sorted, getTextColor, openProfil, noImge }
-  },
-})
+    return {}
+  }
 </script>
 <style scoped>
 select {

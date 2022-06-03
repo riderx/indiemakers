@@ -265,8 +265,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+<script setup lang="ts">
 const solutions = [
   {
     name: 'Podcast',
@@ -299,11 +298,6 @@ const resources = [
     href: '/tools',
   },
   {
-    name: 'Construisons ensemble',
-    description: "Participe a l'amélioration de la communauté en votant et proposant de nouvelles fonctionnalitée",
-    href: '/canny',
-  },
-  {
     name: 'Le livre',
     description: 'Lancer sa startup en indépendant, publié aux éditions Broché',
     href: 'https://amzn.to/3lXjALg',
@@ -313,24 +307,14 @@ const resources = [
     name: 'La Newletter',
     description: 'Suis mon evolution vers les 1k de MRR',
     href: '/newsletter',
-  },
-  {
-    name: 'Coworking pour makers',
-    description: 'Ne te sens plus jamais seul, rejoins les autres makers dans un coworking virtuel',
-    href: 'https://app.indiemakers.space',
-  },
+  }
 ]
 
-export default defineComponent({
-  setup() {
-    const menu = ref(false)
-    const menuMobile = ref(false)
-    const logo = {
-      title: 'INDIE MAKERS LOGO',
-      source: 'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/isolated-monochrome-white_lzhdfh.svg',
-      link: '/',
-    }
-    return { solutions, resources, menu, menuMobile, logo }
-  },
-})
+  const menu = ref(false)
+  const menuMobile = ref(false)
+  const logo = {
+    title: 'INDIE MAKERS LOGO',
+    source: 'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/isolated-monochrome-white_lzhdfh.svg',
+    link: '/',
+  }
 </script>

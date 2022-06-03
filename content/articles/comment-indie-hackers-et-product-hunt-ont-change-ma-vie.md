@@ -10,7 +10,7 @@ description: J'ai aussi découvert des sites comme Product Hunt et Indie Hackers
 type: Article
 headImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fjoshua-aragon-eab4ml7c7fe-unsplash.jpg?alt=media&token=ac9c900d-6c8a-48ee-8c1c-da02f5770c37"
 readTime: 10 min
-date: 30 octobre 2021
+date: 30-10-2021
 author: Martin donadieu
 authorImage: "https://firebasestorage.googleapis.com/v0/b/indiemakerfr.appspot.com/o/static%2Fprofil_martin.png?alt=media&token=845cecb1-7445-409d-8169-cc233f149071"
 

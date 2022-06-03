@@ -93,57 +93,53 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref, defineComponent, useContext, useMeta, useRouter } from '@nuxtjs/composition-api'
-import { createMeta } from '~/services/meta'
+<script setup lang="ts">
+  import { createMeta } from '~/services/meta'
+  import { $vfm } from 'vue-final-modal'
+import { useMainStore } from '~~/store/main';
 
-export default defineComponent({
-  setup() {
-    const { $firebase, $modal } = useContext()
-    const name = ref('')
-    const email = ref('')
-    const router = useRouter()
-    const logo = {
-      title: 'Newletter LOGO',
-      source: 'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/newsletter_hlctgq.svg',
-    }
-    const desc =
-      '💥Tu ne sais pas par où commencer ton projet ? Je te confie mes actions sur mes projets et sur le podcast ! Chaque semaine directement dans ta boîte mail. 💌'
-    const title = 'Mes Emails Hebdo'
-    useMeta(() => ({
+  const { $firebase } = useNuxtApp()
+  const name = ref('')
+  const email = ref('')
+  const router = useRouter()
+  const main = useMainStore()
+  const logo = {
+    title: 'Newletter LOGO',
+    source: 'https://res.cloudinary.com/forgr/image/upload/v1621019061/indiemakers/newsletter_hlctgq.svg',
+  }
+  const desc =
+    '💥Tu ne sais pas par où commencer ton projet ? Je te confie mes actions sur mes projets et sur le podcast ! Chaque semaine directement dans ta boîte mail. 💌'
+  const title = 'Mes Emails Hebdo'
+  useHead(() => ({
+    titleTemplate: title,
+    meta: createMeta(
       title,
-      meta: createMeta(
-        title,
-        desc,
-        'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg',
-        'Martin Donadieu'
-      ),
-    }))
+      desc,
+      'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg',
+      'Martin Donadieu'
+    ),
+  }))
 
-    const addEMailSub = () => {
-      $firebase.db
-        .ref(`users/${email.value}`)
-        .set({
-          first_name: name.value,
-          email: email.value,
-        })
-        .then(() => {
-          $modal.show('thanks_register')
-          setTimeout(() => {
-            router.push('/')
-          }, 2000)
-        })
-        .catch(() => {
-          $modal.show('already_register')
-          setTimeout(() => {
-            router.push('/')
-          }, 2000)
-        })
-    }
-    return { addEMailSub, title, desc, name, email, logo }
-  },
-  head: {},
-})
+  const addEMailSub = () => {
+    $firebase.db
+      .ref(`users/${email.value}`)
+      .set({
+        first_name: name.value,
+        email: email.value,
+      })
+      .then(() => {
+        main.modal = 'thanks_register'
+        setTimeout(() => {
+          router.push('/')
+        }, 2000)
+      })
+      .catch(() => {
+        main.modal = 'already_register'
+        setTimeout(() => {
+          router.push('/')
+        }, 2000)
+      })
+  }
 </script>
 <style scoped>
 .form-size {

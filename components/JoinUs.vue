@@ -15,15 +15,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+<script setup lang="ts">
 
-export default defineComponent({
-  setup() {
-    const joinUs = () => {
-      window.open('https://discord.gg/GctKEcDpxk', '_blank')
-    }
-    return { joinUs }
-  },
-})
+  const joinUs = () => {
+    window.open('https://discord.gg/GctKEcDpxk', '_blank')
+  }
+
 </script>

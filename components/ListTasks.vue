@@ -32,23 +32,14 @@
   </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
-import { Task, TaskAll } from '~/services/types'
-
-export default defineComponent({
-  props: {
-    all: {
-      type: Object as () => TaskAll,
-      default: () => {},
-    },
-  },
-  setup({ all }) {
-    const status = ref('done')
-    const todo = computed(() => all.tasks.filter((a: Task) => a.status === 'todo'))
-    const done = computed(() => all.tasks.filter((a: Task) => a.status === 'done'))
-    const filtered = computed(() => (status.value === 'todo' ? todo.value : done.value))
-    return { filtered, status, todo, done }
-  },
-})
+<script setup lang="ts">
+  import { Task, TaskAll } from '~/services/types'
+  
+  const {all} = defineProps({
+    all: { type: Object as () => TaskAll, default: () => {} },
+  })
+  const status = ref('done')
+  const todo = computed(() => all.tasks.filter((a: Task) => a.status === 'todo'))
+  const done = computed(() => all.tasks.filter((a: Task) => a.status === 'done'))
+  const filtered = computed(() => (status.value === 'todo' ? todo.value : done.value))
 </script>

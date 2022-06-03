@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const Twitter = require('twitter')
+import Twitter from 'twitter'
 
 interface TwUrl {
   url: string

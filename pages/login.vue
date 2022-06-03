@@ -11,7 +11,7 @@
             <label for="email-address" class="sr-only">Email address</label>
             <input
               id="email-address"
-              v-model="email"
+              v-model="main.emailForSignIn"
               name="email"
               type="email"
               autocomplete="email"
@@ -76,70 +76,60 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref, defineComponent, onMounted, useContext, useMeta, useRoute, useRouter } from '@nuxtjs/composition-api'
-import { createMeta } from '~/services/meta'
+<script setup lang="ts">
+  import { createMeta } from '~/services/meta'
+  import { useMainStore } from '~~/store/main'
 
-export default defineComponent({
-  setup() {
-    const { $config, $firebase, $modal, $warehouse } = useContext()
-    const router = useRouter()
-    const route = useRoute()
-    const email = ref('')
-    const desc = 'Pour voter pour tes makers favorie'
-    const title = 'Connecte toi a indie makers'
+  const main = useMainStore()
+  const { $firebase } = useNuxtApp()
+  const router = useRouter()
+  const desc = 'Pour voter pour tes makers favorie'
+  const title = 'Connecte toi a indie makers'
 
-    useMeta(() => ({
+  useHead(() => ({
+    titleTemplate: title,
+    meta: createMeta(
       title,
-      meta: createMeta(
-        `${$config.DOMAIN}${route.value.fullPath}`,
-        title,
-        desc,
-        'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
-      ),
-    }))
-    onMounted(() => {
-      email.value = $warehouse.get('emailForSignIn')
-      $firebase.auth.listen((user: any) => {
-        if (user && user.displayName === null) {
-          $modal.show('confirmName')
-        } else if (user) {
-          $firebase.db.ref(`users/${user.id}`).set({
-            name: user.displayName,
-            email: user.email,
-          })
-          const next = $warehouse.get('nextAfterSign')
-          if (next) {
-            $warehouse.remove('nextAfterSign')
-          }
-          router.push(next || '/makers')
+      desc,
+      'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
+    ),
+  }))
+  onMounted(() => {
+    $firebase.auth.listen((user: any) => {
+      if (user && user.displayName === null) {
+        main.modal = 'confirmName'
+      } else if (user) {
+        $firebase.db.ref(`users/${user.id}`).set({
+          name: user.displayName,
+          email: user.email,
+        })
+        const next = main.nextAfterSign
+        if (next) {
+          main.nextAfterSign = ''
         }
-      })
-      if (email.value) {
-        sendConfirm()
+        router.push(next || '/makers')
       }
     })
-    const sendConfirm = () => {
-      if (email.value) {
-        $modal.show('loading')
-        $firebase.auth
-          .handleSignInRedirect({
-            email: email.value,
-          })
-          .then(() => {
-            $warehouse.remove('emailForSignIn')
-            email.value = ''
-            $modal.hide('loading')
-          })
-          .catch((error: any) => {
-            console.error(error)
-            $modal.hide('loading')
-            router.push('/')
-          })
-      }
+    if (main.emailForSignIn) {
+      sendConfirm()
     }
-    return { sendConfirm, email }
-  },
-  head: {},
-})
+  })
+  const sendConfirm = () => {
+    if (main.emailForSignIn) {
+      main.modal = 'loading'
+      $firebase.auth
+        .handleSignInRedirect({
+          email: main.emailForSignIn,
+        })
+        .then(() => {
+          main.emailForSignIn = ''
+          main.modal = 'loading'
+        })
+        .catch((error: any) => {
+          console.error(error)
+          main.modal = 'loading'
+          router.push('/')
+        })
+    }
+  }
 </script>

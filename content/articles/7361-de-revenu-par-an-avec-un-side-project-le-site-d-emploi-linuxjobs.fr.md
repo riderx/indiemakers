@@ -10,16 +10,16 @@ description: 'Dans cet article, je parlerai de mon side project principal : Linu
   on ajoute 1 200 € de coût de serveur, pour un gain total de 29 445 € en 4 ans soit
   7 361 € de revenu par an.'
 type: Article
-headImage: https://res.cloudinary.com/forgr/image/upload/v1639411180/indiemakers/linuxjobs-fr-screenshot_dy8r8q.png
+headImage: "https://res.cloudinary.com/forgr/image/upload/v1639411180/indiemakers/linuxjobs-fr-screenshot_dy8r8q.png"
 readTime: 4 min
 date: 13-12-2021
 author: Carl Chenet
 authorImage: https://res.cloudinary.com/forgr/image/upload/v1644971955/indiemakers/carl_oiubzi.jpg
 
 ---
-Dans cet article je vais parler de mon side project principal : [LinuxJobs.fr](https://www.linuxjobs.fr "LinuxJobs.fr"), le site d'emploi de la communauté du Logiciel Libre et Open Source. Le service a généré 37 645 € en chiffre d'affaires, m'a coûté 7 000 € à faire développer, on ajoute 1 200 € de coût de serveur, pour un gain total de 29 445 € en 4 ans soit 7 361 € de revenu par an.
+<img class="w-full rounded-lg" src="https://res.cloudinary.com/forgr/image/upload/v1639411180/indiemakers/linuxjobs-fr-screenshot_dy8r8q.png" alt="cree ta boite" width="1310" height="873">
 
-![LinuxJobs.fr, le site d'emploi de la communauté du Logiciel Libre et de l'Open Source](/v1639411180/indiemakers/linuxjobs-fr-screenshot_dy8r8q.png "LinuxJobs.fr, le site d'emploi de la communauté du Logiciel Libre et de l'Open Source")
+Dans cet article je vais parler de mon side project principal : [LinuxJobs.fr](https://www.linuxjobs.fr "LinuxJobs.fr"), le site d'emploi de la communauté du Logiciel Libre et Open Source. Le service a généré 37 645 € en chiffre d'affaires, m'a coûté 7 000 € à faire développer, on ajoute 1 200 € de coût de serveur, pour un gain total de 29 445 € en 4 ans soit 7 361 € de revenu par an.
 
 Amateur de gros chiffres et de startups ayant fait fortune en 15 jours, passez votre chemin, il n'en sera pas question ici. On va parler de bootstrapping, de solopreneur, d'indiemaker, bref à être rentable et à gagner de l'argent sur un projet. Nous parlerons aussi dans cet article des étapes-clés du projet et des éléments importants de ces étapes-clés.
 
