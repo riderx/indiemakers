@@ -6,6 +6,7 @@ const rss = 'https://anchor.fm/s/414d1d4/podcast/rss'
 
 export default defineEventHandler(async (event) => {
   try {
+    const config = useRuntimeConfig()
     const parser = new Parser()
     const feedBase = await parser.parseURL(rss)
     const eps = await getAllPodcast()
@@ -14,8 +15,8 @@ export default defineEventHandler(async (event) => {
     const feed = new RSS({
       title: feedBase.title || '',
       description: 'description',
-      feed_url: 'https://indiemakers.fr/rss.xml',
-      site_url: 'https://indiemakers.fr',
+      feed_url: `${config.baseUrl}/rss.xml`,
+      site_url: config.baseUrl,
       image_url: feedBase.image_url,
       managingEditor: 'Martin Donadieu et Anthonin Archer',
       webMaster: 'Martin Donadieu',
@@ -30,7 +31,7 @@ export default defineEventHandler(async (event) => {
       feed.item({
         title: element.title,
         description: element.content,
-        url: `https://indiemakers.fr/episode/${element.id}`,
+        url: `${config.baseUrl}/episode/${element.id}`,
         guid: element.id,
         author: `Martin Donadieu and ${element.title}`,
         date: element.pubDate,
@@ -41,7 +42,7 @@ export default defineEventHandler(async (event) => {
       })
     })
     const xml = feed.xml()
-    event.res.setHeader('Content-Type', 'application/xml')
+    event.res.setHeader('Content-Type', "application/xml")
     return xml
   } catch (e) {
     console.error(e)

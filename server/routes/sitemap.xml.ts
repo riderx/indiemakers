@@ -44,7 +44,8 @@ const getArticles = () => {
 export default defineEventHandler(async (event) => {
   try {
     initF()
-    const smStream = new SitemapStream({ hostname: 'https://indiemakers.fr' })
+    const config = useRuntimeConfig()
+    const smStream = new SitemapStream({ hostname: config.baseUrl })
 
     smStream.write({ url: '/tools', changefreq: 'monthly', priority: 0.1 })
     smStream.write({ url: '/makers', changefreq: 'daily', priority: 0.5 })
@@ -92,7 +93,7 @@ export default defineEventHandler(async (event) => {
     })
     smStream.end()
     const data = await streamToPromise(smStream)
-    event.res.setHeader('Content-Type', 'application/xml')
+    event.res.setHeader('Content-Type', "application/xml")
     return data.toString()
   } catch (e) {
     console.error(e)

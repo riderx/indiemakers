@@ -1,7 +1,9 @@
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig()
+
   try {
-    const data = 'User-agent: *\nAllow: /\nUser-agent: *\nDisallow: /rss.xml\nSitemap: https://indiemakers.fr/sitemap.xml'
+    const data = `User-agent: *\nAllow: /\nUser-agent: *\nDisallow: /rss.xml\nSitemap: ${config.baseUrl}/sitemap.xml`
     event.res.setHeader('Content-Type', 'text/plain')
     return data.toString()
   } catch (e) {
