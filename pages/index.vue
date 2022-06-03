@@ -36,6 +36,8 @@
               </div>
               <div class="py-1 text-sm">
                 <h2 class="text-xl font-indie">Prochain episode dans {{ nextEpisode() }}</h2>
+                <h2 class="text-xl font-indie">Prochain episode en septembre ! C'est la Pause estivale ❤️</h2>
+                <!-- <h2 class="text-xl font-indie">Prochain episode dans {{ nextEpisode() }}</h2> -->
               </div>
               <div class="pt-3 text-sm">
                 <div v-for="(message, index) in messages" :key="`ep-${index}`">
