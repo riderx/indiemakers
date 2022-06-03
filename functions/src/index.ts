@@ -1,20 +1,22 @@
-import { https, pubsub, firestore } from 'firebase-functions'
+import { config, https, pubsub, firestore } from 'firebase-functions'
 import { initializeApp, getApps, getApp } from 'firebase-admin/app'
 import { getFirestore, Timestamp, DocumentReference } from 'firebase-admin/firestore'
 import { Person, User } from '../../services/types'
 import { onboardingMessage } from '../../services/discord/bot/utils'
-import { podcastToFirebase } from './../../services/firebase/podcasts'
 import { lateBot, morningBot } from './../../services/discord/bot/schedule'
 import { getPerson, voteIfNotDone } from './users'
 import { TwUser, twUserPromise } from './twitter'
 import { sendUserToRevue } from './newletter'
 import { transformURLtoTracked } from './tracker'
+import { podcastToFirebase } from './podcast'
 
 if (!getApps().length) {
   initializeApp()
 } else {
   getApp() // if already initialized, use that one
 }
+
+process.env.IMAGEKIT_KEY = config().imagekit.key
 
 export const updateTwiterUser = pubsub.schedule('0 0 * * *').onRun(async () => {
   const users = await getFirestore()
