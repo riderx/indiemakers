@@ -1,45 +1,10 @@
-import fs from 'fs'
-import path from 'path'
 import { SitemapStream, streamToPromise } from 'sitemap'
-import { getFirestore } from 'firebase-admin/firestore'
 import initF from '~~/services/firebase/init'
-import { Project, User } from '~~/services/types'
 import { getAllUsers } from '~~/services/firebase/discord'
 import { getAllPodcast } from '~~/services/firebase/podcasts'
+import { serverQueryContent } from '#content/server'
+import { getAllAllProject } from '../../services/firebase/project'
 
-const getAllProjects = async (userId: string, userName: string | undefined = undefined): Promise<Project[]> => {
-  try {
-    const documents = await getFirestore().collection(`discord/${userId}/projects`).where('hashtag', '!=', null).get()
-
-    const projects: Project[] = []
-    for (let index = 0; index < documents.docs.length; index++) {
-      const doc = documents.docs[index]
-      const data = (await doc.data()) as Project
-      if (data !== undefined && data.hashtag && data.hashtag !== '') {
-        projects.push({ userId, userName, id: doc.id, ...(data as Project) })
-      }
-    }
-    return projects
-  } catch (err) {
-    console.error('getAllProjects', err)
-    return []
-  }
-}
-
-const getAllAllProject = async (users: User[]): Promise<Project[]> => {
-  const arrays: Project[][] = await Promise.all(
-    users.map((usr: User) => {
-      return getAllProjects(String(usr?.userId), usr?.username)
-    })
-  )
-  const projects: Project[] = arrays.reduce((a, b) => a.concat(b), [])
-  return projects
-}
-
-const getArticles = () => {
-  const files = fs.readdirSync(path.join(__dirname, '..', '..', 'content', 'articles'))
-  return files.map((file) => ({ slug: file.replace('.md', '').replace(/-/g, '_') }))
-}
 
 export default defineEventHandler(async (event) => {
   try {
@@ -82,7 +47,7 @@ export default defineEventHandler(async (event) => {
       }
     })
     // const articles = await $content('articles').fetch()
-    const articles = await getArticles()
+    const articles = await serverQueryContent(event).where({ published: true }).find()
 
     articles.forEach((article: any) => {
       smStream.write({
