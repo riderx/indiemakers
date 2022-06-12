@@ -4,7 +4,7 @@
     <div class="flex items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10">
       <div>
         <a href="/" class="flex">
-          <span class="sr-only">Logo Site</span>
+          <span class="sr-only">Logo INDIE MAKERS</span>
           <img
             :id="logo.title"
             width="100%"
@@ -19,17 +19,7 @@
       <div class="-my-2 -mr-2 md:hidden">
         <button
           type="button"
-          class="
-            inline-flex
-            items-center
-            justify-center
-            p-2
-            text-gray-400
-            bg-white
-            rounded-md
-            hover:text-gray-500 hover:bg-gray-100
-            focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500
-          "
+          class="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md  hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
           aria-expanded="false"
           @click="menuMobile = true"
         >
@@ -54,19 +44,7 @@
             <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" -->
             <button
               type="button"
-              class="
-                inline-flex
-                items-center
-                p-1
-                text-base
-                font-medium
-                text-gray-500
-                bg-white
-                rounded-md
-                group
-                hover:text-gray-900
-                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
-              "
+              class="inline-flex items-center p-1 text-base font-medium text-gray-500 bg-white rounded-md  group hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               aria-expanded="false"
               @click="menu = !menu"
             >
@@ -128,22 +106,7 @@
         <div class="flex items-center md:ml-12">
           <a
             href="/makers"
-            class="
-              inline-flex
-              items-center
-              justify-center
-              px-4
-              py-2
-              ml-8
-              text-base
-              font-medium
-              text-white
-              border border-transparent
-              rounded-md
-              shadow-sm
-              bg-orchid-300
-              hover:bg-orchid-600
-            "
+            class="inline-flex items-center justify-center px-4 py-2 ml-8 text-base font-medium text-white border border-transparent rounded-md shadow-sm  bg-orchid-300 hover:bg-orchid-600"
           >
             Communauté
           </a>
@@ -179,17 +142,7 @@
             <div class="-mr-2">
               <button
                 type="button"
-                class="
-                  inline-flex
-                  items-center
-                  justify-center
-                  p-2
-                  text-gray-400
-                  bg-white
-                  rounded-md
-                  hover:text-gray-500 hover:bg-gray-100
-                  focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500
-                "
+                class="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md  hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                 @click="menuMobile = false"
               >
                 <span class="sr-only">Close menu</span>
@@ -239,22 +192,7 @@
           <div class="mt-6">
             <a
               href="/makers"
-              class="
-                flex
-                items-center
-                justify-center
-                w-full
-                px-4
-                py-2
-                text-base
-                font-medium
-                text-white
-                border border-transparent
-                rounded-md
-                shadow-sm
-                bg-orchid-300
-                hover:bg-orchid-600
-              "
+              class="flex items-center justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm  bg-orchid-300 hover:bg-orchid-600"
             >
               Communauté
             </a>
