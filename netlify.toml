@@ -1,0 +1,33 @@
+[build.environment]
+  NPM_FLAGS = "--prefix=/dev/null"
+  NODE_VERSION = "16"
+
+[build]
+  publish = "dist"
+  command = "npx pnpm i --store=node_modules/.pnpm-store && npx pnpm run build"
+
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap.xml"
+  status = 200
+
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.txt"
+  status = 200
+
+[[redirects]]
+  from = "/rss.xml"
+  to = "/rss.xml"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    cache-control = "public, s-max-age=60"
