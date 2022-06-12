@@ -4,13 +4,13 @@
     <TransitionRoot as="template" :show="main.modal != ''">
     <Dialog as="div" class="relative z-10" @close="main.modal = ''">
       <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in duration-200" leave-from="opacity-100" leave-to="opacity-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
       </TransitionChild>
 
-      <div class="fixed z-10 inset-0 overflow-y-auto">
-        <div class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+      <div class="fixed inset-0 z-10 overflow-y-auto">
+        <div class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
           <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-            <DialogPanel class="relative bg-royalblue-700 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full">
+            <DialogPanel class="relative overflow-hidden text-left transition-all transform rounded-lg shadow-xl bg-royalblue-700 sm:my-8 sm:max-w-sm sm:w-full">
               <div>
                 <div v-if="main.modal == 'copied'">
                   <div class="relative border-8 border-white">
@@ -52,54 +52,21 @@
                           <div class="px-1 pt-3 text-center col-12 md:px-3">
                             <button
                               type="button"
-                              class="
-                                px-3
-                                py-1
-                                m-1
-                                text-white
-                                border-4 border-white
-                                rounded-none
-                                btn-lg
-                                md:m-3
-                                h1
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                              "
+                              class="px-3 py-1 m-1 text-white border-4 border-white rounded-none btn-lg md:m-3 h1 hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
                               @click="listenExternal('https://open.spotify.com/show/6Agf3YmcAdNx4tQMJVoRQg')"
                             >
                               Spotify
                             </button>
                             <button
                               type="button"
-                              class="
-                                px-3
-                                py-1
-                                m-1
-                                text-white
-                                border-4 border-white
-                                rounded-none
-                                btn-lg
-                                md:m-3
-                                h1
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                              "
+                              class="px-3 py-1 m-1 text-white border-4 border-white rounded-none btn-lg md:m-3 h1 hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
                               @click="listenExternal('https://podcasts.apple.com/fr/podcast/indie-maker-fr/id1488437972')"
                             >
                               Apple Podcast
                             </button>
                             <button
                               type="button"
-                              class="
-                                px-3
-                                py-1
-                                m-1
-                                text-white
-                                border-4 border-white
-                                rounded-none
-                                btn-lg
-                                md:m-3
-                                h1
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                              "
+                              class="px-3 py-1 m-1 text-white border-4 border-white rounded-none btn-lg md:m-3 h1 hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200"
                               @click="listenExternal('https://www.youtube.com/channel/UCMedW_Y4K0alzeVz1bSBvjA?sub_confirmation=1')"
                             >
                               Youtube
@@ -125,15 +92,7 @@
                       <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                         <button
                           type="button"
-                          class="
-                            px-4
-                            py-1
-                            text-white
-                            border-4 border-white
-                            rounded-none
-                            hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
-                            h1
-                          "
+                          class="px-4 py-1 text-white border-4 border-white rounded-none hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 h1"
                           @click="main.modal = ''"
                         >
                           😎Cool
@@ -251,15 +210,7 @@
                         <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                           <button
                             type="button"
-                            class="
-                              px-4
-                              py-1
-                              border-4 border-white
-                              rounded-none
-                              hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                              text-light
-                              h1
-                            "
+                            class="px-4 py-1 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                             @click="joinDiscord()"
                           >
                             Rejoindre
@@ -314,15 +265,7 @@
                         <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                           <button
                             type="button"
-                            class="
-                              px-4
-                              py-1
-                              border-4 border-white
-                              rounded-none
-                              hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                              text-light
-                              h1
-                            "
+                            class="px-4 py-1 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                             @click="addEMailSub()"
                           >
                             Recevoir mes conseils
@@ -375,15 +318,7 @@
                         <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                           <button
                             type="button"
-                            class="
-                              px-4
-                              py-1
-                              border-4 border-white
-                              rounded-none
-                              hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                              text-light
-                              h1
-                            "
+                            class="px-4 py-1 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                             @click="addEMailSub('ebook')"
                           >
                             Confirmer
@@ -438,15 +373,7 @@
                       <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                         <button
                           type="button"
-                          class="
-                            px-4
-                            py-1
-                            border-4 border-white
-                            rounded-none
-                            hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                            text-light
-                            h1
-                          "
+                          class="px-4 py-1 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                           @click="addName()"
                         >
                           Confirmer
@@ -479,15 +406,7 @@
                           <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-1
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-1 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                               @click="main.modal = ''"
                             >
                               😢 Plus tard
@@ -525,15 +444,7 @@
                           <div class="py-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-2
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-2 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                               @click="openEp()"
                             >
                               ❤️ Écouter
@@ -570,15 +481,7 @@
                           <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-2
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-2 border-4 border-white rounded-none hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                               @click="tweetItMaker()"
                             >
                               🦚Voir
@@ -613,15 +516,7 @@
                           <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-2
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-2 border-4 border-white rounded-none hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                               @click="nextEp()"
                             >
                               🦚 Voir
@@ -657,15 +552,7 @@
                           <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-2
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-2 border-4 border-white rounded-none hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                               @click="nextEp()"
                             >
                               🦚Voir
@@ -700,15 +587,7 @@
                           <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-2
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-2 border-4 border-white rounded-none hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                               @click="main.modal = ''"
                             >
                               Fermer
@@ -745,15 +624,7 @@
                           <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-1
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-1 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                               @click="tweetItMaker()"
                             >
                               🦚 Voir
@@ -792,15 +663,7 @@
                           <div class="py-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-2
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-2 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                               @click="tweetItMaker()"
                             >
                               🦚 Voir
@@ -837,15 +700,7 @@
                           <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-2
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-2 border-4 border-white rounded-none hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                               @click="tweetItMaker()"
                             >
                               🦚Voir
@@ -882,15 +737,7 @@
                           <div class="pt-0 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-2
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-2 border-4 border-white rounded-none hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                               @click="tweetItMaker()"
                             >
                               🦚Voir
@@ -935,15 +782,7 @@
                           <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-1
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-1 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                               @click="addMaker()"
                             >
                               🎯 Ajouter
@@ -982,15 +821,7 @@
                           <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-1
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-1 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                               @click="tweetItMaker()"
                             >
                               🦚 Voir
@@ -1025,15 +856,7 @@
                           <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-1
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-1 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                               @click="main.modal = ''"
                             >
                               😎 Cool
@@ -1067,15 +890,7 @@
                           <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-2
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-2 border-4 border-white rounded-none hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                               @click="bmc()"
                             >
                               C'est parti
@@ -1110,15 +925,7 @@
                           <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-2
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-2 border-4 border-white rounded-none hover:border-gray-200 hover:text-indiepurple hover:bg-gray-200 text-light h1"
                               @click="tweetItHunt()"
                             >
                               Tweeter
@@ -1153,15 +960,7 @@
                           <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-1
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-1 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                               @click="rate()"
                             >
                               Noter
@@ -1196,15 +995,7 @@
                           <div class="pt-3 pb-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-1
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-1 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                               @click="tweetIt()"
                             >
                               Envoyer
@@ -1249,19 +1040,7 @@
                                 v-model="newEmail"
                                 autofocus
                                 type="text"
-                                class="
-                                  relative
-                                  w-1/2
-                                  px-3
-                                  py-3
-                                  text-sm text-gray-700
-                                  placeholder-gray-400
-                                  bg-white
-                                  border border-gray-400
-                                  rounded
-                                  outline-none
-                                  focus:outline-none focus:shadow-outline
-                                "
+                                class="relative w-1/2 px-3 py-3 text-sm text-gray-700 placeholder-gray-400 bg-white border border-gray-400 rounded outline-none focus:outline-none focus:shadow-outline"
                                 placeholder="you@example.com"
                                 @keyup.enter="sendLogin()"
                               />
@@ -1270,15 +1049,7 @@
                           <div class="py-3 text-center text-white offset-md-3 col-md-6">
                             <button
                               type="button"
-                              class="
-                                px-4
-                                py-2
-                                border-4 border-white
-                                rounded-none
-                                hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200
-                                text-light
-                                h1
-                              "
+                              class="px-4 py-2 border-4 border-white rounded-none hover:border-gray-200 hover:text-royalblue-700 hover:bg-gray-200 text-light h1"
                               @click="sendLogin()"
                             >
                               🚀VALIDER

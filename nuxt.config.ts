@@ -100,6 +100,10 @@ export default defineNuxtConfig({
             "@pinia/nuxt"
         ]
     },
+    build: {
+        extractCSS: true,
+        transpile: ['@headlessui/vue'],
+    },
     content: {
     // https://content.nuxtjs.org/api/configuration
     }
