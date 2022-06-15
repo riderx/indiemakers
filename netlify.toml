@@ -4,7 +4,7 @@
 
 [build]
   publish = "dist"
-  command = "npx pnpm i --store=node_modules/.pnpm-store && npx pnpm build"
+  command = "npx pnpm i --store=node_modules/.pnpm-store && NITRO_PRESET=netlify-edge npx pnpm build"
 
 [[redirects]]
   from = "/sitemap.xml"
