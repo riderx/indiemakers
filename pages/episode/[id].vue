@@ -49,96 +49,28 @@
                 <div class="px-1 text-center">
                   <button
                     type="button"
-                    class="
-                      inline-block
-                      px-4
-                      py-2 py-3
-                      m-1
-                      text-base text-xl
-                      font-normal
-                      leading-tight leading-normal
-                      text-center text-white
-                      no-underline
-                      whitespace-no-wrap
-                      align-middle
-                      border border-4 border-white
-                      rounded
-                      select-none
-                      bnt-block
-                      m-md-3
-                    "
+                    class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 border-white rounded select-none bnt-block m-md-3"
                     @click="listen()"
                   >
                     🎧 Ecouter
                   </button>
                   <button
                     type="button"
-                    class="
-                      inline-block
-                      px-4
-                      py-2 py-3
-                      m-1
-                      text-base text-xl
-                      font-normal
-                      leading-tight leading-normal
-                      text-center text-white
-                      no-underline
-                      whitespace-no-wrap
-                      align-middle
-                      border border-4 border-white
-                      rounded
-                      select-none
-                      bnt-block
-                      m-md-3
-                    "
+                    class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 border-white rounded select-none bnt-block m-md-3"
                     @click="rate()"
                   >
                     ⭐️ Note
                   </button>
                   <button
                     type="button"
-                    class="
-                      inline-block
-                      px-4
-                      py-2 py-3
-                      m-1
-                      text-base text-xl
-                      font-normal
-                      leading-tight leading-normal
-                      text-center text-white
-                      no-underline
-                      whitespace-no-wrap
-                      align-middle
-                      border border-4 border-white
-                      rounded
-                      select-none
-                      bnt-block
-                      m-md-3
-                    "
+                    class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 border-white rounded select-none bnt-block m-md-3"
                     @click="tweetIt()"
                   >
                     ❤️ Partage
                   </button>
                   <button
                     type="button"
-                    class="
-                      inline-block
-                      px-4
-                      py-2 py-3
-                      m-1
-                      text-base text-xl
-                      font-normal
-                      leading-tight leading-normal
-                      text-center text-white
-                      no-underline
-                      whitespace-no-wrap
-                      align-middle
-                      border border-4 border-white
-                      rounded
-                      select-none
-                      bnt-block
-                      m-md-3
-                    "
+                    class="inline-block px-4 py-2 py-3 m-1 text-base text-xl font-normal leading-tight leading-normal text-center text-white no-underline whitespace-no-wrap align-middle border border-4 border-white rounded select-none bnt-block m-md-3"
                     @click="joinUs()"
                   >
                     👉 Rejoins la communauté
@@ -337,20 +269,6 @@
     }
   })
   useHead(() => ({
-    link: [
-      {
-        rel: 'stylesheet',
-        href: 'https://unpkg.com/vue-plyr/dist/vue-plyr.css',
-      },
-    ],
-    script: [
-      {
-        type: 'text/javascript',
-        src: 'https://unpkg.com/@skjnldsv/vue-plyr',
-        async: true,
-        defer: true,
-      },
-    ],
     title: titleNoEmoji.value,
     meta: createMeta(
       titleNoEmoji.value,
