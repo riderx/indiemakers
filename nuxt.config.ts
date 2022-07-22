@@ -1,13 +1,13 @@
 import { defineNuxtConfig } from 'nuxt'
 
 const baseDomain = () => {
-    if (process.env.VERCEL && process.env.domain) {
+    if (process.env.NETLIFY && process.env.domain) {
         return process.env.domain
     }
     return 'indiemakers.fr'
 }
 const baseUrl = () => {
-    if (process.env.VERCEL) {
+    if (process.env.NETLIFY) {
         return `https://${baseDomain()}`
     }
     return 'http://localhost:3000'
