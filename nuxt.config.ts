@@ -46,6 +46,19 @@ export default defineNuxtConfig({
             meta: [
                 { charset: 'utf-8' },
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+                { hid: 'og:type', property: 'og:type', content: 'website' },
+                { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
+                { hid: 'theme-color', name: 'theme-color', content: '#4b279b' },
+                {
+                    hid: 'apple-mobile-web-app-title',
+                    name: 'apple-mobile-web-app-title',
+                    content: baseUrl(),
+                },
+                {
+                    hid: 'keywords',
+                    property: 'keywords',
+                    content: 'podcast, indie makers, indie hackers, bootsstrappers, independants, entrepreneurs, Makers, business',
+                },
                 {
                     hid: 'title',
                     name: 'title',
@@ -61,8 +74,6 @@ export default defineNuxtConfig({
                     property: 'og:title',
                     content: 'Le 1er podcast francais qui aide les independants a vivre de leur business.',
                 },
-                { hid: 'og:type', property: 'og:type', content: 'website' },
-                { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
                 {
                     hid: 'og:site_name',
                     property: 'og:site_name',
@@ -72,11 +83,6 @@ export default defineNuxtConfig({
                     hid: 'og:article:author',
                     property: 'og:article:author',
                     content: 'Martin DONADIEU',
-                },
-                {
-                    hid: 'twitter:card',
-                    property: 'twitter:card',
-                    content: 'summary',
                 },
                 {
                     hid: 'og:description',
