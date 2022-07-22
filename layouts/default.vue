@@ -17,12 +17,12 @@
       {
         rel: 'alternate',
         title: 'INDIE MAKERS',
-        href: `${config.baseUrl}/${route.fullPath}`,
+        href: `${config.baseUrl}${route.fullPath}`,
       },
       {
         rel: 'canonical',
         title: 'INDIE MAKERS',
-        href: `${config.baseUrl}/${route.fullPath}`,
+        href: `${config.baseUrl}${route.fullPath}`,
       },
     ],
     meta: [
@@ -48,7 +48,7 @@
       {
         hid: 'og:url',
         property: 'og:url',
-        content: `${config.baseUrl}/${route.fullPath}`,
+        content: `${config.baseUrl}${route.fullPath}`,
       },
       { hid: 'og:locale', property: 'og:locale', content: 'fr_FR' },
     ],
