@@ -78,14 +78,17 @@
     'J’interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur projet profitable.',
     'Un épisode toute les semaines',
   ]
-  const { data: episodes } = await useFetch<Episode[]>('/api/podcasts')
-  if (episodes.value) {
-    episodes.value = episodes.value.map((episode) => ({
-      ...episode,
-      preview: cutText(episode.content, 30),
-      date: dayjs(episode.pubDate).fromNow(),
-    }))
-  }
+  const { data: episodes } = await useAsyncData('episodes', () => {
+    return $fetch('/api/podcasts').then(res => {
+        return (res as Episode[]).map<Episode>((episode) => {
+          return {
+            ...episode,
+            preview: cutText(episode.content, 30),
+            date: dayjs(episode.pubDate).fromNow(),
+          } as Episode
+        })
+    })
+  })
 
   useHead(() => ({
     titleTemplate: '🚀 Le podcast des entrepreneurs indépendant',
