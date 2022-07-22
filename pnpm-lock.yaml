@@ -25,6 +25,7 @@ specifiers:
   sitemap: ^7.1.1
   twitter: ^1.7.1
   vue-final-modal: ^3.4.4
+  vue-meta: ^2.4.0
   vue-plyr: ^7.0.0
 
 dependencies:
@@ -46,6 +47,7 @@ dependencies:
   sitemap: 7.1.1
   twitter: 1.7.1
   vue-final-modal: 3.4.4
+  vue-meta: 2.4.0
   vue-plyr: 7.0.0
 
 devDependencies:
@@ -2879,7 +2881,6 @@ packages:
   /deepmerge/4.2.2:
     resolution: {integrity: sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==}
     engines: {node: '>=0.10.0'}
-    dev: true
 
   /defaults/1.0.3:
     resolution: {integrity: sha512-s82itHOnYrN0Ib8r+z7laQz3sdE+4FP3d9Q7VLO7U+KRT+CR0GsWuyHxzdAY82I7cXv0G/twrqomTJLOssO5HA==}
@@ -8578,6 +8579,12 @@ packages:
 
   /vue-final-modal/3.4.4:
     resolution: {integrity: sha512-4nOLU+cMcUqAT0kg+64+Hi96kkQPOph2LOJa7Fl58BXlTyhfRxaMuz3M91wi2ooMIL4poWA8428P5GIAXSpuZg==}
+    dev: false
+
+  /vue-meta/2.4.0:
+    resolution: {integrity: sha512-XEeZUmlVeODclAjCNpWDnjgw+t3WA6gdzs6ENoIAgwO1J1d5p1tezDhtteLUFwcaQaTtayRrsx7GL6oXp/m2Jw==}
+    dependencies:
+      deepmerge: 4.2.2
     dev: false
 
   /vue-plyr/7.0.0:

@@ -33,6 +33,7 @@
     "sitemap": "^7.1.1",
     "twitter": "^1.7.1",
     "vue-final-modal": "^3.4.4",
+    "vue-meta": "^2.4.0",
     "vue-plyr": "^7.0.0"
   }
 }
