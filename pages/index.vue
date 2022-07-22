@@ -70,7 +70,6 @@
 
   const scrollComponent = ref(null)
   const image = 'https://res.cloudinary.com/forgr/image/upload/v1621181948/indiemakers/bot_cover-im_akq50z.jpg'
-  const episodes = ref<Episode[]>([])
   const empties = computed(() => (episodes.value && episodes.value.length === 0 ? [null, null, null] : []))
   const title = '🚀 Le podcast des entrepreneurs indépendant'
   const messages = [
@@ -79,9 +78,9 @@
     'J’interroge différents types de Makers, des novices, des aguerris, toujours dans le but de comprendre comment ils se sont lancés et comment ils ont rendu leur projet profitable.',
     'Un épisode toute les semaines',
   ]
-  const { data: items } = await useFetch<Episode[]>('/api/podcasts')
-  if (items.value) {
-    episodes.value = items.value.map((episode) => ({
+  const { data: episodes } = await useFetch<Episode[]>('/api/podcasts')
+  if (episodes.value) {
+    episodes.value = episodes.value.map((episode) => ({
       ...episode,
       preview: cutText(episode.content, 30),
       date: dayjs(episode.pubDate).fromNow(),
@@ -101,21 +100,21 @@
       { capture: true, once: true, passive: true }
     )
   })
-  const nextEpisode = (): string => {
-    const oneHours = 60 * 60 * 1000 // minutes*seconds*milliseconds
-    const oneDay = 24 * oneHours // 24*hours
-    const firstDate = new Date(2019, 10, 19, 10, 0)
-    const tomorow = new Date()
-    tomorow.setHours(10)
-    tomorow.setMinutes(0)
-    tomorow.setMilliseconds(0)
-    tomorow.setDate(tomorow.getDate() + 1)
-    const now = new Date()
-    const diffDays = Math.round(Math.abs((firstDate.getTime() - now.getTime()) / oneDay))
-    const diffHours = tomorow.getTime() - now.getTime()
-    const epRepeat = 7
-    const nextEp = epRepeat - (diffDays % epRepeat)
-    const nextEpH = 24 + Math.round(diffHours / oneHours - 24)
-    return nextEp > 1 ? `${nextEp} jours` : `${nextEpH} heures`
-  }
+  // const nextEpisode = (): string => {
+  //   const oneHours = 60 * 60 * 1000 // minutes*seconds*milliseconds
+  //   const oneDay = 24 * oneHours // 24*hours
+  //   const firstDate = new Date(2019, 10, 19, 10, 0)
+  //   const tomorow = new Date()
+  //   tomorow.setHours(10)
+  //   tomorow.setMinutes(0)
+  //   tomorow.setMilliseconds(0)
+  //   tomorow.setDate(tomorow.getDate() + 1)
+  //   const now = new Date()
+  //   const diffDays = Math.round(Math.abs((firstDate.getTime() - now.getTime()) / oneDay))
+  //   const diffHours = tomorow.getTime() - now.getTime()
+  //   const epRepeat = 7
+  //   const nextEp = epRepeat - (diffDays % epRepeat)
+  //   const nextEpH = 24 + Math.round(diffHours / oneHours - 24)
+  //   return nextEp > 1 ? `${nextEp} jours` : `${nextEpH} heures`
+  // }
 </script>
