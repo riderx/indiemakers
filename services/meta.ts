@@ -51,6 +51,11 @@ export const createMeta = (
         property: 'og:image',
         content: image,
       },
+      {
+        hid: 'twitter:image',
+        property: 'twitter:image',
+        content: image,
+      },
       { hid: 'og:image:width', property: 'og:image:width', content: '300' },
       { hid: 'og:image:height', property: 'og:image:height', content: '300' }
     )
