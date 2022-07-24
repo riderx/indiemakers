@@ -1,0 +1,51 @@
+---
+label: Article
+hide_body: false
+fields:
+  - type: text
+    name: title
+    label: title
+  - type: text
+    name: description
+    label: description
+  - type: text
+    name: author
+    label: author
+  - type: text
+    name: author_url
+    label: author_url
+  - type: datetime
+    name: created_at
+    label: created_at
+  - type: datetime
+    name: updated_at
+    label: updated_at
+  - type: file
+    name: head_image
+    label: head_image
+  - type: text
+    name: head_image_alt
+    label: head_image_alt
+  - type: text
+    name: tag
+    label: tag
+  - type: boolean
+    name: published
+    label: published
+  - type: text
+    name: next_blog
+    label: next_blog
+pages:
+  - content/blog/alternative-to.md
+  - content/blog/amrap.md
+  - content/blog/beginner-s-guide-the-benefits-of-hiit.md
+  - content/blog/crossfit-zone-diet-a-crash-diet-or-an-effective-one.md
+  - content/blog/explanation-of-emom-in-crossfit-for-beginners.md
+  - content/blog/explanation-of-tabata-in-crossfit-for-beginners.md
+  - content/blog/farmer-s-walk-benefits-best-exercise-to-strengthen-your-core-muscles.md
+  - content/blog/how-to-perform-murph-workout-and-variations-to-try.md
+  - content/blog/regenerate-faster-tips-for-regeneration-in-crossfit.md
+  - content/blog/regeneration-cool-down-for-after-crossfit-workout.md
+  - content/blog/steps-to-getting-ready-for-the-next-crossfit-open.md
+  - content/blog/supercompensation-how-to-avoid-overtraining.md
+  - content/blog/ways-to-improve-your-crossfit-performance.md
