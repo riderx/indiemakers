@@ -19,7 +19,7 @@
                   :title="episode.title"
                   :date="episode.date"
                   :preview="episode.preview"
-                  :image="episode.imageOptimized"
+                  :image="episode.image"
                 />
               </NuxtLink>
             </div>

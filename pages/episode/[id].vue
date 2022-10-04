@@ -273,7 +273,7 @@
     meta: createMeta(
       titleNoEmoji.value,
       previewNoEmoji.value.replace(/<[^>]*>?/gm, ''),
-      episode.value.imageOptimized,
+      episode.value.image,
       episode.value.name,
       episode.value.audio
     ),
